@@ -1,0 +1,501 @@
+<ItemPools>
+	<Pool Name="treasure">
+		<!--Yin-Yang Orb-->
+		<Item Name="Yin-Yang Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rainbow Dragon Badge-->
+		<Item Name="Rainbow Dragon Badge" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Grimoire of Patchouli-->
+		<Item Name="Grimoire of Patchouli" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Koakuma Baby-->
+		<Item Name="Koakuma Baby" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Frozen Sakura-->
+		<Item Name="Frozen Sakura" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Chen Baby-->
+		<Item Name="Chen Baby" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Shanghai Doll-->
+		<Item Name="Shanghai Doll" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Melancholic Violin-->
+		<Item Name="Melancholic Violin" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Maniac Trumpet-->
+		<Item Name="Maniac Trumpet" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Illusionary Keyboard-->
+		<Item Name="Illusionary Keyboard" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Starseeker-->
+		<Item Name="Starseeker" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Pathseeker-->
+		<Item Name="Pathseeker" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Gourd-Shroom-->
+		<Item Name="Gourd-Shroom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Jar of Fireflies-->
+		<Item Name="Jar of Fireflies" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Song of Nightbird-->
+		<Item Name="Song of Nightbird" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rabbit Trap-->
+		<Item Name="Rabbit Trap" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Illusion-->
+		<Item Name="Illusion" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Peerless Elixir-->
+		<Item Name="Peerless Elixir" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Dragon Neck Jewel-->
+		<Item Name="Dragon Neck Jewel" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Buddha's Bowl-->
+		<Item Name="Buddha's Bowl" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Robe of Firerat-->
+		<Item Name="Robe of Firerat" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Ash of Pheonix-->
+		<Item Name="Ash of Pheonix" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Tengu Camera-->
+		<Item Name="Tengu Camera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Sunflower Pot-->
+		<Item Name="Sunflower Pot" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rod of Remorse-->
+		<Item Name="Rod of Remorse" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Leaf Shield-->
+		<Item Name="Leaf Shield" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Extending Arm-->
+		<Item Name="Extending Arm" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rune Sword-->
+		<Item Name="Rune Sword" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Plague Lord-->
+		<Item Name="Plague Lord" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Dowsing Rods-->
+		<Item Name="Dowsing Rods" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Scaring Umbrella-->
+		<Item Name="Scaring Umbrella" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Saucer Remote-->
+		<Item Name="Saucer Remote" Weight="0.2" DecreaseBy="0.2" RemoveOn="0.02"/>
+		<!--Mountain Ear-->
+		<Item Name="Mountain Ear" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Zombie Infestation-->
+		<Item Name="Zombie Infestation" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Warpping Hairpin-->
+		<Item Name="Warpping Hairpin" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--The Infamies-->
+		<Item Name="The Infamies" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Hunger-->
+		<Item Name="Hunger" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Sekibanki's Head-->
+		<Item Name="Sekibanki's Head" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--D Flip-->
+		<Item Name="D Flip" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Miracle Mallet-->
+		<Item Name="Miracle Mallet" Weight="0.2" DecreaseBy="0.2" RemoveOn="0.02"/>
+	</Pool>
+	<Pool Name="library">
+		<!--Grimoire of Patchouli-->
+		<Item Name="Grimoire of Patchouli" Weight="1" DecreaseBy="0.1" RemoveOn="0.1"/>
+		<!--Book of Years-->
+		<Item Name="Book of Years" Weight="0.5" DecreaseBy="0.05" RemoveOn="0.05"/>
+		<!--Empty Book-->
+		<Item Name="Empty Book" Weight="1" DecreaseBy="0.1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="secret">
+		<!--Marisa's Broom-->
+		<Item Name="Marisa's Broom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--DELETED ERHU-->
+		<Item Name="DELETED ERHU" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--The Gap-->
+		<Item Name="The Gap" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Gourd-Shroom-->
+		<Item Name="Gourd-Shroom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--One of Nine Tails-->
+		<Item Name="One of Nine Tails" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Book of Years-->
+		<Item Name="Book of Years" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Isaac's Last Wills-->
+		<Item Name="Isaac's Last Wills" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rune Sword-->
+		<Item Name="Rune Sword" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Pure Fury-->
+		<Item Name="Pure Fury" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--The Infamies-->
+		<Item Name="The Infamies" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--D2147483647-->
+		<Item Name="D2147483647" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Golem of Isaac-->
+		<Item Name="Golem of Isaac" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--D Flip-->
+		<Item Name="D Flip" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="goldenChest">
+		<!--Maid Suit-->
+		<Item Name="Maid Suit" Weight="0.2" DecreaseBy="0.08" RemoveOn="0.02"/>
+		<!--Marisa's Broom-->
+		<Item Name="Marisa's Broom" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Shanghai Doll-->
+		<Item Name="Shanghai Doll" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Daitengu Telescope-->
+		<Item Name="Daitengu Telescope" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="shop">
+		<!--Yin-Yang Orb-->
+		<Item Name="Yin-Yang Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Maid Suit-->
+		<Item Name="Maid Suit" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Shanghai Doll-->
+		<Item Name="Shanghai Doll" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Jar of Fireflies-->
+		<Item Name="Jar of Fireflies" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rabbit Trap-->
+		<Item Name="Rabbit Trap" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Peerless Elixir-->
+		<Item Name="Peerless Elixir" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Tengu Camera-->
+		<Item Name="Tengu Camera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Continue?-->
+		<Item Name="Continue?" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Extending Arm-->
+		<Item Name="Extending Arm" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Dowsing Rods-->
+		<Item Name="Dowsing Rods" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Bishamonten's Pagota-->
+		<Item Name="Bishamonten's Pagota" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Tengu Cellphone-->
+		<Item Name="Tengu Cellphone" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Dad's Shares-->
+		<Item Name="Dad's Shares" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Mom's IOU-->
+		<Item Name="Mom's IOU" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Warpping Hairpin-->
+		<Item Name="Warpping Hairpin" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Yamawaro's Crate-->
+		<Item Name="Yamawaro's Crate" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Daitengu Telescope-->
+		<Item Name="Daitengu Telescope" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Exchange Ticket-->
+		<Item Name="Exchange Ticket" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+	</Pool>
+	<Pool Name="babyShop">
+		<!--Koakuma Baby-->
+		<Item Name="Koakuma Baby" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Chen Baby-->
+		<Item Name="Chen Baby" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="boss">
+		<!--Fried Tofu-->
+		<Item Name="Fried Tofu" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Baked Sweet Potato-->
+		<Item Name="Baked Sweet Potato" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="devil">
+		<!--Dark Ribbon-->
+		<Item Name="Dark Ribbon" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Tooth of Vampire-->
+		<Item Name="Tooth of Vampire" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Koakuma Baby-->
+		<Item Name="Koakuma Baby" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Destruction-->
+		<Item Name="Destruction" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Curse of Centipede-->
+		<Item Name="Curse of Centipede" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Oni Horn-->
+		<Item Name="Oni Horn" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Psyche Eye-->
+		<Item Name="Psyche Eye" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Technology 666-->
+		<Item Name="Technology 666" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Psycho Knife-->
+		<Item Name="Psycho Knife" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Broken Amulet-->
+		<Item Name="Broken Amulet" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Sorcerer's Scroll-->
+		<Item Name="Sorcerer's Scroll" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Miracle Mallet-->
+		<Item Name="Miracle Mallet" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Kiketsu Family's Blackmail-->
+		<Item Name="Kiketsu Family's Blackmail" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Fox in Tube-->
+		<Item Name="Fox in Tube" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="curse">
+		<!--Dark Ribbon-->
+		<Item Name="Dark Ribbon" Weight="0.2" DecreaseBy="0.1" RemoveOn="0.02"/>
+		<!--Tooth of Vampire-->
+		<Item Name="Tooth of Vampire" Weight="0.2" DecreaseBy="0.1" RemoveOn="0.02"/>
+		<!--Destruction-->
+		<Item Name="Destruction" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Song of Nightbird-->
+		<Item Name="Song of Nightbird" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Green Eyed Envy-->
+		<Item Name="Green Eyed Envy" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Sorcerer's Scroll-->
+		<Item Name="Sorcerer's Scroll" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Zombie Infestation-->
+		<Item Name="Zombie Infestation" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Vicious Curse-->
+		<Item Name="Vicious Curse" Weight="0.5" DecreaseBy="0.25" RemoveOn="0.05"/>
+		<!--Fox in Tube-->
+		<Item Name="Fox in Tube" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="angel">
+		<!--Spring of Daiyousei-->
+		<Item Name="Spring of Daiyousei" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Roukanken-->
+		<Item Name="Roukanken" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Fan of the Dead-->
+		<Item Name="Fan of the Dead" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Dragon Neck Jewel-->
+		<Item Name="Dragon Neck Jewel" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Buddha's Bowl-->
+		<Item Name="Buddha's Bowl" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Swallow's Shell-->
+		<Item Name="Swallow's Shell" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Jeweled Branch-->
+		<Item Name="Jeweled Branch" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rod of Remorse-->
+		<Item Name="Rod of Remorse" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Sorcerer's Scroll-->
+		<Item Name="Sorcerer's Scroll" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="beggar">
+		<!--Fried Tofu-->
+		<Item Name="Fried Tofu" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="demonbeggar">
+		<!--Tooth of Vampire-->
+		<Item Name="Tooth of Vampire" Weight="0.2" DecreaseBy="0.1" RemoveOn="0.02"/>
+		<!--Destruction-->
+		<Item Name="Destruction" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="craneGame">
+		<!--Shanghai Doll-->
+		<Item Name="Shanghai Doll" Weight="1" DecreaseBy="0.1" RemoveOn="0.1"/>
+		<!--Extending Arm-->
+		<Item Name="Extending Arm" Weight="1" DecreaseBy="0.1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="oldChest">
+		<!--Fan of the Dead-->
+		<Item Name="Fan of the Dead" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--The Gap-->
+		<Item Name="The Gap" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Isaac's Last Wills-->
+		<Item Name="Isaac's Last Wills" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Dad's Shares-->
+		<Item Name="Dad's Shares" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Mom's IOU-->
+		<Item Name="Mom's IOU" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="greedTreasure">
+		<!--Yin-Yang Orb-->
+		<Item Name="Yin-Yang Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rainbow Dragon Badge-->
+		<Item Name="Rainbow Dragon Badge" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Grimoire of Patchouli-->
+		<Item Name="Grimoire of Patchouli" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Koakuma Baby-->
+		<Item Name="Koakuma Baby" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Frozen Sakura-->
+		<Item Name="Frozen Sakura" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Chen Baby-->
+		<Item Name="Chen Baby" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Shanghai Doll-->
+		<Item Name="Shanghai Doll" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Melancholic Violin-->
+		<Item Name="Melancholic Violin" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Maniac Trumpet-->
+		<Item Name="Maniac Trumpet" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Illusionary Keyboard-->
+		<Item Name="Illusionary Keyboard" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Starseeker-->
+		<Item Name="Starseeker" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Gourd-Shroom-->
+		<Item Name="Gourd-Shroom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Jar of Fireflies-->
+		<Item Name="Jar of Fireflies" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Song of Nightbird-->
+		<Item Name="Song of Nightbird" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Peerless Elixir-->
+		<Item Name="Peerless Elixir" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Robe of Firerat-->
+		<Item Name="Robe of Firerat" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Leaf Shield-->
+		<Item Name="Leaf Shield" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Extending Arm-->
+		<Item Name="Extending Arm" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rune Sword-->
+		<Item Name="Rune Sword" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Plague Lord-->
+		<Item Name="Plague Lord" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Dowsing Rods-->
+		<Item Name="Dowsing Rods" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Scaring Umbrella-->
+		<Item Name="Scaring Umbrella" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Tengu Cellphone-->
+		<Item Name="Tengu Cellphone" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Mountain Ear-->
+		<Item Name="Mountain Ear" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Zombie Infestation-->
+		<Item Name="Zombie Infestation" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--The Infamies-->
+		<Item Name="The Infamies" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Hunger-->
+		<Item Name="Hunger" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Sekibanki's Head-->
+		<Item Name="Sekibanki's Head" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--D Flip-->
+		<Item Name="D Flip" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Miracle Mallet-->
+		<Item Name="Miracle Mallet" Weight="0.2" DecreaseBy="0.2" RemoveOn="0.02"/>
+	</Pool>
+	<Pool Name="greedShop">
+		<!--Yin-Yang Orb-->
+		<Item Name="Yin-Yang Orb" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rainbow Dragon Badge-->
+		<Item Name="Rainbow Dragon Badge" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Shanghai Doll-->
+		<Item Name="Shanghai Doll" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Jar of Fireflies-->
+		<Item Name="Jar of Fireflies" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Continue?-->
+		<Item Name="Continue?" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Extending Arm-->
+		<Item Name="Extending Arm" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Dowsing Rods-->
+		<Item Name="Dowsing Rods" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Yamawaro's Crate-->
+		<Item Name="Yamawaro's Crate" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Tengu Cellphone-->
+		<Item Name="Tengu Cellphone" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Exchange Ticket-->
+		<Item Name="Exchange Ticket" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+	</Pool>
+	<Pool Name="greedDevil">
+		<!--Dark Ribbon-->
+		<Item Name="Dark Ribbon" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Tooth of Vampire-->
+		<Item Name="Tooth of Vampire" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Koakuma Baby-->
+		<Item Name="Koakuma Baby" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Destruction-->
+		<Item Name="Destruction" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Peerless Elixir-->
+		<Item Name="Peerless Elixir" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Curse of Centipede-->
+		<Item Name="Curse of Centipede" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Oni Horn-->
+		<Item Name="Oni Horn" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Psyche Eye-->
+		<Item Name="Psyche Eye" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Technology 666-->
+		<Item Name="Technology 666" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Psycho Knife-->
+		<Item Name="Psycho Knife" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Broken Amulet-->
+		<Item Name="Broken Amulet" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Sorcerer's Scroll-->
+		<Item Name="Sorcerer's Scroll" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Miracle Mallet-->
+		<Item Name="Miracle Mallet" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Kiketsu Family's Blackmail-->
+		<Item Name="Kiketsu Family's Blackmail" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Fox in Tube-->
+		<Item Name="Fox in Tube" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="greedAngel">
+		<!--Spring of Daiyousei-->
+		<Item Name="Spring of Daiyousei" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Roukanken-->
+		<Item Name="Roukanken" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Fan of the Dead-->
+		<Item Name="Fan of the Dead" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Dragon Neck Jewel-->
+		<Item Name="Dragon Neck Jewel" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Buddha's Bowl-->
+		<Item Name="Buddha's Bowl" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Swallow's Shell-->
+		<Item Name="Swallow's Shell" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Jeweled Branch-->
+		<Item Name="Jeweled Branch" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Benediction-->
+		<Item Name="Benediction" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Sorcerer's Scroll-->
+		<Item Name="Sorcerer's Scroll" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="greedCurse">
+		<!--Dark Ribbon-->
+		<Item Name="Dark Ribbon" Weight="0.2" DecreaseBy="0.1" RemoveOn="0.02"/>
+		<!--Tooth of Vampire-->
+		<Item Name="Tooth of Vampire" Weight="0.2" DecreaseBy="0.1" RemoveOn="0.02"/>
+		<!--Destruction-->
+		<Item Name="Destruction" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Song of Nightbird-->
+		<Item Name="Song of Nightbird" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Sorcerer's Scroll-->
+		<Item Name="Sorcerer's Scroll" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Zombie Infestation-->
+		<Item Name="Zombie Infestation" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Vicious Curse-->
+		<Item Name="Vicious Curse" Weight="0.5" DecreaseBy="0.25" RemoveOn="0.05"/>
+		<!--Fox in Tube-->
+		<Item Name="Fox in Tube" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="greedSecret">
+		<!--Marisa's Broom-->
+		<Item Name="Marisa's Broom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--DELETED ERHU-->
+		<Item Name="DELETED ERHU" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Gourd-Shroom-->
+		<Item Name="Gourd-Shroom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--One of Nine Tails-->
+		<Item Name="One of Nine Tails" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Book of Years-->
+		<Item Name="Book of Years" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Isaac's Last Wills-->
+		<Item Name="Isaac's Last Wills" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Rune Sword-->
+		<Item Name="Rune Sword" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Pure Fury-->
+		<Item Name="Pure Fury" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--The Infamies-->
+		<Item Name="The Infamies" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--D2147483647-->
+		<Item Name="D2147483647" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Golem of Isaac-->
+		<Item Name="Golem of Isaac" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--D Flip-->
+		<Item Name="D Flip" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="greedBoss">
+		<!--Fried Tofu-->
+		<Item Name="Fried Tofu" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Baked Sweet Potato-->
+		<Item Name="Baked Sweet Potato" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="woodenChest">
+		<!--Marisa's Broom-->
+		<Item Name="Marisa's Broom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+	</Pool>
+	<Pool Name="redChest">
+		<!--Vicious Curse-->
+		<Item Name="Vicious Curse" Weight="0.5" DecreaseBy="0.2" RemoveOn="0.05"/>
+	</Pool>
+	
+	<Pool Name="ultraSecret">
+		<!--Yin-Yang Orb-->
+		<Item Name="Yin-Yang Orb" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Dark Ribbon-->
+		<Item Name="Dark Ribbon" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Koakuma Baby-->
+		<Item Name="Koakuma Baby" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Tooth of Vampire-->
+		<Item Name="Tooth of Vampire" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--The Gap-->
+		<Item Name="The Gap" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Illusion-->
+		<Item Name="Illusion" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Robe of Firerat-->
+		<Item Name="Robe of Firerat" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--D2147483647-->
+		<Item Name="D2147483647" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Sekibanki's Head-->
+		<Item Name="Sekibanki's Head" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Pure Fury-->
+		<Item Name="Pure Fury" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Hunger-->
+		<Item Name="Hunger" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Curse of Centipede-->
+		<Item Name="Curse of Centipede" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Psyche Eye-->
+		<Item Name="Psyche Eye" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+	</Pool>
+</ItemPools>

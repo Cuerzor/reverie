@@ -1,0 +1,55 @@
+<costumes anm2root="gfx/characters/">
+	<costume id="3" anm2path="costume_dark_ribbon.anm2" type="passive" />
+	<costume id="4" anm2path="costume_spring_of_daiyousei.anm2" type="passive" />
+	<costume id="8" anm2path="costume_maid_suit.anm2" type="passive" />
+	<costume id="9" anm2path="costume_tooth_of_vampire.anm2" type="passive" isFlying="true" hasSkinAlt="true"/>
+	<costume id="2" anm2path="costume_marisas_broom.anm2" type="passive" isFlying="true" hasSkinAlt="true"/>
+	<costume id="21" anm2path="costume_frozen_sakura.anm2" type="passive" />
+	<costume id="28" anm2path="costume_fan_of_the_dead.anm2" type="passive" skinColor="0" isFlying="true" />
+	<costume id="30" anm2path="costume_one_of_nine_tails.anm2" type="passive"/>
+	<costume id="32" anm2path="costume_starseeker.anm2" type="passive"/>
+	<costume id="33" anm2path="costume_pathseeker.anm2" type="passive"/>
+	<costume id="42" anm2path="costume_song_of_nightbird.anm2" type="passive" />
+	<costume id="47" anm2path="costume_dragon_neck_jewel.anm2" type="passive" hasSkinAlt="true"/>
+	<costume id="49" anm2path="costume_robe_of_firerat.anm2" type="passive" />	
+	<costume id="50" anm2path="costume_swallows_shell.anm2" type="passive" />	
+	<costume id="63" anm2path="costume_continue_arcade.anm2" type="passive" />	
+
+	<costume id="83" anm2path="costume_broken_amulet.anm2" type="passive" />
+	
+	<costume id="102" anm2path="costume_plague_lord.anm2" type="passive" skinColor="4" overwriteColor="true"/>
+	<costume id="103" anm2path="costume_green_eyed_envy.anm2" type="passive" hasSkinAlt="true"/>	
+	<costume id="104" anm2path="costume_oni_horn.anm2" type="passive"/>	
+	<costume id="107" anm2path="costume_1107_technology_666.anm2" type="passive" hasSkinAlt="true"/>	
+	
+	<costume id="121" anm2path="costume_dowsing_rods.anm2" type="passive"/>	
+
+	<costume id="141" anm2path="costume_141_mountain ear.anm2" type="passive" hasSkinAlt="true"/>	
+	<costume id="142" anm2path="costume_142_zombie infestation.anm2" type="passive" skinColor="4" overwriteColor="true"/>	
+
+	<costume id="184" anm2path="costume_vicious_curse.anm2" type="passive" />	
+	<costume id="186" anm2path="costume_pure_fury.anm2" type="passive" />	
+	<costume id="188" anm2path="costume_dads_shares.anm2" type="passive" />	
+	<costume id="189" anm2path="costume_moms_iou.anm2" type="passive" />	
+
+	<costume id="224" anm2path="costume_kiketsu_familys_blackmail.anm2" type="passive" />	
+	
+
+	
+	<costume id="5556" anm2path="costume_satori_hair.anm2" type="none" hasSkinAlt="true" priority="99"/>
+	<costume id="5557" anm2path="costume_satori.anm2" type="none" hasSkinAlt="true" priority="0"/>
+	<costume id="5558" anm2path="costume_satori_b_hair.anm2" type="none" hasSkinAlt="true" isFlying="false" priority="99"/>
+	<costume id="5558" anm2path="costume_satori_b.anm2" type="none" hasSkinAlt="true" isFlying="false" priority="555"/>
+	<costume id="5559" anm2path="costume_satori_b_flying.anm2" type="none" hasSkinAlt="true" isFlying="true" priority="554"/>
+	
+	<costume id="5811" anm2path="costume_musician.anm2" type="none" />
+	<costume id="5812" anm2path="character_youmu_hair.anm2" type="none" skinColor="0" priority="99" />
+	<costume id="5813" anm2path="costume_youmu_spirit.anm2" type="none" skinColor="0" priority="50" />
+	<costume id="5814" anm2path="costume_the_infamies_pleasure.anm2" type="none" />
+	<costume id="5815" anm2path="costume_the_infamies_anger.anm2" type="none" />
+	<costume id="5816" anm2path="costume_the_infamies_sorrow.anm2" type="none" />
+	<costume id="5817" anm2path="costume_the_infamies_fearness.anm2" type="none" />
+	<costume id="5818" anm2path="costume_buddhas_bowl.anm2" type="none" skinColor="5" forceBodyColor="5" forceHeadColor="5" priority="50"/>
+	<costume id="5821" anm2path="costume_eika.anm2" type="none" priority="99"/>
+	
+</costumes>

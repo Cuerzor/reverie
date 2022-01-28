@@ -1,0 +1,5088 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stringtable>
+  <info version="1.0" modified="Wed Nov 10 12:44:45 2021" modifiedby="script" />
+  <languages>
+    <language id="21" index="0" name="Key" />
+    <language id="0" index="1" name="English" />
+    <language id="2" index="2" name="Japanese" />
+    <language id="11" index="3" name="Korean" />
+    <language id="13" index="4" name="Chinese (Simple)" />
+    <language id="10" index="5" name="Russian" />
+    <language id="5" index="6" name="German" />
+    <language id="4" index="7" name="Spanish" />
+  </languages>
+  <category name="Items">
+    <key name="YIN_YANG_ORB_NAME">
+      <string>Yin-Yang Orb</string>
+      <string>陰陽玉</string>
+      <string>Yin-Yang Orb</string>
+      <string>阴阳玉</string>
+      <string>Yin-Yang Orb</string>
+      <string>Yin-Yang Orb</string>
+      <string>Yin-Yang Orb</string>
+    </key>
+  </category>
+  <!-- <category name="Entities">
+    <key name="FROWNING_GAPER">
+      <string>Frowning Gaper</string>
+      <string>フラウニング ゲイパー</string>
+      <string>험상궂은 게이퍼</string>
+      <string>皱眉裂口尸</string>
+      <string>Хмурый Зевака</string>
+      <string>Mürrischer Gaffer</string>
+      <string>Pesar afligido</string>
+    </key>
+    <key name="GAPER">
+      <string>Gaper</string>
+      <string>ゲイパー</string>
+      <string>게이퍼</string>
+      <string>裂口尸</string>
+      <string>Зевака</string>
+      <string>Gaffer</string>
+      <string>Pesar</string>
+    </key>
+    <key name="FLAMING_GAPER">
+      <string>Flaming Gaper</string>
+      <string>フレイミング ゲイパー</string>
+      <string>격노한 게이퍼</string>
+      <string>燃烧裂口尸</string>
+      <string>Пламенный Зевака</string>
+      <string>Flammender Gaffer</string>
+      <string>Pesar ígneo</string>
+    </key>
+    <key name="ROTTEN_GAPER">
+      <string>Rotten Gaper</string>
+      <string>ロッテン ゲイパー</string>
+      <string>부패한 게이퍼</string>
+      <string>腐烂裂口尸</string>
+      <string>Сгнивший Зевака</string>
+      <string>Verfaulter Gaffer</string>
+      <string>Pesar putrefacto</string>
+    </key>
+    <key name="GUSHER">
+      <string>Gusher</string>
+      <string>グッシャー</string>
+      <string>거셔</string>
+      <string>喷血尸</string>
+      <string>Гейзер</string>
+      <string>Bluter</string>
+      <string>Borbotón</string>
+    </key>
+    <key name="PACER">
+      <string>Pacer</string>
+      <string>ペイサー</string>
+      <string>페이서</string>
+      <string>漫步尸</string>
+      <string>Иноходец</string>
+      <string>Schreiter</string>
+      <string>Sinrumbo</string>
+    </key>
+    <key name="HORF">
+      <string>Horf</string>
+      <string>ホルフ</string>
+      <string>홀프</string>
+      <string>呕血头</string>
+      <string>Хорф</string>
+      <string>Horf</string>
+      <string>Sincuerpo</string>
+    </key>
+    <key name="FLY">
+      <string>Fly</string>
+      <string>ハエ</string>
+      <string>파리</string>
+      <string>苍蝇</string>
+      <string>Муха</string>
+      <string>Fliege</string>
+      <string>Mosca</string>
+    </key>
+    <key name="POOTER">
+      <string>Pooter</string>
+      <string>プーター</string>
+      <string>푸터</string>
+      <string>狙击蝇</string>
+      <string>Морилка</string>
+      <string>Kackewerfer</string>
+      <string>Moscañón</string>
+    </key>
+    <key name="SUPER_POOTER">
+      <string>Super Pooter</string>
+      <string>スーパー プーター</string>
+      <string>슈퍼 푸터</string>
+      <string>超级狙击蝇</string>
+      <string>Супер Морилка</string>
+      <string>Super-Kackewerfer</string>
+      <string>Supermoscañón</string>
+    </key>
+    <key name="TAINTED_POOTER">
+      <string>Tainted Pooter</string>
+      <string>テインティド プーター</string>
+      <string>더럽혀진 푸터</string>
+      <string>堕化狙击蝇</string>
+      <string>Порченая Морилка</string>
+      <string>Befleckter Kackewerfer</string>
+      <string>Moscañón corrupto</string>
+    </key>
+    <key name="CLOTTY">
+      <string>Clotty</string>
+      <string>クロッティ</string>
+      <string>핏고기</string>
+      <string>肉团</string>
+      <string>Тромбик</string>
+      <string>Klumpi</string>
+      <string>Cuajo</string>
+    </key>
+    <key name="CLOT">
+      <string>Clot</string>
+      <string>クロット</string>
+      <string>클롯</string>
+      <string>焦油团</string>
+      <string>Тромб</string>
+      <string>Klumpen</string>
+      <string>Coágulo</string>
+    </key>
+    <key name="IBLOB">
+      <string>I.Blob</string>
+      <string>アイ ブロッブ</string>
+      <string>I.블롭</string>
+      <string>以撒肉团</string>
+      <string>Я.Пузырь</string>
+      <string>Ich-Blob</string>
+      <string>Burbúgulo</string>
+    </key>
+    <key name="GRILLED_CLOTTY">
+      <string>Grilled Clotty</string>
+      <string>グリル クロッティ</string>
+      <string>구운 핏고기</string>
+      <string>烤肉团</string>
+      <string>Поджаренный Тромбик</string>
+      <string>Gegrillter Klumpi</string>
+      <string>Cuajo frito</string>
+    </key>
+    <key name="MULLIGAN">
+      <string>Mulligan</string>
+      <string>ムリガン</string>
+      <string>멀리건</string>
+      <string>棉花怪</string>
+      <string>Нюня</string>
+      <string>Mulligan</string>
+      <string>Hincha</string>
+    </key>
+    <key name="MULLIGOON">
+      <string>Mulligoon</string>
+      <string>ムリグン</string>
+      <string>멀리군</string>
+      <string>灰棉花怪</string>
+      <string>Нытик</string>
+      <string>Mulligauner</string>
+      <string>Hinchazón</string>
+    </key>
+    <key name="MULLIBOOM">
+      <string>Mulliboom</string>
+      <string>ムリボム</string>
+      <string>멀리봄</string>
+      <string>炸弹棉花怪</string>
+      <string>Бомбанытик</string>
+      <string>Mullibumm</string>
+      <string>Hinchabomba</string>
+    </key>
+    <key name="ATTACK_FLY">
+      <string>Attack Fly</string>
+      <string>アタック フライ</string>
+      <string>전투형 파리</string>
+      <string>红苍蝇</string>
+      <string>Атакующая Муха</string>
+      <string>Angriffsfliege</string>
+      <string>Mosca de asalto</string>
+    </key>
+    <key name="LARRY_JR">
+      <string>Larry Jr.</string>
+      <string>ラリー Jr.</string>
+      <string>래리 주니어</string>
+      <string>拉里子虫</string>
+      <string>Ларри Мл.</string>
+      <string>Larry Jr.</string>
+      <string>Larry Hijo</string>
+    </key>
+    <key name="THE_HOLLOW">
+      <string>The Hollow</string>
+      <string>ザ ホロー</string>
+      <string>공허</string>
+      <string>空心虫</string>
+      <string>Пустой</string>
+      <string>Hollow</string>
+      <string>El Vacío</string>
+    </key>
+    <key name="TUFF_TWIN">
+      <string>Tuff Twin</string>
+      <string>タフ ツイン</string>
+      <string>쌍둥이 터프</string>
+      <string>灰岩子虫</string>
+      <string>Кремневые Близнецы</string>
+      <string>Tuff-Zwilling</string>
+      <string>Gemelo Golérico</string>
+    </key>
+    <key name="THE_SHELL">
+      <string>The Shell</string>
+      <string>ザ シェル</string>
+      <string>공각</string>
+      <string>枯壳虫</string>
+      <string>Панцирь</string>
+      <string>Shell</string>
+      <string>La Coraza</string>
+    </key>
+    <key name="MONSTRO">
+      <string>Monstro</string>
+      <string>モンストロ</string>
+      <string>몬스트로</string>
+      <string>萌死戳</string>
+      <string>Монстро</string>
+      <string>Monstro</string>
+      <string>Monstro</string>
+    </key>
+    <key name="MAGGOT">
+      <string>Maggot</string>
+      <string>マゴット</string>
+      <string>구더기</string>
+      <string>蝇蛆</string>
+      <string>Личинка</string>
+      <string>Made</string>
+      <string>Larva</string>
+    </key>
+    <key name="HIVE">
+      <string>Hive</string>
+      <string>ハイブ</string>
+      <string>하이브</string>
+      <string>蝇巢</string>
+      <string>Улей</string>
+      <string>Stock</string>
+      <string>Urticaria</string>
+    </key>
+    <key name="DROWNED_HIVE">
+      <string>Drowned Hive</string>
+      <string>ドラウン ハイブ</string>
+      <string>익사한 하이브</string>
+      <string>溺水蝇巢</string>
+      <string>Утонувший Улей</string>
+      <string>Ertrunkener Stock</string>
+      <string>Urticaria ahogada</string>
+    </key>
+    <key name="HOLY_MULLIGAN">
+      <string>Holy Mulligan</string>
+      <string>ホーリー ムリガン</string>
+      <string>신성한 멀리건</string>
+      <string>神圣棉花怪</string>
+      <string>Святой Нюня</string>
+      <string>Heiliger Mulligan</string>
+      <string>Hincha sagrado</string>
+    </key>
+    <key name="TAINTED_MULLIGAN">
+      <string>Tainted Mulligan</string>
+      <string>テインティド ムリガン</string>
+      <string>더럽혀진 멀리건</string>
+      <string>堕化棉花怪</string>
+      <string>Порченый Нюня</string>
+      <string>Befleckter Mulligan</string>
+      <string>Hincha corrupto</string>
+    </key>
+    <key name="CHARGER">
+      <string>Charger</string>
+      <string>チャージャー</string>
+      <string>차저</string>
+      <string>冲刺蝇蛆</string>
+      <string>Атакующий</string>
+      <string>Sturmmade</string>
+      <string>Cargador</string>
+    </key>
+    <key name="DROWNED_CHARGER">
+      <string>Drowned Charger</string>
+      <string>ドラウン チャージャー</string>
+      <string>익사한 차저</string>
+      <string>溺水冲刺蝇蛆</string>
+      <string>Утонувший Атакующий</string>
+      <string>Ertrunkene Sturmmade</string>
+      <string>Cargador ahogado</string>
+    </key>
+    <key name="DANK_CHARGER">
+      <string>Dank Charger</string>
+      <string>ダンク チャージャー</string>
+      <string>눅눅한 차저</string>
+      <string>阴湿冲刺蝇蛆</string>
+      <string>Сырой Атакующий</string>
+      <string>Nasse Sturmmade</string>
+      <string>Cargador anegado</string>
+    </key>
+    <key name="CARRION_PRINCESS">
+      <string>Carrion Princess</string>
+      <string>カリオン プリンセス</string>
+      <string>썩은 공주</string>
+      <string>腐蛆公主</string>
+      <string>Принцесса-Падальщик</string>
+      <string>Aasprinzessin</string>
+      <string>Princesa carroña</string>
+    </key>
+    <key name="GLOBIN">
+      <string>Globin</string>
+      <string>グロビン</string>
+      <string>글로빈</string>
+      <string>血红尸</string>
+      <string>Глобин</string>
+      <string>Globin</string>
+      <string>Globina</string>
+    </key>
+    <key name="GAZING_GLOBIN">
+      <string>Gazing Globin</string>
+      <string>ゲイジング グロビン</string>
+      <string>게이징 글로빈</string>
+      <string>窥眼血红尸</string>
+      <string>Глазеющий Глобин</string>
+      <string>Starrendes Globin</string>
+      <string>Globina avizora</string>
+    </key>
+    <key name="DANK_GLOBIN">
+      <string>Dank Globin</string>
+      <string>ダンク グロビン</string>
+      <string>눅눅한 글로빈</string>
+      <string>阴湿血红尸</string>
+      <string>Сырой Глобин</string>
+      <string>Nasses Globin</string>
+      <string>Globina anegada</string>
+    </key>
+    <key name="CURSED_GLOBIN">
+      <string>Cursed Globin</string>
+      <string>カーズ グロビン</string>
+      <string>저주받은 글로빈</string>
+      <string>诅咒血红尸</string>
+      <string>Проклятый Глобин</string>
+      <string>Verfluchtes Globin</string>
+      <string>Globina maldita</string>
+    </key>
+    <key name="BOOM_FLY">
+      <string>Boom Fly</string>
+      <string>ボム フライ</string>
+      <string>봄 파리</string>
+      <string>炸弹苍蝇</string>
+      <string>Бомбомуха</string>
+      <string>Bumm-Fliege</string>
+      <string>Moscarbomba</string>
+    </key>
+    <key name="RED_BOOM_FLY">
+      <string>Red Boom Fly</string>
+      <string>レッド ボム フライ</string>
+      <string>레드 봄 파리</string>
+      <string>红色炸弹苍蝇</string>
+      <string>Красная Бомбомуха</string>
+      <string>Rote Bumm-Fliege</string>
+      <string>Moscarbomba roja</string>
+    </key>
+    <key name="DROWNED_BOOM_FLY">
+      <string>Drowned Boom Fly</string>
+      <string>ドラウン ボム フライ</string>
+      <string>익사한 봄 파리</string>
+      <string>溺水炸弹苍蝇</string>
+      <string>Утонувшая Бомбомуха</string>
+      <string>Ertrunkene Bumm-Fliege</string>
+      <string>Moscarbomba ahogada</string>
+    </key>
+    <key name="DRAGON_FLY">
+      <string>Dragon Fly</string>
+      <string>ドラゴン フライ</string>
+      <string>용 파리</string>
+      <string>龙头苍蝇</string>
+      <string>Зажигалка</string>
+      <string>Drachenfliege</string>
+      <string>Mosca dragón</string>
+    </key>
+    <key name="DRAGON_FLY_X">
+      <string>Dragon Fly X</string>
+      <string>ドラゴン フライ X</string>
+      <string>용 파리 X</string>
+      <string>X眼龙头苍蝇</string>
+      <string>Зажигалка Х</string>
+      <string>Drachenfliege X</string>
+      <string>Mosca dragón X</string>
+    </key>
+    <key name="BONE_FLY">
+      <string>Bone Fly</string>
+      <string>ボーン フライ</string>
+      <string>본 파리</string>
+      <string>骷髅苍蝇</string>
+      <string>Костяная Муха</string>
+      <string>Knochenfliege</string>
+      <string>Mosca hueso</string>
+    </key>
+    <key name="SICK_BOOM_FLY">
+      <string>Sick Boom Fly</string>
+      <string>シック ボム フライ</string>
+      <string>아픈 봄 파리</string>
+      <string>病态炸弹苍蝇</string>
+      <string>Больная Бомбомуха</string>
+      <string>Kranke Bumm-Fliege</string>
+      <string>Moscarbomba enferma</string>
+    </key>
+    <key name="TAINTED_BOOM_FLY">
+      <string>Tainted Boom Fly</string>
+      <string>テインティド ボム フライ</string>
+      <string>더럽혀진 봄 파리</string>
+      <string>堕化炸弹苍蝇</string>
+      <string>Порченая Бомбомуха</string>
+      <string>Befleckte Bumm-Fliege</string>
+      <string>Moscarbomba corrupta</string>
+    </key>
+    <key name="MAW">
+      <string>Maw</string>
+      <string>モー</string>
+      <string>구렁텅이</string>
+      <string>大嘴头</string>
+      <string>Пасть</string>
+      <string>Schlund</string>
+      <string>Buche</string>
+    </key>
+    <key name="RED_MAW">
+      <string>Red Maw</string>
+      <string>レッド モー</string>
+      <string>붉은 구렁텅이</string>
+      <string>红色大嘴头</string>
+      <string>Красная Пасть</string>
+      <string>Rotschlund</string>
+      <string>Buche rojo</string>
+    </key>
+    <key name="PSYCHIC_MAW">
+      <string>Psychic Maw</string>
+      <string>サイキック モー</string>
+      <string>심령술사 구렁텅이</string>
+      <string>灵能大嘴头</string>
+      <string>Телепатическая Пасть</string>
+      <string>Psycho-Schlund</string>
+      <string>Buche psíquico</string>
+    </key>
+    <key name="HOST">
+      <string>Host</string>
+      <string>ホスト</string>
+      <string>호스트</string>
+      <string>寄居骷髅</string>
+      <string>Наблюдатель</string>
+      <string>Wirt</string>
+      <string>Huésped</string>
+    </key>
+    <key name="RED_HOST">
+      <string>Red Host</string>
+      <string>レッド ホスト</string>
+      <string>레드 호스트</string>
+      <string>红色寄居骷髅</string>
+      <string>Красный Наблюдатель</string>
+      <string>Roter Wirt</string>
+      <string>Huésped rojo</string>
+    </key>
+    <key name="HARD_HOST">
+      <string>Hard Host</string>
+      <string>ハード ホスト</string>
+      <string>단단한 호스트</string>
+      <string>化石寄居骷髅</string>
+      <string>Твердый Наблюдатель</string>
+      <string>Harter Wirt</string>
+      <string>Huésped duro</string>
+    </key>
+    <key name="CHUB">
+      <string>Chub</string>
+      <string>チアブ</string>
+      <string>처브</string>
+      <string>胖蛆</string>
+      <string>Чаб</string>
+      <string>Pummel</string>
+      <string>Cacho</string>
+    </key>
+    <key name="CHAD">
+      <string>C.H.A.D.</string>
+      <string>チャッド</string>
+      <string>차드</string>
+      <string>查德</string>
+      <string>Ч.А.Д.</string>
+      <string>C.H.A.D.</string>
+      <string>M.A.C.H.O.</string>
+    </key>
+    <key name="THE_CARRION_QUEEN">
+      <string>The Carrion Queen</string>
+      <string>カリオン クイーン</string>
+      <string>썩은 여왕</string>
+      <string>腐蛆女王</string>
+      <string>Королева-Падальщик</string>
+      <string>Die Aaskönigin</string>
+      <string>La Reina Carroña</string>
+    </key>
+    <key name="HOPPER">
+      <string>Hopper</string>
+      <string>ホッパー</string>
+      <string>호퍼</string>
+      <string>跳跳尸</string>
+      <string>Прыгун</string>
+      <string>Hüpfer</string>
+      <string>Bote</string>
+    </key>
+    <key name="TRITE">
+      <string>Trite</string>
+      <string>トライト</string>
+      <string>트라이트</string>
+      <string>跳蛛</string>
+      <string>Паук-Скакун</string>
+      <string>Trite</string>
+      <string>Rebote</string>
+    </key>
+    <key name="EGGY">
+      <string>Eggy</string>
+      <string>エッギー</string>
+      <string>에기</string>
+      <string>卵囊跳跳尸</string>
+      <string>Яичко</string>
+      <string>Eisack-Hüpfer</string>
+      <string>Huebote</string>
+    </key>
+    <key name="TAINTED_HOPPER">
+      <string>Tainted Hopper</string>
+      <string>テインティド ホッパー</string>
+      <string>더럽혀진 호퍼</string>
+      <string>堕化跳跳尸</string>
+      <string>Порченый Прыгун</string>
+      <string>Befleckter Hüpfer</string>
+      <string>Bote corrupto</string>
+    </key>
+    <key name="BOIL">
+      <string>Boil</string>
+      <string>ボイル</string>
+      <string>붉은 거미집</string>
+      <string>脓液囊</string>
+      <string>Нарыв</string>
+      <string>Beule</string>
+      <string>Bolo</string>
+    </key>
+    <key name="GUT">
+      <string>Gut</string>
+      <string>ガット</string>
+      <string>초록 거미집</string>
+      <string>吐根脓液囊</string>
+      <string>Кишка</string>
+      <string>Darm</string>
+      <string>Quimo</string>
+    </key>
+    <key name="SACK">
+      <string>Sack</string>
+      <string>サック</string>
+      <string>하얀 거미집</string>
+      <string>卵囊</string>
+      <string>Кокон</string>
+      <string>Sack</string>
+      <string>Quilo</string>
+    </key>
+    <key name="SPITTY">
+      <string>Spitty</string>
+      <string>スピッティ</string>
+      <string>스피티</string>
+      <string>吐血蝇蛆</string>
+      <string>Плевок</string>
+      <string>Spucki</string>
+      <string>Escupitajo</string>
+    </key>
+    <key name="TAINTED_SPITTY">
+      <string>Tainted Spitty</string>
+      <string>テインティド スピッティ</string>
+      <string>더럽혀진 스피티</string>
+      <string>堕化吐血蝇蛆</string>
+      <string>Порченый Плевок</string>
+      <string>Befleckter Spucki</string>
+      <string>Escupitajo corrupto</string>
+    </key>
+    <key name="BRAIN">
+      <string>Brain</string>
+      <string>ブレイン</string>
+      <string>브레인</string>
+      <string>脑子</string>
+      <string>Мозг</string>
+      <string>Hirn</string>
+      <string>Cerebro</string>
+    </key>
+    <key name="COAL">
+      <string>Coal</string>
+      <string>コール</string>
+      <string>석탄</string>
+      <string>火炭</string>
+      <string>Уголь</string>
+      <string>Kohle</string>
+      <string>Carbón</string>
+    </key>
+    <key name="LEAPER">
+      <string>Leaper</string>
+      <string>リーパー</string>
+      <string>곡예사</string>
+      <string>飞跃尸</string>
+      <string>Скакун</string>
+      <string>Springer</string>
+      <string>Brinco</string>
+    </key>
+    <key name="STICKY_LEAPER">
+      <string>Sticky Leaper</string>
+      <string>スティッキー リーパー</string>
+      <string>끈적한 곡예사</string>
+      <string>黏性飞跃尸</string>
+      <string>Вонючий Скакун</string>
+      <string>Klebriger Springer</string>
+      <string>Brinco pegajoso</string>
+    </key>
+    <key name="MR_MAW">
+      <string>Mr. Maw</string>
+      <string>Mr.モー</string>
+      <string>미스터 구렁텅이</string>
+      <string>大嘴头尸</string>
+      <string>Мистер Пасть</string>
+      <string>Mr. Schlund</string>
+      <string>Sr. Buche</string>
+    </key>
+    <key name="MR_MAW_HEAD">
+      <string>Mr. Maw Head</string>
+      <string>Mr.モー ヘッド</string>
+      <string>미스터 구렁텅이의 머리</string>
+      <string>大嘴头尸的头</string>
+      <string>Голова Мистера Пасть</string>
+      <string>Mr. Schlund - Kopf</string>
+      <string>Cabeza del Sr. Buche</string>
+    </key>
+    <key name="MR_RED_MAW">
+      <string>Mr. Red Maw</string>
+      <string>Mr.レッド モー</string>
+      <string>미스터 붉은 구렁텅이</string>
+      <string>红色大嘴头尸</string>
+      <string>Мистер Красная Пасть</string>
+      <string>Mr. Rotschlund</string>
+      <string>Sr. Buche Rojo</string>
+    </key>
+    <key name="MR_RED_MAW_HEAD">
+      <string>Mr. Red Maw Head</string>
+      <string>Mr.レッド モー ヘッド</string>
+      <string>미스터 붉은 구렁텅이의 머리</string>
+      <string>红色大嘴头尸的头</string>
+      <string>Голова Мистера Красная Пасть</string>
+      <string>Mr. Rotschlund - Kopf</string>
+      <string>Cabeza del Sr. Buche Rojo</string>
+    </key>
+    <key name="GURDY">
+      <string>Gurdy</string>
+      <string>ガーディ</string>
+      <string>거디</string>
+      <string>肉山</string>
+      <string>Герди</string>
+      <string>Gurdy</string>
+      <string>Organillo</string>
+    </key>
+    <key name="BABY">
+      <string>Baby</string>
+      <string>ベイビー</string>
+      <string>아기</string>
+      <string>宝宝</string>
+      <string>Малыш</string>
+      <string>Baby</string>
+      <string>Bebé</string>
+    </key>
+    <key name="ANGELIC_BABY">
+      <string>Angelic Baby</string>
+      <string>アンジェリック ベイビー</string>
+      <string>천사 같은 아기</string>
+      <string>天使宝宝</string>
+      <string>Ангелочек</string>
+      <string>Engelsbaby</string>
+      <string>Bebé angelical</string>
+    </key>
+    <key name="ULTRA_PRIDE_BABY">
+      <string>Ultra Pride Baby</string>
+      <string>ウルトラ プライド ベイビー</string>
+      <string>왕 교만의 아기</string>
+      <string>究极高傲宝宝</string>
+      <string>Малыш Ультра Гордыни</string>
+      <string>Ultra-Hochmut-Baby</string>
+      <string>Ultrasoberbia (bebé)</string>
+    </key>
+    <key name="WRINKLY_BABY">
+      <string>Wrinkly Baby</string>
+      <string>ウィンクリー ベイビー</string>
+      <string>쭈글쭈글한 아기</string>
+      <string>皱皮宝宝</string>
+      <string>Морщинистый Малыш</string>
+      <string>Faltiges Baby</string>
+      <string>Bebé arrugado</string>
+    </key>
+    <key name="VIS">
+      <string>Vis</string>
+      <string>ビス</string>
+      <string>비스</string>
+      <string>开膛怪</string>
+      <string>Пузо</string>
+      <string>Vis</string>
+      <string>Vis</string>
+    </key>
+    <key name="DOUBLE_VIS">
+      <string>Double Vis</string>
+      <string>ダブル ビス</string>
+      <string>더블 비스</string>
+      <string>双头开膛怪</string>
+      <string>Двойное Пузо</string>
+      <string>Doppel-Vis</string>
+      <string>Vis à Vis</string>
+    </key>
+    <key name="CHUBBER">
+      <string>Chubber</string>
+      <string>チャバー</string>
+      <string>처버</string>
+      <string>蛆虫开膛怪</string>
+      <string>Чаббер</string>
+      <string>Dicker</string>
+      <string>Vis à Tête</string>
+    </key>
+    <key name="SCARRED_DOUBLE_VIS">
+      <string>Scarred Double Vis</string>
+      <string>スカード ダブル ビス</string>
+      <string>상처난 더블 비스</string>
+      <string>结痂开膛怪</string>
+      <string>Шрамированное Двойное Пузо</string>
+      <string>Vernarbter Doppel-Vis</string>
+      <string>Vis à Vis desfigurado</string>
+    </key>
+    <key name="GUTS">
+      <string>Guts</string>
+      <string>ガッツ</string>
+      <string>내장</string>
+      <string>脏团</string>
+      <string>Кишки</string>
+      <string>Darmi</string>
+      <string>Tripas</string>
+    </key>
+    <key name="SCARRED_GUTS">
+      <string>Scarred Guts</string>
+      <string>スカード ガッツ</string>
+      <string>상처난 내장</string>
+      <string>结痂脏团</string>
+      <string>Шрамированные Кишки</string>
+      <string>Vernarbter Darmi</string>
+      <string>Tripas desfiguradas</string>
+    </key>
+    <key name="SLOG">
+      <string>Slog</string>
+      <string>スラッグ</string>
+      <string>슬로그</string>
+      <string>沥青脏团</string>
+      <string>Рывок</string>
+      <string>Klebriger Darmi</string>
+      <string>Tripóstumas</string>
+    </key>
+    <key name="KNIGHT">
+      <string>Knight</string>
+      <string>ナイト</string>
+      <string>나이트</string>
+      <string>假面骑士</string>
+      <string>Рыцарь</string>
+      <string>Ritter</string>
+      <string>Caballero</string>
+    </key>
+    <key name="SELFLESS_KNIGHT">
+      <string>Selfless Knight</string>
+      <string>セルフレス ナイト</string>
+      <string>이타적인 나이트</string>
+      <string>忘我骑士</string>
+      <string>Доблестный Рыцарь</string>
+      <string>Selbstloser Ritter</string>
+      <string>Caballero ecuánime</string>
+    </key>
+    <key name="LOOSE_KNIGHT">
+      <string>Loose Knight</string>
+      <string>ルーズ ナイト</string>
+      <string>헐거운 나이트</string>
+      <string>漏脑骑士</string>
+      <string>Рыхлый Рыцарь</string>
+      <string>Lässiger Ritter</string>
+      <string>Caballero holgado</string>
+    </key>
+    <key name="BRAINLESS_KNIGHT">
+      <string>Brainless Knight</string>
+      <string>ブレインレス ナイト</string>
+      <string>무뇌 나이트</string>
+      <string>无脑骑士</string>
+      <string>Безмозглый Рыцарь</string>
+      <string>Hirnloser Ritter</string>
+      <string>Caballero descerebrado</string>
+    </key>
+    <key name="BLACK_KNIGHT">
+      <string>Black Knight</string>
+      <string>ブラック ナイト</string>
+      <string>블랙 나이트</string>
+      <string>黑骑士</string>
+      <string>Черный Рыцарь</string>
+      <string>Schwarzer Ritter</string>
+      <string>Caballero oscuro</string>
+    </key>
+    <key name="STONE_GRIMACE">
+      <string>Stone Grimace</string>
+      <string>ストーン グリメス</string>
+      <string>찡그린 바위</string>
+      <string>石像头</string>
+      <string>Каменная Гримаса</string>
+      <string>Steingrimasse</string>
+      <string>Mueca pétrea</string>
+    </key>
+    <key name="VOMIT_GRIMACE">
+      <string>Vomit Grimace</string>
+      <string>ゲロゲロ グリメス</string>
+      <string>찡그린 바위</string>
+      <string>吐根石像头</string>
+      <string>Рвотная Гримаса</string>
+      <string>Kotzgrimasse</string>
+      <string>Mueca vomitiva</string>
+    </key>
+    <key name="TRIPLE_GRIMACE">
+      <string>Triple Grimace</string>
+      <string>トリプル グリメス</string>
+      <string>찡그린 세 눈</string>
+      <string>三线石像头</string>
+      <string>Тройная Гримаса</string>
+      <string>Dreifache Grimasse</string>
+      <string>Mueca triple</string>
+    </key>
+    <key name="MONSTRO_II">
+      <string>Monstro II</string>
+      <string>モンストロＩＩ</string>
+      <string>몬스트로 2</string>
+      <string>萌死戳II</string>
+      <string>Монстро II</string>
+      <string>Monstro II</string>
+      <string>Monstro II</string>
+    </key>
+    <key name="GISH">
+      <string>Gish</string>
+      <string>ギシ</string>
+      <string>기쉬</string>
+      <string>吉什</string>
+      <string>Клякса</string>
+      <string>Gish</string>
+      <string>Gish</string>
+    </key>
+    <key name="POKY">
+      <string>Poky</string>
+      <string>ポキ</string>
+      <string>포키</string>
+      <string>刺块</string>
+      <string>Тыкалка</string>
+      <string>Stachi</string>
+      <string>Espinas</string>
+    </key>
+    <key name="SLIDE">
+      <string>Slide</string>
+      <string>スライド</string>
+      <string>슬라이드</string>
+      <string>滑刺块</string>
+      <string>Ползун</string>
+      <string>Rutscher</string>
+      <string>Púas</string>
+    </key>
+    <key name="MOM">
+      <string>Mom</string>
+      <string>ママ</string>
+      <string>엄마</string>
+      <string>老妈</string>
+      <string>Мама</string>
+      <string>Mama</string>
+      <string>Mamá</string>
+    </key>
+    <key name="SLOTH">
+      <string>Sloth</string>
+      <string>スロス</string>
+      <string>나태</string>
+      <string>懒惰</string>
+      <string>Лень</string>
+      <string>Faulheit</string>
+      <string>Pereza</string>
+    </key>
+    <key name="SUPER_SLOTH">
+      <string>Super Sloth</string>
+      <string>スーパー スロス</string>
+      <string>초 나태</string>
+      <string>超级懒惰</string>
+      <string>Супер Лень</string>
+      <string>Super-Faulheit</string>
+      <string>Superpereza</string>
+    </key>
+    <key name="ULTRA_PRIDE">
+      <string>Ultra Pride</string>
+      <string>ウルトラ プライド</string>
+      <string>왕 교만</string>
+      <string>究极高傲</string>
+      <string>Ультра Гордыня</string>
+      <string>Ultra-Hochmut</string>
+      <string>Ultrasoberbia</string>
+    </key>
+    <key name="LUST">
+      <string>Lust</string>
+      <string>ラスト</string>
+      <string>성욕</string>
+      <string>色欲</string>
+      <string>Похоть</string>
+      <string>Wollust</string>
+      <string>Lujuria</string>
+    </key>
+    <key name="SUPER_LUST">
+      <string>Super Lust</string>
+      <string>スーパー ラスト</string>
+      <string>초 성욕</string>
+      <string>超级色欲</string>
+      <string>Супер Похоть</string>
+      <string>Super-Wollust</string>
+      <string>Superlujuria</string>
+    </key>
+    <key name="WRATH">
+      <string>Wrath</string>
+      <string>ラース</string>
+      <string>분노</string>
+      <string>愤怒</string>
+      <string>Гнев</string>
+      <string>Zorn</string>
+      <string>Ira</string>
+    </key>
+    <key name="SUPER_WRATH">
+      <string>Super Wrath</string>
+      <string>スーパー ラース</string>
+      <string>초 분노</string>
+      <string>超级愤怒</string>
+      <string>Супер Гнев</string>
+      <string>Super-Zorn</string>
+      <string>Superira</string>
+    </key>
+    <key name="GLUTTONY">
+      <string>Gluttony</string>
+      <string>グラットニー</string>
+      <string>대식</string>
+      <string>暴食</string>
+      <string>Чревоугодие</string>
+      <string>Völlerei</string>
+      <string>Gula</string>
+    </key>
+    <key name="SUPER_GLUTTONY">
+      <string>Super Gluttony</string>
+      <string>スーパー グラットニー</string>
+      <string>초 대식</string>
+      <string>超级暴食</string>
+      <string>Супер Чревоугодие</string>
+      <string>Super-Völlerei</string>
+      <string>Supergula</string>
+    </key>
+    <key name="GREED">
+      <string>Greed</string>
+      <string>グリード</string>
+      <string>탐욕</string>
+      <string>贪婪</string>
+      <string>Алчность</string>
+      <string>Gier</string>
+      <string>Avaricia</string>
+    </key>
+    <key name="SUPER_GREED">
+      <string>Super Greed</string>
+      <string>スーパー グリード</string>
+      <string>초 탐욕</string>
+      <string>超级贪婪</string>
+      <string>Супер Алчность</string>
+      <string>Super-Gier</string>
+      <string>Superavaricia</string>
+    </key>
+    <key name="ENVY">
+      <string>Envy</string>
+      <string>エンヴィー</string>
+      <string>질투</string>
+      <string>嫉妒</string>
+      <string>Зависть</string>
+      <string>Neid</string>
+      <string>Envidia</string>
+    </key>
+    <key name="SUPER_ENVY">
+      <string>Super Envy</string>
+      <string>スーパー エンヴィー</string>
+      <string>초 질투</string>
+      <string>超级嫉妒</string>
+      <string>Супер Зависть</string>
+      <string>Super-Neid</string>
+      <string>Superenvidia</string>
+    </key>
+    <key name="PRIDE">
+      <string>Pride</string>
+      <string>プライド</string>
+      <string>교만</string>
+      <string>高傲</string>
+      <string>Гордыня</string>
+      <string>Hochmut</string>
+      <string>Soberbia</string>
+    </key>
+    <key name="SUPER_PRIDE">
+      <string>Super Pride</string>
+      <string>スーパー プライド</string>
+      <string>초 교만</string>
+      <string>超级高傲</string>
+      <string>Супер Гордыня</string>
+      <string>Super-Hochmut</string>
+      <string>Supersoberbia</string>
+    </key>
+    <key name="DOPLE">
+      <string>Dople</string>
+      <string>ドッペル</string>
+      <string>도플</string>
+      <string>分身</string>
+      <string>Двойник</string>
+      <string>Doppel</string>
+      <string>Doble</string>
+    </key>
+    <key name="EVIL_TWIN">
+      <string>Evil Twin</string>
+      <string>エビル ツイン</string>
+      <string>사악한 쌍둥이</string>
+      <string>邪恶分身</string>
+      <string>Злой Близнец</string>
+      <string>Böser Zwilling</string>
+      <string>Gemelo malvado</string>
+    </key>
+    <key name="FLAMING_HOPPER">
+      <string>Flaming Hopper</string>
+      <string>フレイミング ホッパー</string>
+      <string>불타는 호퍼</string>
+      <string>火焰跳跳尸</string>
+      <string>Горящий Прыгун</string>
+      <string>Flammender Hüpfer</string>
+      <string>Bote ígneo</string>
+    </key>
+    <key name="LEECH">
+      <string>Leech</string>
+      <string>リーチ</string>
+      <string>거머리</string>
+      <string>水蛭</string>
+      <string>Пиявка</string>
+      <string>Blutegel</string>
+      <string>Sanguijuela</string>
+    </key>
+    <key name="KAMIKAZE_LEECH">
+      <string>Kamikaze Leech</string>
+      <string>カミカゼ リーチ</string>
+      <string>가미카제 거머리</string>
+      <string>神风水蛭</string>
+      <string>Пиявка-Камикадзе</string>
+      <string>Kamikaze-Blutegel</string>
+      <string>Sanguijuela suicida</string>
+    </key>
+    <key name="HOLY_LEECH">
+      <string>Holy Leech</string>
+      <string>ホーリー リーチ</string>
+      <string>신성한 거머리</string>
+      <string>神圣水蛭</string>
+      <string>Святая Пиявка</string>
+      <string>Heiliger Blutegel</string>
+      <string>Sanguijuela sagrada</string>
+    </key>
+    <key name="LUMP">
+      <string>Lump</string>
+      <string>ランプ</string>
+      <string>응어리</string>
+      <string>肿块</string>
+      <string>Шишка</string>
+      <string>Geschwulst</string>
+      <string>Bulto</string>
+    </key>
+    <key name="MEMBRAIN">
+      <string>MemBrain</string>
+      <string>メムブレイン</string>
+      <string>멤브레인</string>
+      <string>大脑</string>
+      <string>Мегамозг</string>
+      <string>Mem-Brägen</string>
+      <string>Membraña</string>
+    </key>
+    <key name="MAMA_GUTS">
+      <string>Mama Guts</string>
+      <string>ママ ガッツ</string>
+      <string>엄마의 내장</string>
+      <string>大脏团</string>
+      <string>Мамины Кишки</string>
+      <string>Mama-Gedärm</string>
+      <string>Mamá Agallas</string>
+    </key>
+    <key name="DEAD_MEAT">
+      <string>Dead Meat</string>
+      <string>デッド ガッツ</string>
+      <string>죽은 고기</string>
+      <string>腐烂脏团</string>
+      <string>Мертвечина</string>
+      <string>Totes Fleisch</string>
+      <string>Carne muerta</string>
+    </key>
+    <key name="PARABITE">
+      <string>Para-Bite</string>
+      <string>パラバイト</string>
+      <string>파라바이트</string>
+      <string>咬咬虫</string>
+      <string>Кусака</string>
+      <string>Para-Biss</string>
+      <string>Picásito</string>
+    </key>
+    <key name="SCARRED_PARABITE">
+      <string>Scarred Para-Bite</string>
+      <string>スカード パラバイト</string>
+      <string>상처난 파라바이트</string>
+      <string>结痂咬咬虫</string>
+      <string>Шрамированный Кусака</string>
+      <string>Vernarbter Para-Biss</string>
+      <string>Picásito desfigurado</string>
+    </key>
+    <key name="FRED">
+      <string>Fred</string>
+      <string>フレッド</string>
+      <string>프레드</string>
+      <string>弗莱德</string>
+      <string>Фрэд</string>
+      <string>Fred</string>
+      <string>Fred</string>
+    </key>
+    <key name="EYE">
+      <string>Eye</string>
+      <string>アイ</string>
+      <string>눈</string>
+      <string>眼睛</string>
+      <string>Око</string>
+      <string>Auge</string>
+      <string>Ojo</string>
+    </key>
+    <key name="BLOODSHOT_EYE">
+      <string>Bloodshot Eye</string>
+      <string>ブラッディショット アイ</string>
+      <string>충혈된 눈</string>
+      <string>血丝眼</string>
+      <string>Кровавое Око</string>
+      <string>Blutunterlaufenes Auge</string>
+      <string>Ojo inyectado</string>
+    </key>
+    <key name="HOLY_EYE">
+      <string>Holy Eye</string>
+      <string>ホーリー アイ</string>
+      <string>신성한 눈</string>
+      <string>圣眼</string>
+      <string>Святое Око</string>
+      <string>Heiliges Auge</string>
+      <string>Ojo sagrado</string>
+    </key>
+    <key name="SUCKER">
+      <string>Sucker</string>
+      <string>サッカー</string>
+      <string>따라오는 파리</string>
+      <string>吸血蚊</string>
+      <string>Кровосос</string>
+      <string>Sauger</string>
+      <string>Chupóptera</string>
+    </key>
+    <key name="SPIT">
+      <string>Spit</string>
+      <string>スピット</string>
+      <string>침뱉는 파리</string>
+      <string>吐根吸血蚊</string>
+      <string>Плевун</string>
+      <string>Spucker</string>
+      <string>Escupidera</string>
+    </key>
+    <key name="SOUL_SUCKER">
+      <string>Soul Sucker</string>
+      <string>ソウル サッカー</string>
+      <string>영혼 따라오는 파리</string>
+      <string>吸魂蚊</string>
+      <string>Паразит Души</string>
+      <string>Seelensauger</string>
+      <string>Chupóptera de almas</string>
+    </key>
+    <key name="INK">
+      <string>Ink</string>
+      <string>インク</string>
+      <string>따라오는 먹물 파리</string>
+      <string>吸墨蚊</string>
+      <string>Чернило</string>
+      <string>Tintensauger</string>
+      <string>Tinta</string>
+    </key>
+    <key name="MAMA_FLY">
+      <string>Mama Fly</string>
+      <string>ママ フライ</string>
+      <string>엄마 파리</string>
+      <string>母体苍蝇</string>
+      <string>Мама Муха</string>
+      <string>Mama-Fliege</string>
+      <string>Mamá Mosca</string>
+    </key>
+    <key name="BULB">
+      <string>Bulb</string>
+      <string>バルブ</string>
+      <string>전구</string>
+      <string>吸电蚊</string>
+      <string>Лампочка</string>
+      <string>Glühfliege</string>
+      <string>Bombilla</string>
+    </key>
+    <key name="BLOODFLY">
+      <string>Bloodfly</string>
+      <string>ブラッディフライ</string>
+      <string>핏빛 파리</string>
+      <string>嗜血蚊</string>
+      <string>Кровопийца</string>
+      <string>Blutfliege</string>
+      <string>Mosca de sangre</string>
+    </key>
+    <key name="TAINTED_SUCKER">
+      <string>Tainted Sucker</string>
+      <string>テインティド サッカー</string>
+      <string>더럽혀진 따라오는 파리</string>
+      <string>堕化吸血蚊</string>
+      <string>Порченый Кровосос</string>
+      <string>Befleckter Sauger</string>
+      <string>Chupóptera corrupta</string>
+    </key>
+    <key name="PIN">
+      <string>Pin</string>
+      <string>ピン</string>
+      <string>핀</string>
+      <string>钉头虫</string>
+      <string>Пин</string>
+      <string>Stecknadel</string>
+      <string>Lombrija</string>
+    </key>
+    <key name="SCOLEX">
+      <string>Scolex</string>
+      <string>スコレックス</string>
+      <string>두절</string>
+      <string>头节虫</string>
+      <string>Сколекс</string>
+      <string>Scolex</string>
+      <string>Escólex</string>
+    </key>
+    <key name="THE_FRAIL">
+      <string>The Frail</string>
+      <string>ザ フレイル</string>
+      <string>노쇠</string>
+      <string>脆皮虫</string>
+      <string>Хрупкий</string>
+      <string>Der Gebrechliche</string>
+      <string>El Endeble</string>
+    </key>
+    <key name="WORMWOOD">
+      <string>Wormwood</string>
+      <string>ニガヨモギ</string>
+      <string>웜우드</string>
+      <string>茵陈</string>
+      <string>Горечь</string>
+      <string>Wermut</string>
+      <string>Ajenjo</string>
+    </key>
+    <key name="FAMINE">
+      <string>Famine</string>
+      <string>ファミン</string>
+      <string>기근</string>
+      <string>饥荒骑士</string>
+      <string>Голод</string>
+      <string>Hungersnot</string>
+      <string>Hambre</string>
+    </key>
+    <key name="PESTILENCE">
+      <string>Pestilence</string>
+      <string>ペステレンス</string>
+      <string>역병</string>
+      <string>瘟疫骑士</string>
+      <string>Чума</string>
+      <string>Pestilenz</string>
+      <string>Pestilencia</string>
+    </key>
+    <key name="WAR">
+      <string>War</string>
+      <string>ウォー</string>
+      <string>전쟁</string>
+      <string>战争骑士</string>
+      <string>Война</string>
+      <string>Krieg</string>
+      <string>Guerra</string>
+    </key>
+    <key name="CONQUEST">
+      <string>Conquest</string>
+      <string>コンクエスト</string>
+      <string>정복</string>
+      <string>征服骑士</string>
+      <string>Завоеватель</string>
+      <string>Eroberung</string>
+      <string>Conquista</string>
+    </key>
+    <key name="DEATH">
+      <string>Death</string>
+      <string>デス</string>
+      <string>죽음</string>
+      <string>死亡骑士</string>
+      <string>Смерть</string>
+      <string>Tod</string>
+      <string>Muerte</string>
+    </key>
+    <key name="THE_DUKE_OF_FLIES">
+      <string>The Duke of Flies</string>
+      <string>デューク オブ フライズ</string>
+      <string>파리 공작</string>
+      <string>苍蝇公爵</string>
+      <string>Герцог Мух</string>
+      <string>Der Herzog der Fliegen</string>
+      <string>El Duque de las moscas</string>
+    </key>
+    <key name="THE_HUSK">
+      <string>The Husk</string>
+      <string>ザ ハスク</string>
+      <string>겉껍질</string>
+      <string>尸壳</string>
+      <string>Скорлупа</string>
+      <string>Die Hülle</string>
+      <string>La Costra</string>
+    </key>
+    <key name="PEEP">
+      <string>Peep</string>
+      <string>ピープ</string>
+      <string>오줌보</string>
+      <string>嘘嘘怪</string>
+      <string>Пип</string>
+      <string>Pipi</string>
+      <string>Pipí</string>
+    </key>
+    <key name="THE_BLOAT">
+      <string>The Bloat</string>
+      <string>ザ ブロート</string>
+      <string>고창증</string>
+      <string>充血怪</string>
+      <string>Раздутый</string>
+      <string>Der Aufgeblähte</string>
+      <string>La Masa</string>
+    </key>
+    <key name="LOKI">
+      <string>Loki</string>
+      <string>ロキ</string>
+      <string>로키</string>
+      <string>洛基</string>
+      <string>Локи</string>
+      <string>Loki</string>
+      <string>Loki</string>
+    </key>
+    <key name="LOKII">
+      <string>Lokii</string>
+      <string>ロキー</string>
+      <string>로키이</string>
+      <string>分身洛基</string>
+      <string>Локии</string>
+      <string>Lokii</string>
+      <string>Lokii</string>
+    </key>
+    <key name="FISTULA">
+      <string>Fistula</string>
+      <string>フィステューラ</string>
+      <string>누공</string>
+      <string>瘘管团</string>
+      <string>Фистула</string>
+      <string>Fistel</string>
+      <string>Fístula</string>
+    </key>
+    <key name="TERATOMA">
+      <string>Teratoma</string>
+      <string>テラトーマ</string>
+      <string>테라토마</string>
+      <string>畸胎瘤</string>
+      <string>Тератома</string>
+      <string>Teratom</string>
+      <string>Teratoma</string>
+    </key>
+    <key name="BLASTOCYST">
+      <string>Blastocyst</string>
+      <string>ブラストシスト</string>
+      <string>배반포</string>
+      <string>囊胚</string>
+      <string>Бластоциста</string>
+      <string>Blastozyste</string>
+      <string>Blastocisto</string>
+    </key>
+    <key name="EMBRYO">
+      <string>Embryo</string>
+      <string>エンブリオ</string>
+      <string>배아</string>
+      <string>胚胎</string>
+      <string>Эмбрион</string>
+      <string>Embryo</string>
+      <string>Embrión</string>
+    </key>
+    <key name="MOMS_HEART">
+      <string>Mom's Heart</string>
+      <string>ママの心臓</string>
+      <string>엄마의 심장</string>
+      <string>老妈的心脏</string>
+      <string>Сердце Мамы</string>
+      <string>Mamas Herz</string>
+      <string>Corazón de Mamá</string>
+    </key>
+    <key name="IT_LIVES">
+      <string>It Lives</string>
+      <string>イット リブズ</string>
+      <string>핏덩이</string>
+      <string>它还活着</string>
+      <string>Оно Живое</string>
+      <string>Es lebt</string>
+      <string>¡Está vivo!</string>
+    </key>
+    <key name="MOMS_GUTS">
+      <string>Moms Guts</string>
+      <string>ママの内臓</string>
+      <string>엄마의 내장</string>
+      <string />
+      <string>Мамины Кишки</string>
+      <string>Mamas Gedärm</string>
+      <string>Agallas de Mamá</string>
+    </key>
+    <key name="GEMINI">
+      <string>Gemini</string>
+      <string>ジェミニ</string>
+      <string>쌍둥이</string>
+      <string>连体双子</string>
+      <string>Близнецы</string>
+      <string>Zwillinge</string>
+      <string>Géminis</string>
+    </key>
+    <key name="STEVEN">
+      <string>Steven</string>
+      <string>スティーブン</string>
+      <string>스티븐</string>
+      <string>史蒂文</string>
+      <string>Стивен</string>
+      <string>Steven</string>
+      <string>Steven</string>
+    </key>
+    <key name="THE_BLIGHTED_OVUM">
+      <string>The Blighted Ovum</string>
+      <string>ブライテド オーブム</string>
+      <string>계류유산</string>
+      <string>凋零双子</string>
+      <string>Скверноплод</string>
+      <string>Die verdorbene Eizelle</string>
+      <string>El Óvulo marchito</string>
+    </key>
+    <key name="GEMINI_BABY">
+      <string>Gemini Baby</string>
+      <string>ジェミナイ ベイビー</string>
+      <string>쌍자궁 아기</string>
+      <string>双子宝宝</string>
+      <string>Малыш Близнец</string>
+      <string>Zwillinge-Baby</string>
+      <string>Géminis (bebé)</string>
+    </key>
+    <key name="STEVEN_BABY">
+      <string>Steven Baby</string>
+      <string>スティーブン ベイビー</string>
+      <string>스티븐 아기</string>
+      <string>史蒂文宝宝</string>
+      <string>Малыш Стивен</string>
+      <string>Steven-Baby</string>
+      <string>Steven (bebé)</string>
+    </key>
+    <key name="THE_BLIGHTED_OVUM_BABY">
+      <string>The Blighted Ovum Baby</string>
+      <string>ブライテド オーブム ベイビー</string>
+      <string>계류유산 아기</string>
+      <string>凋零双子宝宝</string>
+      <string>Малыш Скверноплод</string>
+      <string>Die verdorbene Eizelle - Baby</string>
+      <string>El Óvulo marchito (bebé)</string>
+    </key>
+    <key name="MOTER">
+      <string>Moter</string>
+      <string>モーター</string>
+      <string>모터 파리</string>
+      <string>连体苍蝇</string>
+      <string>Парная Муха</string>
+      <string>Motter</string>
+      <string>Moter</string>
+    </key>
+    <key name="THE_FALLEN">
+      <string>The Fallen</string>
+      <string>ザ フォーレン</string>
+      <string>타락한 자</string>
+      <string>堕落恶魔</string>
+      <string>Падший</string>
+      <string>Der Gefallene</string>
+      <string>El Caído</string>
+    </key>
+    <key name="KRAMPUS">
+      <string>Krampus</string>
+      <string>クランプス</string>
+      <string>크람푸스</string>
+      <string>坎卜斯</string>
+      <string>Крампус</string>
+      <string>Krampus</string>
+      <string>Krampus</string>
+    </key>
+    <key name="HEADLESS_HORSEMAN">
+      <string>Headless Horseman</string>
+      <string>ヘッドレス ホースマン</string>
+      <string>머리없는 기마병</string>
+      <string>无头骑士</string>
+      <string>Всадник без головы</string>
+      <string>Kopfloser Reiter</string>
+      <string>Jinete sin cabeza</string>
+    </key>
+    <key name="HEADLESS_HORSEMANS_HEAD">
+      <string>Headless Horseman's Head</string>
+      <string>ヘッドレス ホースマン ヘッド</string>
+      <string>머리없는 기마병의 머리</string>
+      <string>无头骑士的头</string>
+      <string>Голова Всадника без головы</string>
+      <string>Kopfloser Reiter - Kopf</string>
+      <string>Cabeza de Jinete sin cabeza</string>
+    </key>
+    <key name="SATAN">
+      <string>Satan</string>
+      <string>サタン</string>
+      <string>사탄</string>
+      <string>撒但</string>
+      <string>Сатана</string>
+      <string>Satan</string>
+      <string>Satanás</string>
+    </key>
+    <key name="SPIDER">
+      <string>Spider</string>
+      <string>スパイダー</string>
+      <string>거미</string>
+      <string>蜘蛛</string>
+      <string>Паук</string>
+      <string>Spinne</string>
+      <string>Araña</string>
+    </key>
+    <key name="KEEPER">
+      <string>Keeper</string>
+      <string>キーパー</string>
+      <string>키퍼</string>
+      <string>店主</string>
+      <string>Хранитель</string>
+      <string>Hüter</string>
+      <string>Custodio</string>
+    </key>
+    <key name="GURGLE">
+      <string>Gurgle</string>
+      <string>ガーグル</string>
+      <string>가글</string>
+      <string>吐根尸</string>
+      <string>Хрипун</string>
+      <string>Gurgler</string>
+      <string>Gorgoteo</string>
+    </key>
+    <key name="CRACKLE">
+      <string>Crackle</string>
+      <string>クラックル</string>
+      <string>크래클</string>
+      <string>吐火尸</string>
+      <string>Трескун</string>
+      <string>Prassler</string>
+      <string>Crujido</string>
+    </key>
+    <key name="WALKING_BOIL">
+      <string>Walking Boil</string>
+      <string>ウォーキング ボイル</string>
+      <string>걸어다니는 붉은 거미집</string>
+      <string>行走脓液囊</string>
+      <string>Ходячий Нарыв</string>
+      <string>Laufende Beule</string>
+      <string>Bolo caminante</string>
+    </key>
+    <key name="WALKING_GUT">
+      <string>Walking Gut</string>
+      <string>ウォーキング ガット</string>
+      <string>걸어다니는 초록 거미집</string>
+      <string>行走吐根脓液囊</string>
+      <string>Ходячая Кишка</string>
+      <string>Laufender Darm</string>
+      <string>Quimo caminante</string>
+    </key>
+    <key name="WALKING_SACK">
+      <string>Walking Sack</string>
+      <string>ウォーキング サック</string>
+      <string>걸어다니는 하얀 거미집</string>
+      <string>行走卵囊</string>
+      <string>Ходячий Кокон</string>
+      <string>Laufender Sack</string>
+      <string>Quilo caminante</string>
+    </key>
+    <key name="BUTTLICKER">
+      <string>Buttlicker</string>
+      <string>バットリッカー</string>
+      <string>버트리커</string>
+      <string>跟屁虫</string>
+      <string>Жополиз</string>
+      <string>Popolecker</string>
+      <string>Lameculos</string>
+    </key>
+    <key name="HANGER">
+      <string>Hanger</string>
+      <string>ハンガー</string>
+      <string>매달린 자</string>
+      <string>上吊店主</string>
+      <string>Висельник</string>
+      <string>Hänger</string>
+      <string>Colgado</string>
+    </key>
+    <key name="SWARMER">
+      <string>Swarmer</string>
+      <string>スウォーマー</string>
+      <string>파리군주</string>
+      <string>蝇团</string>
+      <string>Рой</string>
+      <string>Schwärmer</string>
+      <string>Enjambrador</string>
+    </key>
+    <key name="HEART">
+      <string>Heart</string>
+      <string>心臓</string>
+      <string>심장</string>
+      <string>心脏</string>
+      <string>Сердце</string>
+      <string>Herz</string>
+      <string>Corazón</string>
+    </key>
+    <key name="HALF_HEART">
+      <string>1/2 Heart</string>
+      <string>ハーフ心臓</string>
+      <string>1/2 심장</string>
+      <string>半边心脏</string>
+      <string>1/2 Сердца</string>
+      <string>1/2 Herz</string>
+      <string>Medio corazón</string>
+    </key>
+    <key name="HALF_HEART">
+      <string>1/2 Heart</string>
+      <string>ハーフ心臓</string>
+      <string>1/2 심장</string>
+      <string>半边心脏</string>
+      <string>1/2 Сердца</string>
+      <string>1/2 Herz</string>
+      <string>Medio corazón</string>
+    </key>
+    <key name="MASK">
+      <string>Mask</string>
+      <string>マスク</string>
+      <string>가면</string>
+      <string>假面</string>
+      <string>Маска</string>
+      <string>Maske</string>
+      <string>Máscara</string>
+    </key>
+    <key name="MASK_II">
+      <string>Mask II</string>
+      <string>マスクⅡ</string>
+      <string>가면 II</string>
+      <string>假面II</string>
+      <string>Маска 2</string>
+      <string>Maske II</string>
+      <string>Máscara II</string>
+    </key>
+    <key name="BIG_SPIDER">
+      <string>Big Spider</string>
+      <string>ビッグ スパイダー</string>
+      <string>큰거미</string>
+      <string>大蜘蛛</string>
+      <string>Большой Паук</string>
+      <string>Große Spinne</string>
+      <string>Araña mayor</string>
+    </key>
+    <key name="ETERNAL_FLY">
+      <string>Eternal Fly</string>
+      <string>エターナル フライ</string>
+      <string>영원한 파리</string>
+      <string>永恒苍蝇</string>
+      <string>Вечная Муха</string>
+      <string>Ewige Fliege</string>
+      <string>Mosca eterna</string>
+    </key>
+    <key name="MASK_OF_INFAMY">
+      <string>Mask of Infamy</string>
+      <string>マスク オブ インファミー</string>
+      <string>악명 높은 가면</string>
+      <string>耻辱假面</string>
+      <string>Маска Позора</string>
+      <string>Maske der Schande</string>
+      <string>Máscara de Infamia</string>
+    </key>
+    <key name="HEART_OF_INFAMY">
+      <string>Heart of Infamy</string>
+      <string>ハート オブ インファミー</string>
+      <string>악명 높은 심장</string>
+      <string>耻辱之心</string>
+      <string>Сердце Позора</string>
+      <string>Herz der Schande</string>
+      <string>Corazón de Infamia</string>
+    </key>
+    <key name="GURDY_JR">
+      <string>Gurdy Jr.</string>
+      <string>ガーディJr.</string>
+      <string>거디 주니어.</string>
+      <string>小肉山</string>
+      <string>Герди Мл.</string>
+      <string>Gurdy Jr.</string>
+      <string>Organillo Hijo</string>
+    </key>
+    <key name="WIDOW">
+      <string>Widow</string>
+      <string>ウィドー</string>
+      <string>과부</string>
+      <string>灰寡妇蛛</string>
+      <string>Вдова</string>
+      <string>Witwe</string>
+      <string>Viuda</string>
+    </key>
+    <key name="THE_WRETCHED">
+      <string>The Wretched</string>
+      <string>ザ レチェッド</string>
+      <string>흉물</string>
+      <string>伤痕寡妇蛛</string>
+      <string>Гнусная</string>
+      <string>Der Elende</string>
+      <string>El Condenado</string>
+    </key>
+    <key name="DADDY_LONG_LEGS">
+      <string>Daddy Long Legs</string>
+      <string>ダディー ロング レッグズ</string>
+      <string>장님 거미</string>
+      <string>父体长腿蛛</string>
+      <string>Длинноногий папочка</string>
+      <string>Papi Langbein</string>
+      <string>Papi Piernaslargas</string>
+    </key>
+    <key name="TRIACHNID">
+      <string>Triachnid</string>
+      <string>トライアクニッド</string>
+      <string>세다리 거미</string>
+      <string>三腿蜘蛛</string>
+      <string>Триахнид</string>
+      <string>Tri-Arachnid</string>
+      <string>Triácnido</string>
+    </key>
+    <key name="ISAAC">
+      <string>Isaac</string>
+      <string>アイザック</string>
+      <string>아이작</string>
+      <string>以撒</string>
+      <string>Исаак</string>
+      <string>Isaac</string>
+      <string>Isaac</string>
+    </key>
+    <key name="BLUEBABY">
+      <string>???</string>
+      <string>???</string>
+      <string>???</string>
+      <string>？？？</string>
+      <string>???</string>
+      <string>???</string>
+      <string>???</string>
+    </key>
+    <key name="STONE_EYE">
+      <string>Stone Eye</string>
+      <string>ストーン アイ</string>
+      <string>석화된 눈</string>
+      <string>石眼</string>
+      <string>Каменное Око</string>
+      <string>Steinauge</string>
+      <string>Ojo pétreo</string>
+    </key>
+    <key name="CONSTANT_STONE_SHOOTER">
+      <string>Constant Stone Shooter</string>
+      <string>コンスタント ストーン シューター</string>
+      <string>연사하는 돌머리</string>
+      <string>连发石像射手</string>
+      <string>Каменный Стрелок</string>
+      <string>Dauer-Steinwerfer</string>
+      <string>Lanzarrocas tenaz</string>
+    </key>
+    <key name="CROSS_STONE_SHOOTER">
+      <string>Cross Stone Shooter</string>
+      <string>クロス ストーン シューター</string>
+      <string>십자 돌머리</string>
+      <string>十字石像射手</string>
+      <string>Перекрестный Каменный Стрелок</string>
+      <string>Kreuz-Steinwerfer</string>
+      <string>Lanzarrocas cruzado</string>
+    </key>
+    <key name="CROSS_STONE_SHOOTER">
+      <string>Cross Stone Shooter</string>
+      <string>クロス ストーン シューター</string>
+      <string>십자 돌머리</string>
+      <string>十字石像射手</string>
+      <string>Перекрестный Каменный Стрелок</string>
+      <string>Kreuz-Steinwerfer</string>
+      <string>Lanzarrocas cruzado</string>
+    </key>
+    <key name="BRIMSTONE_HEAD">
+      <string>Brimstone Head</string>
+      <string>ブリムストーン ヘッド</string>
+      <string>유황 머리</string>
+      <string>硫磺石像射手</string>
+      <string>Серная Голова</string>
+      <string>Schwefelkopf</string>
+      <string>Cabeza de azufre</string>
+    </key>
+    <key name="MOBILE_HOST">
+      <string>Mobile Host</string>
+      <string>モバイル ホスト</string>
+      <string>모바일 호스트</string>
+      <string>行走寄居骷髅</string>
+      <string>Мобильный Наблюдатель</string>
+      <string>Mobiler Wirt</string>
+      <string>Huésped móvil</string>
+    </key>
+    <key name="NEST">
+      <string>Nest</string>
+      <string>ネスト</string>
+      <string>둥지</string>
+      <string>蜘蛛巢</string>
+      <string>Гнездо</string>
+      <string>Nest</string>
+      <string>Nido</string>
+    </key>
+    <key name="BABY_LONG_LEGS">
+      <string>Baby Long Legs</string>
+      <string>ベビー ロング レッグズ</string>
+      <string>키다리 아기</string>
+      <string>生崽长腿蛛</string>
+      <string>Длинноногий малыш</string>
+      <string>Baby Langbein</string>
+      <string>Nene Piernaslargas</string>
+    </key>
+    <key name="SMALL_BABY_LONG_LEGS">
+      <string>Small Baby Long Legs</string>
+      <string>スモール ベビー ロング レッグズ</string>
+      <string>작은 키다리 아기</string>
+      <string>小生崽长腿蛛</string>
+      <string>Маленький длинноногий малыш</string>
+      <string>Kleines Baby Langbein</string>
+      <string>Peque Piernaslargas</string>
+    </key>
+    <key name="CRAZY_LONG_LEGS">
+      <string>Crazy Long Legs</string>
+      <string>クレイジー ロング レッグズ</string>
+      <string>미친 키다리 아기</string>
+      <string>疯狂长腿蛛</string>
+      <string>Безумный длинноног</string>
+      <string>Verrücktes Langbein</string>
+      <string>Loco Piernaslargas</string>
+    </key>
+    <key name="SMALL_CRAZY_LONG_LEGS">
+      <string>Small Crazy Long Legs</string>
+      <string>スモール クレイジー ロング レッグズ</string>
+      <string>작고 미친 키다리 아기</string>
+      <string>小疯狂长腿蛛</string>
+      <string>Маленький безумный длинноног</string>
+      <string>Kleines verrücktes Langbein</string>
+      <string>Locuelo Piernaslargas</string>
+    </key>
+    <key name="FATTY">
+      <string>Fatty</string>
+      <string>ファッティ</string>
+      <string>뚱뚱보</string>
+      <string>肥仔</string>
+      <string>Толстяк</string>
+      <string>Fettkloß</string>
+      <string>Gordi</string>
+    </key>
+    <key name="PALE_FATTY">
+      <string>Pale Fatty</string>
+      <string>ペール ファッティ</string>
+      <string>창백한 뚱뚱보</string>
+      <string>苍白肥仔</string>
+      <string>Бледный Толстяк</string>
+      <string>Blasser Fettkloß</string>
+      <string>Gordi pachucho</string>
+    </key>
+    <key name="FLAMING_FATTY">
+      <string>Flaming Fatty</string>
+      <string>フレイミング ファッティ</string>
+      <string>불타는 뚱뚱보</string>
+      <string>燃烧肥仔</string>
+      <string>Горящий Толстяк</string>
+      <string>Flammender Fettkloß</string>
+      <string>Gordi ígneo</string>
+    </key>
+    <key name="FAT_SACK">
+      <string>Fat Sack</string>
+      <string>ファット サック</string>
+      <string>피투성이 뚱뚱보</string>
+      <string>充血肥仔</string>
+      <string>Жирдяй</string>
+      <string>Fettsack</string>
+      <string>Saco de grasa</string>
+    </key>
+    <key name="BLUBBER">
+      <string>Blubber</string>
+      <string>ブラバー</string>
+      <string>뚱뚱보의 몸</string>
+      <string>无头肥仔</string>
+      <string>Ворвань</string>
+      <string>Speck</string>
+      <string>Sebo</string>
+    </key>
+    <key name="HALF_SACK">
+      <string>Half Sack</string>
+      <string>ハーフ サック</string>
+      <string>뚱뚱보의 하체</string>
+      <string>半身肥仔</string>
+      <string>Полужирдяй</string>
+      <string>Halber Sack</string>
+      <string>Sebo a medias</string>
+    </key>
+    <key name="DEATHS_HEAD">
+      <string>Death's Head</string>
+      <string>デス ヘッド</string>
+      <string>죽음의 머리</string>
+      <string>死人头骨</string>
+      <string>Голова Смерти</string>
+      <string>Totenkopf</string>
+      <string>Parcabeza</string>
+    </key>
+    <key name="DANK_DEATHS_HEAD">
+      <string>Dank Death's Head</string>
+      <string>ダンク デス ヘッド</string>
+      <string>검은 죽음의 머리</string>
+      <string>阴湿死人头骨</string>
+      <string>Сырая Голова Смерти</string>
+      <string>Nasser Totenkopf</string>
+      <string>Parcabeza anegada</string>
+    </key>
+    <key name="CURSED_DEATHS_HEAD">
+      <string>Cursed Death's Head</string>
+      <string>カーズ デス ヘッド</string>
+      <string>저주받은 죽음의 머리</string>
+      <string>诅咒死人头骨</string>
+      <string>Проклятая Голова Смерти</string>
+      <string>Verfluchter Totenkopf</string>
+      <string>Parcabeza maldita</string>
+    </key>
+    <key name="BRIMSTONE_DEATHS_HEAD">
+      <string>Brimstone Death's Head</string>
+      <string>ブリムストーン デス ヘッド</string>
+      <string>죽음의 유황 머리</string>
+      <string>硫磺死人头骨</string>
+      <string>Серная Голова Смерти</string>
+      <string>Schwefel-Totenkopf</string>
+      <string>Parcabeza de azufre</string>
+    </key>
+    <key name="REDSKULL">
+      <string>Redskull</string>
+      <string>レッドスカル</string>
+      <string>붉은 해골</string>
+      <string>红色头骨</string>
+      <string>Красный Череп</string>
+      <string>Roter Schädel</string>
+      <string>Cráneo Rojo</string>
+    </key>
+    <key name="MOMS_HAND">
+      <string>Mom's Hand</string>
+      <string>ママの手</string>
+      <string>엄마의 손</string>
+      <string>老妈的手</string>
+      <string>Мамина Рука</string>
+      <string>Mamas Hand</string>
+      <string>Mano de Mamá</string>
+    </key>
+    <key name="LEVEL_2_FLY">
+      <string>Level 2 Fly</string>
+      <string>フライ Lv2</string>
+      <string>lvl2 파리</string>
+      <string>二级苍蝇</string>
+      <string>Муха 2 Уровня</string>
+      <string>Level 2 - Fliege</string>
+      <string>Mosca de nivel 2</string>
+    </key>
+    <key name="LEVEL_2_SPIDER">
+      <string>Level 2 Spider</string>
+      <string>スパイダー Lv2</string>
+      <string>lvl2 거미</string>
+      <string>二级蜘蛛</string>
+      <string>Паук 2 Уровня</string>
+      <string>Level 2 - Spinne</string>
+      <string>Araña de nivel 2</string>
+    </key>
+    <key name="SWINGER">
+      <string>Swinger</string>
+      <string>スウィンガー ボディ</string>
+      <string>스윙어</string>
+      <string>甩头者</string>
+      <string>Качель</string>
+      <string>Schwinger</string>
+      <string>Vaivén</string>
+    </key>
+    <key name="SWINGER_HEAD">
+      <string>Swinger Head</string>
+      <string>スウィンガー ヘッド</string>
+      <string>스윙어의 머리</string>
+      <string>甩头者的头</string>
+      <string>Голова Качели</string>
+      <string>Schwingerkopf</string>
+      <string>Cabeza de Vaivén</string>
+    </key>
+    <key name="DIP">
+      <string>Dip</string>
+      <string>ディップ</string>
+      <string>딥</string>
+      <string>粪滴</string>
+      <string>Капля</string>
+      <string>Tröpfchen</string>
+      <string>Gotita</string>
+    </key>
+    <key name="CORN">
+      <string>Corn</string>
+      <string>コーン</string>
+      <string>콘</string>
+      <string>玉米粪滴</string>
+      <string>Кукурузинка</string>
+      <string>Mais</string>
+      <string>Roseta</string>
+    </key>
+    <key name="BROWNIE_CORN">
+      <string>Brownie Corn</string>
+      <string>ブラウニー コーン</string>
+      <string>브라우니 콘</string>
+      <string>布朗尼玉米粪滴</string>
+      <string>Шоколадная Кукурузинка</string>
+      <string>Brownie-Mais</string>
+      <string>Roseta tostada</string>
+    </key>
+    <key name="BIG_CORN">
+      <string>Big Corn</string>
+      <string>ビッグ コーン</string>
+      <string>큰 콘</string>
+      <string>大玉米粪滴</string>
+      <string>Большая Кукурузинка</string>
+      <string>Großer Mais</string>
+      <string>Palomita</string>
+    </key>
+    <key name="WALL_HUGGER">
+      <string>Wall Hugger</string>
+      <string>ウォール ハガー</string>
+      <string>가시 함정</string>
+      <string>贴墙刺块</string>
+      <string>Прижималка</string>
+      <string>Wandschleicher</string>
+      <string>Guardamuros</string>
+    </key>
+    <key name="WIZOOB">
+      <string>Wizoob</string>
+      <string>ウィズーブ</string>
+      <string>위즈브</string>
+      <string>巫鬼</string>
+      <string>Визуб</string>
+      <string>Magier</string>
+      <string>Fantoche</string>
+    </key>
+    <key name="SQUIRT">
+      <string>Squirt</string>
+      <string>スクワートル</string>
+      <string>응가</string>
+      <string>粪团</string>
+      <string>Сквирт</string>
+      <string>Batzen</string>
+      <string>Chorro</string>
+    </key>
+    <key name="DANK_SQUIRT">
+      <string>Dank Squirt</string>
+      <string>ダンク スクワートル</string>
+      <string>눅눅한 응가</string>
+      <string>阴湿粪团</string>
+      <string>Сырой Сквирт</string>
+      <string>Dunkler Batzen</string>
+      <string>Chorro anegado</string>
+    </key>
+    <key name="COD_WORM">
+      <string>Cod Worm</string>
+      <string>コッド ワーム</string>
+      <string>바깥지렁이</string>
+      <string>肉包虫</string>
+      <string>Тресковый Червь</string>
+      <string>Fischwurm</string>
+      <string>Caparásito</string>
+    </key>
+    <key name="RING_FLY">
+      <string>Ring Fly</string>
+      <string>リング フライ</string>
+      <string>원 파리</string>
+      <string>环绕苍蝇</string>
+      <string>Кольцевая Муха</string>
+      <string>Ringfliege</string>
+      <string>Mosca anillo</string>
+    </key>
+    <key name="DINGA">
+      <string>Dinga</string>
+      <string>ディンガ</string>
+      <string>똥</string>
+      <string>粪堆</string>
+      <string>Динга</string>
+      <string>Kacko</string>
+      <string>K.K.</string>
+    </key>
+    <key name="OOB">
+      <string>Oob</string>
+      <string>ウーブ</string>
+      <string>우브</string>
+      <string>乌伯</string>
+      <string>Уб</string>
+      <string>Oob</string>
+      <string>Oob</string>
+    </key>
+    <key name="BLACK_MAW">
+      <string>Black Maw</string>
+      <string>ブラック モー</string>
+      <string>검은 구렁텅이</string>
+      <string>黑口怪</string>
+      <string>Черная Пасть</string>
+      <string>Schwarzschlund</string>
+      <string>Buche negro</string>
+    </key>
+    <key name="SKINNY">
+      <string>Skinny</string>
+      <string>スキニー</string>
+      <string>스키니</string>
+      <string>皱脸尸</string>
+      <string>Тощий</string>
+      <string>Dürrer</string>
+      <string>Anémico</string>
+    </key>
+    <key name="ROTTY">
+      <string>Rotty</string>
+      <string>ロッティー</string>
+      <string>로티</string>
+      <string>腐脸尸</string>
+      <string>Гнилой</string>
+      <string>Faulender</string>
+      <string>Pestilente</string>
+    </key>
+    <key name="CRISPY">
+      <string>Crispy</string>
+      <string>クリスピー</string>
+      <string>크리스피</string>
+      <string>脆脸尸</string>
+      <string>Хрустящий</string>
+      <string>Knuspriger</string>
+      <string>Crujiente</string>
+    </key>
+    <key name="BONY">
+      <string>Bony</string>
+      <string>ボーニー</string>
+      <string>해골</string>
+      <string>骷髅仔</string>
+      <string>Костлявый</string>
+      <string>Knochiger</string>
+      <string>Anchihueso</string>
+    </key>
+    <key name="HOLY_BONY">
+      <string>Holy Bony</string>
+      <string>ホーリー ボーニー</string>
+      <string>신성한 해골</string>
+      <string>神圣骷髅仔</string>
+      <string>Святой Костлявый</string>
+      <string>Heiliger Knochiger</string>
+      <string>Anchihueso sagrado</string>
+    </key>
+    <key name="HOMUNCULUS">
+      <string>Homunculus</string>
+      <string>ホムンクルス</string>
+      <string>호문쿨루스</string>
+      <string>畸婴</string>
+      <string>Гомункул</string>
+      <string>Homunkulus</string>
+      <string>Homúnculo</string>
+    </key>
+    <key name="TUMOR">
+      <string>Tumor</string>
+      <string>テューマー</string>
+      <string>종양</string>
+      <string>肿瘤</string>
+      <string>Опухоль</string>
+      <string>Tumor</string>
+      <string>Tumor</string>
+    </key>
+    <key name="PLANETOID">
+      <string>Planetoid</string>
+      <string>プラネットイド</string>
+      <string>플레인토이드</string>
+      <string>行星肿瘤</string>
+      <string>Планетоид</string>
+      <string>Planetoid</string>
+      <string>Planetoide</string>
+    </key>
+    <key name="CAMILLO_JR">
+      <string>Camillo Jr.</string>
+      <string>カミロJr.</string>
+      <string>카미로 주니어</string>
+      <string>小卡米洛</string>
+      <string>Камилло Мл.</string>
+      <string>Camillo Jr.</string>
+      <string>Camillo Hijo</string>
+    </key>
+    <key name="NERVE_ENDING">
+      <string>Nerve Ending</string>
+      <string>ナーブ エンディング</string>
+      <string>너브 엔딩</string>
+      <string>神经末梢</string>
+      <string>Нервное Окончание</string>
+      <string>Nervenende</string>
+      <string>Terminación nerviosa</string>
+    </key>
+    <key name="NERVE_ENDING_2">
+      <string>Nerve Ending 2</string>
+      <string>ナーブ エンディング２</string>
+      <string>너브 엔딩 2</string>
+      <string>神经末梢2</string>
+      <string>Нервное Окончание 2</string>
+      <string>Nervenende 2</string>
+      <string>Terminación nerviosa II</string>
+    </key>
+    <key name="ONE_TOOTH">
+      <string>One Tooth</string>
+      <string>ワン テュース</string>
+      <string>원 투스</string>
+      <string>独牙蝙蝠</string>
+      <string>Однозуб</string>
+      <string>Einzahn</string>
+      <string>Unidiente</string>
+    </key>
+    <key name="GAPING_MAW">
+      <string>Gaping Maw</string>
+      <string>ゲーピング モー</string>
+      <string>입 버린 구렁텅이</string>
+      <string>大嘴石像头</string>
+      <string>Зияющая Пасть</string>
+      <string>Klaffender Schlund</string>
+      <string>Buche atónito</string>
+    </key>
+    <key name="BROKEN_GAPING_MAW">
+      <string>Broken Gaping Maw</string>
+      <string>ブロークン ゲーピング モー</string>
+      <string>망가진 입 버린 구렁텅이</string>
+      <string>碎裂大嘴石像头</string>
+      <string>Сломанная Зияющая Пасть</string>
+      <string>Toter klaffender Schlund</string>
+      <string>Buche atónito destrozado</string>
+    </key>
+    <key name="GURGLING">
+      <string>Gurgling</string>
+      <string>ガーグリング</string>
+      <string>거글링</string>
+      <string>肉山幼崽</string>
+      <string>Булькающи</string>
+      <string>Kleiner Gurgler</string>
+      <string>Gluglú</string>
+    </key>
+    <key name="GURGLING_BOSS">
+      <string>Gurgling (boss)</string>
+      <string>ガーグリング（ボス）</string>
+      <string>거글링 (보스)</string>
+      <string>肉山幼崽（头目）</string>
+      <string>Булькающи (босс)</string>
+      <string>Kleiner Gurgler (Endgegner)</string>
+      <string>Gluglú (jefe)</string>
+    </key>
+    <key name="TURDLING">
+      <string>Turdling</string>
+      <string>タードリング</string>
+      <string>응가링</string>
+      <string>粪山幼崽</string>
+      <string>Говняшка</string>
+      <string>Kackerchen</string>
+      <string>Zurupeque</string>
+    </key>
+    <key name="SPLASHER">
+      <string>Splasher</string>
+      <string>スプラッシャー</string>
+      <string>스플레셔</string>
+      <string>喷毒尸</string>
+      <string>Брызгун</string>
+      <string>Spritzer</string>
+      <string>Chapoteador</string>
+    </key>
+    <key name="GRUB">
+      <string>Grub</string>
+      <string>グラブ</string>
+      <string>유충</string>
+      <string>幼虫</string>
+      <string>Жор</string>
+      <string>Larve</string>
+      <string>Gorgojo</string>
+    </key>
+    <key name="CORPSE_EATER">
+      <string>Corpse Eater</string>
+      <string>コープス イーター</string>
+      <string>시체 먹보</string>
+      <string>食尸虫</string>
+      <string>Трупоед</string>
+      <string>Leichenfresser</string>
+      <string>Necrófago</string>
+    </key>
+    <key name="CARRION_RIDER">
+      <string>Carrion Rider</string>
+      <string>カリオン ライダー</string>
+      <string>썩은 기수</string>
+      <string>食尸虫骑士</string>
+      <string>Всадник-падальщик</string>
+      <string>Aasreiter</string>
+      <string>Jinete carroña</string>
+    </key>
+    <key name="WALL_CREEP">
+      <string>Wall Creep</string>
+      <string>ウォール クリープ</string>
+      <string>벽타는 크리프</string>
+      <string>爬墙蛛</string>
+      <string>Настенный Ползун</string>
+      <string>Wandkriecher</string>
+      <string>Trepamuros</string>
+    </key>
+    <key name="SOY_CREEP">
+      <string>Soy Creep</string>
+      <string>ソイ クリープ</string>
+      <string>콩리프</string>
+      <string>豆奶爬墙蛛</string>
+      <string>Соевый Ползун</string>
+      <string>Sojakriecher</string>
+      <string>Trepadora de soja</string>
+    </key>
+    <key name="RAG_CREEP">
+      <string>Rag Creep</string>
+      <string>ラグ クリープ</string>
+      <string>누더기 크리프</string>
+      <string>绷带爬墙蛛</string>
+      <string>Тряпичный Ползун</string>
+      <string>Lumpenkriecher</string>
+      <string>Trepadora de trapo</string>
+    </key>
+    <key name="TAINTED_SOY_CREEP">
+      <string>Tainted Soy Creep</string>
+      <string>テインティド ソイ クリープ</string>
+      <string>더럽혀진 콩리프</string>
+      <string>腐化豆奶爬墙蛛</string>
+      <string>Порченый Соевый Ползун</string>
+      <string>Befleckter Sojakriecher</string>
+      <string>Trepadora de soja corrupta</string>
+    </key>
+    <key name="RAGE_CREEP">
+      <string>Rage Creep</string>
+      <string>レイジ クリープ</string>
+      <string>격노한 크리프</string>
+      <string>愤怒爬墙蛛</string>
+      <string>Яростный Ползун</string>
+      <string>Wutkriecher</string>
+      <string>Trepadora iracunda</string>
+    </key>
+    <key name="SPLIT_RAGE_CREEP">
+      <string>Split Rage Creep</string>
+      <string>スピリット ラージ クリープ</string>
+      <string>분열된 격노한 크리프</string>
+      <string>分裂愤怒爬墙蛛</string>
+      <string>Расколотый Яростный Ползун</string>
+      <string>Doppelter Wutkriecher</string>
+      <string>Trepadora iracunda mutilada</string>
+    </key>
+    <key name="BLIND_CREEP">
+      <string>Blind Creep</string>
+      <string>ブラインド クリープ</string>
+      <string>눈 먼 크리프</string>
+      <string>盲眼爬墙蛛</string>
+      <string>Слепой Ползун</string>
+      <string>Blinder Kriecher</string>
+      <string>Trepadora ciega</string>
+    </key>
+    <key name="CONJOINED_SPITTY">
+      <string>Conjoined Spitty</string>
+      <string>コンジョインド スピッティ</string>
+      <string>샴쌍둥이 스피티</string>
+      <string>连体吐血蝇蛆</string>
+      <string>Сиамский Плевок</string>
+      <string>Siamesischer Spucki</string>
+      <string>Escupitajo siamés</string>
+    </key>
+    <key name="ROUND_WORM">
+      <string>Round Worm</string>
+      <string>ラウンド ワーム</string>
+      <string>낮지렁이</string>
+      <string>圆头虫</string>
+      <string>Круглый Червь</string>
+      <string>Rundwurm</string>
+      <string>Nematodo</string>
+    </key>
+    <key name="TUBE_WORM">
+      <string>Tube Worm</string>
+      <string>チューブ ワーム</string>
+      <string>관지렁이</string>
+      <string>管头虫</string>
+      <string>Трубчатый Червь</string>
+      <string>Röhrenwurm</string>
+      <string>Tubusano</string>
+    </key>
+    <key name="TAINTED_ROUND_WORM">
+      <string>Tainted Round Worm</string>
+      <string>テインティド ラウンド ワーム</string>
+      <string>더럽혀진 낮지렁이</string>
+      <string>堕化圆头虫</string>
+      <string>Порченый Круглый Червь</string>
+      <string>Befleckter Rundwurm</string>
+      <string>Nematodo corrupto</string>
+    </key>
+    <key name="TAINTED_TUBE_WORM">
+      <string>Tainted Tube Worm</string>
+      <string>テインティド チューブ ワーム</string>
+      <string>더럽혀진 관지렁이</string>
+      <string>堕化管头虫</string>
+      <string>Порченый Трубчатый Червь</string>
+      <string>Befleckter Röhrenwurm</string>
+      <string>Tubusano corrupto</string>
+    </key>
+    <key name="RAGLING">
+      <string>Ragling</string>
+      <string>ラグリング</string>
+      <string>랭링</string>
+      <string>绷带蜘蛛</string>
+      <string>Тряпка</string>
+      <string>Kleiner Lump</string>
+      <string>Andrajo</string>
+    </key>
+    <key name="FLESH_MOBILE_HOST">
+      <string>Flesh Mobile Host</string>
+      <string>フレッシュ モバイル ホスト</string>
+      <string>핏고기 모바일 호스트</string>
+      <string>血肉行走寄居骷髅</string>
+      <string>Мясной Мобильный Наблюдатель</string>
+      <string>Mobiler Fleischwirt</string>
+      <string>Huésped móvil de carne</string>
+    </key>
+    <key name="PSYCHIC_HORF">
+      <string>Psychic Horf</string>
+      <string>サイキック ホルフ</string>
+      <string>사이킥 호르프</string>
+      <string>灵能吐血头</string>
+      <string>Телепатический Хорф</string>
+      <string>Psycho-Horf</string>
+      <string>Sincuerpo psíquico</string>
+    </key>
+    <key name="FULL_FLY">
+      <string>Full Fly</string>
+      <string>フル フライ</string>
+      <string>커다란 파리</string>
+      <string>丰满苍蝇</string>
+      <string>Полная Муха</string>
+      <string>Volle Fliege</string>
+      <string>Mosca llena</string>
+    </key>
+    <key name="TICKING_SPIDER">
+      <string>Ticking Spider</string>
+      <string>ティッキング スパイダー</string>
+      <string>똑딱 파리</string>
+      <string>炸弹蜘蛛</string>
+      <string>Тикающий Паук</string>
+      <string>Tickende Spinne</string>
+      <string>Araña de relojería</string>
+    </key>
+    <key name="BEGOTTEN">
+      <string>Begotten</string>
+      <string>ビゴッテン</string>
+      <string>비가튼</string>
+      <string>受生恶魔</string>
+      <string>Порожденный</string>
+      <string>Gezeugter</string>
+      <string>Unigénito</string>
+    </key>
+    <key name="NULLS">
+      <string>Nulls</string>
+      <string>ノルズ</string>
+      <string>널</string>
+      <string>虚影恶魔</string>
+      <string>Нуль</string>
+      <string>Nuller</string>
+      <string>Nulo</string>
+    </key>
+    <key name="PSY_TUMOR">
+      <string>Psy Tumor</string>
+      <string>サイ テューマー</string>
+      <string>불안한 종양</string>
+      <string>灵能肿瘤</string>
+      <string>Пси-Опухоль</string>
+      <string>Psy-Tumor</string>
+      <string>Tumor psíquico</string>
+    </key>
+    <key name="FLOATING_KNIGHT">
+      <string>Floating Knight</string>
+      <string>フローティング ナイト</string>
+      <string>부유하는 나이트</string>
+      <string>漂浮骑士</string>
+      <string>Парящий Рыцарь</string>
+      <string>Schwebender Ritter</string>
+      <string>Caballero flotante</string>
+    </key>
+    <key name="NIGHT_CRAWLER">
+      <string>Night Crawler</string>
+      <string>ナイト クローラー</string>
+      <string>밤지렁이</string>
+      <string>夜行圆头虫</string>
+      <string>Ночной Червь</string>
+      <string>Nachtraupe</string>
+      <string>Rastreador nocturno</string>
+    </key>
+    <key name="DART_FLY">
+      <string>Dart Fly</string>
+      <string>ダート フライ</string>
+      <string>다트 파리</string>
+      <string>尖头苍蝇</string>
+      <string>Дротик</string>
+      <string>Dartfliege</string>
+      <string>Mosca dardo</string>
+    </key>
+    <key name="CONJOINED_FATTY">
+      <string>Conjoined Fatty</string>
+      <string>コンジョインド ファッティ</string>
+      <string>샴쌍둥이 뚱뚱보</string>
+      <string>连体肥仔</string>
+      <string>Сиамский Толстяк</string>
+      <string>Siamesischer Fettkloß</string>
+      <string>Gordi siamés</string>
+    </key>
+    <key name="BLUE_CONJOINED_FATTY">
+      <string>Blue Conjoined Fatty</string>
+      <string>ブルー コンジョインド ファッティ</string>
+      <string>푸른 샴쌍둥이 뚱뚱보</string>
+      <string>窒息连体肥仔</string>
+      <string>Синий Сиамский Толстяк</string>
+      <string>Blauer siamesischer Fettkloß</string>
+      <string>Gordi siamés azul</string>
+    </key>
+    <key name="FAT_BAT">
+      <string>Fat Bat</string>
+      <string>ファット バット</string>
+      <string>뚱뚱한 박쥐</string>
+      <string>胖蝙蝠</string>
+      <string>Жирная Мышь</string>
+      <string>Fette Fledermaus</string>
+      <string>Gordiélago</string>
+    </key>
+    <key name="IMP">
+      <string>Imp</string>
+      <string>インプ</string>
+      <string>임프</string>
+      <string>小恶魔</string>
+      <string>Бес</string>
+      <string>Imp</string>
+      <string>Diablillo</string>
+    </key>
+    <key name="HAUNT">
+      <string>Haunt</string>
+      <string>ホーント</string>
+      <string>유령</string>
+      <string>大幽灵</string>
+      <string>Привидение</string>
+      <string>Spuk</string>
+      <string>Tormento</string>
+    </key>
+    <key name="LIL_HAUNT">
+      <string>Lil' Haunt</string>
+      <string>リトル ホーント</string>
+      <string>리틀 헌트</string>
+      <string>小幽灵</string>
+      <string>Мелкое Привидение</string>
+      <string>Kleiner Spuk</string>
+      <string>Minitormento</string>
+    </key>
+    <key name="DINGLE">
+      <string>Dingle</string>
+      <string>ディングル</string>
+      <string>딩글</string>
+      <string>坨坨</string>
+      <string>Какуля</string>
+      <string>Kacker</string>
+      <string>Boñi</string>
+    </key>
+    <key name="DANGLE">
+      <string>Dangle</string>
+      <string>ダングル</string>
+      <string>댕글</string>
+      <string>滑坨坨</string>
+      <string>Какаха</string>
+      <string>Kacki</string>
+      <string>Cacarrubina</string>
+    </key>
+    <key name="MEGA_MAW">
+      <string>Mega Maw</string>
+      <string>メガ モー</string>
+      <string>구렁텅이</string>
+      <string>超级大嘴头</string>
+      <string>Мега Пасть</string>
+      <string>Megaschlund</string>
+      <string>Megabuche</string>
+    </key>
+    <key name="THE_GATE">
+      <string>The Gate</string>
+      <string>ザ ゲート</string>
+      <string>수문장</string>
+      <string>守门骷髅</string>
+      <string>Врата</string>
+      <string>Das Tor</string>
+      <string>El Portal</string>
+    </key>
+    <key name="MEGA_FATTY">
+      <string>Mega Fatty</string>
+      <string>メガ ファッティ</string>
+      <string>뚱땡이</string>
+      <string>超级肥仔</string>
+      <string>Мега Толстяк</string>
+      <string>Mega-Fettkloß</string>
+      <string>Megagordi</string>
+    </key>
+    <key name="THE_CAGE">
+      <string>The Cage</string>
+      <string>ザ ケージ</string>
+      <string>우리</string>
+      <string>大肥笼</string>
+      <string>Клетка</string>
+      <string>Der Käfig</string>
+      <string>La Jaula</string>
+    </key>
+    <key name="MAMA_GURDY">
+      <string>Mama Gurdy</string>
+      <string>ママ ガーディ</string>
+      <string>마마 거디</string>
+      <string>母体肉山</string>
+      <string>Мега Герди</string>
+      <string>Mama Gurdy</string>
+      <string>Mamá Organillo</string>
+    </key>
+    <key name="DARK_ONE">
+      <string>Dark One</string>
+      <string>ダーク ワン</string>
+      <string>어둠의 자식</string>
+      <string>黑暗恶魔</string>
+      <string>Темный</string>
+      <string>Dunkler</string>
+      <string>El Oscuro</string>
+    </key>
+    <key name="THE_ADVERSARY">
+      <string>The Adversary</string>
+      <string>ザ アドバーセーリ</string>
+      <string>대적</string>
+      <string>敌手</string>
+      <string>Неприятель</string>
+      <string>Der Widersacher</string>
+      <string>El Adversario</string>
+    </key>
+    <key name="POLYCEPHALUS">
+      <string>Polycephalus</string>
+      <string>ポーリセファラス</string>
+      <string>쌍두괴물</string>
+      <string>多头畸胎</string>
+      <string>Полицефал</string>
+      <string>Polyzephalus</string>
+      <string>Policéfalo</string>
+    </key>
+    <key name="THE_PILE">
+      <string>The Pile</string>
+      <string>ザ パイル</string>
+      <string>뼈다귀더미</string>
+      <string>骨堆畸胎</string>
+      <string>Груда</string>
+      <string>Der Knochenhaufen</string>
+      <string>El Cúmulo</string>
+    </key>
+    <key name="MR_FRED">
+      <string>Mr. Fred</string>
+      <string>Mr.フレッド</string>
+      <string>미스터. 프레드</string>
+      <string>大弗莱德</string>
+      <string>Мистер Фред</string>
+      <string>Mr. Fred</string>
+      <string>Sr. Fred</string>
+    </key>
+    <key name="URIEL">
+      <string>Uriel</string>
+      <string>ウリエル</string>
+      <string>우리엘</string>
+      <string>乌列</string>
+      <string>Уриил</string>
+      <string>Uriel</string>
+      <string>Uriel</string>
+    </key>
+    <key name="FALLEN_URIEL">
+      <string>Fallen Uriel</string>
+      <string>フォーレン ウリエル</string>
+      <string>타락한 우리엘</string>
+      <string>堕落乌列</string>
+      <string>Падший Уриил</string>
+      <string>Gefallener Uriel</string>
+      <string>Uriel caído</string>
+    </key>
+    <key name="GABRIEL">
+      <string>Gabriel</string>
+      <string>ガブリエル</string>
+      <string>가브리엘</string>
+      <string>加百列</string>
+      <string>Гавриил</string>
+      <string>Gabriel</string>
+      <string>Gabriel</string>
+    </key>
+    <key name="FALLEN_GABRIEL">
+      <string>Fallen Gabriel</string>
+      <string>フォーレン ガブリエル</string>
+      <string>타락한 가브리엘</string>
+      <string>堕落加百列</string>
+      <string>Падший Гавриил</string>
+      <string>Gefallener Gabriel</string>
+      <string>Gabriel caído</string>
+    </key>
+    <key name="THE_LAMB">
+      <string>The Lamb</string>
+      <string>ザ ラム</string>
+      <string>어린 양</string>
+      <string>羔羊</string>
+      <string>Агнец</string>
+      <string>Das Lamm</string>
+      <string>El Cordero</string>
+    </key>
+    <key name="MEGA_SATAN">
+      <string>Mega Satan</string>
+      <string>メガ サタン</string>
+      <string>메가 사탄</string>
+      <string>超级撒但</string>
+      <string>Мега Сатана</string>
+      <string>Mega-Satan</string>
+      <string>Megasatanás</string>
+    </key>
+    <key name="MEGA_SATAN_2">
+      <string>Mega Satan 2</string>
+      <string>メガ サタン ヘッド</string>
+      <string>메가 사탄 2</string>
+      <string>超级撒但2</string>
+      <string>Мега Сатана 2</string>
+      <string>Mega-Satan 2</string>
+      <string>Megasatanás II</string>
+    </key>
+    <key name="ROUNDY">
+      <string>Roundy</string>
+      <string>ラウンディ</string>
+      <string>뚱뚱보 지렁이</string>
+      <string>肥圆虫</string>
+      <string>Круглик</string>
+      <string>Rundling</string>
+      <string>Rotundo</string>
+    </key>
+    <key name="BLACK_BONY">
+      <string>Black Bony</string>
+      <string>ブラック ボーニィ</string>
+      <string>검은 해골</string>
+      <string>黑色骷髅仔</string>
+      <string>Черный Костлявый</string>
+      <string>Schwarzer Knochiger</string>
+      <string>Anchihueso negro</string>
+    </key>
+    <key name="BLACK_GLOBIN">
+      <string>Black Globin</string>
+      <string>ブラック グロビン</string>
+      <string>검은 글로빈</string>
+      <string>黑色血红尸</string>
+      <string>Черный Глобин</string>
+      <string>Schwarzes Globin</string>
+      <string>Globina negra</string>
+    </key>
+    <key name="BLACK_GLOBINS_HEAD">
+      <string>Black Globin's Head</string>
+      <string>ブラック グロビン ヘッド</string>
+      <string>검은 글로빈의 머리</string>
+      <string>黑色血红尸的头</string>
+      <string>Голова Черного Глобина</string>
+      <string>Schwarzes Globin - Kopf</string>
+      <string>Cabeza de globina negra</string>
+    </key>
+    <key name="BLACK_GLOBINS_BODY">
+      <string>Black Globin's Body</string>
+      <string>ブラック グロビン ボディ</string>
+      <string>검은 글로빈의 몸</string>
+      <string>黑色血红尸的身体</string>
+      <string>Тело Черного Глобина</string>
+      <string>Schwarzes Globin - Körper</string>
+      <string>Cuerpo de globina negra</string>
+    </key>
+    <key name="SWARM">
+      <string>Swarm</string>
+      <string>スウォーム</string>
+      <string>파리 떼</string>
+      <string>苍蝇群</string>
+      <string>Рой</string>
+      <string>Schwarm</string>
+      <string>Enjambre</string>
+    </key>
+    <key name="MEGA_CLOTTY">
+      <string>Mega Clotty</string>
+      <string>メガ クロッティ</string>
+      <string>거대한 핏고기</string>
+      <string>大肉团</string>
+      <string>Мега Тромбик</string>
+      <string>Mega-Klumpi</string>
+      <string>Megacuajo</string>
+    </key>
+    <key name="BONE_KNIGHT">
+      <string>Bone Knight</string>
+      <string>ボーン ナイト</string>
+      <string>본 나이트</string>
+      <string>骸骨骑士</string>
+      <string>Костяной Рыцарь</string>
+      <string>Knochenritter</string>
+      <string>Caballero óseo</string>
+    </key>
+    <key name="CYCLOPIA">
+      <string>Cyclopia</string>
+      <string>サイクロピア</string>
+      <string>외눈박이</string>
+      <string>独眼尸</string>
+      <string>Циклопия</string>
+      <string>Zyklopie</string>
+      <string>Ciclopia</string>
+    </key>
+    <key name="RED_GHOST">
+      <string>Red Ghost</string>
+      <string>レッド ゴースト</string>
+      <string>레드 고스트</string>
+      <string>红色巫鬼</string>
+      <string>Красный Призрак</string>
+      <string>Roter Geist</string>
+      <string>Fantasma rojo</string>
+    </key>
+    <key name="FLESH_DEATHS_HEAD">
+      <string>Flesh Death's Head</string>
+      <string>フレッシュ デス ヘッド</string>
+      <string>핏고기 죽음의 머리</string>
+      <string>血肉死人头骨</string>
+      <string>Мясная Голова Смерти</string>
+      <string>Fleischtod - Kopf</string>
+      <string>Parcabeza de carne</string>
+    </key>
+    <key name="MOMS_DEAD_HAND">
+      <string>Mom's Dead Hand</string>
+      <string>ママの死んだ手</string>
+      <string>엄마의 죽은 손</string>
+      <string>老妈的死手</string>
+      <string>Мамина Мертвая Рука</string>
+      <string>Mamas tote Hand</string>
+      <string>Mano muerta de Mamá</string>
+    </key>
+    <key name="DUKIE">
+      <string>Dukie</string>
+      <string>デューキー</string>
+      <string>듀키</string>
+      <string>小苍蝇公爵</string>
+      <string>Дюки</string>
+      <string>Herzoglein</string>
+      <string>Duquecito</string>
+    </key>
+    <key name="ULCER">
+      <string>Ulcer</string>
+      <string>アルサー</string>
+      <string>궤양</string>
+      <string>溃疡</string>
+      <string>Язва</string>
+      <string>Geschwür</string>
+      <string>Úlcera</string>
+    </key>
+    <key name="MEATBALL">
+      <string>Meatball</string>
+      <string>ミートボール</string>
+      <string>미트볼</string>
+      <string>肉球</string>
+      <string>Мясной Шар</string>
+      <string>Fleischbällchen</string>
+      <string>Albóndiga</string>
+    </key>
+    <key name="CORN_MINE">
+      <string>Corn Mine</string>
+      <string>コーン マイン</string>
+      <string>콘 마인</string>
+      <string>玉米粒地雷</string>
+      <string>Кукурузная Мина</string>
+      <string>Maismine</string>
+      <string>Mina de maíz</string>
+    </key>
+    <key name="HUSH_FLY">
+      <string>Hush Fly</string>
+      <string>ハッシュ フライ</string>
+      <string>침묵 파리</string>
+      <string>窒息苍蝇</string>
+      <string>Тихая Муха</string>
+      <string>Stille Fliege</string>
+      <string>Mosca del silencio</string>
+    </key>
+    <key name="BLUE_GAPER">
+      <string>Blue Gaper</string>
+      <string>ブルー ゲイパー</string>
+      <string>푸른 게이퍼</string>
+      <string>窒息裂口尸</string>
+      <string>Синий Зевака</string>
+      <string>Blauer Gaffer</string>
+      <string>Pesar azul</string>
+    </key>
+    <key name="BLUE_BOIL">
+      <string>Blue Boil</string>
+      <string>ブルー ボイル</string>
+      <string>푸른 거미집</string>
+      <string>窒息脓液囊</string>
+      <string>Синйи Нарыв</string>
+      <string>Blaue Beule</string>
+      <string>Bolo azul</string>
+    </key>
+    <key name="GREED_GAPER">
+      <string>Greed Gaper</string>
+      <string>グリード ゲイパー</string>
+      <string>탐욕찬 게이퍼</string>
+      <string>贪婪裂口尸</string>
+      <string>Алчный Зевака</string>
+      <string>Gieriger Gaffer</string>
+      <string>Pesar verde</string>
+    </key>
+    <key name="MUSHROOM">
+      <string>Mushroom</string>
+      <string>マシュルーム</string>
+      <string>버섯</string>
+      <string>蘑菇</string>
+      <string>Гриб</string>
+      <string>Pilz</string>
+      <string>Champiñón</string>
+    </key>
+    <key name="POISON_MIND">
+      <string>Poison Mind</string>
+      <string>ポイゾン マインド</string>
+      <string>포이즌 마인드</string>
+      <string>剧毒脑子</string>
+      <string>Ядовитый Мозг</string>
+      <string>Giftgeist</string>
+      <string>Mente envenenada</string>
+    </key>
+    <key name="STONEY">
+      <string>Stoney</string>
+      <string>ストーニー</string>
+      <string>석화된 뚱뚱보</string>
+      <string>石肥仔</string>
+      <string>Каменюка</string>
+      <string>Steiniger</string>
+      <string>Gordi pétreo</string>
+    </key>
+    <key name="CROSS_STONEY">
+      <string>Cross Stoney</string>
+      <string>クロス ストーニー</string>
+      <string>석화된 십자 뚱뚱보</string>
+      <string>十字石肥仔</string>
+      <string>Скрещенный Каменюка</string>
+      <string>Kreuz-Steiniger</string>
+      <string>Gordi pétreo cruzado</string>
+    </key>
+    <key name="BLISTER">
+      <string>Blister</string>
+      <string>ブリスター</string>
+      <string>블리스터</string>
+      <string>水疱跳蛛</string>
+      <string>Волдырь</string>
+      <string>Blase</string>
+      <string>Ampolla</string>
+    </key>
+    <key name="THE_THING">
+      <string>The Thing</string>
+      <string>ザ シング</string>
+      <string>더 띵</string>
+      <string>怪形爬墙蛛</string>
+      <string>Нечто</string>
+      <string>Das Ding</string>
+      <string>La Cosa</string>
+    </key>
+    <key name="MINISTRO">
+      <string>Ministro</string>
+      <string>ミニストロ</string>
+      <string>미니스트로</string>
+      <string>迷你萌死戳</string>
+      <string>Министро</string>
+      <string>Ministro</string>
+      <string>Minimostro</string>
+    </key>
+    <key name="PORTAL">
+      <string>Portal</string>
+      <string>ポータル</string>
+      <string>포탈</string>
+      <string>黑洞</string>
+      <string>Портал</string>
+      <string>Portal</string>
+      <string>Portal</string>
+    </key>
+    <key name="LIL_PORTAL">
+      <string>Lil Portal</string>
+      <string>リトル ポータル</string>
+      <string>작은 포탈</string>
+      <string>小黑洞</string>
+      <string>Маленький Портал</string>
+      <string>Kleines Portal</string>
+      <string>Miniportal</string>
+    </key>
+    <key name="TAR_BOY">
+      <string>Tar Boy</string>
+      <string>タール ボーイ</string>
+      <string>타르 보이</string>
+      <string>焦油小子</string>
+      <string>Деготь</string>
+      <string>Teerjunge</string>
+      <string>Chico de brea</string>
+    </key>
+    <key name="TAR_BOY_MOUTH">
+      <string>Tar Boy (mouth)</string>
+      <string>タール ボーイ（口）</string>
+      <string>타르 보이 (입)</string>
+      <string>焦油小子（嘴）</string>
+      <string>Деготь (рот)</string>
+      <string>Teerjunge (Mund)</string>
+      <string>Chico de brea (boca)</string>
+    </key>
+    <key name="FISTULOID">
+      <string>Fistuloid</string>
+      <string>ロウコウロイド</string>
+      <string>피스툴로이드</string>
+      <string>小瘘管</string>
+      <string>Фистулик</string>
+      <string>Fisteloid</string>
+      <string>Fistuloide</string>
+    </key>
+    <key name="GUSH">
+      <string>Gush</string>
+      <string>グシャ</string>
+      <string>거쉬</string>
+      <string>焦油囊</string>
+      <string>Извергающийся</string>
+      <string>Sprudler</string>
+      <string>Brote</string>
+    </key>
+    <key name="LEPER">
+      <string>Leper</string>
+      <string>レパー</string>
+      <string>나병자</string>
+      <string>麻风怪</string>
+      <string>Прокаженный</string>
+      <string>Aussätziger</string>
+      <string>Lepra</string>
+    </key>
+    <key name="LEPER_STAGE_2">
+      <string>Leper (stage 2)</string>
+      <string>レパー</string>
+      <string>나병자 (2 스테이지)</string>
+      <string>麻风怪（第二阶段）</string>
+      <string>Прокаженный (уровень 2)</string>
+      <string>Aussätziger (Stufe 2)</string>
+      <string>Lepra (fase 2)</string>
+    </key>
+    <key name="LEPER_STAGE_3">
+      <string>Leper (stage 3)</string>
+      <string>レパー</string>
+      <string>나병자 (3 스테이지)</string>
+      <string>麻风怪（第三阶段）</string>
+      <string>Прокаженный (уровень 3)</string>
+      <string>Aussätziger (Stufe 3)</string>
+      <string>Lepra (fase 3)</string>
+    </key>
+    <key name="LEPER_STAGE_4">
+      <string>Leper (stage 4)</string>
+      <string>レパー</string>
+      <string>나병자 (4 스테이지)</string>
+      <string>麻风怪（第四阶段）</string>
+      <string>Прокаженный (уровень 4)</string>
+      <string>Aussätziger (Stufe 4)</string>
+      <string>Lepra (fase 4)</string>
+    </key>
+    <key name="LEPER_FLESH">
+      <string>Leper Flesh</string>
+      <string>レパー フレッシュ</string>
+      <string>나병 살갗</string>
+      <string>麻风怪的血肉</string>
+      <string>Прокаженная Плоть</string>
+      <string>Aussätziges Fleisch</string>
+      <string>Tajada de lepra</string>
+    </key>
+    <key name="MR_MINE">
+      <string>Mr. Mine</string>
+      <string>Mr.マイン</string>
+      <string>미스터 마인</string>
+      <string>水雷头</string>
+      <string>Мистер Мина</string>
+      <string>Mr. Mine</string>
+      <string>Sr. Mine</string>
+    </key>
+    <key name="THE_STAIN">
+      <string>The Stain</string>
+      <string>ザ ステイン</string>
+      <string>부패</string>
+      <string>血痕畸胎</string>
+      <string>Пятно</string>
+      <string>Der Fleck</string>
+      <string>La Mácula</string>
+    </key>
+    <key name="BROWNIE">
+      <string>Brownie</string>
+      <string>ブラウニー</string>
+      <string>브라우니</string>
+      <string>布朗尼</string>
+      <string>Брауни</string>
+      <string>Nougat</string>
+      <string>Brownie</string>
+    </key>
+    <key name="THE_FORSAKEN">
+      <string>The Forsaken</string>
+      <string>ザ フォーセークン</string>
+      <string>버려진 자</string>
+      <string>被遗弃者</string>
+      <string>Отрекшийся</string>
+      <string>Der Verlassene</string>
+      <string>El Desamparado</string>
+    </key>
+    <key name="LITTLE_HORN">
+      <string>Little Horn</string>
+      <string>リトル ホーン</string>
+      <string>작은 뿔</string>
+      <string>小魔角</string>
+      <string>Маленький Рог</string>
+      <string>Kleines Horn</string>
+      <string>Cuernecito</string>
+    </key>
+    <key name="RAG_MAN">
+      <string>Rag Man</string>
+      <string>ラグ マン</string>
+      <string>넝마주이</string>
+      <string>绷带人</string>
+      <string>Тряпичник</string>
+      <string>Lumpenmann</string>
+      <string>Hombre de trapo</string>
+    </key>
+    <key name="ULTRA_GREED">
+      <string>Ultra Greed</string>
+      <string>ウルトラ グリード</string>
+      <string>왕 탐욕</string>
+      <string>究极贪婪</string>
+      <string>Ультра Алчность</string>
+      <string>Ultra-Gier</string>
+      <string>Ultravaricia</string>
+    </key>
+    <key name="ULTRA_GREEDIER">
+      <string>Ultra Greedier</string>
+      <string>ウルトラ グリーディアー</string>
+      <string>왕 심한 탐욕</string>
+      <string>究极大贪婪</string>
+      <string>Ультра Жадность</string>
+      <string>Ultra-Gieriger</string>
+      <string>Megaultravaricia</string>
+    </key>
+    <key name="HUSH">
+      <string>Hush</string>
+      <string>ハッシュ</string>
+      <string>침묵</string>
+      <string>窒息胎</string>
+      <string>Тишина</string>
+      <string>Stille</string>
+      <string>Silencio</string>
+    </key>
+    <key name="RAG_MEGA">
+      <string>Rag Mega</string>
+      <string>ラグ メガ</string>
+      <string>메가 넝마주이</string>
+      <string>超级绷带人</string>
+      <string>Мега Тряпичник</string>
+      <string>Lumpen-Mega</string>
+      <string>Megatrapo</string>
+    </key>
+    <key name="SISTERS_VIS">
+      <string>Sisters Vis</string>
+      <string>シスターズ ビス</string>
+      <string>시스터즈 비스</string>
+      <string>开膛姐妹</string>
+      <string>Сестры Вис</string>
+      <string>Schwestern Vis</string>
+      <string>Hermanas Vis</string>
+    </key>
+    <key name="BIG_HORN">
+      <string>Big Horn</string>
+      <string>ビッグ ホーン</string>
+      <string>큰 뿔</string>
+      <string>大魔角</string>
+      <string>Большой Рог</string>
+      <string>Großes Horn</string>
+      <string>Cuerno mayor</string>
+    </key>
+    <key name="DELIRIUM">
+      <string>Delirium</string>
+      <string>デリリアム</string>
+      <string>섬망</string>
+      <string>精神错乱</string>
+      <string>Бред</string>
+      <string>Delirium</string>
+      <string>Delirio</string>
+    </key>
+    <key name="THE_MATRIARCH">
+      <string>The Matriarch</string>
+      <string>ザ メイトリアーク</string>
+      <string>메이트리아크</string>
+      <string>胖蛆族母</string>
+      <string>Матриарх</string>
+      <string>Die Matriarchin</string>
+      <string>La Matriarca</string>
+    </key>
+    <key name="BLOOD_PUPPY">
+      <string>Blood Puppy</string>
+      <string>ブラッド パピー</string>
+      <string>핏빛 강아지</string>
+      <string>嗜血小宠</string>
+      <string>Кровавый Щеночек</string>
+      <string>Blutwelpe</string>
+      <string>Cachorro de sangre</string>
+    </key>
+    <key name="BLOOD_PUPPY">
+      <string>Blood Puppy</string>
+      <string>ブラッド パピー</string>
+      <string>핏빛 강아지</string>
+      <string>嗜血小宠</string>
+      <string>Кровавый Щеночек</string>
+      <string>Blutwelpe</string>
+      <string>Cachorro de sangre</string>
+    </key>
+    <key name="QUAKE_GRIMACE">
+      <string>Quake Grimace</string>
+      <string>クエイク グリメス</string>
+      <string>찡그린 지진</string>
+      <string>地震石像头</string>
+      <string>Гримаса Землетрясения</string>
+      <string>Bebengrimasse</string>
+      <string>Mueca sísmica</string>
+    </key>
+    <key name="BISHOP">
+      <string>Bishop</string>
+      <string>ビショップ</string>
+      <string>비숍</string>
+      <string>修士像</string>
+      <string>Епископ</string>
+      <string>Läufer</string>
+      <string>Obispo</string>
+    </key>
+    <key name="BUBBLES">
+      <string>Bubbles</string>
+      <string>バブル</string>
+      <string>거품</string>
+      <string>充水肥仔</string>
+      <string>Пузырь</string>
+      <string>Platscher</string>
+      <string>Burbujas</string>
+    </key>
+    <key name="WRAITH">
+      <string>Wraith</string>
+      <string>レイス</string>
+      <string>망령</string>
+      <string>隐鬼</string>
+      <string>Призрак</string>
+      <string>Gespenst</string>
+      <string>Espectro</string>
+    </key>
+    <key name="WILLO">
+      <string>Willo</string>
+      <string>ウィロー</string>
+      <string>윌오</string>
+      <string>萤火苍蝇</string>
+      <string>Светлячок</string>
+      <string>Irrlicht</string>
+      <string>Willo</string>
+    </key>
+    <key name="BOMB_GRIMACE">
+      <string>Bomb Grimace</string>
+      <string>ボム グリメス</string>
+      <string>찡그린 폭탄</string>
+      <string>炸弹石像头</string>
+      <string>Бомбовая Гримаса</string>
+      <string>Bombengrimasse</string>
+      <string>Mueca explosiva</string>
+    </key>
+    <key name="SMALL_LEECH">
+      <string>Small Leech</string>
+      <string>スモール ヒル</string>
+      <string>작은 거머리</string>
+      <string>小水蛭</string>
+      <string>Маленькая Пиявка</string>
+      <string>Kleiner Blutegel</string>
+      <string>Sanguijuela menor</string>
+    </key>
+    <key name="DEEP_GAPER">
+      <string>Deep Gaper</string>
+      <string>ディープ ゲイパー</string>
+      <string>깊은 게이퍼</string>
+      <string>潜水裂口尸</string>
+      <string>Глубинный Зевака</string>
+      <string>Untiefengaffer</string>
+      <string>Pesar profundo</string>
+    </key>
+    <key name="SUB_HORF">
+      <string>Sub Horf</string>
+      <string>サブマリン ホルフ</string>
+      <string>잠복 홀프</string>
+      <string>水栖吐血头</string>
+      <string>Подводный Хорф</string>
+      <string>Untersee-Horf</string>
+      <string>Sincuerpo subterráneo</string>
+    </key>
+    <key name="TAINTED_SUB_HORF">
+      <string>Tainted Sub Horf</string>
+      <string>テインティド サブマリン ホルフ</string>
+      <string>더럽혀진 잠복 홀프</string>
+      <string>堕化水栖吐血头</string>
+      <string>Порченый Подводный Хорф</string>
+      <string>Befleckter Untersee-Horf</string>
+      <string>Sincuerpo subterráneo corrupto</string>
+    </key>
+    <key name="BLURB">
+      <string>Blurb</string>
+      <string>ブラーブ</string>
+      <string>블럽</string>
+      <string>蓄水裂口尸</string>
+      <string>Бульк</string>
+      <string>Glucker</string>
+      <string>Potarate</string>
+    </key>
+    <key name="STRIDER">
+      <string>Strider</string>
+      <string>ストライダー</string>
+      <string>스트라이더</string>
+      <string>水蜘蛛</string>
+      <string>Водомерка</string>
+      <string>Wasserläufer</string>
+      <string>Zancudo</string>
+    </key>
+    <key name="FISSURE">
+      <string>Fissure</string>
+      <string>フィッシャー</string>
+      <string>피셔</string>
+      <string>骷髅鱼</string>
+      <string>Кефаль</string>
+      <string>Fischur</string>
+      <string>Fisura</string>
+    </key>
+    <key name="POLTY">
+      <string>Polty</string>
+      <string>ポルティ</string>
+      <string>폴티</string>
+      <string>捣蛋小鬼</string>
+      <string>Полтергейст</string>
+      <string>Polti</string>
+      <string>Polti</string>
+    </key>
+    <key name="KINETI">
+      <string>Kineti</string>
+      <string>キネティ</string>
+      <string>풀티</string>
+      <string>灵能小鬼</string>
+      <string>Барабашка</string>
+      <string>Kineti</string>
+      <string>Kineti</string>
+    </key>
+    <key name="PREY">
+      <string>Prey</string>
+      <string>リーチズ ミート</string>
+      <string>물린건</string>
+      <string>水蛭棉花怪</string>
+      <string>Жертва</string>
+      <string>Beute</string>
+      <string>Presa</string>
+    </key>
+    <key name="MULLIGHOUL">
+      <string>Mullighoul</string>
+      <string>ムリグール</string>
+      <string>멀리굴</string>
+      <string>棉花鬼</string>
+      <string>Нюнядух</string>
+      <string>Mullighul</string>
+      <string>Hinchagul</string>
+    </key>
+    <key name="ROCK_SPIDER">
+      <string>Rock Spider</string>
+      <string>ロック スパイダー</string>
+      <string>바위 거미</string>
+      <string>石头蜘蛛</string>
+      <string>Каменный Паук</string>
+      <string>Felsenspinne</string>
+      <string>Rocaraña</string>
+    </key>
+    <key name="ROCK_SPIDER">
+      <string>Rock Spider</string>
+      <string>ロック スパイダー</string>
+      <string>바위 거미</string>
+      <string>石头蜘蛛</string>
+      <string>Каменный Паук</string>
+      <string>Felsenspinne</string>
+      <string>Rocaraña</string>
+    </key>
+    <key name="ROCK_SPIDER">
+      <string>Rock Spider</string>
+      <string>ロック スパイダー</string>
+      <string>바위 거미</string>
+      <string>石头蜘蛛</string>
+      <string>Каменный Паук</string>
+      <string>Felsenspinne</string>
+      <string>Rocaraña</string>
+    </key>
+    <key name="ROCK_SPIDER">
+      <string>Rock Spider</string>
+      <string>ロック スパイダー</string>
+      <string>바위 거미</string>
+      <string>石头蜘蛛</string>
+      <string>Каменный Паук</string>
+      <string>Felsenspinne</string>
+      <string>Rocaraña</string>
+    </key>
+    <key name="TINTED_ROCK_SPIDER">
+      <string>Tinted Rock Spider</string>
+      <string>カラフル ロック スパイダー</string>
+      <string>옅은 바위 거미</string>
+      <string>标记石头蜘蛛</string>
+      <string>Крашеный Каменный Паук</string>
+      <string>Dunkle Felsenspinne</string>
+      <string>Rocaraña marcada</string>
+    </key>
+    <key name="TINTED_ROCK_SPIDER">
+      <string>Tinted Rock Spider</string>
+      <string>カラフル ロック スパイダー</string>
+      <string>옅은 바위 거미</string>
+      <string>标记石头蜘蛛</string>
+      <string>Крашеный Каменный Паук</string>
+      <string>Dunkle Felsenspinne</string>
+      <string>Rocaraña marcada</string>
+    </key>
+    <key name="TINTED_ROCK_SPIDER">
+      <string>Tinted Rock Spider</string>
+      <string>カラフル ロック スパイダー</string>
+      <string>옅은 바위 거미</string>
+      <string>标记石头蜘蛛</string>
+      <string>Крашеный Каменный Паук</string>
+      <string>Dunkle Felsenspinne</string>
+      <string>Rocaraña marcada</string>
+    </key>
+    <key name="TINTED_ROCK_SPIDER">
+      <string>Tinted Rock Spider</string>
+      <string>カラフル ロック スパイダー</string>
+      <string>옅은 바위 거미</string>
+      <string>标记石头蜘蛛</string>
+      <string>Крашеный Каменный Паук</string>
+      <string>Dunkle Felsenspinne</string>
+      <string>Rocaraña marcada</string>
+    </key>
+    <key name="COAL_SPIDER">
+      <string>Coal Spider</string>
+      <string>コール スパイダー</string>
+      <string>석탄 거미</string>
+      <string>火炭蜘蛛</string>
+      <string>Угольный Паук</string>
+      <string>Kohlenspinne</string>
+      <string>Ascuaraña</string>
+    </key>
+    <key name="COAL_SPIDER">
+      <string>Coal Spider</string>
+      <string>コール スパイダー</string>
+      <string>석탄 거미</string>
+      <string>火炭蜘蛛</string>
+      <string>Угольный Паук</string>
+      <string>Kohlenspinne</string>
+      <string>Ascuaraña</string>
+    </key>
+    <key name="COAL_SPIDER">
+      <string>Coal Spider</string>
+      <string>コール スパイダー</string>
+      <string>석탄 거미</string>
+      <string>火炭蜘蛛</string>
+      <string>Угольный Паук</string>
+      <string>Kohlenspinne</string>
+      <string>Ascuaraña</string>
+    </key>
+    <key name="COAL_SPIDER">
+      <string>Coal Spider</string>
+      <string>コール スパイダー</string>
+      <string>석탄 거미</string>
+      <string>火炭蜘蛛</string>
+      <string>Угольный Паук</string>
+      <string>Kohlenspinne</string>
+      <string>Ascuaraña</string>
+    </key>
+    <key name="FLY_BOMB">
+      <string>Fly Bomb</string>
+      <string>ボム フライ</string>
+      <string>파리 폭탄</string>
+      <string>苍蝇炸弹</string>
+      <string>Летучая бомба</string>
+      <string>Fliegenbombe</string>
+      <string>Moscamikaze</string>
+    </key>
+    <key name="ETERNAL_FLY_BOMB">
+      <string>Eternal Fly Bomb</string>
+      <string>エターナル ボム フライ</string>
+      <string>영원한 파리 폭탄</string>
+      <string>永恒苍蝇炸弹</string>
+      <string>Вечная Летучая бомба</string>
+      <string>Ewige Fliegenbombe</string>
+      <string>Moscamikaze eterna</string>
+    </key>
+    <key name="DANNY">
+      <string>Danny</string>
+      <string>ダニー</string>
+      <string>대니</string>
+      <string>丹尼</string>
+      <string>Дэнни</string>
+      <string>Danny</string>
+      <string>Danny</string>
+    </key>
+    <key name="COAL_BOY">
+      <string>Coal Boy</string>
+      <string>コール ボーイ</string>
+      <string>석태니</string>
+      <string>火炭小子</string>
+      <string>Уголек</string>
+      <string>Kohlenjunge</string>
+      <string>Joven minero</string>
+    </key>
+    <key name="BLASTER">
+      <string>Blaster</string>
+      <string>ブラスター</string>
+      <string>블래스터</string>
+      <string>爆破者</string>
+      <string>Бластер</string>
+      <string>Kanonier</string>
+      <string>Bláster</string>
+    </key>
+    <key name="BOUNCER">
+      <string>Bouncer</string>
+      <string>バウンサー</string>
+      <string>바운서</string>
+      <string>充气怪</string>
+      <string>Вышибала</string>
+      <string>Riesenschädel</string>
+      <string>Rebotador</string>
+    </key>
+    <key name="QUAKEY">
+      <string>Quakey</string>
+      <string>クエイキー</string>
+      <string>쿵쿵이</string>
+      <string>地震肥仔</string>
+      <string>Землетряс</string>
+      <string>Erschütterer</string>
+      <string>Gordi sísmico</string>
+    </key>
+    <key name="GYRO">
+      <string>Gyro</string>
+      <string>ジャイロ</string>
+      <string>자이로</string>
+      <string>肉轮</string>
+      <string>Гирос</string>
+      <string>Gyros</string>
+      <string>Gyros</string>
+    </key>
+    <key name="GRILLED_GYRO">
+      <string>Grilled Gyro</string>
+      <string>グリル ジャイロ</string>
+      <string>구운 자이로</string>
+      <string>烤肉轮</string>
+      <string>Поджаренный Гирос</string>
+      <string>Gegrilltes Gyros</string>
+      <string>Gyros frito</string>
+    </key>
+    <key name="FIRE_WORM">
+      <string>Fire Worm</string>
+      <string>ファイヤー ワーム</string>
+      <string>불지렁이</string>
+      <string>火虫</string>
+      <string>Огненный Червь</string>
+      <string>Feuerwurm</string>
+      <string>Gusano ígneo</string>
+    </key>
+    <key name="HARDY">
+      <string>Hardy</string>
+      <string>ハーディー</string>
+      <string>돌똥</string>
+      <string>化石粪团</string>
+      <string>Жесткий</string>
+      <string>Harter Stuhl</string>
+      <string>Maciza</string>
+    </key>
+    <key name="FACELESS">
+      <string>Faceless</string>
+      <string>フェイスレス</string>
+      <string>이퍼</string>
+      <string>无脸尸</string>
+      <string>Безликий</string>
+      <string>Gesichtsloser</string>
+      <string>Sinrostro</string>
+    </key>
+    <key name="TAINTED_FACELESS">
+      <string>Tainted Faceless</string>
+      <string>テインティド フェイスレス</string>
+      <string>더럽혀진 이퍼</string>
+      <string>堕化无脸尸</string>
+      <string>Порченый Безликий</string>
+      <string>Befleckter Gesichtsloser</string>
+      <string>Sinrostro corrupto</string>
+    </key>
+    <key name="NECRO">
+      <string>Necro</string>
+      <string>ネクロ</string>
+      <string>네크로</string>
+      <string>死灵骷髅</string>
+      <string>Некро</string>
+      <string>Nekro</string>
+      <string>Necro</string>
+    </key>
+    <key name="MOLE">
+      <string>Mole</string>
+      <string>モール</string>
+      <string>두더지</string>
+      <string>鼹鼠</string>
+      <string>Крот</string>
+      <string>Maulwurf</string>
+      <string>Topo</string>
+    </key>
+    <key name="TAINTED_MOLE">
+      <string>Tainted Mole</string>
+      <string>テインティド モール</string>
+      <string>더럽혀진 두더지</string>
+      <string>堕化鼹鼠</string>
+      <string>Порченый Крот</string>
+      <string>Befleckter Maulwurf</string>
+      <string>Topo corrupto</string>
+    </key>
+    <key name="BIG_BONY">
+      <string>Big Bony</string>
+      <string>ビッグ ボニー</string>
+      <string>큰 해골</string>
+      <string>肥骷髅仔</string>
+      <string>Большой Костлявый</string>
+      <string>Großknochiger</string>
+      <string>Anchihueso mayor</string>
+    </key>
+    <key name="GUTTED_FATTY">
+      <string>Gutted Fatty</string>
+      <string>ボタボタ ファッティ</string>
+      <string>배따인 뚱뚱보</string>
+      <string>流肠肥仔</string>
+      <string>Выпотрошенный</string>
+      <string>Ausgeweideter Fettkloß</string>
+      <string>Gordi destripado</string>
+    </key>
+    <key name="FESTERING_GUTS">
+      <string>Festering Guts</string>
+      <string>フェスタリング ガッツ</string>
+      <string>썩어가는 내장</string>
+      <string>溃烂脏团</string>
+      <string>Гнойные Кишки</string>
+      <string>Schwärender Darmi</string>
+      <string>Tripas agangrenadas</string>
+    </key>
+    <key name="EXORCIST">
+      <string>Exorcist</string>
+      <string>エクソシスト</string>
+      <string>엑소시스트</string>
+      <string>驱魔人</string>
+      <string>Экзорцист</string>
+      <string>Exorzist</string>
+      <string>Exorcista</string>
+    </key>
+    <key name="FANATIC">
+      <string>Fanatic</string>
+      <string>ファナティック</string>
+      <string>파나틱</string>
+      <string>狂信徒</string>
+      <string>Фанатик</string>
+      <string>Fanatiker</string>
+      <string>Fanático</string>
+    </key>
+    <key name="CANDLER">
+      <string>Candler</string>
+      <string>キャンドラー</string>
+      <string>캔들러</string>
+      <string>烛台鬼</string>
+      <string>Свечник</string>
+      <string>Kerzenleuchter</string>
+      <string>Candelero</string>
+    </key>
+    <key name="WHIPPER">
+      <string>Whipper</string>
+      <string>ウィッパー</string>
+      <string>휘퍼</string>
+      <string>鞭笞怪</string>
+      <string>Хлестун</string>
+      <string>Peitscher</string>
+      <string>Meque</string>
+    </key>
+    <key name="SNAPPER">
+      <string>Snapper</string>
+      <string>スナッパー</string>
+      <string>스내퍼</string>
+      <string>长鞭怪</string>
+      <string>Шлепун</string>
+      <string>Wirbler</string>
+      <string>Trefe</string>
+    </key>
+    <key name="FLAGELLANT">
+      <string>Flagellant</string>
+      <string>フラジラント</string>
+      <string>플래절런트</string>
+      <string>狂鞭怪</string>
+      <string>Бечевка</string>
+      <string>Flagellant</string>
+      <string>Flagelante</string>
+    </key>
+    <key name="PEEPING_FATTY">
+      <string>Peeping Fatty</string>
+      <string>ピーピング ファッティ</string>
+      <string>엿보는 뚱뚱보</string>
+      <string>窥眼肥仔</string>
+      <string>Смотрящий Толстяк</string>
+      <string>Linsender Fettkloß</string>
+      <string>Gordi mirón</string>
+    </key>
+    <key name="VIS_VERSA">
+      <string>Vis Versa</string>
+      <string>ビス バーサ</string>
+      <string>비스 벌사</string>
+      <string>追踪开膛怪</string>
+      <string>Вис Верса</string>
+      <string>Vis Versa</string>
+      <string>Vis Versa</string>
+    </key>
+    <key name="LEVEL_2_WILLO">
+      <string>Level 2 Willo</string>
+      <string>ウィロー Lv2</string>
+      <string>lvl2 윌오</string>
+      <string>二级萤火苍蝇</string>
+      <string>Светлячок 2 уровня</string>
+      <string>Level 2 - Irrlicht</string>
+      <string>Willo de nivel 2</string>
+    </key>
+    <key name="STRIFER">
+      <string>Strifer</string>
+      <string>ストライファー</string>
+      <string>스트라이퍼</string>
+      <string>横行魔偶</string>
+      <string>Раздор</string>
+      <string>Streiter</string>
+      <string>Discordia</string>
+    </key>
+    <key name="PON">
+      <string>Pon</string>
+      <string>ポン</string>
+      <string>뽕</string>
+      <string>跳跳脑</string>
+      <string>Вароли</string>
+      <string>Kleinhirn</string>
+      <string>Pon</string>
+    </key>
+    <key name="REVENANT">
+      <string>Revenant</string>
+      <string>レヴェナント</string>
+      <string>레버넌트</string>
+      <string>死灵骷髅</string>
+      <string>Ревенант</string>
+      <string>Wiedergänger</string>
+      <string>Renacido</string>
+    </key>
+    <key name="QUAD_REVENANT">
+      <string>Quad Revenant</string>
+      <string>クアッド レヴェナント</string>
+      <string>사중 레버넌트</string>
+      <string>四脸死灵骷髅</string>
+      <string>Четверной Ревенант</string>
+      <string>Viergesicht-Wiedergänger</string>
+      <string>Renacido cruzado</string>
+    </key>
+    <key name="NIGHTWATCH">
+      <string>Nightwatch</string>
+      <string>ナイトウォッチ</string>
+      <string>나이트워치</string>
+      <string>守夜鬼</string>
+      <string>Дозорный</string>
+      <string>Nachtwächter</string>
+      <string>Farolero</string>
+    </key>
+    <key name="BOMBGAGGER">
+      <string>Bombgagger</string>
+      <string>ボムギャギャ</string>
+      <string>폭탄물이</string>
+      <string>轰炸怪</string>
+      <string>Бомбардир</string>
+      <string>Bombenspucker</string>
+      <string>Tragabombas</string>
+    </key>
+    <key name="LEVEL_2_GAPER">
+      <string>Level 2 Gaper</string>
+      <string>ゲイパー Lv2</string>
+      <string>lvl2 게이퍼</string>
+      <string>二级裂口尸</string>
+      <string>Зевака 2 уровня</string>
+      <string>Level 2 - Gaffer</string>
+      <string>Pesar de nivel 2</string>
+    </key>
+    <key name="LEVEL_2_HORF">
+      <string>Level 2 Horf</string>
+      <string>ホルフ Lv2</string>
+      <string>lvl2 홀프</string>
+      <string>二级吐血头</string>
+      <string>Хорф 2 уровня</string>
+      <string>Level 2 - Horf</string>
+      <string>Sincuerpo de nivel 2</string>
+    </key>
+    <key name="LEVEL_2_GUSHER">
+      <string>Level 2 Gusher</string>
+      <string>グッシャー Lv2</string>
+      <string>lvl2 거셔</string>
+      <string>二级喷血尸</string>
+      <string>Гейзер 2 уровня</string>
+      <string>Level 2 - Bluter</string>
+      <string>Borbotón de nivel 2</string>
+    </key>
+    <key name="TWITCHY">
+      <string>Twitchy</string>
+      <string>トゥイッチー</string>
+      <string>트위치</string>
+      <string>跳蛛尸</string>
+      <string>Дерганый</string>
+      <string>Zappler</string>
+      <string>Saltarín</string>
+    </key>
+    <key name="SPIKEBALL">
+      <string>Spikeball</string>
+      <string>スパイクボール</string>
+      <string>가시공</string>
+      <string>刺球</string>
+      <string>Шипастый шар</string>
+      <string>Stachelkugel</string>
+      <string>Bola de pinchos</string>
+    </key>
+    <key name="SMALL_MAGGOT">
+      <string>Small Maggot</string>
+      <string>スモール マゴット</string>
+      <string>작은 거머리</string>
+      <string>小蝇蛆</string>
+      <string>Маленькая Личинка</string>
+      <string>Kleine Made</string>
+      <string>Larva menor</string>
+    </key>
+    <key name="ADULT_LEECH">
+      <string>Adult Leech</string>
+      <string>アダルト リーチ</string>
+      <string>성체 거머리</string>
+      <string>水蛭成虫</string>
+      <string>Взрослая Пиявка</string>
+      <string>Ausgewachsener Blutegel</string>
+      <string>Sanguijuela adulta</string>
+    </key>
+    <key name="LEVEL_2_CHARGER">
+      <string>Level 2 Charger</string>
+      <string>チャージャー Lv2</string>
+      <string>lvl2 차저</string>
+      <string>二级冲刺蝇蛆</string>
+      <string>Атакующий 2 уровня</string>
+      <string>Level 2 - Sturmmade</string>
+      <string>Cargador de nivel 2</string>
+    </key>
+    <key name="ELLEECH">
+      <string>Elleech</string>
+      <string>エルリーチ</string>
+      <string>정예 거머리</string>
+      <string>精英水蛭</string>
+      <string>Элитная Пиявка</string>
+      <string>Elite-Blutegel</string>
+      <string>Sanguijuela de élite</string>
+    </key>
+    <key name="GASBAG">
+      <string>Gasbag</string>
+      <string>ガスバッグ</string>
+      <string>가스백</string>
+      <string>毒气囊</string>
+      <string>Газовый Мешок</string>
+      <string>Gasbeutel</string>
+      <string>Bubón gaseoso</string>
+    </key>
+    <key name="COHORT">
+      <string>Cohort</string>
+      <string>コホート</string>
+      <string>코호트</string>
+      <string>血红团</string>
+      <string>Когорта</string>
+      <string>Kohorte</string>
+      <string>Cohorte</string>
+    </key>
+    <key name="VESSEL">
+      <string>Vessel</string>
+      <string>ベッセル</string>
+      <string>베슬</string>
+      <string>蝇蛆肥仔</string>
+      <string>Сосуд</string>
+      <string>Gefäß</string>
+      <string>Caballo de Troya</string>
+    </key>
+    <key name="FLOAST">
+      <string>Floast</string>
+      <string>フロート</string>
+      <string>플로스트</string>
+      <string>浮空寄居骷髅</string>
+      <string>Парящий Наблюдатель</string>
+      <string>Schwebewirt</string>
+      <string>Huésped flotante</string>
+    </key>
+    <key name="UNBORN">
+      <string>Unborn</string>
+      <string>アンボーン</string>
+      <string>언본</string>
+      <string>死胎</string>
+      <string>Нерожденный</string>
+      <string>Ungeborener</string>
+      <string>Nonato</string>
+    </key>
+    <key name="PUSTULE">
+      <string>Pustule</string>
+      <string>パスチュル</string>
+      <string>농포</string>
+      <string>脓疱</string>
+      <string>Прыщ</string>
+      <string>Pustel</string>
+      <string>Pústula</string>
+    </key>
+    <key name="CYST">
+      <string>Cyst</string>
+      <string>シスト</string>
+      <string>낭포</string>
+      <string>囊肿</string>
+      <string>Киста</string>
+      <string>Zyste</string>
+      <string>Quiste</string>
+    </key>
+    <key name="MORNINGSTAR">
+      <string>Morningstar</string>
+      <string>モーニングスター</string>
+      <string>새벽별</string>
+      <string>流星锤</string>
+      <string>Моргенштерн</string>
+      <string>Morgenstern</string>
+      <string>Lucero del Alba</string>
+    </key>
+    <key name="MOCKULUS">
+      <string>Mockulus</string>
+      <string>モッキュラス</string>
+      <string>모큘러스</string>
+      <string>嘲弄眼</string>
+      <string>Насмешка</string>
+      <string>Dämonenauge</string>
+      <string>Ridióculo</string>
+    </key>
+    <key name="EVIS">
+      <string>Evis</string>
+      <string>エビス</string>
+      <string>이비스</string>
+      <string>内脏开膛怪</string>
+      <string>Пузохват</string>
+      <string>Evis</string>
+      <string>Evis</string>
+    </key>
+    <key name="DARK_ESAU">
+      <string>Dark Esau</string>
+      <string>ダーク エサウ</string>
+      <string>검은 에사우</string>
+      <string>堕化以扫</string>
+      <string>Исав</string>
+      <string>Dunkler Esau</string>
+      <string>Esaú oscuro</string>
+    </key>
+    <key name="MOTHERS_SHADOW">
+      <string>Mother's Shadow</string>
+      <string>マザーズ シャドウ</string>
+      <string>엄마의 그림자</string>
+      <string>老妈的暗影</string>
+      <string>Тень Мамы</string>
+      <string>Mutters Schatten</string>
+      <string>Sombra de Madre</string>
+    </key>
+    <key name="ARMY_FLY">
+      <string>Army Fly</string>
+      <string>アーミー フライ</string>
+      <string>군단 파리</string>
+      <string>苍蝇队</string>
+      <string>Строевая Муха</string>
+      <string>Armeefliege</string>
+      <string>Mosca militar</string>
+    </key>
+    <key name="MIGRAINE">
+      <string>Migraine</string>
+      <string>マイグレイン</string>
+      <string>편두통거미</string>
+      <string>头瘤蜘蛛</string>
+      <string>Мигрень</string>
+      <string>Migräne</string>
+      <string>Migraña</string>
+    </key>
+    <key name="DRIP">
+      <string>Drip</string>
+      <string>ドリップ</string>
+      <string>드립</string>
+      <string>粪球</string>
+      <string>Дрип</string>
+      <string>Tropfen</string>
+      <string>Gota</string>
+    </key>
+    <key name="SPLURT">
+      <string>Splurt</string>
+      <string>スプラートル</string>
+      <string>끙가</string>
+      <string>浮粪团</string>
+      <string>Брызг</string>
+      <string>Batzen</string>
+      <string>Salpicón</string>
+    </key>
+    <key name="CLOGGY">
+      <string>Cloggy</string>
+      <string>クロッギー</string>
+      <string>똥고기</string>
+      <string>便便肉团</string>
+      <string>Засорчик</string>
+      <string>Kackklumpi</string>
+      <string>Atascador</string>
+    </key>
+    <key name="FLY_TRAP">
+      <string>Fly Trap</string>
+      <string>フライ トラップ</string>
+      <string>파리지옥</string>
+      <string>蝇巢浮尸</string>
+      <string>Мухоловка</string>
+      <string>Fliegenfalle</string>
+      <string>Enmoscada</string>
+    </key>
+    <key name="GAS_DWARF">
+      <string>Gas Dwarf</string>
+      <string>ガス ドワーフ</string>
+      <string>가스 멀리건</string>
+      <string>毒气棉花怪</string>
+      <string>Газовый Карлик</string>
+      <string>Gaszwerg</string>
+      <string>Enano a gas</string>
+    </key>
+    <key name="POOT_MINE">
+      <string>Poot Mine</string>
+      <string>プー マイン</string>
+      <string>풋 마인</string>
+      <string>屁雷</string>
+      <string>Мина-бздун</string>
+      <string>Furzmine</string>
+      <string>Flatumina</string>
+    </key>
+    <key name="DUMP">
+      <string>Dump</string>
+      <string>ダンプ</string>
+      <string>똥덩어리</string>
+      <string>便便鼻涕虫</string>
+      <string>Кал</string>
+      <string>Kackschnecke</string>
+      <string>Gusatruño</string>
+    </key>
+    <key name="DUMP_HEAD">
+      <string>Dump Head</string>
+      <string>ダンプ ヘッド</string>
+      <string>똥덩머리</string>
+      <string>便便鼻涕虫的头</string>
+      <string>Кал</string>
+      <string>Kackschnecke</string>
+      <string>Gusatruño</string>
+    </key>
+    <key name="GRUDGE">
+      <string>Grudge</string>
+      <string>グラッジ</string>
+      <string>원한</string>
+      <string>窥眼刺块</string>
+      <string>Обида</string>
+      <string>Groll</string>
+      <string>Rencorojo</string>
+    </key>
+    <key name="BUTT_SLICKER">
+      <string>Butt Slicker</string>
+      <string>バット スリッカー</string>
+      <string>벗슬리커</string>
+      <string>阴湿跟屁虫</string>
+      <string>Лизоблюд</string>
+      <string>Klebriger Popolecker</string>
+      <string>Lameculos macabro</string>
+    </key>
+    <key name="BLOATY">
+      <string>Bloaty</string>
+      <string>ブロウティー</string>
+      <string>블로티</string>
+      <string>浮肿尸</string>
+      <string>Раздутый</string>
+      <string>Aufgedunsener</string>
+      <string>Henchido</string>
+    </key>
+    <key name="FLESH_MAIDEN">
+      <string>Flesh Maiden</string>
+      <string>フレッシュ メイデン</string>
+      <string>핏고기 숙녀</string>
+      <string>血处女</string>
+      <string>Мясная Дева</string>
+      <string>Fleischerne Jungfrau</string>
+      <string>Doncelleante</string>
+    </key>
+    <key name="NEEDLE">
+      <string>Needle</string>
+      <string>ニードル</string>
+      <string>니들</string>
+      <string>小钉虫</string>
+      <string>Игла</string>
+      <string>Nadel</string>
+      <string>Punzón</string>
+    </key>
+    <key name="PASTY">
+      <string>Pasty</string>
+      <string>パスティー</string>
+      <string>페이스티</string>
+      <string>白骨虫</string>
+      <string>Бледный</string>
+      <string>Blasser</string>
+      <string>Enclenque</string>
+    </key>
+    <key name="DUST">
+      <string>Dust</string>
+      <string>ダスト</string>
+      <string>더스트</string>
+      <string>尘鬼</string>
+      <string>Прах</string>
+      <string>Staub</string>
+      <string>Cinéreo</string>
+    </key>
+    <key name="BABY_BEGOTTEN">
+      <string>Baby Begotten</string>
+      <string>ベイビー ビゴッテン</string>
+      <string>아기 비가튼</string>
+      <string>受生恶魔宝宝</string>
+      <string>Порожденный Малыш</string>
+      <string>Baby-Gezeugter</string>
+      <string>Bebé unigénito</string>
+    </key>
+    <key name="SWARM_SPIDER">
+      <string>Swarm Spider</string>
+      <string>スウォーム スパイダー</string>
+      <string>거미 떼</string>
+      <string>蜘蛛群</string>
+      <string>Ройный Паук</string>
+      <string>Schwarmspinne</string>
+      <string>Araña de enjambre</string>
+    </key>
+    <key name="CULTIST">
+      <string>Cultist</string>
+      <string>カルティスト</string>
+      <string>광신도</string>
+      <string>邪教徒</string>
+      <string>Культист</string>
+      <string>Kultist</string>
+      <string>Sectario</string>
+    </key>
+    <key name="BLOOD_CULTIST">
+      <string>Blood Cultist</string>
+      <string>ブラッド カルティスト</string>
+      <string>피의 광신도</string>
+      <string>血腥邪教徒</string>
+      <string>Кровавый Культист</string>
+      <string>Blutkultist</string>
+      <string>Sectario sanguíneo</string>
+    </key>
+    <key name="VIS_FATTY">
+      <string>Vis Fatty</string>
+      <string>ビス ファッティ</string>
+      <string>비스 뚱뚱보</string>
+      <string>开膛肥仔</string>
+      <string>Пузатый Толстяк</string>
+      <string>Vis-Fettkloß</string>
+      <string>Visigordi</string>
+    </key>
+    <key name="FETAL_DEMON">
+      <string>Fetal Demon</string>
+      <string>フェータル デーモン</string>
+      <string>태아 악마</string>
+      <string>魔胎</string>
+      <string>Эмбрионный Демон</string>
+      <string>Dämonenfötus</string>
+      <string>Demonio fetal</string>
+    </key>
+    <key name="DUSTY_DEATHS_HEAD">
+      <string>Dusty Death's Head</string>
+      <string>ダスティ デス ヘッド</string>
+      <string>먼지 쌓인 죽음의 머리</string>
+      <string>尘埃死人头骨</string>
+      <string>Пыльная голова Смерти</string>
+      <string>Staubiger Totenkopf</string>
+      <string>Parcabeza polvorienta</string>
+    </key>
+    <key name="SHADY">
+      <string>Shady</string>
+      <string>シャーディー</string>
+      <string>어둠보</string>
+      <string>暗影肥仔</string>
+      <string>Тенистый</string>
+      <string>Schattenfettkloß</string>
+      <string>Umbrío</string>
+    </key>
+    <key name="CLICKETY_CLACK">
+      <string>Clickety Clack</string>
+      <string>カタカタ</string>
+      <string>딸깍딸깍</string>
+      <string>嘎吱骨</string>
+      <string>Трещотка</string>
+      <string>Klapper-klapp</string>
+      <string>Traqueteante</string>
+    </key>
+    <key name="MAZE_ROAMER">
+      <string>Maze Roamer</string>
+      <string>メイズ ローマー</string>
+      <string>미궁의 미아</string>
+      <string>漫步木乃伊</string>
+      <string>Лабиринтный Бродяга</string>
+      <string>Labyrinthbewohner</string>
+      <string>Vagadédalos</string>
+    </key>
+    <key name="MAZE_ROAMER">
+      <string>Maze Roamer</string>
+      <string>メイズ ローマー</string>
+      <string>미궁의 미아</string>
+      <string>漫步木乃伊</string>
+      <string>Лабиринтный Бродяга</string>
+      <string>Labyrinthbewohner</string>
+      <string>Vagadédalos</string>
+    </key>
+    <key name="GOAT">
+      <string>Goat</string>
+      <string>ゴート</string>
+      <string>염소</string>
+      <string>山羊</string>
+      <string>Козел</string>
+      <string>Ziege</string>
+      <string>Cabra</string>
+    </key>
+    <key name="BLACK_GOAT">
+      <string>Black Goat</string>
+      <string>ブラック ゴート</string>
+      <string>검은 염소</string>
+      <string>黑山羊</string>
+      <string>Черный Козел</string>
+      <string>Schwarze Ziege</string>
+      <string>Macho cabrío</string>
+    </key>
+    <key name="POOFER">
+      <string>Poofer</string>
+      <string>プーファー</string>
+      <string>푸퍼</string>
+      <string>胀血团</string>
+      <string>Пуф</string>
+      <string>Blähkugel</string>
+      <string>Inflema</string>
+    </key>
+    <key name="BALL_AND_CHAIN">
+      <string>Ball and Chain</string>
+      <string>ボール＆チェーン</string>
+      <string>사슬공</string>
+      <string>链球</string>
+      <string>Шар и Цепь</string>
+      <string>Kettenkugel</string>
+      <string>Bola encadenada</string>
+    </key>
+    <key name="REAP_CREEP">
+      <string>Reap Creep</string>
+      <string>リープ クリープ</string>
+      <string>사신 크리프</string>
+      <string>裂面爬墙蛛</string>
+      <string>Ползучий Жнец</string>
+      <string>Todeskriecher</string>
+      <string>Trepadora reina</string>
+    </key>
+    <key name="LIL_BLUB">
+      <string>Lil Blub</string>
+      <string>リトル ブラブ</string>
+      <string>작은 납작</string>
+      <string>小水泡</string>
+      <string>Маленький Пузырь</string>
+      <string>Kleiner Blubberer</string>
+      <string>Sollozos</string>
+    </key>
+    <key name="RAINMAKER">
+      <string>Rainmaker</string>
+      <string>レインメーカー</string>
+      <string>레인메이커</string>
+      <string>造雨人</string>
+      <string>Призыватель Дождя</string>
+      <string>Regenmacher</string>
+      <string>Hacedor de lluvia</string>
+    </key>
+    <key name="THE_VISAGE">
+      <string>The Visage</string>
+      <string>ザ ビザージ</string>
+      <string>비사지</string>
+      <string>锁链假面</string>
+      <string>Лик</string>
+      <string>Die Visage</string>
+      <string>El Semblante</string>
+    </key>
+    <key name="SIREN">
+      <string>Siren</string>
+      <string>サイレン</string>
+      <string>사이렌</string>
+      <string>塞壬</string>
+      <string>Сирена</string>
+      <string>Sirene</string>
+      <string>Sirena</string>
+    </key>
+    <key name="THE_HERETIC">
+      <string>The Heretic</string>
+      <string>ザ ヘレティック</string>
+      <string>불신자</string>
+      <string>大异端</string>
+      <string>Еретик</string>
+      <string>Der Ketzer</string>
+      <string>El Hereje</string>
+    </key>
+    <key name="HORNFEL">
+      <string>Hornfel</string>
+      <string>ホルンフェル</string>
+      <string>혼펠</string>
+      <string>岩角恶魔</string>
+      <string>Роговик</string>
+      <string>Hornfels</string>
+      <string>Corneana</string>
+    </key>
+    <key name="GREAT_GIDEON">
+      <string>Great Gideon</string>
+      <string>グレート ギデオン</string>
+      <string>위대한 기드온</string>
+      <string>大基甸</string>
+      <string>Великий Гедеон</string>
+      <string>Großer Gideon</string>
+      <string>Gran Gideón</string>
+    </key>
+    <key name="BABY_PLUM">
+      <string>Baby Plum</string>
+      <string>ベイビー プラム</string>
+      <string>아기 플럼</string>
+      <string>甜蝇宝宝</string>
+      <string>Сливка</string>
+      <string>Baby-Pflaume</string>
+      <string>Ciruelita</string>
+    </key>
+    <key name="THE_SCOURGE">
+      <string>The Scourge</string>
+      <string>ザ スカージ</string>
+      <string>스커지</string>
+      <string>鞭刃怪</string>
+      <string>Плеть</string>
+      <string>Die Geißel</string>
+      <string>El Azote</string>
+    </key>
+    <key name="CHIMERA">
+      <string>Chimera</string>
+      <string>キメラ</string>
+      <string>키메라</string>
+      <string>嵌体怪</string>
+      <string>Химера</string>
+      <string>Chimäre</string>
+      <string>Quimera</string>
+    </key>
+    <key name="ROTGUT">
+      <string>Rotgut</string>
+      <string>ロットガット</string>
+      <string>썩은내장</string>
+      <string>腐脏巨面</string>
+      <string>Пойло</string>
+      <string>Fäulnisgedärm</string>
+      <string>Pudretripa</string>
+    </key>
+    <key name="MOTHER">
+      <string>Mother</string>
+      <string>マザー</string>
+      <string>어메</string>
+      <string>死母</string>
+      <string>Матерь</string>
+      <string>Mutter</string>
+      <string>Madre</string>
+    </key>
+    <key name="DEAD_ISAAC">
+      <string>Dead Isaac</string>
+      <string>デッド アイザック</string>
+      <string>죽은 아이작</string>
+      <string>僵尸以撒</string>
+      <string>Мертвый Исаак</string>
+      <string>Toter Isaac</string>
+      <string>Isaac muerto</string>
+    </key>
+    <key name="MIN_MIN">
+      <string>Min Min</string>
+      <string>ミンミン</string>
+      <string>민 민</string>
+      <string>冥明火灵</string>
+      <string>Мин Мин</string>
+      <string>Min Min</string>
+      <string>Min-Min</string>
+    </key>
+    <key name="CLOG">
+      <string>Clog</string>
+      <string>クロッグ</string>
+      <string>클로그</string>
+      <string>拦路屎</string>
+      <string>Засор</string>
+      <string>Verstopfer</string>
+      <string>Atascoágulo</string>
+    </key>
+    <key name="SINGE">
+      <string>Singe</string>
+      <string>シンジュ</string>
+      <string>신즈</string>
+      <string>焦皮小子</string>
+      <string>Ожог</string>
+      <string>Versenger</string>
+      <string>Chamusquina</string>
+    </key>
+    <key name="BUMBINO">
+      <string>Bumbino</string>
+      <string>バンビーノ</string>
+      <string>범비노</string>
+      <string>大乞丐宝</string>
+      <string>Бамбино</string>
+      <string>Bumbino</string>
+      <string>Bumbino</string>
+    </key>
+    <key name="COLOSTOMIA">
+      <string>Colostomia</string>
+      <string>コロストミア</string>
+      <string>콜로스토미아</string>
+      <string>结肠造口袋</string>
+      <string>Колостомия</string>
+      <string>Kolostomia</string>
+      <string>Colostomía</string>
+    </key>
+    <key name="TURDLET">
+      <string>Turdlet</string>
+      <string>タードレット</string>
+      <string>긴똥</string>
+      <string>虫形大便</string>
+      <string>Какашечка</string>
+      <string>Kackwurst</string>
+      <string>Lombrez</string>
+    </key>
+    <key name="RAGLICH">
+      <string>Raglich</string>
+      <string>ラグリッチ</string>
+      <string>래글리치</string>
+      <string>绷带巫妖</string>
+      <string>Тряпичный Лич</string>
+      <string>Lumpenleichnam</string>
+      <string>Liche harapiento</string>
+    </key>
+    <key name="HORNY_BOYS">
+      <string>Horny Boys</string>
+      <string>ホーニー ボーイズ</string>
+      <string>꼴린 소년들</string>
+      <string>魔角兄弟</string>
+      <string>Рогоносцы</string>
+      <string>Hornbuben</string>
+      <string>Cornudos y cachondos</string>
+    </key>
+    <key name="CLUTCH">
+      <string>Clutch</string>
+      <string>クラッチ</string>
+      <string>클러치</string>
+      <string>附身邪鬼</string>
+      <string>Захват</string>
+      <string>Klammerer</string>
+      <string>El desposeedor</string>
+    </key>
+    <key name="DOGMA">
+      <string>Dogma</string>
+      <string>ドグマ</string>
+      <string>도그마</string>
+      <string>教条</string>
+      <string>Догма</string>
+      <string>Dogma</string>
+      <string>Dogma</string>
+    </key>
+    <key name="THE_BEAST">
+      <string>The Beast</string>
+      <string>ザ ビースト</string>
+      <string>짐승</string>
+      <string>祸兽</string>
+      <string>Зверь</string>
+      <string>Die Bestie</string>
+      <string>La Bestia</string>
+    </key>
+    <key name="ULTRA_FAMINE">
+      <string>Ultra Famine</string>
+      <string>ウルトラ ファミン</string>
+      <string>왕 기근</string>
+      <string>究极饥荒骑士</string>
+      <string>Ультра Голод</string>
+      <string>Ultra-Hungersnot</string>
+      <string>Ultrahambre</string>
+    </key>
+    <key name="ULTRA_PESTILENCE">
+      <string>Ultra Pestilence</string>
+      <string>ウルトラ ペステレンス</string>
+      <string>왕 역병</string>
+      <string>究极瘟疫骑士</string>
+      <string>Ультра Чума</string>
+      <string>Ultra-Pestilenz</string>
+      <string>Ultrapestilencia</string>
+    </key>
+    <key name="ULTRA_WAR">
+      <string>Ultra War</string>
+      <string>ウルトラ ウォー</string>
+      <string>왕 전쟁</string>
+      <string>究极战争骑士</string>
+      <string>Ультра Война</string>
+      <string>Ultra-Krieg</string>
+      <string>Ultraguerra</string>
+    </key>
+    <key name="ULTRA_DEATH">
+      <string>Ultra Death</string>
+      <string>ウルトラ デス</string>
+      <string>왕 죽음</string>
+      <string>究极死亡骑士</string>
+      <string>Ультра Смерть</string>
+      <string>Ultra-Tod</string>
+      <string>Ultramuerte</string>
+    </key>
+  </category>
+  <category name="Players">
+    <key name="ISAAC_NAME">
+      <string>Isaac</string>
+      <string>アイザック</string>
+      <string>아이작</string>
+      <string>以撒</string>
+      <string>Исаак</string>
+      <string>Isaac</string>
+      <string>Isaac</string>
+    </key>
+    <key name="ISAAC_BIRTHRIGHT">
+      <string>More options</string>
+      <string>オプションがいっぱい</string>
+      <string>추가 선택지</string>
+      <string>更多选择</string>
+      <string>Опции</string>
+      <string>Mehr Optionen</string>
+      <string>Más opciones</string>
+    </key>
+    <key name="MAGDALENE_NAME">
+      <string>Magdalene</string>
+      <string>マグダレーン</string>
+      <string>막달레나</string>
+      <string>抹大拉</string>
+      <string>Магдалена</string>
+      <string>Magdalene</string>
+      <string>Magdalena</string>
+    </key>
+    <key name="MAGDALENE_BIRTHRIGHT">
+      <string>Limit breaker + HP up</string>
+      <string>限界突破、ＨＰアップ</string>
+      <string>한계 돌파 + 체력 증가</string>
+      <string>突破极限+体力上升</string>
+      <string>Взлом Пределов + Повыш. ОЗ</string>
+      <string>Limitbrecher + TP hoch</string>
+      <string>Rompelímites, + PV</string>
+    </key>
+    <key name="CAIN_NAME">
+      <string>Cain</string>
+      <string>ケイン</string>
+      <string>카인</string>
+      <string>该隐</string>
+      <string>Каин</string>
+      <string>Kain</string>
+      <string>Caín</string>
+    </key>
+    <key name="CAIN_BIRTHRIGHT">
+      <string>Better arcades + luck up</string>
+      <string>楽しいアーケードがいっぱい、運アップ</string>
+      <string>조작성 + 행운 증가</string>
+      <string>更好的赌博房+运气上升</string>
+      <string>Лучшие Аркады + Повыш. Удачи</string>
+      <string>Bessere Spielhallen + Glück hoch</string>
+      <string>Mejora recreativas; + Suerte</string>
+    </key>
+    <key name="JUDAS_NAME">
+      <string>Judas</string>
+      <string>ユダ</string>
+      <string>유다</string>
+      <string>犹大</string>
+      <string>Иуда</string>
+      <string>Judas</string>
+      <string>Judas</string>
+    </key>
+    <key name="JUDAS_BIRTHRIGHT">
+      <string>Belial incarnate</string>
+      <string>ベリアルの化身</string>
+      <string>벨리알의 화신</string>
+      <string>彼列化身</string>
+      <string>Воплощенный Белиал</string>
+      <string>Belials Inkarnation</string>
+      <string>Encarnado de Belial</string>
+    </key>
+    <key name="BLUEBABY_NAME">
+      <string>???</string>
+      <string>？？？</string>
+      <string>???</string>
+      <string>???</string>
+      <string>???</string>
+      <string>???</string>
+      <string>???</string>
+    </key>
+    <key name="BLUEBABY_BIRTHRIGHT">
+      <string>Stronger spirit</string>
+      <string>より強い魂</string>
+      <string>더 강한 영혼</string>
+      <string>坚韧灵魂</string>
+      <string>Более сильный дух</string>
+      <string>Stärkerer Wille</string>
+      <string>Fortalece el espíritu</string>
+    </key>
+    <key name="EVE_NAME">
+      <string>Eve</string>
+      <string>イブ</string>
+      <string>이브</string>
+      <string>夏娃</string>
+      <string>Ева</string>
+      <string>Eva</string>
+      <string>Eva</string>
+    </key>
+    <key name="EVE_BIRTHRIGHT">
+      <string>Forever cursed</string>
+      <string>呪われたまま</string>
+      <string>영원한 저주</string>
+      <string>永远受诅</string>
+      <string>Навеки проклята</string>
+      <string>Für immer verflucht</string>
+      <string>Maldición de por vida</string>
+    </key>
+    <key name="SAMSON_NAME">
+      <string>Samson</string>
+      <string>サムソン</string>
+      <string>삼손</string>
+      <string>参孙</string>
+      <string>Самсон</string>
+      <string>Samson</string>
+      <string>Sansón</string>
+    </key>
+    <key name="SAMSON_BIRTHRIGHT">
+      <string>Rage up</string>
+      <string>怒りアップ</string>
+      <string>분노 증가</string>
+      <string>怒气上升</string>
+      <string>Ярость Повыш.</string>
+      <string>Wut hoch</string>
+      <string>+ Furia</string>
+    </key>
+    <key name="AZAZEL_NAME">
+      <string>Azazel</string>
+      <string>アザゼル</string>
+      <string>아자젤</string>
+      <string>阿撒泻勒</string>
+      <string>Азазель</string>
+      <string>Azazel</string>
+      <string>Azazel</string>
+    </key>
+    <key name="AZAZEL_BIRTHRIGHT">
+      <string>Wide breath</string>
+      <string>大きく息を吐いて</string>
+      <string>더 넓은 입김</string>
+      <string>大面积吐息</string>
+      <string>Широкое дыхание</string>
+      <string>Breiter Atem</string>
+      <string>Aliento amplificado</string>
+    </key>
+    <key name="LAZARUS_NAME">
+      <string>Lazarus</string>
+      <string>ラザラス</string>
+      <string>나사로</string>
+      <string>拉撒路</string>
+      <string>Лазарь</string>
+      <string>Lazarus</string>
+      <string>Lázaro</string>
+    </key>
+    <key name="LAZARUS_BIRTHRIGHT">
+      <string>Come back stronger</string>
+      <string>強くなって再登場</string>
+      <string>강해져서 돌아옴</string>
+      <string>复活后更强</string>
+      <string>Воскреснешь более сильным</string>
+      <string>Komm stärker zurück</string>
+      <string>Vuelve con más fuerza</string>
+    </key>
+    <key name="EDEN_NAME">
+      <string>Eden</string>
+      <string>エデン</string>
+      <string>에덴</string>
+      <string>伊甸</string>
+      <string>Эдем</string>
+      <string>Eden</string>
+      <string>Edén</string>
+    </key>
+    <key name="EDEN_BIRTHRIGHT">
+      <string>???</string>
+      <string>？？？</string>
+      <string>???</string>
+      <string>???</string>
+      <string>???</string>
+      <string>???</string>
+      <string>???</string>
+    </key>
+    <key name="THE_LOST_NAME">
+      <string>The Lost</string>
+      <string>ザ ロスト</string>
+      <string>더 로스트</string>
+      <string>游魂</string>
+      <string>Заблудший</string>
+      <string>Der Verlorene</string>
+      <string>El perdido</string>
+    </key>
+    <key name="THE_LOST_BIRTHRIGHT">
+      <string>Better destiny</string>
+      <string>マシな運命</string>
+      <string>더 나은 운명</string>
+      <string>更好的命运</string>
+      <string>Лучшая судьба</string>
+      <string>Besseres Schicksal</string>
+      <string>Mejora el destino</string>
+    </key>
+    <key name="LAZARUS2_NAME">
+      <string>Lazarus</string>
+      <string>ラザラス</string>
+      <string>나사로</string>
+      <string>拉撒路</string>
+      <string>Лазарь</string>
+      <string>Lazarus</string>
+      <string>Lázaro</string>
+    </key>
+    <key name="LAZARUS2_BIRTHRIGHT">
+      <string>Temporary DMG up</string>
+      <string>一時的にダメージアップ</string>
+      <string>일시적 공격력 증가</string>
+      <string>暂时性伤害上升</string>
+      <string>Временно Повыш. Урон</string>
+      <string>Temporär Schaden hoch</string>
+      <string>+ DAÑO (temporal)</string>
+    </key>
+    <key name="BLACK_JUDAS_NAME">
+      <string>Black Judas</string>
+      <string>ダーク ユダ</string>
+      <string>블랙 유다</string>
+      <string>犹大之影</string>
+      <string>Темный Иуда</string>
+      <string>Schwarzer Judas</string>
+      <string>Judas oscuro</string>
+    </key>
+    <key name="BLACK_JUDAS_BIRTHRIGHT">
+      <string>Belial incarnate</string>
+      <string>ベリアルの化身</string>
+      <string>벨리알의 화신</string>
+      <string>彼列化身</string>
+      <string>Воплощенный Белиал</string>
+      <string>Belials Inkarnation</string>
+      <string>Encarnado de Belial</string>
+    </key>
+    <key name="LILITH_NAME">
+      <string>Lilith</string>
+      <string>リリス</string>
+      <string>릴리트</string>
+      <string>莉莉丝</string>
+      <string>Лилит</string>
+      <string>Lilith</string>
+      <string>Lilit</string>
+    </key>
+    <key name="LILITH_BIRTHRIGHT">
+      <string>Offensive formation</string>
+      <string>いやーなフォーメーション</string>
+      <string>공격적 위치</string>
+      <string>进攻阵型</string>
+      <string>Атакующее построение</string>
+      <string>Offensivformation</string>
+      <string>Formación ofensiva</string>
+    </key>
+    <key name="KEEPER_NAME">
+      <string>Keeper</string>
+      <string>キーパー</string>
+      <string>키퍼</string>
+      <string>店主</string>
+      <string>Хранитель</string>
+      <string>Hüter</string>
+      <string>Custodio</string>
+    </key>
+    <key name="KEEPER_BIRTHRIGHT">
+      <string>Coin up</string>
+      <string>コインアップ</string>
+      <string>동전 증가</string>
+      <string>硬币增加</string>
+      <string>Больше монет</string>
+      <string>Münze hoch</string>
+      <string>+ Monedas</string>
+    </key>
+    <key name="APOLLYON_NAME">
+      <string>Apollyon</string>
+      <string>アポリオン</string>
+      <string>아폴리온</string>
+      <string>亚玻伦</string>
+      <string>Аполлион</string>
+      <string>Apollyon</string>
+      <string>Apolión</string>
+    </key>
+    <key name="APOLLYON_BIRTHRIGHT">
+      <string>Regurgitate</string>
+      <string>吐き出す</string>
+      <string>역류</string>
+      <string>反刍</string>
+      <string>Извергать</string>
+      <string>Hochwürgen</string>
+      <string>Regurgitación</string>
+    </key>
+    <key name="THE_FORGOTTEN_NAME">
+      <string>The Forgotten</string>
+      <string>ザ フォーガットン</string>
+      <string>더 포가튼</string>
+      <string>遗骸</string>
+      <string>Забытый</string>
+      <string>Der Vergessene</string>
+      <string>El Olvidado</string>
+    </key>
+    <key name="THE_FORGOTTEN_BIRTHRIGHT">
+      <string>Unchained</string>
+      <string>釈放</string>
+      <string>풀려난 자</string>
+      <string>消解桎梏</string>
+      <string>Неприкованный</string>
+      <string>Entfesselt</string>
+      <string>Desencadenado</string>
+    </key>
+    <key name="THE_SOUL_NAME">
+      <string>The Soul</string>
+      <string>ザ ソウル</string>
+      <string>더 소울</string>
+      <string>遗骸之魂</string>
+      <string>Душа</string>
+      <string>Die Seele</string>
+      <string>El alma</string>
+    </key>
+    <key name="THE_SOUL_BIRTHRIGHT">
+      <string>Unchained</string>
+      <string>釈放</string>
+      <string>풀려난 자</string>
+      <string>消解桎梏</string>
+      <string>Неприкованный</string>
+      <string>Entfesselt</string>
+      <string>Desencadenado</string>
+    </key>
+    <key name="BETHANY_NAME">
+      <string>Bethany</string>
+      <string>ベタニア</string>
+      <string>베다니</string>
+      <string>伯大尼</string>
+      <string>Вифания</string>
+      <string>Bethanie</string>
+      <string>Betania</string>
+    </key>
+    <key name="BETHANY_BIRTHRIGHT">
+      <string>Conserve your faith</string>
+      <string>自分を信じて</string>
+      <string>신앙의 보호</string>
+      <string>保持你的信仰</string>
+      <string>Сохрани свою веру</string>
+      <string>Bewahre deinen Glauben</string>
+      <string>Conserva tu fe</string>
+    </key>
+    <key name="JACOB_NAME">
+      <string>Jacob</string>
+      <string>ヤコブ</string>
+      <string>야곱</string>
+      <string>雅各</string>
+      <string>Иаков</string>
+      <string>Jakob</string>
+      <string>Jacob</string>
+    </key>
+    <key name="JACOB_BIRTHRIGHT">
+      <string>What's yours is mine</string>
+      <string>オマエのものはオレのもの</string>
+      <string>네건 내거</string>
+      <string>你的就是我的</string>
+      <string>Что твое, то мое</string>
+      <string>Alles meins</string>
+      <string>Lo tuyo es mío</string>
+    </key>
+    <key name="ESAU_NAME">
+      <string>Esau</string>
+      <string>エサウ</string>
+      <string>에사우</string>
+      <string>以扫</string>
+      <string>Исав</string>
+      <string>Esau</string>
+      <string>Esaú</string>
+    </key>
+    <key name="ESAU_BIRTHRIGHT">
+      <string>What's yours is mine</string>
+      <string>オマエのものはオレのもの</string>
+      <string>네건 내거</string>
+      <string>你的就是我的</string>
+      <string>Что твое, то мое</string>
+      <string>Alles meins</string>
+      <string>Lo tuyo es mío</string>
+    </key>
+    <key name="ISAAC_B_BIRTHRIGHT">
+      <string>Inventory up</string>
+      <string>インベントリアップ</string>
+      <string>인벤토리 증가</string>
+      <string>物品栏增加</string>
+      <string>Повыш. Инвентарь</string>
+      <string>Inventar hoch</string>
+      <string>+ Inventario</string>
+    </key>
+    <key name="MAGDALENE_B_BIRTHRIGHT">
+      <string>HP up!</string>
+      <string>ＨＰアップ！</string>
+      <string>체력 증가!</string>
+      <string>体力上升！</string>
+      <string>Повыш. ОЗ!</string>
+      <string>TP hoch!</string>
+      <string>¡+ PV!</string>
+    </key>
+    <key name="CAIN_B_BIRTHRIGHT">
+      <string>Salvage</string>
+      <string>回収</string>
+      <string>싹쓸이</string>
+      <string>拾荒</string>
+      <string>Спасение</string>
+      <string>Ausschlachten</string>
+      <string>Salvación</string>
+    </key>
+    <key name="JUDAS_B_BIRTHRIGHT">
+      <string>Extended darkness</string>
+      <string>真っ暗闇</string>
+      <string>확장된 어둠</string>
+      <string>黑暗蔓延</string>
+      <string>Расширенная темнота</string>
+      <string>Erweiterte Dunkelheit</string>
+      <string>Más tinieblas</string>
+    </key>
+    <key name="BLUEBABY_B_BIRTHRIGHT">
+      <string>Poop up</string>
+      <string>うんちアップ</string>
+      <string>응아 증가</string>
+      <string>大便增加</string>
+      <string>Повыш. Какашек</string>
+      <string>Kacke hoch</string>
+      <string>+ Caca</string>
+    </key>
+    <key name="EVE_B_BIRTHRIGHT">
+      <string>Coagulate</string>
+      <string>固める</string>
+      <string>응고</string>
+      <string>血液凝结</string>
+      <string>Коагуляция</string>
+      <string>Koagulieren</string>
+      <string>Coagulación</string>
+    </key>
+    <key name="SAMSON_B_BIRTHRIGHT">
+      <string>Unstoppable force</string>
+      <string>止められない何か</string>
+      <string>멈출 수 없는 힘</string>
+      <string>无坚不摧</string>
+      <string>Неудержимая сила</string>
+      <string>Unaufhaltbare Kraft</string>
+      <string>Fuerza imparable</string>
+    </key>
+    <key name="AZAZEL_B_BIRTHRIGHT">
+      <string>Stronger sneeze</string>
+      <string>強烈なハクション</string>
+      <string>더 강한 재채기</string>
+      <string>咳血强化</string>
+      <string>Усиленный чих</string>
+      <string>Stärkeres Niesen</string>
+      <string>Estornudo más fuerte</string>
+    </key>
+    <key name="LAZARUS_B_BIRTHRIGHT">
+      <string>Superposition</string>
+      <string>重ね合わせの原理</string>
+      <string>중첩</string>
+      <string>生死共存</string>
+      <string>Суперпозиция</string>
+      <string>Überlagerung</string>
+      <string>Superposición</string>
+    </key>
+    <key name="EDEN_B_BIRTHRIGHT">
+      <string>Eternal</string>
+      <string>エターナル</string>
+      <string>영원</string>
+      <string>永恒</string>
+      <string>Вечный</string>
+      <string>Ewig</string>
+      <string>Eterno</string>
+    </key>
+    <key name="THE_LOST_B_BIRTHRIGHT">
+      <string>Extra life</string>
+      <string>おかわりライフ</string>
+      <string>추가 목숨</string>
+      <string>加一条命</string>
+      <string>Дополнительная жизнь</string>
+      <string>Extraleben</string>
+      <string>Vida extra</string>
+    </key>
+    <key name="LILITH_B_BIRTHRIGHT">
+      <string>Conjoined</string>
+      <string>結びつき</string>
+      <string>샴쌍둥이</string>
+      <string>连体</string>
+      <string>Сросшийся</string>
+      <string>Verbunden</string>
+      <string>Siameses</string>
+    </key>
+    <key name="KEEPER_B_BIRTHRIGHT">
+      <string>Money money money</string>
+      <string>カネ、カネ、金！</string>
+      <string>돈 돈 돈</string>
+      <string>钱钱钱</string>
+      <string>Деньги деньги деньги</string>
+      <string>Geld-Geld-Geld</string>
+      <string>Dinero dinero dinero</string>
+    </key>
+    <key name="APOLLYON_B_BIRTHRIGHT">
+      <string>Torment</string>
+      <string>トーメント</string>
+      <string>고통</string>
+      <string>苦痛</string>
+      <string>Мучение</string>
+      <string>Qual</string>
+      <string>Tormento</string>
+    </key>
+    <key name="THE_FORGOTTEN_B_BIRTHRIGHT">
+      <string>Recall</string>
+      <string>リコール</string>
+      <string>회상</string>
+      <string>召回</string>
+      <string>Отзыв</string>
+      <string>Rückruf</string>
+      <string>Exhumación</string>
+    </key>
+    <key name="BETHANY_B_BIRTHRIGHT">
+      <string>Artifact</string>
+      <string>アーティファクト</string>
+      <string>아티팩트</string>
+      <string>神器召唤</string>
+      <string>Артефакт</string>
+      <string>Artefakt</string>
+      <string>Artefacto</string>
+    </key>
+    <key name="JACOB_B_BIRTHRIGHT">
+      <string>There is no escape</string>
+      <string>逃げ場はない</string>
+      <string>탈출 불가능</string>
+      <string>置于死地</string>
+      <string>Выхода нет</string>
+      <string>Es gibt kein Entkommen</string>
+      <string>No hay escapatoria</string>
+    </key>
+  </category> -->
+</stringtable>
+

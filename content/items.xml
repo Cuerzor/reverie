@@ -1,0 +1,111 @@
+<items gfxroot="gfx/items/" version="1" deathanm2="gfx/death items.anm2">
+    <active id="1" name="Yin-Yang Orb" description="Bouncing crusher" gfx="yin-yang_orb.png" maxcharges="2" quality="2" tags="offensive"/>
+    <passive id="2" name="Marisa's Broom" description="Also try mushrooms!" gfx="marisas_broom.png" quality="3" tags="summonable" cache="flying damage speed range"/>
+    <passive id="3" name="Dark Ribbon" description="Consuming darkness" gfx="dark_ribbon.png" devilprice="2" quality="4" tags="summonable offensive"/>
+    <passive id="4" name="Spring of Daiyousei" description="Blessing of fairies" gfx="spring_of_daiyousei.png" quality="4" tags="nocantrip nolostbr"/>
+    <active id="5" name="Rainbow Dragon Badge" description="Fight 'em!" gfx="rainbow_dragon_badge.png" maxcharges="110" chargetype="timed" quality="3" tags="offensive"/>
+    <familiar id="6" name="Koakuma Baby" description="Librarian buddy" gfx="koakuma_baby.png" devilprice="1" quality="1" cache="familiars" tags="summonable baby monstermanual" />
+    <active id="7" name="Grimoire of Patchouli" description="Seven elements" gfx="grimoire_of_patchouli.png" maxcharges="4" quality="3" tags="offensive book"/>
+    <passive id="8" name="Maid Suit" description="Perfect and elegant" gfx="maid_suit.png" quality="3" tags="offensive nocantrip nogreed"/>
+    <passive id="9" name="Tooth of Vampire" description="Accept your fate" gfx="tooth_of_vampire.png" devilprice="2" quality="4" tags="offensive" cache="damage luck flying"/>
+    <active id="10" name="Destruction" description="Cataclysm" gfx="destruction.png" devilprice="1" maxcharges="2" quality="2" tags="offensive" />
+    <active id="11" name="DELETED ERHU" description="REMOVE *" gfx="deleted_erhu.png" maxcharges="0" quality="2" tags="offensive"/>
+
+    <passive id="21" name="Frozen Sakura" description="Spring Snow" gfx="frozen_sakura.png" quality="3" tags="summonable offensive"/>
+    <familiar id="22" name="Chen Baby" description="Cheeeeeeeeeeeen!" gfx="chen_baby.png" quality="1" cache="familiars" tags="summonable baby monstermanual"/>
+    <familiar id="23" name="Shanghai Doll" description="Not the same as mine..." gfx="shanghai_doll.png" quality="2" cache="familiars" tags="summonable offensive"/>
+    <active id="24" name="Melancholic Violin" description="Gloom Totem" gfx="melancholic_violin.png" maxcharges="200" chargetype="timed" quality="1" tags="offensive"/>
+    <active id="25" name="Maniac Trumpet" description="Aggressive Totem" gfx="maniac_trumpet.png" maxcharges="200" chargetype="timed" quality="1" tags="offensive"/>
+    <active id="26" name="Illusionary Keyboard" description="Maneuverable Totem" gfx="illusionary_keyboard.png" maxcharges="200" chargetype="timed" quality="1" tags="offensive"/>
+    <active id="27" name="Roukanken" description="Roukan no ken wo ku ra e!" gfx="roukanken.png" quality="3" devilprice="2" tags="offensive" maxcharges="6"/>
+    <passive id="28" name="Fan of the Dead" description="Live to Death" gfx="fan_of_the_dead.png" quality="4" devilprice="2" tags="nolostbr nocantrip" cache="flying tearflag"/>
+    <passive id="29" name="Fried Tofu" description="Foxes' Favourite!" gfx="fried_tofu.png" maxhearts="2" hearts="4" quality="1" tags="nolostbr nocantrip food"/>
+    <passive id="30" name="One of Nine Tails" description="Power of Familiars" gfx="one_of_nine_tails.png" quality="3" tags="offensive nocantrip"/>
+    <active id="31" name="The Gap" description="Border of space" gfx="the_gap.png" maxcharges="4" quality="3" tags="offensive nocantrip nogreed"/>
+    <passive id="32" name="Starseeker" description="Far see the future" gfx="starseeker.png" quality="3" tags="offensive nocantrip stars"/>
+    <passive id="33" name="Pathseeker" description="Wide see the world" gfx="pathseeker.png" quality="2" tags="offensive nocantrip nogreed"/>
+    <passive id="34" name="Gourd-Shroom" description="You feel big and small" gfx="gourd_shroom.png" quality="2" tags="summonable nolostbr mushroom"/>
+    
+    <active id="41" name="Jar of Fireflies" description="Fire fire fireflies!" gfx="jar_of_fireflies.png" maxcharges="1" quality="2" tags="fly offensive"/>
+    <passive id="42" name="Song of Nightbird" description="Deaf to all but the songs" gfx="song_of_nightbird.png" quality="2" tags="summonable offensive"/>
+    <active id="43" name="Book of Years" description="Time changes" gfx="book_of_years.png" maxcharges="6" quality="4" tags="book offensive"/>
+    <passive id="44" name="Rabbit Trap" description="Watch your step!" gfx="rabbit_trap.png" cache="luck" quality="2" tags="summonable offensive nocantrip nogreed"/>
+    <familiar id="45" name="Illusion" description="What are you hiding?!" gfx="illusion.png" cache="familiars" quality="2" tags="summonable offensive"/>
+    <active id="46" name="Peerless Elixir" description="Caution: Overdose wil" gfx="peerless_elixir.png" maxcharges="4" quality="3" tags="offensive"/>
+    <passive id="47" name="Dragon Neck Jewel" description="Five-Colored Shots" gfx="dragon_neck_jewel.png" quality="3" devilprice="2" tags="summonable offensive"/>
+    <passive id="48" name="Buddha's Bowl" description="Indomitable Will" gfx="buddhas_bowl.png" quality="3" devilprice="2" tags="summonable nolostbr"/>
+    <passive id="49" name="Robe of Firerat" description="Unhurried Mind" gfx="robe_of_firerat.png" cache="familiars" quality="3" tags="summonable offensive"/>
+    <passive id="50" name="Swallow's Shell" description="Everlasting Life" gfx="swallows_shell.png" quality="3" tags="summonable offensive nocantrip"/>
+    <passive id="51" name="Jeweled Branch" description="Rainbow Danmaku" gfx="jeweled_branch.png" quality="3" tags="summonable offensive"/>
+    <passive id="52" name="Ash of Pheonix" description="Nirvana" gfx="ash_of_pheonix.png" quality="2"/>
+
+    <active id="61" name="Tengu Camera" description="Cheese!" gfx="tengu_camera.png" chargetype="timed" maxcharges="300" quality="2" tags="offensive nogreed"/>
+    <passive id="62" name="Sunflower Pot" description="Don't get it hurt!" gfx="sunflower_pot.png" quality="2" cache="familiars" tags="offensive nogreed"/>
+    <passive id="63" name="Continue?" description="Insert Coin" gfx="continue_arcade.png" coins="3" quality="2" tags=""/>
+    <active id="64" name="Rod of Remorse" description="Repent, then sacrifice" gfx="rod_of_remorse.png" quality="3" maxcharges="0" tags="nolostbr nogreed nocantrip"/>
+    <active id="65" name="Isaac's Last Wills" description="Dear diary: Today I died." gfx="isaacs_last_wills.png" maxcharges="0" quality="4" tags="offensive nocantrip nochallenge"/>
+    
+    <passive id="81" name="Leaf Shield" description="-W- GET EQUIPPED WITH LEAF SHIELD" gfx="leaf_shield.png" quality="2" tags="summonable offensive"/>
+    <passive id="82" name="Baked Sweet Potato" description="Both tasty and warmable" gfx="baked_sweet_potato.png" maxhearts="2" hearts="4" quality="1" tags="nolostbr nocantrip"/>
+    <passive id="83" name="Broken Amulet" description="You and monsters feel uncomfortable..." gfx="broken_amulet.png" devilprice="2" quality="3" cache="luck" tags="offensive summonable"/>
+    <active id="84" name="Extending Arm" description="Hold on tight!" gfx="extending_arm.png" maxcharges="30" chargetype="timed" quality="1" tags="nolostbr"/>
+    <active id="86" name="Benediction" description="Invoke the Gods" gfx="collectibles_86_benediction.png" maxcharges="12" initcharge="0" quality="4" tags="offensive nogreed"/>
+    <active id="90" name="Rune Sword" description="Runewords" gfx="rune_sword.png" maxcharges="6" cache="speed firedelay damage range shotspeed luck" quality="3" tags="offensive nocantrip"/>
+    
+    <passive id="102" name="Plague Lord" description="The cycle of life is over" gfx="plague_lord.png" quality="2" tags="offensive summonable"/>
+    <passive id="103" name="Green Eyed Envy" description="I'm envious!" gfx="green_eyed_envy.png" quality="0" tags="nogreed"/>
+    <passive id="104" name="Oni Horn" description="Knock out in three steps" gfx="oni_horn.png" quality="3" cache="damage" tags="nolostbr summonable"/>
+    <familiar id="105" name="Psyche Eye" description="Be one of Satori" gfx="psyche_eye.png" quality="3" cache="familiars" tags="summonable offensive"/>
+    <passive id="107" name="Technology 666" description="Made in Hell" gfx="1107_technology_666.png" quality="3" devilprice="2" tags="offensive summonable tech"/>
+    <active id="108" name="Psycho Knife" description="Watch     Your     Back" gfx="psycho_knife.png" maxcharges="150" chargetype="timed" quality="2" tags="offensive"/>
+
+    <passive id="121" name="Dowsing Rods" description="Fortunately, It's not an active item" gfx="dowsing_rods.png" quality="2" tags="offensive nocantrip"/>
+    <passive id="122" name="Scaring Umbrella" description="It's not funny" gfx="scaring_umbrella.png" cache="familiars" quality="1" tags="summonable"/>
+    <active id="125" name="Bishamonten's Pagota" description="Oh shiny!" gfx="bishamontens_pagota.png" initcharge="0" maxcharges="12" chargetype="special" quality="3" tags="offensive nogreed"/>
+    <active id="126" name="Sorcerer's Scroll" description="Strengthen your body" gfx="sorcerers_scroll.png" maxcharges="4" quality="2" tags="nolostbr"/>
+    <active id="127" name="Saucer Remote" description="Incoming!" gfx="saucer_remote.png" maxcharges="4" quality="4" tags="offensive nogreed"/>
+    <active id="128" name="Tengu Cellphone" description="Search for goods!" gfx="tengu_cellphone.png" maxcharges="2" quality="2" tags="offensive"/>
+    
+    <passive id="141" name="Mountain Ear" description="Mountain Ear" gfx="mountain_ear.png" quality="2" tags="offensive summonable"/>
+    <passive id="142" name="Zombie Infestation" description="Yoshika has successfully eliminated all life on Earth." gfx="zombie_infestation.png" quality="2" tags="offensive summonable"/>
+    <active id="143" name="Warpping Hairpin" description="What's in the other side?" gfx="warpping_hairpin.png" maxcharges="90" chargetype="timed" quality="2" tags="nocantrip"/>
+    <active id="147" name="D2147483647" description="Active mimic" gfx="d2147483647.png" maxcharges="12" quality="4" tags="nocantrip"/>
+    <active id="148" name="Empty Book" description="What are you going to write on it?" gfx="empty_book.png" maxcharges="0" quality="3" tags="offensive book nocantrip"/>
+    <active id="149" name="My Manual" description="It's writen by me!" gfx="kosuzu_manual.png" maxcharges="1" quality="3" hidden="true" tags="offensive book nocantrip"/>
+    <active id="150" name="My Guide" description="It's writen by me!" gfx="kosuzu_guide.png" maxcharges="3" quality="3" hidden="true" tags="offensive book nocantrip"/>
+    <active id="151" name="My History" description="It's writen by me!" gfx="kosuzu_history.png" maxcharges="6" quality="3" hidden="true" tags="offensive book nocantrip"/>
+    <passive id="152" name="The Infamies" description="Fragile, thy name is heart" gfx="the_infamies.png" quality="2" cache="firedelay damage speed luck" tags="summonable offensive"/>
+    
+    <familiar id="162" name="Sekibanki's Head" description="Isn't she cute?" gfx="sekibankis_head.png" quality="2" cache="familiars" tags="summonable offensive monstermanual" />
+    <active id="166" name="D Flip" description="umop-ap!sdn" gfx="d_flip.png" quality="4" maxcharges="3" tags="offensive" />
+    <active id="167" name="Miracle Mallet" description="Tell me your wish" gfx="1407_miracle_mallet.png" quality="3" maxcharges="0" tags="offensive nocantrip" />
+
+    <passive id="183" name="Dream Soul" description="Wake up" gfx="doremy/dream_soul.png" quality="0" tags="offensive noeden lazarussharedglobal quest"/>
+    <passive id="184" name="Vicious Curse" description="I wish you were stabbed to death" gfx="vicious_curse.png" quality="0" tags="nolostbr"/>
+    <passive id="186" name="Pure Fury" description="DMG up" gfx="pure_fury.png" quality="4" cache="damage" tags="summonable offensive"/>
+    <passive id="188" name="Dad's Shares" description="Can ABSOLUTELY earn!" gfx="dads_shares.png" quality="1" tags="offensive nogreed nocantrip"/>
+    <passive id="189" name="Mom's IOU" description="Money! But at what cost...?" gfx="moms_iou.png" quality="1" cache="luck" shopprice="1" tags="offensive nogreed mom nocantrip"/>
+    
+    <familiar id="204" name="Golem of Isaac" description="My imitator" gfx="golem_of_isaac.png" quality="2" cache="familiars" tags="summonable offensive"/>
+
+    <active id="221" name="Fetus Blood" description="Rebone" gfx="fetus_blood.png" maxcharges="240" chargetype="timed" quality="2" hidden="true" tags="offensive"/>
+    <passive id="224" name="Kiketsu Family's Blackmail" description="Obey or Die" gfx="kiketsu_familiars_blackmail.png" quality="2" tags="offensive summonable"/>
+    <passive id="228" name="Hunger" description="Desire drives you" gfx="hunger.png" quality="2" cache="speed damage firedelay" tags="nocantrip"/>
+        
+    <active id="242" name="Yamawaro's Crate" description="Item storage" gfx="yamawaros_crate.png" maxcharges="0" quality="2" tags="offensive"/>
+    <passive id="245" name="Fox in Tube" description="How could I lie to you?" gfx="fox_in_tube.png" quality="2" tags="offensive"/>
+    <passive id="246" name="Daitengu Telescope" description="Stars are falling..." gfx="daitengu_telescope.png" quality="2" tags="offensive stars"/>
+    <active id="247" name="Exchange Ticket" description="Each takes what he needs" gfx="exchange_ticket.png" maxcharges="6" quality="3" tags="offensive"/>
+    <passive id="248" name="Curse of Centipede" description="MMMMuuuuttttiiiipppplllleeee" gfx="curse_of_centipede.png" devilprice="2" quality="4" tags="offensive"/>
+
+
+    
+	<trinket id="603" name="Frozen Frog" description="Ice Touch" gfx="frozen_frog.png" />
+	<trinket id="704" name="Aromatic Flower" description="Spring Die Twice" gfx="aromatic_flower.png" />
+	<trinket id="752" name="Glasses of Knowledge" description="All stats up...for each item." gfx="glasses_of_knowledge.png" cache="damage firedelay speed range" />
+	<trinket id="803" name="Corroded Doll" description="Don't touch it!" gfx="corroded_doll.png"/>
+    <trinket id="1401" name="Merman Shell" tags="nogreed" description="Aqua Affinity" gfx="merman_shell.png"/>
+	<trinket id="1604" name="Lion Statue" description="Guardian Beast" gfx="lion_statue.png" />
+	<trinket id="1802" name="Fortune Cat Paw" description="Business is booming" gfx="fortune_cat_paw.png" />
+
+</items>

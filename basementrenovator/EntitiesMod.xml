@@ -1,0 +1,18 @@
+<data>
+    <entity Group="(Reverie)" ID="581" Image="Entities/581.0.0 - The Abandoned.png" Kind="Bosses" Name="The Abandoned" Variant="0" Subtype="0" />
+
+    <entity Group="(Reverie)" ID="582" Image="Entities/582.0.0 - Necrospyder.png" Kind="Bosses" PlaceVisual="0,1" Name="Necrospyder" Variant="0" Subtype="0" />
+    
+    <entity Group="(Reverie)" ID="583" Image="Entities/583.0.0 - The Centipede.png" Kind="Bosses" PlaceVisual="0,0.5" Name="The Centipede" Variant="0" Subtype="0" />
+    
+    <entity Group="(Reverie)" ID="584" Image="Entities/584.0.0 - Pyroplume.png" Kind="Bosses" Name="Pyroplume" Variant="0" Subtype="0" />
+    <entity Group="(Reverie)" ID="584" Image="Entities/584.1.0 - Pyroplume 2.png" Kind="Bosses" Name="Pyroplume 2" Variant="1" Subtype="0" />
+    <entity Group="(Reverie)" ID="584" Image="Entities/584.2.0 - Pyroplume 3.png" Kind="Bosses" Name="Pyroplume 3" Variant="2" Subtype="0" />
+    
+    <entity Group="(Reverie)" ID="585" Image="Entities/585.0.0 - The Summoner.png" Kind="Bosses" Name="The Summoner" Variant="0" Subtype="0" />
+    <entity Group="(Reverie)" ID="585" Image="Entities/585.1.0 - The Immortal.png" Kind="Bosses" Name="The Immortal" Variant="1" Subtype="0" />
+
+    <entity Group="(Reverie)" ID="586" Image="Entities/586.0.0 - Devilcrow.png" Kind="Bosses" PlaceVisual="0,2" Name="Devilcrow" Variant="0" Subtype="0" />
+
+    <entity Group="(Reverie)" ID="587" Image="Entities/587.0.0 - Guppet.png" Kind="Bosses" Name="Guppet" Variant="0" Subtype="0" />
+</data>

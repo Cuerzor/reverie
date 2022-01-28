@@ -1,0 +1,180 @@
+<entities anm2root="gfx/" version="5" deathanm2="gfx/death enemies.anm2">
+
+    <entity name="Yin-Yang Orb" anm2path="yin-yang_orb.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="12" collisionRadius="11" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5810" />
+    <entity name="Maid Knife" anm2path="maid_knife.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="5811" />
+    <entity name="Meteor Frag" anm2path="meteor.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" gibAmount="6" gibFlags="rock dust" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5812">
+        <gibs amount="6" blood="0" bone="0" eye="0" gut="0" large="0" rock="1" dust="1" />
+    </entity>
+    <entity name="Probe Tear" anm2path="probe_tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5813" />
+    <entity name="Echo Tear" anm2path="002.5814_echo tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5814" />
+    <entity name="Echo Blood Tear" anm2path="002.5815_echo blood tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5815" />
+
+    <entity name="Koakuma Baby" anm2path="koakuma_baby.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5811" />
+    <entity name="Chen Baby" anm2path="chen_baby.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5812" />
+    <entity name="Shanghai Doll" anm2path="shanghai_doll.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5813" />
+    <entity name="Isaac Golem" anm2path="isaac_golem.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="100" collisionRadius="13" friction="1" gridCollision="ground" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5814" />
+    <entity name="Rabbit Illusion" anm2path="illusion.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5815" />
+    <entity name="Robe Fire" anm2path="grid/effect_005_fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="10" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5816" />
+    <entity name="Psyche Eye Familiar" anm2path="003.007_psyche_eye.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5817" />
+    <entity name="Sunflower Pot" anm2path="sunflower_pot.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5818" />
+    <entity name="Leaf Shield Ring" anm2path="leaf_shield_ring.anm2" baseHP="0" boss="0" champion="0" collisionDamage="4" collisionMass="0" collisionRadius="36" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5819" />
+    <entity name="Scaring Umbrella" anm2path="scaring_umbrella.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5820" />
+    <entity name="Extending Arm" anm2path="extending_arm.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="1000" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="5820" />
+    <entity name="Sekibanki Head" anm2path="003.5821_sekibanki head.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="7" collisionInterval="4" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5821" />
+    <entity name="Roukanken Hitbox" anm2path="roukanken.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="6400" />
+
+    <entity name="Spring Fairy" anm2path="spring_fairy.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="17" stageHP="0" variant="5810" gridCollision="walls" />
+    <entity name="Starseeker Ball" anm2path="starseeker_ball.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="5811" tags="noreroll" reroll="false" />
+    <entity name="Cheese Food" anm2path="food_cheese.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" subtype="1" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="5812" />
+    <entity name="Bread Food" anm2path="food_bread.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" subtype="2" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="5812" />
+    <entity name="Steak Food" anm2path="food_steak.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" subtype="3" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="5812" />
+    <entity name="Fox's Advice Bottle" anm2path="foxs_advice_bottle.anm2" baseHP="3" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="5813" tags="noreroll" reroll="false" />
+
+    <entity name="Roukanken" anm2path="roukanken.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5810" />
+    <entity name="Blade Rock" anm2path="blade_rock.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="8" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="5811" />
+    <entity name="Rock Sword" anm2path="008.010_spirit sword.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="80" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5812" />
+
+    <entity name="Onfire Fly" anm2path="onfirefly.anm2" reroll="true" baseHP="5" boss="0" champion="0" collisionDamage="1" collisionMass="3" collisionRadius="17" friction="1" id="18" numGridCollisionPoints="4" shadowSize="11" stageHP="0" variant="5810" portrait="5" gridCollision="walls" tags="fly" />
+
+
+    <entity name="Pickup Effect" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5809" />
+    <entity name="Dark Halo" anm2path="dark_halo.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5810" />
+    <entity name="Fairy Particle" anm2path="fairy_particle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5811" />
+    <entity name="Fairy Effect" anm2path="spring_fairy.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="17" stageHP="0" variant="5812" />
+    <entity name="Rainbow Player Trail" anm2path="rainbow_trail.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5813" />
+    <entity name="Knife Spawner" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="100" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5815" />
+    <entity name="Meteor" anm2path="meteor.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" gibAmount="30" gibFlags="rock dust" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="5816">
+        <gibs amount="30" blood="0" bone="0" eye="0" gut="0" large="0" rock="1" dust="1" />
+    </entity>
+    <entity name="Meteor Ring" anm2path="meteor_ring.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5817" />
+    <entity name="Small Explosion" anm2path="small_explosion.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5818" />
+    <entity name="Freeze Halo" anm2path="freeze_halo.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5819" />
+    <entity name="Flying Instrument" anm2path="flying_instrument.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="24" stageHP="0" variant="5820" subtype="0" />
+    <entity name="Music Wave" anm2path="music_wave.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5821" />
+    <entity name="Note" anm2path="note.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5822" />
+    <entity name="Gap" anm2path="the_gap.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5823" />
+    <entity name="Rabbit Trap" anm2path="rabbit_trap.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="90" subtype="5810" />
+    <entity name="Tengu Spotlight" anm2path="spotlight.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5824" />
+    <entity name="Midas Flash" anm2path="midas_flash.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5825" />
+    <entity name="Idle Rocket" anm2path="rocket_idle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5826" subtype="1" />
+    <entity name="Knife Parent" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5826" subtype="2" />
+    <entity name="Psycho Slash" anm2path="1000.5827_psycho_slash.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5827" />
+    <entity name="Damage Source Alternate" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5828" />
+    <entity name="Psyche Eye Vessel" anm2path="003.007_psyche_eye.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5829" />
+    <entity name="Devilcrow Rocket (Up)" anm2path="1000.5830_devilcrow_rocket.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5830" />
+    <entity name="Devilcrow Rocket (Down)" anm2path="1000.5830_devilcrow_rocket.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5830" subtype="1" />
+    <entity name="Abandoned Boo Text" anm2path="1000.5831_abandoned boo text.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5831" />
+    <entity name="Necrospyder Hole" anm2path="1000.5832_necrospyder hole.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5832" />
+    <entity name="Holy Thunder" anm2path="1000.5833_holy thunder.anm2" baseHP="0" boss="0" champion="0" collisionDamage="7" collisionMass="0" collisionRadius="12" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5833" />
+    <entity name="Summoning Magic Circle" anm2path="1000.5834.000_summoning magic circle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5834" />
+    <entity name="Magic Cluster" anm2path="1000.5835_magic cluster.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5835" />
+    <entity name="Magic Cluster Head" anm2path="1000.5835_magic cluster.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5835" subtype="1" />
+    <entity name="Purple Magic Circle Fire" anm2path="1000.5836.000_purple magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" />
+    <entity name="Red Magic Circle Fire" anm2path="1000.5836.001_red magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="1" />
+    <entity name="Curse Magic Circle Fire" anm2path="1000.5836.002_curse magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="2" />
+    <entity name="Black Magic Circle Fire" anm2path="1000.5836.003_black magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="3" />
+    <entity name="Grey Magic Circle Fire" anm2path="1000.5836.004_grey magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="4" />
+    <entity anm2path="1000.144_enemy ghost.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="8" collisionRadius="8" friction="1" id="1000" name="Summoner Ghost" numGridCollisionPoints="0" shadowSize="10" stageHP="0" variant="5837">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0"/>
+    </entity>
+
+    
+    <entity anm2path="581.000_the abandoned.anm2" baseHP="300" boss="1" bossID="5811" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="20" friction="1" gridCollision="none" id="581" name="The Abandoned" numGridCollisionPoints="8" shieldStrength="0" portrait="2" shadowSize="25" stageHP="0" variant="0" tags="nodelirium ghost" >
+        <bestiary anim="Idle" transform="0,0,1"/>
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0"/>
+    </entity>
+    <entity anm2path="581.001_abandoned water ball.anm2" baseHP="10" boss="0" champion="0" collisionDamage="1" collisionMass="20" collisionRadius="13" gridCollision="walls" friction="1" id="581" name="Abandoned Water Ball" numGridCollisionPoints="16" portrait="2" shadowSize="16" stageHP="0" variant="1">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0"/>
+    </entity>
+    
+    <entity anm2path="582.000_necrospyder.anm2" baseHP="240" boss="1" bossID="5812" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="30" friction="1" gridCollision="none" id="582" name="Necrospyder" numGridCollisionPoints="8" shieldStrength="0" portrait="3" shadowSize="30" stageHP="0" variant="0" tags="nodelirium" >
+        <bestiary anim="Idle" transform="0,-32,1"/>
+        <gibs amount="8" blood="1" bone="0" eye="1" gut="1" large="1"/>
+    </entity>
+    
+    <entity anm2path="583.000_the centipede.anm2" baseHP="120" boss="1" bossID="5813" champion="0" collisionDamage="1" collisionMass="50" collisionRadius="20" friction="1" gridCollision="walls" id="583" name="The Centipede" numGridCollisionPoints="8" shieldStrength="3" portrait="4" shadowSize="25" stageHP="0" variant="0" tags="nodelirium">
+        <bestiary anim="WalkHeadHori" transform="0,0,1"/>
+        <gibs amount="8" blood="1" bone="1" eye="0" gut="1" large="0"/>
+        <preload-snd id="115"/>
+    </entity>
+
+    <entity anm2path="584.000_pyroplume.anm2" baseHP="75" boss="1" bossID="5814" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="584" name="Pyroplume" numGridCollisionPoints="12" shieldStrength="2" portrait="5" shadowSize="0" stageHP="0" variant="0" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,-8,1"/>
+        <gibs amount="10" blood="0" bone="0" dust="1" eye="0" gut="0" large="0"/>
+    </entity>
+    <entity anm2path="584.001_pyroplume 2.anm2" baseHP="150" boss="1" bossID="5814" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="584" name="Pyroplume 2" numGridCollisionPoints="12" shieldStrength="4" portrait="5" shadowSize="0" stageHP="0" variant="1" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,-8,1"/>
+        <gibs amount="10" blood="0" bone="0" dust="1" eye="0" gut="0" large="0"/>
+    </entity>
+
+    <entity anm2path="584.002_pyroplume 3.anm2" baseHP="300" boss="1" bossID="5814" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="584" name="Pyroplume 3" numGridCollisionPoints="12" shieldStrength="6" portrait="5" shadowSize="0" stageHP="0" variant="2" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,-8,1"/>
+        <gibs amount="10" blood="0" bone="0" dust="1" eye="0" gut="0" large="0"/>
+    </entity>
+
+    <entity anm2path="585.000_the summoner.anm2" baseHP="700" boss="1" bossID="5815" champion="0" collisionDamage="1" collisionMass="40" collisionRadius="12" friction="1" gridCollision="walls" id="585" name="The Summoner" numGridCollisionPoints="12" shieldStrength="6" portrait="6" shadowSize="12" stageHP="0" variant="0" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,0,1"/>
+        <gibs amount="1" blood="0" bone="0" dust="0" eye="0" gut="0" large="1"/>
+    </entity>
+
+    <entity anm2path="585.001_the immortal.anm2" baseHP="0" boss="0" bossID="0" champion="0" collisionDamage="1" collisionMass="40" collisionRadius="12" friction="1" gridCollision="ground" id="585" name="The Immortal" numGridCollisionPoints="12" shieldStrength="0" portrait="10" shadowSize="12" stageHP="0" variant="1" shutdoors="false" tags="nodelirium">
+        <bestiary anim="WalkDown" transform="0,0,1"/>
+        <gibs amount="1" blood="5" bone="10" dust="0" eye="0" gut="0" large="0"/>
+    </entity>
+
+    <entity anm2path="585.002_evil spirit.anm2" baseHP="0" boss="0" bossID="0" champion="0" collisionDamage="1" collisionMass="40" collisionRadius="24" friction="1" gridCollision="walls" id="585" name="Evil Spirit" numGridCollisionPoints="12" shieldStrength="0" portrait="6" shadowSize="0" stageHP="0" variant="2" shutdoors="false" tags="nodelirium noreroll" />
+
+
+    <entity name="Devilcrow" id="586" variant="0" anm2path="586.000_devilcrow.anm2" boss="1" baseHP="500"
+    bossID="5816" 
+    collisionDamage="1" collisionRadius="40" collisionRadiusYMulti="2" numGridCollisionPoints="24" collisionMass="100" friction="0" shadowSize="48"
+    tags="nodelirium noreroll" gridCollision="walls" reroll="false" shutdoors="true" shieldStrength="30" portrait="7" >
+        <bestiary transform="0,-20,0.5" anim="Bestiary" />
+        <gibs amount="30" blood="0" bone="0" dust="1" eye="0" gut="0" large="0" rock="1"/>
+    </entity>
+    <entity name="Devilcrow Waste Bucket" id="586" variant="1" anm2path="586.001_devilcrow_waste_bucket.anm2" boss="0" baseHP="10"
+    collisionDamage="1" collisionRadius="24" collisionRadiusYMulti="0.5" numGridCollisionPoints="12" collisionMass="12" friction="1" shadowSize="12"
+    tags="noreroll" reroll="false" shutdoors="false" portrait="9" />
+
+    <entity anm2path="587.000_guppet.anm2" baseHP="1000" boss="1" bossID="5817" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="587" name="Guppet" numGridCollisionPoints="12" shieldStrength="10" portrait="8" shadowSize="32" stageHP="0" variant="0" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,-8,1"/>
+        <gibs amount="1" blood="1" bone="0" eye="0" gut="1" large="1"/>
+    </entity>
+
+    <entity name="Trader (Normal)" anm2path="trader_normal.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="0" tags="noreroll" reroll="false" shutdoors="false" />
+    <entity name="Trader (Shop)" anm2path="trader_shop.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="1"  tags="noreroll" reroll="false" shutdoors="false" />
+    <entity name="Trader (Secret)" anm2path="trader_secret.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="2"  tags="noreroll" reroll="false" shutdoors="false" />
+    <entity name="Trader (Boss)" anm2path="trader_boss.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="3"  tags="noreroll" reroll="false" shutdoors="false" />
+    <entity name="Trader (Devil)" anm2path="trader_devil.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="4"  tags="noreroll" reroll="false" shutdoors="false" />
+    <entity name="Trader (Angel)" anm2path="trader_angel.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="5"  tags="noreroll" reroll="false" shutdoors="false" />
+    <entity name="Trader (Curse)" anm2path="trader_curse.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="6"  tags="noreroll" reroll="false" shutdoors="false" />
+
+    <entity name="Blood Boney" id="227" variant="5810" reroll="true" baseHP="12" stageHP="4" shieldStrength="20" boss="0" champion="0" collisionDamage="3" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="14" portrait="104" anm2path="blood_boney.anm2">
+        <gibs amount="10" blood="1" bone="0" eye="0" gut="1" large="1" />
+		<preload id="9" variant="1" />
+        <preload-snd id="116" /> <!-- SOUND_MONSTER_ROAR_1 -->
+        <preload-snd id="249" /> <!-- SOUND_SCAMPER -->
+    </entity>
+    <entity name="Red Bonus UFO" id="990" variant="0" anm2path="red_bonus_ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="5810"  collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
+    <entity name="Blue Bonus UFO" id="990" variant="1" anm2path="blue_bonus_ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="5810"  collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
+    <entity name="Green Bonus UFO" id="990" variant="2" anm2path="green_bonus_ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="5810"  collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
+    <entity name="Rainbow Bonus UFO" id="990" variant="3" anm2path="rainbow_bonus_ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="5810"  collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
+    
+    <entity name="Dream World Backdrop" anm2path="doremy/backdrop/dream_world_backdrop.anm2" id="1000" variant="58123" subtype="0" collisionRadius="0" numGridCollisionPoints="0" />
+    <entity name="Dream World Backdground" anm2path="doremy/backdrop/dream_world_background.anm2" id="1000" variant="58123" subtype="1" collisionRadius="0" numGridCollisionPoints="0" />
+    <entity name="Doremy Spell Card Backdground" anm2path="doremy/backdrop/spell_card_background.anm2" id="1000" variant="58123" subtype="2" collisionRadius="0" numGridCollisionPoints="0" />
+    <entity name="Spell Card Leaf" anm2path="doremy/effects/spell_card_leaf.anm2" id="1000" variant="58124" friction="1" collisionRadius="0" numGridCollisionPoints="0" />
+    <entity name="Spell Card Wave" anm2path="doremy/effects/spell_card_wave.anm2" id="1000" variant="58125" collisionRadius="0" numGridCollisionPoints="0" />
+    <entity name="Doremy Image" anm2path="doremy/bosses/doremy.anm2" id="1000" variant="58126" collisionRadius="0" numGridCollisionPoints="0" shadowSize="16" />
+    <entity name="Isaac Image" anm2path="doremy/effects/isaac_image.anm2" id="1000" variant="58126" subtype="1" collisionRadius="0" numGridCollisionPoints="0" shadowSize="16" />
+    <entity name="Dream Cushion" anm2path="doremy/effects/dream_cushion.anm2" id="1000" variant="58127" subtype="0" collisionRadius="0" numGridCollisionPoints="0" />
+    <entity name="Doremy Sweet" id="998" variant="58123" anm2path="doremy/bosses/doremy.anm2" boss="1" baseHP="4000"
+    bossID="58123" 
+    collisionDamage="1" collisionRadius="16" numGridCollisionPoints="8" collisionMass="100" friction="1" shadowSize="16"
+    tags="nodelirium noreroll" gridCollision="walls" reroll="false" shutdoors="true" shieldStrength="60" portrait="0" >
+        <bestiary transform="0,0,1" anim="Idle" />
+    </entity>
+
+    <entity baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" name="Wheelchair Hitbox" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5555"/>
+    <entity anm2path="komeiji_meter.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Komeiji Meter" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5555"/>
+</entities>

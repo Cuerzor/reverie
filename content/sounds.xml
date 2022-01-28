@@ -1,0 +1,92 @@
+<sounds root="sfx/">
+	<sound name="Fairy Heal">
+		<sample weight="1" path="fairy_heal.wav" />
+	</sound>
+	<sound name="Touhou Charge">
+		<sample weight="1" path="touhou/charge.wav" />
+	</sound>
+	<sound name="Touhou Charge Release">
+		<sample weight="1" path="touhou/charge_release.wav" />
+	</sound>
+	<sound name="Touhou Danmaku">
+		<sample weight="1" path="touhou/danmaku.wav" />
+	</sound>
+	<sound name="Touhou Destroy">
+		<sample weight="1" path="touhou/destroy.wav" />
+	</sound>
+	<sound name="Touhou Laser">
+		<sample weight="1" path="touhou/laser.wav" />
+	</sound>
+	<sound name="Touhou Spell Card">
+		<sample weight="1" path="touhou/spell_card.wav" />
+	</sound>
+	<sound name="Mind Control">
+		<sample weight="1" path="mind_control.wav" />
+	</sound>
+	<sound name="Execute">
+		<sample weight="1" path="execute.wav" />
+	</sound>
+	<sound name="Centipede">
+		<sample weight="1" path="centipede.wav" />
+	</sound>
+	<sound name="Hook Catch">
+		<sample weight="1" path="hook_catch.wav" />
+	</sound>
+	<sound name="Fault">
+		<sample weight="1" path="fault.wav" />
+	</sound>
+	<sound name="Radar">
+		<sample weight="1" path="radar.wav" />
+	</sound>
+	<sound name="UFO">
+		<sample weight="1" path="ufo.wav" />
+	</sound>
+	<sound name="UFO Alert">
+		<sample weight="1" path="ufo_alert.wav" />
+	</sound>
+	<sound name="Scifi Mech">
+		<sample weight="1" path="scifi_mech.wav" />
+	</sound>
+	<sound name="Scifi Laser">
+		<sample weight="1" path="scifi_laser.wav" />
+	</sound>
+	<sound name="Nuclear Alert">
+		<sample weight="1" path="nuclear_alert.wav" />
+	</sound>
+	<sound name="Thunder Shock">
+		<sample weight="1" path="thunder_shock1.wav" />
+		<sample weight="1" path="thunder_shock2.wav" />
+		<sample weight="1" path="thunder_shock3.wav" />
+	</sound>
+
+	
+	<sound name="Magic Impact">
+		<sample weight="1" path="magic_impact1.wav" />
+		<sample weight="1" path="magic_impact2.wav" />
+		<sample weight="1" path="magic_impact3.wav" />
+	</sound>
+	<sound name="Curse Cast">
+		<sample weight="1" path="curse_cast.wav" />
+	</sound>
+	<sound name="Fearness Curse">
+		<sample weight="1" path="curse_fearness.wav" />
+	</sound>
+	<sound name="Corpse Explode Cast">
+		<sample weight="1" path="corpse_explode_cast.wav" />
+	</sound>
+	<sound name="Revive Skeleton Cast">
+		<sample weight="1" path="revive_skeleton_cast.wav" />
+	</sound>
+	<sound name="Bone Cast">
+		<sample weight="1" path="bone_cast.wav" />
+	</sound>
+	<sound name="Summoner Death">
+		<sample weight="1" path="summoner_death.wav" />
+	</sound>
+	<sound name="Diablo Identify">
+		<sample weight="1" path="diablo/identify.wav" />
+	</sound>
+	<sound name="Diablo Scroll">
+		<sample weight="1" path="diablo/scroll.wav" />
+	</sound>
+</sounds>

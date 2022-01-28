@@ -1,0 +1,3 @@
+<bosses root="gfx/ui/boss/" anm2="versusscreen.anm2">
+    <boss id="5810" name="Devilcrow" nameimage="BossName_586.0_Devilcrow.png" portrait="Portrait_586.0_Devilcrow.png" pivotX="96" pivotY="140" />
+</bosses>
