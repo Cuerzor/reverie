@@ -7,7 +7,7 @@ local Dice = ModItem("D2147483647", "DLimit");
 local config = Isaac.GetItemConfig();
 
 local FrameSprite = Sprite();
-FrameSprite:Load("gfx/ui/select_frame.anm2", true);
+FrameSprite:Load("gfx/reverie/ui/select_frame.anm2", true);
 FrameSprite:SetFrame("Frame", 0);
 FrameSprite.Scale = Vector(0.5, 0.5);
 
@@ -30,10 +30,14 @@ local HUDHeight = 5;
 local HUDSize = HUDWidth * HUDHeight;
 local maxPage = math.ceil(#ActiveList / (HUDSize - 1));
 
-function Dice.UpdateActiveList()
+function Dice.UpdateActiveList(player)
     local diff = 0;
     if (THI.IsLunatic()) then
         diff = 1;
+    end
+    local Seija = THI.Players.Seija;
+    if (Seija:WillPlayerNerf(player)) then
+        diff = 2;
     end
 
     if (diff ~= ActiveDifficulty) then
@@ -42,6 +46,15 @@ function Dice.UpdateActiveList()
             for i = #ActiveList, 1, -1 do
                 local active = ActiveList[i];
                 if (active == CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE) then
+                    table.remove(ActiveList, i);
+                end
+            end
+        elseif (diff == 2) then
+            local itemConfig = Isaac.GetItemConfig();
+            for i = #ActiveList, 1, -1 do
+                local active = ActiveList[i];
+                local config = itemConfig:GetCollectible(active);
+                if (config and config.Quality > 1) then
                     table.remove(ActiveList, i);
                 end
             end
@@ -64,14 +77,15 @@ end
 
 function Dice:GetPlayerData(player, init)
     return Dice:GetData(player, init, function() return {
-        SelectedItem = -1,
+        SelectedItem = nil,
         Choice = 1,
         Page = 1,
         ChargesAfterUse = 0,
         UsedItemSlot = -1,
         UsedItem = 0,
         UsedItemCharge = 0,
-        Sprites = {}
+        Sprites = {},
+        UsedThisFrame = false
     } end);
 end
 
@@ -94,7 +108,7 @@ local function ChangeItemSprite(sprite, item)
     if (item == 0) then
         gfx = "";
     elseif (item == -1) then
-        gfx = "gfx/ui/cancel.png";
+        gfx = "gfx/reverie/ui/cancel.png";
     else
         gfx = config:GetCollectible(item).GfxFileName;
     end
@@ -167,12 +181,15 @@ local function IsSelecting(player)
     return HoldingActive:GetHoldingItem(player) == Dice.Item;
 end
 
-function Dice:PostPlayerEffect(player)
+function Dice:PostPlayerUpdate(player)
     -- Move the Cursor.
+    local actionTrigger = Input.IsActionTriggered;
+    -- Move.
     if (IsSelecting(player)) then
 
         local playerData = Dice:GetPlayerData(player, true);
-        if (Inputs.IsActionDown(ButtonAction.ACTION_SHOOTLEFT, player.ControllerIndex)) then
+        -- Move Left.
+        if (actionTrigger(ButtonAction.ACTION_SHOOTLEFT, player.ControllerIndex)) then
             SelectLeft(playerData);
             
             local times = 0;
@@ -185,22 +202,24 @@ function Dice:PostPlayerEffect(player)
                 end
             end
         end
-        if (Inputs.IsActionDown(ButtonAction.ACTION_SHOOTRIGHT, player.ControllerIndex)) then
+        -- Move Right.
+        if (actionTrigger(ButtonAction.ACTION_SHOOTRIGHT, player.ControllerIndex)) then
             SelectRight(playerData);
             
             if (GetChoiceItemId(playerData.Page, playerData.Choice) == 0) then
                 playerData.Choice = HUDSize;
             end
         end
-        if (Inputs.IsActionDown(ButtonAction.ACTION_SHOOTDOWN, player.ControllerIndex)) then
+        -- Move Down.
+        if (actionTrigger(ButtonAction.ACTION_SHOOTDOWN, player.ControllerIndex)) then
             SelectDown(playerData);
 
-            
             if (GetChoiceItemId(playerData.Page, playerData.Choice) == 0) then
                 playerData.Choice = HUDSize;
             end
         end
-        if (Inputs.IsActionDown(ButtonAction.ACTION_SHOOTUP, player.ControllerIndex)) then
+        -- Move Up.
+        if (actionTrigger(ButtonAction.ACTION_SHOOTUP, player.ControllerIndex)) then
             SelectUp(playerData);
             
             
@@ -217,12 +236,16 @@ function Dice:PostPlayerEffect(player)
 
         end
 
-        if (Inputs.IsActionDown(ButtonAction.ACTION_DROP, player.ControllerIndex)) then
+        -- Cancel.
+        if (actionTrigger(ButtonAction.ACTION_DROP, player.ControllerIndex)) then
             HoldingActive:Cancel(player);
         end
     end
 
+    
+    -- Check if active item is used.
     local playerData = Dice:GetPlayerData(player, false);
+    local used = false;
     if (playerData) then
         local slot = playerData.UsedItemSlot;
         if (slot >= 0) then
@@ -239,95 +262,126 @@ function Dice:PostPlayerEffect(player)
                     -- After active's charges is changed, or it has no charge.
                     player:RemoveCollectible(item, true, slot, true);
                     player:AddCollectible(Dice.Item, playerData.ChargesAfterUse, false, slot);
+                    used = true;
                     playerData.UsedItemSlot = -1;
                 end
             else
                 -- If used item is not current active item (One-time use)
-                playerData.SelectedItem = -1;
+                playerData.SelectedItem = nil;
                 playerData.UsedItem = -1;
                 playerData.UsedItemSlot = -1;
                 playerData.UsedItemCharge = 0;
                 playerData.ChargesAfterUse = 0;
             end
         end
+
+        playerData.UsedThisFrame = false;
     end
-        
-    -- Use the dice.
-    local pressed, slot = Actives.IsActiveItemDown(player, Dice.Item);
-    
-    local currentCharge = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot);
-
-    local transformCost = Dice.GetTransformCost();
-    if (pressed and (currentCharge >= transformCost or slot == ActiveSlot.SLOT_POCKET2)) then
-        local playerData = Dice:GetPlayerData(player, true);
-        -- I AM ERROR room
-        if (Dice.Item == playerData.SelectedItem) then
-            THI.Game:StartRoomTransition(-2, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT, player);
-            player:RemoveCollectible(Dice.Item, true, slot, true);
-            playerData.SelectedItem = -1;
-        else
-            -- Normal Use.
-            if (not IsSelecting(player)) then
-                HoldingActive:Hold(Dice.Item, player, slot);
-                Dice.UpdateActiveList();
-                InitSprites(playerData);
-            else
-
-                local item = GetChoiceItemId(playerData.Page, playerData.Choice);
-                if (item == -1) then
-                    -- Cancel.
-                    HoldingActive:Cancel(player);
-                elseif (item > 0) then
-                    
-                    HoldingActive:Cancel(player);
-                    THI.SFXManager:Play(SoundEffect.SOUND_POWERUP1);
-                    -- Get Item.
-                    player:RemoveCollectible(Dice.Item, true, slot, true);
-
-                    local collectibleConfig = config:GetCollectible(item);
-                    -- Make zero charge actives like Converter and Guppy's paw cost at least 1 charge.
-                    local itemMaxCharges = collectibleConfig.MaxCharges;
-                    local itemChargeType = collectibleConfig.ChargeType;
-
-                    currentCharge = currentCharge - transformCost;
-
-                    local newItemCharge = math.min(itemMaxCharges, currentCharge);
-                    if (itemChargeType == 1 or itemChargeType == 2) then
-                        newItemCharge = 0;
-                    end
-
-                    player:AddCollectible(item, newItemCharge, false, slot);
-                    --player:AnimateCollectible(item, "Pickup");
-                    player:AnimateCollectible(item, "HideItem");
-                    THI.Game:GetHUD():ShowItemText(player, config:GetCollectible(item));
-                    playerData.ChargesAfterUse = currentCharge - newItemCharge;
-                    playerData.SelectedItem = item;
-                end
-            end
-        end
+    if (used) then
+        return false;
     end
 end
 
-Dice:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Dice.PostPlayerEffect);
+Dice:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Dice.PostPlayerUpdate);
+
+
+local function TryUseDice(mod, item, player, slot)
+    local charges = player:GetActiveCharge (slot);
+    return charges >= Dice.GetTransformCost();
+end
+Dice:AddCustomCallback(CuerLib.CLCallbacks.CLC_TRY_USE_ITEM, TryUseDice, Dice.Item);
 
 
 function Dice:UseItem(item, rng, player, flags, slot, varData)
-    local playerData = Dice:GetPlayerData(player, false);
-    if (playerData and item == playerData.SelectedItem) then
-        if (item ~= Dice.Item) then
-            playerData.SelectedItem = -1;
-            playerData.UsedItem = item;
-            playerData.UsedItemSlot = slot;
-            playerData.UsedItemCharge = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot);
+    local playerData = Dice:GetPlayerData(player, true);
+    if (item == Dice.Item) then
+
+        if (player:GetActiveItem(slot) == Dice.Item) then
+            
+            -- Use Dice when transforming into itself.
+            if (playerData and playerData.SelectedItem and item == playerData.SelectedItem) then
+
+                -- Teleport to I AM Error Room.
+                THI.Game:StartRoomTransition(-2, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT, player);
+                player:RemoveCollectible(Dice.Item, true, slot, true);
+                playerData.SelectedItem = nil;
+            else
+                
+                -- Normally Use.
+                if (not IsSelecting(player)) then
+                    HoldingActive:Hold(Dice.Item, player, slot);
+                    Dice.UpdateActiveList(player);
+                    InitSprites(playerData);
+                else
+
+                    local item = GetChoiceItemId(playerData.Page, playerData.Choice);
+                    if (item == -1) then
+                        -- Cancel.
+                        HoldingActive:Cancel(player);
+                    elseif (item > 0) then
+
+                        local currentCharge = Actives:GetUseTryCharges(player, slot);
+                        if (not currentCharge or currentCharge < 0) then
+                            currentCharge = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot);
+                        end
+                        
+                        local transformCost = Dice.GetTransformCost();
+                        
+                        HoldingActive:Cancel(player);
+                        THI.SFXManager:Play(SoundEffect.SOUND_POWERUP1);
+                        -- Get Item.
+                        player:RemoveCollectible(Dice.Item, true, slot, true);
+
+                        local collectibleConfig = config:GetCollectible(item);
+                        -- Make zero charge actives like Converter and Guppy's paw cost at least 1 charge.
+                        local itemMaxCharges = collectibleConfig.MaxCharges;
+                        local itemChargeType = collectibleConfig.ChargeType;
+
+                        currentCharge = currentCharge - transformCost;
+                        currentCharge = math.max(currentCharge, 0)
+
+                        local newItemCharge = math.min(itemMaxCharges, currentCharge);
+                        if (itemChargeType == 1 or itemChargeType == 2) then
+                            newItemCharge = 0;
+                        end
+
+                        player:AddCollectible(item, newItemCharge, false, slot);
+                        --player:AnimateCollectible(item, "Pickup");
+                        player:AnimateCollectible(item, "HideItem");
+                        THI.Game:GetHUD():ShowItemText(player, config:GetCollectible(item));
+                        playerData.ChargesAfterUse = currentCharge - newItemCharge;
+                        
+                        playerData.SelectedItem = item;
+                        playerData.UsedThisFrame = true; 
+
+                        Actives:EndUseTry(player, slot);
+                    end
+                end
+
+                return {Discharge = false}
+            end
+        end
+    else
+        if (playerData and playerData.SelectedItem and item == playerData.SelectedItem) then
+            if (player:GetActiveItem(slot) == item and flags & UseFlag.USE_OWNED) then
+                playerData.SelectedItem = nil;
+                playerData.UsedItem = item;
+                playerData.UsedItemSlot = slot;
+                playerData.UsedItemCharge = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot);
+            end
         end
     end
 end
 Dice:AddCallback(ModCallbacks.MC_USE_ITEM, Dice.UseItem);
 
-function Dice:UseDice(item, rng, player, flags, slot, varData)
-    return {Discharge = false, ShowAnim = false};
+local function PreUseItem(mod, item, rng, player, flags, slot, varData)
+    local playerData = Dice:GetPlayerData(player, false);
+    if (playerData and playerData.UsedThisFrame) then
+        return true;
+    end
+
 end
-Dice:AddCallback(ModCallbacks.MC_USE_ITEM, Dice.UseDice, Dice.Item);
+Dice:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, PreUseItem);
 
 
 

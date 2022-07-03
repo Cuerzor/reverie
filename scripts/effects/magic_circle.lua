@@ -16,13 +16,13 @@ Circle.SubTypes = {
 -- Main.
 do
     local sprites = {
-        [Circle.SubTypes.SUMMONING] = "gfx/effects/magic_circle_summon.png",
-        [Circle.SubTypes.BONE_WALL] = "gfx/effects/magic_circle_bone_wall.png",
-        [Circle.SubTypes.BONE_TRAP] = "gfx/effects/magic_circle_bone_trap.png",
-        [Circle.SubTypes.EVIL_SPIRIT] = "gfx/effects/magic_circle_evilspirit.png",
-        [Circle.SubTypes.FEARNESS] = "gfx/effects/magic_circle_fearness.png",
-        [Circle.SubTypes.RESURRECTION] = "gfx/effects/magic_circle_resurrection.png",
-        [Circle.SubTypes.CORPSE_EXPLOSION] = "gfx/effects/magic_circle_corpse_explosion.png",
+        [Circle.SubTypes.SUMMONING] = "gfx/reverie/effects/magic_circle_summon.png",
+        [Circle.SubTypes.BONE_WALL] = "gfx/reverie/effects/magic_circle_bone_wall.png",
+        [Circle.SubTypes.BONE_TRAP] = "gfx/reverie/effects/magic_circle_bone_trap.png",
+        [Circle.SubTypes.EVIL_SPIRIT] = "gfx/reverie/effects/magic_circle_evilspirit.png",
+        [Circle.SubTypes.FEARNESS] = "gfx/reverie/effects/magic_circle_fearness.png",
+        [Circle.SubTypes.RESURRECTION] = "gfx/reverie/effects/magic_circle_resurrection.png",
+        [Circle.SubTypes.CORPSE_EXPLOSION] = "gfx/reverie/effects/magic_circle_corpse_explosion.png",
     }
 
     local function GetCircleFireSubType(subType)
@@ -214,7 +214,7 @@ do
                 local Cluster = THI.Effects.MagicCluster;
                 rng:SetSeed(circle.InitSeed, 0);
                 if (subType == Circle.SubTypes.SUMMONING) then
-                    for i = 1, 3 do
+                    for i = 1, circle.InitSeed % 2 + 1 do
                         local params = {
                             Color = Color(0.8,0,0.8,1,0,0,0),
                             Gravity = 1,
@@ -236,9 +236,21 @@ do
                     cluster.PositionOffset = circle.PositionOffset;
                 elseif (subType == Circle.SubTypes.FEARNESS) then
                     local game = Game();
-                    for i, player in Detection.PlayerPairs(true, false) do
+                    local targets = {}
+                    if (circle:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+                        for i, ent in pairs(Isaac.GetRoomEntities()) do
+                            if (ent:IsVulnerableEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+                                table.insert(targets, ent);
+                            end
+                        end
+                    else
+                        for _, ent in Detection.PlayerPairs(true, false) do
+                            table.insert(targets, ent);
+                        end
+                    end
+                    for _, ent in pairs(targets) do
                     
-                        local target = player
+                        local target = ent
                         local params = {
                             Color = Color(0.3,0,0.5,1,0,0,0),
                             UpdateFunc = FearnessClusterUpdate
@@ -261,7 +273,7 @@ do
 
                     local params;
                     local sound = THI.Sounds.SOUND_REVIVE_SKELETON_CAST;
-                    local count = math.min(3, #ghosts);
+                    local count = math.min(circle.InitSeed % 2 + 1, #ghosts);
                     if (subType == Circle.SubTypes.RESURRECTION) then
                         params = {
                             Color = Color(0.3,0,0.5,1,0,0,0),

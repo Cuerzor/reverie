@@ -2,7 +2,7 @@
 	<Info CreatedBy="Unknown" CreatedOn="2022/1/24 19:45:50" Version="2" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="..\..\items\collectibles\collectibles_86_benediction.png" Id="0"/>
+			<Spritesheet Path="..\..\reverie\items\collectibles\benediction.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="icon" Id="0" SpritesheetId="0"/>

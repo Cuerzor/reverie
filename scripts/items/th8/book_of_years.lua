@@ -1,4 +1,4 @@
-
+local ItemPools = CuerLib.ItemPools;
 local BookOfYears = ModItem("Book of Years", "BookOfYears")
 
 local config = Isaac.GetItemConfig();
@@ -11,18 +11,16 @@ function BookOfYears.GetBookGlobalData(init)
     }end);
 end
 
-function BookOfYears.GetPlayerTempData(player, init)
-    local data = player:GetData();
-    if (init) then
-        data._BOOK_OF_YEARS = data._BOOK_OF_YEARS or {
-            SpawningCountdown = 0
+local function GetTempPlayerData(player, init)
+    return BookOfYears:GetTempData(player, init, function()
+        return {
+            SpawningCountdown = 0,
         }
-    end
-    return data._BOOK_OF_YEARS;
+    end);
 end
 
 function BookOfYears:onPlayerUpdate(player)
-    local playerData = BookOfYears.GetPlayerTempData(player, false);
+    local playerData = GetTempPlayerData(player, false);
     if (playerData) then
 
         if (playerData.SpawningCountdown > 0) then
@@ -33,6 +31,9 @@ function BookOfYears:onPlayerUpdate(player)
                 local frame = sprite:GetFrame();
                 --player:PlayExtraAnimation("HideItem");
 
+                -- Clear Pickup Sprite.
+                player:AnimatePickup(Sprite(), false, "UseItem");
+
                 -- Create new Collectible.
                 local canSpawn = true;
                 local room = Game():GetRoom();
@@ -40,7 +41,6 @@ function BookOfYears:onPlayerUpdate(player)
                 local globalData = BookOfYears.GetBookGlobalData(true);
 
                 if (THI.IsLunatic()) then
-                    
                     local spawnRng = RNG();
                     spawnRng:SetSeed(globalData.SpawnSeed, 0);
                     local value = spawnRng:RandomInt(100);
@@ -51,7 +51,7 @@ function BookOfYears:onPlayerUpdate(player)
 
                 if (canSpawn) then
                     local itemPool = Game():GetItemPool();
-                    local poolType = math.max(0, itemPool:GetPoolForRoom(room:GetType(), spawnSeed));
+                    local poolType = math.max(0, ItemPools:GetPoolForRoom(room:GetType(), spawnSeed));
                     local newId = itemPool:GetCollectible (poolType, true, spawnSeed, CollectibleType.COLLECTIBLE_BREAKFAST)
                     
                     local pos = room:FindFreePickupSpawnPosition (player.Position, 0, true);
@@ -121,12 +121,14 @@ end
 
 function BookOfYears:onUseBook(item,rng,player,flags,slot,data)	
     local id = SelectItem(player);
-    local playerData = BookOfYears.GetPlayerTempData(player, true);
+    local playerData = GetTempPlayerData(player, true);
     if (playerData.SpawningCountdown <= 0) then
         if (id) then
             player:RemoveCollectible(id, true);
-            player:AnimateCollectible(id, "UseItem", "PlayerPickup");
-            playerData.SpawningCountdown = 20;
+
+            local gfx = Isaac.GetItemConfig():GetCollectible(id).GfxFileName;
+            player:AnimateCollectible(id, "Pickup", "PlayerPickupSparkle");
+            playerData.SpawningCountdown = 50;
         else
             return { ShowAnim = true }
         end

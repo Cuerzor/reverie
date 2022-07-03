@@ -22,6 +22,21 @@ Kogasa.States = {
     CHARGE_UP = 23,
     CHARGE_DROP = 24,
 }
+
+do
+    local TearParams = ProjectileParams();
+    TearParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+    Kogasa.TearParams = TearParams;
+
+    
+    local DropParams = ProjectileParams();
+    DropParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+    DropParams.BulletFlags = ProjectileFlags.ACCELERATE_EX;
+    DropParams.HeightModifier = -10;
+    DropParams.FallingAccelModifier = -0.1;
+    DropParams.Acceleration = 0.8;
+    Kogasa.DropParams = DropParams;
+end
 -- BooText.
 
 local BooText = ModEntity("Abandoned Boo Text", "BOO");
@@ -29,7 +44,7 @@ do
 
     local function PostBooTextInit(mod, text)
         local spr = text:GetSprite();
-        spr:ReplaceSpritesheet(0, "gfx/bosses/reverie/kogasa_boo_"..Options.Language..".png");
+        spr:ReplaceSpritesheet(0, "gfx/reverie/effects/kogasa_boo_"..Options.Language..".png");
         spr:LoadGraphics();
         text:AddEntityFlags(EntityFlag.FLAG_RENDER_WALL | EntityFlag.FLAG_NO_REMOVE_ON_TEX_RENDER);
     end
@@ -136,11 +151,11 @@ do
         },
         Type = Kogasa.Type,
         Variant = Kogasa.Variant,
-        PortraitPath = "gfx/ui/boss/portrait_581.0_the abandoned.png",
+        PortraitPath = "gfx/reverie/ui/boss/portrait_581.0_the abandoned.png",
         PortraitOffset = Vector(0, 0),
         NamePaths = {
-            en = "gfx/ui/boss/bossname_581.0_the abandoned.png",
-            zh = "gfx/ui/boss/bossname_581.0_the abandoned_zh.png"
+            en = "gfx/reverie/ui/boss/bossname_581.0_the abandoned.png",
+            zh = "gfx/reverie/ui/boss/bossname_581.0_the abandoned_zh.png"
         }
     }
     Bosses:SetBossConfig("reverie:the_abandoned", bossConfig, roomConfigs);
@@ -317,8 +332,9 @@ local function PostKogasaUpdate(mod, kogasa)
                         else
                             dir = Vector(1, 0);
                         end
-                        local vel = dir * (i * 3 + 5);
-                        local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_TEAR, 0, umbrellaPos, vel, kogasa):ToProjectile();
+                        local vel = dir * (i * 1 + 5);
+                        kogasa:FireProjectiles(umbrellaPos, vel, 0, Kogasa.TearParams);
+                        --local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_TEAR, 0, umbrellaPos, vel, kogasa):ToProjectile();
                     end
                 end
             end
@@ -355,8 +371,10 @@ local function PostKogasaUpdate(mod, kogasa)
             local pos = kogasa.Position + dir * 24;
             THI.SFXManager:Play(SoundEffect.SOUND_TEARS_FIRE);
             for i = 1, 3 do
-                local vel = dir * (2 * i + 3);
-                Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_TEAR, 0, pos, vel, kogasa);
+                local vel = dir * (0.5 * i + 6);
+                
+                kogasa:FireProjectiles(pos, vel, 0, Kogasa.TearParams);
+                --Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_TEAR, 0, pos, vel, kogasa);
             end
         end
 
@@ -447,11 +465,9 @@ local function PostKogasaUpdate(mod, kogasa)
                 
                 THI.SFXManager:Play(SoundEffect.SOUND_TEARS_FIRE);
                 for i = 1, 16 do
-                    local angle = math.random(-4500, 4500) / 100;
-                    local vel = (-dir):Rotated( angle) * math.random(700, 1400) / 100;
-                    local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_TEAR, 0, endPoint, vel, kogasa):ToProjectile();
-                    proj.FallingAccel = math.random(100, 200) / 100;
-                    proj.FallingSpeed = math.random(-3000, -1000) / 100;
+                    
+                    local proj=kogasa:FireBossProjectiles(1, kogasa.Position - dir * 280, 0, Kogasa.TearParams);
+                    proj.Position = endPoint;
                 end
                 kogasa:AddVelocity(-dir * 20);
             end
@@ -509,16 +525,13 @@ local function PostKogasaUpdate(mod, kogasa)
             THI.SFXManager:Play(SoundEffect.SOUND_BOSS2INTRO_WATER_EXPLOSION);
             
             THI.SFXManager:Play(SoundEffect.SOUND_TEARS_FIRE);
-            for i = 1, 16 do
+            for i = 1, 32 do
                 local dir = RandomVector();
-                local vel = dir * math.random(1000, 2000) / 100;
-                local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_TEAR, 0, kogasa.Position, vel, kogasa):ToProjectile();
+                local vel = dir * (Random() % 1000 + 1000) / 100;
+
+                kogasa:FireProjectiles(kogasa.Position, vel, 0, Kogasa.DropParams);
+
                 
-                proj.FallingSpeed = math.random(-1000, -600) / 100;
-                proj.FallingAccel = -proj.FallingSpeed / 100;
-                proj.Acceleration = 0.8;
-                proj:AddProjectileFlags(ProjectileFlags.ACCELERATE_EX);
-                proj.Height = -23.5;
             end
         end
         
@@ -580,14 +593,13 @@ local function PostAbandonedKill(mod, abandoned)
         THI.SFXManager:Play(SoundEffect.SOUND_TEARS_FIRE);
         for i = 1, 16 do
             local dir = RandomVector();
-            local vel = dir * math.random(500, 1000) / 100;
-            local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_TEAR, 0, abandoned.Position, vel, kogasa):ToProjectile();
-            
-            proj.FallingSpeed = math.random(-1000, -600) / 100;
-            proj.FallingAccel = -proj.FallingSpeed / 100;
-            proj.Acceleration = 0.8;
-            proj:AddProjectileFlags(ProjectileFlags.ACCELERATE_EX);
-            proj.Height = -23.5;
+            local vel = dir * (Random() % 500 + 500) / 100;
+
+
+            local npc = abandoned:ToNPC();
+            if (npc) then
+                npc:FireProjectiles(abandoned.Position, vel, 0, Kogasa.DropParams);
+            end
         end
     end
 end
@@ -643,7 +655,7 @@ local function PostKogasaDamage(mod, tookDamage, amount, flags, source, countdow
         data.GhostAlpha = 1;
     end
 end
-Kogasa:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostKogasaDamage, Kogasa.Type);
+Kogasa:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostKogasaDamage, Kogasa.Type);
 
 
 

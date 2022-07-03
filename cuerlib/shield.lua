@@ -1,14 +1,14 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 local Callbacks = Lib.Callbacks;
-local Screen = CuerLib.Screen;
-local Shields = {};
+local Screen = _TEMP_CUERLIB.Screen;
+local Shields = Lib:NewClass();
 
 local spr = Sprite();
 spr:Load("gfx/characters/058_book of shadows.anm2", true);
 spr:SetAnimation("WalkDown");
 
 function Shields:GetPlayerData(player, init)
-    local data = Lib:GetData(player);
+    local data = Lib:GetLibData(player);
     if (init) then
         data.Shields = data.Shields or  {
             ShieldTime = 0,
@@ -36,6 +36,7 @@ function Shields:PostPlayerEffect(player)
         end
     end
 end
+Shields:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Shields.PostPlayerEffect);
 
 function Shields:PostPlayerUpdate(player)
     
@@ -48,6 +49,7 @@ function Shields:PostPlayerUpdate(player)
         end
     end
 end
+Shields:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Shields.PostPlayerUpdate);
 
 function Shields:PostNewRoom()
     local game = THI.Game;
@@ -60,6 +62,7 @@ function Shields:PostNewRoom()
         end
     end
 end
+Shields:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Shields.PostNewRoom);
 function Shields:PostPlayerRender(player, offset)
     local playerData = Shields:GetPlayerData(player, false);
     if (playerData) then
@@ -75,12 +78,6 @@ function Shields:PostPlayerRender(player, offset)
         end
     end
 end
-
-function Shields:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Shields.PostPlayerEffect);
-    mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Shields.PostPlayerUpdate);
-    mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Shields.PostNewRoom);
-    mod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Shields.PostPlayerRender);
-end
+Shields:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Shields.PostPlayerRender);
 
 return Shields;

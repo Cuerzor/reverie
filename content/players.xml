@@ -1,30 +1,10 @@
-<players root="gfx/characters/costumes/" 
-        portraitroot="gfx/ui/boss/" 
-        nameimageroot="gfx/ui/boss/" >
-    <player name="Eika" skin="character_eika.png" hp="4" canShoot="false" achievement ="-2" bombs="1" items="604"
-          costumeSuffix="eika"
-          skinColor="-1"
-          nameimage="PlayerName_Eika.png" 
-          portrait="PlayerPortrait_Eika.png" 
-		  birthright="Many littles make a mickle" />
-    <player name="Tainted Eika" skin="character_eika_b.png" hp="4" achievement ="-2"
-          costumeSuffix="eika_b"
-          skinColor="3"
-          bSkinParent="Eika"
-          nameimage="PlayerName_Eika.png" 
-          portrait="PlayerPortrait_Eika_b.png" 
-		  birthright="Regeneration" />
-    <player name="Satori" skin="character_satori.png" hp="4" achievement ="-2" items="123,665"
-          costumeSuffix="satori"
-          skinColor="-1"
-          nameimage="PlayerName_Satori.png" 
-          portrait="PlayerPortrait_Satori.png" 
-		  birthright="Terrible Hypnosis" />
-    <player name="Tainted Satori" skin="character_satori_b.png" hp="4" achievement ="-2" items="348,671"
-          costumeSuffix="satori_b"
-          skinColor="-1"
-          bSkinParent="Satori"
-          nameimage="PlayerName_Satori.png" 
-          portrait="PlayerPortrait_Satori_b.png" 
-		  birthright="Jesus Take the Wheel" />
+<players root="gfx/reverie/characters/costumes/" portraitroot="gfx/reverie/ui/boss/" nameimageroot="gfx/reverie/ui/boss/">
+      <player name="Eika" skin="character_eika.png" hp="4" canShoot="false" achievement="-2" bombs="1" items="604" costumeSuffix="eika" skinColor="-1" nameimage="PlayerName_Eika.png" portrait="PlayerPortrait_Eika.png" birthright="Many littles make a mickle" />
+      <player name="Tainted Eika" skin="character_eika_b.png" hp="4" achievement="-2" costumeSuffix="eika_b" skinColor="3" bSkinParent="Eika" nameimage="PlayerName_Eika.png" portrait="PlayerPortrait_Eika_b.png" birthright="Corpse explosion" />
+
+      <player name="Satori" skin="character_satori.png" hp="4" keys="1" achievement="-2" items="123,665" costumeSuffix="satori" skinColor="-1" nameimage="PlayerName_Satori.png" portrait="PlayerPortrait_Satori.png" birthright="Terrible Hypnosis" />
+      <player name="Tainted Satori" skin="character_satori_b.png" hp="4" achievement="-2" items="348,671" costumeSuffix="satori_b" skinColor="-1" bSkinParent="Satori" nameimage="PlayerName_Satori.png" portrait="PlayerPortrait_Satori_b.png" birthright="Jesus Take the Wheel" />
+
+      <player name="Seija" skin="character_seija.png" hp="6" achievement="-2" bombs="1" costumeSuffix="seija" skinColor="-1" nameimage="PlayerName_Seija.png" portrait="PlayerPortrait_Seija.png" birthright="No more weak ones" />
+      <player name="Tainted Seija" skin="character_seija_b.png" hp="6" achievement="-2" bombs="1" costumeSuffix="seija_b" skinColor="-1" bSkinParent="Seija" nameimage="PlayerName_Seija.png" portrait="PlayerPortrait_Seija_b.png" birthright="More weak ones" />
 </players>

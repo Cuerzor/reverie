@@ -1,6 +1,7 @@
 
 local Screen = CuerLib.Screen;
 local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local MomsIOU = ModItem("Mom's IOU", "MomsIOU");
 
 
@@ -99,7 +100,7 @@ function MomsIOU:PostGainCollectible(player, item, count, touched)
         data.Debt = data.Debt + math.ceil(added * 1.2);
     end
 end
-MomsIOU:AddCustomCallback(CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, MomsIOU.PostGainCollectible, MomsIOU.Item);
+MomsIOU:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, MomsIOU.PostGainCollectible, MomsIOU.Item);
 
 
 function MomsIOU:PostPlayerEffect(player)
@@ -148,7 +149,7 @@ function MomsIOU:PostNewStage()
                 local remainRepay = repayHalfHearts;
                 -- Soul Hearts.
                 local repayingHalfHearts = math.min(player:GetSoulHearts(), remainRepay);
-                player:AddSoulHearts(-repayingHalfHearts);
+                Players:AddRawSoulHearts(player, -repayingHalfHearts);
                 remainRepay = remainRepay - repayingHalfHearts;
 
                 -- Eternal Hearts.
@@ -192,7 +193,7 @@ function MomsIOU:PostNewStage()
         end
     end
 end
-MomsIOU:AddCustomCallback(CLCallbacks.CLC_NEW_STAGE, MomsIOU.PostNewStage);
+MomsIOU:AddCustomCallback(CuerLib.CLCallbacks.CLC_NEW_STAGE, MomsIOU.PostNewStage);
 
 function MomsIOU:PostPlayerRender(player, offset)
     if (not Screen.IsReflection()) then

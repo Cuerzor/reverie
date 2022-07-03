@@ -8,12 +8,12 @@ local Tears = Lib.Tears;
 local Inputs = Lib.Inputs;
 local Detection = Lib.Detection;
 local Screen = Lib.Screen;
+local Weapons = Lib.Weapons;
 local Eika = ModPlayer("Eika", false, "Eika");
 
-local Costume = Isaac.GetCostumeIdByPath("gfx/characters/costume_eika.anm2");
+local Costume = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_eika.anm2");
 
 local MaxFireCooldown = 2;
-local rng = RNG();
 local LudovicoFlag = Maths.GetTearFlag(127);
 
 
@@ -27,13 +27,13 @@ local FetusFlags = {
     TEAR_FETUS = BitSet128(0, 1 << 50),
 }
 local Effects = {
-    PlaceHolder = Isaac.GetEntityVariantByName("Idle Rocket")
+    PlaceHolder = Isaac.GetEntityVariantByName("Eika Placeholder")
 }
 
 local PlaceHolderSubType = {
-    IdleRocket = 1,
-    KnifeParent = 2,
-    SwordParent = 3
+    IdleRocket = 0,
+    KnifeParent = 1,
+    SwordParent = 2
 }
 
 local Knifes = {
@@ -120,6 +120,7 @@ local function GetShootingVector(player, center)
         return (target.Position - player.Position):Normalized();
     end
 
+    center = center or player.Position;
     local dir = Inputs.GetRawShootingVector(player, center);
     if (not IsAllDirectionShoot(player)) then
         local length = dir:Length();
@@ -157,7 +158,7 @@ end
 
 -- Get player's temporary Data for this run.
 function Eika:GetPlayerTempData(player, init)
-    local data = Lib:GetData(player);
+    local data = Lib:GetLibData(player);
     if (init) then
         data._EIKA = data._EIKA or {
             CursedEyeTeleport = false,
@@ -412,12 +413,12 @@ local function AddThrowIndex(player, fireDir)
             pencilParams.IsLung = true;
             pencilParams.AddIndex = false;
             pencilParams.IgnoreItems = true;
-            Eika:ShootRock(player, nil, fireDir, MultishotParams.Default, pencilParams);
+            Eika:ThrowARock(player, nil, fireDir, MultishotParams.Default, pencilParams);
         end
     end
 end
 -- Shoot the rock using specified params to a direction.
-function Eika:ShootRock(player, rock, fireDir, params, rockParams)
+function Eika:ThrowARock(player, rock, fireDir, params, rockParams)
     params = params or MultishotParams.Default;
 
     local data = Eika:GetPlayerData(player, true);
@@ -455,8 +456,8 @@ function Eika:ShootRock(player, rock, fireDir, params, rockParams)
         end
 
         for i = 1, num do
-            local exists = EntityExists(rock);
-            if (not exists) then
+            local stacked = EntityExists(rock);
+            if (not stacked) then
                 rock = Eika:SpawnRock(player);
             end
             local rockData = Eika:GetRockData(rock, true);
@@ -470,20 +471,29 @@ function Eika:ShootRock(player, rock, fireDir, params, rockParams)
 
             SetRockFired(player, rock, dir, rockParams);
 
-            if (exists) then
+            if (stacked) then
                 rock.Position = rock.Position - rock.Velocity;
+            end
+
+            
+            -- Lachryphagy.
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_LACHRYPHAGY)) then
+                rock:AddTearFlags(TearFlags.TEAR_ABSORB);
             end
 
             rockData.IsStacking = false;
 
+
+            
             rock = nil;
 
             -- Monstro's Lung's tears will increase throw index.
-            if (not exists and (isLung and rockParams.AddIndex)) then
+            if (not stacked and (isLung and rockParams.AddIndex)) then
                 AddThrowIndex(player, fireDir);
             end
         end
     end
+
 
     -- Add throw index.
     if (rockParams.AddIndex) then
@@ -505,7 +515,7 @@ function Eika:ThrowRock(player, rock)
     local rockParams = RockParams:New();
     rockParams.IsLung = isLung;
 
-    Eika:ShootRock(player, rock, dir, params, rockParams);
+    Eika:ThrowARock(player, rock, dir, params, rockParams);
 
     -- Mom's Knife.
     if (HasMomsKnife(player)) then
@@ -524,7 +534,7 @@ function Eika:ThrowRock(player, rock)
             for i = 1, count do
                 local angle = fireRng:RandomFloat() * 360;
                 local vec = Vector.FromAngle(angle);
-                Eika:ShootRock(player, Eika:SpawnRock(player), vec, MultishotParams.Default, rockParams)
+                Eika:ThrowARock(player, Eika:SpawnRock(player), vec, MultishotParams.Default, rockParams)
             end
         end
     end
@@ -536,14 +546,14 @@ function Eika:ThrowRock(player, rock)
         rockParams.FlyingKnife = false;
         local angle = 180;
         local vec = dir:Rotated(angle);
-        Eika:ShootRock(player, Eika:SpawnRock(player), vec, MultishotParams.Default, rockParams)
+        Eika:ThrowARock(player, Eika:SpawnRock(player), vec, MultishotParams.Default, rockParams)
     end
     local function TriggerLokisHorn()
         rockParams.FlyingKnife = false;
         for i = 1, 3 do
             local angle = i * 90;
             local vec = dir:Rotated(angle);
-            Eika:ShootRock(player, Eika:SpawnRock(player), vec, MultishotParams.Default, rockParams)
+            Eika:ThrowARock(player, Eika:SpawnRock(player), vec, MultishotParams.Default, rockParams)
         end
     end
     -- Mom's Eye
@@ -575,7 +585,7 @@ function Eika:ThrowRock(player, rock)
             for i = 1, count do
                 local angle = fireRng:RandomFloat() * 360;
                 local vec = Vector.FromAngle(angle);
-                Eika:ShootRock(player, Eika:SpawnRock(player), vec, MultishotParams.Default, rockParams)
+                Eika:ThrowARock(player, Eika:SpawnRock(player), vec, MultishotParams.Default, rockParams)
             end
         end
     end
@@ -593,7 +603,7 @@ function Eika:ThrowRock(player, rock)
             local vec = dir:Rotated(angle);
 
             -- SetRockFired(player, rock, vec, rockParams);
-            Eika:ShootRock(player, Eika:SpawnRock(player), vec, MultishotParams.Default, rockParams)
+            Eika:ThrowARock(player, Eika:SpawnRock(player), vec, MultishotParams.Default, rockParams)
         end
     end
 
@@ -633,7 +643,7 @@ end
 -- Drop the rock down.
 function Eika:DropRock(player, rock, height)
     rock.Position = player.Position;
-    rock.Velocity = RandomVector() * rng:RandomFloat();
+    rock.Velocity = RandomVector() * (Random() % 100 / 100);
     if (rock.Type == EntityType.ENTITY_TEAR) then
         rock.FallingSpeed = 0;
         rock.FallingAcceleration = 2;
@@ -882,7 +892,7 @@ function Eika:SetRockFlags(player, rock)
         -- TODO TearFlags.TEAR_FETUS;
         tear:AddTearFlags(FetusFlags.TEAR_FETUS | TearFlags.TEAR_SPECTRAL);
         local spr = tear:GetSprite();
-        spr:ReplaceSpritesheet(0, "gfx/characters/costumes_eika/fetus_tears.png");
+        spr:ReplaceSpritesheet(0, "gfx/reverie/characters/costumes_eika/fetus_tears.png");
         spr:LoadGraphics();
         if (isSpiritSword) then
             tear:AddTearFlags(FetusFlags.TEAR_SWORD_FETUS);
@@ -926,6 +936,14 @@ function Eika:SetRockFlags(player, rock)
     if (isBrimstone) then
         rock.Color = RockColors.Brimstone;
     end
+
+    
+    if (rock.Type == EntityType.ENTITY_TEAR) then
+        local tear = rock:ToTear();
+        if (tear:HasTearFlags(TearFlags.TEAR_ABSORB)) then
+            tear:ClearTearFlags(TearFlags.TEAR_ABSORB);
+        end
+    end
 end
 
 -- Spawn a rock.
@@ -952,7 +970,9 @@ function Eika:SpawnRock(player)
                 local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, Effects.PlaceHolder, PlaceHolderSubType.IdleRocket,
                     player.Position, Vector.Zero, player):ToEffect();
                 effect.SpriteRotation = -90;
-                effect:GetSprite():Play("Idle");
+                local spr=effect:GetSprite()
+                spr:Load("gfx/reverie/rocket_idle.anm2", true);
+                spr:Play("Idle");
                 return effect;
             else
                 -- Normal Bomb.
@@ -979,6 +999,9 @@ function Eika:SpawnRock(player)
     if (Tears:CanOverrideVariant(TearVariant.ROCK, rock.Variant)) then
         rock:ChangeVariant(TearVariant.ROCK);
     end
+    if (rock.Variant == TearVariant.HUNGRY) then
+        rock:ChangeVariant(TearVariant.ROCK);
+    end
     -- rock.CollisionDamage = params.TearDamage;
     -- rock.Scale = params.TearScale;
     -- rock.TearFlags = params.TearFlags;
@@ -996,7 +1019,7 @@ function Eika:MakeBladeRockFly(player, rock, dir)
     rock.Position = GetKnifeParentPosition(player.Position);
     knifeData.FlyAway = true;
     knifeData.Direction = dir;
-    knifeData.SideVelocity = dir:Rotated(-90):Normalized() * (rng:RandomFloat() * 2 - 1) * 10;
+    knifeData.SideVelocity = dir:Rotated(-90):Normalized() * ((Random() % 100 / 100) * 2 - 1) * 10;
 end
 
 local function FindBladeKnifeHomingTarget(effect)
@@ -1016,11 +1039,20 @@ end
 -- Animations
 --------------------
 
+function Eika:ShouldPlayAnimation(player)
+    local Rebecha = THI and THI.Monsters and THI.Monsters.Rebecha;
+    if (Rebecha and Rebecha:GetPlayerMecha(player)) then
+        return false;
+    end
+    return true;
+end
 -- Make player play an animation.
 function Eika:PlayAnimation(player, anim)
-    local tempData = Eika:GetPlayerTempData(player, true);
-    tempData.Anim.Name = anim;
-    tempData.Anim.Frame = 0;
+    if (Eika:ShouldPlayAnimation(player)) then
+        local tempData = Eika:GetPlayerTempData(player, true);
+        tempData.Anim.Name = anim;
+        tempData.Anim.Frame = 0;
+    end
 end
 
 -- Is player playing the animation?
@@ -1169,7 +1201,7 @@ local function LudovicoUpdate(player)
                     local childData = Eika:GetRockData(child, true);
                     
                     if (isLung) then
-                        childData.Ludo.Scale = RandomRange(rng, 0.5 * rock.Scale, rock.Scale * 1.5)
+                        childData.Ludo.Scale = (0.5 + Random() % 100 / 100) * rock.Scale;
                     else
                         childData.Ludo.Scale = 0.5;
                     end
@@ -1217,15 +1249,18 @@ local function ShootingUpdate(player)
     local tempData = Eika:GetPlayerTempData(player, true);
 
     -- Stack Rocks.
-    local stackedRocks = tempData.StackedRocks;
-    while (tempData.FireDelay <= 0) do
-        local rock = Eika:SpawnRock(player);
-        -- Normal, Stack Rocks.
-        table.insert(stackedRocks, 1, rock);
-        local rockData = Eika:GetRockData(rock, true);
-        rockData.IsStacking = true;
-        tempData.Stacking = true;
-        tempData.FireDelay = tempData.FireDelay + math.max(1, player.MaxFireDelay + 1);
+    
+    if (not Weapons:IsWeaponsBanned(player)) then
+        local stackedRocks = tempData.StackedRocks;
+        while (tempData.FireDelay <= 0) do
+            local rock = Eika:SpawnRock(player);
+            -- Normal, Stack Rocks.
+            table.insert(stackedRocks, 1, rock);
+            local rockData = Eika:GetRockData(rock, true);
+            rockData.IsStacking = true;
+            tempData.Stacking = true;
+            tempData.FireDelay = tempData.FireDelay + math.max(1, player.MaxFireDelay + 1);
+        end
     end
 
     local hasTarget = GetMarkedTarget(player) ~= nil;
@@ -1455,12 +1490,17 @@ function Eika:PostPlayerTakeDamage(entity, amount, flags, source, countdown)
         end
     end
 end
-Eika:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Eika.PostPlayerTakeDamage, EntityType.ENTITY_PLAYER);
+Eika:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Eika.PostPlayerTakeDamage, EntityType.ENTITY_PLAYER);
+
 
 function Eika:PostPlayerEffect(player)
     if (player:GetPlayerType() == Eika.Type) then
 
         local tempData = Eika:GetPlayerTempData(player, true);
+
+
+        local hasMegaMush = player:GetEffects():HasCollectibleEffect(625);
+
 
         -- Weapon Update
         if (Eika:CanUseLudovico(player) and
@@ -1602,6 +1642,26 @@ function Eika:PostPlayerEffect(player)
 end
 Eika:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Eika.PostPlayerEffect)
 
+-- local function PostFireTear(mod, tear)
+--     local spawner = tear.SpawnerEntity;
+--     local player = nil;
+--     if (spawner) then
+--         player = spawner:ToPlayer();
+--     end
+
+--     if (player) then
+--         if (player:GetPlayerType() == Eika.Type) then
+--             if (tear:HasTearFlags(TearFlags.TEAR_ABSORB)) then
+--                 tear:ClearTearFlags(TearFlags.TEAR_ABSORB);
+--             end
+--             if (tear.Variant == TearVariant.HUNGRY) then
+--                 tear:ChangeVariant(TearVariant.ROCK);
+--             end
+--         end
+--     end
+-- end
+-- Eika:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, PostFireTear)
+
 function Eika:PostFamiliarUpdate(familiar)
     local player = familiar.Player;
     if (player and player:GetPlayerType() == Eika.Type) then
@@ -1612,13 +1672,13 @@ Eika:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, Eika.PostFamiliarUpdate)
 function Eika:OnEvaluateCache(player, cache)
     if (player:GetPlayerType() == Eika.Type) then
         if (cache == CacheFlag.CACHE_SPEED) then
-            player.MoveSpeed = player.MoveSpeed - 0.2;
+            player.MoveSpeed = player.MoveSpeed - 0.15;
         elseif (cache == CacheFlag.CACHE_DAMAGE) then
             Stats:MultiplyDamage(player, 1.25);
         elseif (cache == CacheFlag.CACHE_FIREDELAY) then
             
             Stats:AddTearsModifier(player, function(tears)
-                tears = tears * 0.6;
+                --tears = tears * 0.75;
 
                 -- Mom's Knife.
                 if (HasMomsKnife(player)) then
@@ -1642,47 +1702,44 @@ function Eika:OnEvaluateCache(player, cache)
 end
 Eika:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Eika.OnEvaluateCache)
 
-function Eika:InputAction(entity, hook, action)
-    if (entity and entity.Type == EntityType.ENTITY_PLAYER) then
-        local player = entity:ToPlayer();
-        if (player:GetPlayerType() == Eika.Type) then
-            local tempData = Eika:GetPlayerTempData(player, false);
-            if (tempData and tempData.Stacking) then
-                local item = 0;
-                if (action == ButtonAction.ACTION_ITEM or action == ButtonAction.ACTION_PILLCARD) then
-                    return Inputs.DisabledInput(hook);
-                end
-            end
-        end
-    end
-end
-Eika:AddCallback(ModCallbacks.MC_INPUT_ACTION, Eika.InputAction);
+-- function Eika:InputAction(entity, hook, action)
+--     if (entity and entity.Type == EntityType.ENTITY_PLAYER) then
+--         local player = entity:ToPlayer();
+--         if (player:GetPlayerType() == Eika.Type) then
+--             local tempData = Eika:GetPlayerTempData(player, false);
+--             if (tempData and tempData.Stacking) then
+--                 local item = 0;
+--                 if (action == ButtonAction.ACTION_ITEM or action == ButtonAction.ACTION_PILLCARD) then
+--                     return Inputs.DisabledInput(hook);
+--                 end
+--             end
+--         end
+--     end
+-- end
+-- Eika:AddCallback(ModCallbacks.MC_INPUT_ACTION, Eika.InputAction);
 
 function Eika:PostPlayerRender(player, offset)
     if (player:GetPlayerType() == Eika.Type) then
         local spr = player:GetSprite();
-        local color = player:GetColor();
-        color = Color(color.R, color.G, color.B, 1);
-        spr.Color = color;
 
         local hasMegaMush = player:GetEffects():HasCollectibleEffect(625);
 
-        if (player:IsExtraAnimationFinished() and not hasMegaMush) then
-            local tempData = Eika:GetPlayerTempData(player, false);
+        local tempData = Eika:GetPlayerTempData(player, false);
 
-            if (tempData and tempData.Anim.Name) then
-
-                if (spr:GetAnimation() ~= tempData.Anim.Name) then
-                    spr:Play(tempData.Anim.Name);
-                end
-                spr:SetFrame(tempData.Anim.Frame);
-                spr:RemoveOverlay();
-                local game = THI.Game;
-                local pos = Screen.GetEntityOffsetedRenderPosition(player, offset);
-                spr:Render(pos, Vector.Zero, Vector.Zero);
-                color.A = 0;
-                spr.Color = color;
+        if (player:IsExtraAnimationFinished() and not hasMegaMush and tempData and tempData.Anim.Name) then
+            if (spr:GetAnimation() ~= tempData.Anim.Name) then
+                spr:Play(tempData.Anim.Name);
             end
+            spr:SetFrame(tempData.Anim.Frame);
+            spr:RemoveOverlay();
+            local game = THI.Game;
+            local pos = Screen.GetEntityOffsetedRenderPosition(player, offset);
+            local playerColor = player:GetColor();
+            local color = Color(playerColor.R, playerColor.G, playerColor.B, tempData.AlphaBefore, playerColor.RO, playerColor.GO, playerColor.BO)
+            spr.Color = color;
+            spr:Render(pos, Vector.Zero, Vector.Zero);
+            color.A = 0;
+            spr.Color = color;
         end
     end
 end
@@ -1709,7 +1766,7 @@ function Eika:PostTearUpdate(tear)
         if (tear:HasTearFlags(LudovicoFlag)) then
             if (player:GetPlayerType() == Eika.Type) then
                 Eika:SetRockFlags(player, tear);
-                if (Synergies.CanRockChangeVariant(TearVariant.ROCK, tear.Variant)) then
+                if (Tears:CanOverrideVariant(TearVariant.ROCK, tear.Variant)) then
                     tear:ChangeVariant(TearVariant.ROCK);
                 end
 
@@ -1784,12 +1841,12 @@ Eika:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, Eika.PostTearUpdate)
 --         --end
 --     end
 -- end
--- Eika:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Eika.PostEntityTakeDamage);
+-- Eika:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Eika.PostEntityTakeDamage);
 
 function Eika:PreTearCollision(tear, other, low)
     --if (tear:HasTearFlags(TearFlags.TEAR_PIERCING)) then
     local data = Eika:GetRockData(tear, false);
-    if (data and other:IsEnemy()) then
+    if (data and other:IsEnemy() and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
         local player = GetSpawnerPlayer(tear);
         if (player) then
             
@@ -1999,7 +2056,7 @@ function Eika:PostEffectUpdate(effect)
                                 poof.SpriteScale = poof.SpriteScale * child.Scale;
                                 for i = 1, child.Scale ^ 2 do
                                     local tooth = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.TOOTH_PARTICLE, 0,
-                                        child.Position, RandomVector() * rng:RandomFloat() * 3, child);
+                                        child.Position, RandomVector() * (Random() % 100 / 100) * 3, child);
                                     tooth:SetColor(color, -1, 0, false, false);
                                 end
                             end
@@ -2078,7 +2135,7 @@ function Eika:DamageFromKnife(tookDamage, amount, flags, source, countdown)
         tookDamage:AddVelocity(dir:Normalized() * length);
     end
 end
-Eika:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Eika.DamageFromKnife);
+Eika:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Eika.DamageFromKnife);
 
 function Eika:PostBombUpdate(bomb)
     local data = Eika:GetRockData(bomb, false);
@@ -2117,7 +2174,7 @@ function Eika:PostTearRemove(ent)
         poof.SpriteScale = poof.SpriteScale * tear.Scale;
         for i = 1, tear.Scale ^ 2 do
             local tooth = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.TOOTH_PARTICLE, 0, tear.Position,
-                RandomVector() * rng:RandomFloat() * 3, tear);
+                RandomVector() * (Random() % 100 / 100) * 3, tear);
             tooth:SetColor(color, -1, 0, false, false);
         end
     end

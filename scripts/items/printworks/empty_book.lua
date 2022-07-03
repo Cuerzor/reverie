@@ -91,10 +91,10 @@ local activeEffectCount = 7;
 local passiveEffectCount = 7;
 
 local ChoiceSprite = Sprite();
-ChoiceSprite:Load("gfx/ui/empty_book.anm2", true);
+ChoiceSprite:Load("gfx/reverie/ui/empty_book.anm2", true);
 
 local FrameSprite = Sprite();
-FrameSprite:Load("gfx/ui/select_frame.anm2", true);
+FrameSprite:Load("gfx/reverie/ui/select_frame.anm2", true);
 FrameSprite:SetFrame("Frame", 0);
 
 local function IsWriting(player)
@@ -196,19 +196,19 @@ function EmptyBook.ShowBookItemText(effect, size)
     THI.Game:GetHUD():ShowItemText(GetBookName(active, size), GetBookDescription(effect), false);
 end
 
-function EmptyBook:PostPlayerEffect(player)
+function EmptyBook:PostPlayerUpdate(player)
     if (IsWriting(player)) then
         local playerData = EmptyBook:GetPlayerData(player, true);
         if (playerData) then
 
-            if (Inputs.IsActionDown(ButtonAction.ACTION_SHOOTLEFT, player.ControllerIndex)) then
+            if (Input.IsActionTriggered(ButtonAction.ACTION_SHOOTLEFT, player.ControllerIndex)) then
                 playerData.Choice = (playerData.Choice - 1) % 3;
             end
             
-            if (Inputs.IsActionDown(ButtonAction.ACTION_SHOOTRIGHT, player.ControllerIndex)) then
+            if (Input.IsActionTriggered(ButtonAction.ACTION_SHOOTRIGHT, player.ControllerIndex)) then
                 playerData.Choice = (playerData.Choice + 1) % 3;
             end
-            if (Inputs.IsActionDown(ButtonAction.ACTION_DROP, player.ControllerIndex)  or not player:HasCollectible(EmptyBook.Item)) then
+            if (Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex)  or not player:HasCollectible(EmptyBook.Item)) then
                 HoldingActive:Cancel(player);
                 player:AnimateCollectible(EmptyBook.Item, "HideItem");
             end
@@ -218,7 +218,7 @@ function EmptyBook:PostPlayerEffect(player)
 
 end
 
-EmptyBook:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, EmptyBook.PostPlayerEffect);
+EmptyBook:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, EmptyBook.PostPlayerUpdate);
 
 local function GetChoiceId(choice, time)
     local data = EmptyBook:GetGlobalBookData(false);
@@ -392,7 +392,7 @@ function EmptyBook:EvaluateCurse(curses)
         end
     end
 end
-EmptyBook:AddCustomCallback(CLCallbacks.CLC_EVALUATE_CURSE, EmptyBook.EvaluateCurse, 0, -100);
+EmptyBook:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, EmptyBook.EvaluateCurse, 0, -100);
 
 function EmptyBook:OnEvaluateCache(player, cache)
     if (cache == CacheFlag.CACHE_SPEED) then
@@ -433,7 +433,7 @@ function EmptyBook:PostEntityTakeDamage(tookDamage, amount, flags, source, count
         end
     end
 end
-EmptyBook:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, EmptyBook.PostEntityTakeDamage);
+EmptyBook:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, EmptyBook.PostEntityTakeDamage);
 
 -- Active Effects.
 local function DamageBoost(player, size, rng)
@@ -648,7 +648,7 @@ function EmptyBook:PostChangeCollecitble(player, item, diff)
         end
     end
 end
-EmptyBook:AddCustomCallback(CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, EmptyBook.PostChangeCollecitble);
+EmptyBook:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, EmptyBook.PostChangeCollecitble);
 
 function EmptyBook:PostPickupCollectible(player, item, touched)
     for i ,id in pairs(FinishedBooks) do
@@ -669,7 +669,7 @@ function EmptyBook:PostPickupCollectible(player, item, touched)
         
     end
 end
-EmptyBook:AddCustomCallback(CLCallbacks.CLC_POST_PICKUP_COLLECTIBLE, EmptyBook.PostPickupCollectible);
+EmptyBook:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_PICKUP_COLLECTIBLE, EmptyBook.PostPickupCollectible);
 
 local renderOffset = Vector(0, -60);
 local leftOffset = Vector(-40, 0);

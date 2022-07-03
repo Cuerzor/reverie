@@ -114,24 +114,31 @@ do
     end
     Immortal:AddCallback(ModCallbacks.MC_POST_PROJECTILE_UPDATE, PostProjectileUpdate);
 
-    local function PreImmortalCollision(mod, npc, other, low)
+    -- TODO Post Collision,
+    local function PostImmortalCollision(mod, npc, other, low)
         if (npc.Variant == Immortal.Variant) then
-            local player = other:ToPlayer();
-            if (player) then
+            local canCollide = other.Type == EntityType.ENTITY_PLAYER;
+            if (npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+                canCollide = other.Type ~= EntityType.ENTITY_PLAYER and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY);
+            end
+            if (canCollide) then
                 local data = GetImmortalData(npc, false);
                 if (data and data.Charging) then
                     data.Charging = false;
                     Game():ShakeScreen(15);
                     THI.SFXManager:Play(SoundEffect.SOUND_PUNCH);
-                    local vel = (player.Position - npc.Position):Resized(ChargeSpeed);
+                    local vel = (other.Position - npc.Position):Resized(ChargeSpeed);
+                    if (other:IsVulnerableEnemy()) then
+                        other:TakeDamage(30, 0, EntityRef(npc), 0)
+                    end
                     --other.Velocity = other.Velocity + vel;
-                    player.Velocity = vel:Resized(50);
+                    other.Velocity = vel:Resized(50);
                     -- npc:AddVelocity(-vel);
                 end
             end
         end
     end
-    Immortal:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PreImmortalCollision, Immortal.Type)
+    Immortal:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PostImmortalCollision, Immortal.Type)
 
     
     local function PostImmortalRender(mod, npc, offset)

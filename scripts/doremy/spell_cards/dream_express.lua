@@ -13,6 +13,19 @@ local scaleColors = {
     Color(1,1,1,1,1,0,1)
 }
 
+local FeatherParams = ProjectileParams();
+FeatherParams.BulletFlags = ProjectileFlags.ACCELERATE;
+FeatherParams.Acceleration = 1.1;
+FeatherParams.Variant = ProjectileVariant.PROJECTILE_WING;
+FeatherParams.FallingAccelModifier = -0.2;
+FeatherParams.FallingSpeedModifier = 3;
+
+local ProjParams = ProjectileParams();
+ProjParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+ProjParams.FallingAccelModifier = -0.2;
+ProjParams.FallingSpeedModifier = 3;
+ProjParams.Scale = 2;
+
 function DreamExpress:GetDefaultData(doremy)
     return {
         ScaleTime = 0,
@@ -71,18 +84,26 @@ function DreamExpress:PostUpdate(doremy)
                 local offset = fireDir * 10 + Vector.FromAngle(normalAngle) * normalOffset;
                 local sourcePos = doremy.Position + offset;
                 local color = scaleColors[i];
-                local speed = 0.3;
+                local speed = 1;
                 local velocity = fireDir * speed;
-                local tearEntity = Isaac.Spawn(9, 13, 0, sourcePos, velocity, doremy);
+
                 
-                tearEntity:SetColor(color, -1, 0,false, true);
-                local proj = tearEntity:ToProjectile();
-                proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
-                table.insert(data.Projectiles, {
-                    Projectile = proj,
-                    Speed = speed
-                }
-                );
+                FeatherParams.Color = color;
+                FeatherParams.BulletFlags = self:GetProjectileFlags(doremy) | ProjectileFlags.ACCELERATE;
+                doremy:FireProjectiles (sourcePos, velocity, 0, FeatherParams);
+                FeatherParams.Color = Color.Default;
+                FeatherParams.BulletFlags = ProjectileFlags.ACCELERATE;
+
+                -- local tearEntity = Isaac.Spawn(9, 13, 0, sourcePos, velocity, doremy);
+                
+                -- tearEntity:SetColor(color, -1, 0,false, true);
+                -- local proj = tearEntity:ToProjectile();
+                -- proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
+                -- table.insert(data.Projectiles, {
+                --     Projectile = proj,
+                --     Speed = speed
+                -- }
+                -- );
             end
         end
         
@@ -101,32 +122,36 @@ function DreamExpress:PostUpdate(doremy)
             local sourcePos = doremy.Position;
             local speed = 6;
             local velocity = Vector.FromAngle(angle) * speed;
-            local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
 
-            local proj = tearEntity:ToProjectile();
-            proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
-            proj.Scale = 2;
+            ProjParams.BulletFlags = self:GetProjectileFlags(doremy);
+            doremy:FireProjectiles (sourcePos, velocity, 0, ProjParams);
+            ProjParams.BulletFlags = 0;
+
+            --local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
+            -- local proj = tearEntity:ToProjectile();
+            -- proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
+            -- proj.Scale = 2;
             
-            table.insert(data.Projectiles, {
-                Projectile = proj,
-                Speed = 0
-            });
+            -- table.insert(data.Projectiles, {
+            --     Projectile = proj,
+            --     Speed = 0
+            -- });
         end
         
         --THI.SFXManager:Play(SoundEffect.SOUND_BISHOP_HIT);
-                THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_DANMAKU, 0.25);
+        THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_DANMAKU, 0.25);
     end
 
-    -- Make projectiles float and increase speed.
-    for i, info in pairs(data.Projectiles) do
-        local proj = info.Projectile;
-        if (proj:Exists()) then
-            proj.Velocity = proj.Velocity + proj.Velocity:Normalized() * info.Speed;
-            proj.FallingSpeed = 0;
-        else
-            data.Projectiles[i] = nil;
-        end
-    end
+    -- -- Make projectiles float and increase speed.
+    -- for i, info in pairs(data.Projectiles) do
+    --     local proj = info.Projectile;
+    --     if (proj:Exists()) then
+    --         proj.Velocity = proj.Velocity + proj.Velocity:Normalized() * info.Speed;
+    --         proj.FallingSpeed = 0;
+    --     else
+    --         data.Projectiles[i] = nil;
+    --     end
+    -- end
 end
 function DreamExpress:OnCast(doremy)
     local data = self:GetData(doremy);

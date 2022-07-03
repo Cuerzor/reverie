@@ -73,15 +73,16 @@ function SaucerRemote:UseRemote(item, rng, player, flags, slot, varData)
         i = rng:RandomInt(4);
     end
 
+    local subType = ufo.SubTypes.RED;
     if (i == 1) then
-        variant = ufo.BlueVariant;
+        subType = ufo.SubTypes.BLUE;
     elseif (i == 2) then
-        variant = ufo.GreenVariant;
+        subType = ufo.SubTypes.GREEN;
     elseif (i == 3) then
-        variant = ufo.RainbowVariant;
+        subType = ufo.SubTypes.RAINBOW;
     end
 
-    local spawned = Isaac.Spawn(ufo.Type, variant, 0, room:GetCenterPos(), Vector.Zero, player);
+    local spawned = Isaac.Spawn(ufo.Type, variant, subType, room:GetCenterPos(), Vector.Zero, player);
     local data = ufo.GetUFOData(spawned, true);
     if (player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY)) then
         data.BonusTimes = 3;

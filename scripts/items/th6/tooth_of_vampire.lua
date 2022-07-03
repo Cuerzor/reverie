@@ -11,7 +11,7 @@ function VampireTooth:postChangeCollectibles(player, item, diff)
     player:AddCacheFlags(CacheFlag.CACHE_LUCK)
     player:EvaluateItems()
 end
-Callbacks:AddCallback(VampireTooth:GetMod(), CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, VampireTooth.postChangeCollectibles, VampireTooth.Item);
+VampireTooth:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, VampireTooth.postChangeCollectibles, VampireTooth.Item);
 
 function VampireTooth:onUseSun(card, player, flags)
     if (player:HasCollectible(VampireTooth.Item)) then
@@ -34,17 +34,6 @@ function VampireTooth:onUseMoon(card, player, flags)
         THI.Game:StartRoomTransition(secretIndex, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT, player)
     end
 end
-
--- function VampireTooth:preGetCollectible(pool, decrease, seed)
---     if (Collectibles.IsAnyHasCollectible(VampireTooth.Item)) then
---         local room = THI.Game:GetRoom();
---         if (room:GetType() == RoomType.ROOM_ULTRASECRET and pool == ItemPoolType.POOL_ANGEL) then
---             local pool = THI.Game:GetItemPool();
---             return pool:GetCollectible(ItemPoolType.POOL_DEVIL, decrease, seed, CollectibleType.COLLECTIBLE_PENTAGRAM)
---         end
---     end
--- end
---VampireTooth:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, VampireTooth.preGetCollectible);
 
 function VampireTooth:onEntityDeath(npc)
     if (Collectibles.IsAnyHasCollectible(VampireTooth.Item)) then

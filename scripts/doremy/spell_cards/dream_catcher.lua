@@ -1,10 +1,17 @@
 local Dream = GensouDream;
+local Collectibles = CuerLib.Collectibles;
 
 local DreamCatcher = Dream.SpellCard();
 local dreamLasers = {};
 local dreamLaserBuffer = {};
 local catcherProjColor = Color(1,1,1,1,0,0,1); 
     
+local ProjParams = ProjectileParams();
+ProjParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+ProjParams.Color = catcherProjColor;
+ProjParams.FallingAccelModifier = -0.15;
+--ProjParams.FallingSpeedModifier = -0.05;
+
 local function AddDreamLaser(laser) 
     table.insert(dreamLasers, {
         Laser = laser,
@@ -220,36 +227,43 @@ function DreamCatcher:PostUpdate(doremy)
     local data = self:GetData(doremy);
 
     -- Fire bouncing projectiles.
-    if (data.Index > 0) then
-        data.Time = data.Time - 1;
-        if (data.Time <= 0) then
-            data.Time = 5;
-            local angleOffset = 0;
-            if (data.Index % 2 == 0) then
-                angleOffset = 15;
+    if (not Collectibles.IsAnyHasCollectible(CollectibleType.COLLECTIBLE_DREAM_CATCHER)) then
+        if (data.Index > 0) then
+            data.Time = data.Time - 1;
+            if (data.Time <= 0) then
+                data.Time = 5;
+                local angleOffset = 0;
+                if (data.Index % 2 == 0) then
+                    angleOffset = 15;
+                end
+                for i =0, 11 do 
+                    local angle = i * 30 + angleOffset;
+                    local dir = Vector.FromAngle(angle);
+                    local sourcePos = data.Position - dir * 90;
+                    
+                    ProjParams.BulletFlags = self:GetProjectileFlags(doremy) | ProjectileFlags.BOUNCE;
+                    doremy:FireProjectiles (sourcePos, -dir * 4, 0, ProjParams);
+                    ProjParams.BulletFlags = ProjectileFlags.BOUNCE;
+
+                    -- local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, -dir * 4, doremy);
+                    -- tearEntity:SetColor(catcherProjColor, -1, 0, false, true);
+                    -- local proj = tearEntity:ToProjectile();
+                    -- proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy) | ProjectileFlags.BOUNCE;
+                    -- table.insert(data.Projectiles, proj);
+                end
+                data.Index = data.Index - 1;
             end
-            for i =0, 11 do 
-                local angle = i * 30 + angleOffset;
-                local dir = Vector.FromAngle(angle);
-                local sourcePos = data.Position - dir * 90;
-                local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, -dir * 4, doremy);
-                tearEntity:SetColor(catcherProjColor, -1, 0, false, true);
-                local proj = tearEntity:ToProjectile();
-                proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy) | ProjectileFlags.BOUNCE;
-                table.insert(data.Projectiles, proj);
-            end
-            data.Index = data.Index - 1;
         end
     end
 
-    -- Make projectiles float.
-    for i, proj in pairs(data.Projectiles) do
-        if (proj:Exists()) then
-            proj.FallingSpeed = 0.05;
-        else
-            data.Projectiles[i] = nil;
-        end
-    end
+    -- -- Make projectiles float.
+    -- for i, proj in pairs(data.Projectiles) do
+    --     if (proj:Exists()) then
+    --         proj.FallingSpeed = 0.05;
+    --     else
+    --         data.Projectiles[i] = nil;
+    --     end
+    -- end
 end
 function DreamCatcher:OnCast(doremy)
     local data = self:GetData(doremy);
@@ -270,7 +284,7 @@ function DreamCatcher:OnCast(doremy)
     data.Position = player.Position;
     data.Time = 5;
     data.Index = 3;
-    Dream.SpellCardEffect.Burst(doremy.Position);
+    THI.Effects.SpellCardWave.Burst(doremy.Position);
     THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_LASER);
     THI.Game:ShakeScreen(10);
 end

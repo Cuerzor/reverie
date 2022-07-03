@@ -119,7 +119,7 @@ do
         local orbitalTargetPos = player.Position + player.Velocity+ familiar:GetOrbitPosition(Vector.Zero);
         
         local dir = player:GetFireDirection();
-        local fireDir = Familiars:GetFireVector(familiar, dir)
+        local fireDir = Familiars:GetFireVector(familiar, dir, false, 1000);
         Familiars:DoFireCooldown(familiar);
         if (dir ~= Direction.NO_DIRECTION and Familiars:canFire(familiar) and (player == nil or player:IsExtraAnimationFinished())) then
             

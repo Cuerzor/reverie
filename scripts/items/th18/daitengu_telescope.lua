@@ -1,4 +1,5 @@
 local Detection = CuerLib.Detection;
+local Stages = CuerLib.Stages;
 local Telescope = ModItem("Daitengu Telescope", "MegumuTelescope");
 
 function Telescope.GetTelescopeData(init)
@@ -106,7 +107,7 @@ function Telescope.GetMeteorRoomIndex(seed)
     -- Get valid rooms.
     for i = 1, rooms.Size do
         local room = rooms:Get(i);
-        if (room and room.GridIndex >= 0) then
+        if (room and room.GridIndex >= 0 and Stages.GetDimension(room) == 0) then
             local roomData = room.Data;
             local shape = roomData.Shape;
             local typeOk = roomData.Type == RoomType.ROOM_DEFAULT or roomData.Type == RoomType.ROOM_BOSS;
@@ -217,7 +218,7 @@ function Telescope.SpawnMeteorReward(position)
     for i, ent in pairs(Isaac.GetRoomEntities()) do
         if (ent.Position:Distance(pos) <= explosionRadius) then
             local npc = ent:ToNPC();
-            if (npc) then
+            if (npc and not npc:IsInvincible()) then
                 if (npc:IsBoss()) then
                     npc.HitPoints = npc.HitPoints - npc.MaxHitPoints / 2;
                 else
@@ -263,15 +264,19 @@ function Telescope:PostNewRoom()
         local roomDesc = level:GetCurrentRoomDesc();
         local firstVisit = room:IsFirstVisit();
 
+        -- After Enter Treasure room.
         if (not room:IsMirrorWorld() and room:GetType() == RoomType.ROOM_TREASURE and firstVisit) then
             Telescope.RemoveSkippedTreasureRoom(level:GetStage(), level:GetStageType(), 1);
         end
 
-        local meteorData = globalData.Meteor;
-        if (meteorData.Triggered) then
-            if (roomDesc.SafeGridIndex == meteorData.RoomIndex and firstVisit) then
-                local position = room:GetRandomPosition(80);
-                Telescope.SpawnMeteorReward(position);
+        -- Spawn Meteor.
+        if (Stages.GetDimension(roomDesc) == 0) then -- Only spawn in main dimension.
+            local meteorData = globalData.Meteor;
+            if (meteorData.Triggered) then
+                if (roomDesc.SafeGridIndex == meteorData.RoomIndex and firstVisit) then
+                    local position = room:GetRandomPosition(80);
+                    Telescope.SpawnMeteorReward(position);
+                end
             end
         end
     end
@@ -319,7 +324,7 @@ function Telescope:PostNewStage()
     Telescope.AddSkippedTreasureRoom(stage, stageType, treasureRoomCount);
     --print ("Skipped Treasure Rooms Now: "..Telescope.GetSkippedTreasureRoomCount());
 end
-Telescope:AddCustomCallback(CLCallbacks.CLC_NEW_STAGE, Telescope.PostNewStage)
+Telescope:AddCustomCallback(CuerLib.CLCallbacks.CLC_NEW_STAGE, Telescope.PostNewStage)
 
 -- function Telescope:PostRender()
 --     Isaac.RenderText(Telescope.GetMeteorChance(), 160, 80, 1,1,1,1);

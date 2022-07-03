@@ -1,5 +1,4 @@
 local Stats = CuerLib.Stats;
-local Explosion = CuerLib.Explosion;
 local Actives = CuerLib.Actives;
 local Detection = CuerLib.Detection;
 
@@ -87,12 +86,6 @@ PeerlessElixir:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, PeerlessElixir.onNewL
 local WispExplosionColor = Color(1,1,1,1,0,1,0);
 function PeerlessElixir:onFamiliarKilled(familiar)
     if (familiar.Variant == FamiliarVariant.WISP and familiar.SubType == PeerlessElixir.Item) then
-        
-        -- local params = Explosion.ExplosionParams();
-        -- params.PlayerDamage = 1; 
-        -- params.Spawner = familiar;
-        -- Explosion.CustomExplode(familiar.Position, params);
-
         THI.Game:BombExplosionEffects (familiar.Position, 20, TearFlags.TEAR_NORMAL, WispExplosionColor, familiar, 1, true, false, DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_IGNORE_ARMOR)
     end
 end
@@ -101,7 +94,7 @@ PeerlessElixir:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, PeerlessElixir.onFa
 
 
 function PeerlessElixir:GetShaderParams(name)
-    if (name == "HUD Hack") then
+    if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
         Actives.RenderActivesCount(PeerlessElixir.Item, function(player) 
             local data = PeerlessElixir.GetPlayerData(player);
             return (data and data.UsedTime) or 0;

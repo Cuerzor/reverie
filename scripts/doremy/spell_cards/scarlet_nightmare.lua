@@ -2,6 +2,11 @@ local ScarletNightmare = GensouDream.SpellCard();
 
 
 local tearColor = Color(1,1,1,1,0.5,0,0);
+local ProjParams = ProjectileParams();
+ProjParams.FallingAccelModifier = -0.2;
+ProjParams.FallingSpeedModifier = 3;
+ProjParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+ProjParams.Color = tearColor;
 
 function ScarletNightmare:GetDefaultData(doremy)
     return {
@@ -35,27 +40,31 @@ function ScarletNightmare:PostUpdate(doremy)
         for i = 0, 3 do
             local tearAngle = i * 120;
             local velocity = Vector.FromAngle(tearAngle) * 4;
-            local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
-            tearEntity:SetColor(tearColor, -1, 0, false, true);
-            --THI.SFXManager:Play(SoundEffect.SOUND_BISHOP_HIT);
-            THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_DANMAKU, 0.25);
 
-            local proj = tearEntity:ToProjectile();
-            proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
-            table.insert(data.Projectiles, proj);
+            
+            ProjParams.BulletFlags = self:GetProjectileFlags(doremy);
+            doremy:FireProjectiles(sourcePos, velocity, 0, ProjParams);
+            ProjParams.BulletFlags = 0;
+            -- local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
+            -- tearEntity:SetColor(tearColor, -1, 0, false, true);
+            -- local proj = tearEntity:ToProjectile();
+            -- proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
+            -- table.insert(data.Projectiles, proj);
+
+            THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_DANMAKU, 0.25);
         end
         data.Time = data.Time - 1;
     end
 
 
-    -- Make projectiles float.
-    for i, proj in pairs(data.Projectiles) do
-        if (proj:Exists()) then
-            proj.FallingSpeed = 0;
-        else
-            data.Projectiles[i] = nil;
-        end
-    end
+    -- -- Make projectiles float.
+    -- for i, proj in pairs(data.Projectiles) do
+    --     if (proj:Exists()) then
+    --         proj.FallingSpeed = 0;
+    --     else
+    --         data.Projectiles[i] = nil;
+    --     end
+    -- end
 end
 function ScarletNightmare:OnCast(doremy)
     local data = self:GetData(doremy);

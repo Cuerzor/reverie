@@ -10,30 +10,30 @@ MaidSuit.MaidKnifeVariant = Isaac.GetEntityVariantByName("Maid Knife");
 MaidSuit.KnifeSpawner = Isaac.GetEntityTypeByName("Knife Spawner");
 MaidSuit.KnifeSpawnerVariant = Isaac.GetEntityVariantByName("Knife Spawner");
 MaidSuit.Config = {
-    ChanceIncreament = 20,
+    StartingChance = 10,
+    ChanceIncreament = 5,
     KnifeSpawnerTime = 25
 };
 MaidSuit.rng = RNG();
 
-local function GetDefaultTempData()
-    return {
-        Stopping = false,
-        Time = 0,
-        Countdown = 0
-    };
+local function GetTempGlobalData(create)
+    return MaidSuit:GetTempGlobalData(create, function() 
+        return {
+            Time = 0,
+            Countdown = 0
+        };
+    end);
 end
-MaidSuit.TimeStop = GetDefaultTempData();
 
 
-local function GetGlobalData()
-    return MaidSuit:GetGlobalData(true, function() return {
-        Chance = 20,
-        Has = Collectibles.IsAnyHasCollectible(MaidSuit.Item),
+local function GetGlobalData(create)
+    return MaidSuit:GetGlobalData(create, function() return {
+        Chance = 10,
         WorldSpawned = false
     }end);
 end
 
-function MaidSuit.GetFreezeTime()
+function MaidSuit:GetFreezeTime()
     if (THI.IsLunatic()) then
         return 60;
     else
@@ -63,7 +63,7 @@ function MaidSuit:GetNPCData(npc)
     } end);
 end
 
-function MaidSuit:postPickCollectible(player, item, count, touched)
+function MaidSuit:postGainCollectible(player, item, count, touched)
     if (not touched) then
         local room = THI.Game:GetRoom();
         if (count > 0) then
@@ -73,47 +73,44 @@ function MaidSuit:postPickCollectible(player, item, count, touched)
         end
     end
 end
-MaidSuit:AddCustomCallback(CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, MaidSuit.postPickCollectible, MaidSuit.Item);
-
--- function MaidSuit:postChangeCollectibles(player, item, diff)
---     GetGlobalData().Has = Collectibles.IsAnyHasCollectible(MaidSuit.Item);
--- end
--- MaidSuit:AddCustomCallback(CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, MaidSuit.postChangeCollectibles, MaidSuit.Item);
+MaidSuit:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, MaidSuit.postGainCollectible, MaidSuit.Item);
 
 function MaidSuit:onUpdate()
 
-    GetGlobalData().Has = Collectibles.IsAnyHasCollectible(MaidSuit.Item);
-    local timeStopData = MaidSuit.TimeStop;
-    if (timeStopData.Countdown > 0) then
-        timeStopData.Countdown = timeStopData.Countdown - 1;
-        if (timeStopData.Countdown <= 0) then
-            MaidSuit:StartTimeStop();
+    local timeStopData = GetTempGlobalData(false);
+    if (timeStopData) then
+        if (timeStopData.Countdown > 0) then
+            timeStopData.Countdown = timeStopData.Countdown - 1;
+            if (timeStopData.Countdown <= 0) then
+                MaidSuit:StartTimeStop();
+            end
         end
-    end
-    -- Time stop timeout.
-    if (timeStopData.Stopping) then
-        timeStopData.Time = timeStopData.Time + 1;
-        -- Play Hand Sound.
-        if (timeStopData.Time % 30 == 1) then
-            THI.SFXManager:Play(SoundEffect.SOUND_COIN_INSERT, 1, 0, false, 5);
-        end
-        if (timeStopData.Time > MaidSuit.GetFreezeTime()) then
-            MaidSuit:UnfreezeObjects();
-            MaidSuit:EndTimeStop();
-        else
-            MaidSuit:FreezeObjects();
+        -- Time stop timeout.
+        if (timeStopData.Time >= 0) then
+            timeStopData.Time = timeStopData.Time - 1;
+            -- Play Hand Sound.
+            if (timeStopData.Time % 30 == 29) then
+                THI.SFXManager:Play(SoundEffect.SOUND_COIN_INSERT, 1, 0, false, 5);
+            end
+            
+            if (timeStopData.Time < 0) then
+                MaidSuit:UnfreezeObjects();
+                MaidSuit:EndTimeStop();
+            else
+                MaidSuit:FreezeObjects();
+            end
         end
     end
 end
 
 function MaidSuit:StartTimeStop()
-    MaidSuit.TimeStop.Stopping = true;
-    MaidSuit.TimeStop.Time = 0;
+    local data = GetTempGlobalData(true);
+    data.Time = self:GetFreezeTime();
 end
 
 function MaidSuit:EndTimeStop()
-    MaidSuit.TimeStop.Stopping = false;
-    MaidSuit.TimeStop.Time = 0;
+    local data = GetTempGlobalData(true);
+    data.Time = -1;
 end
 
 function MaidSuit:CanUnfreeze(e) 
@@ -190,7 +187,7 @@ function MaidSuit:SpawnKnife(position, i, player)
     local dir = Vector(math.sin(rad), -math.cos(rad));
     local pos = position + dir * 120;
     local knife = Isaac.Spawn(MaidSuit.MaidKnife, MaidSuit.MaidKnifeVariant, 0, pos, Vector(0, 0), player):ToTear();
-    local freezeTime = MaidSuit.GetFreezeTime();
+    local freezeTime = MaidSuit:GetFreezeTime();
     knife.WaitFrames = freezeTime;
     knife.TearFlags = knife.TearFlags | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_PIERCING;
     local data = MaidSuit:GetKnifeData(knife);
@@ -218,18 +215,18 @@ end
 
 function MaidSuit:onNewRoom()
     MaidSuit:EndTimeStop();
-    if (GetGlobalData().Has and (Isaac.CountEnemies() > 0 or Isaac.CountBosses() > 0)) then
+    if (Collectibles.IsAnyHasCollectible(MaidSuit.Item) and (Isaac.CountEnemies() > 0 or Isaac.CountBosses() > 0)) then
         -- Set Timestop Countdown.
-        MaidSuit.TimeStop.Countdown = 15;
+        local data = GetTempGlobalData(true);
+        data.Countdown = 15;
     end
 end
 
 function MaidSuit:onNewLevel()
-    if (SaveAndLoad.GameStarted) then
-        local data = GetGlobalData();
-        if (data.Has) then
-            data.Chance = MaidSuit.Config.ChanceIncreament;
-            data.Stage = stage;
+    if (Game():GetFrameCount() > 0) then
+        if (Collectibles.IsAnyHasCollectible(MaidSuit.Item)) then
+            local data = GetGlobalData(true);
+            data.Chance = MaidSuit.Config.StartingChance;
             data.WorldSpawned = false;
         end
     end
@@ -263,7 +260,7 @@ function MaidSuit:onKnifeSpawnerUpdate(effect)
     if (data.Time % 3 == 0) then
         local knife = MaidSuit:SpawnKnife(effect.Position, data.Index, data.Player);
         local knifeData = MaidSuit:GetKnifeData(knife);
-        knife.WaitFrames = MaidSuit.GetFreezeTime() - data.Time;
+        knife.WaitFrames = MaidSuit:GetFreezeTime() - data.Time;
         data.Index = data.Index + 1;
     end
     
@@ -275,21 +272,23 @@ function MaidSuit:onKnifeSpawnerUpdate(effect)
 end
 
 function MaidSuit:preSpawnCleanAward(rng, Position)
-    local data = GetGlobalData();
-    if (data.Has and not data.WorldSpawned) then
-        if (not THI.IsLunatic()) then
-            local value = MaidSuit.rng:RandomInt(99);
-            if (value < data.Chance) then
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_WORLD, THI.Game:GetRoom():FindFreePickupSpawnPosition(Position, 0, false), Vector(0,0), nil);
-                data.WorldSpawned = true;
-                data.Chance = 0;
+    if (Collectibles.IsAnyHasCollectible(MaidSuit.Item)) then
+        local data = GetGlobalData(true);
+        if (not data.WorldSpawned) then
+            if (not THI.IsLunatic()) then
+                local value = MaidSuit.rng:RandomInt(99);
+                if (value < data.Chance) then
+                    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_WORLD, THI.Game:GetRoom():FindFreePickupSpawnPosition(Position, 0, false), Vector(0,0), nil);
+                    data.WorldSpawned = true;
+                    data.Chance = 0;
+                else
+                    data.Chance = data.Chance + MaidSuit.Config.ChanceIncreament;
+                end
             else
-                data.Chance = data.Chance + MaidSuit.Config.ChanceIncreament;
-            end
-        else
-            if (THI.Game:GetRoom():GetType() == RoomType.ROOM_BOSS) then
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_WORLD, THI.Game:GetRoom():FindFreePickupSpawnPosition(Position, 0, false), Vector(0,0), nil);
-                data.WorldSpawned = true;
+                if (THI.Game:GetRoom():GetType() == RoomType.ROOM_BOSS) then
+                    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_WORLD, THI.Game:GetRoom():FindFreePickupSpawnPosition(Position, 0, false), Vector(0,0), nil);
+                    data.WorldSpawned = true;
+                end
             end
         end
     end
@@ -304,10 +303,6 @@ function MaidSuit:onNPCUpdate(npc)
     end
 end
 
-function MaidSuit:postExit()
-    MaidSuit.TimeStop = GetDefaultTempData();
-end
-SaveAndLoad:AddCallback(MaidSuit:GetMod(), SLCallbacks.SLC_POST_EXIT, MaidSuit.postExit);
 
 MaidSuit:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, MaidSuit.onNewLevel);
 MaidSuit:AddCallback(ModCallbacks.MC_POST_UPDATE, MaidSuit.onUpdate);

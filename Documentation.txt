@@ -4,51 +4,48 @@ At present, there are items and trinkets in Touhou Project series and Secret Sea
 ...And a secret Boss!
 The mod is completely open source, you are welcome to help improve the mod, and use the mod to learn mod creation.
 
-Now there are many bugs in the Mod API of Repentance, 
-including but not limited to the inability to customize the sound effect, the inability to set Isaac's range, 
-and game crashes when collectable temporary effects are added.
+·This supports Mod Config Menu: https://steamcommunity.com/sharedfiles/filedetails/?id=2487535818
 
-Some effects that can't be applied will be put on hold until Repentance is updated and bugs are fixed.
+·This adds some pocket items such as runes, and has announcer voice. 
+    If you want to turn off the announcer, you can use above Mod Config Menu to turn it off.
 
-This MOD has another mode: Lunatic Mode
-In this mode, some powerful items got nerfed.
-Can switch Lunatic Mode by inputing "thlunatic" in console.
+·This MOD has another mode: Lunatic Mode
+    In this mode, some powerful items got nerfed.
+    Can switch Lunatic Mode by inputing "thlunatic" in console.
 
-There're nerfed items in this mode:
-Dark Ribbon: Damage multiplier reduced to 120%.
-Spring of Daiyousei: Fairies now will only heal 1 red heart, and grant 1 soul heart.
-Maid Suit: Time stop time reduced to 2 seconds. The World card spawns after defeat boss instead.
-Tooth of Vampire: Heart Drop rate reduced to 2.5%.
-Roukanken: Slain enemies no longer provides charges.
-Fan of the Dead: Max lives are 20.
-One of Nine Tails: No longer spawn babies when familiars reaches the limit of 9.
-Starseeker: The options become 2.
-Book of Years: Has 30% chance not spawning items.
-Tengu Camera: Reduced the freeze time to 4 seconds.
-Rune Sword: Ehwaz's trapdoor spawn chance reduced to 50% * x.
-Bishamonten's Pagota: No longer midases enemies.
-Zombie Infestation: Monsters has only 50% chance to spawn friendly clones.
-D2147483647: Needs 2 charges to transform, and excluded Death Certificate.
-The Infamies: No longer charm Bosses.
-Hunger: Enemies no longer drop foods.
-Fortune Cat Paw: The coin drop rate of bosses reduced to 60%.
+    There're nerfed items in this mode:
+    Dark Ribbon: Damage multiplier reduced to 120%.
+    Spring of Daiyousei: Fairies now will only heal 1 red heart, and grant 1 soul heart.
+    Maid Suit: Time stop time reduced to 2 seconds. The World card spawns after defeat boss instead.
+    Tooth of Vampire: Heart Drop rate reduced to 2.5%.
+    Roukanken: Slain enemies no longer provides charges.
+    Fan of the Dead: Max lives are 20.
+    One of Nine Tails: No longer spawn babies when familiars reaches the limit of 9.
+    Starseeker: The options become 2.
+    Book of Years: Has 30% chance not spawning items.
+    Tengu Camera: Reduced the freeze time to 4 seconds.
+    Bishamonten's Pagota: No longer midases enemies.
+    Zombie Infestation: Monsters has only 50% chance to spawn friendly clones.
+    D2147483647: Needs 2 charges to transform, and excluded Death Certificate.
+    The Infamies: No longer charm Bosses.
+    Fortune Cat Paw: The coin drop rate of bosses reduced to 60%.
 
 Introduction to Characters:
 --------------------
 Eika
 Hearts: 2 Red Hearts
-Speed: 0.8
-Fire Rate: 1.82
-Damage：4.38
+Speed: 0.85 (-0.15)
+Fire Rate: 2.73
+Damage：4.38 (125%)
 Range: 6.5
 Shot Speed: 1
-Luck: 1
+Luck: 1 (+1)
 
 Items: Mom's Bracelet
 Trinkets: Shiny Rock
 Special: 
--She cannot shoot tears, and towers rocks over her head instead. After releasing the shooting keys, throw them all to the direction.
--The maxinium count of towering rocks is 5. If Eika is moving, it will be 3.
+* She cannot shoot tears, and towers rocks over her head instead. After releasing the shooting keys, throw them all to the direction.
+* The maxinium count of towering rocks is 5. If Eika is moving, it will be 3.
 
 Birthright：
 Description: Many littles make a mickle
@@ -75,9 +72,9 @@ Spirit Sword: Rocks will spawn spinning swords during flight.
 --------------------
 Tainted Eika
 Hearts: 2 Red Hearts
-Speed: 0.75
+Speed: 0.85 (-0.15)
 Fire Rate: 2.73
-Damage: 2.63
+Damage: 2.63 (75%)
 Range: 6.5
 Shot Speed: 1
 Luck: 0
@@ -85,33 +82,45 @@ Luck: 0
 Items: Fetus Blood (Pocket Slot)
 Trinket: Umbilical Cord
 Features:
--Leave creep behind.
--Has Unique Item: Fetus Blood
-Description: Rebone
-Type: Active Item
-Charges: 1
-Quality: 2
-Item Pools: None (Hidden)
-Tags: Offensive
--Upon use, spawn a friendly Blood Boney.
-    -Throw bones to enemies like normal boney. But bones' damage is player damage + 5.
-    -Has 12 health, and increase 4 for each floor. Has 20 shield strength.
-    -Has 3 contact damage.
--The limit of Blood Boney is equals to the current floor.
--If Isaac has Book of Virtues, spawn flesh wisps.
+* Leave creeps behind.
+* Cannot have soul hearts, black hearts or bone hearts. They will be converted into bonies.
+    * Soul bonies and Devil bonies can be stacked and upgraded.
+    * Soul bonies is flying:
+        * Level 1: 
+            Fire weak bones that deals player damage.
+            Can take hits up to (4 + currentFloor) times.
+        * Level 2: 
+            Fire weak bones, and has 50% chance to shoot blue flames, dealing 20% of player damage per hit.
+            Can take hits up to (8 + 2 * currentFloor) times.
+        * Level 3: 
+            Fire weak bones and blue flames.
+            Can take hits up to (12 + 3 * currentFloor) times.
+    * Devil Bonies shoots 3 bones at a time, and explodes upon death:
+        * Level 1: 
+            Fire strong bones that deals 5 + playerDamage. 
+            Can take hits up to (4 + currentFloor) times.
+        * Level 2: 
+            Fire strong and homing bones that deals 5 + playerDamage * 2;.
+            Can take hits up to (8 + 2 * currentFloor) times.
+        * Level 3: 
+            Fire strong and homing bones, and spawn brimstone balls when the bone is hit.
+            Can take hits up to (12 + 3 * currentFloor) times.
+    * Bone hearts will be converted to friendly Big Bonies, which has more HP.
+        * Can take at most (16 + currentFloor * 4) hits.
+* Bonies converted from hearts will transform back to a heart upon death, which only exists for 3 seconds.
+* Use Larynx will play Hush's sound.
 
 Birthright:
-Description: Regeneration
-Effects: Blood Boneies will regenerate health. They regenerate 3.33% health per second.
-
+Description: Corpse Explosion
+Effect: All friendly Blood Bonies, Soul Bonies, Devil Bonies and Big Bonies explodes upon death, dealing MaxHP * 5 damage.
 -----------------------------------
 Satori
 
 Stats: 
 Hearts: 2 Red Hearts
 Speed: 1.0
-Firerate: 3.33
-Damage: x0.8
+Firerate: 2.18 (80%)
+Damage: 2.50 (80%)
 Range: 6.5
 Shot Speed: 1.0
 Luck: 0
@@ -120,19 +129,21 @@ Starting Items: Monster Manual, Guppy's Eye
 
 Features:
 Starts with a Psyche Eye familiar.
+Each enemy monster controlled by Psyche Eye permanently grants player +0.01 tears up, +0.02 damage up, +0.025 range up.
+Each friendly monster killed by Psyche Eye's mind blast grants player +1 tears up, +2 damage up, +2.5 range up in 5 seconds.
 
 Birthright:
 Description: Terrible Hypnosis
-After player enters a room, charm 3 random enemies for 5 minutes.
+Stats up from Psyche Eye get doubled.
 
 --------------------------------
 Tainted Satori
 
 Stats: 
 Hearts: 2 Heart Containers with a half red heart
-Speed: Halved, and max speed is reduced to 1.0
+Speed: 0.5 (50%, and max speed is reduced to 1.0)
 Firerate: 2.73
-Damage: x0.8
+Damage: 2.80 (80%)
 Range: 6.5
 Shot Speed: 1.0
 Luck: 0
@@ -143,884 +154,1500 @@ Features:
 Immune to spikes and creeps.
 Slowly increase speed boost up to 100% while player is moving.
 if player is moving with 50% speed boost, become invincible and can crush enemies.
-Crush Damage is 10 + 40 * Speed Boost Percent * Player Speed * Player Damage.
+Crush Damage is 10 + 140 * Speed Boost Percent * Player Speed * (Player Damage / 3.5) ^ 0.5.
 Restore speed after being hit by projectiles or crushing enemy while invincible.
 
 Birthright:
 Description: Jesus Take the wheel
 Increase the max speed to 1.25, and explodes after crushing enemies while speed is larger than or equals to 1.0.
 
+--------------------------------
+Seija
+Stats: 
+3 Heart Containers
+Speed: 1.0
+Tears: 2.73
+Damage: 3.5
+Range: 6.5
+Shotspeed: 1
+Luck: 0
+Starts with 1 bomb
 
+Starting Item: D Flip (Pocket Slot)
+Features:
+All quality 0 and some quality 1 items included in vanilla game and this mod get buffed.
+All quality 4 and some quality 3 items included in vanilla game and this mod get nerfed.
+
+The following items get buffed:
+My Reflection:
+    x0.75 Range.
+    Fires shuriken tears which is piercing and spectral, will deal contact damage every frame.
+Skatole:
+    Turns all flies friendly.
+    Spawn a blue fly when an enemy dies.
+Boom!: 
+    +89 additional bombs.
+The Poop: 
+    Spawn golden poop.
+Kamikaze!: 
+    Trigger Mama Mega's effect in this room.
+Mom's Pad: 
+    Deal 40 damage to all enemies, killed enemies will drop red hearts.
+Teleport!: 
+    Teleport you to the unvisited Treasure room, Ultra Secret Room, Devil/Angel Room, I AM Error Room in the order.
+The Bean: 
+    All enemies farts and get poisoned.
+Dead Bird: 
+    Spawn a dead bird when enemy killed.
+Razor Blade: 
+    Upon use, damage multiplies √(UseTime + 1) in the room, triggers Soul of Magdalane's Effect.
+Pageant Boy: 
+    Spawn an additional nickel, dime, golden penny and lucky penny upon picked up.
+    Pennies have a chance to be replaced by nickel, dime, golden penny or lucky penny.
+Bum Friend: 
+    50% chance to give collectibles from beggar item pool instead.
+Infestation: 
+    Has 50% chance to poison the enemy and spawn a blue fly when an enemy is damaged.
+Portable Slot: 
+    50% chance to gain 1 penny when failed.
+Black Bean: 
+    Enemies nearby farts and get poisoned when player is damaged.
+    Enemies also triggers this after died.
+Blood Rights: 
+    Deals 40 additional damage, all enemies bleeds pernamently.
+    Bleeding enemies drops temporary red hearts when dies.
+Abel
+    Deals 128 damage per second to nearby enemies and makes them burn.
+    Link the player and abel with laser, deals damage to enemies touch the laser.
+Tiny Planet: 
+    Falls a meteor and explodes at a random position when tears hit an enemy, dealing 10x player damage.
+    Won't damage player.
+Missing Page 2: 
+    +1 Damage up.
+    Triggers Necronomicon when damaged.
+Best Bud: 
+    Always has the white fly.
+    The white fly will knockback enemies close to player, deal damages and make them confusion.
+Isaac's Heart: 
+    The heart repels enemies.
+D10: 
+    All non-Boss enemies has 80% chance to turn to fly.
+Book of Secrets: 
+    Use four times in one time.
+Key Bum: 
+    Gives an additional Latch Key.
+Punching bag: 
+    Pull the nearby enemies to its side and punch repeatedly.
+Obsessed Fan: 
+    Spawn 2 blue flies per second when enemy exists.
+The Jar: 
+    Drop 1 additional random heart after room cleared.
+Strange Attactor:
+    Tears will shock enemies nearby.
+Cursed Eye: 
+     Doubles Tears.
+Cain's Other Eye: 
+    Fire brimstone laser to the nearest enemy.
+    Displays this floor's rooms after new floor.
+Isaac's Tears: 
+    Only needs shot to fully recharge.
+Breath of Life: 
+    Invincible while charges is not full.
+Betrayal: 
+    Charm 50% enemies when entered a new room.
+    Use Soul of Satori when damaged.
+Linger Bean: 
+    Clouds appears more frequently, and will chase enemies.
+My Shadow: 
+    Spawn black chargers under enemies.
+    Black chargers explode upon death, won't damage player.
+Shade: 
+    Spawn a Seija's shade for each enemies after entered a room.
+    Deal 90 contact damage per second.
+    Disappears when enemy dies.
+Hushy: 
+    Fire 3 lines of Continuum tears when stopped.
+Plan C: 
+    Gain 1UP!.
+Dataminer: 
+    When used:.
+    +0.1 Speed up +0.25 Tears up.
+    +0.5 Damage up +0.75 Range up.
+    +0.5 Luck.
+Clicker: 
+    Spawn a quality 4 item.
+Scooper: 
+    Use 5 more times.
+    +5 Damage up after each use, reduce 1.07 damage every second.
+Brown Nugget: 
+    Only needs 0.5 seconds for fully charged.
+Curse of the Tower: 
+    Explosion resistance.
+Missing No.: 
+    Get full soul heart after floor.
+    Won't meet TMTRAINER.
+Ouija Board: 
+    +1 Tears up.
+    Piercing tears.
+Glaucoma: 
+    Additional chance to fire confusion tears.
+    Flashes on hit, confuses all enemies nearby and deals 200% player damage to them, and clear bullets.
+    50% at 9 luck.
+The Wiz: 
+    Homing and piercing tears.
+Athame: 
+    Enemies killed by black laser has 20% chance to drop a black heart.
+Taurus: 
+    Speed becomes 1.95.
+Green Eyed Envy:
+    Enemy copies get charmed for 5 minutes.
+Vicious Curse: 
+    No longer damages player, +1 soul heart.
+    Restore Damocles' update speed.
+    Protects player when killing by Damocles.
+Other mod's quality 0 items:
+    All stats up.
+
+
+
+The following items get nerfed:
+Cricket's Head: 
+    -33% Tears down.
+Magic Mushroom: 
+    -0.8 Speed down.
+Dr. Fetus: 
+    Explosion time get tripled.
+D6: 
+    Has 30% chance to remove the collectible.
+Wafer: 
+    Has 50% chance to take an addition damage when damaged.
+Mom's Knife: 
+    -25% Tears down.
+    -25% Damage down.
+    Homing.
+Brimstone: 
+    Blood laser's range is limited by player's range.
+Ipecac: 
+    Boomerange Tears.
+Epic Fetus: 
+    Doubles rockets' falling time.
+Polyphemus: 
+    -25% Tears down.
+Sacred Heart: 
+    -50% Tears down 
+    -0.5 Speed down 
+    -2.5 Range down 
+    -3 Luck down.
+    +1 Shotspeed up.
+Pyromaniac: 
+    Enemy restores HP instead of taking explosion damage.
+Stop Watch: 
+    -0.6 Speed down.
+Infestation 2: 
+    Spawn enemy spiders when an enemy dies.
+Proptosis: 
+    -1 Shotspeed down.
+Satanic Bible: 
+    +1Broken Heart when used.
+Holy Mantle: 
+    Become The Lost forever.
+Godhead: 
+    +2.3 Shotspeed up.
+Incubus: 
+    -25 %Damage down.
+Tech X: 
+    +2 Shotspeed up.
+Maw of the Void: 
+    Enemies killed by lasers explodes.
+Crown of the Light: 
+    Red hearts run off slowly.
+Mega Blast: 
+    Blood laser's range is limited by player's range.
+Void: 
+    All stats slightly down after consumed a collectible.
+D Infinity: 
+    Has 33% chance to lose a charge after room cleared.
+Psy Fly:
+    Greatly reduces speed.
+Mega Mush: 
+    Have not contact damage.
+Revelation: 
+    Laser's range is limited by player's range.
+Binge Eater: 
+    -0.12Speed down for each food item.
+C Section: 
+    Has 5% chance to fire an Unborn enemy.
+Glitched Crown: 
+    Collectibles has 80% chance to turn to Glitched Crown.
+Twisted Pair: 
+    -40% Damage down.
+Abyss: 
+    -10% Damage down after consumed a collectible.
+Bag of Crafting: 
+    75% chance to fail the crafting.
+Flip: 
+    50% chance to remove pedestal items.
+Spindown Dice: 
+    Reduces items' ID by 0-2 again randomly.
+Rock Bottom: 
+    All stats get doubled, then no longer changes.
+Holy Light: 
+    Lightbolts have only 33% player damage.
+Dark Ribbon: 
+    Enemies die inside the halo spawn enemy black chargers.
+Vampire Tooth: 
+    All hearts run off slowly.
+Fan of the Dead: 
+    Revives at the last room.
+Saucer Remote: 
+    UFO will attack player.
+D2147483647: 
+    Can only select quality 0 or 1 items.
+Wild Fury: 
+    Stats down instead after kills enemy.
+Pure Fury: 
+    x1.01 Damage up instead.
+Curse of Centipede: 
+    Also gives Sacred Heart and Polyphemus.
+
+Birthright:
+Description: No more weak ones
+No longer nerfs items.
+
+
+
+------------------------------------------
+Tainted Seija
+
+Stats: 
+3 Heart Containers
+Speed: 1.0
+Tears: 2.73
+Damage: 3.5
+Range: 6.5
+Shotspeed: 1
+Luck: 0
+Starts with 1 bomb
+
+Starting Item: D Flip (Pocket Slot)
+Features:
+Like normal Seija, low quality items get buffed, high quality items get nerfed, but Tainted Seija can only meet quality 2 items.
+In that case, she needs to reduce the qualities of items by using D Siphon manually.
+
+Birthright:
+Description: More weak ones
+The passive effect only prevents quality 0 items from spawning.
+
+
+
+================================
+
+Introduction to Cards:
+
+A Small Stone
+Description: Heap up
+Mimic Charges: 1
+* Fire a rock tear to the shooting direction.
+    * Has only 1 damage, pernamently adds 1 damage every use.
+* Spawn A Small Stone.
+
+Spirit Mirror
+Description: Fight against yourselves
+Mimic Charges: 6
+* Spawn a friendly copy for each enemies in the room.
+
+Situation Twist
+Description: Reroll, then shuffle
+Mimic Charges: 6
+* Reroll all pedestal items in the room.
+* The rerolled items will replace future items from item pools.
+
+================================
+
+Introduction to Pills:
+
+Pill of Ultramarine Orb
+Mimic Charges: 3
+* After use, use Glowing Hourglass after hit in current room. Then this pill disappears.
+* Horse pill won't disappear.
+
+
+================================
+
+Introduction to Runes:
+
+Soul of Eika
+Description: Bone wish
+Mimic Charges: 4
+* Spawn 3 blood bonies that don't take place on Fetus Blood's limit.
+
+Soul of Satori
+Description: I am your master
+Mimic Charges: 6
+* Mind control all monsters, turn them friendly.
+* Charm all bosses for 5 seconds.
+
+Soul of Seija
+Description: Flip
+Mimic Charges: 6
+* Use D Flip.
+* Gives player another Soul of Seija.
+    * Another soul has the same effect, but disappears after use.
+
+
+================================
 
 Introduction to items:
 
 Yin-Yang Orb
 Description: Bouncing Crusher
+Reference: Reimu Hakurei
 Type: Active Item
 Charges: 2
 Quality: 2
 Item Pools: Treasure Room, Golden Chest, Shop, Greed Treasure Room, Greed Shop, Ultra Secret Room
 Tags: Offensive
--Player hold up the orb upon use, then throw a bouncing Yin-Yang Orb after pressed fire button.
-    -Yin-Yang Orb can deal 20 collision damage.
--If Isaac has the Book of Virtues, spawn Yin-Yang Orb wisps.
+* Player hold up the orb upon use, then throw a bouncing Yin-Yang Orb after pressed fire button.
+    * Yin-Yang Orb can deal 20 collision damage.
+* If player has the Book of Virtues, spawn Yin-Yang Orb wisps.
 
+Marisa's Broom
+Description: Also try mushrooms!
+Reference: Marisa Kirisame
+Type: Passive Item
+Quality: 3
+Item Pools: Secret Room, Golden Chest, Wooden Chest, Greed Secret Room
+Tags: Summonable
+* Gain flying ability.
+* Gain Damage + 1, Fire Rate + 0.5 and speed + 0.3 for each kind of mushroom items player has.
 
 Dark Ribbon
 Description: Consuming darkness
+Reference: Rumia
 Type: Passive Item
 Quality: 4
-Item Pools: Curse Room, Devil Room, Greed Devil Room, Ultra Secret Room
+Item Pools: Devil Room, Greed Devil Room, Ultra Secret Room
 Tags: Summonable, Offensive
--Spawn black halo around Isaac, the damage of players inside the halo become 1.5x.
-    -Black halo deals 2.5 damage to enemies inside it per 7 ticks.
+* Spawn black halo around player, the damage of players inside the halo become 1.5x.
+    * Black halo deals 2.5 damage to enemies inside it per 7 ticks.
 
 Spring of Daiyousei
 Description: Blessing of Fairies
+Reference: Daiyousei
 Type: Passive Item
-Quality: 4
+Quality: 3
 Item Pools: Angel Room, Greed Angel Room
 Tags: No Cantripped, No Lost Birthright
--Upon picking up, Restore all Isaac's red hearts, gain 2 soul hearts and recharge Isaac's actives.
--Hearts that players met has a chance of 10% to transform into a fairy.
-    -Fairies will fly irregularly in the room. After picking up, it will restore all the players' hearts and grant Isaac a soul heart.
+* Upon picking up, Restore all player's red hearts, gain 2 soul hearts and recharge player's actives.
+* Hearts that players met has a chance of 10% to transform into a fairy.
+    * Fairies will fly irregularly in the room. After picking up, it will restore all the players' hearts and grant player a soul heart.
 
 Rainbow Dragon Badge
 Description: Fight 'em!
+Reference: Hong Meiling
 Type: Active Item
 Charges: Timed
 Quality: 3
 Item Pools: Treasure Room, Golden Chest, Greed Treasure Room, Greed Shop
 Tags: Offensive
--Upon use, if the user is moving, he become invincible and dash into his moving direction, then lose invincible after about 1 second.
-    -Player deals (40 + 10 * playerDamage) damage to every collided enemies in dash, and creates a circle of punch tears.
-    -Increase 1 second to the invinciblility time upon hit an enemy.
--If Isaac has the Book of Virtues, spawn Star wisps, they will shoot punch tears.
+* Upon use, if the user is moving, he become invincible and dash into his moving direction, then lose invincible after about 1 second.
+    * Player deals (40 + 10 * playerDamage) damage to every collided enemies in dash, and creates a circle of punch tears.
+    * Increase 1 second to the invinciblility time upon hit an enemy.
+* If player has the Book of Virtues, spawn Star wisps, they will shoot punch tears.
 
 Koakuma Baby
 Description: Libraian Buddy
+Reference: Koakuma
 Type: Passive Item
 Quality: 1
 Item Pools: Devil Room, Baby Shop, Treasure Room, Greed Treasure Room, Greed Devil Room, Ultra Secret Room
-Tags: Summonable, Baby, Monster Manual
--Spawn a Koakuma buddy, shoots big tears when Isaac is holding fire button. It can fire 3 tears per second which has 3 damage.
--If Isaac has Bookworm Transformation, Has a chance of 25% to shoot 2 tears.
--If Isaac has tear effects from Grimoire of Patchouli, tears from Koakuma will also have them. 
--BFFs will double the damage, and enlarge the tears.
+Tags: Offensive, Summonable, Baby, Monster Manual
+* Spawn a Koakuma buddy, shoots big tears when player is holding fire button. It can fire 3 tears per second which has 3 damage.
+* If player has Bookworm Transformation, Has a chance of 25% to shoot 2 tears.
+* If player has tear effects from Grimoire of Patchouli, tears from Koakuma will also have them. 
+* BFFs will double the damage, and enlarge the tears.
 
 Grimoire or Patchouli
 Description: Seven elements
+Reference: Patchouli Knowledge
 Type: Active Item
 Charges: 4
 Quality: 3
 Item Pools: Treasure Room, Library, Greed Treasure Room
 Tags: Offensive, Book
--Upon use, gain a tear effect from Homing(Sun), Charm(Moon), Burn(Fire), Slow(Water), Poison(Wood), Magnetize(Metal) and Rock(Earth) in current floor.
-    -Will not gain tear effect that has already gained.
-        -If all tear effects are gained, teleport Isaac to I AM ERROR room after use.
-    -Because of the bug of Mod API, magnetizing or rock tear effect cannot be gained for now.
--If Isaac has the Book of Virtues, spawn wisps that corresponding to gained effect. Each wisp has the same tear effect with the gained effect, and has different stats.
-    -Spawn ERROR wisp when enters I AM ERROR room (Same as Undefined).
+* Upon use, gain a tear effect from Homing(Sun), Charm(Moon), Burn(Fire), Slow(Water), Poison(Wood), Magnetize(Metal) and Rock(Earth) in current floor.
+    * Will not gain tear effect that has already gained.
+        * If all tear effects are gained, teleport player to I AM ERROR room after use.
+* If player has the Book of Virtues, spawn wisps that corresponding to gained effect. Each wisp has the same tear effect with the gained effect, and has different stats.
+    * Spawn ERROR wisp when enters I AM ERROR room (Same as Undefined).
 
 Maid Suit
 Description: Perfect and elegant
+Reference: Sakuya Izayoi
 Type: Passive Item
 Quality: 3
 Item Pools: Shop, Golden Chest
 Tags: Offensive, No Cantripped, No Greed
--Spawn XXI - The World.
--After Isaac enters a room, if there are enemies in the room, pause all enemies for 3 seconds.
--After Isaac cleared a room, has 20% chance to drop XXI - The World. 
-    -If not drop, increase the chance by 20%.
-    -If dropped, will not drop any more in the current floor.
-    -Resets after the floor.
--Using XXI - The World will also pause all enemies for 3 seconds, and spawn 9 suspending knifes around them.
-    -After the pause, the knifes will fly to the enemies and deal 20 damages each knife.
+* Spawn XXI - The World.
+* After player enters a room, if there are enemies in the room, pause all enemies for 3 seconds.
+* After player cleared a room, has 10% chance to drop XXI - The World. 
+    * If not drop, increase the chance by 5%.
+    * If dropped, will not drop any more in the current floor.
+    * Resets after the floor.
+* Using XXI - The World will also pause all enemies for 3 seconds, and spawn 9 suspending knifes around them.
+    * After the pause, the knifes will fly to the enemies and deal 20 damages each knife.
 
 Tooth of Vampire
 Description: Accept your fate
+Reference: Remilia Scarlet
 Type: Passive Item
 Quality: 4
 Item Pools: Devil Room, Devil Beggar, Greed Devil Room, Ultra Secret Room
-Tags: Offensive
--+1 Damage.
--+2 Luck.
--Gain flying ability.
--Has a chance of 5% to spawn a random heart after an enemy dies.
--Using XIX - The Sun will cause that the user takes red heart damages which equals to its red hearts.
-    -These damages cannot kill user.
--Using XVIII - The Moon will teleport Isaac to Ultra Secret room.
+Tags: Offensive, Summonable
+* +1 Damage.
+* +2 Luck.
+* Gain flying ability.
+* Has a chance of 5% to spawn a random heart after an enemy dies.
+* Using XIX - The Sun will cause that the user takes red heart damages which equals to its red hearts.
+    * These damages cannot kill user.
+* Using XVIII - The Moon will teleport player to Ultra Secret room.
 
 Destruction
 Description: Cataclysm
+Reference: Flandre Scarlet
 Type: Active Item
 Charges: 2
 Quality: 2
 Item Pools: Devil Room, Devil Beggar, Curse Room, Greed Devil Room, Greed Curse Room
 Tags: Offsenive
--Create a target ring at the position of Isaac after use, a meteor will fall down on the ring after 3 seconds. The meteor will explode with 495 damage, and spawn flames and meteor frags.
-    -Meteor frags can deal 5 damage, with burn and rock effect (Because of the bug of Mod API, rock tear effect cannot be applied for now).
--Meteors continuely falls at player's position per 3 seconds in current room.
--If Isaac has the Book of Virtues, spawn cataclysm wisps that fires burn tears.
-    -Cataclysm wisps will spawn small explosions after being put out.
-
-Marisa's Broom
-Description: Also try mushrooms!
-Type: Passive Item
-Quality: 3
-Item Pools: Secret Room, Golden Chest, Wooden Chest, Greed Secret Room
-Tags: Summonable
--Gain flying ability.
--Gain Damage + 1, Fire Rate + 0.5 and speed + 0.3 for each kind of mushroom items Isaac has.
-
-Frozen Sakura
-Description: Spring Snow
-Type: Passive Item
-Quality: 3
-Item Pools: Treasure Room, Greed Treasure Room
-Tags: Summonable, Offensive
--Spawn a cold halo around Isaac.
-    -Enemies inside the halo will take 1 damage and slow for 1 second per 7 frames, and freeze if killed by this.
-    -The halo will slow projectiles inside it.
-
-Chen Baby
-Description: Cheeeeeeeeeeeen!
-Type: Passive Item
-Quality: 1
-Item Pools: Treasure Room, Baby Shop
-Tags: Summonable, Baby, Monster Manual
--Spawn a Chen baby, charge into the fire direction if Isaac fires.
-    -Deal 3.5 collision damage, and fly to the another nearest enemy upon hit, repeatly.
-    -If collided with walls or there were no other enemies, it will stop flying and return to Isaac after 1 second.
--BFFs will double the damage.
--If Isaac has One of Nine Tails, double its damage.
-
-Shanghai Doll
-Description: Not the same as mine...
-Type: Passive Item
-Quality: 2
-Item Pools: Treasure Room, Golden Chest, Shop, Crane Game, Greed Treasure Room, Greed Shop
-Tags: Summonable, Offensive
--Spawn a Shanghai Doll orbital, can block enemy projectiles.
--If there are enemies around Isaac, Shanghai Doll will repeatly charge to the enemy and deal 3 damage to it.
--BFFs will double the damage, and increase the size.
-
-Melancholic Violin
-Description: Gloom Totem
-Type: Active Item
-Charges: Timed
-Quality: 2
-Item Pools: Treasure Room, Greed Treasure Room
-Tags: Offensive
-Transformation: Musician
--Spawn a flying violin upon use, and effect entities around.
-    -The fire rates of players in range increase by 5, the upper limit is 10.
-    -Enemies in range is slowed.
--If Isaac has the Book of Virtues, spawn note wisps that fires slow tears.
-
-Maniac Trumpet
-Description: Aggressive Totem
-Type: Active Item
-Charges: Timed
-Quality: 2
-Item Pools: Treasure Room, Greed Treasure Room
-Tags: Offensive
-Transformation: Musician
--Spawn a flying trumpet upon use, and effect entities around.
-    -The damages of players in range increase 50%.
-    -Enemies in range take 2 damage per 10 frames.
--If Isaac has the Book of Virtues, spawn note wisps that fires confusing tears.
-
-Illusionary Keyboard
-Description: Maneuverable Totem
-Type: Active Item
-Charges: Timed
-Quality: 2
-Item Pools: Treasure Room, Greed Treasure Room
-Tags: Offensive
-Transformation: Musician
--Spawn a flying keyboard upon use, and effect entities around.
-    -The speeds of players in range increase by 1.
-    -Projectiles in range will be removed.
--If Isaac has the Book of Virtues, spawn note wisps that fires charming tears.
+* Create a target ring at the position of player after use, a meteor will fall down on the ring after 3 seconds. The meteor will explode with 495 damage, and spawn flames and meteor frags.
+    * Meteor frags can deal 5 damage, with burn and rock effect.
+* Meteors continuely falls at player's position per 3 seconds in current room.
+* If player has the Book of Virtues, spawn cataclysm wisps that fires burn tears.
+    * Cataclysm wisps will spawn small explosions after being put out.
 
 DELETED ERHU
 Description: REMOVE *
+Reference: Rin Satsuki
 Type: Active Item
 Charges: None
 Quality: 2
 Item Pools: Secret Room, Greed Secret Room
 Tags: Offensive
 Transformation: Musician
--Delete all enemies and obstacles in the current room upon use, and will not appear any more in current game.
-    -This Item disappears.
-    -Obstacles that block player, like rocks, pots or tnt, will not be deleted after destroyed.
-    -Spikes, pits or gravities will always be deleted.
-    -will not delete room doors, trapdoors or teleporters and other important grid entities.
--If Isaac has the Book of Virtues, spawn a glitch wisp.
-    -If glitch wisp was put out, delete all enemies in the current room.
+* Delete all enemies and obstacles in the current room upon use, and will not appear any more in current game.
+    * This Item disappears.
+    * Obstacles that block player, like rocks, pots or tnt, will not be deleted after destroyed.
+    * Spikes, pits or gravities will always be deleted.
+    * will not delete room doors, trapdoors or teleporters and other important grid entities.
+* If player has the Book of Virtues, spawn a glitch wisp.
+    * If glitch wisp was put out, delete all enemies in the current room.
+
+Frozen Sakura
+Description: Spring Snow
+Reference: Letty Whiterock
+Type: Passive Item
+Quality: 3
+Item Pools: Treasure Room, Greed Treasure Room
+Tags: Summonable, Offensive
+* Spawn a cold halo around player.
+    * Enemies inside the halo will take 1 damage and slow for 1 second per 7 frames, and freeze if killed by this.
+    * The halo will slow projectiles inside it.
+
+Chen Baby
+Description: Cheeeeeeeeeeeen!
+Reference: Chen
+Type: Passive Item
+Quality: 1
+Item Pools: Treasure Room, Baby Shop, Greed Treasure Room
+Tags: Summonable, Offensive, Baby, Monster Manual
+* Spawn a Chen baby, charge into the fire direction if player fires.
+    * Deal 3.5 collision damage, and fly to the another nearest enemy upon hit, repeatly.
+    * If collided with walls or there were no other enemies, it will stop flying and return to player after 1 second.
+* BFFs will double the damage.
+* If player has One of Nine Tails, double its damage.
+
+Shanghai Doll
+Description: Not the same as mine...
+Reference: Alice Margatroid
+Type: Passive Item
+Quality: 2
+Item Pools: Treasure Room, Golden Chest, Shop, Crane Game, Greed Treasure Room, Greed Shop
+Tags: Summonable
+* Spawn a Shanghai Doll orbital, can block enemy projectiles.
+* If there are enemies around player, Shanghai Doll will repeatly charge to the enemy and deal 3 damage to it.
+* BFFs will double the damage, and increase the size.
+
+Melancholic Violin
+Description: Gloom Totem
+Reference: Lunasa Prismriver
+Type: Active Item
+Charges: Timed
+Quality: 2
+Tags: Offensive
+Item Pools: Treasure Room, Greed Treasure Room, Crane Game
+Transformation: Musician
+* Spawn a flying violin upon use, and effect entities around.
+    * The tears of players in range increase by 5.
+    * Enemies in range is slowed.
+* If player has the Book of Virtues, spawn note wisps that fires slow tears.
+
+Maniac Trumpet
+Description: Aggressive Totem
+Reference: Merlin Prismriver
+Type: Active Item
+Charges: Timed
+Quality: 2
+Tags: Offensive
+Item Pools: Treasure Room, Greed Treasure Room, Crane Game
+Transformation: Musician
+* Spawn a flying trumpet upon use, and effect entities around.
+    * The damages of players in range increase 50%.
+    * Enemies in range take 2 damage per 10 frames.
+* If player has the Book of Virtues, spawn note wisps that fires confusing tears.
+
+Illusionary Keyboard
+Description: Maneuverable Totem
+Reference: Lyrica Prismriver
+Type: Active Item
+Charges: Timed
+Quality: 2
+Tags: Offensive
+Item Pools: Treasure Room, Greed Treasure Room, Crane Game
+Transformation: Musician
+* Spawn a flying keyboard upon use, and effect entities around.
+    * The speeds of players in range increase by 1.
+    * Projectiles in range will be removed.
+* If player has the Book of Virtues, spawn note wisps that fires charming tears.
 
 Roukanken
 Description: Roukan no ken wo ku ra e!
+Reference: Youmu Konpaku
 Type: Active Item
 Charges: 6
 Quality: 3
 Item Pools: Angel Room, Greed Angel Room
 Tags: Offensive
--After use, Isaac unsheathe Roukanken and transform into Youmu's Spirit in 18 second.
-    -Roukanken deals playerDamage * 5 damage per hit, and can destroy obstacles.
-    -Spirit state will end after defeating this level's boss.
--If isaac use this again in Spirit state, he will dash to his moving direction.
-    -Dash deals playerDamage * 2 damage, and charges Isaac's active items after killed an enemy.
--If Isaac has The Book of Virtues, spawn white wisps, will deal melee damage instead of tears, and can destroy obstacles.
+* After use, player unsheathe Roukanken and transform into Youmu's Spirit in 18 second.
+    * Roukanken deals playerDamage * 5 damage per hit, and can destroy obstacles.
+    * Spirit state will end after defeating this level's boss.
+* If player use this again in Spirit state, he will dash to his moving direction.
+    * Dash deals playerDamage * 2 damage, and charges player's active items after killed an enemy.
+* If player has The Book of Virtues, spawn white wisps, will deal melee damage instead of tears, and can destroy obstacles.
 
 Fan of the Dead
 Description: Live to Death
+Reference: Yuyuko Saigyouji
 Type: Passive Item
 Quality: 4
 Item Pools: Angel Room, Old Chest, Greed Angel Room
 Tags: No Lost Birthright, No Cantripped
--Gain Spectral tears and flying ability.
--Upon picked up, transform all player's soul hearts and heart containers into lives, left half of a soul heart. After player died, revive in the current room.
-    -1 soul heart or heart container will be transformed into 2 lives.
-    -All following heart containers or soul hearts will be transformed into lives.
--Synergies with Jacob and Esau:
-    -If one of the twins is dead:
-        -If this has the fan and extra lives, lose this one's lives.
-        -If this doens't have the fan or extra lives, but the other one has, lose the other one's extra life and revive this.
-        -else, game over.
+* Gain Spectral tears and flying ability.
+* Upon picked up, transform all player's soul hearts and heart containers into lives, left half of a soul heart. After player died, revive in the current room.
+    *1 soul heart or heart container will be transformed into 2 lives.
+    * All following heart containers or soul hearts will be transformed into lives.
+* Synergies with Jacob and Esau:
+    * If one of the twins is dead:
+        * If this has the fan and extra lives, lose this one's lives.
+        * If this doens't have the fan or extra lives, but the other one has, lose the other one's extra life and revive this.
+        * else, game over.
 
 Fried Tofu
 Description: Foxes' Favourite!
+Reference: Ran Yakumo
 Type: Passive Item
 Quality: 1
-Item Pool：Boss Room, Beggar
+Item Pool：Boss Room, Greed Boss Room, Beggar
 Tags: No Lost Birthright, No Cantripped, Food
--+1 Health up.
--If player has Binge Eater, +1.5 Range, +1 Luck.
+* +1 Health up, Heals 1 Red Heart.
+* If player has Binge Eater, +1.5 Range, +1 Luck, -0.03 Speed.
 
 One of Nine Tails
 Description: Power of Familiars
+Reference: Ran Yakumo
 Type: Passive Item
 Quality: 3
 Item Pools: Secret Room, Greed Secret Room
 Tags: Offensive, No Cantripped
--Spawn a random item from baby shop upon pick up.
--Spawn a random item from baby shop after a new stage.
--Gain Damage up for each familiar you have.
-    -The maximum damage multiplier is 150% when the count of familiars reaches 9, 
-    -Chen Baby counts as 3.
+* Spawn a random item from baby shop upon pick up.
+* Spawn a random item from baby shop after a new stage.
+* Gain Damage up for each familiar you have.
+    * The maximum damage multiplier is 150% when the count of familiars reaches 9, 
+    * Chen Baby counts as 3.
 
 The Gap
 Description: Border of space
+Reference: Yukari Yakumo
 Type: Active Item
 Charges: 4
 Quality: 3
 Item Pools: Secret Room, Old Chest, Ultra Secret Room
 Tags: Offensive, No Cantripped, No Greed
--Generate floors which have the same shape as the map of current level after use. 
-    -Use The Gap again when standing on them (No need for charges) will teleport you to the corresponding room.
-    -Includes Ultra Secret.
-    -The floors will not be generated where there are obstacles or traps.
-    -If other floors already exist in current room at the time of use, remove them.
--If Isaac has The Book of Virtues, spawn gap wisps, has a chance of 10% to shoot teleporting tears which will teleport enemies to random position in current room.
+* Generate floors which have the same shape as the map of current level after use. 
+    * Use The Gap again when standing on them (No need for charges) will teleport you to the corresponding room.
+    * Includes Ultra Secret.
+    * The floors will not be generated where there are obstacles or traps.
+    * If other floors already exist in current room at the time of use, remove them.
+* If player has The Book of Virtues, spawn gap wisps, has a chance of 10% to shoot teleporting tears which will teleport enemies to random position in current room.
 
 Starseeker
 Description: Far see the future
+Reference: Renko Usami
 Type: Passive Item
 Quality: 3
 Item Pools: Treasure Room, Greed Treasure Room
 Tags: Offensive, No Cantripped, Stars
--After entering the room with items, generate three crystal balls.
-    -After picking up the crystal ball, the other two will disappear.
-    -the next item of this room type will be replaced by the chosen item.
-    -Choose for each items in the room.
+* After entering the room with items, generate three crystal balls.
+    * After picking up the crystal ball, the other two will disappear.
+    * the next item of this room type will be replaced by the chosen item.
+    * Choose for each items in the room.
 
 Pathseeker
 Description: Wide see the world
+Reference: Maribel Hearn
 Type: Passive Item
 Quality: 2
 Item Pools: Treasure Room
 Tags: Offensive, No Cantripped, No Greed
--After entering a new floor, spawn floors that display all rooms of this stage at the starting room.
-    -If Isaac has the Gap, he can use this to teleport.
+* After entering a new floor, spawn floors that display all rooms of this stage at the starting room.
+    * If player has the Gap, he can use this to teleport.
 
 Gourd-Shroom
 Description: You feel big and small
+Reference: Suika Ibuki
 Type: Passive Item
-Quality: 2
+Quality: 3
 Item Pools: Treasure Room, Secret Room, Greed Treasure Room, Greed Secret Room
 Tags: Mushroom, No Lost Birthright, Summonable
--After Isaac takes damage, switch into sparse or dense form.
-    -Reduce the size, spawn minisaacs, x1.5 fire rate, +0.5 speed while sparse form.
-    -Increase the size, can crush rocks, x1.35 damage, +3 range while dense form.
+* After player takes damage, switch into sparse or dense form.
+    * Reduce the size, spawn minisaacs, x1.5 fire rate, +0.5 speed while sparse form.
+    * Increase the size, can crush rocks, x1.35 damage, +3 range while dense form.
 
 Jar of Fireflies
 Description: Fire fire fireflies!
+Reference: Wriggle Nightbug
 Type: Active Item
 Charges: 1
 Quality: 2
 Item Pools: Treasure Room, Shop, Greed Treasure Room, Greed Shop
 Tags: Beelzebub, Offensive
--Spawn 8 friendly chasing Onfire Flies, explode after contact or death, deal damages that equal to player's damage.
-    -Spawned Onfire Flies will disappear after leaving the room.
--Clear the Curse of Darkness when holding.
--If Isaac has The Book of Virtues, spawn 3 fly wisps. They spawn Onfire Flies after being put out.
+* Spawn 8 friendly chasing Onfire Flies, explode after contact or death, deal damages that equal to player's damage.
+    * Spawned Onfire Flies will disappear after leaving the room.
+* Clear the Curse of Darkness when holding.
+* If player has The Book of Virtues, spawn 3 fly wisps. They spawn Onfire Flies after being put out.
 
 Song of Night Bird
 Description: Deaf to All but the Song
+Reference: Mystia Lorelei
 Type: Passive Item
 Quality: 2
 Item Pools: Treasure Room, Curse Room, Greed Treasure Room, Greed Curse Room
 Tags: Summonable, Offensive
 Transformation: Musician
--Has Curse of Darkness permanently.
--Monsters far away against Isaac get confused, and will take 1.5x damage.
+* Has Curse of Darkness permanently.
+* Monsters far away against player get confused, and will take 1.5x damage.
 
 Book of Years
 Description: Time changes
+Reference: Keine Kamishirasawa
 Type: Active Item
 Charges: 6
 Quality: 4
 Item Pools: Secret Room, Library, Greed Secret Room
 Tags: Offensive, Bookworm
--Remove a random passive collectible item with the lowest quality, spawn a random collectible.
--If Isaac has the Book of Virtues, spawn grey wisps, they spawns Missing Page 2 collectibles after being put out. 
+* Remove a random passive collectible item with the lowest quality, spawn a random collectible.
+* If player has the Book of Virtues, spawn grey wisps, they spawns Missing Page 2 collectibles after being put out. 
 
 Rabbit Trap
 Description: Watch your step!
+Reference: Tewi Inaba
 Type: Passive Item
 Quality: 2
 Item Pools: Treasure Room, Shop
 Tags: Offsenive, Summonable, No Cantripped, No Greed
--+1 Luck.
--Spawn some traps after Isaac enters a room with enemies.
-    -Monsters stepping on traps will be killed, Bosses will take 30 damage per 20 frames.
-    -Cannot interact with flying monsters or player.
-    -Spawn more traps if Isaac has multiple Rabbit traps.
+* +1 Luck.
+* Spawn some traps after player enters a room with enemies.
+    * Monsters stepping on traps will be killed, Bosses will take 30 damage per 20 frames.
+    * Cannot interact with flying monsters or player.
+    * Spawn more traps if player has multiple Rabbit traps.
 
 Illusion
 Description: What are you hiding?!
+Reference: Reisen Udongein Inaba
 Type: Passive Item
 Quality: 2
-Item Pools: Treasure Room, Ultra Secret Room
+Item Pools: Treasure Room, Greed Treasure Room, Ultra Secret Room
 Item Tags: Offensive, Summonable
--Spawn 4 Illusions at a medium range away around Isaac. Deals collsion damages of 60% of player damage per 7 frames.
-    -Illusions will shoot blood tears to the shooting direction, their damages are always 3.5.
+* Spawn 4 Illusions at a medium range away around player. Deals collsion damages of 60% of player damage per 7 frames.
+    * Illusions will shoot blood tears to the shooting direction, their damages are always 3.5.
 
 Peerless Elixir
 Description: Caution: Overdose wil
+Reference: Eirin Yagokoro
 Type: Active Item
 Charges: 4
 Quality: 3
-Item Pools: Treasure Room, Shop, Greed Treasure Room, Greed Shop
+Item Pools: Treasure Room, Shop, Greed Treasure Room, Greed Shop, Beggar, Devil Beggar
 Tags: Offensive
--After use, gain +0.6 Damage, +0.6 fire rate and +0.3 speed in current floor.
--After the fourth use in current floor, Isaac explodes and dies.
--If Isaac has Book of Virtues, spawn green wisp. They have high fire rates and damages, but will explode after being put out.
+* After use, gain +0.6 Damage, +0.6 fire rate and +0.3 speed in current floor.
+* After the fourth use in current floor, player explodes and dies.
+* If player has Book of Virtues, spawn green wisp. They have high fire rates and damages, but will explode after being put out.
 
 Dragon Neck Jewel
 Description: Five-Colored Shots
+Reference: Kaguya Houraisan
 Type: Passive Item
 Quality: 3
-Item Pools: Treasure Room, Angel Room, Greed Angel Room
 Tags: Offsenvie, Summonable
--Spawn a light bolt at the position of the nearest enemy in a range arount the player per 3 seconds.
-    -Spawn 5 radiant rainbow tears at the position of the bolt. Each deals 3.5 damage.
-    -Spawn light bolt more efficiently if Isaac has multiple Dragon Neck Jewels.
+Item Pools: Treasure Room, Angel Room, Greed Treasure Room, Greed Angel Room
+* Spawn a light bolt at the position of the nearest enemy in a range arount the player per 3 seconds.
+    * Spawn 5 radiant rainbow tears at the position of the bolt. Each deals 3.5 damage.
+    * Spawn light bolt more efficiently if player has multiple Dragon Neck Jewels.
 
 Buddha's Bowl
 Description: Indomitable Will
+Reference: Kaguya Houraisan
 Type: Passive Item
 Quality: 3
-Item Pools: Treasure Room, Angel Room, Greed Angel Room
 Tags: No Lost Birthright, Summonable
--Whenever Isaac takes damage, prevent next damage.
-    -IV Bag-like items will trigger this effect, but will not prevent these damages.
+Item Pools: Treasure Room, Angel Room, Greed Treasure Room, Greed Angel Room
+* Whenever player takes damage, prevent next damage.
+    * IV Bag-like items will trigger this effect, but will not prevent these damages.
 
 Robe of Firerat
 Description: Unhurried Mind
+Reference: Kaguya Houraisan
 Type: Passive Item
 Quality: 3
 Item Pools: Treasure Room, Greed Treasure Room, Ultra Secret Room
 Tags: Offensive, Summonable
--Spawn a fire orbital some distance away from Isaac, Dealing 10 contact damage per 7 frames.
--All Tears pass through any fire will transform into Red Candle Flames, which have the 4x damage as the tears.
--Isaac immunes to fire.
+* Spawn a fire orbital some distance away from player, Dealing 10 contact damage per 7 frames.
+* All Tears pass through any fire will transform into Red Candle Flames, which have the 4x damage as the tears.
+* Player immunes to fire.
 
 Swallow's Shell 
 Description: Everlasting Life
+Reference: Kaguya Houraisan
 Type: Passive Item
 Quality: 3
 Item Pools: Angel Room, Greed Angel Room
 Tags: Offensive, Summonable, No Cantripped
--Spawn a random angel room item after Isaac enters a new floor.
-    -Spawn an extra soul heart for each baby item Isaac has.
--Remove one of this items after Isaac takes damages.
+* Spawn a random angel room item after player enters a new floor.
+    * Spawn an extra soul heart for each baby item player has.
+* Remove one of this items after player takes damages.
 
 Jeweled Branch
 Description: Rainbow Danmaku
+Reference: Kaguya Houraisan
 Type: Passive Item
 Quality: 3
 Item Pools: Angel Room, Greed Angel Room
 Tags: Offensive, Summonable
--After pressing shooting buttons in current room, Isaac fires tears to a ring around him. The limit is 5 tears.
-    -The speed of spawning tears depends on Isaac's fire rate. 
-    -The damages of tears equals to Isaac's damage.
-    -The speed of the ring to spin depends on Isaac's shot speed.
-    -Inherit all tear effects, but is not compatible with lasers or bombs.
-    -If the tear count reaches its limit, one of them will fly to the nearest enemy.
-    -Press Drop button (Ctrl) will stop tear spawning.
+* After pressing shooting buttons in current room, player fires tears to a ring around him. The limit is 5 tears.
+    * The speed of spawning tears depends on player's fire rate. 
+    * The damages of tears equals to player's damage.
+    * The speed of the ring to spin depends on player's shot speed.
+    * Inherit all tear effects, but is not compatible with lasers or bombs.
+    * If the tear count reaches its limit, one of them will fly to the nearest enemy.
+    * Press Drop button (Ctrl) will stop tear spawning.
 
 Ash of Phoenix
 Description: Nirvana
+Reference: Fujiwara no Mokou
 Type: Passive Item
 Quality: 2
 Item Pools: Treasure Room
 Tags: None
 Effects:
--Isaac transform into ashes and release 4 fire waves after death.
-    -If ashes don't take any damage in 2 seconds, revive Isaac.
-        -release fire waves again after revive.
-    -Self-damaging, such as IV Bag, Curse Room or Sacrifice will not trigger this effect.
+* Player transform into ashes and release 4 fire waves after death.
+    * If ashes don't take any damage in 2 seconds, revive player.
+        * release fire waves again after revive.
+    * Self-damaging, such as IV Bag, Curse Room or Sacrifice will not trigger this effect.
 
 Tengu Camera
 Description: Cheese!
+Reference: Aya Shameimaru
 Type: Active Item
 Charges: 10 Seconds
 Quality: 3
-Item Pools: Treasure Room, Shop
+Item Pools: Treasure Room, Shop, Crane Game
 Tags: Offensive, No Greed Mode
--Displays a fanshaped area when held. After use, Freeze all enemies in the area and deals 5 damage to them, destroy all projectiles in the area.
-    -Gains scores based on the number of projectiles and enemies affected, then generate bonuses.
-        -10：1 penny
-        -12：1 key
-        -16：1 bomb
-        -22：1 pill
-        -30：1 card
-        -40：1 trinket
-        -52：1 soul heart
-        -66：Negative
-        -82：Torn Photo
-        -100：Death Certificate
-    -Bosses have a base score of 12, enemies have a base score of 4, projectiles have a base score of 2.
-    -If multiple objects of the same type are captured, gained score will be reduced.
--If Isaac has Car Battery, multiply score with 1.5 and deal 10 damage instead.
--If Isaac has Book of Virtues, generate a wisp that cannot fire tears for each captured projectile.
+* Displays a fanshaped area when held. After use, Freeze all enemies in the area and deals 5 damage to them, destroy all projectiles in the area.
+    * Gains scores based on the number of projectiles and enemies affected, then generate bonuses.
+        *10：1 penny
+        *12：1 key
+        *16：1 bomb
+        *22：1 pill
+        *30：1 card
+        *40：1 trinket
+        *52：1 soul heart
+        *66：Negative
+        *82：Torn Photo
+        *100：Death Certificate
+    * Bosses have a base score of 12, enemies have a base score of 4, projectiles have a base score of 2.
+    * If multiple objects of the same type are captured, gained score will be reduced.
+* If player has Car Battery, multiply score with 1.5 and deal 10 damage instead.
+* If player has Book of Virtues, generate a wisp that cannot fire tears for each captured projectile.
 
 Sunflower Pot
 Description: Don't get it hurt!
+Reference: Yuuka Kazami
 Type: Passive Item
 Quality: 2
 Item Pools: Treasure Room
 Tags: Offensive, No Greed Mode
--Isaac get a sunflower pot on his head. After cleared a room, spawn a random pickup or collectible.
-    -If Isaac has "BFFs!", spawn 2.
-    -After Isaac was hurt, the sunflower dies. And then explode, dealing extra damage of 1 heart to Isaac.
-        -Self damage does not trigger this effect, and this damage cannot kill Isaac.
-    -Sunflower will revive in the next floor.
-    -Sunflower can be sacrificed.
+* Player get a sunflower pot on his head. After cleared a room, spawn a random pickup or collectible.
+    * If player has "BFFs!", spawn 2.
+    * After player was hurt, the sunflower dies. And then explode, dealing extra damage of 1 heart to player.
+        * Self damage does not trigger this effect, and this damage cannot kill player.
+    * Sunflower will revive in the next floor.
+    * Sunflower can be sacrificed.
 
 Continue?
 Description: Insert Coin
+Reference: Komachi Onozuka
 Type: Passive Item
-Quality: 2
+Quality: 1
 Tags: None
-Item Pools: Shop, Greed Shop
-- +3 Coins.
--After Isaac dies, pay 3 coins for resurrection with full health in current room.
--Every resurrection will triple the cost.
+Item Pools: Shop, Greed Shop, Crane Game
+*  +3 Coins.
+* After player dies, pay 3 coins for resurrection with full health in current room.
+* Every resurrection will triple the cost.
 
 Rod of Remorse
 Description: Repent, then sacrifice
+Reference: Eiki Shiki, Yamaxanadu
 Type: Active Item
 Charges: None
 Quality: 3
 Tags: No Lost Birthright, No Greed Mode, No Cantripped
 Item Pools: Treasure Room, Angel Room
--After use, deal one heart damage to Isaac (red hearts first) and trigger the effect of sacrifice room once.
--The sacrifice count of Rod of Remorse is not related to any sacrifice room and will be reset after new floor.
--If the player has the Book of Virtues, spawn red wisps, which has 25% chance to drop a red heart after it's put out.
+* After use, deal one heart damage to player (red hearts first) and trigger the effect of sacrifice room once.
+* The sacrifice count of Rod of Remorse is not related to any sacrifice room and will be reset after new floor.
+* If the player has the Book of Virtues, spawn red wisps, which has 25% chance to drop a red heart after it's put out.
 
 Isaac's Last Wills 
 Description: Dear diary: Today I died 
+Reference: Hieda no Akyuu
 Type: Active Item 
-Charges: None 
-Quality: 4 
+Charges: 0 
+Quality: 3 
 Tags: Offensive, No Cantripped 
 Item Pools: Secret Room, Old Chest, Greed Secret Room
--One-time Use! 
--Upon use, send all collectibles and trinkets in current room to the next run.
--If Isaac has Book of Virtues, spawn a ring of powerful wisps in the next run.
--Has no effects in runs that disable achievements.
--Will not receive items when disabling this mod. The legacies will not be received until next run with this mod.
+* One-time Use! 
+* Upon use, send all collectibles, trinkets and pickups in current room to the next run.
+* If player has Book of Virtues, spawn a ring of powerful wisps in the next run.
+* Has no effects in runs that disable achievements.
+* Will not receive items when disabling this mod. The legacies will not be received until next run with this mod.
+
+Sunny Fairy
+Description: I'm Sunny!
+Reference: Sunny Milk
+Type: Familiar Item
+Quality: 1
+Tags: Offensive, Summonable, Monster Manual, Baby
+Item Pools: Treasure Room, Greed Treasure Room, Baby Shop, Ultra Secret Room
+* Following familiar that dormants every floor. 
+* After entering boss room, Wakes up and spawn 3 red hearts.
+    * If there is no boss room in this floor, instantly wakes up.
+    * Using XIX - the sun will also wake this up.
+* After waking up, fire 3 burning 4-damage tear per second.
+* If player has all three light fairies, they will wake up together, and their tear damage will be tripled.
+
+Lunar Fairy
+Description: I'm Lunar!
+Reference: Luna Child
+Type: Familiar Item
+Quality: 1
+Tags: Offensive, Summonable, Monster Manual, Baby
+Item Pools: Treasure Room, Greed Treasure Room, Baby Shop
+* Following familiar that dormants every floor. 
+* After entering secret, super secret or ultra secret room, Wakes up and spawn 2 bombs.
+    * If there is no secret, super secret or ultra secret room in this floor, instantly wakes up.
+* After waking up, fire 3 bouncing 3-damage tear per second.
+* If player has all three light fairies, they will wake up together, and their tear damage will be tripled.
+
+Star Fairy
+Description: I'm Star!
+Reference: Star Sapphire
+Type: Familiar Item
+Quality: 1
+Tags: Offensive, Summonable, Monster Manual, Baby
+Item Pools: Treasure Room, Greed Treasure Room, Baby Shop
+* Following familiar that dormants every floor. 
+* After entering treasure room or planetarium, Wakes up and spawn 1 key.
+    * If there is no treasure room or planetarium in this floor, instantly wakes up.
+* After waking up, fire 3 homing 2-damage tear per second.
+* If player has all three light fairies, they will wake up together, and their tear damage will be tripled.
 
 Leaf Shield
 Description: -W- GET EQUIPPED WITH LEAF SHIELD
+Reference: Shizuha Aki
 Type: Passive Item
 Quality: 2
-Tags: Offensive, Summonable
-Item Pools: Treasure Room, Greed Treasure Room
--Spawn leaf shield per 3 seconds, dealing 4 damage per 7 seconds and block any projectiles.
--Press shoot buttons to fire this shield away.
+Tags: Summonable
+Item Pools: Treasure Room, Greed Treasure Room, Wooden Chest
+* Spawn leaf shield per 3 seconds, dealing 4 damage per 7 seconds and block any projectiles.
+* Press shoot buttons to fire this shield away.
+* BFFs! can increase shield's size and damage.
 
 Baked Sweet Potato
 Description: Both tasty and warmable
+Reference: Minoriko Aki
 Type: Passive Item
 Quality: 1
 Tags: No Lost Birthright, No Cantripped
-Item Pools: Boss Room, Greed White Treasure Room
--+1 Heart Container.
--+5 Damage, will decay with time in 2 minutes.
+Item Pools: Boss Room, Greed White Treasure Room, Beggar
+* +1 Heart Container.
+* +5 Damage, will decay with time in 2 minutes.
 
 Broken Amulet
 Description: You and monsters feel uncomfortable...
+Reference: Hina Kagiyama
 Type: Passive Item
 Quality: 3
 Tags: Offensive, Summonable
 Item Pools: Devil Room (2 Hearts), Greed Devil Room (2 Hearts)
-- -3 Luck.
--Tears Isaac shoots have black aura. Enemies in the aura take damages per 2 frames. The lower luck Isaac has, the aura is larger, and the damage is higher.
-    -Deal 20% player damage when luck is 0, Deal 80% player damage as the limit when luck is -5.
+* -3 Luck.
+* Tears player shoots have black aura. Enemies in the aura take damages per 2 frames. The lower luck player has, the aura is larger, and the damage is higher.
+    * Deal 20% player damage when luck is 0, Deal 80% player damage as the limit when luck is -5.
 
 Extending Arm
 Description: Hold on Tight!
+Reference: Nitori Kawashiro
 Type: Active Item
 Charges: 1 second
 Quality: 1
 Item Pools: Treasure Room, Shop, Crane Game, Greed Treasure Room, Greed Shop
 Tags: No Lost Birthright
--Lift this item after use, then shoot a hook to a direction after pressed shooting buttons.
-    -Enemies hit by hook will be frozen, and pull them to some distance away from Isaac.
-    -After hit an obstacle, pull Isaac to it.
-    -After hit a pickup, pull the pickup to Isaac.
--After hook hit a target, Isaac will be invincible until pulling is over.
--If player has Book of Virtues, spawn green wisps in a line when hook is extending.
-    -Wisps will disappear after 3 seconds, and cannot be brought out room.
+* Lift this item after use, then shoot a hook to a direction after pressed shooting buttons.
+    * Enemies hit by hook will be frozen, and pull them to some distance away from player.
+    * After hit an obstacle, pull player to it.
+    * After hit a pickup, pull the pickup to player.
+* After hook hit a target, player will be invincible until pulling is over.
+* If player has Book of Virtues, spawn green wisps in a line when hook is extending.
+    * Wisps will disappear after 3 seconds, and cannot be brought out room.
+
+Wolf Eye
+Description: Far see in the sight
+Reference: Momiji Inubashiri
+Type: Passive Item
+Quality: 2
+Item Pools: Treasure Room, Greed Treasure Room
+Tags: Offensive, Summonable
+* +0.5 Damage.
+* Display all border rooms.
+* Increase projectiles' visibility.
 
 Benediction
 Description: Invoke the Gods
+Reference: Sanae Kochiya
 Type: Active Item
 Charges: 12
-Quality: 4
-Tags: Offensive, No Greed Mode
-Item Pools: Angel Room
--Can be used at any charges.
--Upon use, get an angel room collectible depends on the charges, until next floor.
-    -1: Hallowed Ground
-    -2: Guardian Angel
-    -3: Angelic Prism
-    -4: Holy Water
-    -5: Trisagion
-    -6: Holy Light
-    -7: Holy Mantle
-    -8: Salvation
-    -9: Godhead
-    -10: Revelation
-    -11: Sacred Heart
-    -12: Sacred Orb
--If player has Book of Virtues, spawn wisps which has HP that corresponding with charges.
+Quality: 3
+Tags: Offensive
+Item Pools: Angel Room, Greed Angel Room
+* Can be used at any charges.
+* Upon use, get an angel room collectible depends on the charges, until next floor.
+    *1: Hallowed Ground
+    *2: Guardian Angel
+    *3: Angelic Prism
+    *4: Holy Water
+    *5: Trisagion
+    *6: Holy Light
+    *7: Holy Mantle
+    *8: Salvation
+    *9: Godhead
+    *10: Revelation
+    *11: Sacred Heart
+    *12: Sacred Orb
+* If player has Book of Virtues, spawn wisps which has HP that corresponding with charges.
+
+Onbashira
+Description: Totem of the sky
+Reference: Kanako Yasaka
+Type: Active Item
+Charges: 4
+Quality: 2
+Tags: Offensive
+Item Pools: Treasure Room, Greed Treasure Room, Wooden Chest
+* Summon an onbashira from the sky, crush all obstacles and enemies nearby and spawn shockwaves.
+* Enemies near the onbashira will be struck by holy lights, each hit deals 2 damage.
+    * Damage of Young Native Gods in the range become tripled.
+* Onbashira exists for 8 seconds.
+* If player has Book of Virtues, spawn wisps that has 10% chance to fire holy light tears.
+
+Young Native God
+Description: Spirit of the earth
+Reference: Suwako Moriya
+Type: Familiar Item
+Quality: 2
+Tags: Offensive, Summonable, Monster Manual
+Item Pools: Treasure Room, Greed Treasure Room, Baby Shop
+* Spawn a white snake familiar, which moves under ground to help player.
+    * Can be sacrificed.
+* Snake familiar will bite enemies, each bite deals 35 damage, and poisons the enemy.
+* It will destroy all rocks above it.
+* If there's no enemies, it will move to the location of tinted rocks or crawlspace rocks, and destroy it.
+
+Geography Chain
+Description: Luck up, nothing stand before you!
+Reference: Watatsuki no Toyohime
+Type: Active Item
+Charges: 3
+Quality: 2
+Tags: Offensive
+Item Pools: Treasure Room, Greed Treasure Room
+* +2 Luck up when held.
+* Upon use, destroy all rocks, locks, blocks, pillars and cobwebs, fill all pits.
+* Kill all invulnerbale traps, or enemies with invincible armors.
+* If player has Book of Virtues, spawn wisps that fire rocks.
 
 Rune Sword
 Description: Runewords
+Reference: Watatsuki no Yorihime
 Type: Active Item
 Quality: 3
 Tags: Offensive, No Cantripped
 Item Pools: Treasure Room, Secret Room, Greed Treasure Room, Greed Secret Room
--Spawn a random rune upon pickup.
--Consume the rune held by the player, insert it on this item and convert it into the passive effect of this.
-    -If player is not holding rune, give player a random rune.
--If the player has Book of Virtues, spawn rune wisps upon inserting.
--Effects (where x is the number of inserted runes of this type):
-    -Ansuz:                     Displays all map grids within the Manhattan distance of (x + 1).
-    -Dagaz:                     No curses. Gain two soul hearts upon inserting.
-    -Hagalaz:                   Tears have (x * 33.3%) chance to turn into Rocks.
-    -Perthro:                   When player's bomb hits a pedestal, it will reroll the pedestal.
-        -There is a (30+40*0.5^x)% chance that the pedestal will disappear.
-    -Ehwaz:                     After defeating the boss of this floor, spawn a trap door to the dungeon.
-    -Berkano:                   After cleaning a room, spawn (3 * x) blue flies and (3 * x) blue spiders.
-    -Algiz:                     After taking damage, have (20% * x) chance to trigger the effect of Book of Shadow.
-    -Jera:                      After entering a room, have (50% * x) chance to double the pickups.
-        -Chance more than 100% will be converted into new award drop.
-    -Black Rune:                All stats up.
-    -Blank Rune:                Insert a random Rune above instead.
-    -Rune Shard:                Insert a random Rune above instead.
-    -Soul of Isaac:             After entering a new room, have (50% * x) chance to trigger this rune's effect.
-        -Chance more than 100% will be converted to a new number of times.
-    -Soul of Magdalene:         After entering a room with monsters, trigger the rune effect.
-    -Soul of Cain:              After cleaning a room, have (5% * x, max 20%) chance to trigger this rune's effect.
-        -if not triggered, the chance will be stacked.
-    -Soul of Judas:             Before being hit by a projectile or enemy, trigger this rune's effect. Max times is x.
-    -Soul of ???:               Press and hold the shooting keys for 3 seconds to spawn a butt bombs.
-    -Soul of Eve:               After being hurt, generate (2 * x) dead birds in this room.
-    -Soul of Samson:            Trigger the rune's effect after dealt (100 + 65*current floor) * (0.5 + 0.5 /x) damage.
-    -Soul of Azazel:            After cleaning 4 rooms, entering a room with monsters will trigger this rune's effect.
-    -Soul of Lazarus:           After player dies, if this rune is inserted, consume one rune and trigger this rune's effect.
-    -Soul of Eden:              When inserted, spawn a random collectible.
-    -Soul of the Lost:          When inserted, use Holy Card. After entering a new room, has (10% * x) chance to use Holy Card.
-    -Soul of Lilith:            Trigger the rune's effect after defeating the boss of this floor.
-    -Soul of the Keeper:        When a monster dies, it has (40% * x) chance to drop random temporary coins.
-        -Chance more than 100% will be converted into new coins.
-    -Soul of Apollyon:          Spawn 3 * x random locusts after cleaning room.
-    -Soul of the Forgotten:     After being damaged, have (10% * x, max is 50%) chance to drop a bone heart.
-    -Soul of Bethany:           After cleaning a room, generate (x) wisps.
-    -Soul of Jacob and Esau:    When Inserted, Spawn Birthright.
+* Spawn a random rune upon pickup.
+* Consume the rune held by the player, insert it on this item and convert it into the passive effect of this.
+    * If player is not holding rune, give player a random rune.
+* If the player has Book of Virtues, spawn rune wisps upon inserting.
+* Effects (where x is the number of inserted runes of this type):
+    * Ansuz:                     Displays all map grids within the Manhattan distance of (x + 1).
+    * Dagaz:                     No curses. Gain two soul hearts upon inserting.
+    * Hagalaz:                   Tears have (x * 33.3%) chance to turn into Rocks.
+    * Perthro:                   When player's bomb hits a pedestal item, reroll it.
+        * There is a (30+40*0.5^x)% chance that the item will disappear.
+    * Ehwaz:                     After defeating the boss of this floor, spawn a trap door to the crawlspace.
+    * Berkano:                   After cleaning a room, spawn (3 * x) blue flies and (3 * x) blue spiders.
+    * Algiz:                     After taking damage, have (20% * x) chance to trigger the effect of Book of Shadow.
+    * Jera:                      After entering a room, have (50% * x) chance to double the pickups.
+        * Chance more than 100% will be converted into new award drop.
+    * Black Rune:                All stats up.
+    * Blank Rune:                Insert a random Rune above instead.
+    * Rune Shard:                Insert a random Rune above instead.
+    * Soul of Isaac:             After entering a new room, have (50% * x) chance to trigger this rune's effect.
+        * Chance more than 100% will be converted to a new number of times.
+    * Soul of Magdalene:         After entering a room with monsters, trigger the rune effect.
+    * Soul of Cain:              After cleaning a room, have (5% * x, max 20%) chance to trigger this rune's effect.
+        * if not triggered, the chance will be stacked.
+    * Soul of Judas:             Before being hit by a projectile or enemy, trigger this rune's effect. Max times is x.
+    * Soul of ???:               Press and hold the shooting keys for 3 seconds to spawn a butt bombs.
+    * Soul of Eve:               After being hurt, generate (2 * x) dead birds in this room.
+    * Soul of Samson:            Trigger the rune's effect after dealt (100 + 65*current floor) * (0.5 + 0.5 /x) damage.
+    * Soul of Azazel:            After cleaning 4 rooms, entering a room with monsters will trigger this rune's effect.
+    * Soul of Lazarus:           After player dies, if this rune is inserted, consume one rune and trigger this rune's effect.
+    * Soul of Eden:              When inserted, spawn a random collectible.
+    * Soul of the Lost:          When inserted, use Holy Card. After entering a new room, has (10% * x) chance to use Holy Card.
+    * Soul of Lilith:            Trigger the rune's effect after defeating the boss of this floor.
+    * Soul of the Keeper:        When a monster dies, it has (40% * x) chance to drop random temporary coins.
+        * Chance more than 100% will be converted into new coins.
+    * Soul of Apollyon:          Spawn 3 * x random locusts after cleaning room.
+    * Soul of the Forgotten:     After being damaged, have (10% * x, max is 50%) chance to drop a bone heart.
+    * Soul of Bethany:           After cleaning a room, generate (x) wisps.
+    * Soul of Jacob and Esau:    When Inserted, Spawn Birthright.
+    * Soul of Eika:              Has 2% * x chance to spawn a blood bony when an enemy is killed, limit is 20%.
+    * Soul of Satori:            Tears has 20% * x chance to mind control enemies.
+    * Soul of Seija:             Get Seija's passive effect. Insert another soul of Seija can prevent from nerfing high quality items.
+
+Escape 
+Description: Shameful but useful 
+Reference: Reisen 
+Type: Passive Item 
+Quality: 1 
+Tags: Summonable 
+Tags: Boss Room, Shop, Greed White Treasure Room, Greed Shop
+* +0.15 speed. 
+* After damaged or lost holy mantle, gain +0.15 speed in current room, and open all doors which are not locked.
+
+Keystone
+Description: Reusable Earthquake 
+Reference: Tenshi Hinanawi
+Type: Passive Item
+Charges: 4
+Quality: 2
+Tags: Offensive
+Item Pools: Treasure Room, Greed Treasure Room
+* +3 keys when picked up.
+* Upon use, release an earthquake which lasts for 4 seconds, destroying rocks and doors, and fall rocks from ceiling.
+    * Rocks' damage is equal to player damage.
+    * Use multiple times will increase earthquake's duration.
+* Deal damage to all ground enemies during earthquake, the value is about 11.4% of their current HP per second.
+* If player has Book of Virtues, spawn rock wisps, which shoot rock tears.
+
+Angel's Raiment
+Description: Revenge from the sky
+Reference: Iku Nagae
+Type: Passive Item
+Quality: 3
+Tags: No Lost Birthright, Summonable, Seraphim set
+Item Pools: Angel Room, Greed Angel Room
+* Flight.
+* Trigger Crack the Sky's effect when damaged.
+
+Bucket of Wisps
+Description: Wisp Forger
+Reference: Kisume
+Type: Active Item
+Charges: 0
+Quality: 2
+Tags: Offensive
+Item Pools: Treasure Room, Greed Treasure Room, Wooden Chest
+* Gains souls when each enemy is killed, up to a maxinium of 64.  
+* Can be used with 8 souls, cost them to produce a wisp.
+    * The wisp's hp and tear damage is based on the enemies' max hp.
+        * HP is:  2 * √( TotalMaxHP / 40 ) (round up, up to 24)。
+        * Tear damage is: HP / 3 (round up)。
+* If player has Book of Virtues, double produced wisps.
 
 Plague Lord
-Description: The cycle of life is over
+Description: Toxic Infection
+Reference: Yamame Kurodani
 Type: Passive Item
 Quality: 2
 Tags: Summonable, Offensive
-Item Pools: Treasure Room, Greed Treasure Room
--Poisons nearby enemies.
--Poisoned enemies leave poison clouds after death.
+Item Pools: Treasure Room, Greed Treasure Room, Rotten Beggar
+* Poisons nearby enemies.
+* Poisoned enemies leave poison clouds after death.
 
 Green Eyed Envy
 Description: I'm Envious!
+Reference: Parsee Mizuhashi
 Type: Passive Item 
 Quality: 0
 Tags: No Greed Mode
-Item Pools: Curse Room
--After entering a room, health of all non-final-boss enemies in the room get reduced to 40%.
--After these enemies die, summon two small copies of them with 20% health.
+Item Pools: Curse Room, Red Chest
+* After entering a room, health of all non-final-boss enemies in the room get reduced to 40%.
+* After these enemies die, summon two small copies of them with 20% health.
 
 Oni Horn
 Description: Knock Out In Three Steps
+Reference: Yuugi Hoshiguma
 Type: Passive Item
 Quality: 3
 Tags: No Lost Birthright, Summonable
-Item Pools: Devil Room, Greed Devil Room (1 Heart)
--+1 Damage.
--After Isaac get damaged:
-    -First time in current room: Spawn a circle of shockwave.
-    -Second time in current room: Spawn 3 circles of shockwave, then explodes.
-    -Third time in current room: Fill the room with shockwaves, then create a Mama Mega explosion. Reset the damaged counter.
-    -Only Blood Machines, Confessionals, Dark Beggars and Hell Games don't trigger this effect.
+Item Pools: Devil Room, Greed Devil Room (1 Heart), Devil Beggar
+* +1 Damage.
+* After player get damaged:
+    * First time in current room: Spawn a circle of shockwave.
+    * Second time in current room: Spawn 3 circles of shockwave, then explodes.
+    * Third time in current room: Fill the room with shockwaves, then create a Mama Mega explosion. Reset the damaged counter.
+    * Only Blood Machines, Confessionals, Dark Beggars and Hell Games don't trigger this effect.
 
 Psyche Eye
 Description: Be one of Satori
+Reference: Satori Komeiji
 Type: Passive Item
 Quality: 3
 Tags: Offsenive, Summonable
 Item Pools: Devil Room (1 Heart), Greed Devil Room (1 Heart), Ultra Secret Room
--Spawn an eye familiar that attaches to Isaac, shoots a mind controlling tear per second, which has 2.5 damage.
-    -This tear will turn monsters which hit by this friendly, and charm bosses for 5 seconds.
-    -Lil' Haunt cannot become friendly due to a bug.
--Dispels Curse of Lost, Blindness and Unknown.
+* Spawn an eye familiar that attaches to player.
+* Hold shooting keys for 2.5 seconds to fire psyche wave.
+    * Psyche waves can turn enemy monsters nearby friendly, and charm bosses for 5 seconds.
+    * Wave's radius is based on player's range.
+    * Each psyche eye can only control at most 5 monsters. 
+        * If there are more than 5 friendly monsters, the eye will close and cannot release psyche waves.
+    * Lil' Haunt cannot become friendly due to a bug.
+* Hold drop Button and shooting keys for 1.5 seconds to release mind blast.
+    * Mind blast will kill all friendly monsters, knockback objects and confuse all enemies for 3 seconds.
+
+Guppy's Corpse Cart
+Description: Crusssssh you!
+Reference: Rin Kaenbyou
+Type: Passive Item
+Quality: 3
+Tags: Guppy, No Lost Birthright, Summonable
+Item Pools: Curse Room, Greed Curse Room, Red Chest, Devil Room, Greed Devil Room, Ultra Secret Room
+* Flight.
+* +0.2 Speed up.
+* When moving at a speed faster than 0.85, takes no damage when touching enemies, and deal (10+10*√(PlayerDamage/3.5)) damage to them.
 
 Technology 666
 Description: Made in Hell
+Reference: Utsuho Reiuji
 Type: Passive Item
 Quality: 3
 Label: Offensive, Summonable, Tech
-Item Pools: Devil Room, Greed Devil Room (1 Heart)
--When player holds the shooting button, fire an additional thin brimstone laser with 25% player damage to the shooting direction per second.
-    -If the laser kills an enemy, the dead enemy will explode and burst 6 new lasers, which exist for 1 second.
-        -This explosion cannot damage players.
-        -These lasers also have the effect of bursting lasers after kills.
+Item Pools: Devil Room, Greed Devil Room (2 Hearts)
+* When player holds the shooting button, fire an additional thin brimstone laser with 15% player damage to the shooting direction per second.
+    * If the laser kills an enemy, the dead enemy will explode and burst 6 new lasers, which exist for 1 second.
+        * This explosion cannot damage players.
+        * These lasers also have the effect of bursting lasers after kills.
 
 Psycho knife
 Description: Watch    Your     Back
+Reference: Koishi Komeiji
 Type: Active Item
 Charges: 5 seconds
 Quality: 2
 Tags: offensive, No Cantripped
 Item Pools: Devil Room, Greed Devil Room (1 Hearr)
--After use, execute a surrounding enemy.
--Execution will directly kill the monster, and deal (10% maximum HP + 5 * player damage) damage that ignores armor to bosses. Isaac gains 1 second invincible time and shakes away the enemies around him.
--The conditions of execution are as follows:
-    -Close to the enemy. The radius is about 1.5 grids.
-    -If the enemy's HP is less than or equal to (2 * player damage) or 20% of the maximum HP, or is confused, charmed, freeze or fear, the radius is doubled.
--Executable enemies will show red dots.
--If Isaac has the Book of Virtues, spawn dark wisps.
+* After use, execute a surrounding enemy.
+* Execution will directly kill the monster, and deal (10% maximum HP + 5 * player damage) damage that ignores armor to bosses. player gains 1 second invincible time and shakes away the enemies around him.
+* The conditions of execution are as follows:
+    * Close to the enemy. The radius is about 1.5 grids.
+    * If the enemy's HP is less than or equal to (2 * player damage) or 20% of the maximum HP, or is confused, charmed, freeze or fear, the radius is doubled.
+* Executable enemies will show red dots.
+* If player has the Book of Virtues, spawn dark wisps.
 
 Dowsing Rods
-Description: Fortunately, It's not an active item
+Description: More Treasures
+Reference: Nazrin
 Type: Passive Item
 Quality: 2
 Tags: Offensive, No Cantripped
 Item Pools: Treasure Room, Greed Treasure Room, Shop, Greed Shop
--Hide some pickups into some normal rocks.
--Play radar sounds when get closed to these stones. The near it is, the more frequent the sounds are.
--Spawn pickups when destroyed the rock.
-    -Normal Chest: 39%
-    -Golden Chest: 20%
-    -Double Bomb: 15%
-    -2 Tinted Rock Spiders: 10%
-    -Hardy: 10%
-    -Collectible: 5%
-    -64 Blue spiders: 1%
+* Hide some pickups into some normal rocks.
+* Play radar sounds when get closed to these stones. The near it is, the more frequent the sounds are.
+* Spawn pickups when destroyed the rock.
+    * Normal Chest: 39%
+    * Golden Chest: 20%
+    * Double Bomb: 15%
+    *2 Tinted Rock Spiders: 10%
+    * Hardy: 10%
+    * Collectible: 5%
+    *64 Blue spiders: 1%
 
 Scaring Umbrella 
 Description: It's not funny
+Reference: Kogasa Tatara
 Type: Passive Item
 Quality: 1
 Tags: Summonable
 Item Pools: Treasure Room, Greed Treasure Room.
--Blocks projectiles from above.
--Tears keep falling from the sky after shoot in current room. 
-    -Can be canceled using Drop Key.
--Has a chance to make enemies fear. 
--Scare player while in room without enemies.
-    -I won't tell you how it scares you here :)
+* Blocks projectiles from above.
+* Tears keep falling from the sky after shoot in current room. 
+    * Can be canceled using Drop Key.
+* Has a chance to make enemies fear. 
+* Scare player while in room without enemies.
+    * I won't tell you how it scares you here :)
+
+Unzan
+Description: Unarguable Youkai Punch!
+Type: Passive Item
+Quality: 2
+Tags: Offensive, Summonable, No Cantripped
+Item Pools: Treasure Room, Greed Treasure Room
+* Summon Unzan for attack helps after entering a room with enemies.
+   * Unzan will spawn 2 giant fist tears at both side of player every 2 seconds, which deal (2 * currentFloor) damage each hit.
+   * Fists will impact at the center of room, deal (10 * currentFloor) damage to all enemies at the impact position.
+   * Unzan leaves after room cleared.
 
 Bishamonten's Pagota
 Description: Oh shiny!
+Reference: Shou Toramaru
 Type: Active Item
 Charges: 12 (Coins Charges)
 Quality: 3
+Item Pools: Shop, Crane Game
 Tags: Offensive, No Greed Mode
-Item Pools: Shop
--One-Time Use!
--Turn all rooms in current floor and their pickups into golden version, and midas all enemies for 5 seconds.
-    -Pennies to Golden Pennies
-    -Keys to Golden Keys
-    -Bombs to Golden Bombs
-    -Troll Bombs to Golden Troll Bombs
-    -Hearts to Golden Hearts
-    -Poops to Golden Poops
-    -Chests to Golden Chests
-    -Batteries to Golden Batteries
-    -Trinkets to Golden Trinkets
-    -Pills to Golden Pills
--If Isaac has Book of Virtues, Spawn 12 coin wisps which have 10% chance to fire midas tears.
+* One-Time Use!
+* Turn all rooms in current floor and their pickups into golden version, and midas all enemies for 5 seconds.
+    * Pennies to Golden Pennies
+    * Keys to Golden Keys
+    * Bombs to Golden Bombs
+    * Troll Bombs to Golden Troll Bombs
+    * Hearts to Golden Hearts
+    * Poops to Golden Poops
+    * Chests to Golden Chests
+    * Batteries to Golden Batteries
+    * Trinkets to Golden Trinkets
+    * Pills to Golden Pills
+* If player has Book of Virtues, Spawn 12 coin wisps which have 10% chance to fire midas tears.
 
 Sorcerer's Scroll
 Description: Strengthen your body
+Reference: Byakuren Hijiri
 Type: Active Item
 Charges: 4
 Quality: 2
 Tags: No Lost Birthright
 Item Pools: Curse Room, Devil Room, Angel Room, Greed Curse Room, Greed Devil Room, Greed Angel Room (1 Heart)
--Remove all soul hearts from Isaac. 
-    -Permanently gain +0.2 damage, +0.2 firerate, +0.03 speed, +0.4 range for each half of removed soul hearts.
-    -Won't kill Isaac.
--If Isaac has Book of Virtues, spawn a sutra fire that can increase Isaac's stats.
+* Remove all soul hearts from player. 
+    * Permanently gain +0.2 damage, +0.2 firerate, +0.03 speed, +0.4 range for each half of removed soul hearts.
+    * Won't kill player.
+* If player has Book of Virtues, spawn a sutra fire that can increase player's stats.
 
 Saucer Remote
 Description: Incoming!
+Reference: Nue Houjuu
 Type: Active Item
 Charges: 4
 Quality: 4
 Tags: Offensive
-Item Pools: Treasure Room, Greed Treasure Room
--Spawn a UFO which takes all free pickups and collectibles in current room away.
--UFO has 5 base health and 8 armor, and increase 12 more health each floor.
-    -Health increases after taking collectibles or pickups. 
-    -Destory UFO will cause other UFOs's health get doubled in current floor.
-    -The final health = (o + p*3) * 2 ^ (c + u)
+Item Pools: Treasure Room, Greed Treasure Room, Crane Game
+* Spawn a UFO which takes all free pickups and collectibles in current room away.
+* UFO has 5 base health and 8 armor, and increase 12 more health each floor.
+    * Health increases after taking collectibles or pickups. 
+    * Destory UFO will cause other UFOs's health get doubled in current floor.
+    * The final health = (o + p*3) * 2 ^ (c + u)
         o = Base health.
         c = Taken collectibles count.
         u = Destoryed UFO count in current floor.
         p = Taken pickup count.
--Spawn double pickups and collectibles after destroyed UFO.
-    -Collectibles and trinkets are whole new.
-    -If player has Car Battery, spawn triple.
--UFO will leave and disappear in 15 seconds.
--If player has Book of Virtues, spawn UFO token wisps.
-    -The color of wisp is the same with spawned UFO. 
-        -If it's colorful UFO, color is random.
-    -When use this item, if player has 3 same or totally different color of wisps, cost them as the charges.
-        -Then the spawned UFO has the same color of costed wisps.
-            -If wisps' color is different, spawn colorful UFO.
-    -Example 1: If a red UFO has spawned, spawn a red wisp.
-    -Example 2: If player has 3 red wisps, they will be costed and free to use this time. Then it always spawns red UFO.
+* Spawn double pickups and collectibles after destroyed UFO.
+    * Collectibles and trinkets are whole new.
+    * If player has Car Battery, spawn triple.
+* UFO will leave and disappear in 15 seconds.
+* If player has Book of Virtues, spawn UFO token wisps.
+    * The color of wisp is the same with spawned UFO. 
+        * If it's colorful UFO, color is random.
+    * When use this item, if player has 3 same or totally different color of wisps, cost them as the charges.
+        * Then the spawned UFO has the same color of costed wisps.
+            * If wisps' color is different, spawn colorful UFO.
+    * Example 1: If a red UFO has spawned, spawn a red wisp.
+    * Example 2: If player has 3 red wisps, they will be costed and free to use this time. Then it always spawns red UFO.
 
 Tengu Cellphone
 Description: Search for goods!
+Reference: Hatate Himekaidou
 Type: Active Item
 Charges: 2
 Quality: 2
 Tags: Offensive
-Item Pools: Shop, Treasure Room, Greed Shop, Greed Treasure Room
--Open the online store interface, where 3 collectibles or pickups will be sold.
-    -The content depends on the current room type, and each room is different.
-    -After selecting an option, press the active key to buy this item with the specified money. 
-        -This item will be mailed to the next floor.
-    -Online stores are more expensive, but are can be discounted by Steam Sale.
--Relationship between item quality and online store price:
+Item Pools: Shop, Treasure Room, Greed Shop, Greed Treasure Room, Crane Game
+* Open the online store interface, where 3 collectibles or pickups will be sold.
+    * The content depends on the current room type, and each room is different.
+    * After selecting an option, press the active key to buy this item with the specified money. 
+        * This item will be mailed to the next floor.
+    * Online stores are more expensive, but are can be discounted by Steam Sale.
+* Relationship between item quality and online store price:
     Quality 0: 5 coins
     Quality 1: 10 coins
     Quality 2: 15 coins
     Quality 3: 20 coins
     Quality 4: 30 coins
--If player has the Book of Virtues, a wisp with a chance to fire midas tears will be spawned after purchase.
+* If player has the Book of Virtues, a wisp with a chance to fire midas tears will be spawned after purchase.
+
+Ethereal Arm
+Description: Give up for asking more
+Reference: Kasen Ibaraki
+Type: Passive Item
+Quality: 3
+Tags: Offensive, No Cantripped
+Item Pools: Devil Room, Greed Devil Room(1 Heart), Curse Room, Greed Curse Room, Red Chest
+* Can no longer pick up any pocket items like cards, pills and runes.
+* Replace player's pocket item into Void Hand, can transform a pocket item in current room into random collectible from any item pools.
+    * Can be used 3 times per floor.
+* Marked skulls always drop "Teleport!"
 
 Mountain Ear
 Description: Mountain Ear
+Reference: Kyouko Kasodani
 Type: Passive Item
 Quality: 2
 Tags: Offensive, Summonable
 Item Pools: Treasure Room, Greed Treasure Room
--Musician Transformation.
--Isaac has 1/(9-Luck) chance to shoot echo tears, which will bounce between enemies and obstacles.
-    -100% chance at 8 Luck.
--When echo tears hit Isaac, it disappears and Isaac gains +1 damage and 0.1 damage/sec decay.
-    -Damage and decay both stacks.
+* Musician Transformation.
+* Player has 1/(9-Luck) chance to shoot echo tears, which will bounce between enemies and obstacles.
+    *100% chance at 8 Luck.
+* When echo tears hit player, it disappears and player gains +1 damage and 0.1 damage/sec decay.
+    * Damage and decay both stacks.
 
 Zombie Infestation
-Description: Yoshika has successfully eliminated all life on Earth.
+Description: Biohazard
+Reference: Yoshika Miyako
 Type: Passive Item
 Quality: 2
 Tags: Offensive, Summonable
-Item Pools: Treasure Room, Curse Room, Greed Treasure Room, Greed Curse Room
--Replace all red hearts into rotten hearts upon pick up.
--Whenever an enemy monster being killed, spawn a new friendly copy of it.
-    -Cannot be brought out room.
+Item Pools: Treasure Room, Curse Room, Greed Treasure Room, Greed Curse Room, Rotten Beggar
+* Replace all red hearts into rotten hearts upon pick up.
+* Whenever an enemy monster being killed, spawn a new friendly copy of it.
+    * Cannot be brought out room.
     
 
-Warpping Hairpin
+Warping Hairpin
 Description: What's in the other side?
+Reference: Seiga Kaku
 Type: Active Item
 Charges: 3 Seconds
 Quality: 2
 Item Pools: Treasure Room, Shop
-Tags: No Cantripped
--After using against a wall, if there is a room opposite, teleport to the room.
--If you have Book of virtues, spawn a fragile golden wisp when teleported to a room.
+Tags: Offensive, No Cantripped
+* After using against a wall, if there is a room opposite, teleport to the room.
+* If you have Book of virtues, spawn a fragile golden wisp when teleported to a room.
+
+Holy Thunder
+Description: Fist of the Heavens
+Reference: Soga no Tojiko
+Type: Passive Item
+Quality: 3
+Tags: Offensive, Summonable
+Item Pools: Treasure Room, Greed Treasure Room, Angel Room, Greed Angel Room
+* Player has chance to shoot thunder tears, which fall thunders when hit or land.
+    * Thunder will create chain lightnings between surrounding enemies, dealing 2x tear damage.
+    * If room is flooded, the radius become tripled.
+* Chance is 1 / (17 - Luck).
+    * The minium chance is 5.88% at 0 Luck, maxinium chance is 50% at 15 Luck.
+
+Geomantic Detector
+Description: I found a lucky place!
+Reference: Mononobe no Futo
+Type: Passive Item
+Quality: 2
+Tags: Offensive, Summonable
+Item Pools: Shop, Greed Shop, Crane Game
+* -3 Luck down.
+* +0.05 Luck up for each empty grid in the room.
+* +3 Luck up for each secret room near this room.
+
+Lightbombs
+Description: +5 bombs, the light shall burn you!
+Reference: Toyosatomimi no Miko
+Type: Passive item
+Quality: 3
+Tags: Offensive, Summonable
+Item Pools: Angel Room, Greed Angel Room, Bomb Beggar
+* +5 bombs.
+* Bombs release 10 light beams at circular directions.
 
 D2147483647
 Description: Active mimic
+Reference: Mamizou Futatsuiwa
 Type: Active Item
 Charges: 1
 Quality: 4
 Item Pools: Secret Room, Ultra Secret Room, Greed Secret Room
-Tags: No Cantripped
--After use, transform this item to a specified active item with empty charges.
-    -Needs 1 charge to transform.
--After Isaac use transformed item, transform this item back to D2147483647 with empty charges.
--Disappears after use one-time use items.
--If transformed into D2147483647, teleport Isaac to I AM ERROR Room after use D2147483647 again, and it disappears.
+Tags: Offensive, No Cantripped
+* After use, transform this item to a specified active item with empty charges.
+    * Needs 1 charge to transform.
+* After player use transformed item, transform this item back to D2147483647 with empty charges.
+* Disappears after use one-time use items.
+* If transformed into D2147483647, teleport player to I AM ERROR Room after use D2147483647 again, and it disappears.
 
 The Infamies
 Description: Fragile, thy name is heart.
+Reference: Hata no Kokoro
 Type: Passive Item
 Quality: 2
 Item Pools: Treasure Room, Secret Room, Greed Treasure Room, Greed Secret Room
 Tags: Offensive, Summonable
--Enters pleasure form. Switch forms after clearing rooms.
-    -Pleasure: +0.3 Speed, represents Spades
-    -Anger: +2 Damage, represents Hearts
-    -Sorrow: +1 Fire rate, represents Clubs
-    -Fearness: +1 Luck, represents Diamonds
--After clearing rooms, has a chance to drop an Ace Poker represented by the current form. Or drop a Joker.
-    -Chances are 5% and 1% when Isaac has 0 luck, and are 25% and 5% when has 10 Luck.
--If Isaac has Isaac's Heart, protect it using masks. It immunes to all projectiles.
--If Isaac has Infamy, +0.3 Speed.
--All Mask and Heart enemies become friendly, and will follow Isaac between rooms.
+* Enters pleasure form. Switch forms after clearing rooms.
+    * Pleasure: +0.3 Speed, represents Spades
+    * Anger: +2 Damage, represents Hearts
+    * Sorrow: +1 Fire rate, represents Clubs
+    * Fearness: +1 Luck, represents Diamonds
+* After clearing rooms, has a chance to drop an Ace Poker represented by the current form. Or drop a Joker.
+    * Chances are 5% and 1% when player has 0 luck, and are 25% and 5% when has 10 Luck.
+* If player has Isaac's Heart, protect it using masks. It immunes to all projectiles.
+* If player has Infamy, +0.3 Speed.
+* All Mask and Heart enemies become friendly, and will follow player between rooms.
 
 Empty Book
 Description: What are you going to write on it?
+Reference: Kosuzu Motoori
 Type: Active Item
 Charges: None
 Quality: 3
 Item Pools: Library
 Tags: Offensive, Book, No Cantripped
--Enter Writing mode after use, to finish this item.
--Choose one effect from three as this item's effect. Repeat 3 times.
--This item became "My Book", it has all three effects you selected.
--The second time you use Empty Book in one game, will replace all effects of "My Book" with the new effects.
--Effect List:
+* Enter Writing mode after use, to finish this item.
+* Choose one effect from three as this item's effect. Repeat 3 times.
+* This item became "My Book", it has all three effects you selected.
+* The second time you use Empty Book in one game, will replace all effects of "My Book" with the new effects.
+* Effect List:
     First (Charges):
         Manual：1 Charge    Guide: 3 Charges    History: 6 Charges
     Second (Active Effect):
@@ -1042,292 +1669,593 @@ Tags: Offensive, Book, No Cantripped
 
 Sekibanki's Head
 Description: Isn't she cute?
-Type: Passive Item
+Reference: Sekibanki
+Type: Familiar Item
 Quality: 2
 Item Pools: Treasure Room, Greed Treasure Room, Ultra Secret
 Tags: Offensive, Monster manual, Summonable
--Orbital, deals 7 damage per 4 frames.
-    -Can be sacrificed.
--Shoots 2 Lasers per 11 frames, dealing 1.75 damage each laser.
--If player has Guillotine, increase head count.
--After use The Pinking Shears, install an auto-fire head for isaac's body.
--After use Scissors, spawn an extra fixed head turret.
--After use Decap Attack, throw all head orbitals away.
+* Orbital, deals 7 damage per 4 frames.
+    * Can be sacrificed.
+* Shoots 2 Lasers per 11 frames, dealing 1.75 damage each laser.
+* If player has Guillotine, increase head count.
+* After use The Pinking Shears, install an auto-fire head for player's body.
+* After use Scissors, spawn an extra fixed head turret.
+* After use Decap Attack, throw all head orbitals away.
+
+Wild Fury
+Description: Bloody Growth
+Type: Active Item
+Charges: 6
+Quality: 4
+Item Pools: Treasure Room, Greed Treasure Room, Ultra Secret Room
+Tags: Offensive
+* After use, player become furious in 10 seconds, x1.5 his speed, tears, damage and range.
+    * Each enemy killed during furious will give player speed, tears, damage and range up.
+        * The stats up amount is based on the enemy's max HP.
+* If player has Book of Virtues, spawn a blood wisp. It's extermely offensive, but has only 1 HP.
 
 D Flip
 Description: umop-ap!sdn
+Reference: Seija Kijin
 Type: Active Item
-Charges: 3
+Charges: 6
 Quality: 4
-Item Pools: Treasure Room, Greed Treasure Room, Secret Room, Greed Secret Room
+Item Pools: Treasure Room, Secret Room, Crane Game, Greed Shop, Greed Treasure Room, Greed Secret Room
 Tags: offensive
--Reroll collectibles to another corresponding collectible.
-    -The corresponding collectible is determined by the seed and is always one-on-one.
--Change the tarot cards in this room to the corresponding reversed tarot cards, or turn them back.
--If player has Book of Virtues:
-    -If player has this item's wisps, destroy them.
-    -Or spawn 3 wisps.
--Some collectible pairs are fixed:
+* Reroll collectibles to another corresponding collectible.
+    * The corresponding collectible is determined by the seed and is always one-on-one.
+    * The game always tries to set the quality sum of the paired 2 collectibles to 4.
+* Change the tarot cards in this room to the corresponding reversed tarot cards, or turn them back.
+* If player has Book of Virtues:
+    * If player has this item's wisps, destroy them.
+    * Or spawn 3 wisps.
+* Some collectible pairs are fixed:
     Sad Onion - Dead Onion
     Cricket's Head - Cricket's Body
     Brother Bobby - Sister Maggy
     1UP! - Magic Mushroom
+    Roid Rage - Growth Hormones
     Bible - Satanic Bible
-    Guppy's Head - Tammy's Head
+    Tammy's Head - Guppy's Head
+    Teleport! - Teleport 2.0
+    Yum Heart - Yuck Heart
+    Pentagram - Halo
+    Dr. Fetus - Fetus Blood
     Magneto - Strange Attractor
+    Treasure Map - Blue Map
     Hourglass - Hourglass
     Chocalate Milk - Soy Milk
-    Roid Rage - Growth Hormones
     Mini Mush - Mega Mush
+    Cube of Meat - Ball of Bandages
     PHD - FALSE PHD
-    Goat Head - Eucharist
-    Bursting Sack - Juicy Sack
-    Trisagion - Brimstone
-    Compound Fracture - Brittle Bones
-    Holy Light - Explosivo
     Lord of the Pit - Redemption
-    Wicked Crown - Holy Crown
-    A Lighter - Ice Cube
-    Blessed Penny - Cursed Penny
-    20/20 - Broken Glasses
-    Lump of Coal - Proptosis
-    Infamy - Isaac's Heart
-    Halo - Pentagram
-    Cain's Other Eye - Cain's Eye
+    Book of Sin - Book of Virtues
     Wafer - Wafer
-    Teleport! - Teleport 2.0
-    Dr. Fetus - Fetus Blood
-    Spirit Shackles - Samson's Chains
-    Hungry Soul - Purgatory
-    Blue Map - Treasure Map
     Guardian Angel - Demon Baby
+    Brimstone - Trisagion
     Odd Mushroom (Thin) - Odd Mushroom (Large)
+    Razor Blade - Dull Razor
     Forget Me Now - Plan C
-    Razor Blade - Dull Razor`
     A Pony - White Pony
+    Lump of Coal - Proptosis
     Remote Detonator - Tear Detonator
     Speed Ball - Euthanasia
     Notched Axe - Dataminer
     Infestation - Infestation II
     Bloody Lust - Anemic
     The Candle - Red Candle
+    Dad's Key - Mom's Key
     Iron Bar - Midas' Touch
-    Cube of Meat - Ball of Bandages
+    Goat Head - Eucharist
     Anti-Gravity - Black Hole
-    Purity - Black Lotus
+    Black Lotus - Purity
     Stop Watch - Broken Watch
     Key Piece 1 - Key Piece 2
-    Knife Piece 1 - Knife Piece 2
+    Infamy - Isaac's Heart
     Trinity Shield - Spirit Sword
-    Missing Page - Missing Page 2
+    20/20 - Broken Glasses
+    Starter Deck - Little Baggy
+    Missing Page 2 - Missing Page
     Clear Rune - Black Rune
+    Bursting Sack - Juicy Sack
     Butter Bean - Wait What?
     Cancer - Cancer
     Judas' Shadow - My Shadow
-    Dad's Key - Mom's Key
+    Cain's Other Eye - Cain's Eye
+    Samson's Chains - Spirit Shackles
     Polaroid - Negative
-    Glass Cannon - Broken Glass Cannon
     Godhead - Broken Amulet
-    Yum Heart - Yuck Heart
+    Toxic Shock - Contagion
+    Glass Cannon - Broken Glass Cannon
     Incubus - Succubus
+    Holy Light - Explosivo
     Restock - Restock
-    Contagion - Toxic Shock
-    Void - Abyss
     Chaos - Chaos
-    Glowing Hourglass - Glowing Hourglass
     Cambion Conception - Immaculate Conception
     Crown of Light - Dark Prince's Crown
+    Glowing Hourglass - Glowing Hourglass
+    Compound Fracture - Brittle Bones
+    Void - Abyss
     Ghost Pepper - Bird's Eye
     Duality - Duality
-    Mom's Ring - Dad's Ring
+    Dad's Ring - Mom's Ring
+    Rock Bottom - The Stairway
     Immaculate Heart - Heartbreak
     Red Key - Blue Key
-    Book of Virtues - Book of Sin
-    Death Certificate - Birthright
-    Venus - Mars
     Sol - Luna
-    Candy Heart - Soul Locket
-    Rock Bottom - The Stairway
+    Venus - Mars
     Genesis - Destruction
+    Knife Piece 1 - Knife Piece 2
+    Death Certificate - Birthright
+    Purgatory - Hungry Soul
     Brimstone Bombs - Lightbomb
+    Candy Heart - Soul Locket
+    Flip - Flip
+    Blessed Penny - Cursed Penny
+    A Lighter - Ice Cube
+    Wicked Crown - Holy Crown
     Starseeker - Pathseeker
+    Wolf Eye - Wild Fury
     Onbashira - Young Native God
-    D Flip - D Flip
+    D Flip - D Siphon
+    Miracle Mallet - Miracle Mallet Replica
     Mom's IOU - Dad's Shares
+    Soul of Seija-Another Soul of Seija
+    
 
 Miracle Mallet
 Description: Tell me your wish
+Reference: Shinmyoumaru Sukuna
 Type: Active Item
 Charges: None
 Quality: 3
 Tags: Offensive, No Cantripped
 Item Pools: Treasure room, Greed Treasure Room, Devil Room, Greed Devil Room (1 Heart)
--! ONE-TIME USE!
--Transform all collectibles in current room into Quality 4 collectibles from current room's item pool.
-    -If the pool has no quality 4 items, transform it into Brimstone.
--Gain 3 broken hearts for each collectible transformation.
--If player has Book of Virtues, spawn wisps that fire midas tears.
+* ! ONE-TIME USE!
+* Transform all collectibles in current room into Quality 4 collectibles from current room's item pool.
+    * If the pool has no quality 4 items, transform it into Brimstone.
+* Gain 3 broken hearts for each collectible transformation.
+* If player has Book of Virtues, spawn wisps that fire midas tears.
+
+Thunder Drum
+Description: Beat the celestial drum
+Reference: Raiko Horikawa
+Type: Passive Item
+Quality: 2
+Tags: Offensive, Summonable
+Item Pools: Treasure Room, Greed Treasure Room, Crane Game, Ultra Secret
+* Musician Transformation.
+* Drum familiar that bounces around the room.
+* After the drum takes damage, spawn shockwaves and 18 lasers. Each laser deals 15 damage.
+* Can be directly beaten by The Forgotten's bone club.
+
+Nimble Fabric
+Description: Reusable Dodge
+Reference: Seija Kijin
+Type: Active Item
+Charges: 3
+Quality: 1
+Tags: Offensive
+Items: Treasure Room, Shop, Greed Treasure Room, Greed Shop, Crane Game, Beggar
+* Upon use, cost 1 charge to temporarily become invincible.
+* Cannot move or shooting while invincible.
+* Can lengthen the duration by holding the active key, up to 5 seconds.
+* If player has the book of virtues, Spawn purple wisps.
+
+Miracle Mallet Replica
+Description: Okay, Done!
+Reference: Seija Kijin
+Type: Active Item
+Charges: 1
+Quality: 2
+Tags: Offensive
+Item Pools: Shop, Greed Shop, Beggar, Crane Game
+* After use, lift the mallet, press shooting keys to hammer a direction, deals 80 damage, and spawn shockwaves.
+* If player has the book of virtues, spawn hammer wisps that spawn shockwaves after extinguished.
+
+Rune Cape
+Description: Shot speed up+I see the future
+Reference: Sumireko Usami
+Type: Passive Item
+Quality: 1
+Tags: Offsenive
+Item Pools: Boss Room, Shop, Greed Shop, Greed White Treasure Room, Crane Game
+* +0.16 Shot Speed.
+* Drop 3 random runes.
+
+Lunatic Gun
+Description: Help from other dimensions
+Reference: Seiran
+Type: Passive Item
+Quality: 2
+Tags: Offensive, Summonable
+Item Pools: Treasure Room, Greed Treasure Room, Crane Game
+* When player holds shooting buttons for 2 seconds, shoot a cone-shaped cluster of tears to the shooting direction.
+    * Each tears is spectral and piercing, dealing 20% of player's damage, and has no knockback effect.
+    * Tears will not inherit player's tear effects.
 
 Vicious Curse
 Description: I wish you were stabbed to death
+Reference: Sagume Kishin
 Type: Passive Item
 Quality: 0
 Tags: No Lost Birthright
 Item Pools: Curse Room, Greed Curse Room, Red Chest
--Gain Damocles, then deal 1 heart of damage to Isaac.
--Double Damocles' update rate.
+* Gain Damocles, then deal 1 heart of damage to player.
+* Double Damocles' update rate.
+
+Carnival Hat
+Description: Lunatic feast
+Reference: Clownpiece
+Type: Passive Item
+Quality: 1
+Tags: No Lost Birthright
+Item Pools: Curse Room, Greed Curse Room, Red Chest, Crane Game
+* All Stats + 0.01.
+* Spawn a Joker.
+* Monsters spawn a troll bomb upon death.
+* Gain +0.1 damage up for each explosion damage taken.
 
 Pure Fury
 Description: DMG up
+Reference: Junko
 Type: Passive Item
 Quality: 4
 Item Pools: Secret Room, Ultra Secret Room, Greed Secret Room
 Tags: Offsenive, Summonable
--Player Damage x150%.
+* Player Damage x150%.
+
+Hekate
+Description Planet Dominion
+Reference: Hecatia Lapislazuli
+Type: Passive Item
+Qaulity: 3
+Tags: Summonable, Stars
+Item Pool: Planetarium
+* Spawn otherworld, earth and moon orbitals, can block enemy projectiles.
+* Otherworld orbits player, earth orbits otherworld, moon orbits earth.
+* Otherworld, earth and moon can deal 105, 75, 45 contact damage per second respectively.
 
 Dad's Shares
 Description: Can ABSOLUTELY earn!
+Reference: Joon Yorigami
 Type: Passive Item
 Quality: 1
 Tags: No Greed, No Cantripped
 Item Pools: Shop, Old Chest
--Whenever Isaac takes damage, lose 5 coins.
-    -Self-damaging will not trigger this.
--After clearing a room, spawn 1 penny.
+* Whenever player takes damage, lose 5 coins.
+    * Self-damaging will not trigger this.
+* After clearing a room, spawn 1 penny.
 
 Mom's IOU
 Description: Money! But at what cost...?
+Reference: Shion Yorigami
 Type: Passive Item
 Quality: 1
 Tags: No Greed, Mom, No Cantripped
 Item Pools: Shop, Old Chest
--Worths 1 penny.
--Fill Isaac's coins to the limit, and get the debt with 20% interest.
--Pay 20% of principal for debt every floor.
-    -If Isaac has not enough money, remove random collectible for coins. Each provides 15 pennies.
-    -If still has not enough money, use Isaac's hearts for coins. Each heart provides 3 pennies.
-        -Can kill Isaac.
--After paid off all debts, IOU disappears.
+* Only costs 1 coin in shop.
+* Fill player's coins to the limit, and get the debt with 20% interest.
+* Pay 20% of principal for debt every floor.
+    * If player has not enough money, remove random collectible for coins. Each provides 15 pennies.
+    * If still has not enough money, use player's hearts for coins. Each heart provides 3 pennies.
+        * Can kill player.
+* After paid off all debts, IOU disappears.
+
+Yamanba's Chopper
+Description: Both good and evil
+Reference: Nemuno Sakata
+Type: Passive item
+Quality: 1
+Tags: No lost birthright, Summonable
+Item Pools: Treasure Room, Devil Room(1 heart), Angel Room, Greed Treasure Room, Greed Devil Room, Greed Angel Room
+* Has chance to heal half heart after an enemy is killed.
+    * Chance is 1/(18-Luck), the limit is 20%.
+* Has chance to drop pennies when damaged.
+    * Chance is Luck / 4, chance that over 100% will be converted to new pennies.
+* This collectible can be shown in Curse of Blind.
 
 Golem of Isaac
 Description: My imitator
+Reference: Narumi Yatadera
 Type: Passive Item
 Quality: 2
 Item Pools: Secret Room, Greed Secret Room
 Tags: Offensive, Summonable
--Spawn a golem familiar that follows Isaac, automatically attack enemies, and help you press buttons, and open trap chests.
-    -Always attack Bishop first.
--The damage of golem is (3.5 + (stage - 1) * 0.9), fire delay is (10 - 0.25 * (stage - 1)).
+* Spawn a golem familiar that follows player, automatically attack enemies, and help you press buttons, and open trap chests.
+    * Always attack Bishop first.
+* The damage of golem is (3.5 + (stage - 1) * 0.9), fire delay is (10 - 0.25 * (stage - 1)).
+
+Dancer Servants
+Description: Dance! Dance! Dance!
+Reference: Mai Teireida/Satono Nishida
+Type: Familiar Item
+Quality: 1
+Item Pools: Treasure Room, Greed Treasure Room, Baby Shop
+Tags: Offensive, Summonable, Monster Manual, Baby
+* Two fast orbital babies, which cannot block projectiles.
+    * can be sacrificed.
+* While player is pressing shooting buttons, shoot tears backwards the direction.
+* Green servant shoots 2 tears with 3 damage per second. Enemies killed by it has 10% chance to drop a soul heart.
+* Magenta servant shoots 3 tears with 2 damage per second. Enemies killed by it has 20% chance to drop a red heart.
+
+Back Door
+Description: Bullet Consumer
+Reference: Okina Matara
+Type: Passive Item
+Quality: 2
+Item Pools: Treasure Room, Greed Treasure Room
+Tags: Summonable
+* A door familiar behind player, can block projectiles.
+* Deals 52.5 contact damage per second.
+
+Fetus Blood
+Description: Rebone
+Reference: Eika Ebisu
+Type: Active Item
+Charges: 8 seconds
+Quality: 3
+Item Pools: Treasure Room, Curse Room, Red Chest, Devil Room, Ultra Secret, Demon Beggar, Greed Treasure Room, Greed Devil Room, Greed Curse Room (1 Heart)
+Tags: Offensive
+* Upon use, spawn a friendly Blood Bony.
+    * Throw bones to enemies like normal bonies. But bones' damage is player damage * 1.2.
+    * Can take at most (8 + currentFloor * 2) hits.
+* The limit of Blood Bonies is equals to the current floor.
+* If player has Book of Virtues, spawn flesh wisps.
+
+Cockcrow Wings 
+Description: Round the clock
+Reference: Kutaka Niwatari
+Type: Passive Item 
+Quality: 3 
+Tags: Offensive 
+Item Pools: Angel Room, Greed Angel Room 
+* Flight.
+* Gain these based on game timer: 
+    *0:00 to 0:30: +0.5 tears. Display the locations of secret room, super secret room and ultra secret room, get curse of darkness.
+    *0:30 to 2:00: +1 damage, -0.5 tears.Display the location of boss room, dispel curse of darkness. 
+    *2:00 to 2:30: +0.5 damage. Display the location of boss room, dispel curse of darkness. 
+    *2:30 to 4:00: +1 tears, -0.5 damage. Display the locations of secret room, super secret room and ultra secret room, get curse of darkness.
+    * Cycles every 4 minutes.
 
 Kiketsu Family's Blackmail
 Description: Obey or die
+Reference: Yachie Kitcho
 Type: Passive Item
 Quality: 2
-Item Pools: Devil Room (1 Heart), Greed Devil Room (1 Heart)
+Item Pools: Devil Room (1 Heart), Greed Devil Room (1 Heart), Devil Beggar
 Tags: Offensive, Summonable
--Enemies inside 3 grids radius get feared.
--Enemies inside 6 grids radius get charmed.
+* Enemies inside 3 grids radius get feared.
+* Enemies inside 6 grids radius get charmed.
+
+Carving Tools
+Description: Haniwa Army
+Reference: Keiki Haniyasushin
+Type: Passive Item
+Quality: 3
+Tags: Offensive, Summonable
+Item Pools: Shop, Treasure Room, Golden Chest, Crane Game, Greed Shop, Greed Treasure Room
+* Spawn a haniwa after destroying a rock, up to a max of 8.
+    * Haniwas will automatically fight enemies.
+    * Difference rocks spawns different haniwas: 
+        * Normal Rocks: Haniwa Soldier, 5 HP, melee, deals 3 damage 2.73 times per second
+        * Tinted Rocks: Haniwa Officer, 10 HP, melee, deals 8 damage 2.73 times per second
+        * Super Special Rocks: Haniwa General, 30 HP, melee, deals 20 damage 2.73 times per second
+        * Bomb Rocks: Kamikaze Haniwa, 1 HP, self-destructs, deals 185 explosion damage
+        * Spiked Rocks: Haniwa Archer, 5 HP, fires piercing tears, deals 5 damage 2.73 times per second
+        * Fool's Gold: Brass Haniwa, 10 HP, extermely fast cuts, deals 1 damage 30 times per second
+        * Pots/ Buckets: Tomb Haniwa, 5 HP, fires poison tears, deals 2 damage 2.73 times per second
+        * Mushrooms: Haniwa Mage, 5 HP, fires burning/ electric/ ice tears, deals 2 damage 2.73 times per second
+        * Skulls: Haniwa Skeleton, 5 HP, fires spliting bones, deals 3 damage 2.73 times per second
+        * Polyps: Flesh Haniwa, 5 HP, fires tears, deals 8 damage 2.73 times per second
+
+Brutal Horseshoe
+Description: Charged Strike
+Reference: Saki Kurokoma
+Type: Passive Item
+Quality: 3
+Tags: Offensive
+Item Pools: Devil Room, Greed Devil Room (2 Hearts), Devil Beggar, Ultra Secret Room
+* Press opposite move keys to charge up. After charged for at least 1 seconds, release one key to dash.
+    * Limit up to 4 seconds.
+    * Can also charge up by pressing left stick on game pad, or do slow movements.
+* Invincible while dashing, causing explosion with damage of (chargeSeconds * 80 + 40) / 3 after hit obstacles, then spawn 4 crackwaves.
+* Deal damage of (( 2 + chargeSeconds) * playerDamage + 8) to hit enemies, and kick off them during dash.
+* Kicked enemies will take additional damage after hit obstacles. They will also deal damages to other enemies they hit.
+    * Amount is (10 + 2 * (currentFloor - 1)).
 
 Hunger
 Description: Desire drives you
+Reference: Yuuma Toutetsu
 Type: Passive Item
 Quality: 2
 Tags: No Cantripped
 Item Pools: Treasure Room, Greed Treasure Room, Ultra Secret Room
--Isaac has Hunger system, with max hunger as 10.
-    -If Hunger is larger than or equals to 9, transform 0.2 Hunger to a half red heart.
-    -If Hunger is larger than or equals to 8, gain +0.2 Speed，x1.2 Damage，+1 Fire Rate。
-    -If Hunger is less than 3, gain -0.5 speed, x0.5 Damage, Fire rate x0.5, and will swallow any trinkets.
-        -If this trinket can provide Hunger, it will disappear.
-    -If Hunger is equals to 0, Isaac take damage of half red heart per 5 seconds.
--Pickup collectibles like foods, Crack Jacks or Red Stew will restore Hunger.
--Use pills will restore 0.5 Hunger.
--Monsters have 3.33% chance to drop food pickups, restores Hunger after picked up.
--Isaac will lose 1 Hunger per 66 seconds while moving.
--Can show Hunger by pressing Drop/Switch Button.
+* Player has Hunger system, with max hunger as 10.
+    * If Hunger is larger than or equals to 9, transform 0.2 Hunger to a half red heart.
+    * If Hunger is larger than or equals to 8, gain +0.2 Speed，x1.2 Damage，+1 Fire Rate。
+    * If Hunger is less than 3, gain -0.5 speed, x0.5 Damage, Fire rate x0.5, and will swallow any trinkets.
+        * If this trinket can provide Hunger, it will disappear.
+    * If Hunger is equals to 0, player take damage of half red heart per 5 seconds.
+* Pickup collectibles like foods, Crack Jacks or Red Stew will restore Hunger.
+* Use pills will restore 0.5 Hunger.
+* Monsters have 3.33% chance to drop food pickups, restores Hunger after picked up.
+* Player will lose 1 Hunger per 40 seconds while moving.
+* Can show Hunger by pressing Drop/Switch Button.
 
 Item Hungers:
 -3: Ipecac
 1: Wafer, Ghost Pepper, Playdough Cookie, Bird's Eye, Rotten Tomato, Dead Onion
 2: Sad Onion, Jesus Juice, Milk!, Apple!, Eucharist, Black bean, Linger Bean, Belly Jelly
-3: Fruit Cake, Food Items, Mushroom Items, Soy Milk, Chocolate Milk, Marrow, Crack Jacks, Candy Heart
+3: Fruit Cake, Food Items, Mushroom Items, Soy Milk, Chocolate Milk, Marrow, Crack Jacks, Candy Heart, Almond Milk, Baked Sweet Potato
 4: Bucket of Lard, Raw Liver, MEAT!, Sausage, Thunder Thigh
 10: Red Stew
 
 Trinket Hungers (can only be eaten when Hunger is less than 3, and these will disappear):
-1: Ice Cube, Locusts, Cricket Leg, Worms, Tick, Louse, Blister, Lil Larva
-2: Walnut, Jaw Breaker, Mysterious Candy, Judas' Tongue, Cain's Eye, The Left Hand, Apple of Sodom, Umbilical Cord, Callus, Daemon's Tail, Pinky Eye, Lucky Toe, Bob's Blobber, Tonsil, Bat Wing, Myosotis, Lil Clot
+1: Ice Cube, Locusts, Cricket Leg, Worms, Tick, Louse, Blister, Lil Larva, Butterfly Wings
+2: Walnut, Jaw Breaker, Mysterious Candy, Judas' Tongue, Cain's Eye, The Left Hand, Apple of Sodom, Umbilical Cord, Callus, Daemon's Tail, Pinky Eye, Lucky Toe, Bob's Blobber, Tonsil, Bat Wing, Myosotis, Lil Clot, Dangos
 3: Butter!, Liberty Cap, Fish Tail, Eve's Bird Foot, Gigante Bean, Monkey Paw, The Twins, Frozen Frog, Fortune Cat Paw
 4: Fish Head, Child's Heart, Crow Heart, Goat Hoof, Isaac's Head, Bag Lunch
 
+
+Sake of Forgotten
+Description: I forgor...
+Type: Passive Item
+Quality: 2
+Tags: Offensive, No Cantripped
+Item Pools: Treasure Room, Shop, Secret Room
+* After player defeat the boss of a floor, spawn a sake bottle. Touch it to restart this floor.
+* New floor has Curse of Labyrinth, Maze and Lost, and player has the Lost's Curse for current floor.
+* Can only spawn sake bottle in odd floors, or chapters which have not second floor. Also will not spawn in new floor after drink.
+
+Gambling D6
+Description: Greater or Less
+Character: Sannyo Komakusa
+Type: Active Item
+Charges: 2
+Quality: 3
+Tags: Offensive
+Item Pools: Treasure Room, Secret Room, Crane Game, Greed Shop, Greed Treasure Room, Greed Secret Room
+* Choose greater or less ID, then reroll all pedestal items in the room.
+* If you failed to guess that the rerolled item's ID is greater or less than the original, the rerolled item disappears.
+* If player has Book of Virtues, Spawn a wisp after guessing right a item.
+    * Consumes a wisp instead of the item disappears after guessing wrong.
+
 Yamawaro's Crate
 Description: Item storage
+Reference: Takane Yamashiro
 Type: Active Item
 Charges: None
 Quality: 2
 Tags: Offensive
-Item Pools: Shop, Greed Shop
--Open the 8-slot backpack, you can put your collectibles and trinkets into it (has no effects), or take them out.
--Can discard items onto the ground.
--Cannot select Yamawaro's Crate.
--If player has Car Battery, add 4 black slots.
--If player has Book of Virtues, add 2 blue slots, and no wisps will be spawned.
-    -Can teleport to the start room at any time using the blue scroll next to the slots.
--If player is Judas and has Birthright, add 2 red slots.
-    -You can use the red scroll next to the slots to reroll items. Can only be used once each room.
--If player no longer meets the conditions of the above additional slot, the items in the corresponding slots will drop.
+Item Pools: Shop, Greed Shop, Wooden Chest
+* Open the 8-slot backpack, you can put your collectibles and trinkets into it (has no effects), or take them out.
+* Can reduce collectibles or trinkets into pickups.
+* Cannot select Yamawaro's Crate.
+* If player has Car Battery, add 4 black slots.
+* If player has Book of Virtues, add 2 blue slots, and no wisps will be spawned.
+    * Can teleport to the start room at any time using the blue scroll next to the slots.
+* If player is Judas and has Birthright, add 2 red slots.
+    * You can use the red scroll next to the slots to reroll items. Can only be used once each room.
+* If player no longer meets the conditions of the above additional slot, the items in the corresponding slots will drop.
+
+Delusion Pipe
+Description: Drowning in delight
+Reference: Sannyo Komakusa
+Type: Active Item
+Charges: 1 second
+Quality: 1
+Tags: Offensive
+Item Pools: Treasure Room, Greed Treasure Room, Devil Beggar
+* +10 Luck, which decays to 0 in 30 seconds.
+* Seeing double on screen.
+   * The more luck up player has, the more severe this will be.
+* If player has Book of Virtues, spawn whirl wisps, their hp is based on player's luck up.
+* If player is Judas and has Birthright, gain additional damage up for the rest of the floor, amount based on max luck up in current floor.
+
+Soul Magatama
+Description: Life swapper
+Reference: Misumaru Tamatsukuri
+Type: Active Item
+Charges: 2
+Quality: 2
+Tags: Offensive
+Item Pools: Angel Room, Greed Angel Room
+* Fire a magatama tear, which swap the enemy's HP and player's red hearts.
+    * Based on their percents, round up.
+* If player has no heart containers, transform the monster into error keeper, or set the HP of the boss into 25%.
+* Cannot reduce boss' HP below its 25%.
+* Eg. The result of swapping between an enemy with 66% hp and a player with 5 heart containers + 1.5 red hearts is: Enemy become 30% hp, player become 3.5 red hearts.
+* If player has Book of Virtues, spawn Magatama wisps, which fire lifestealing tears.
 
 Fox in Tube
 Description: How could I lie to you?
+Reference: Tsukasa Kudamaki
 Type: Passive Item
 Quality: 2
 Tags: Offensive
-Item Pools: Curse Room, Devil Room, Greed Curse Room, Greed Devil Room (1 Heart)
--Provides helps in some situations, and show a fortune text.
--If you accepts her helps, you will pay for this at sometime.
-    -Glass bottles spawn by her can be broken by tears.
+Item Pools: Curse Room, Devil Room, Greed Curse Room, Greed Devil Room (1 Heart), Red Chest
+* Provides helps in some situations, and show a fortune text.
+* If you accepts her helps, you will pay for this at sometime.
+    * Glass bottles spawn by her can be broken by tears.
 
 Daitengu Telescope
 Description: Stars are falling...
+Reference: Megumu Iizunamaru
 Type: Passive Item
 Quality: 2
-Tags: Offensive, Star
-Item Pools: Shop, Golden Chest
--After entering a new floor, have a chance to drop a meteor in a random room and generate a random item from planetarium in the room.
-    -This room can only be normal room or boss room, and cannot be narrow room.
-    -When triggered, it will shake the screen and play an explosion sound. All obstacles and enemies next to the item position are destroyed, with flames and a explosion crater.
--The basic probability is 1%. For each treasure room you have not been to, the probability adds 20%.
--Telescope Lens + 10%, Magic 8 Ball+ 20%, Crystal ball + 30%.
--The probability of treasure room will be cleared after generating the item, but the probability can be increased again.
--When the item pool is empty, generate Tiny Planet.
+Tags: Offensive, Star, No Greed Mode
+Item Pools: Shop, Secret Room, Crane Game
+* After entering a new floor, have a chance to drop a meteor in a random room and generate a random item from planetarium in the room.
+    * This room can only be normal room or boss room, and cannot be narrow room.
+    * When triggered, it will shake the screen and play an explosion sound. All obstacles and enemies next to the item position are destroyed, with flames and a explosion crater.
+* The basic probability is 1%. For each treasure room you have not been to, the probability adds 20%.
+* Telescope Lens + 10%, Magic 8 Ball+ 20%, Crystal ball + 30%.
+* The probability of treasure room will be cleared after generating the item, but the probability can be increased again.
+* When the item pool is empty, generate Tiny Planet.
 
 Exchange ticket
 Description: Each takes what he needs
+Reference: Chimata Tenkyuu
 Type: Active Item
 Charges: 6
 Quality: 3
 Tags: Offensive
 Item Pools: Shop, Greed Shop
--Teleport players to the exchange, including several traders.
-    -After entering again, the content will be refreshed without any remained pickups.
--There are 4 kinds of traders:
-    -Upper left: Exchange the collectibles on the player for emeralds.
-    -Lower left: Exchange emeralds for collectibles in the specified item pool.
-    -Lower right: Use the collectibles sold by the lower left traders in exchange for new collectibles.
-    -Upper right: Use the collectiblessold by the lower right traders to exchange for emeralds.
--If the player has the book of virtues, spawn emerald wisps, which can be used as 1 emerald.
+* Teleport players to the exchange, including several traders.
+    * After entering again, the content will be refreshed without any remained pickups.
+* There are 4 kinds of traders:
+    * Upper left: Exchange the collectibles on the player for emeralds.
+    * Lower left: Exchange emeralds for collectibles in the specified item pool.
+    * Lower right: Use the collectibles sold by the lower left traders in exchange for new collectibles.
+    * Upper right: Use the collectiblessold by the lower right traders to exchange for emeralds.
+* If the player has the book of virtues, spawn emerald wisps, which can be used as 1 emerald.
 
 Curse of Centipede
-Description: MMMMuuuuttttiiiipppplllleeee
+Description: MMMMuuuullllttttiiiipppplllleeee
+Reference: Momoyo Himemushi
 Type: Passive Item
 Quality: 4
 Item Pools: Devil Rooms, Greed Devil Room (2 Hearts), Ultra Secret Room
 Tags: Offsenive
--Turns into Mutant Spider, Belly Button, Polydactyly, Schoolbag and Lucky foot.
--If player is Tainted Isaac, drop items that cannot hold.
+* Turns into Mutant Spider, Belly Button, Polydactyly, Schoolbag and Lucky foot.
+* If player is Tainted Isaac, drop items that cannot hold.
+
+Rebel Mecha Caller
+Description: Start your engine!
+Reference: Mizuchi Miyadeguchi
+Type: Active Item
+Charges: 12
+Quality: 3
+Tags: Offensive
+Item Pools: Devil room, Greed devil room, Ultra Secret Room (2 Hearts), Crane Game
+* After use, summon a mecha from above, smash all surrounding enemies and destroy obstacles.
+* Contact to drive the mecha and provide 3 times of defense.
+* Press the shooting button to fire 15 tears per second. Each tear deals 50% of the player damage.
+* Press the active key to switch flight mode.
+* Press the Bomb button to fire bombs.
+* Press the discard key to leave the mecha.
+* Press the card key to self destruct, dealing 500 damage.
+* The mecha cannot move after death, player has to to withdraw in time. It explode later, dealing 500 damage.
+* If the player has the book of virtues, spawn brown heart wisps, the mecha can consume the wisp instead of HP loss after being hit.
+
+D Siphon
+Description: Disempower
+Reference: Seija Kijin
+Type: Active Item
+Charges: 3
+Quality: 3
+Item Pools: Treasure Room, Secret Room, Crane Game, Greed Shop, Greed Treasure Room, Greed Secret Room
+Tags: offensive
+* Reroll all pedestal items in the room to *-1* quality items.
+* This dice gets *+1* counter for each rerolled item.
+* Reverse the numbers when its counter reaches 4.
+* If player has Book of Virtues, spawn black wisps with high HP, which loses HP for each use
+
 
 Dream Soul
 Description: Wake up
+Reference: Doremy Sweet
 Type: Passive Item
 Quality: 0
 Item Pools: Before Home
@@ -1338,49 +2266,112 @@ Introduction to trinkets:
 
 Frozen Frog
 Description: Ice Touch
+Reference: Cirno
 Type: Trinket
--Instantly freeze any non-boss enemies Isaac touches.
+* Instantly freeze any non-boss enemies player touches.
 
 Aromatic Flower
 Description: Spring Die Twice
+Reference: Lily White
 Type: Trinket
 Effect:
--Revive Isaac at the current room after he dies, if he has no other revive items.
-    -Isaac revives with red hearts of a amount of half of all heart containers.
-        -If Isaac has double trinket effects, Isaac will have full red hearts.
-        -If Isaac has trinket effects that is more than double, Isaac will gain (multiplier - 2) * 2 soul hearts.
-    -Aromatic Flower disappears.
+* Revive player at the current room after he dies, if he has no other revive items.
+    * Player revives with red hearts of a amount of half of all heart containers.
+        * If player has double trinket effects, player will have full red hearts.
+        * If player has trinket effects that is more than double, player will gain (multiplier - 2) * 2 soul hearts.
+    * Aromatic Flower disappears.
 
 Glasses of Knowledge
 Description: All stats up...for each item.
+Reference: Rinnosuke Morichika
 Type: Trinket
--Gain +0.03 Damage, +0.02 Fire Rate, +0.03 Damage, +0.038 Range for each kind of collectibles Isaac has.
+* Gain +0.03 Damage, +0.02 Fire Rate, +0.03 Damage, +0.038 Range for each collectible player has.
+
+How to Read A Book
+Description：The Classic Guide to Intelligent Reading
+Reference: The Youkai Who Read a Book
+Type: Trinket
+* Increase chance for book collectibles.
 
 Corroded Doll
 Description: Dont't touch it!
+Reference: Medicine Melancholy
 Type: Trinket
--Isaac leaves green creep behind per 7 frames, dealing 20% of player damage per frame.
--If Isaac has multiple trinket effects, creep damage up.
+* Player leaves green creep behind per 7 frames, dealing 20% of player damage per frame.
+* If player has multiple trinket effects, creep damage up.
 
-Lion Statue
-Description: Guardian Beast
+Ghost Anchor
+Description: Stand your ground
+Reference: Minamitu Murasa
 Type: Trinket
--Spawn an extra angel statue in rooms that contains angel statues.
--If Isaac has multiple trinket effects, Spawn more statues, at the most of 4.
-
-Fortune Cat Paw
-Description: Business is booming
-Type: Trinket
--Has 25% chance to drop temporary coins after a monster died.
--Bosses will always drop 5 random temporary coins.
--If Isaac has multiple trinket effects, spawn more coins if the monster drops.
+* +0.3 Speed.
+* Player's movement has no inertia, and will move strictly towards the input.
+* Player is no longer affected by water currents.
 
 Merman Shell
 Description: Aqua Affinity
+Reference: Wakasagihime
 Type: Trinket
 Tags: No Greed Mode
--Gain +2 Damage, +1 Firerate, +0.15 Speed in flooded rooms.
--After a new level, flood (20% * trinketMultiplier) rooms of current level.
+* Gain +2 Damage, +1 Firerate, +0.15 Speed in flooded rooms.
+* After a new level, flood (20% * trinketMultiplier) rooms of current level.
+
+Dangos
+Description: Tasty!
+Reference: Ringo
+Type: Trinket
+* No effects when holding.
+* Gain these stats when gulped:
+    +0.5 tears.
+    +1 damage.
+    +1.5 range.
+    +0.2 shot speed.
+    +1 luck.
+* If trinket multiplier is more than 1, also gain these stats when holding, count is (multiplier-1).
+
+Butterfly Wings
+Description: Dream is the reality, reality is a dream
+Reference: Eternity Larva
+Type: Trinket
+* After you clear a room, gain flight.
+* After you clear the second room, lose flight.
+* Multiple trinket effects will keep player flying.
+
+Lion Statue
+Description: A pair of divine beasts
+Reference: Aunn Komano
+Type: Trinket
+* Spawn an extra angel statue in rooms that contains angel statues.
+* If player has multiple trinket effects, Spawn more statues, at the most of 4.
+
+Bundled Statue
+Description: High Gravity
+Reference: Ushizaki Urumi
+Type: Trinket
+* -0.15 Speed.
+* All enemy projectiles fall faster.
+
+Shield of Loyalty
+Description: We are your shield
+Reference: Mayumi Joutougu
+Type: Trinket
+* All familiars can block enemy projectiles.
+* Blue flies and spiders will be killed after blocking.
+
+Sword of Loyalty
+Description: I swear my loyalty to you!
+Reference: Mayumi Joutougu
+Type: Trinket
+* All familiars can deal 15 additional contact damage per second.
+* Can be doubled by BFFS! .
+
+Fortune Cat Paw
+Description: Business is booming
+Reference: Mike Goutokuji
+Type: Trinket
+* Has 25% chance to drop temporary coins after a monster died.
+* Bosses will always drop 3 random temporary coins.
+* If player has multiple trinket effects, spawn more coins if the monster drops.
 
 Introduction to transformations: 
 
@@ -1393,14 +2384,17 @@ Including Items:
     Illusionary Keyboard
     DELETED ERHU
     Song of Nightbird
+    Mountain Ear
+    Thunder Drum
 Effect:
--Isaac's tears become Pupula Duplex tears, and is spectral and piercing.
+* +1 tears.
+* Player's tears become Pupula Duplex tears, and are spectral and piercing.
 
 
 Introduction to challenges:
 
 Heavy Debt
-Character: Tainted Keeper
+Reference: Tainted Keeper
 Starting Items: Deep Pockets, Moms' IOU
 Starting Trinkets: Silver Dollar (Swallowed)
 End: Mom's Heart/It lives!
@@ -1408,7 +2402,7 @@ Room Filter: None
 Curse Filter: No Curse of Labyrinth
 
 Shadow Die Twice
-Character: Tainted Judas
+Reference: Tainted Judas
 Starting Items: Roukanken, 4.5 Volt, Judas' Shadow, The Battery
 Starting Trinkets: Aromatic Flower, Old Capacitor(Swallowed)
 Pocket Items: Psycho Knife
@@ -1416,15 +2410,15 @@ End: The Lamb
 Room Filter: No Treasure Rooms or Shops
 
 Steam Age
-Character: Cain
+Reference: Cain
 Staring Items: Deep Pockets
 Pocket Items: Tengu Cellphone
 End: ？？？
 Curse Filter: No Curse of Blind
 Special:
--All collectibles become A Quarter.
-    -Except collectibles in Tengu Cellphone.
--All items that require coins become batteries.
+* All collectibles become A Quarter.
+    * Except collectibles in Tengu Cellphone.
+* All items that require coins become batteries.
 
 
 Boss List:

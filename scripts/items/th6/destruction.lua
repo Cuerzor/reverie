@@ -1,4 +1,4 @@
-local Explosion = CuerLib.Explosion;
+
 
 local Destruction = ModItem("Destruction", "Destruction");
 Destruction.rng = RNG();
@@ -170,13 +170,6 @@ end
 
 function Destruction:onFamiliarKilled(familiar)
     if (familiar.Variant == FamiliarVariant.WISP and familiar.SubType == Destruction.Item) then
-        -- local params = Explosion.ExplosionParams();
-        -- params.Damage = 20;
-        -- params.PlayerDamage = 0;
-        -- params.Scale = 0.75;
-        -- params.Sound = SoundEffect.SOUND_EXPLOSION_WEAK;
-        -- params.Spawner = familiar;
-        -- Explosion.CustomExplode(familiar.Position, params)
         THI.Game:BombExplosionEffects (familiar.Position, 20, TearFlags.TEAR_NORMAL, WispExplosionColor, familiar.Player, 0.5, true, false, DamageFlag.DAMAGE_EXPLOSION )
     end
 end

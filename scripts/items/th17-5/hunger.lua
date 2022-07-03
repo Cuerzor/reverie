@@ -3,13 +3,7 @@ local Screen = CuerLib.Screen;
 local Detection = CuerLib.Detection;
 
 local Hunger = ModItem("Hunger", "Hunger");
-local FoodPickup = ModEntity("Cheese Food", "Food");
 
-local FoodSubType = {
-    CHEESE = 1,
-    BREAD = 2,
-    STEAK = 3
-}
 local itemConfig = Isaac.GetItemConfig();
 
 local CollectibleHungers = {
@@ -32,6 +26,7 @@ local CollectibleHungers = {
     [CollectibleType.COLLECTIBLE_JELLY_BELLY] = 2,
 
     [CollectibleType.COLLECTIBLE_FRUIT_CAKE] = 3,
+    [CollectibleType.COLLECTIBLE_ALMOND_MILK] = 3,
     [CollectibleType.COLLECTIBLE_SOY_MILK] = 3,
     [CollectibleType.COLLECTIBLE_CHOCOLATE_MILK] = 3,
     [CollectibleType.COLLECTIBLE_MARROW] = 3,
@@ -117,7 +112,7 @@ local TrinketHungers = {
 }
 
 local maxHunger = 1000;
-local hungerCostPerFrame = 0.05;
+local hungerCostPerFrame = 0.0833333;
 local RegenerationThresold = 900;
 local RegenerationCost = 20;
 local maxRegenDelay = 20;
@@ -135,7 +130,7 @@ local HungerFont = THI.Fonts.PFTempesta7;
 
 
 local HungerIcon = Sprite();
-HungerIcon:Load("gfx/ui/hunger.anm2", true);
+HungerIcon:Load("gfx/reverie/ui/hunger.anm2", true);
 
 local HungryStats = {
     NORMAL = 0,
@@ -143,12 +138,19 @@ local HungryStats = {
     HUNGRY = 2
 }
 
+function Hunger:SetCollectibleHunger(item, hunger)
+    CollectibleHungers[item] = hunger;
+end
+function Hunger:SetTrinketHunger(trinket, hunger)
+    TrinketHungers[trinket] = hunger;
+end
+
 function Hunger.GetPlayerTempData(player, init)
     local data = player:GetData();
     if (init) then
         if (not data._THI_HUNGER) then
             local iconSprite = Sprite();
-            iconSprite:Load("gfx/ui/hunger.anm2", true);
+            iconSprite:Load("gfx/reverie/ui/hunger.anm2", true);
             data._THI_HUNGER = {
                 Added = {
                     Value = 0,
@@ -189,7 +191,7 @@ function Hunger.GetFontColor(hunger)
     return KColor(1,1,1,1);
 end
 
-function Hunger.Feed(player, hunger)
+function Hunger:Feed(player, hunger)
     local data = Hunger.GetPlayerData(player, true);
     local tempData = Hunger.GetPlayerTempData(player, true);
     local beforeHunger = data.Hunger
@@ -221,7 +223,7 @@ function Hunger.SwallowTrinket(player)
         end
     end
     if (canEat) then
-        Hunger.Feed(player, feed);
+        Hunger:Feed(player, feed);
         player:TryRemoveTrinket(eatTrinket);
         player:AnimateTrinket (eatTrinket, "UseItem", "PlayerPickup" );
     else
@@ -382,7 +384,7 @@ Hunger:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Hunger.OnEvaluateCahce);
 function Hunger:PostUsePill(effect, player, flags)
     if (flags & UseFlag.USE_MIMIC <= 0) then
         if (player:HasCollectible(Hunger.Item)) then
-            Hunger.Feed(player, 0.5);
+            Hunger:Feed(player, 0.5);
         end
     end
 end
@@ -394,25 +396,25 @@ function Hunger:PostGainCollectible(player, item, count, touched)
         if (player:HasCollectible(Hunger.Item)) then
             local hunger = CollectibleHungers[item];
             if (hunger) then
-                Hunger.Feed(player, hunger * count);
+                Hunger:Feed(player, hunger * count);
             else
                 local c = itemConfig:GetCollectible(item);
                 if (c) then
                     if (c:HasTags(ItemConfig.TAG_MUSHROOM | ItemConfig.TAG_FOOD)) then
-                        Hunger.Feed(player, 3 * count);
+                        Hunger:Feed(player, 3 * count);
                     end
                 end
             end
         end
     end
 end
-Hunger:AddCustomCallback(CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, Hunger.PostGainCollectible);
+Hunger:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, Hunger.PostGainCollectible);
 
 function Hunger:PostNPCDeath(npc)
     
-    if (THI.IsLunatic()) then
-        return;
-    end
+    -- if (THI.IsLunatic()) then
+    --     return;
+    -- end
 
 
     local game = THI.Game;
@@ -429,14 +431,14 @@ function Hunger:PostNPCDeath(npc)
         if (chance < 1) then
             local room = THI.Game:GetRoom();
             local pos = room:FindFreePickupSpawnPosition (npc.Position, 0, true);
+            local FoodPickup = THI.Pickups.FoodPickup;
             Isaac.Spawn(FoodPickup.Type, FoodPickup.Variant, 0, pos, Vector.Zero, npc);
         end
     end
 end
 Hunger:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, Hunger.PostNPCDeath);
 
-local renderPosOffset = Vector(0, -72);
-local renderOffset = Vector(-4, 0);
+local renderOffset = Vector(-4, -52);
 function Hunger:PostPlayerRender(player, offset)
     local game = THI.Game;
     -- Render Hunger.
@@ -451,7 +453,7 @@ function Hunger:PostPlayerRender(player, offset)
                 if (alpha > 0) then
                     local hunger = data.Hunger;
 
-                    local renderPos = Screen.GetEntityOffsetedRenderPosition(player, offset, renderPosOffset) + renderOffset;
+                    local renderPos = Screen.GetEntityOffsetedRenderPosition(player, offset) + renderOffset;
                     local str = string.format("%.2f", hunger / displayUnit);
                     local color = Hunger.GetFontColor(hunger);
                     color.Alpha = alpha;
@@ -507,88 +509,6 @@ function Hunger:ExecuteCommand(cmd, parameters)
     end
 end
 Hunger:AddCallback(ModCallbacks.MC_EXECUTE_CMD, Hunger.ExecuteCommand);
-
-----------------
--- Foods
-----------------
-function FoodPickup.GetFeedHunger(pickup)
-    if (pickup.SubType == FoodSubType.CHEESE) then
-        return 0.5;
-    elseif (pickup.SubType == FoodSubType.BREAD) then
-        return 1;
-    elseif (pickup.SubType == FoodSubType.STEAK) then
-        return 2;
-    end
-    return 0;
-end
-
-function FoodPickup:PostPickupUpdate(pickup)
-    if (pickup.SubType == 0) then
-        local chance = pickup.DropSeed % 6;
-        local type = pickup.Type;
-        local variant = pickup.Variant;
-        local subType = FoodSubType.CHEESE;
-        if (chance >= 5) then
-            subType = FoodSubType.STEAK;
-        elseif(chance >= 3) then
-            subType = FoodSubType.BREAD;
-        end
-        pickup:Morph (type, variant, subType, false, true, true );
-        return;
-    end
-end
-FoodPickup:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, FoodPickup.PostPickupUpdate, FoodPickup.Variant);
-
-
-
-local pickupEffect = THI.Effects.PickupEffect;
-function FoodPickup:PostEffectUpdate(effect)
-    if (effect:GetSprite():IsFinished("Collect")) then
-        effect:Remove();
-    end
-end
-FoodPickup:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, FoodPickup.PostEffectUpdate, pickupEffect.Variant);
-
--- function FoodPickup:PrePlayerCollision(player, other, low)
---     print("Collision")
---     if (other.Type == EntityType.ENTITY_PICKUP) then
---         local pickup = other:ToPickup();
---         if (pickup.Variant == FoodPickup.Variant) then
---             if (player:HasCollectible(Hunger.Item)) then
---                 if (pickup.State == 0) then
---                     local feed = FoodPickup.GetFeedHunger(pickup);
---                     Hunger.Feed(player, feed);
---                     pickup.State = 1;
---                     pickup:GetSprite():Play("Collect");
---                     return true;
---                 end
---             end
---         end
---     end
--- end
--- FoodPickup:AddCustomCallback(CLCallbacks.CLC_PRE_PLAYER_COLLISION, FoodPickup.PrePlayerCollision);
-
-function FoodPickup:PrePickupCollision(pickup, other, low)
-    if (other.Type == EntityType.ENTITY_PLAYER) then
-        local player = other:ToPlayer();
-        if (player:HasCollectible(Hunger.Item)) then
-            local feed = FoodPickup.GetFeedHunger(pickup);
-            Hunger.Feed(player, feed);
-
-
-            local pickupEffect = THI.Effects.PickupEffect;
-            local effect = Isaac.Spawn(pickupEffect.Type, pickupEffect.Variant, 0, pickup.Position, Vector.Zero, pickup);
-            local spr = effect:GetSprite();
-            spr:Load(pickup:GetSprite():GetFilename(), true)
-            spr:Play("Collect");
-
-            
-            pickup:Remove();
-            return true;
-        end
-    end
-end
-FoodPickup:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, FoodPickup.PrePickupCollision, FoodPickup.Variant);
 
 
 return Hunger;

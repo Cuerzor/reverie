@@ -1,6 +1,6 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 local Callbacks = Lib.Callbacks;
-local Damages = {};
+local Damages = Lib:NewClass();
 
 function Damages:PreEntityTakeDamage(entity, amount, flags, source, countdown)
     for i, info in pairs(Callbacks.Functions.PreEntityTakeDamage) do
@@ -19,6 +19,7 @@ function Damages:PreEntityTakeDamage(entity, amount, flags, source, countdown)
         end
     end
 end
+Damages:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, Damages.PreEntityTakeDamage);
 
 function Damages.IsSelfDamage(entity, flags, source)
     local ivBag = flags & (DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_IV_BAG | DamageFlag.DAMAGE_INVINCIBLE) > 0;
@@ -41,9 +42,4 @@ function Damages.IsSelfDamage(entity, flags, source)
     end
     return false;
 end
-
-function Damages:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, Damages.PreEntityTakeDamage);
-end
-
 return Damages;

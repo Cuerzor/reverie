@@ -25,10 +25,15 @@ local function PostRevive(player, reviver)
     player:AddHearts(targetHealth - currentHeart);
 end
 
-local function CanRevive(player)
-    return player:HasTrinket(AromaticFlower.Trinket);
+local function PreRevive(mod, player)
+    if (player:HasTrinket(AromaticFlower.Trinket)) then
+        return {
+            Callback = PostRevive
+        }
+    end
 end
 
-Revive.AddReviveInfo(false, nil, nil, CanRevive, PostRevive)
---AromaticFlower:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, AromaticFlower.onPlayerUpdate);
+AromaticFlower:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, PreRevive);
+
+--Revive.AddReviveInfo(false, nil, nil, CanRevive, PostRevive)
 return AromaticFlower;

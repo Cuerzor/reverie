@@ -3,8 +3,16 @@ local Detection = CuerLib.Detection;
 local Bosses = CuerLib.Bosses;
 local Revive = CuerLib.Revive;
 local Grids = CuerLib.Grids;
+local Players = CuerLib.Players;
+
 
 local Devilcrow = ModEntity("Devilcrow", "DEVILCROW");
+
+
+local GatlingParams = ProjectileParams();
+GatlingParams.Color = Color(1,0.5,0,1,0.5,0.25,0);
+GatlingParams.Variant = ProjectileVariant.PROJECTILE_ROCK;
+GatlingParams.Scale = 0.01;
 
 Devilcrow.Variants = {
     DEVILCROW = Isaac.GetEntityVariantByName("Devilcrow"),
@@ -30,7 +38,7 @@ local GreenColor = Color(1,1,1,1,0,0,0);
 GreenColor:SetColorize(0,1,0,1);
 local maxRadiation = 150;
 local RadiationSprite = Sprite();
-RadiationSprite:Load("gfx/ui/radiation_warning.anm2", true);
+RadiationSprite:Load("gfx/reverie/ui/radiation_warning.anm2", true);
 RadiationSprite:Play("Idle");
 RadiationSprite.Scale = Vector.One * 0.5;
 
@@ -159,11 +167,11 @@ do
         },
         Type = Devilcrow.Type,
         Variant = Devilcrow.Variant,
-        PortraitPath = "gfx/ui/boss/portrait_586.0_devilcrow.png",
+        PortraitPath = "gfx/reverie/ui/boss/portrait_586.0_devilcrow.png",
         PortraitOffset = Vector(0, -20),
         NamePaths = {
-            en = "gfx/ui/boss/bossname_586.0_devilcrow.png",
-            zh = "gfx/ui/boss/bossname_586.0_devilcrow_zh.png"
+            en = "gfx/reverie/ui/boss/bossname_586.0_devilcrow.png",
+            zh = "gfx/reverie/ui/boss/bossname_586.0_devilcrow_zh.png"
         }
     }
     Bosses:SetBossConfig("reverie:devilcrow", bossConfig, roomConfigs);
@@ -188,7 +196,7 @@ do
         -- Up.
         if (rocket.SubType == 0) then
             local timeout = rocket.Timeout;
-            rocket.PositionOffset = Vector(0, (30 - timeout) * -100);
+            rocket.PositionOffset = Vector(0, (60 - timeout) * -100);
             if (timeout == 0) then
                 rocket:Remove();
             end
@@ -341,11 +349,13 @@ local function DevilcrowUpdate(devilcrow)
             return angle <= angleDegrees;
         end
         
-        if (spr:IsPlaying("Idle")) then
+        if (not devilcrow:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and spr:IsPlaying("Idle")) then
             data.LightColor.A = math.min(0.5, data.LightColor.A + 0.03);
             if (data.LightColor.A >= 0.49) then
                 for p, player in Detection.PlayerPairs() do
-                    if (not player:IsDead() and isInRange(devilcrow, player)) then
+                    local Rebecha = THI.Monsters.Rebecha;
+                    local defended = Rebecha:GetPlayerMecha(player) ~= nil;
+                    if (not player:IsCoopGhost ( ) and not Players:IsDead(player) and isInRange(devilcrow, player) and not defended) then
                         local playerData = Devilcrow.GetPlayerData(player, true);
                         playerData.Radiated = true;
                     end
@@ -397,8 +407,7 @@ local function DevilcrowUpdate(devilcrow)
             local Wave = THI.Effects.SpellCardWave;
             THI.SFXManager:Play(SoundEffect.SOUND_FRAIL_CHARGE);
             local wavePos, depthOffset = GetEyePos(left);
-            local wave = Isaac.Spawn(Wave.Type,  Wave.Variant, 0, wavePos, Vector.Zero, nil);
-            wave:GetSprite():Play("Shrink");
+            local wave = Isaac.Spawn(Wave.Type,  Wave.Variant, Wave.SubTypes.SHRINK, wavePos, Vector.Zero, nil);
             wave:SetColor(Color(1,0,0,0.5,0,0,0), -1, 0);
             wave.DepthOffset = depthOffset;
         end
@@ -413,18 +422,18 @@ local function DevilcrowUpdate(devilcrow)
 
             if (laserData.Timer > 0) then
                 laserData.Timer = laserData.Timer - 1;
-                if (laserData.Timer == 20) then
+                if (laserData.Timer == 30) then
                     ChargeBrimstone(left);
                 end
-                if (laserData.Timer == 10) then
+                if (laserData.Timer == 15) then
                     laserData.Target = target.Position;
                 end
             else
                 shootEyeLaser(left, laserData.Target);
                 if (left) then
-                    laserData.Timer = 250;
+                    laserData.Timer = 450;
                 else
-                    laserData.Timer = 250;
+                    laserData.Timer = 450;
                 end
             end
         end
@@ -474,15 +483,15 @@ local function DevilcrowUpdate(devilcrow)
             local rocket = Isaac.Spawn(1000, Rocket.Variant, 1, position, Vector.Zero, devilcrow):ToEffect();
             local scale = Vector(2, 2);
             target.SpriteScale = scale;
-            target:SetTimeout(40);
+            target:SetTimeout(70);
 
             rocket:SetColor(Color(1, 1, 1, 0, 0, 0, 0), 1, 0, false, true);
             rocket.SpriteScale = scale;
             rocket.Parent = target;
-            rocket:SetTimeout(40);
+            rocket:SetTimeout(70);
 
             rocketUp.SpriteScale = scale;
-            rocketUp:SetTimeout(30);
+            rocketUp:SetTimeout(60);
             THI.SFXManager:Play(SoundEffect.SOUND_ROCKET_LAUNCH);
         end
         local function spawnBucket(left)
@@ -613,10 +622,17 @@ local function DevilcrowUpdate(devilcrow)
         
                                 pos = pos + Vector(20, 0) :Rotated(currentAngle);
                                 local vel = Vector.FromAngle(currentAngle) * 30;
-                                local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_ROCK, 0, pos, vel, devilcrow):ToProjectile();
-                                proj:SetColor(Color(1,0.5,0,1,0.5,0.25,0), -1, 0);
-                                proj.DepthOffset = depthOffset;
-                                proj.Scale = 0.01;
+
+                                GatlingParams.DepthOffset = depthOffset;
+                                devilcrow:FireProjectiles (pos, vel, 0, GatlingParams)
+                                GatlingParams.DepthOffset = 0;
+
+                                -- local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_ROCK, 0, pos, vel, devilcrow):ToProjectile();
+                                -- proj:SetColor(Color(1,0.5,0,1,0.5,0.25,0), -1, 0);
+                                -- proj.DepthOffset = depthOffset;
+                                -- proj.Scale = 0.01;
+
+
                                 local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BOMB_EXPLOSION, 0, pos, Vector.Zero, devilcrow);
                                 effect.SpriteRotation = currentAngle + 90;
                                 effect.SpriteScale = Vector(0.3, 0.3);
@@ -677,7 +693,7 @@ function Devilcrow:PostPlayerEffect(player)
     if (playerData) then
         local radiation = playerData.NuclearRadiation;
         local radiated = playerData.Radiated;
-        local alive = not player:IsDead() and not Revive.IsReviving(player);
+        local alive = not Players:IsDead(player);
         if (radiated) then
             if (alive)then
                 radiation = math.min(maxRadiation, radiation + 1);
@@ -921,10 +937,25 @@ local function TryTransferPlayers()
     if (hasDevilcrow) then
         local center = Game():GetRoom():GetCenterPos();
         for p, player in Detection.PlayerPairs(true, true) do
-            player.Position = center + Vector(0, 160);
+            local pos = center + Vector(0, 160);
+            for _, ent in ipairs(Isaac.FindByType(3)) do
+                if (ent.Position:Distance(player.Position) < 40) then
+                    ent.Position = pos;
+                end
+            end
+            player.Position = pos;
+            
         end
     end
 end
+
+local function PreNPCCollision(mod, npc, other, low)
+    -- 防止BOSS立刻击杀迷失游魂跟班。
+    if (Game():GetRoom():GetFrameCount() < 1) then
+        return true;
+    end
+end
+Devilcrow:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PreNPCCollision);
 
 function Devilcrow:PostNewRoom()
     TryTransferPlayers()

@@ -36,16 +36,16 @@ function Illusion.TryFireTears(illusion, shootingInput)
     end
 end
 
-
-function Illusion:postIllusionUpdate(illusion)
-    local player = illusion.Player;
-    if (player) then
+function Illusion:GetTargetPosition(familiar)
+    local player = familiar.Player;
+    local data = Illusion.GetIllusionData(familiar, false);
+    if (data and player) then
+        
         local shootingInput = Inputs.GetRawShootingVector(player);
-        local data = Illusion.GetIllusionData(illusion, true);
         local angle = 0;
         local shootAngle = 90;
         if (shootingInput:Length() > 0.1 and player:IsExtraAnimationFinished()) then
-            Illusion.TryFireTears(illusion, shootingInput);
+            Illusion.TryFireTears(familiar, shootingInput);
             shootAngle = shootingInput:GetAngleDegrees();
         end
         if (data.Count > 0) then
@@ -61,9 +61,28 @@ function Illusion:postIllusionUpdate(illusion)
         end
         local targetAngle = (currentAngle + angleDiff / 6) % 360;
         local targetPos = player.Position + Vector.FromAngle(targetAngle) * 80;
-        illusion.Velocity = targetPos - illusion.Position;
-        data.Angle = targetAngle;
+        return targetPos, targetAngle;
+    end
+    return familiar.Position, 0;
+end
 
+function Illusion:postIllusionUpdate(illusion)
+    local player = illusion.Player;
+    if (player) then
+
+        -- Move.
+        if (Game():GetRoom():GetFrameCount() > 0) then
+            
+            local data = Illusion.GetIllusionData(illusion, true);
+            local targetPos, targetAngle = Illusion:GetTargetPosition(illusion);
+            illusion.Velocity = targetPos - illusion.Position;
+            data.Angle = targetAngle;
+        else
+            illusion.Velocity = Vector.Zero;
+        end
+
+
+        -- Play Anim.
         local moveDir = player:GetMovementDirection();
         
         local anim = "FaceDown";
@@ -84,6 +103,13 @@ function Illusion:postIllusionUpdate(illusion)
     end
 end
 Illusion:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, Illusion.postIllusionUpdate, Illusion.Variant);
+
+local function PostNewRoom(mod)
+    for i, ent in pairs(Isaac.FindByType(Illusion.Type, Illusion.Variant)) do
+        ent.Position = Illusion:GetTargetPosition(ent:ToFamiliar());
+    end
+end
+Illusion:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom);
 
 
 return Illusion;

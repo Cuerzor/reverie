@@ -68,7 +68,7 @@ function JeweledBranch:PostPlayerUpdate(player)
                         local nearest = nil;
                         local pos = currentBullet.Position;
                         for _, ent in pairs(Isaac.FindInRadius(pos, 320, EntityPartition.ENEMY)) do
-                            if (ent:IsVulnerableEnemy()) then
+                            if (ent:IsVulnerableEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
                                 if (not nearest or ent.Position:Distance(pos) < nearest.Position:Distance(pos)) then
                                     nearest = ent;
                                 end

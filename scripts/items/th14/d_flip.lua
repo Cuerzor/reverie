@@ -3,7 +3,7 @@ local CompareEntity = CuerLib.Detection.CompareEntity;
 local Actives = CuerLib.Actives;
 local DFlip = ModItem("D Flip", "DFLIP");
 
-local config = Isaac.GetItemConfig();
+local itemConfig = Isaac.GetItemConfig();
 DFlip.FixedPairs = {
     --Sad Onion - Dead Onion
     {{5,100,CollectibleType.COLLECTIBLE_SAD_ONION}, {5,100,CollectibleType.COLLECTIBLE_DEAD_ONION}},
@@ -39,6 +39,8 @@ DFlip.FixedPairs = {
     {{5,350,TrinketType.TRINKET_BLESSED_PENNY}, {5,350,TrinketType.TRINKET_CURSED_PENNY}},
     --20/20 - Broken Glasses
     {{5,100,CollectibleType.COLLECTIBLE_20_20}, {5,350,TrinketType.TRINKET_BROKEN_GLASSES}},
+    --Starter Deck - Little Baggy
+    {{5,100,CollectibleType.COLLECTIBLE_STARTER_DECK}, {5,100,CollectibleType.COLLECTIBLE_LITTLE_BAGGY}},
     --Lump of Coal - Proptosis
     {{5,100,CollectibleType.COLLECTIBLE_LUMP_OF_COAL}, {5,100,CollectibleType.COLLECTIBLE_PROPTOSIS}},
     --Lump of Coal - Proptosis
@@ -166,9 +168,9 @@ DFlip.FixedPairs = {
 
 }
 
-function DFlip.AddFixedPair(type1, variant1, subType1, type2, variant2, subType2)
+function DFlip:AddFixedPair(type1, variant1, subType1, type2, variant2, subType2)
     local pair = {{type1, variant1, subType1}, {type2, variant2, subType2}};
-    table.insert(DFlip.FixedPairs, pair);
+    table.insert(self.FixedPairs, pair);
 end
 
 local function GetNotFixedCollectibles()
@@ -191,44 +193,137 @@ local function GetNotFixedCollectibles()
         end
     end
     local greed = THI.Game:IsGreedMode();
-    local function condition(id)
-        local conf = config:GetCollectible(id);
+    local function condition(conf)
         if (not conf or conf:HasTags(ItemConfig.TAG_QUEST) or conf.Hidden) then
             return false;
         end
         if (greed and conf:HasTags(ItemConfig.TAG_NO_GREED)) then
             return false;
         end
-        if (fixed[id]) then
+        if (fixed[conf.ID]) then
             return false;
         end
         return true;
     end
-    return Collectibles.FindCollectibles(condition);
+
+
+    
+    local qualityGroups = {};
+    local itemCount = 0;
+    local maxCollectible = itemConfig:GetCollectibles().Size;
+    for i = 1, maxCollectible do
+        local config = itemConfig:GetCollectible(i);
+        if (config and condition(config)) then
+            local quality = config.Quality;
+            quality = math.min(4, math.max(0, quality));
+            if (not qualityGroups[quality]) then
+                qualityGroups[quality] = {};
+            end
+            table.insert(qualityGroups[quality], i);
+            itemCount = itemCount + 1;
+        end
+    end
+    return qualityGroups, itemCount;
+    --return Collectibles.FindCollectibles(condition);
 end
 function DFlip.GetPairs(seed)
-    local notFixed = GetNotFixedCollectibles();
+    local pools, itemCount = GetNotFixedCollectibles();
+    
+
     local rng = RNG();
     rng:SetSeed(seed, 0);
     local result = {};
-    while (#notFixed > 1) do
-        local index1 = rng:RandomInt(#notFixed) + 1;
-        local item1 = notFixed[index1];
-        table.remove(notFixed, index1);
-        local index2 = rng:RandomInt(#notFixed) + 1;
-        local item2 = notFixed[index2];
-        table.remove(notFixed, index2);
+    local lowerQuality = 0;
+    local upperQuality = 4;
 
-        local pair = {{5, 100, item1}, {5, 100, item2}};
-        table.insert(result, pair);
+    local function FindOtherItem(item, quality)
+        local targetQuality = 4 - quality;
+
+        local qualityPool = pools[targetQuality];
+        local searchTimes = 0;
+        while (not qualityPool or #qualityPool <= 0) do
+            searchTimes = searchTimes + 1;
+            local dis = math.ceil(searchTimes / 2);
+            local dir = searchTimes % 2 * 2 - 1;
+            local q = targetQuality + dis * dir;
+            if (q >= 0 and q <= 4) then
+                qualityPool = pools[q];
+            end
+            if (searchTimes > 10) then
+                return nil;
+            end
+        end
+
+        local index2 = rng:RandomInt(#qualityPool) + 1;
+        local item2 = qualityPool[index2];
+        table.remove(qualityPool, index2);
+        itemCount = itemCount - 1;
+        return item2;
     end
 
-    if (#notFixed == 1) then
-        local item = notFixed[1];
-        table.remove(notFixed, 1);
-        local pair = {{5, 100, item}, {5, 100, item}};
-        table.insert(result, pair);
+
+    local isUpper = false;
+    while (itemCount > 1) do
+        local q = lowerQuality
+        if (isUpper) then
+            q = upperQuality;
+        end
+        local qualityPool = pools[q];
+        if (#qualityPool <= 0) then
+            if (isUpper) then
+                upperQuality = q - 1;
+            else
+                lowerQuality = q + 1;
+            end
+        else
+            local index1 = rng:RandomInt(#qualityPool) + 1;
+            local item1 = qualityPool[index1];
+            table.remove(qualityPool, index1);
+            itemCount = itemCount - 1;
+    
+            local item2 = FindOtherItem(item1, q);
+    
+            local pair = {{5, 100, item1}, {5, 100, item2}};
+            table.insert(result, pair);
+        end
+        isUpper = not isUpper;
+
+        if (upperQuality < lowerQuality) then
+            break;
+        end
     end
+
+    if (itemCount == 1) then
+        for q, pool in pairs(pools) do
+            if (#pool > 0) then
+                local item = pool[1];
+                table.remove(pool, 1);
+                itemCount = itemCount - 1;
+                local pair = {{5, 100, item}, {5, 100, item}};
+                table.insert(result, pair);
+                break;
+            end
+        end
+    end
+
+    for index, pair in ipairs(result) do
+        local id1 = pair[1][3];
+        local config1 = itemConfig:GetCollectible(id1);
+        local name1 = config1.Name;
+        local quality1 = config1.Quality;
+        local id2 = pair[2][3];
+        local config2 = itemConfig:GetCollectible(id2);
+        local name2 = config2.Name;
+        local quality2 = config2.Quality;
+
+
+        local str= "Pair: ["..id1.."-"..name1.."("..quality1..") : "..id2.."-"..name2.."("..quality2..")]";
+        if (quality1 + quality2 ~= 4) then
+            str = str.."NOT COMPLETELY OPPOSITE"
+        end
+        Isaac.DebugString(str)
+    end
+
     return result;
 end
 
@@ -239,9 +334,9 @@ if (THI.Game:GetFrameCount() > 0) then
     DFlip.Pairs = DFlip.GetPairs(seeds:GetStartSeed());
 end
 
-
-function DFlip.GetAnother(type, variant, subtype)
-    for _, pair in pairs(DFlip.FixedPairs) do
+function DFlip:GetFixedAnother(type, variant, subtype)
+    
+    for _, pair in pairs(self.FixedPairs) do
         local item1 = pair[1];
         local item2 = pair[2];
         if (item1[1] == type and item1[2] == variant and item1[3] == subtype) then
@@ -251,7 +346,15 @@ function DFlip.GetAnother(type, variant, subtype)
             return item1;
         end
     end
-    for _, pair in pairs(DFlip.Pairs) do
+    return nil;
+end
+
+function DFlip:GetAnother(type, variant, subtype)
+    local fixed = self:GetFixedAnother(type, variant, subtype);
+    if (fixed) then
+        return fixed;
+    end
+    for _, pair in pairs(self.Pairs) do
         local item1 = pair[1];
         local item2 = pair[2];
         if (item1[1] == type and item1[2] == variant and item1[3] == subtype) then
@@ -266,6 +369,9 @@ end
 
 
 local function UseDFlip(mod, item, rng, player, flags, slot, vardata)
+    if (flags & UseFlag.USE_CARBATTERY > 0) then
+        return {ShowAnim = false, Discharge = false;}
+    end
     for _, ent in pairs(Isaac.FindByType(EntityType.ENTITY_PICKUP)) do
         local type = ent.Type;
         local variant = ent.Variant;
@@ -280,7 +386,7 @@ local function UseDFlip(mod, item, rng, player, flags, slot, vardata)
                 canRoll = true;
             end
         end
-        local another = DFlip.GetAnother(type, variant, subType);
+        local another = DFlip:GetAnother(type, variant, subType);
 
         if (another) then
             type = another[1];
@@ -298,10 +404,11 @@ local function UseDFlip(mod, item, rng, player, flags, slot, vardata)
 
         if (canRoll) then
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
-            if (subType < 0) then
+            if (subType <= 0) then
                 pickup:Remove();
             else
-                pickup:Morph(type, variant, subType, true, true, true);
+                pickup:Morph(type, variant, subType, true, false, false);
+                pickup.Touched = false;
             end
         end
     end

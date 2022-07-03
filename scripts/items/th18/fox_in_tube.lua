@@ -560,9 +560,9 @@ function Fox:PostUpdate()
 end
 Fox:AddCallback(ModCallbacks.MC_POST_UPDATE, Fox.PostUpdate);
 
-function Fox:PreGetCollectible(pool, decrease, seed)
+function Fox:PreGetCollectible(pool, decrease, seed, loopCount)
     -- Treasure Room Pay.
-    if (decrease and seed % 100 < Fox.GetPayCount("TreasureRoom") * 20) then
+    if (decrease and seed % 100 < Fox.GetPayCount("TreasureRoom") * 20 and loopCount == 1) then
         Fox.RemovePay("TreasureRoom", 1);
         local data = Fox.GetPayData(true);
         if (data.CanShowTreasureRoomFortune) then
@@ -572,7 +572,7 @@ function Fox:PreGetCollectible(pool, decrease, seed)
         return CollectibleType.COLLECTIBLE_POOP;
     end
 end
-Fox:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, Fox.PreGetCollectible)
+Fox:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, Fox.PreGetCollectible, nil, 200)
 
 function Fox:PostPickupRemove(pickup)
     local data = Fox.GetCollectibleData(pickup, false);
@@ -605,6 +605,6 @@ function Fox:PostNewLevel()
         data.NewLevel = true;
     end
 end
-Fox:AddCustomCallback(CLCallbacks.CLC_NEW_STAGE, Fox.PostNewLevel);
+Fox:AddCustomCallback(CuerLib.CLCallbacks.CLC_NEW_STAGE, Fox.PostNewLevel);
 
 return Fox;

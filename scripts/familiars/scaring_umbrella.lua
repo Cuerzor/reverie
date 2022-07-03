@@ -16,11 +16,6 @@ function Umbrella.GetUmbrellaData(umbrella, init)
         LaughTime = 0
     } end);
 end
-function Umbrella.GetTearData(tear, init)
-    return Umbrella:GetData(tear, init, function() return {
-        Rain = false;
-    } end);
-end
 
 function Umbrella:PostUmbrellaUpdate(umbrella)
     local player = umbrella.Player;
@@ -98,8 +93,10 @@ function Umbrella:PostUmbrellaUpdate(umbrella)
                     pos = nearEnemies[1].Position;
                 end
                 local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.BLUE, 0, pos, Vector.Zero, player):ToTear();
-                local tearData = Umbrella.GetTearData(tear, true);
-                tearData.Rain = true;
+                
+                local TearEffects = THI.Shared.TearEffects;
+                TearEffects:SetTearRain(tear, true);
+
                 tear.Height = -400;
                 tear.FallingAcceleration = 5;
             end
@@ -227,19 +224,6 @@ function Umbrella:PostUmbrellaUpdate(umbrella)
 end
 Umbrella:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, Umbrella.PostUmbrellaUpdate, Umbrella.Variant);
 
-function Umbrella:PreTearCollision(tear, other, low)
-    local bulletData = Umbrella.GetTearData(tear, false);
-    if (bulletData and bulletData.Rain) then
-        if (other.Type == EntityType.ENTITY_BOMBDROP) then
-            return true;
-        else
-            if (-tear.Height > other.Size) then
-                return true;
-            end
-        end
-    end
-end
-Umbrella:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, Umbrella.PreTearCollision);
 
 function Umbrella:PostNewRoom()
     local game = THI.Game;

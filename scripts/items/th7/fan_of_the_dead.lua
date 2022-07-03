@@ -3,6 +3,7 @@ local Collectibles = CuerLib.Collectibles
 local Revive = CuerLib.Revive;
 local Callbacks = CuerLib.Callbacks;
 local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local FanOfTheDead = ModItem("Fan of the Dead", "FanOfTheDead");
 FanOfTheDead.FontColor = KColor(1,1,1,1,0,0,0);
@@ -11,7 +12,7 @@ FanOfTheDead.Font = Font();
 FanOfTheDead.Font:Load("font/pftempestasevencondensed.fnt");
 
 FanOfTheDead.FanSprite = Sprite();
-FanOfTheDead.FanSprite:Load("gfx/lives_fan.anm2", true);
+FanOfTheDead.FanSprite:Load("gfx/reverie/ui/lives_fan.anm2", true);
 FanOfTheDead.FanSprite:Play(FanOfTheDead.FanSprite:GetDefaultAnimation ( ));
 
 local function GetPlayerData(player)
@@ -20,7 +21,7 @@ local function GetPlayerData(player)
     } end);
 end
 
-local function CanRevive(player)
+function FanOfTheDead:CanRevive(player)
     if (not player:HasCollectible(FanOfTheDead.Item)) then
         return false;
     end
@@ -49,7 +50,7 @@ local function AvoidDeath(player)
             player:AddBoneHearts(1);
         end
     -- Keeper and Bethany creates heart containers.
-    elseif (playerType == PlayerType.PLAYER_KEEPER or playerType == PlayerType.PLAYER_KEEPER_B or playerType == PlayerType.PLAYER_BETHANY) then
+    elseif (Players:IsFullRedHeartPlayer(playerType)) then
         local maxHearts = player:GetMaxHearts();
         local hearts = player:GetMaxHearts();
         if (maxHearts <= 0) then
@@ -62,7 +63,7 @@ local function AvoidDeath(player)
     else
         local soulHearts = player:GetSoulHearts();
         if (soulHearts <= 0) then
-            player:AddSoulHearts(1);
+            Players:AddRawSoulHearts(player, 1);
         end
     end
 
@@ -76,7 +77,7 @@ local function TransformHearts(player, data)
     local transformed = false;
     
     -- Keeper and Bethany will leave a heart container.
-    if (type == PlayerType.PLAYER_KEEPER or type == PlayerType.PLAYER_KEEPER_B or type == PlayerType.PLAYER_BETHANY) then
+    if (Players:IsFullRedHeartPlayer(player:GetPlayerType())) then
         maxHearts = maxHearts - 2;
     end
     if (maxHearts > 0) then
@@ -90,7 +91,7 @@ local function TransformHearts(player, data)
         local soulHearts = player:GetSoulHearts() - 1;
         if (soulHearts > 0) then
             data.Lives = data.Lives + soulHearts;
-            player:AddSoulHearts(-soulHearts);
+            Players:AddRawSoulHearts(player, -soulHearts);
             transformed = true;
         end
     end
@@ -140,30 +141,8 @@ function FanOfTheDead:postPickCollectible(player, item, count, touched)
 
     AvoidDeath(player);
 end
-FanOfTheDead:AddCustomCallback(CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, FanOfTheDead.postPickCollectible, FanOfTheDead.Item);
+FanOfTheDead:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, FanOfTheDead.postPickCollectible, FanOfTheDead.Item);
 
-local function PostRevive(player, reviver)   
-    --local data = GetPlayerData(player);
-    local reviverData = GetPlayerData(reviver);
-    reviverData.Lives = reviverData.Lives - 1;
-    -- local type = player:GetPlayerType();
-    -- if (type == PlayerType.PLAYER_JACOB or type == PlayerType.PLAYER_ESAU) then
-    --     local other = player:GetOtherTwin();
-    --     local otherData = GetPlayerData(other);
-    --     local thisHas = player:HasCollectible(FanOfTheDead.Item) and data.Lives > 0;
-    --     local otherHas = other:HasCollectible(FanOfTheDead.Item) and otherData.Lives > 0;
-        
-    --     if (thisHas) then
-    --         data.Lives = data.Lives - 1;
-    --     else
-    --         if (otherHas) then
-    --             otherData.Lives = otherData.Lives - 1;
-    --         end
-    --     end
-    -- else
-    --     data.Lives = data.Lives - 1;
-    -- end
-end
 
 local function RenderPlayer(player, playerIndex)
     if (player:HasCollectible(FanOfTheDead.Item) and THI.Game:GetHUD():IsVisible()) then
@@ -236,7 +215,36 @@ end
 
 
 
-Revive.AddReviveInfo(true, 60, "LostDeath", CanRevive, PostRevive);
+local function PreRevive(mod, player)
+    if (FanOfTheDead:CanRevive(player)) then
+        ---@type ReviveCallback
+        local function PostRevive(player, reviver)   
+            local reviverData = GetPlayerData(reviver);
+            reviverData.Lives = reviverData.Lives - 1;
+            local Seija = THI.Players.Seija;
+            if (Seija:WillPlayerNerf(player)) then
+                local level = Game():GetLevel();
+                local lastRoomDesc = level:GetLastRoomDesc();
+                if (lastRoomDesc and lastRoomDesc.Data) then
+                    local dir = Direction.NO_DIRECTION;
+                    Game():StartRoomTransition (lastRoomDesc.GridIndex, dir, RoomTransitionAnim.WALK, player);
+                end
+            end
+        end
+        
+        return {
+            BeforeVanilla = true,
+            ReviveFrame = 30,
+            Animation = "LostDeath",
+            Callback = PostRevive
+        }
+    end
+end
+FanOfTheDead:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, PreRevive, nil, 900)
+
+--Revive.AddReviveInfo(true, 60, "LostDeath", CanRevive, PostRevive);
+
+
 FanOfTheDead:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, FanOfTheDead.onPlayerEffect);
 --FanOfTheDead:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, FanOfTheDead.onPlayerUpdate);
 FanOfTheDead:AddCallback(ModCallbacks.MC_POST_RENDER, FanOfTheDead.onRender);

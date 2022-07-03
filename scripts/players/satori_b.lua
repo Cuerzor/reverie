@@ -1,10 +1,21 @@
 local Stats = CuerLib.Stats;
 local SatoriB = ModPlayer("Tainted Satori", true, "SatoriB");
-SatoriB.Costume = Isaac.GetCostumeIdByPath("gfx/characters/costume_satori_b.anm2");
-SatoriB.CostumeHair = Isaac.GetCostumeIdByPath("gfx/characters/costume_satori_b_hair.anm2");
-SatoriB.CostumeFlying = Isaac.GetCostumeIdByPath("gfx/characters/costume_satori_b_flying.anm2");
+SatoriB.Costume = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_satori_b.anm2");
+SatoriB.CostumeHair = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_satori_b_hair.anm2");
+SatoriB.CostumeFlying = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_satori_b_flying.anm2");
+SatoriB.Sprite = "gfx/reverie/satori_b.anm2";
+SatoriB.SpriteFlying = "gfx/reverie/satori_b_flying.anm2";
 
 local Wheelchair = THI.Shared.Wheelchair;
+
+local function GetPlayerTempData(player, init)
+    return SatoriB:GetTempData(player, init, function()
+        return {
+            SpriteState = 0
+        }
+    end)
+end
+
 
 function SatoriB.GetPlayerData(player, init)
     local data = player:GetData();
@@ -18,6 +29,28 @@ function SatoriB.GetPlayerData(player, init)
     end
     return data._SATORI_B;
 end
+
+local function UpdatePlayerSprite(player)
+    local data = GetPlayerTempData(player, true);
+    local sprState = 1;
+    local path = SatoriB.Sprite;
+    if (player.CanFly) then
+        path = SatoriB.SpriteFlying;
+        sprState = 2;
+    end
+    if (data.SpriteState ~= sprState) then
+        data.SpriteState = sprState;
+        local spr = player:GetSprite();
+        local animation = spr:GetAnimation();
+        local frame = spr:GetFrame();
+        local overlayAnimation = spr:GetOverlayAnimation();
+        local overlayFrame = spr:GetOverlayFrame();
+        spr:Load(path, true);
+        spr:SetFrame(animation, frame);
+        spr:SetOverlayFrame(overlayAnimation, overlayFrame);
+    end
+end
+
 
 function SatoriB:PostPlayerInit(player)
     local playerType = player:GetPlayerType();
@@ -36,6 +69,7 @@ SatoriB:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, SatoriB.PostPlayerInit)
 function SatoriB:PostPlayerUpdate(player)
     local playerType = player:GetPlayerType();
     if (playerType == SatoriB.Type) then
+        UpdatePlayerSprite(player);
         Wheelchair:PlayerUpdate(player);
     end
 end
@@ -69,7 +103,7 @@ function SatoriB:OnEvaluateCache(player, cache)
             end
             player.MoveSpeed = player.MoveSpeed * multi;
             local currentLimit = Stats:GetSpeedLimit(player);
-            if (currentLimit > 0.999) then
+            if (currentLimit < 0) then
                 Stats:SetSpeedLimit(player, limit);
             end
         elseif (cache == CacheFlag.CACHE_DAMAGE) then
@@ -86,12 +120,12 @@ function SatoriB:PreTakeDamage(tookDamage, amount, flags, source, countdown)
         if (player and player:GetPlayerType() == SatoriB.Type) then
             local sourceType = source.Type;
             local variant = source.Variant;
-            if (sourceType == EntityType.ENTITY_EFFECT or
+            if (sourceType == EntityType.ENTITY_EFFECT and (
             variant == EffectVariant.CREEP_RED or
             variant == EffectVariant.CREEP_GREEN or
             variant == EffectVariant.CREEP_YELLOW or
             variant == EffectVariant.CREEP_WHITE or
-            variant == EffectVariant.CREEP_BLACK) then
+            variant == EffectVariant.CREEP_BLACK)) then
                 return false;
             end
 
@@ -101,16 +135,19 @@ function SatoriB:PreTakeDamage(tookDamage, amount, flags, source, countdown)
         end
     end
 end
-SatoriB:AddCustomCallback(CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, SatoriB.PreTakeDamage);
+SatoriB:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, SatoriB.PreTakeDamage);
 
 
-function SatoriB:PostCrushEnemy(player, npc, damage)
-    if (player:GetPlayerType() == SatoriB.Type) then
+function SatoriB:PostCrushEnemy(source, crushed, damage)
+    local player = source:ToPlayer();
+    if (player and player:GetPlayerType() == SatoriB.Type) then
         if (player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
             if (player.MoveSpeed >= 1) then
                 Isaac.Explode(player.Position, player, damage)
             end
         end
+
+        player:SetMinDamageCooldown(60);
     end
 end
 Wheelchair:AddCallback(SatoriB, Wheelchair.Callbacks.WC_POST_CRUSH_NPC, SatoriB.PostCrushEnemy);

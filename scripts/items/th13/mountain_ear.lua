@@ -69,8 +69,10 @@ do
         if (player) then
             if (player:HasCollectible(Ear.Item)) then
                 local rng = player:GetCollectibleRNG(Ear.Item);
-                local range = math.max(1, 9 - player.Luck);
-                if (rng:RandomInt(range * 100) < 100) then
+                local luck = player.Luck;
+                
+                local range = 1 / math.max(1, 9 - luck);
+                if (rng:RandomInt(100) < range * 100) then
                     if (not Ear.TearHasEcho(tear)) then
                         Ear.SetTearEcho(tear, true);
                         tear:AddTearFlags(TearFlags.TEAR_BOUNCE);

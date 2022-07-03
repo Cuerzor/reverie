@@ -1,0 +1,18 @@
+<pocketitems>
+    <card type="object" pickup="580" description="Transform" id="580" name="Void Hand" mimiccharge="2" hud="VoidHandThree" />
+    <card type="object" pickup="581" description="Transform" id="581" name="Void Hand" mimiccharge="2" hud="VoidHandTwo" />
+    <card type="object" pickup="582" description="Transform" id="582" name="Void Hand" mimiccharge="2" hud="VoidHandOne" />
+
+    
+    <rune type="rune" pickup="583" description="Bone wish" id="583" name="Soul of Eika" mimiccharge="4" hud="SoulOfEika" />
+    <rune type="rune" pickup="584" description="I am your master" id="584" name="Soul of Satori" mimiccharge="6" hud="SoulOfSatori" />
+
+    <card type="special" pickup="585" description="Heap up" id="585" name="A Small Stone" mimiccharge="1" hud="ASmallStone" />
+    <card type="special" pickup="585" description="Fight against yourselves" id="586" name="Spirit Mirror" mimiccharge="6" hud="SpiritMirror" />
+    
+    <rune type="rune" pickup="586" description="Flip" id="587" name="Soul of Seija" mimiccharge="6" hud="SoulOfSeija" />
+    <rune type="rune" pickup="587" description="Flip" id="588" name="Soul of Seija" mimiccharge="6" hud="SoulOfSeijaReversed" />
+    <card type="special" pickup="585" description="Reroll, then shuffle" id="589" name="Situation Twist" mimiccharge="6" hud="SituationTwist" />
+
+    <pilleffect id="580" name="Pill of Ultramarine Orb" class="2" mimiccharge="3" />
+</pocketitems>

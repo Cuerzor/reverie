@@ -2,8 +2,10 @@ local Lib = CuerLib;
 local Detection = Lib.Detection;
 local Pickups = Lib.Pickups;
 
-local function IsPickupNotGoldenChest(variant)
-    return variant == PickupVariant.PICKUP_CHEST or
+local function IsPickupNotGoldenChest(pickup)
+    local variant = pickup.Variant;
+    local subType = pickup.SubType;
+    return (variant == PickupVariant.PICKUP_CHEST or
     variant == PickupVariant.PICKUP_BOMBCHEST or
     variant == PickupVariant.PICKUP_SPIKEDCHEST or
     variant == PickupVariant.PICKUP_ETERNALCHEST or
@@ -11,7 +13,7 @@ local function IsPickupNotGoldenChest(variant)
     variant == PickupVariant.PICKUP_OLDCHEST or
     variant == PickupVariant.PICKUP_WOODENCHEST or
     variant == PickupVariant.PICKUP_HAUNTEDCHEST or
-    variant == PickupVariant.PICKUP_REDCHEST;
+    variant == PickupVariant.PICKUP_REDCHEST) and subType == 1;
 end
 
 local function TurnPickupGold(pickup)
@@ -23,7 +25,21 @@ local function TurnPickupGold(pickup)
         end
     elseif (variant == PickupVariant.PICKUP_HEART) then
         if (subType ~= HeartSubType.HEART_GOLDEN) then
-            pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN, true, true, true);
+            local canMorph = true;
+            local level = Game():GetLevel();
+            local roomDesc = level:GetCurrentRoomDesc();
+            if (roomDesc and roomDesc.Data) then
+                local roomType =roomDesc.Data.Type;
+                local roomId = roomDesc.Data.Variant; 
+                if (roomType == RoomType.ROOM_SUPERSECRET) then
+                    if (roomId == 0 or roomId == 1 or roomId == 6 or roomId == 12 or roomId == 13 or roomId == 16 or roomId == 23) then
+                        canMorph = false;
+                    end
+                end
+            end
+            if (canMorph) then
+                pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_GOLDEN, true, true, true);
+            end
         end
         
     elseif (variant == PickupVariant.PICKUP_BOMB) then
@@ -34,7 +50,7 @@ local function TurnPickupGold(pickup)
         if (subType ~= KeySubType.KEY_GOLDEN) then
             pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_KEY, KeySubType.KEY_GOLDEN, true, true, true);
         end
-    elseif (IsPickupNotGoldenChest(variant)) then
+    elseif (IsPickupNotGoldenChest(pickup)) then
         pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LOCKEDCHEST, subType, true, true, true);
     elseif (variant == PickupVariant.PICKUP_PILL) then
         if (subType ~= PillColor.PILL_GOLD) then
@@ -122,7 +138,7 @@ function Pagota:GetPagotaData(init)
 end
 
 function Pagota:GetPlayerTempData(player, init)
-    local data = Lib:GetData(player);
+    local data = Lib:GetLibData(player);
     if (init) then
         data._PAGOTA_TEMP = data._PAGOTA_TEMP or {
             LastCoins = 0,
@@ -224,7 +240,7 @@ function Pagota:PostPickupCollected(player, pickup)
         data.AddedCoins = data.AddedCoins + originValue;
     end
 end
-Pagota:AddCustomCallback(CLCallbacks.CLC_POST_PICKUP_COLLECTED, Pagota.PostPickupCollected, PickupVariant.PICKUP_COIN);
+Pagota:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_PICKUP_COLLECTED, Pagota.PostPickupCollected, PickupVariant.PICKUP_COIN);
 
 -- function Pagota:PrePickupCollision(pickup, other, low)
     
@@ -264,7 +280,7 @@ Pagota:AddCustomCallback(CLCallbacks.CLC_POST_PICKUP_COLLECTED, Pagota.PostPicku
 --         end
 --     end
 -- end
--- Pagota:AddCustomCallback(CLCallbacks.CLC_PRE_PICKUP_COLLISION, Pagota.PrePickupCollision, PickupVariant.PICKUP_COIN);
+-- Pagota:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_PICKUP_COLLISION, Pagota.PrePickupCollision, PickupVariant.PICKUP_COIN);
 
 local turnGoldInUpdate = false;
 function Pagota:NewRoom()

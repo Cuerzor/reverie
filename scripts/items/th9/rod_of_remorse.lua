@@ -2,6 +2,13 @@ local Actives = CuerLib.Actives;
 local Detection = CuerLib.Detection;
 local RodOfRemorse = ModItem("Rod of Remorse", "RodOfRemorse");
 
+local function GetGlobalData(create)
+    return RodOfRemorse:GetGlobalData(create, function() return {
+        RedemptionAppeared = false
+    } end)
+end
+
+
 function RodOfRemorse.GetPlayerData(player, init)
     return RodOfRemorse:GetData(player, init, function() return {
         SacrificeCount = 0,
@@ -35,24 +42,34 @@ function RodOfRemorse.SpawnRandomChest(rng, pos, spawner)
     -- 红箱子：5%
     -- 木箱子：1%
     local variant = PickupVariant.PICKUP_CHEST;
-    local value = rng:RandomInt(100);
-    if (value < 2) then
-        variant = PickupVariant.PICKUP_BOMBCHEST
-    elseif (value < 4) then
-        variant = PickupVariant.PICKUP_SPIKEDCHEST
-    elseif (value < 6) then
-        variant = PickupVariant.PICKUP_MIMICCHEST
-    elseif (value < 8) then
-        variant = PickupVariant.PICKUP_HAUNTEDCHEST
-    elseif (value < 13) then
-        variant = PickupVariant.PICKUP_REDCHEST
-    elseif (value < 14) then
-        variant = PickupVariant.PICKUP_WOODENCHEST
-    end
+    -- local value = rng:RandomInt(100);
+    -- if (value < 2) then
+    --     variant = PickupVariant.PICKUP_BOMBCHEST
+    -- elseif (value < 4) then
+    --     variant = PickupVariant.PICKUP_SPIKEDCHEST
+    -- elseif (value < 6) then
+    --     variant = PickupVariant.PICKUP_MIMICCHEST
+    -- elseif (value < 8) then
+    --     variant = PickupVariant.PICKUP_HAUNTEDCHEST
+    -- elseif (value < 13) then
+    --     variant = PickupVariant.PICKUP_REDCHEST
+    -- elseif (value < 14) then
+    --     variant = PickupVariant.PICKUP_WOODENCHEST
+    -- end
 
     Isaac.Spawn(EntityType.ENTITY_PICKUP, variant, 0, pos, Vector.Zero, spawner);
 end
 local teleported = false;
+
+function RodOfRemorse:IsRedemptionAppeared()
+    local data = GetGlobalData(false);
+    return data and data.RedemptionAppeared;
+end
+
+function RodOfRemorse:SetRedemptionAppeared(value)
+    local data = GetGlobalData(true)
+    data.RedemptionAppeared = true;
+end
 
 function RodOfRemorse.TriggerSacrificeEffect(count, player)
     local game = THI.Game;
@@ -97,6 +114,7 @@ function RodOfRemorse.TriggerSacrificeEffect(count, player)
             local pos = room:FindFreePickupSpawnPosition(player.Position);
             RodOfRemorse.SpawnRandomChest(rng, pos, player);
         else
+            level:InitializeDevilAngelRoom (true, false)
             player:UseCard (Card.CARD_JOKER, UseFlag.USE_NOANIM | UseFlag.USE_NOCOSTUME | UseFlag.USE_NOANNOUNCER);
         end
     elseif (count == 7) then
@@ -106,7 +124,7 @@ function RodOfRemorse.TriggerSacrificeEffect(count, player)
         else
             local pos = room:FindFreePickupSpawnPosition(player.Position, 0, true);
             local id = CollectibleType.COLLECTIBLE_REDEMPTION;
-            if (game:GetDevilRoomDeals() <= 0) then
+            if (game:GetDevilRoomDeals() <= 0 or RodOfRemorse:IsRedemptionAppeared()) then
                 id = itemPools:GetCollectible(ItemPoolType.POOL_ANGEL, true, seed);
             end
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero, player);
@@ -165,6 +183,14 @@ function RodOfRemorse:PostPlayerEffect(player)
 end
 RodOfRemorse:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, RodOfRemorse.PostPlayerEffect);
 
+local function PostCollectibleUpdate(mod, pickup)
+    
+    if (pickup.FrameCount == 1 and pickup.SubType == CollectibleType.COLLECTIBLE_REDEMPTION) then
+        RodOfRemorse:SetRedemptionAppeared(true);
+    end
+end
+RodOfRemorse:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostCollectibleUpdate, PickupVariant.PICKUP_COLLECTIBLE);
+
 function RodOfRemorse:PostTakeDamage(tookDamage, amount, flags, source, countdown)
     if (tookDamage.Type == EntityType.ENTITY_PLAYER) then
         local player = tookDamage:ToPlayer();
@@ -178,10 +204,10 @@ function RodOfRemorse:PostTakeDamage(tookDamage, amount, flags, source, countdow
         end
     end
 end
-RodOfRemorse:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, RodOfRemorse.PostTakeDamage);
+RodOfRemorse:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, RodOfRemorse.PostTakeDamage);
 
 function RodOfRemorse:GetShaderParams(name)
-    if (name == "HUD Hack") then
+    if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
         Actives.RenderActivesCount(RodOfRemorse.Item, function(player) 
             local data = RodOfRemorse.GetPlayerData(player, false);
             return (data and data.SacrificeCount) or 0;

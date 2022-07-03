@@ -1,6 +1,4 @@
-local Screen = {
-    
-}
+local Screen = _TEMP_CUERLIB:NewClass();
 
 function Screen.GetScreenSize() 
     --return (Isaac.WorldToScreen(Vector(320, 280)) - THI.Game:GetRoom():GetRenderScrollOffset() - THI.Game.ScreenShakeOffset) * 2

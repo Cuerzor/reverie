@@ -27,7 +27,7 @@ function DadsShares:PostTakeDamage(tookDamage, amount, flags, source, countdown)
         end
     end
 end
-DadsShares:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, DadsShares.PostTakeDamage, EntityType.ENTITY_PLAYER);
+DadsShares:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, DadsShares.PostTakeDamage, EntityType.ENTITY_PLAYER);
 
 function DadsShares:PreSpawnCleanAward(rng, position)
     local game = THI.Game;

@@ -1,10 +1,11 @@
 local Detection = CuerLib.Detection;
+local Collectibles = CuerLib.Collectibles;
 local CompareEntity = Detection.CompareEntity;
 local FetusBlood = ModItem("Fetus Blood", "FetusBlood");
 
 local function EvaluateBoneies()
     local game = THI.Game;
-    local BloodBoney = THI.Monsters.BloodBoney;
+    local BloodBony = THI.Monsters.BloodBony;
     local players = 0;
     for p, player in Detection.PlayerPairs() do
         if (player:HasCollectible(FetusBlood.Item)) then
@@ -12,12 +13,12 @@ local function EvaluateBoneies()
         end
     end
     local limit = THI.Game:GetLevel():GetStage() * players;
-    local boneies = Isaac.FindByType(BloodBoney.Type, BloodBoney.Variant);
+    local bonies = Isaac.FindByType(BloodBony.Type, BloodBony.Variant, BloodBony.SubTypes.TEMPORARY);
 
     -- Remove Blood Boneies that out of limit.
     local count = 0;
-    for i = #boneies, 1, -1 do
-        local ent = boneies[i];
+    for i = #bonies, 1, -1 do
+        local ent = bonies[i];
         if (ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
             if (count < limit) then
                 count = count + 1;
@@ -36,15 +37,13 @@ function FetusBlood:PostUpdate()
 end
 FetusBlood:AddCallback(ModCallbacks.MC_POST_UPDATE, FetusBlood.PostUpdate);
 
+
+
 function FetusBlood:UseBlood(item, rng, player, flags, slot, varData)
-    local BloodBoney = THI.Monsters.BloodBoney;
-    local bony = Isaac.Spawn(BloodBoney.Type, BloodBoney.Variant, 0, player.Position, Vector.Zero, player);
-    bony.Parent = player;
-    bony:AddCharmed(EntityRef(player), -1);
+    local BloodBony = THI.Monsters.BloodBony;
+    local bony = BloodBony:SpawnBony(BloodBony.Type, BloodBony.Variant, BloodBony.SubTypes.TEMPORARY, player.Position, player);
     THI.SFXManager:Play(SoundEffect.SOUND_MONSTER_ROAR_0);
 
-    -- Make Boney Immune to Spikes.
-    bony:AddEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS | EntityFlag.FLAG_NO_SPIKE_DAMAGE);
     -- Set Limit.
     EvaluateBoneies();
 

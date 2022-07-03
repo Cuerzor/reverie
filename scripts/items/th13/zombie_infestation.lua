@@ -3,6 +3,7 @@ local Tears = CuerLib.Tears;
 local Zombie = ModItem("Zombie Infestation", "Z_INFEST");
 
 Zombie.ItemPlayer = nil;
+Zombie.MaxZombieCount = 5;
 
 
 
@@ -48,19 +49,42 @@ do
     Zombie:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 
     local function PostNPCUpdate(mod, npc)
-        local spawner = Zombie.ItemPlayer;
-        local canSpawn = true;
-        if (THI.IsLunatic()) then
-            canSpawn = npc.InitSeed % 100 < 50 ;
-        end
-        if (spawner and canSpawn and npc:IsDead() and npc:Exists() and not npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and npc:IsActiveEnemy(true) and not npc:IsBoss()) then
-            local new = Isaac.Spawn(npc.Type, npc.Variant, npc.SubType, npc.Position, Vector.Zero, spawner);
-            new.SpawnerType = 58115310;
-            new.SpawnerVariant = Zombie.Item;
-            new:AddCharmed(EntityRef(spawner), -1);
-            local champion = npc:GetChampionColorIdx ( );
-            if (champion >= 0) then
-                new:ToNPC():MakeChampion(new.InitSeed, champion, true);
+        if (npc:IsDead() and npc:Exists() and not npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and npc:IsActiveEnemy(true) and not npc:IsBoss()) then
+            -- Spawn Zombie.
+            local spawner = Zombie.ItemPlayer;
+
+            if (spawner) then
+                local canSpawn = true;
+                if (THI.IsLunatic()) then
+                    canSpawn = npc.InitSeed % 100 < 50 ;
+                end
+
+                -- Cannot spawn zombies more than max count.
+                local zombieCount = 0;
+                for i, ent in pairs(Isaac.GetRoomEntities()) do
+                    if (Zombie:IsZombie(ent)) then
+                        zombieCount = zombieCount + 1;
+                    end
+                    if (zombieCount >= Zombie.MaxZombieCount) then
+                        canSpawn = false;
+                        break;
+                    end
+                end
+
+                if (npc:HasEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS)) then -- Avoid some uncharmable enemies to be controlled.
+                    canSpawn = false;
+                end
+
+                if (canSpawn) then
+                    local new = Isaac.Spawn(npc.Type, npc.Variant, npc.SubType, npc.Position, Vector.Zero, spawner);
+                    new.SpawnerType = 58115310;
+                    new.SpawnerVariant = Zombie.Item;
+                    new:AddCharmed(EntityRef(spawner), -1);
+                    local champion = npc:GetChampionColorIdx ( );
+                    if (champion >= 0) then
+                        new:ToNPC():MakeChampion(new.InitSeed, champion, true);
+                    end
+                end
             end
         end
     end
@@ -100,7 +124,7 @@ do
             player:AddRottenHearts(redHearts);
         end
     end
-    Zombie:AddCustomCallback(CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainZombie, Zombie.Item);
+    Zombie:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainZombie, Zombie.Item);
 end
 
 return Zombie;

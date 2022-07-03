@@ -6,13 +6,14 @@ local itemCount = itemConfig:GetCollectibles().Size;
 
 function Glasses:OnEvaluateCache(player, cache)
     if (player:HasTrinket(Glasses.Trinket)) then
-        local count = 0;
-        for i = 1, itemCount do
-            local col = itemConfig:GetCollectible(i);
-            if (col and player:HasCollectible(i, true)) then
-                count = count + 1;
-            end
-        end
+        -- local count = 0;
+        -- for i = 1, itemCount do
+        --     local col = itemConfig:GetCollectible(i);
+        --     if (col and player:HasCollectible(i, true)) then
+        --         count = count + 1;
+        --     end
+        -- end
+        local count = player:GetCollectibleCount ( );
         local multiplier = player:GetTrinketMultiplier (Glasses.Trinket);
 
         if (cache == CacheFlag.CACHE_DAMAGE) then
@@ -34,6 +35,6 @@ function Glasses:PostChangeCollectibles(player, item, diff)
         player:EvaluateItems();
     end
 end
-Glasses:AddCustomCallback(CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, Glasses.PostChangeCollectibles);
+Glasses:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, Glasses.PostChangeCollectibles);
 
 return Glasses;

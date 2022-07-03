@@ -1,6 +1,4 @@
-local Math = {
-
-}
+local Math = _TEMP_CUERLIB:NewClass();
 
 function Math.GetDirectionByAngle(angle)
     angle = angle % 360;
@@ -20,6 +18,7 @@ end
 function Math.GetTearScaleByDamage(damage)
     return damage ^ 0.5 * 0.23 + damage * 0.01 + 0.55;
 end
+
 
 function Math.RandomRange(rng, min, max)
     return rng:RandomFloat() * (max - min) + min;
@@ -61,22 +60,12 @@ function Math.GetIncludedAngle(vec1, vec2)
 end
 
 function Math.GetAngleDiff(angle1, angle2)
-    
-    local diff = angle2 - angle1;
-    if (diff > 0) then
-        if (math.abs(diff) <= math.abs(diff - 360)) then
-            return diff;
-        else
-            return diff - 360;
-        end
-    else
-        if (math.abs(diff) <= math.abs(diff + 360)) then
-            return diff;
-        else
-            return diff + 360;
-        end
-    end
-    return diff;
+    local includedAngle = angle2 - angle1;
+    includedAngle = includedAngle % 360
+    if (includedAngle > 180) then
+        includedAngle = includedAngle - 360;
+    end 
+    return includedAngle;
 end
 
 function Math.GetTearFlag(x)
@@ -84,7 +73,33 @@ function Math.GetTearFlag(x)
 end
 
 
-
+function Math:HSVToRGB(h,s,v)
+    local R, G, B = 0,0,0;
+    if (s == 0) then
+        R,G,B=v,v,v;
+    else
+        h = h / 60;
+        local i = math.floor(h);
+        local f = h - i;
+        local a = v * ( 1 - s );
+        local b = v * ( 1 - s * f );
+        local c = v * ( 1 - s * (1 - f ) );
+        if (i == 0) then
+            R = v; G = c; B = a;
+        elseif (i == 1) then
+            R = b; G = v; B = a;
+        elseif (i == 2) then
+            R = a; G = v; B = c;
+        elseif (i == 3) then
+            R = a; G = b; B = v;
+        elseif (i == 4) then
+            R = c; G = a; B = v;
+        elseif (i == 5) then
+            R = v; G = a; B = b;
+        end
+    end
+    return R,G,B
+end
 
 
 

@@ -1,5 +1,5 @@
-local Lib = CuerLib;
-local Tears = {}
+local Lib = _TEMP_CUERLIB;
+local Tears = Lib:NewClass();
 
 Tears.Animation = {
     REGULAR = 0,
@@ -48,6 +48,7 @@ end
 Tears.TearFlags = {
 
 }
+Tears.TearFlagNum = 0;
 
 do -- Tear Flags Set.
 
@@ -105,13 +106,17 @@ do -- Tear Flags Set.
 end
 
 function Tears:RegisterModTearFlag(key)
-    if (not Tears.TearFlags[key]) then
-        Tears.TearFlags[key] = #Tears.TearFlags;
+    local id = Tears.TearFlags[key]
+    if (not id) then
+        id = Tears.TearFlagNum;
+        Tears.TearFlags[key] = id;
+        Tears.TearFlagNum = id + 1;
     end
+    return id;
 end
 
 local function GetTearData(tear, create)
-    local data = Lib:GetData(tear, true);
+    local data = Lib:GetLibData(tear, true);
     if (create) then
         data._TEARS = data._TEARS or {
             TearFlags = {}
@@ -185,7 +190,9 @@ do -- Variants
     function Tears:CanOverrideVariant(override, variant)
         return variant == TearVariant.BLUE or variant == TearVariant.BLOOD or variant == TearVariant.CUPID_BLUE or variant ==
             TearVariant.CUPID_BLOOD or variant == TearVariant.PUPULA or variant == TearVariant.PUPULA_BLOOD or variant ==
-            TearVariant.GLAUCOMA or variant == TearVariant.GLAUCOMA_BLOOD;
+            TearVariant.GLAUCOMA or variant == TearVariant.GLAUCOMA_BLOOD
+            
+             or variant == TearVariant.METALLIC;
     end
     function Tears:IsTearVariantBlood(variant)
         local info = Tears.TearVariantInfos[variant];
@@ -209,15 +216,6 @@ do -- Variants
         end
         return -1;
     end
-end
-
-local function PostTearRemove(mod, entity)
-    -- local tear = entity:ToTear();
-    -- local initSeed = tear.InitSeed;
-    -- creatorTearFlags[tostring(initSeed)] = Tears.GetModTearFlags(tear, false);
-end
-
-local function PostTearInit(mod, tear)
 end
 
 local firstTears = {}
@@ -248,12 +246,7 @@ local function PostUpdate(mod)
         end 
     end
 end
+Tears:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 
-function Tears:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, PostTearRemove, EntityType.ENTITY_TEAR);
-    mod:AddCallback(ModCallbacks.MC_POST_TEAR_INIT, PostTearInit);
-    mod:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
-
-end
 
 return Tears;

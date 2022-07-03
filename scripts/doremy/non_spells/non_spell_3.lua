@@ -3,6 +3,16 @@ local NonSpell = GensouDream.SpellCard();
 
 local tearColor1 = Color(1,1,1,1,0,0,0.5);
 local tearColor2 = Color(1,1,1,1,0.5,0,0.5);
+local ProjParams = ProjectileParams();
+ProjParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+ProjParams.Color = tearColor1;
+ProjParams.FallingAccelModifier = -0.2;
+ProjParams.FallingSpeedModifier = 3;
+local ProjParams2 = ProjectileParams();
+ProjParams2.Variant = ProjectileVariant.PROJECTILE_TEAR;
+ProjParams2.Color = tearColor2;
+ProjParams2.FallingAccelModifier = -0.2;
+ProjParams.FallingSpeedModifier = 3;
 
 function NonSpell:GetDefaultData(doremy)
     return {
@@ -43,37 +53,31 @@ function NonSpell:PostUpdate(doremy)
                 local angle = i * 120 + data.Time * 30;
                 local offset = Vector.FromAngle(angle) * 90;
                 local sourcePos = data.Position + offset;
+
+                local params = ProjParams2;
+                local speed = 6;
                 if (data.Time > 20) then
-                    color = tearColor1;
+                    params = ProjParams;
                     speed = 4;
-                else
-                    color = tearColor2;
-                    speed = 6;
                 end
                 local velocity = Vector.FromAngle(tearAngle) * speed;
-                local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
-                
-                tearEntity:SetColor(color, -1, 0, false, true);
-                --THI.SFXManager:Play(SoundEffect.SOUND_BISHOP_HIT);
-                THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_DANMAKU, 0.25);
 
-                local proj = tearEntity:ToProjectile();
-                proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
-                table.insert(data.Projectiles, proj);
+                params.BulletFlags = self:GetProjectileFlags(doremy);
+                doremy:FireProjectiles (sourcePos, velocity, 0, params);
+                params.BulletFlags = 0;
+
+                -- local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
+                -- tearEntity:SetColor(color, -1, 0, false, true);
+                -- local proj = tearEntity:ToProjectile();
+                -- proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
+                -- table.insert(data.Projectiles, proj);
+
+                THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_DANMAKU, 0.25);
             end
             data.Time = data.Time - 1;
         end
     end
 
-
-    -- Make projectiles float.
-    for i, proj in pairs(data.Projectiles) do
-        if (proj:Exists()) then
-            proj.FallingSpeed = 0;
-        else
-            data.Projectiles[i] = nil;
-        end
-    end
 end
 function NonSpell:OnCast(doremy)
     local data = self:GetData(doremy);

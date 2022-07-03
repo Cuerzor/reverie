@@ -1,11 +1,9 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 local Callbacks = Lib.Callbacks;
 local SaveAndLoad = Lib.SaveAndLoad;
 local Callbacks = Lib.Callbacks;
 
-local Collectibles = {
-    
-}
+local Collectibles = Lib:NewClass()
 
 local function PostPickupCollectible(player, item, touched)
     touched = touched or false;
@@ -25,12 +23,13 @@ local function PostPickupTrinket(player, item, golden, touched)
     end
 end
 
-local function PostGainCollectible(player, item, count, touched)
+local function PostGainCollectible(player, item, count, touched, queued)
     count = count or 1;
     touched = touched or false;
+    queued = queued or false;
     for i, func in pairs(Callbacks.Functions.PostGainCollectible) do
         if (func.OptionalArg == nil or item == func.OptionalArg) then
-            func.Func(func.Mod, player, item, count, touched);
+            func.Func(func.Mod, player, item, count, touched, queued);
         end
     end
 end
@@ -67,7 +66,6 @@ local function GetItems()
     return result;
 end
 
-local itemList = GetItems();
 
 
 local ChangedItems = {
@@ -78,7 +76,7 @@ local ChangedItems = {
 
 
 local function GetPickupData(pickup, init) 
-    local data = Lib:GetData(pickup, true);
+    local data = Lib:GetLibData(pickup, true);
     if (data) then
         data._COLLECTIBLES = data._COLLECTIBLES or {
             LastID = -1
@@ -87,7 +85,7 @@ local function GetPickupData(pickup, init)
     return data._COLLECTIBLES;
 end
 local function GetPlayerData(player, init)
-    local entData = Lib:GetData(player, true);
+    local entData = Lib:GetLibData(player, true);
     if (init) then
         entData._COLLECTIBLES = entData._COLLECTIBLES or {
             Items = {},
@@ -100,9 +98,12 @@ end
 
 function Collectibles.FindCollectibles(condition)
     local results = {};
-    for i, ent in pairs(itemList) do
-        if (condition(ent)) then
-            table.insert(results, ent);
+    local itemConfig = Isaac.GetItemConfig();
+    local collectibleCount = itemConfig:GetCollectibles().Size;
+    for i = 1, collectibleCount do
+        local config = itemConfig:GetCollectible(i);
+        if (config and condition(i, config)) then
+            table.insert(results, i);
         end
     end
     return results;
@@ -110,10 +111,15 @@ end
 
 function Collectibles.GetPlayerCollectibles(player)
     local results = {}
-    for _, item in pairs(itemList) do
-        local key = item;
-        local num = player:GetCollectibleNum(item, true);
-        results[key] = num;
+    local itemConfig = Isaac.GetItemConfig();
+    local collectibleCount = itemConfig:GetCollectibles().Size;
+    for i = 1, collectibleCount do
+        local config = itemConfig:GetCollectible(i);
+        if (config) then
+            local key = i;
+            local num = player:GetCollectibleNum(i, true);
+            results[key] = num;
+        end
     end
     return results;
 end
@@ -123,7 +129,7 @@ function Collectibles.IsAnyHasCollectible(item, onlyTrue)
     if (onlyTrue == nil) then
         onlyTrue = false;
     end
-    for index, player in  Lib.Detection.PlayerPairs() do
+    for index, player in Lib.Detection.PlayerPairs() do
         if (player:HasCollectible(item, onlyTrue)) then
             return true;
         end
@@ -131,7 +137,7 @@ function Collectibles.IsAnyHasCollectible(item, onlyTrue)
     return false;
 end
 
-local function GainItem(player, itemInfo)
+local function GainItem(player, itemInfo, queued)
     local id = itemInfo.Item;
     local data = GetPlayerData(player, true);
     local key = tostring(id);
@@ -139,7 +145,7 @@ local function GainItem(player, itemInfo)
     data.Items[key] = (data.Items[key] or 0) + 1;
     data.Count = (data.Count or 0) + 1;
     
-    PostGainCollectible(player, id, 1, itemInfo.Touched);
+    PostGainCollectible(player, id, 1, itemInfo.Touched, queued);
     PostChangeCollectibles(player, id, 1);
 end
 
@@ -172,44 +178,49 @@ local function UpdateCollectibles(player)
     local queuedItem = data.QueueingItem;
 
     -- Update Collectibles.
-    for _, item in pairs(itemList) do
-        local key = tostring(item);
-        local curNum = data.Items[key] or 0;
-        local num = player:GetCollectibleNum(item, true);
+    local itemConfig = Isaac.GetItemConfig();
+    local collectibleCount = itemConfig:GetCollectibles().Size;
+    for item = 1, collectibleCount do
+        local config = itemConfig:GetCollectible(item);
+        if (config) then
+            local key = tostring(item);
+            local curNum = data.Items[key] or 0;
+            local num = player:GetCollectibleNum(item, true);
 
-        -- If this collectible's number is different with record.
-        local diff = num - curNum;
-        if (diff ~= 0) then
+            -- If this collectible's number is different with record.
+            local diff = num - curNum;
+            if (diff ~= 0) then
 
 
-            if (diff > 0) then
-                local gained = diff;
-                -- If player has queued item record, trigger gain event for it.
-                if (queuedItem) then
-                    
-                    if (item == queuedItem.Item and queuedItem.Type ~= ItemType.ITEM_TRINKET) then
-                        PostGainCollectible(player, item, 1, queuedItem.Touched);
-                        gained = gained - 1;
-                        data.QueueingItem = nil;
+                if (diff > 0) then
+                    local gained = diff;
+                    -- If player has queued item record, trigger gain event for it.
+                    if (queuedItem) then
+                        
+                        if (item == queuedItem.Item and queuedItem.Type ~= ItemType.ITEM_TRINKET) then
+                            PostGainCollectible(player, item, 1, queuedItem.Touched, true);
+                            gained = gained - 1;
+                            data.QueueingItem = nil;
+                        end
                     end
-                end
 
-                -- Trigger gain event.
-                if (gained > 0) then
-                    PostGainCollectible(player, item, gained, false);
+                    -- Trigger gain event.
+                    if (gained > 0) then
+                        PostGainCollectible(player, item, gained, false, false);
+                    end
+                else
+                    PostLoseCollectible(player, item, -diff);
                 end
-            else
-                PostLoseCollectible(player, item, -diff);
+                PostChangeCollectibles(player, item, diff);
+                data.Items[key] = num;
             end
-            PostChangeCollectibles(player, item, diff);
-            data.Items[key] = num;
         end
     end
 end
 
 
 function Collectibles:onPlayerUpdate(player)
-    if (SaveAndLoad.GameStarted) then
+    if (Game():GetFrameCount() > 0) then
         if (not player:IsItemQueueEmpty()) then -- If player is queueing items
             local data = GetPlayerData(player, true);
             if (not data.QueueingItem) then -- If has not recorded queueing item.
@@ -246,11 +257,11 @@ function Collectibles:onPlayerUpdate(player)
         end
     end
 end
+Collectibles:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Collectibles.onPlayerUpdate);
 
 
 function Collectibles:onPlayerRender(player, offset, variant)
-    if (SaveAndLoad.GameStarted) then -- Avoid triggering events while loading game.
-
+    if (Game():GetFrameCount() > 0) then -- Avoid triggering events while loading game.
         local data = GetPlayerData(player, true);
         local function NeedsUpdate()
             -- If has recorded queued item,
@@ -278,6 +289,7 @@ function Collectibles:onPlayerRender(player, offset, variant)
         end
     end
 end
+Collectibles:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Collectibles.onPlayerRender);
 
 function Collectibles:onGameStarted(isContinued)
     if (isContinued) then
@@ -287,29 +299,41 @@ function Collectibles:onGameStarted(isContinued)
             -- To prevent event retrigger.
             local data = GetPlayerData(player, true);
             data.Count = player:GetCollectibleCount();
-            for i,item in pairs(itemList) do
-                local key = tostring(item);
-                local curNum = data.Items[key] or 0;
-                local num = player:GetCollectibleNum(item, true);
 
-                if (curNum ~= num) then
-                    data.Items[key] = num;
+            local itemConfig = Isaac.GetItemConfig();
+            local collectibleCount = itemConfig:GetCollectibles().Size;
+            for item = 1, collectibleCount do
+                local config = itemConfig:GetCollectible(item);
+                if (config) then
+                    local key = tostring(item);
+                    local curNum = data.Items[key] or 0;
+                    local num = player:GetCollectibleNum(item, true);
+
+                    if (curNum ~= num) then
+                        data.Items[key] = num;
+                    end
                 end
             end
         end
     end
 end
+Collectibles:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, Collectibles.onGameStarted);
+
 local function PostPickupUpdate(mod, pickup)
     if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE) then
         local data = GetPickupData(pickup, true);
         data.LastID = pickup.SubType;
     end
 end
+Collectibles:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate);
+
 local function PostPickupRemove(mod, entity)
     if (entity.Variant == PickupVariant.PICKUP_TRINKET) then
         table.insert(ChangedItems.Trinkets, { ID = entity.SubType, Timeout = 1});
     end
 end
+Collectibles:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, PostPickupRemove, EntityType.ENTITY_PICKUP);
+
 local function PostUpdate(mod)
     for i, item in pairs(ChangedItems.Trinkets) do
         if (item.Timeout > 0) then
@@ -319,41 +343,37 @@ local function PostUpdate(mod)
         end 
     end
 end
+Collectibles:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 
-local function PrePickupCollision(mod, pickup, other, low)
-    local isTrinket = pickup.Variant == PickupVariant.PICKUP_TRINKET;
-    if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or isTrinket) then
-        if (other.Type == EntityType.ENTITY_PLAYER) then
-            local player = other:ToPlayer();
-            local data = GetPlayerData(player, true);
-            if (player:IsExtraAnimationFinished() and pickup.Wait <= 0) then
-                data.TouchedItem = {
-                    ID = pickup.SubType,
-                    IsTrinket = isTrinket
-                };
-            end
+-- local function PrePickupCollision(mod, pickup, other, low)
+--     local isTrinket = pickup.Variant == PickupVariant.PICKUP_TRINKET;
+--     if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or isTrinket) then
+--         if (other.Type == EntityType.ENTITY_PLAYER) then
+--             local player = other:ToPlayer();
+--             local data = GetPlayerData(player, true);
+--             if (player:IsExtraAnimationFinished() and pickup.Wait <= 0) then
+--                 data.TouchedItem = {
+--                     ID = pickup.SubType,
+--                     IsTrinket = isTrinket
+--                 };
+--             end
+--         end
+--     end
+-- end
+
+
+local loopCount = 0;
+local function PreGetCollectible(mod, pool, decrease, seed)
+    loopCount = loopCount + 1;
+    for i, info in pairs(Callbacks.Functions.PreGetCollectible) do
+        local result = info.Func(mod, pool, decrease, seed, loopCount);
+        if (result) then
+            loopCount = loopCount - 1;
+            return result;
         end
     end
+    loopCount = loopCount - 1;
 end
-
-function Collectibles:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Collectibles.onPlayerUpdate);
-    mod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Collectibles.onPlayerRender);
-    mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, Collectibles.onGameStarted);
-    mod:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
-    mod:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate);
-    mod:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, PostPickupRemove, EntityType.ENTITY_PICKUP);
-    --mod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, PrePickupCollision);
-end
-
-function Collectibles:Unregister(mod)
-    mod:RemoveCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Collectibles.onPlayerUpdate);
-    mod:RemoveCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Collectibles.onPlayerRender);
-    mod:RemoveCallback(ModCallbacks.MC_POST_GAME_STARTED, Collectibles.onGameStarted);
-    mod:RemoveCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
-    mod:RemoveCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate);
-    mod:RemoveCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, PostPickupRemove);
-    --mod:RemoveCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, PrePickupCollision);
-end
+Collectibles:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, PreGetCollectible);
 
 return Collectibles;

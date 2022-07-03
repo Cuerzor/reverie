@@ -1,10 +1,10 @@
 
 -- boss designs
-local path = HPBars.iconPath
-local barPath = HPBars.barPath
+local path = HPBars.iconPath.."reverie/"
+local barPath = HPBars.barPath.."reverie/"
 HPBars.BarStyles["Doremy"] = {
-    sprite = barPath .. "bosses/bossbar_doremy.png",
-    overlayAnm2 = barPath .. "bosses/doremy_bosshp_overlay.anm2",
+    sprite = barPath .. "bossbar_doremy.png",
+    overlayAnm2 = barPath .. "doremy_bosshp_overlay.anm2",
     overlayAnimationType = "Animated",
     idleColoring = HPBars.BarColorings.none,
     hitColoring = HPBars.BarColorings.white,
@@ -32,11 +32,13 @@ HPBars.BossDefinitions[type.."."..variant] = {
 };
 
 
-local ufoType = THI.Monsters.BonusUFO.Type;
-local ufoRedVariant = THI.Monsters.BonusUFO.Variant;
-local ufoBlueVariant = THI.Monsters.BonusUFO.BlueVariant;
-local ufoGreenVariant = THI.Monsters.BonusUFO.GreenVariant;
-local ufoColorfulVariant = THI.Monsters.BonusUFO.RainbowVariant;
+local UFO = THI.Monsters.BonusUFO;
+local ufoType = UFO.Type;
+local ufoVariant = UFO.Variant;
+local ufoRedSubType = UFO.SubTypes.RED;
+local ufoBlueSubType = UFO.SubTypes.BLUE;
+local ufoGreenSubType = UFO.SubTypes.GREEN;
+local ufoColorfulSubType = UFO.SubTypes.RAINBOW;
 
 local bosses = THI.Bosses;
 local TheAbandoned = bosses.TheAbandoned;
@@ -46,38 +48,24 @@ local TheCentipede = bosses.TheCentipede;
 local Necrospyder = bosses.Necrospyder;
 local Pyroplume = bosses.Pyroplume;
 local Guppet = bosses.Guppet;
-HPBars.BossDefinitions[ufoType.."."..ufoRedVariant] = {
-    sprite = path .. "ufo_red.png",
-    offset = Vector(-6, 0)
-};
-HPBars.BossDefinitions[ufoType.."."..ufoBlueVariant] = {
-    sprite = path .. "ufo_blue.png",
-    offset = Vector(-6, 0)
-};
-HPBars.BossDefinitions[ufoType.."."..ufoGreenVariant] = {
-    sprite = path .. "ufo_green.png",
-    offset = Vector(-6, 0)
-};
-HPBars.BossDefinitions[ufoType.."."..ufoColorfulVariant] = {
+HPBars.BossDefinitions[ufoType.."."..ufoVariant] = {
 	sprite = path .. "ufo_red.png",
 	conditionalSprites = {
 		{
 			function(entity)
-				return entity.FrameCount % 4 == 1;
+				return entity.SubType == ufoBlueSubType or (entity.SubType == ufoColorfulSubType and entity.FrameCount % 4 == 1);
 			end,
 			path .. "ufo_blue.png"
 		},
 		{
-			
 			function(entity)
-				return entity.FrameCount % 4 == 2;
+				return entity.SubType == ufoGreenSubType or (entity.SubType == ufoColorfulSubType and entity.FrameCount % 4 == 2);
 			end,
 			path .. "ufo_green.png"
 		},
 		{
-			
 			function(entity)
-				return entity.FrameCount % 4 == 3;
+				return entity.SubType == ufoColorfulSubType and entity.FrameCount % 4 == 3;
 			end,
 			path .. "ufo_yellow.png"
 		}
@@ -128,3 +116,26 @@ HPBars.BossDefinitions[Guppet.Type.."."..Guppet.Variant] = {
 	sprite = path .. "guppet.png",
 	offset = Vector(-6, 0)
 };
+
+
+-- Reverie.
+local Notes = THI.Bosses.ReverieNote;
+
+local conditionalSpr = {};
+for _, subtype in pairs(Notes.SubTypes) do
+	table.insert(conditionalSpr, {
+		function(entity)
+			return entity.SubType == subtype;
+		end,
+		path .. "reverie/note_"..subtype..".png"
+	});
+end
+HPBars.BossDefinitions[Notes.Type.."."..Notes.Variant] = {
+	sprite = path .. "reverie/note_0.png",
+	conditionalSprites = conditionalSpr,
+	offset = Vector(0, 0)
+};
+
+HPBars.BossIgnoreList[Notes.Type.."."..Notes.Variant] = function(entity)
+	return not Notes:IsNoteActive(entity);
+end

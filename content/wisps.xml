@@ -188,19 +188,19 @@
 			73: ECOLI
 	-->
 	<!-- Yin-Yang Orb -->
-	<wisp id="1" hp="2.5" layer="2" damage="1.5" tearScale="0.6" flameColor="flame_red" coreColor="default" tearColor="tear_red" coreGfx="yin-yang.png" />
-	<wisp id="5" hp="1" layer="2" damage="3" tearScale="1" tearFlags="64" tearVariant="39" flameColor="flame_red" coreColor="core_yellow" tearColor="default" coreGfx="pentastar.png" />
+	<wisp id="1" hp="2.5" layer="2" damage="1.5" tearScale="0.6" flameColor="flame_red" coreColor="default" tearColor="tear_red" coreGfx="reverie/yin-yang.png" />
+	<wisp id="5" hp="1" layer="2" damage="3" tearScale="1" tearFlags="64" tearVariant="39" flameColor="flame_red" coreColor="core_yellow" tearColor="default" coreGfx="reverie/pentastar.png" />
     <wisp id="7" count="0" />
-	<wisp id="10" hp="2" layer="2" damage="1" tearScale="0.6" tearFlags="22" flameColor="flame_black" coreColor="default" tearColor="tear_red" coreGfx="cataclysm.png" />
-    <wisp id="24" hp="2" layer="2" damage="1" tearScale="0.6" fireDelay="30" tearFlags="3" flameColor="flame_black" coreColor="default" tearColor="tear_black" coreGfx="note.png" />
-	<wisp id="25" hp="2" layer="2" damage="3" tearScale="0.6" fireDelay="60" tearFlags="14" flameColor="flame_white" coreColor="default" tearColor="tear_white" coreGfx="note.png" />
-	<wisp id="26" hp="2" layer="2" damage="2" tearScale="0.6" fireDelay="45" tearFlags="13" flameColor="flame_red" coreColor="default" tearColor="tear_red" coreGfx="note.png" />
+	<wisp id="10" hp="2" layer="2" damage="1" tearScale="0.6" tearFlags="22" flameColor="flame_black" coreColor="default" tearColor="tear_red" coreGfx="reverie/cataclysm.png" />
+    <wisp id="24" hp="2" layer="2" damage="1" tearScale="0.6" fireDelay="30" tearFlags="3" flameColor="flame_black" coreColor="default" tearColor="tear_black" coreGfx="reverie/note.png" />
+	<wisp id="25" hp="2" layer="2" damage="3" tearScale="0.6" fireDelay="60" tearFlags="14" flameColor="flame_white" coreColor="default" tearColor="tear_white" coreGfx="reverie/note.png" />
+	<wisp id="26" hp="2" layer="2" damage="2" tearScale="0.6" fireDelay="45" tearFlags="13" flameColor="flame_red" coreColor="default" tearColor="tear_red" coreGfx="reverie/note.png" />
 	<!-- DELETED ERHU -->
 	<wisp id="11" hp="12" layer="0" damage="6" flameColor="flame_red" coreColor="core_yellow" tearColor="tear_yellow" coreGfx="glitch.png" />
 	<!-- Roukanken -->
 	<wisp id="27" hp="12" layer="0" damage="6" canShoot="false" flameColor="flame_white" coreColor="core_white" coreGfx="core.png" />
 	<!-- Gap -->
-	<wisp id="31" hp="8" damage="6" flameColor="flame_purple" coreColor="default" tearColor="tear_purple" procChance="0.1" tearFlags2="81" coreGfx="gap_eye.png" />
+	<wisp id="31" hp="8" damage="6" flameColor="flame_purple" coreColor="default" tearColor="tear_purple" procChance="0.1" tearFlags2="81" coreGfx="reverie/gap_eye.png" />
 	<!-- Jar of Fireflies -->
 	<wisp id="41" count="3" hp="2" damage="1" tearScale="0.6" tearFlags="22" flameColor="flame_orange" coreColor="core_orange" tearColor="tear_orange" coreGfx="fly.png" />
 	<!-- Book of Years -->
@@ -218,37 +218,75 @@
 	<wisp id="84" count="0" canShoot="false" layer="-1" hp="1" damage="1" flameColor="flame_green" coreColor="core_white"/>
 	<!-- Benediction -->
 	<wisp id="86" count="0" layer="1" hp="12" damage="3" flameColor="flame_blue" coreColor="core_blue" coreGfx="core.png" tearColor="tear_blue"/>
+	<!-- Onbashira -->
+	<wisp id="87" layer="1" hp="3" damage="1" procChance="0.1" tearFlags2="39" flameColor="flame_blue" coreColor="core_white" coreGfx="core.png" tearColor="tear_blue"/>
+	
+	
+	<!-- Geographic Chain -->
+	<wisp id="89" layer="1" hp="3" damage="2" tearFlags="70" tearVariant="42" flameColor="flame_white" coreColor="core_brown" coreGfx="core.png" tearColor="default"/>
 	<!-- Rune Sword -->
 	<wisp id="90" count="0" layer="1" hp="2" damage="3" flameColor="flame_purple" coreColor="core_purple" tearColor="tear_purple" coreGfx="rune.png" tearFlags2="80" procChance="0.15"/>
+	<!-- Keystone -->
+	<wisp id="92" layer="1" hp="4" damage="2" tearFlags="70" tearVariant="42" flameColor="core_brown" coreColor="core_brown" coreGfx="core.png" tearColor="default"/>
 
 
+    <!-- TH11-->
+	<!-- Bucket of wisps -->
+	<wisp id="101" count="0" layer="1" hp="6" damage="2" flameColor="flame_cyan" coreColor="core_cyan" tearColor="tear_cyan" coreGfx="core.png"/>
 	<!-- Psycho Knife -->
 	<wisp id="108" count="0" layer="2" hp="3" damage="2" flameColor="flame_black" coreColor="core_red" coreGfx="core.png" tearColor="tear_black"/>
+	
+    <!-- TH12-->
 	<!-- Bishamonten's Pagota -->
 	<wisp id="125" count="12" procChance="0.1" tearFlags2="53" tearColor2="tear_gold" layer="2" hp="2" damage="2" flameColor="flame_gold" coreColor="core_gold" coreGfx="coin.png" tearColor="tear_yellow"/>
 	<!-- Sorcerer's Scroll -->
-	<wisp id="126" count="0" layer="1" hp="3" damage="2" flameColor="flame_purple" coreColor="core_blue" coreGfx="glyph_spell.png" tearColor="tear_purple"/>
+	<wisp id="126" count="0" layer="1" hp="3" damage="2" flameColor="flame_purple" coreColor="core_blue" coreGfx="reverie/glyph_spell.png" tearColor="tear_purple"/>
 	<!-- Saucer Remote -->
 	<wisp id="127" count="0"/>
 	<!-- Tengu Cellphone -->
 	<wisp id="128" count="0" procChance="0.1" tearFlags2="53" tearColor2="tear_gold" layer="1" hp="4" damage="2" flameColor="flame_gold" coreColor="core_gold" coreGfx="coin.png" tearColor="tear_yellow"/>
-	<!-- Warpping Hairpin -->
+	
+    <!-- TH13-->
+	<!-- Warping Hairpin -->
 	<wisp id="143" count="0" layer="2" hp="1" damage="1" flameColor="flame_gold" coreColor="core_gold" coreGfx="coin.png" tearColor="tear_yellow"/>
 	<!-- D2147483647 -->
 	<wisp id="147" count="0" />
 	<!-- Empty Book -->
 	<wisp id="148" count="0" />
+
+    <!-- TH14-->
+	<!-- Wild Fury -->
+	<wisp id="163" hp="1" fireDelay="5" damage="6" tearScale="1.2" flameColor="flame_black" tearVariant="1" coreColor="core_red" coreGfx="dripping.png" />
 	<!-- D Flip -->
 	<wisp id="166" count="0" hp="4" damage="3" flameColor="flame_white" tearColor="tear_white" coreColor="core_white" coreGfx="dice.png" />
 	<!-- Miracle Mallet -->
-	<wisp id="167" hp="12" damage="3" tearFlags="53" tearColor="tear_gold" flameColor="flame_gold" coreColor="default" coreGfx="miracle_mallet.png" />
+	<wisp id="167" hp="12" damage="3" tearFlags="53" tearColor="tear_gold" flameColor="flame_gold" coreColor="default" coreGfx="reverie/miracle_mallet.png" />
+	<!-- Nimble Fabric -->
+	<wisp id="169" hp="2" layer="1" damage="1" tearScale="0.5" tearFlags="0" flameColor="flame_purple" coreColor="default" tearColor="tear_purple" coreGfx="core.png" />
+	<!-- Miracle Mallet Replica -->
+	<wisp id="170" hp="1" layer="1" damage="1.5" tearScale="0.5" tearFlags="0" flameColor="flame_yellow" coreColor="default" tearColor="tear_yellow" coreGfx="reverie/hammer.png" />
 	
+    <!-- TH17-->
 	<!-- Fetus Blood -->
 	<wisp id="221" hp="2" layer="2" damage="1" tearScale="0.6" flameColor="flame_red" coreColor="core_red" tearColor="tear_red" coreGfx="meat.png" />
+	
+    <!-- TH18-->
+	<!-- Gambling D6 -->
+	<wisp id="241" count="0" hp="2" damage="3" flameColor="flame_purple" coreColor="core_purple" coreGfx="dice.png"/>
 	<!-- Yamawaro's Crate -->
 	<wisp id="242" count="0" />
+	<!-- Delusion Pipe -->
+	<wisp id="243" hp="2" layer="0" damage="1.5" flameColor="flame_white" coreColor="core_red" tearColor="tear_white" coreGfx="reverie/pipe_whirl.png" />
+	<!-- Soul Magatama -->
+	<wisp id="244" hp="3" layer="1" damage="1" flameColor="flame_green" coreColor="core_default" tearColor="tear_green" coreGfx="reverie/magatama.png" />
 	<!-- Exchange Ticket -->
 	<wisp id="247" hp="12" layer="0" damage="2" tearScale="0.6" flameColor="flame_green" coreColor="core_green" tearColor="tear_green" coreGfx="coin.png" />
+	<!-- Rebel Mecha Caller -->
+	<wisp id="249" hp="12" layer="0" damage="2" tearScale="0.6" flameColor="flame_red" coreColor="core_brown" tearColor="default" coreGfx="heart.png" />
+	<!-- D Siphon -->
+	<wisp id="251" count="0" hp="24" layer="0" damage="2" tearScale="0.6" flameColor="flame_black" coreColor="core_black" tearColor="tear_black" coreGfx="dice.png" />
+	
+	
 	<!-- My Manual -->
 	<wisp id="149" hp="2" layer="2" damage="2" flameColor="default" coreColor="default" coreGfx="core.png" />
 	<!-- My Guide -->
@@ -258,9 +296,9 @@
 
 
 	<!-- Dark Ribbion, For Red UFO -->
-	<wisp id="3" hp="12" layer="0" damage="1" flameColor="flame_red" coreColor="default" tearColor="tear_red" coreGfx="ufo_red.png" />
+	<wisp id="3" hp="12" layer="0" damage="1" flameColor="flame_red" coreColor="default" tearColor="tear_red" coreGfx="reverie/ufo_red.png" />
 	<!-- Maid Suit, For Blue UFO -->
-	<wisp id="8" hp="12" layer="0" damage="1" flameColor="flame_blue" coreColor="default" tearColor="tear_blue" coreGfx="ufo_blue.png" />
+	<wisp id="8" hp="12" layer="0" damage="1" flameColor="flame_blue" coreColor="default" tearColor="tear_blue" coreGfx="reverie/ufo_blue.png" />
 	<!-- Spring of Daiyousei, For Green UFO -->
-	<wisp id="4" hp="12" layer="0" damage="1" flameColor="flame_green" coreColor="default" tearColor="tear_green" coreGfx="ufo_green.png" />
+	<wisp id="4" hp="12" layer="0" damage="1" flameColor="flame_green" coreColor="default" tearColor="tear_green" coreGfx="reverie/ufo_green.png" />
 </wisps>

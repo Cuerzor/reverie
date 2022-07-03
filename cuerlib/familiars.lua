@@ -1,32 +1,39 @@
-local Lib = CuerLib;
-local Consts = CuerLib.Consts; 
-local Math = CuerLib.Math
+local Lib = _TEMP_CUERLIB;
+local Consts = Lib.Consts; 
+local Math = Lib.Math;
+local Synergies = Lib.Synergies;
+local Detection = Lib.Detection;
 
-local Familiars = {
-    AnimationNames = {
-        [Direction.NO_DIRECTION] = "Down",
-        [Direction.LEFT] = "Side",
-        [Direction.UP] = "Up",
-        [Direction.RIGHT] = "Side",
-        [Direction.DOWN] = "Down"
-    }
+local Familiars = Lib:NewClass();
+Familiars.AnimationNames = {
+    [Direction.NO_DIRECTION] = "Down",
+    [Direction.LEFT] = "Side",
+    [Direction.UP] = "Up",
+    [Direction.RIGHT] = "Side",
+    [Direction.DOWN] = "Down"
 }
 
 
-function Familiars:GetFireVector(familiar, shootDirection, kingbaby)
-    if (kingbaby == nil) then
-        kingbaby = true;
-    end 
-
+function Familiars:GetFireVector(familiar, shootDirection, noModifiers, shootRange)
+    shootRange = shootRange or 200;
     local player = familiar.Player;
-    if (kingbaby) then
+    if (not noModifiers) then
         if (player:HasCollectible(CollectibleType.COLLECTIBLE_KING_BABY)) then
-            local enemy = Isaac.FindInRadius(familiar.Position, 200, EntityPartition.ENEMY);
-            if (#enemy > 0) then
-                local Detection = Lib.Detection;
-                if (Detection.IsValidEnemy(enemy[1])) then
-                    return (enemy[1].Position - familiar.Position):Normalized();
+            local enemies = Isaac.FindInRadius(familiar.Position, shootRange, EntityPartition.ENEMY);
+            local enemy = nil;
+            local Detection = Lib.Detection;
+            for i, ent in pairs(enemies) do
+                if (Detection.IsValidEnemy(ent) and (not enemy or familiar.Position:Distance(ent.Position) < familiar.Position:Distance(enemy.Position))) then
+                    enemy = ent;
                 end
+            end
+            if (enemy) then
+                return (enemy.Position - familiar.Position):Normalized();
+            end
+        else
+            local target = Synergies:GetMarkedTarget(player);
+            if (target) then
+                return (target.Position - familiar.Position):Normalized();
             end
         end
     end

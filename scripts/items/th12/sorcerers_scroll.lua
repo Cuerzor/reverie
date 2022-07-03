@@ -1,6 +1,7 @@
 local Stats = CuerLib.Stats;
 local CompareEntity = CuerLib.Detection.CompareEntity;
 local Actives = CuerLib.Actives;
+local Players = CuerLib.Players;
 local Scroll = ModItem("Sorcerer's Scroll", "SORCERERS_SCROLL");
 
 local ScrollCharges = Isaac.GetItemConfig():GetCollectible(Scroll.Item).MaxCharges;
@@ -29,10 +30,10 @@ do
             soulCount = player:GetSoulHearts();
             local redHearts = player:GetHearts ( )
             local boneHearts = player:GetBoneHearts();
-            if (redHearts <= 0 and boneHearts < 0 or playerType == PlayerType.PLAYER_THESOUL) then
+            if (redHearts <= 0 and boneHearts <= 0 or playerType == PlayerType.PLAYER_THESOUL) then
                 soulCount = soulCount - 1;
             end
-            player:AddSoulHearts (-soulCount);
+            Players:AddRawSoulHearts (player,-soulCount);
         end
         if (soulCount > 0) then
             

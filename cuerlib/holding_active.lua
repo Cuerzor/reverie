@@ -1,7 +1,6 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 
-local HoldingActive = {
-}
+local HoldingActive = Lib:NewClass();
 
 local function EndHolding(player)
     local playerData = HoldingActive:GetPlayerData(player, true);
@@ -13,9 +12,11 @@ function HoldingActive:GetPlayerData(player, init)
     if (init == nil) then
         init = true;
     end
-    local playerData = Lib:GetData(player, true);
+    local playerData = Lib:GetLibData(player, true);
     if (init) then
-        playerData.HoldingActive = playerData.HoldingActive or {}
+        playerData.HoldingActive = playerData.HoldingActive or {
+            HoldFrame = 0
+        }
     end
     return playerData.HoldingActive;
 end
@@ -26,6 +27,7 @@ function HoldingActive:GetHoldingItem(player)
 end
 
 function HoldingActive:SwitchHolding(id, player, slot)
+    local playerData = self:GetPlayerData(player, false);
     local holding = HoldingActive:GetHoldingItem(player);
     if (holding <= 0) then
         HoldingActive:Hold(id, player, slot);
@@ -41,6 +43,7 @@ function HoldingActive:Hold(id, player, slot)
     playerData.Slot = slot;
     player:AnimateCollectible(id, "LiftItem");
     playerData.Lifting = false;
+    playerData.HoldFrame = player.FrameCount;
 end
 
 function HoldingActive:Cancel(player)
@@ -134,9 +137,13 @@ local function PostPlayerEffect(mod, player)
         local anim = spr:GetAnimation();
         local overlayAnim = spr:GetOverlayAnimation ( );
         if (HoldingActive:GetHoldingItem(player) > 0) then
-            if (player:IsExtraAnimationFinished() or not IsHoldingAnimation(anim)) then
-                EndHolding(player);
-                return;
+            -- Prevent player end holding instantly after get hit and use item, causing animation stuck.
+            if (player.FrameCount > playerData.HoldFrame + 1) then
+                -- If player has no animation or this animation is not Holding animation.
+                if (player:IsExtraAnimationFinished() or not IsHoldingAnimation(anim)) then
+                    EndHolding(player);
+                    return;
+                end
             end
             if (overlayAnim == "") then
                 playerData.Lifting = true;
@@ -151,6 +158,7 @@ local function PostPlayerEffect(mod, player)
         end
     end
 end
+HoldingActive:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PostPlayerEffect)
 
 local function InputAction(mod, entity,hook, action)
     if (entity and entity.Type == EntityType.ENTITY_PLAYER) then
@@ -161,56 +169,7 @@ local function InputAction(mod, entity,hook, action)
         end
     end
 end
-
--- local function PreUseItem(mod, item,rng,player,flags,slot,varData)
---     local holding = HoldingActive:GetHoldingItem(player);
---     if (flags & UseFlag.USE_NOANIM <= 0 and holding > 0 and holding ~= item) then
---         HoldingActive:Cancel(player);
---     end
--- end
--- -- local function PostUseItem(mod, item, rng, player, flags, slot, varData)
--- --     local holding = HoldingActive:GetHoldingItem(player);
--- --     if (flags & UseFlag.USE_NOANIM <= 0 and holding > 0 and holding ~= item) then
--- --         EndHolding(player);
--- --     end
--- -- end
-
--- local function PostUseCard(mod, card, player, flags)
---     if (flags & UseFlag.USE_NOANIM <= 0) then
---         local holding = HoldingActive:GetHoldingItem(player);
---         if (holding > 0) then
---             EndHolding(player);
---         end
---     end
--- end
-
--- local function PostUsePill(mod, effect, player, flags)
---     if (flags & UseFlag.USE_NOANIM <= 0) then
---         local holding = HoldingActive:GetHoldingItem(player);
---         if (holding > 0) then
---             EndHolding(player);
---         end
---     end
--- end
-
-
-function HoldingActive:Register(mod)
-    -- mod:AddCallback(ModCallbacks.MC_PRE_USE_ITEM, PreUseItem)
-    -- --mod:AddCallback(ModCallbacks.MC_USE_ITEM, PostUseItem)
-    -- mod:AddCallback(ModCallbacks.MC_USE_CARD, PostUseCard)
-    -- mod:AddCallback(ModCallbacks.MC_USE_PILL, PostUsePill)
-    mod:AddCallback(ModCallbacks.MC_INPUT_ACTION, InputAction)
-    mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PostPlayerEffect)
-end
-
-function HoldingActive:Unregister(mod)
-    -- mod:RemoveCallback(ModCallbacks.MC_PRE_USE_ITEM, PreUseItem)
-    -- --mod:RemoveCallback(ModCallbacks.MC_USE_ITEM, PostUseItem)
-    -- mod:RemoveCallback(ModCallbacks.MC_USE_CARD, PostUseCard)
-    -- mod:RemoveCallback(ModCallbacks.MC_USE_PILL, PostUsePill)
-    mod:RemoveCallback(ModCallbacks.MC_INPUT_ACTION, InputAction)
-    mod:RemoveCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PostPlayerEffect)
-end
+HoldingActive:AddCallback(ModCallbacks.MC_INPUT_ACTION, InputAction)
 
 
 return HoldingActive;

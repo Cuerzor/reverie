@@ -228,33 +228,33 @@ end
 Dream:AddCallback(ModCallbacks.MC_NPC_UPDATE, doremyUpdate, Doremy.Type);
 
 
-local damageLock = false;
-local function doremyTakeDamage(mod, tookDamage, amount, flags, source, countdown)
-    if (tookDamage.Variant == Doremy.Variant) then
-        if (amount > 0) then
-            local doremy = tookDamage;
-            local data = GetDoremyData(doremy);
+-- local damageLock = false;
+-- local function doremyTakeDamage(mod, tookDamage, amount, flags, source, countdown)
+--     if (tookDamage.Variant == Doremy.Variant) then
+--         if (amount > 0) then
+--             local doremy = tookDamage;
+--             local data = GetDoremyData(doremy);
             
-            if (data.DamageLimit <= 0) then
-                return false;
-            end
+--             if (data.DamageLimit <= 0) then
+--                 return false;
+--             end
 
             
-            -- Recude Damage.
-            if (amount > data.DamageLimit and not damageLock) then
-                damageLock = true;
-                doremy:TakeDamage(data.DamageLimit, flags, source, countdown);
-                damageLock = false;
+--             -- Recude Damage.
+--             if (amount > data.DamageLimit and not damageLock) then
+--                 damageLock = true;
+--                 doremy:TakeDamage(data.DamageLimit, flags, source, countdown);
+--                 damageLock = false;
                 
-                data.DamageLimit = 0;
-                return false;
-            else 
-                data.DamageLimit = data.DamageLimit - amount;
-            end
-        end
-    end
-end
-Dream:AddCustomCallback(CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, doremyTakeDamage, Doremy.Type);
+--                 data.DamageLimit = 0;
+--                 return false;
+--             else 
+--                 data.DamageLimit = data.DamageLimit - amount;
+--             end
+--         end
+--     end
+-- end
+-- Dream:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, doremyTakeDamage, Doremy.Type);
 
 
 
@@ -270,7 +270,7 @@ local function doremyKill(mod, entity)
         --     return false;
         -- else
         --THI.SFXManager:Play(SoundEffect.SOUND_MEGA_BLAST_START);
-        Dream.SpellCardEffect.Burst(doremy.Position);
+        THI.Effects.SpellCardWave.Burst(doremy.Position);
         THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_DESTROY);
         THI.Game:ShakeScreen(30);
         table.insert(deadDoremyList, doremy);
@@ -303,7 +303,6 @@ local function doremyGameUpdate(mod)
             deadDoremyList[i] = nil;
         end
     end
-
 end
 Dream:AddCallback(ModCallbacks.MC_POST_UPDATE, doremyGameUpdate);
 

@@ -22,15 +22,15 @@ function SteamAge:PostUpdate()
 end
 SteamAge:AddCallback(ModCallbacks.MC_POST_UPDATE, SteamAge.PostUpdate);
 
-function SteamAge:PreGetCollectible(pool, decrease, seed)
+function SteamAge:PreGetCollectible(pool, decrease, seed, loopCount)
     local cellphone = THI.Collectibles.TenguCellphone;
     if (not cellphone.GeneratingOffers) then
-        if (Isaac.GetChallenge() == SteamAge.Id and Game():GetFrameCount() > 2 and ModifyPoolCooldown <= 0) then
+        if (loopCount == 1 and Isaac.GetChallenge() == SteamAge.Id and Game():GetFrameCount() > 2 and ModifyPoolCooldown <= 0) then
             return CollectibleType.COLLECTIBLE_QUARTER;
         end
     end
 end
-SteamAge:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, SteamAge.PreGetCollectible);
+SteamAge:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, SteamAge.PreGetCollectible, nil, 100);
 
 function SteamAge:PreGameExit(ShouldSave)
     ModifyPoolCooldown = 2;

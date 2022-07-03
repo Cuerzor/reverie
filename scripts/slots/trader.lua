@@ -25,6 +25,15 @@ Trader.Classes = {
     CLASS_CURSE = 6,
     NUM_CLASSES = 7,
 }
+Trader.ClassWeights = {
+    [Trader.Classes.CLASS_NORMAL] = 1,
+    [Trader.Classes.CLASS_SHOP] = 0.5,
+    [Trader.Classes.CLASS_SECRET] = 0.2,
+    [Trader.Classes.CLASS_BOSS] = 0.6,
+    [Trader.Classes.CLASS_DEVIL] = 0.2,
+    [Trader.Classes.CLASS_ANGEL] = 0.2,
+    [Trader.Classes.CLASS_CURSE] = 0.4,
+}
 
 local PlayerCollectibles = {
     List = {},
@@ -82,20 +91,18 @@ function Trader.GetBuyableItem(seed)
     return 1, ItemPoolType.POOL_DEVIL;
 end
 function Trader.GetClass(seed)
-    local value = seed % 100;
-    if (value >= 30) then
-        if (value < 50) then
-            return Trader.Classes.CLASS_SHOP;
-        elseif (value < 65) then
-            return Trader.Classes.CLASS_BOSS;
-        elseif (value < 75) then
-            return Trader.Classes.CLASS_CURSE;
-        elseif (value < 85) then
-            return Trader.Classes.CLASS_DEVIL;
-        elseif (value < 95) then
-            return Trader.Classes.CLASS_ANGEL;
-        elseif (value < 100) then
-            return Trader.Classes.CLASS_SECRET;
+    local totalWeight = 0;
+    for i, weight in pairs(Trader.ClassWeights) do
+        totalWeight = totalWeight + weight;
+    end
+
+    if (totalWeight > 0) then
+        local value = seed % totalWeight;
+        for i, weight in pairs(Trader.ClassWeights) do
+            value = value - weight;
+            if (value <= 0) then
+                return i;
+            end
         end
     end
     return Trader.Classes.CLASS_NORMAL
@@ -344,7 +351,7 @@ function Trader.GetOfferData(type, subType)
         sprite:Play("ShopIdle");
         sprite.Scale = Vector(0.5, 0.5);
     elseif (type == Trader.OfferType.OFFER_EMERALD) then
-        sprite:Load("gfx/emerald_icon.anm2", true);
+        sprite:Load("gfx/reverie/emerald_icon.anm2", true);
         sprite:Play("Icon");
         sprite.Scale = Vector(0.5, 0.5);
     end
@@ -374,9 +381,6 @@ function Trader:PostNPCUpdate(npc)
 
         npc.Velocity = npc.TargetPosition - npc.Position;
         npc:MultiplyFriction(0.6);
-        if (npc:IsDead()) then
-            print("dead");
-        end
 
         local data = Trader.GetTraderData(npc, false);
         if (data) then
@@ -487,7 +491,7 @@ function Trader:PostPlayerCollision(player, other, low)
         end
     end
 end
-Trader:AddCustomCallback(CLCallbacks.CLC_POST_PLAYER_COLLISION, Trader.PostPlayerCollision, 0);
+Trader:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_PLAYER_COLLISION, Trader.PostPlayerCollision, 0);
 
 
 -- function Trader:PostTraderKill(trader)

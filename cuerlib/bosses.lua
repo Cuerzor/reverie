@@ -1,37 +1,15 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 local Rooms = Lib.Rooms;
 
-local Bosses = {
-    CustomRooms = {
-
-    },
-    BossConfigs = {
-
-    },
-    SplashSprite = Sprite(),
-    PlayingSplashSprite = nil,
-    BackgroundColor = Color.Default,
-    ForceCustomBoss = false
-}
-local ReplacingGridConfig = nil;
-
-local LayerOrders = {
-    0, 1, 2, 9, 14, 13, 4, 5, 12, 11, 7, 8, 10, 15
-}
+local Bosses = Lib:NewClass();
+Bosses.CustomRooms = {};
+Bosses.BossConfigs = {};
+Bosses.SplashSprite = Sprite();
 Bosses.SplashSprite.PlaybackSpeed = 0.4978;
 Bosses.SplashSprite:Load("gfx/ui/boss/cuerlib_versusscreen.anm2", true);
-
-
-
-Bosses.BossRoomType = {
-    NO_BOSS_ROOM = 0,
-    NORMAL = 1,
-    FIRST_IN_LABYRINTH = 2,
-    SECOND_IN_LABYRINTH = 3
-}
-
-local renderedObject = false;
-
+Bosses.PlayingSplashSprite = nil;
+Bosses.BackgroundColor = Color.Default;
+Bosses.ForceCustomBoss = false;
 Bosses.StageBackgrounds = {
     
     {
@@ -103,6 +81,24 @@ Bosses.StageBackgrounds = {
         BossSpotPath = "gfx/ui/boss/bossspot_07x_corpse.png"
     },
 }
+Bosses.BossRoomType = {
+    NO_BOSS_ROOM = 0,
+    NORMAL = 1,
+    FIRST_IN_LABYRINTH = 2,
+    SECOND_IN_LABYRINTH = 3
+}
+
+local ReplacingGridConfig = nil;
+
+local LayerOrders = {
+    0, 1, 2, 9, 14, 13, 4, 5, 12, 11, 7, 8, 10, 15
+}
+
+
+
+
+local renderedObject = false;
+
 local ClearColor = Color(0,0,0,0,0,0,0);
 local function UpdatePlaceholderSprite(gridEnt)
     gridEnt:GetSprite().Scale = Vector.Zero;
@@ -271,12 +267,13 @@ local function CreateBossReplacements()
         local currentBossRoom = bossRooms[i];
         local selectedList = {};
         -- Get valid room configs.
-        for name, roomConfig in pairs(Bosses.CustomRooms) do
+        for index, roomConfig in pairs(Bosses.CustomRooms) do
             local bossID = roomConfig.BossID;
+            local config = roomConfig.Room;
             if (not blacklist[tostring(bossID)]) then
                 -- If current room fits.
-                if (IsRoomFits(currentBossRoom.Index, currentBossRoom.Type, roomConfig)) then
-                    local bossID = roomConfig.BossID;
+                if (IsRoomFits(currentBossRoom.Index, currentBossRoom.Type, config)) then
+                    local bossID = config.BossID;
                     local bossConfig = Bosses.BossConfigs[bossID];
                     local encountered = true;
                     if (bossConfig) then
@@ -284,8 +281,8 @@ local function CreateBossReplacements()
                     end
                     if (not encountered) then
                         local value = rng:RandomInt(100);
-                        if (value < roomConfig.ReplaceChance or Bosses.ForceCustomBoss) then
-                            table.insert(selectedList, name);
+                        if (value < config.ReplaceChance or Bosses.ForceCustomBoss) then
+                            table.insert(selectedList, index);
                         end
                     end
                 end
@@ -293,11 +290,12 @@ local function CreateBossReplacements()
         end
         -- Select a random room config.
         if (#selectedList > 0) then
-            local selectedIndex = rng:RandomInt(#selectedList) + 1;
-            local selectedName = selectedList[selectedIndex]
-            globalData.ReplacedBosses[tostring(currentBossRoom.Index)] = selectedName;
-            local roomConfig = Bosses.CustomRooms[selectedName];
-            local bossID = roomConfig.BossID;
+            local listIndex = rng:RandomInt(#selectedList) + 1;
+            local roomIndex = selectedList[listIndex];
+            local roomConfig = Bosses.CustomRooms[roomIndex];
+            globalData.ReplacedBosses[tostring(currentBossRoom.Index)] = roomIndex;
+            local bossID = roomConfig.Room.BossID;
+            local selectedName = roomConfig.Name;
             blacklist[tostring(bossID)] = true;
         end
     end
@@ -519,7 +517,7 @@ end
 function Bosses:SetBossConfig(name, config, roomConfigs)
     self.BossConfigs[name] = config;
     for n, room in pairs(roomConfigs.CustomRooms) do
-        self.CustomRooms[n] = room;
+        table.insert(self.CustomRooms, {Name = n, Room = room})
     end
 end
 
@@ -551,9 +549,9 @@ local function GetRoomConfigForCurrent()
         local globalData = GetGlobalData(false);
         local replacedBoss = nil;
         if (globalData and globalData.ReplacedBosses) then
-            local name = globalData.ReplacedBosses[tostring(index)]
-            if (name) then
-                replacedBoss = Bosses.CustomRooms[name];
+            local roomIndex = globalData.ReplacedBosses[tostring(index)]
+            if (roomIndex) then
+                replacedBoss = Bosses.CustomRooms[roomIndex].Room;
             end
         end
         if (replacedBoss) then
@@ -574,26 +572,26 @@ local function PostNewRoom(mod)
         LoadBossRoom(replacedBoss);
     end
 end
+Bosses:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom);
 
 local function PostNewLevel(mod)
     ClearBossReplacements();
     CreateBossReplacements();
 end
+Bosses:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, PostNewLevel);
+
 local function PostGameStarted(mod, isContinued)
     if (isContinued) then
         PostNewRoom(mod);
     end
 end
+Bosses:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, PostGameStarted);
 
 --local IsOddFrame = nil;
 
 local function PostRender(mod)
     
-    --IsOddFrame = not IsOddFrame;
     local spr = Bosses.PlayingSplashSprite;
-    -- for i = 1, 20000 do
-    --     print("       ");
-    -- end
     if (spr) then
         local game = Game();
         local room = game:GetRoom();
@@ -614,39 +612,6 @@ local function PostRender(mod)
                 end
                 if (layer == 0) then
                     spr.Color = Bosses.BackgroundColor;
-                    -- function FindColor() 
-                    --     for tint = 0.2, 0.03, -0.001 do
-                    --         for offset = -1, 1, 0.01 do
-                    --         --while (red > 0 or green > 0 or blue > 0) do
-                    --             --offset = offset - 0.001;
-                    --             spr.Color = Color(tint,tint,tint,1,offset, offset, offset);
-                    --             local col = spr:GetTexel(Vector(0,0), Vector.Zero, 1, layer)
-                    --             local bottomCol = spr:GetTexel(Vector(0,220), Vector.Zero, 1, layer)
-                    --             local red = 1;
-                    --             local blue = 1;
-                    --             red = col.Red;
-                    --             blue = col.Blue;
-                    --             local bottomRed = bottomCol.Red;
-                    --             local bottomBlue = bottomCol.Blue;
-                    --             if (math.abs(red - 0.048) <= 0.001 and math.abs(bottomRed - 0.092) <= 0.002) then
-                    --                 print("Red & Green", red, bottomRed, tint, offset);
-                    --             end
-                    --             if (math.abs(blue - 0.05) <= 0.001 and math.abs(bottomBlue - 0.097) <= 0.002) then
-                    --                 print("Blue", blue, bottomBlue, tint, offset);
-                    --             end
-                    --         --end
-                    --         end
-                    --     end
-                    -- end
-
-                    -- function GetColors(maxX, maxY) 
-                    --     for x = 0, maxX do
-                    --         for y = 0, maxY do
-                    --             local col = spr:GetTexel(Vector(x,y), Vector.Zero, 1, layer)
-                    --             print(col.Red);
-                    --         end
-                    --     end
-                    -- end
                 end
                 spr:RenderLayer(layer, center + offset, clamp, Vector.Zero);
                 spr.Color = Color(1,1,1,1,0,0,0);
@@ -659,22 +624,19 @@ local function PostRender(mod)
         end
     end
 end
+Bosses:AddCallback(ModCallbacks.MC_POST_RENDER, PostRender);
+
 local function PostPlayerRender(mod, player)
     renderedObject = true;
 end
+Bosses:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, PostPlayerRender);
+
 local function ExecuteCMD(mod, cmd, params)
     if (cmd == "forcethboss" or cmd=="fthb") then
         Bosses.ForceCustomBoss = not Bosses.ForceCustomBoss;
         print( "Force Touhou Bosses has been set to "..tostring(Bosses.ForceCustomBoss)..".");
     end    
 end
-function Bosses:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, PostNewLevel);
-    mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom);
-    mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, PostGameStarted);
-    mod:AddCallback(ModCallbacks.MC_POST_RENDER, PostRender);
-    mod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, PostPlayerRender);
-    mod:AddCallback(ModCallbacks.MC_EXECUTE_CMD, ExecuteCMD);
-end
+Bosses:AddCallback(ModCallbacks.MC_EXECUTE_CMD, ExecuteCMD);
 
 return Bosses;

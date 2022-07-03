@@ -1,7 +1,5 @@
-local Lib = CuerLib;
-local Inputs = {
-
-}
+local Lib = _TEMP_CUERLIB;
+local Inputs = Lib:NewClass();
 
 function Inputs.DisabledInput(hook)
     if (hook == InputHook.IS_ACTION_PRESSED or hook == InputHook.IS_ACTION_TRIGGERED) then
@@ -36,89 +34,32 @@ function Inputs.GetRawShootingVector(player, center)
         return Vector.Zero;
     end
 
-    center = center or player.Position;
-    if (player.ControllerIndex == 0) then
-        if (Input.IsMouseBtnPressed(0)) then
-            return (Input.GetMousePosition(true) - center):Normalized();
+    if (Options.MouseControl) then
+        center = center or player.Position;
+        if (player.ControllerIndex == 0) then
+            if (Input.IsMouseBtnPressed(0)) then
+                return (Input.GetMousePosition(true) - center):Normalized();
+            end
         end
     end
     return player:GetShootingJoystick();
 end
 
--- local pressed = {};
--- function Inputs.IsActionDown(action, controllerIndex)
---     pressed[tostring(controllerIndex)] = pressed[tostring(controllerIndex)] or {};
---     local controllerData = pressed[tostring(controllerIndex)];
-
---     local actionKey = tostring(action);
---     if (Input.IsActionPressed(action, controllerIndex)) then
---         if (not controllerData[actionKey]) then
---             controllerData[actionKey] = true;
---             return true;
---         end
---     else
---         controllerData[actionKey] = false;
---     end
---     return false;
--- end
-
-local actionsData = {};
-function Inputs.GetActionHoldTime(action, controllerIndex)
-    local controllerData = actionsData[tostring(controllerIndex)];
-    if (controllerData) then
-        local actionData = controllerData[action];
-        if (actionData) then
-            local time = actionData.ActionHoldTime;
-            return time or 0;
+function Inputs:GetShootingVector(player, center)
+    center = center or player.Position;
+    local shooting = self.GetRawShootingVector(player, center);
+    local target = Lib.Synergies:GetMarkedTarget(player);
+    if (target) then
+        shooting = target.Position - player.Position;
+    elseif (not player:HasCollectible(CollectibleType.COLLECTIBLE_ANALOG_STICK) and shooting:Length() > 0) then
+        if (math.abs(shooting.Y) >= math.abs(shooting.X)) then
+            shooting = Vector(0, shooting.Y);
+        elseif (shooting.X ~= 0) then
+            shooting = Vector(shooting.X, 0);
         end
     end
-    return 0;
-end
-function Inputs.IsActionDown(action, controllerIndex)
-    local controllerData = actionsData[tostring(controllerIndex)];
-    if (controllerData) then
-        local actionData = controllerData[action];
-        if (actionData) then
-            local pressed = actionData.ActionDown;
-            return pressed;
-        end
-    end
-    return false;
+    return shooting:Normalized();
 end
 
-local function PostUpdate(mod, player)
-
-    local game = Game();
-    for i = 0, game:GetNumPlayers() - 1 do
-        local player = game:GetPlayer(i);
-        local key = tostring(player.ControllerIndex);
-        actionsData[key] = actionsData[key] or {};
-    end
-
-    for index, controllerData in pairs(actionsData) do
-        local allNil = true;
-        for action = ButtonAction.ACTION_LEFT, ButtonAction.ACTION_MENUTAB do
-            controllerData[action] = controllerData[action] or {};
-            local actionData = controllerData[action] ;
-            if (Input.IsActionPressed(action, tonumber(index))) then
-                actionData.ActionDown = not actionData.ActionPressed
-                actionData.ActionPressed = true;
-                actionData.ActionHoldTime = (actionData.ActionHoldTime or 0) + 1;
-                allNil = false;
-            else
-                actionData.ActionDown = false;
-                actionData.ActionPressed = false;
-                actionData.ActionHoldTime = nil;
-            end
-        end
-        if (allNil) then
-            actionsData[index] = nil;
-        end
-    end
-end
-
-function Inputs:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
-end
 
 return Inputs;

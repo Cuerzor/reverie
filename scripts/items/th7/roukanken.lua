@@ -11,13 +11,14 @@ local Roukanken = ModItem("Roukanken", "Roukanken")
 Roukanken.Sword = {
     Type = Isaac.GetEntityTypeByName("Roukanken"),
     Variant = Isaac.GetEntityVariantByName("Roukanken"),
-    SubType = 5810,
+    SubType = 580,
     SpriteOffset = Vector(0, -10)
 };
 Roukanken.Hitbox = {
     Type = Isaac.GetEntityTypeByName("Roukanken Hitbox"),
     Variant = Isaac.GetEntityVariantByName("Roukanken Hitbox"),
-    SubType = 6400
+    SubType = 581,
+    DashSubType = 582
 };
 Roukanken.Config = {
     DashCooldown = 60,
@@ -26,9 +27,10 @@ Roukanken.Config = {
     DashDamageMulti = 2
 };
 Roukanken.YoumuSpirit = Isaac.GetPlayerTypeByName("Youmu's Spirit");
-Roukanken.YoumuCostume = Isaac.GetCostumeIdByPath("gfx/characters/character_youmu_hair.anm2");
-Roukanken.YoumuSpiritCostume = Isaac.GetCostumeIdByPath("gfx/characters/costume_youmu_spirit.anm2");
-Roukanken.SpiritSwordSpritePath = "gfx/effects/spirit_sword_roukanken.png";
+local rootPath = "gfx/reverie/characters/";
+Roukanken.YoumuCostume = Isaac.GetCostumeIdByPath(rootPath.."character_youmu_hair.anm2");
+Roukanken.YoumuSpiritCostume = Isaac.GetCostumeIdByPath(rootPath.."costume_youmu_spirit.anm2");
+Roukanken.SpiritSwordSpritePath = "gfx/reverie/effects/spirit_sword_roukanken.png";
 
 local function GetSpiritSwordData(sword)
     return Roukanken:GetData(sword, true, function() return {
@@ -64,7 +66,6 @@ function Roukanken.ChangeToYoumu(player)
     local playerData = Roukanken.GetPlayerData(player, true);
 
     playerData.IsYoumu = true;
-    Weapons.BanishWeapon(player, true);
 
     player:AddNullCostume(Roukanken.YoumuSpiritCostume);
     player:SetColor(Color(1,1,1,1,1,1,1), 10, 0, true, false)
@@ -174,7 +175,7 @@ local function GetDashTarget(player, direction)
 
 
         -- Create Hitbox.
-        local hitbox = Roukanken.CreateHitbox(player, 25, true, currentPos);
+        local hitbox = Roukanken.FireHitBox(player, 25, currentPos, true);
         
         local hitboxSpr = hitbox:GetSprite();
         hitboxSpr:Play("Slash");
@@ -226,15 +227,16 @@ end
 Roukanken:AddCallback(ModCallbacks.MC_USE_ITEM, Roukanken.onUseItem, Roukanken.Item);
 
 
-function Roukanken:onGameStarted(isContinued)
-    for p, player in Detection.PlayerPairs() do
-        local playerData = Roukanken.GetPlayerData(player, false);
-        if (playerData and playerData.IsYoumu) then
-            Weapons.BanishWeapon(player, true);
-        end
-    end
-end
-Roukanken:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, Roukanken.onGameStarted);
+-- function Roukanken:onGameStarted(isContinued)
+--     for p, player in Detection.PlayerPairs() do
+--         local playerData = Roukanken.GetPlayerData(player, false);
+--         if (playerData and playerData.IsYoumu) then
+            
+--             Weapons.BanishWeapon(player, true);
+--         end
+--     end
+-- end
+-- Roukanken:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, Roukanken.onGameStarted);
 
 function Roukanken:onPlayerUpdate(player)
     local playerData = Roukanken.GetPlayerData(player, false);
@@ -301,7 +303,7 @@ function Roukanken:onPlayerUpdate(player)
                     swordSprite.Rotation = (swordSprite.Rotation + (targetRotation - swordSprite.Rotation) * 0.3);
                     sword.Position = player.Position + swordPosOffset * 10;
 
-                    if (player.ControlsEnabled and player.ControlsCooldown <= 0 and playerData.Dash.Cooldown <= 0 and Actives.IsActiveItemDown(player, Roukanken.Item)) then
+                    if (player.ControlsEnabled and player.ControlsCooldown <= 0 and playerData.Dash.Cooldown <= 0 and Actives.IsActiveItemTriggered(player, Roukanken.Item)) then
                         Roukanken.SlashDash(player);
                     end
                 end
@@ -354,18 +356,30 @@ function Roukanken:onPlayerEffect(player)
     local playerData = Roukanken.GetPlayerData(player, false);
 
     if (playerData) then
+        local hasSpiritSword = player:HasWeaponType(WeaponType.WEAPON_SPIRIT_SWORD);
+        if (playerData.Slashing) then
+            local shouldBan = playerData.Slashing and not hasSpiritSword;
+            local weaponBanned = Weapons:IsWeaponsBanned(player);
+            if (shouldBan ~= weaponBanned) then
+                if (shouldBan) then
+                    Weapons.BanishWeapon(player, true);
+                else
+                    Weapons.UnbanWeapon(player);
+                end
+            end
+        end
+
         if (playerData.Slashing) then
             if (Stages.IsInMinesEscape()) then
                 Roukanken.EndSlash(player);
             end
 
-            local hasSpiritSword = player:HasWeaponType(WeaponType.WEAPON_SPIRIT_SWORD);
             if (not hasSpiritSword) then
                 -- Swing Sword
                 if (playerData.IsYoumu) then
                     if (player:GetAimDirection():Length() > 0.1) then
-                        if (playerData.SwingDelay <= 0) then
-                            playerData.SwingDelay = 11;
+                        if (player.FireDelay <= 0) then
+                            player.FireDelay = player.MaxFireDelay;
                             Roukanken.SwingSword(player);
                         end
                     end
@@ -426,7 +440,7 @@ function Roukanken.SwingSword(player)
         end
 
         -- Spawn Hitbox.
-        local hitbox = Roukanken.CreateHitbox(player, 50);
+        local hitbox = Roukanken.FireHitBox(player, 50);
         
         -- Play Animation.
         local sprite = sword:GetSprite();
@@ -453,7 +467,6 @@ function Roukanken.SpawnSword(player)
     
     local playerData = Roukanken.GetPlayerData(player);
     local sword = Isaac.Spawn(Roukanken.Sword.Type, Roukanken.Sword.Variant, Roukanken.Sword.SubType, player.Position, Vector.Zero, player):ToKnife();
-    sword.Size = 0;
     sword.Parent = player;
     sword.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE;
     sword.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NONE;
@@ -471,172 +484,207 @@ end
 -- Hitbox
 ------------------
 
+do
 
-function Roukanken.GetHitboxData(hitbox, init)
-    return Roukanken:GetData(hitbox, init, function() return {
-        Time = 11,
-        Fixed = false,
-        ChargeActive = false,
-        Offset = Vector.Zero,
-        SwingVelocity = Vector.Zero,
-        HitEnemies = {},
-        HitPickups = {}
-    } end);
-end
-
-
-function Roukanken.DestroyObstacles(position, size)
-    local room = THI.Game:GetRoom();
-    local extents = size;
-    local roomWidth = room:GetGridWidth();
-    local leftest = position.X - extents;
-    local topest = position.Y - extents;
-    local rightest = position.X + extents;
-    local bottomest = position.Y + extents;
-    local width = math.ceil((rightest - leftest) / 24);
-    local height = math.ceil((bottomest - topest) / 24);
+    function Roukanken.GetHitboxData(hitbox, init)
+        return Roukanken:GetData(hitbox, init, function() return {
+            Timeout = 11,
+            Offset = Vector.Zero,
+            SwingVelocity = Vector.Zero,
+            HitEnemies = {},
+            HitPickups = {}
+        } end);
+    end
     
-    for y=0, height do
-        for x=0, width do
-            local pos = Vector(leftest + 24 * x, topest + 24 * y);
-            if (pos:Distance(position) < size) then
-                local index = room:GetGridIndex(pos);
-                room:DestroyGrid(index);
-            end
-        end
-    end
-
-    for _,ent in pairs(Isaac.FindInRadius (position, size + 12, EntityPartition.ENEMY)) do
-        -- If it's a fire place but not white fire place.
-        if (ent.Type == EntityType.ENTITY_FIREPLACE and ent.Variant ~= 4) then
-            ent:Die();
-        end
-    end
-end
-
-function Roukanken.CollectPickups(player, hitbox, swingVector)
-    swingVector = swingVector or Vector.Zero;
-    local position = hitbox.Position;
-    local size = hitbox.Size;
-    for _,ent in pairs(Isaac.FindInRadius (position, size + 12, EntityPartition.PICKUP)) do
-        local pickup = ent:ToPickup();
-        local hitPickups = Roukanken.GetHitboxData(hitbox, true).HitPickups;
-        if (pickup ~= nil and hitPickups[pickup.InitSeed] == nil) then
-            if (Pickups.CanCollect(player, pickup)) then
-                Pickups.Collect(player, pickup)
-            end
-            pickup:AddVelocity(((position - player.Position):Normalized() + swingVector:Normalized()) * 5 )
-            hitPickups[pickup.InitSeed] = true;
-        end
-    end
-end
-
-function Roukanken.CutProjectiles(position, size)
-    for _,ent in pairs(Isaac.FindByType(EntityType.ENTITY_PROJECTILE)) do
-        local projectile = ent:ToProjectile();
-        if (projectile ~= nil) then
-            if (projectile.Position:Distance(position) < projectile.Size + size) then
-                projectile:Die();
-            end
-        end
-    end
-end
-
-function Roukanken.SpawnHitbox(position, rotation, size, spriteOffset, damage)
-    local hitbox = Isaac.Spawn(Roukanken.Hitbox.Type, Roukanken.Hitbox.Variant, Roukanken.Hitbox.SubType, position, Vector.Zero, player):ToFamiliar();
     
-    hitbox.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NONE;
-    hitbox.Target = hitbox;
-    hitbox:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
-    hitbox.Size = size;
-    hitbox.SpriteRotation = rotation;
-    hitbox.SpriteOffset = spriteOffset;
-    hitbox.CollisionDamage = damage;
-    return hitbox;
-end
-
-function Roukanken.CreateHitbox(player, size, fixed, position)
-    fixed = fixed or false;
-    position = position or player.Position + player:GetAimDirection() * 50;
-    local playerData = Roukanken.GetPlayerData(player);
-
-    local rotation = player:GetAimDirection():GetAngleDegrees() - 90;
-    local spriteOffset = Vector.Zero;
-    if (not fixed) then
-        spriteOffset = Roukanken.Sword.SpriteOffset - (position - player.Position) / 2;
-    end
-    local damage = player.Damage * Roukanken.Config.CutDamageMulti;
-
-    local hitbox = Roukanken.SpawnHitbox(position, rotation, size, spriteOffset, damage);
-
-    hitbox.Parent = player;
-    local hitboxData = Roukanken.GetHitboxData(hitbox, true);
-    hitboxData.Offset = position - player.Position;
-    hitboxData.Fixed = fixed;
-
-    return hitbox;
-end
-
-function Roukanken:onEntityDamage(tookDamage, damage, damageFlags, damageSourceRef)
-    if damageSourceRef == nil or damageSourceRef.Entity == nil or not Detection.IsValidEnemy(tookDamage) then
-        return nil
-    end
-
-    local srcEntity = damageSourceRef.Entity;
-
-    if (srcEntity.Type == Roukanken.Hitbox.Type and srcEntity.Variant == Roukanken.Hitbox.Variant) then
-        local hitboxData = Roukanken.GetHitboxData(srcEntity, true);
-        local player = srcEntity.Parent:ToPlayer();
-        if (not hitboxData.HitEnemies[tookDamage.InitSeed]) then
-            hitboxData.HitEnemies[tookDamage.InitSeed] = true;
-            local npc = tookDamage:ToNPC();
-            npc:PlaySound(SoundEffect.SOUND_MEATY_DEATHS, 0.75, 0, false, 1.8)
-            if (npc and hitboxData.ChargeActive) then
-                Roukanken.GetNPCData(npc, true).DeathCharge = {
-                    Target = player,
-                    Amount = 1,
-                    Time = 10
-                };
+    function Roukanken.DestroyObstacles(position, size)
+        local room = THI.Game:GetRoom();
+        local extents = size;
+        local roomWidth = room:GetGridWidth();
+        local leftest = position.X - extents;
+        local topest = position.Y - extents;
+        local rightest = position.X + extents;
+        local bottomest = position.Y + extents;
+        local width = math.ceil((rightest - leftest) / 24);
+        local height = math.ceil((bottomest - topest) / 24);
+        
+        for y=0, height do
+            for x=0, width do
+                local pos = Vector(leftest + 24 * x, topest + 24 * y);
+                if (pos:Distance(position) < size) then
+                    local index = room:GetGridIndex(pos);
+                    room:DestroyGrid(index);
+                end
             end
-        else 
-            return false;
+        end
+    
+        for _,ent in pairs(Isaac.FindInRadius (position, size + 12, EntityPartition.ENEMY)) do
+            -- If it's a fire place but not white fire place.
+            if (ent.Type == EntityType.ENTITY_FIREPLACE and ent.Variant ~= 4) then
+                ent:Die();
+            end
         end
     end
-end
-Roukanken:AddCustomCallback(CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, Roukanken.onEntityDamage);
+    
+    function Roukanken.CollectPickups(player, hitbox, swingVector)
+        swingVector = swingVector or Vector.Zero;
+        local position = hitbox.Position;
+        local size = hitbox.Size;
+        for _,ent in pairs(Isaac.FindInRadius (position, size + 12, EntityPartition.PICKUP)) do
+            local pickup = ent:ToPickup();
+            local hitPickups = Roukanken.GetHitboxData(hitbox, true).HitPickups;
+            if (pickup ~= nil and hitPickups[pickup.InitSeed] == nil) then
+                if (Pickups.CanCollect(player, pickup)) then
+                    Pickups.Collect(player, pickup)
+                end
+                pickup:AddVelocity(((position - player.Position):Normalized() + swingVector:Normalized()) * 5 )
+                hitPickups[pickup.InitSeed] = true;
+            end
+        end
+    end
+    
+    function Roukanken.CutProjectiles(position, size)
+        for _,ent in pairs(Isaac.FindByType(EntityType.ENTITY_PROJECTILE)) do
+            local projectile = ent:ToProjectile();
+            if (projectile ~= nil) then
+                if (projectile.Position:Distance(position) < projectile.Size + size) then
+                    projectile:Die();
+                end
+            end
+        end
+    end
+    
+    function Roukanken.SpawnHitbox(spawner, position, size, damage, rotation, spriteOffset, subType)
+        damage = damage or 7;
+        rotation = rotation or 0;
+        spriteOffset = spriteOffset or Vector.Zero;
+        subType = subType or Roukanken.Hitbox.SubType;
 
-function Roukanken:onHitboxUpdate(hitbox)
-    if (hitbox.Type == Roukanken.Hitbox.Type and hitbox.Variant == Roukanken.Hitbox.Variant) then
-        hitbox.SpriteScale = Vector(hitbox.Size / 50, hitbox.Size /50 );
+        local hitBoxInfo = Roukanken.Hitbox;
+        local hitbox = Isaac.Spawn(hitBoxInfo.Type, hitBoxInfo.Variant, subType, position, Vector.Zero, spawner):ToKnife();
+        
+        hitbox:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
+        hitbox.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NONE;
+        --hitbox.Target = hitbox;
+        hitbox.Size = size;
+        hitbox.SpriteRotation = rotation;
+        hitbox.SpriteOffset = spriteOffset;
+        hitbox.CollisionDamage = damage;
+    
+        hitbox.Parent = spawner;
+        return hitbox;
+    end
+    
+    function Roukanken.FireHitBox(player, size, position, fixed)
+        fixed = fixed or false;
+        position = position or player.Position + player:GetAimDirection() * 50;
+    
+        local rotation = player:GetAimDirection():GetAngleDegrees() - 90;
+        local spriteOffset = Vector.Zero;
+        if (not fixed) then
+            spriteOffset = Roukanken.Sword.SpriteOffset - (position - player.Position) / 2;
+        end
+        local damage = player.Damage * Roukanken.Config.CutDamageMulti;
+
+        local subType = nil;
+        if (fixed) then
+            subType = Roukanken.Hitbox.DashSubType;
+        end
+        local hitbox = Roukanken.SpawnHitbox(player, position, size, damage, rotation, spriteOffset, subType);
         local hitboxData = Roukanken.GetHitboxData(hitbox, true);
-        local parent = hitbox.Parent;
-        local player;
-        if (parent ~= nil) then
-            player = parent:ToPlayer();
-        end
-        if (hitboxData.Time > 0) then
-            hitboxData.Time = hitboxData.Time - 1;
-
-            -- Destroy Obstacles.
-            Roukanken.DestroyObstacles(hitbox.Position, hitbox.Size)
-
-            if (player ~= nil) then
-                -- Collect Pickups.
-                Roukanken.CollectPickups(player, hitbox, hitboxData.SwingVelocity)
+        hitboxData.Offset = position - player.Position;
+    
+        return hitbox;
+    end
+    
+    
+    local function PostHitboxUpdate(mod, hitbox)
+        local info = Roukanken.Hitbox;
+        local isHitbox = hitbox.SubType == info.SubType;
+        
+        local isDash = hitbox.SubType == info.DashSubType;
+        if (hitbox.Type == info.Type and hitbox.Variant == info.Variant and (isHitbox or isDash)) then
+            hitbox.SpriteScale = Vector(hitbox.Size / 50, hitbox.Size /50 );
+            local hitboxData = Roukanken.GetHitboxData(hitbox, true);
+            local parent = hitbox.Parent;
+            local player;
+            if (parent) then
+                player = parent:ToPlayer();
+                if (not isDash) then
+                    hitbox.Position = parent.Position + hitboxData.Offset;
+                    hitbox.Velocity = parent.Velocity;
+                end
             end
-
-            -- Cut Projectiles.
-            Roukanken.CutProjectiles(hitbox.Position, hitbox.Size)
-        end
-        if (not hitboxData.Fixed and parent ~= nil) then
-            hitbox.Position = parent.Position + hitboxData.Offset;
-        end
-        if (hitboxData.Time <= 0) then
-            hitbox:Remove();
+            if (hitboxData.Timeout == 0) then
+                hitbox:Remove();
+            else
+                
+                if (hitboxData.Timeout > 0) then
+                    hitboxData.Timeout = hitboxData.Timeout - 1;
+                end
+    
+                -- Destroy Obstacles.
+                Roukanken.DestroyObstacles(hitbox.Position, hitbox.Size)
+    
+                -- Collect Pickups.
+                if (player) then
+                    Roukanken.CollectPickups(player, hitbox, hitboxData.SwingVelocity)
+                end
+    
+                -- Cut Projectiles.
+                Roukanken.CutProjectiles(hitbox.Position, hitbox.Size)
+            end
         end
     end
+    Roukanken:AddCallback(ModCallbacks.MC_POST_KNIFE_UPDATE, PostHitboxUpdate);
+    
+
+    -- Fixed the knife only damage player's double stats damage.
+    local replacingDMG = false;
+    local function PreEntityDamage(mod, tookDamage, damage, flags, source, countdown)
+        if source == nil or source.Entity == nil or not Detection.IsValidEnemy(tookDamage) then
+            return nil
+        end
+    
+        local srcEnt = source.Entity;
+        local hitBoxInfo = Roukanken.Hitbox;
+        if (srcEnt.Type == hitBoxInfo.Type and srcEnt.Variant == hitBoxInfo.Variant) then
+
+            if (not replacingDMG) then
+                -- Replace the damage into collisionDamage.
+                replacingDMG = true;
+                tookDamage:TakeDamage(srcEnt.CollisionDamage, flags, source, countdown);
+                replacingDMG = false;
+                return false;
+            else
+                local hitboxData = Roukanken.GetHitboxData(srcEnt, true);
+                local player = srcEnt.Parent:ToPlayer();
+                local key = tookDamage.InitSeed;
+
+                if (not hitboxData.HitEnemies[key]) then
+                    -- Hit the enemy.
+                    hitboxData.HitEnemies[key] = true;
+                    local npc = tookDamage:ToNPC();
+                    if (npc) then
+                        npc:PlaySound(SoundEffect.SOUND_MEATY_DEATHS, 0.75, 0, false, 1.8)
+                        if (hitboxData.ChargeActive) then
+                            Roukanken.GetNPCData(npc, true).DeathCharge = {
+                                Target = player,
+                                Amount = 1,
+                                Timeout = 10
+                            };
+                        end
+                    end
+                else 
+                    -- Has hit this enemy.
+                    return false;
+                end
+            end
+        end
+    end
+    Roukanken:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, PreEntityDamage);
 end
-Roukanken:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, Roukanken.onHitboxUpdate, Roukanken.Hitbox.Variant);
+
 
 ---------------------------
 -- NPCs
@@ -649,12 +697,12 @@ end
 function Roukanken:onNPCUpdate(npc) 
     if (not npc:IsDead()) then
         local npcData = Roukanken.GetNPCData(npc, false);
-        if (npcData and npcData.DeathCharge) then
-            if (npcData.DeathCharge.Time > 0) then
-                npcData.DeathCharge.Time = npcData.DeathCharge.Time - 1;
-            end
-            if (npcData.DeathCharge.Time <= 0) then
-                npcData.DeathCharge = nil;
+        local deathCharge = npcData and npcData.DeathCharge;
+        if (deathCharge) then
+            if (deathCharge.Timeout < 0) then
+                deathCharge = nil;
+            else
+                deathCharge.Timeout = deathCharge.Timeout - 1;
             end
         end
     end
@@ -706,8 +754,7 @@ function Roukanken:onWispUpdate(familiar)
             local rotation = player:GetAimDirection():GetAngleDegrees() - 90;
             local spriteOffset = Vector(0, -10) - player:GetAimDirection() * size / 2;
             local damage = 6;
-            local hitbox = Roukanken.SpawnHitbox(position, rotation, size, spriteOffset, damage);
-            hitbox.Parent = familiar;
+            local hitbox = Roukanken.SpawnHitbox(familiar, position, size, damage, rotation, spriteOffset);
             local hitboxData = Roukanken.GetHitboxData(hitbox, true);
             hitboxData.Offset = position - familiar.Position;
             

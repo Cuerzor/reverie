@@ -3,9 +3,12 @@ local Detection = CuerLib.Detection;
 local Pickups = CuerLib.Pickups;
 local Screen = CuerLib.Screen;
 
-BonusUFO.BlueVariant = Isaac.GetEntityVariantByName("Blue Bonus UFO");
-BonusUFO.GreenVariant = Isaac.GetEntityVariantByName("Green Bonus UFO");
-BonusUFO.RainbowVariant = Isaac.GetEntityVariantByName("Rainbow Bonus UFO");
+BonusUFO.SubTypes = {
+    RED = 0,
+    BLUE = 1,
+    GREEN = 2,
+    RAINBOW = 3
+}
 
 local Fonts = {
     en = THI.Fonts.Terminus8
@@ -243,11 +246,11 @@ local function CollectUpdate(npc)
         local pickup = ent:ToPickup();
         if (pickup and CanCollect(pickup) and pickup:Exists()) then
             local dir = (npc.Position - pickup.Position):Normalized();
-            local frameCount = math.min(npc.FrameCount, pickup.FrameCount);
+            local frameCount = npc.FrameCount;
             if (variant == PickupVariant.PICKUP_COLLECTIBLE) then
                 pickup.TargetPosition = pickup.Position + dir * math.min(20, frameCount / 10 * 2);
             else
-                pickup.Position = pickup.Position + dir * math.min(10, frameCount / 10);
+                pickup.Position = pickup.Position + dir * math.min(10, math.min(frameCount, pickup.FrameCount) / 10);
                 pickup.Velocity = pickup.Velocity + dir * 1;
             end
             if (Detection.CheckCollision(npc, pickup)) then
@@ -264,7 +267,7 @@ local function MovementUpdate(npc)
     local game = THI.Game;
     local room = game:GetRoom();
 
-    local variant = npc.Variant;
+    local subType = npc.SubType;
     npc.Target = npc.SpawnerEntity or Isaac.GetPlayer(0);
     local target = npc.Target;
     local data = BonusUFO.GetUFOData(npc, true);
@@ -277,7 +280,8 @@ local function MovementUpdate(npc)
         npc.TargetPosition = Vector(-300, -300);
     else
 
-        if (variant == BonusUFO.Variant) then
+        -- Red.
+        if (subType == BonusUFO.SubTypes.RED) then
             maxSpeed = 5;
             local maxRadius = 120;
             local maxRotateSpeed = 10;
@@ -287,13 +291,16 @@ local function MovementUpdate(npc)
             local rotatedAngle = math.atan(maxRotateSpeed / 2 / nextRadius) / math.pi * 180 * 2;
             local offset = dir:Rotated(rotatedAngle):Normalized() * nextRadius;
             npc.TargetPosition = target.Position + offset;
-        elseif (variant == BonusUFO.BlueVariant) then
+
+        -- Blue.
+        elseif (subType == BonusUFO.SubTypes.BLUE) then
             -- Guts like movement.
             maxSpeed = 7;
             npc.TargetPosition = GetBlueTarget(npc, maxSpeed);
             
-        elseif (variant == BonusUFO.GreenVariant) then
-            -- Warpping Movement.
+        -- Green.
+        elseif (subType == BonusUFO.SubTypes.GREEN) then
+            -- Warping Movement.
             maxSpeed = 12;
             local centerPos = room:GetCenterPos();
             local minY = 160;
@@ -316,8 +323,9 @@ local function MovementUpdate(npc)
     
             npc.TargetPosition = npc.Position + Vector(maxSpeed, 0);
             
-        elseif (variant == BonusUFO.RainbowVariant) then
-            -- Vertical Warpping Movement.
+        -- Rainbow.
+        elseif (subType == BonusUFO.SubTypes.RAINBOW) then
+            -- Vertical Warping Movement.
             maxSpeed = 12;
             local centerPos = room:GetCenterPos();
             local minX = 80;
@@ -350,63 +358,65 @@ local function MovementUpdate(npc)
 end
 
 function BonusUFO:PostNPCUpdate(npc)
+    if (npc.Variant == BonusUFO.Variant) then
+        local game = THI.Game;
+        local room = game:GetRoom();
+        local sprite = npc:GetSprite();
+        if (npc.FrameCount == 1) then
+            BonusUFO.EvaluateHealth(npc);
+            THI.SFXManager:Play(THI.Sounds.SOUND_UFO);
+            sprite:Play("Appear", true);
+        end
+        if (sprite:IsFinished("Appear"))then
+            sprite:Play("Idle");
+        end
     
-    local game = THI.Game;
-    local room = game:GetRoom();
-    local sprite = npc:GetSprite();
-    if (npc.FrameCount == 1) then
-        BonusUFO.EvaluateHealth(npc);
-        THI.SFXManager:Play(THI.Sounds.SOUND_UFO);
-        sprite:Play("Appear", true);
-    end
-    if (sprite:IsFinished("Appear"))then
-        sprite:Play("Idle");
-    end
-
-    npc.SpriteRotation = math.sin(npc.FrameCount / math.pi /4) * 5;
-    if (npc.FrameCount % 15 == 0) then
-        THI.SFXManager:Play(THI.Sounds.SOUND_UFO_ALERT, 0.5);
-    end
-
-    local time = BonusUFO.GetUFOTime(npc);
-    CollectUpdate(npc);
-    if (time > 0) then
-        npc.Friction = 1;
-        MovementUpdate(npc);
-    else
+        npc.SpriteRotation = math.sin(npc.FrameCount / math.pi /4) * 5;
+        if (npc.FrameCount % 15 == 0) then
+            THI.SFXManager:Play(THI.Sounds.SOUND_UFO_ALERT, 0.5);
+        end
+    
+        local time = BonusUFO.GetUFOTime(npc);
+        CollectUpdate(npc);
+        if (time > 0) then
+            npc.Friction = 1;
+            MovementUpdate(npc);
+        else
+            
+            npc.Friction = 0;
+        end
         
-        npc.Friction = 0;
-    end
+        if (time > timeLimit and not room:IsPositionInRoom(npc.Position, -200)) then
+            npc:Remove();
+            return;
+        end
+        if (npc:IsDead()) then
+            local globalData = BonusUFO.GetFloorData(true);
+            globalData.DestroyedCount = globalData.DestroyedCount + 1;
     
-    if (time > timeLimit and not room:IsPositionInRoom(npc.Position, -200)) then
-        npc:Remove();
-        return;
-    end
-    if (npc:IsDead()) then
-        local globalData = BonusUFO.GetFloorData(true);
-        globalData.DestroyedCount = globalData.DestroyedCount + 1;
-
-        local data = BonusUFO.GetUFOData(npc, false);
-        if (data) then
-            local game = THI.Game;
-            local room = game:GetRoom();
-            local rng = RNG();
-            rng:SetSeed(Random(), 0);
-            local times = data.BonusTimes;
-            for i, info in pairs(data.Collected.Collectibles) do
-                for t = 1, times do
-                    local pos = room:FindFreePickupSpawnPosition(npc.Position, 0, true);
-                    Isaac.Spawn(info.Type, info.Variant, info.SubType, pos, Vector.Zero, npc);
+            local data = BonusUFO.GetUFOData(npc, false);
+            if (data) then
+                local game = THI.Game;
+                local room = game:GetRoom();
+                local rng = RNG();
+                rng:SetSeed(Random(), 0);
+                local times = data.BonusTimes;
+                for i, info in pairs(data.Collected.Collectibles) do
+                    for t = 1, times do
+                        local pos = room:FindFreePickupSpawnPosition(npc.Position, 0, true);
+                        Isaac.Spawn(info.Type, info.Variant, info.SubType, pos, Vector.Zero, npc);
+                    end
                 end
-            end
-            for i, info in pairs(data.Collected.Pickups) do
-                for t = 1, times do
-                    local pos = npc.Position;
-                    Isaac.Spawn(info.Type, info.Variant, info.SubType, pos, RandomVector() * rng:RandomFloat() * 3, npc);
+                for i, info in pairs(data.Collected.Pickups) do
+                    for t = 1, times do
+                        local pos = npc.Position;
+                        Isaac.Spawn(info.Type, info.Variant, info.SubType, pos, RandomVector() * rng:RandomFloat() * 3, npc);
+                    end
                 end
             end
         end
     end
+ 
 end
 BonusUFO:AddCallback(ModCallbacks.MC_NPC_UPDATE, BonusUFO.PostNPCUpdate, BonusUFO.Type);
 
@@ -431,8 +441,7 @@ function BonusUFO.BurstEffect(position, count)
         leafEntity.SpriteScale = Vector(sizeX, sizeY);
         leafEntity:GetSprite().PlaybackSpeed = speed;
     end
-    local waveEnt = Isaac.Spawn(wave.Type, wave.Variant, 0, position, Vector.Zero, nil);
-    waveEnt:GetSprite():Play("Burst");
+    local waveEnt = Isaac.Spawn(wave.Type, wave.Variant, wave.SubTypes.BURST, position, Vector.Zero, nil);
 end
 
 function BonusUFO:PostUFODeath(npc)
@@ -455,7 +464,7 @@ function BonusUFO:PreUFOTakeDamage(entity, amount, flags, source, countdown)
         return false;
     end
 end
-BonusUFO:AddCustomCallback(CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, BonusUFO.PreUFOTakeDamage, BonusUFO.Type);
+BonusUFO:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, BonusUFO.PreUFOTakeDamage, BonusUFO.Type);
 
 local greyColor = KColor(0.5, 0.5, 0.5, 1);
 function BonusUFO:RenderUFO(ufo, offset)

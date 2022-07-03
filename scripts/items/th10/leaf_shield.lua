@@ -61,7 +61,7 @@ function LeafShield:PostPlayerEffect(player)
     local data = LeafShield.GetPlayerData(player, false);
     if (data) then
         
-        local shootingVector = Inputs.GetRawShootingVector(player);
+        local shootingVector = Inputs.GetRawShootingVector(player):Normalized();
         if (shootingVector:Length() > 0.1) then
             if (EntityExists(data.Ring) and data.Ring.FrameCount > 20) then
                 local Ring = THI.Familiars.LeafShieldRing;

@@ -36,7 +36,7 @@ function ChenBaby:Charge(familiar, dir)
     local data = ChenBaby:GetChenData(familiar);
     data.IsCharging = true;
     familiar:RemoveFromFollowers();
-    local velocity = Familiars:GetFireVector(familiar, dir, false) * ChenBaby.Speed;
+    local velocity = Familiars:GetFireVector(familiar, dir, false, 1000) * ChenBaby.Speed;
     familiar.Velocity = velocity;
 end
 

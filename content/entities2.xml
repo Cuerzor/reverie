@@ -1,165 +1,386 @@
 <entities anm2root="gfx/" version="5" deathanm2="gfx/death enemies.anm2">
 
-    <entity name="Yin-Yang Orb" anm2path="yin-yang_orb.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="12" collisionRadius="11" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5810" />
-    <entity name="Maid Knife" anm2path="maid_knife.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="5811" />
-    <entity name="Meteor Frag" anm2path="meteor.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" gibAmount="6" gibFlags="rock dust" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5812">
+    <!-- Tears -->
+    <entity name="Yin-Yang Orb" anm2path="reverie/002.5810_yin-yang orb.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="12" collisionRadius="11" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5810" />
+    <entity name="Maid Knife" anm2path="reverie/002.5811_maid knife.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="5811" />
+    <entity name="Meteor Frag" anm2path="reverie/meteor.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" gibAmount="6" gibFlags="rock dust" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5812">
         <gibs amount="6" blood="0" bone="0" eye="0" gut="0" large="0" rock="1" dust="1" />
     </entity>
-    <entity name="Probe Tear" anm2path="probe_tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5813" />
-    <entity name="Echo Tear" anm2path="002.5814_echo tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5814" />
-    <entity name="Echo Blood Tear" anm2path="002.5815_echo blood tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5815" />
+    <entity name="Probe Tear" anm2path="reverie/002.5813_probe tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5813" />
+    <entity name="Echo Tear" anm2path="reverie/002.5814_echo tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5814" />
+    <entity name="Echo Blood Tear" anm2path="reverie/002.5815_echo blood tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5815" />
+    <entity name="Magatama Tear" anm2path="reverie/002.5816_magatama tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5816" />
+    <entity name="Shuriken Tear" anm2path="reverie/002.5817_shuriken tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5817" />
+    <!-- Projectiles -->
+    <entity name="Yin-Yang Orb Projectile" anm2path="reverie/002.5810_yin-yang orb.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="12" collisionRadius="11" friction="1" id="9" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5800" />
 
-    <entity name="Koakuma Baby" anm2path="koakuma_baby.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5811" />
-    <entity name="Chen Baby" anm2path="chen_baby.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5812" />
-    <entity name="Shanghai Doll" anm2path="shanghai_doll.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5813" />
-    <entity name="Isaac Golem" anm2path="isaac_golem.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="100" collisionRadius="13" friction="1" gridCollision="ground" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5814" />
-    <entity name="Rabbit Illusion" anm2path="illusion.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5815" />
+    <!-- Familiars -->
+    <entity name="Koakuma Baby" anm2path="reverie/003.5811_koakuma baby.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5811" />
+    <entity name="Chen Baby" anm2path="reverie/003.5812_chen baby.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5812" />
+    <entity name="Shanghai Doll" anm2path="reverie/003.5813_shanghai doll.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5813" />
+    <entity name="Isaac Golem" anm2path="reverie/003.5814_isaac golem.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="100" collisionRadius="13" friction="1" gridCollision="ground" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5814" />
+    <entity name="Rabbit Illusion" anm2path="reverie/003.5815_illusion.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5815" />
     <entity name="Robe Fire" anm2path="grid/effect_005_fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="10" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5816" />
-    <entity name="Psyche Eye Familiar" anm2path="003.007_psyche_eye.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5817" />
-    <entity name="Sunflower Pot" anm2path="sunflower_pot.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5818" />
-    <entity name="Leaf Shield Ring" anm2path="leaf_shield_ring.anm2" baseHP="0" boss="0" champion="0" collisionDamage="4" collisionMass="0" collisionRadius="36" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5819" />
-    <entity name="Scaring Umbrella" anm2path="scaring_umbrella.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5820" />
-    <entity name="Extending Arm" anm2path="extending_arm.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="1000" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="5820" />
-    <entity name="Sekibanki Head" anm2path="003.5821_sekibanki head.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="7" collisionInterval="4" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5821" />
-    <entity name="Roukanken Hitbox" anm2path="roukanken.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="6400" />
+    <entity name="Psyche Eye Familiar" anm2path="reverie/003.5817_psyche eye.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5817" />
+    <entity name="Sunflower Pot" anm2path="reverie/003.5818_sunflower pot.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5818" />
+    <entity name="Leaf Shield Ring" anm2path="reverie/003.5819_leaf shield ring.anm2" baseHP="0" boss="0" champion="0" collisionDamage="4" collisionMass="0" collisionRadius="36" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5819" />
+    <entity name="Scaring Umbrella" anm2path="reverie/003.5820_scaring umbrella.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5820" />
+    <entity name="Sekibanki Head" anm2path="reverie/003.5821_sekibanki head.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="7" collisionInterval="4" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5821" />
+    <entity name="Hell Planet" anm2path="reverie/003.5822.0_planet otherworld.anm2" baseHP="0" boss="0" champion="0" collisionDamage="7" collisionInterval="2" collisionMass="3" collisionRadius="25" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5822" />
+    <entity name="Thunder Drum" anm2path="reverie/003.5823_thunder drum.anm2" baseHP="99999" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="3" numGridCollisionPoints="12" gridCollision="walls" shadowSize="11" stageHP="0" variant="5823" />
 
-    <entity name="Spring Fairy" anm2path="spring_fairy.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="17" stageHP="0" variant="5810" gridCollision="walls" />
-    <entity name="Starseeker Ball" anm2path="starseeker_ball.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="5811" tags="noreroll" reroll="false" />
-    <entity name="Cheese Food" anm2path="food_cheese.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" subtype="1" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="5812" />
-    <entity name="Bread Food" anm2path="food_bread.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" subtype="2" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="5812" />
-    <entity name="Steak Food" anm2path="food_steak.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" subtype="3" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="5812" />
-    <entity name="Fox's Advice Bottle" anm2path="foxs_advice_bottle.anm2" baseHP="3" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="5813" tags="noreroll" reroll="false" />
+    <entity name="Sunny Fairy" anm2path="reverie/003.5824_sunny fairy.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5824" />
+    <entity name="Lunar Fairy" anm2path="reverie/003.5825_lunar fairy.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5825" />
+    <entity name="Star Fairy" anm2path="reverie/003.5826_star fairy.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5826" />
 
-    <entity name="Roukanken" anm2path="roukanken.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5810" />
-    <entity name="Blade Rock" anm2path="blade_rock.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="8" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="5811" />
-    <entity name="Rock Sword" anm2path="008.010_spirit sword.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="80" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5812" />
+    <entity name="Young Native God" anm2path="reverie/003.5827_young native god.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" gridCollision="walls" collisionRadius="9" friction="1" id="3" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="5827" />
 
-    <entity name="Onfire Fly" anm2path="onfirefly.anm2" reroll="true" baseHP="5" boss="0" champion="0" collisionDamage="1" collisionMass="3" collisionRadius="17" friction="1" id="18" numGridCollisionPoints="4" shadowSize="11" stageHP="0" variant="5810" portrait="5" gridCollision="walls" tags="fly" />
+    <entity name="Dancer Servant" anm2path="reverie/003.5828.0_dancer servant mai.anm2" tags="cansacrifice" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5828" />
 
+    <entity name="Back Door" anm2path="reverie/003.5829_back door.anm2" baseHP="0" boss="0" champion="0" collisionDamage="7" collisionInterval="4" collisionMass="3" collisionRadius="17" collisionRadiusYMulti="0.5" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5829" />
+
+    <entity name="Unzan Familiar" anm2path="reverie/003.5830_unzan.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="17" friction="1" id="3" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="5830" />
+
+    <entity name="Haniwa Soldier" anm2path="reverie/003.5831.0_haniwa soldier.anm2" baseHP="5" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="5" gridCollision="ground" friction="1" id="3" numGridCollisionPoints="12" shadowSize="8" stageHP="0" variant="5831" />
+
+    <!-- Pickups -->
+    <!-- Cards -->
+    <entity name="Void Hand" anm2path="reverie/005.300.580_void hand.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="580">
+        <preload-snd id="252" /> <!-- SHELL_GAME -->
+    </entity>
+
+    <entity name="Void Hand 2" anm2path="reverie/005.300.581_void hand 2.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="581">
+        <preload-snd id="252" /> <!-- SHELL_GAME -->
+    </entity>
+
+    <entity name="Void Hand 3" anm2path="reverie/005.300.582_void hand 3.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="582">
+        <preload-snd id="252" /> <!-- SHELL_GAME -->
+    </entity>
+
+    <entity name="Soul of Eika" anm2path="reverie/005.300.583_soul of eika.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="583" />
+
+    <entity name="Soul of Satori" anm2path="reverie/005.300.584_soul of satori.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="584" />
+
+    <entity name="Stone Card" anm2path="reverie/005.300.585_stone card.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="585" />
+
+    <entity name="Soul of Seija" anm2path="reverie/005.300.586_soul of seija.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="586" />
+
+    <entity name="Soul of Seija Reversed" anm2path="reverie/005.300.587_soul of seija reversed.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="587" />
+
+    <!-- Mod Pickups -->
+    <entity name="Sake Bottle" anm2path="reverie/005.380.581_sake bottle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="10" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="380" subtype="581"/>
+
+    <entity name="Reverie Music Box" anm2path="reverie/005.380.582_reverie music box.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="10" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="380" subtype="582"/>
+
+    <entity name="Spring Fairy" anm2path="reverie/005.580_spring fairy.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="17" stageHP="0" variant="580" gridCollision="walls" />
+
+    <entity name="Rebecha Idle" anm2path="reverie/rebecha.anm2" baseHP="3" boss="0" champion="0" collisionDamage="0" gridCollision="none" collisionMass="80" collisionRadius="24" friction="1" id="5" numGridCollisionPoints="24" shadowSize="32" stageHP="0" variant="581" />
+
+    <entity name="Starseeker Ball" anm2path="reverie/005.582_starseeker ball.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="582" tags="noreroll" reroll="false" />
+
+    <entity name="Cheese Food" anm2path="reverie/005.583.1_cheese.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" subtype="1" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="583" />
+    <entity name="Bread Food" anm2path="reverie/005.583.2_bread.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" subtype="2" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="583" />
+    <entity name="Steak Food" anm2path="reverie/005.583.3_steak.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" subtype="3" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="583" />
+
+    <entity name="Fox's Advice Bottle" anm2path="reverie/005.584_foxs advice bottle.anm2" baseHP="3" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="584" tags="noreroll" reroll="false" />
+
+    <!-- Knives -->
+    <entity baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" name="Wheelchair Hitbox" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="555" subtype="555" />
+
+    <entity name="Roukanken" anm2path="reverie/roukanken.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="580" subtype="580" />
+
+    <entity name="Roukanken Hitbox" anm2path="reverie/roukanken.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="580" subtype="581" />
+
+    <entity name="Roukanken Dash Hitbox" anm2path="reverie/roukanken.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="580" subtype="582" />
+
+    <entity name="Blade Rock" anm2path="reverie/008.581_blade rock.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="8" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="581" />
+
+    <entity name="Rock Sword" anm2path="008.010_spirit sword.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="80" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="582" />
+
+    <entity name="Haniwa Knife" anm2path="008.001_Bone Club.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="16" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="583" />
+
+    <!-- Effects -->
+
+    <entity anm2path="reverie/komeiji_meter.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Komeiji Meter" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="555" />
 
     <entity name="Pickup Effect" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5809" />
-    <entity name="Dark Halo" anm2path="dark_halo.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5810" />
-    <entity name="Fairy Particle" anm2path="fairy_particle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5811" />
-    <entity name="Fairy Effect" anm2path="spring_fairy.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="17" stageHP="0" variant="5812" />
-    <entity name="Rainbow Player Trail" anm2path="rainbow_trail.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5813" />
+
+    <entity name="Dark Halo" anm2path="reverie/1000.5810_dark halo.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5810" />
+
+    <entity name="Fairy Particle" anm2path="reverie/1000.5811_fairy particle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5811" />
+
+    <entity name="Fairy Effect" anm2path="reverie/005.580_spring fairy.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="17" stageHP="0" variant="5812" />
+
+    <entity name="Player Trail" anm2path="reverie/1000.5813_player trail.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5813" />
+
     <entity name="Knife Spawner" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="100" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5815" />
-    <entity name="Meteor" anm2path="meteor.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" gibAmount="30" gibFlags="rock dust" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="5816">
+
+    <entity name="Meteor" anm2path="reverie/meteor.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" gibAmount="30" gibFlags="rock dust" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="5816">
         <gibs amount="30" blood="0" bone="0" eye="0" gut="0" large="0" rock="1" dust="1" />
     </entity>
-    <entity name="Meteor Ring" anm2path="meteor_ring.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5817" />
-    <entity name="Small Explosion" anm2path="small_explosion.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5818" />
-    <entity name="Freeze Halo" anm2path="freeze_halo.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5819" />
-    <entity name="Flying Instrument" anm2path="flying_instrument.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="24" stageHP="0" variant="5820" subtype="0" />
-    <entity name="Music Wave" anm2path="music_wave.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5821" />
-    <entity name="Note" anm2path="note.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5822" />
-    <entity name="Gap" anm2path="the_gap.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5823" />
-    <entity name="Rabbit Trap" anm2path="rabbit_trap.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="90" subtype="5810" />
+
+    <entity name="Rabbit Trap" anm2path="reverie/1000.90.5810_rabbit trap.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="90" subtype="5810" />
+
+    <entity name="Meteor Ring" anm2path="reverie/1000.5817_meteor ring.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5817" />
+
+    <entity name="Extending Arm" anm2path="reverie/1000.5818_extending arm.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="1000" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="5818" />
+
+    <entity name="Freeze Halo" anm2path="reverie/1000.5819_freeze halo.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5819" />
+
+
+    <entity name="Flying Instrument" anm2path="reverie/1000.5820_flying instrument.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="24" stageHP="0" variant="5820" subtype="0" />
+
+    <entity name="Music Wave" anm2path="reverie/1000.5821_music wave.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5821" />
+
+    <entity name="Note" anm2path="reverie/1000.5822_note.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5822" />
+
+    <entity name="Gap" anm2path="reverie/1000.5823_the gap.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5823" />
+
     <entity name="Tengu Spotlight" anm2path="spotlight.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5824" />
-    <entity name="Midas Flash" anm2path="midas_flash.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5825" />
-    <entity name="Idle Rocket" anm2path="rocket_idle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5826" subtype="1" />
-    <entity name="Knife Parent" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5826" subtype="2" />
-    <entity name="Psycho Slash" anm2path="1000.5827_psycho_slash.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5827" />
+
+    <entity name="Midas Flash" anm2path="reverie/1000.5825_midas flash.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5825" />
+
+    <entity name="Eika Placeholder" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5826" />
+
+    <entity name="Psycho Slash" anm2path="reverie/1000.5827_psycho_slash.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5827" />
+
     <entity name="Damage Source Alternate" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5828" />
-    <entity name="Psyche Eye Vessel" anm2path="003.007_psyche_eye.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5829" />
-    <entity name="Devilcrow Rocket (Up)" anm2path="1000.5830_devilcrow_rocket.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5830" />
-    <entity name="Devilcrow Rocket (Down)" anm2path="1000.5830_devilcrow_rocket.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5830" subtype="1" />
-    <entity name="Abandoned Boo Text" anm2path="1000.5831_abandoned boo text.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5831" />
-    <entity name="Necrospyder Hole" anm2path="1000.5832_necrospyder hole.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5832" />
-    <entity name="Holy Thunder" anm2path="1000.5833_holy thunder.anm2" baseHP="0" boss="0" champion="0" collisionDamage="7" collisionMass="0" collisionRadius="12" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5833" />
-    <entity name="Summoning Magic Circle" anm2path="1000.5834.000_summoning magic circle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5834" />
-    <entity name="Magic Cluster" anm2path="1000.5835_magic cluster.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5835" />
-    <entity name="Magic Cluster Head" anm2path="1000.5835_magic cluster.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5835" subtype="1" />
-    <entity name="Purple Magic Circle Fire" anm2path="1000.5836.000_purple magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" />
-    <entity name="Red Magic Circle Fire" anm2path="1000.5836.001_red magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="1" />
-    <entity name="Curse Magic Circle Fire" anm2path="1000.5836.002_curse magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="2" />
-    <entity name="Black Magic Circle Fire" anm2path="1000.5836.003_black magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="3" />
-    <entity name="Grey Magic Circle Fire" anm2path="1000.5836.004_grey magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="4" />
+
+    <entity name="Psyche Eye Vessel" anm2path="reverie/003.5817_psyche eye.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5829" />
+
+    <entity name="Devilcrow Rocket (Up)" anm2path="reverie/1000.5830_devilcrow_rocket.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5830" />
+
+    <entity name="Devilcrow Rocket (Down)" anm2path="reverie/1000.5830_devilcrow_rocket.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5830" subtype="1" />
+
+    <entity name="Abandoned Boo Text" anm2path="reverie/1000.5831_abandoned boo text.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5831" />
+    <entity name="Necrospyder Hole" anm2path="reverie/1000.5832_necrospyder hole.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5832" />
+    <entity name="Holy Thunder" anm2path="reverie/1000.5833_holy thunder.anm2" baseHP="0" boss="0" champion="0" collisionDamage="7" collisionMass="0" collisionRadius="12" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5833" />
+    <entity name="Summoning Magic Circle" anm2path="reverie/1000.5834.000_summoning magic circle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5834" />
+    <entity name="Magic Cluster" anm2path="reverie/1000.5835_magic cluster.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5835" />
+    <entity name="Magic Cluster Head" anm2path="reverie/1000.5835_magic cluster.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5835" subtype="1" />
+    <entity name="Purple Magic Circle Fire" anm2path="reverie/1000.5836.000_purple magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" />
+    <entity name="Red Magic Circle Fire" anm2path="reverie/1000.5836.001_red magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="1" />
+    <entity name="Curse Magic Circle Fire" anm2path="reverie/1000.5836.002_curse magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="2" />
+    <entity name="Black Magic Circle Fire" anm2path="reverie/1000.5836.003_black magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="3" />
+    <entity name="Grey Magic Circle Fire" anm2path="reverie/1000.5836.004_grey magic circle fire.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5836" subtype="4" />
+
     <entity anm2path="1000.144_enemy ghost.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="8" collisionRadius="8" friction="1" id="1000" name="Summoner Ghost" numGridCollisionPoints="0" shadowSize="10" stageHP="0" variant="5837">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+    </entity>
+
+    <entity name="Life Swap" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5838" />
+
+    <entity name="Miracle Mallet Replica" anm2path="reverie/1000.5839_miracle mallet.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5839" />
+
+    <entity name="Onbashira" anm2path="reverie/1000.5840_onbashira.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="800" collisionRadius="24" friction="0" id="1000" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="5840" shutdoors="false" reroll="false" />
+
+    <entity name="Wild Fangs" anm2path="reverie/1000.5841_wild fangs.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="0" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5841" />
+
+    <entity name="Bucket Soul" anm2path="1000.179_enemy soul.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5842" />
+
+    <entity name="Nimble Fabric" anm2path="reverie/1000.5843_nimble fabric.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5843" />
+
+    <entity name="Unzan Face" anm2path="reverie/1000.5844_unzan face.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5844" />
+
+    <!-- Marisa Note Circle-->
+    <entity anm2path="reverie/1000.5845_marisa note circle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Marisa Note Circle" numGridCollisionPoints="0" shieldStrength="0" portrait="11" shadowSize="0" stageHP="0" variant="5845" />
+
+    <entity name="Reverie Music Paper" anm2path="reverie/1000.5846_reverie music paper.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5846" />
+
+    <entity name="Reverie Note Wave" anm2path="reverie/1000.5847_reverie note wave.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5847" />
+
+    <entity name="Reverie Prop" anm2path="reverie/1000.5848_reverie prop.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5848" />
+
+    <entity name="Tiny Meteor" anm2path="reverie/1000.5849_tiny meteor.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5849" />
+
+    <entity name="Seija's Shade" anm2path="reverie/1000.5850_seijas shade.anm2" baseHP="0" boss="0" champion="0" collisionDamage="2" collisionInterval="2" collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11" id="1000" stageHP="0" variant="5850" />
+
+    <entity name="Item Soul" anm2path="reverie/1000.5851_item soul.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionInterval="0" collisionMass="0" collisionRadius="0" friction="1" numGridCollisionPoints="0" shadowSize="0" id="1000" stageHP="0" variant="5851" />
+
+    <entity name="Blood Fountain" anm2path="reverie/1000.5852.0_blood fountain.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5852" subtype="0">
+        <gibs amount="6" blood="1" bone="1" eye="1" gut="1" large="0"/>
+    </entity>
+    <entity name="Bone Fountain" anm2path="reverie/1000.5852.1_bone fountain.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5852" subtype="1">
+        <gibs amount="10" blood="0" bone="1" dust="1" eye="0" gut="0" large="0" sound_bone="1"/>
+    </entity>
+    <entity name="Fly Fountain" anm2path="reverie/1000.5852.2_fly fountain.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5852" subtype="2">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0"/>
     </entity>
-
-    
-    <entity anm2path="581.000_the abandoned.anm2" baseHP="300" boss="1" bossID="5811" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="20" friction="1" gridCollision="none" id="581" name="The Abandoned" numGridCollisionPoints="8" shieldStrength="0" portrait="2" shadowSize="25" stageHP="0" variant="0" tags="nodelirium ghost" >
-        <bestiary anim="Idle" transform="0,0,1"/>
+    <entity name="Spider Fountain" anm2path="reverie/1000.5852.3_spider fountain.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5852" subtype="3">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0"/>
     </entity>
-    <entity anm2path="581.001_abandoned water ball.anm2" baseHP="10" boss="0" champion="0" collisionDamage="1" collisionMass="20" collisionRadius="13" gridCollision="walls" friction="1" id="581" name="Abandoned Water Ball" numGridCollisionPoints="16" portrait="2" shadowSize="16" stageHP="0" variant="1">
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0"/>
-    </entity>
-    
-    <entity anm2path="582.000_necrospyder.anm2" baseHP="240" boss="1" bossID="5812" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="30" friction="1" gridCollision="none" id="582" name="Necrospyder" numGridCollisionPoints="8" shieldStrength="0" portrait="3" shadowSize="30" stageHP="0" variant="0" tags="nodelirium" >
-        <bestiary anim="Idle" transform="0,-32,1"/>
-        <gibs amount="8" blood="1" bone="0" eye="1" gut="1" large="1"/>
-    </entity>
-    
-    <entity anm2path="583.000_the centipede.anm2" baseHP="120" boss="1" bossID="5813" champion="0" collisionDamage="1" collisionMass="50" collisionRadius="20" friction="1" gridCollision="walls" id="583" name="The Centipede" numGridCollisionPoints="8" shieldStrength="3" portrait="4" shadowSize="25" stageHP="0" variant="0" tags="nodelirium">
-        <bestiary anim="WalkHeadHori" transform="0,0,1"/>
-        <gibs amount="8" blood="1" bone="1" eye="0" gut="1" large="0"/>
-        <preload-snd id="115"/>
+    <entity name="Poop Fountain" anm2path="reverie/1000.5852.4_poop fountain.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5852" subtype="4">
+        <gibs amount="5" blood="0" bone="0" eye="0" gut="0" large="0" poop="1"/>
     </entity>
 
-    <entity anm2path="584.000_pyroplume.anm2" baseHP="75" boss="1" bossID="5814" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="584" name="Pyroplume" numGridCollisionPoints="12" shieldStrength="2" portrait="5" shadowSize="0" stageHP="0" variant="0" tags="nodelirium">
-        <bestiary anim="Idle" transform="0,-8,1"/>
-        <gibs amount="10" blood="0" bone="0" dust="1" eye="0" gut="0" large="0"/>
-    </entity>
-    <entity anm2path="584.001_pyroplume 2.anm2" baseHP="150" boss="1" bossID="5814" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="584" name="Pyroplume 2" numGridCollisionPoints="12" shieldStrength="4" portrait="5" shadowSize="0" stageHP="0" variant="1" tags="nodelirium">
-        <bestiary anim="Idle" transform="0,-8,1"/>
-        <gibs amount="10" blood="0" bone="0" dust="1" eye="0" gut="0" large="0"/>
-    </entity>
 
-    <entity anm2path="584.002_pyroplume 3.anm2" baseHP="300" boss="1" bossID="5814" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="584" name="Pyroplume 3" numGridCollisionPoints="12" shieldStrength="6" portrait="5" shadowSize="0" stageHP="0" variant="2" tags="nodelirium">
-        <bestiary anim="Idle" transform="0,-8,1"/>
-        <gibs amount="10" blood="0" bone="0" dust="1" eye="0" gut="0" large="0"/>
+    <!-- Monsters -->
+    <entity name="Onfire Fly" anm2path="reverie/018.580_onfirefly.anm2" reroll="true" baseHP="5" boss="0" champion="0" collisionDamage="1" collisionMass="3" collisionRadius="17" friction="1" id="18" numGridCollisionPoints="4" shadowSize="11" stageHP="0" variant="580" portrait="5" gridCollision="walls" tags="fly" />
+
+    <entity name="Rebecha" anm2path="reverie/rebecha.anm2" baseHP="3" boss="1" champion="0" collisionDamage="0" collisionMass="80" gridCollision="none" collisionRadius="24" friction="1" id="580" numGridCollisionPoints="24" shadowSize="32" stageHP="0" variant="0" subtype="0" tags="nodelirium ghost">
+        <gibs amount="30" blood="0" bone="0" dust="1" eye="0" gut="0" large="0" rock="1" />
     </entity>
 
-    <entity anm2path="585.000_the summoner.anm2" baseHP="700" boss="1" bossID="5815" champion="0" collisionDamage="1" collisionMass="40" collisionRadius="12" friction="1" gridCollision="walls" id="585" name="The Summoner" numGridCollisionPoints="12" shieldStrength="6" portrait="6" shadowSize="12" stageHP="0" variant="0" tags="nodelirium">
-        <bestiary anim="Idle" transform="0,0,1"/>
-        <gibs amount="1" blood="0" bone="0" dust="0" eye="0" gut="0" large="1"/>
+    <entity anm2path="reverie/581.000_the abandoned.anm2" baseHP="300" boss="1" bossID="581" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="20" friction="1" gridCollision="none" id="581" name="The Abandoned" numGridCollisionPoints="8" shieldStrength="0" portrait="2" shadowSize="25" stageHP="0" variant="0" tags="nodelirium ghost">
+        <bestiary anim="Idle" transform="0,0,1" />
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+    </entity>
+    <entity anm2path="reverie/581.001_abandoned water ball.anm2" baseHP="10" boss="0" champion="0" collisionDamage="1" collisionMass="20" collisionRadius="13" gridCollision="walls" friction="1" id="581" name="Abandoned Water Ball" numGridCollisionPoints="16" portrait="2" shadowSize="16" stageHP="0" variant="1">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
     </entity>
 
-    <entity anm2path="585.001_the immortal.anm2" baseHP="0" boss="0" bossID="0" champion="0" collisionDamage="1" collisionMass="40" collisionRadius="12" friction="1" gridCollision="ground" id="585" name="The Immortal" numGridCollisionPoints="12" shieldStrength="0" portrait="10" shadowSize="12" stageHP="0" variant="1" shutdoors="false" tags="nodelirium">
-        <bestiary anim="WalkDown" transform="0,0,1"/>
-        <gibs amount="1" blood="5" bone="10" dust="0" eye="0" gut="0" large="0"/>
+    <entity anm2path="reverie/582.000_necrospyder.anm2" baseHP="240" boss="1" bossID="582" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="30" friction="1" gridCollision="none" id="582" name="Necrospyder" numGridCollisionPoints="8" shieldStrength="0" portrait="3" shadowSize="30" stageHP="0" variant="0" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,-32,1" />
+        <gibs amount="8" blood="1" bone="0" eye="1" gut="1" large="1" />
     </entity>
 
-    <entity anm2path="585.002_evil spirit.anm2" baseHP="0" boss="0" bossID="0" champion="0" collisionDamage="1" collisionMass="40" collisionRadius="24" friction="1" gridCollision="walls" id="585" name="Evil Spirit" numGridCollisionPoints="12" shieldStrength="0" portrait="6" shadowSize="0" stageHP="0" variant="2" shutdoors="false" tags="nodelirium noreroll" />
+    <entity anm2path="reverie/583.000_the centipede.anm2" baseHP="120" boss="1" bossID="583" champion="0" collisionDamage="1" collisionMass="50" collisionRadius="20" friction="1" gridCollision="walls" id="583" name="The Centipede" numGridCollisionPoints="8" shieldStrength="3" portrait="4" shadowSize="25" stageHP="0" variant="0" tags="nodelirium">
+        <bestiary anim="WalkHeadHori" transform="0,0,1" />
+        <gibs amount="8" blood="1" bone="1" eye="0" gut="1" large="0" />
+        <preload-snd id="115" />
+    </entity>
+
+    <entity anm2path="reverie/584.000_pyroplume.anm2" baseHP="75" boss="1" bossID="584" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="584" name="Pyroplume" numGridCollisionPoints="12" shieldStrength="2" portrait="5" shadowSize="0" stageHP="0" variant="0" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,-8,1" />
+        <gibs amount="10" blood="0" bone="0" dust="1" eye="0" gut="0" large="0" />
+    </entity>
+    <entity anm2path="reverie/584.001_pyroplume 2.anm2" baseHP="150" boss="1" bossID="584" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="584" name="Pyroplume 2" numGridCollisionPoints="12" shieldStrength="4" portrait="5" shadowSize="0" stageHP="0" variant="1" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,-8,1" />
+        <gibs amount="10" blood="0" bone="0" dust="1" eye="0" gut="0" large="0" />
+    </entity>
+
+    <entity anm2path="reverie/584.002_pyroplume 3.anm2" baseHP="300" boss="1" bossID="584" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="584" name="Pyroplume 3" numGridCollisionPoints="12" shieldStrength="6" portrait="5" shadowSize="0" stageHP="0" variant="2" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,-8,1" />
+        <gibs amount="10" blood="0" bone="0" dust="1" eye="0" gut="0" large="0" />
+    </entity>
+
+    <entity anm2path="reverie/585.000_the summoner.anm2" baseHP="560" boss="1" bossID="585" champion="0" collisionDamage="1" collisionMass="40" collisionRadius="12" friction="1" gridCollision="walls" id="585" name="The Summoner" numGridCollisionPoints="12" shieldStrength="6" portrait="6" shadowSize="12" stageHP="0" variant="0" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,0,1" />
+        <gibs amount="1" blood="0" bone="0" dust="0" eye="0" gut="0" large="1" />
+    </entity>
+
+    <entity anm2path="reverie/585.001_the immortal.anm2" baseHP="0" boss="0" bossID="0" champion="0" collisionDamage="1" collisionMass="40" collisionRadius="12" friction="1" gridCollision="ground" id="585" name="The Immortal" numGridCollisionPoints="12" shieldStrength="0" portrait="10" shadowSize="12" stageHP="0" variant="1" shutdoors="false" tags="nodelirium">
+        <bestiary anim="WalkDown" transform="0,0,1" />
+        <gibs amount="1" blood="5" bone="10" dust="0" eye="0" gut="0" large="0" />
+    </entity>
+
+    <entity anm2path="reverie/585.002_evil spirit.anm2" baseHP="0" boss="0" bossID="0" champion="0" collisionDamage="1" collisionMass="40" collisionRadius="24" friction="1" gridCollision="walls" id="585" name="Evil Spirit" numGridCollisionPoints="12" shieldStrength="0" portrait="6" shadowSize="0" stageHP="0" variant="2" shutdoors="false" tags="nodelirium noreroll" />
 
 
-    <entity name="Devilcrow" id="586" variant="0" anm2path="586.000_devilcrow.anm2" boss="1" baseHP="500"
-    bossID="5816" 
-    collisionDamage="1" collisionRadius="40" collisionRadiusYMulti="2" numGridCollisionPoints="24" collisionMass="100" friction="0" shadowSize="48"
-    tags="nodelirium noreroll" gridCollision="walls" reroll="false" shutdoors="true" shieldStrength="30" portrait="7" >
+    <entity name="Devilcrow" id="586" variant="0" anm2path="reverie/586.000_devilcrow.anm2" boss="1" baseHP="500" bossID="586" collisionDamage="1" collisionRadius="40" collisionRadiusYMulti="2" numGridCollisionPoints="24" collisionMass="100" friction="0" shadowSize="48" tags="nodelirium noreroll" gridCollision="walls" reroll="false" shutdoors="true" shieldStrength="30" portrait="7">
         <bestiary transform="0,-20,0.5" anim="Bestiary" />
-        <gibs amount="30" blood="0" bone="0" dust="1" eye="0" gut="0" large="0" rock="1"/>
+        <gibs amount="30" blood="0" bone="0" dust="1" eye="0" gut="0" large="0" rock="1" />
     </entity>
-    <entity name="Devilcrow Waste Bucket" id="586" variant="1" anm2path="586.001_devilcrow_waste_bucket.anm2" boss="0" baseHP="10"
-    collisionDamage="1" collisionRadius="24" collisionRadiusYMulti="0.5" numGridCollisionPoints="12" collisionMass="12" friction="1" shadowSize="12"
-    tags="noreroll" reroll="false" shutdoors="false" portrait="9" />
+    <entity name="Devilcrow Waste Bucket" id="586" variant="1" anm2path="reverie/586.001_devilcrow_waste_bucket.anm2" boss="0" baseHP="10" collisionDamage="1" collisionRadius="24" collisionRadiusYMulti="0.5" numGridCollisionPoints="12" collisionMass="12" friction="1" shadowSize="12" tags="noreroll" reroll="false" shutdoors="false" portrait="9" />
 
-    <entity anm2path="587.000_guppet.anm2" baseHP="1000" boss="1" bossID="5817" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="587" name="Guppet" numGridCollisionPoints="12" shieldStrength="10" portrait="8" shadowSize="32" stageHP="0" variant="0" tags="nodelirium">
-        <bestiary anim="Idle" transform="0,-8,1"/>
-        <gibs amount="1" blood="1" bone="0" eye="0" gut="1" large="1"/>
+    <entity anm2path="reverie/587.000_guppet.anm2" baseHP="1000" boss="1" bossID="587" champion="0" collisionDamage="1" collisionMass="200" collisionRadius="30" friction="1" gridCollision="walls" id="587" name="Guppet" numGridCollisionPoints="12" shieldStrength="10" portrait="8" shadowSize="32" stageHP="0" variant="0" tags="nodelirium">
+        <bestiary anim="Idle" transform="0,-8,1" />
+        <gibs amount="1" blood="1" bone="0" eye="0" gut="1" large="1" />
     </entity>
 
-    <entity name="Trader (Normal)" anm2path="trader_normal.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="0" tags="noreroll" reroll="false" shutdoors="false" />
-    <entity name="Trader (Shop)" anm2path="trader_shop.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="1"  tags="noreroll" reroll="false" shutdoors="false" />
-    <entity name="Trader (Secret)" anm2path="trader_secret.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="2"  tags="noreroll" reroll="false" shutdoors="false" />
-    <entity name="Trader (Boss)" anm2path="trader_boss.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="3"  tags="noreroll" reroll="false" shutdoors="false" />
-    <entity name="Trader (Devil)" anm2path="trader_devil.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="4"  tags="noreroll" reroll="false" shutdoors="false" />
-    <entity name="Trader (Angel)" anm2path="trader_angel.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="5"  tags="noreroll" reroll="false" shutdoors="false" />
-    <entity name="Trader (Curse)" anm2path="trader_curse.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="5810" subtype="6"  tags="noreroll" reroll="false" shutdoors="false" />
+    <!-- Reverie Notes-->
+    <!-- Waksagihime Note-->
+    <entity anm2path="reverie/588.580.0_reverie note(wakasagihime).anm2" baseHP="600" boss="1" variant="580" subtype="0" bossID="588" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" id="588" name="Reverie" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" >
+        <bestiary anim="Bestiary" transform="0,0,1" />
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+    </entity>
+    
+    <!-- Sekibanki Note-->
+    <entity anm2path="reverie/588.580.1_reverie note(sekibanki).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="1" name="Reverie Note (Sekibanki)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <!-- Sekibanki Note Drone-->
+    <entity anm2path="reverie/588.581.0_sekibanki note drone.anm2" baseHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="none" id="588" name="Sekibanki Note Drone" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" variant="581" tags="nodelirium" />
 
-    <entity name="Blood Boney" id="227" variant="5810" reroll="true" baseHP="12" stageHP="4" shieldStrength="20" boss="0" champion="0" collisionDamage="3" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="14" portrait="104" anm2path="blood_boney.anm2">
+
+    <!-- Kagerou Note-->
+    <entity anm2path="reverie/588.580.2_reverie note(kagerou).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="2" name="Reverie Note (Kagerou)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+
+    <!-- Benben Note-->
+    <entity anm2path="reverie/588.580.3_reverie note(benben).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="3" name="Reverie Note (Benben)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <!-- Merlin Note-->
+    <entity anm2path="reverie/588.580.4_reverie note(merlin).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="4" name="Reverie Note (Merlin)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <!-- Lunasa Note-->
+    <entity anm2path="reverie/588.580.5_reverie note(lunasa).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="5" name="Reverie Note (Lunasa)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <!-- Lyrica Note-->
+    <entity anm2path="reverie/588.580.6_reverie note(lyrica).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="6" name="Reverie Note (Lyrica)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <!-- Yatsuhashi Note-->
+    <entity anm2path="reverie/588.580.7_reverie note(yatsuhashi).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="7" name="Reverie Note (Yatsuhashi)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+
+
+    <!-- Flandre 1 Note-->
+    <entity anm2path="reverie/588.580.8_reverie note(flandre1).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="8" name="Reverie Note (Flandre 1)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <!-- Flandre 2 Note-->
+    <entity anm2path="reverie/588.580.9_reverie note(flandre2).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="9" name="Reverie Note (Flandre 2)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <!-- Flandre 3 Note-->
+    <entity anm2path="reverie/588.580.10_reverie note(flandre3).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="10" name="Reverie Note (Flandre 3)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <!-- Flandre 4 Note-->
+    <entity anm2path="reverie/588.580.11_reverie note(flandre4).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="11" name="Reverie Note (Flandre 4)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+
+
+    <!-- Reimu Note-->
+    <entity anm2path="reverie/588.580.12_reverie note(reimu).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="12" name="Reverie Note (Reimu)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <!-- Marisa Note-->
+    <entity anm2path="reverie/588.580.13_reverie note(marisa).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="13" name="Reverie Note (Marisa)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+
+    <!-- Hecatia Note-->
+    <entity anm2path="reverie/588.580.14_reverie note(hecatia).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="14" name="Reverie Note (Hecatia)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <!-- Hecatia Note Moon-->
+    <entity anm2path="reverie/588.582.0_hecatia note moon.anm2" baseHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="64" friction="1" gridCollision="walls" id="588" name="Hecatia Note Moon" numGridCollisionPoints="16" shieldStrength="30" portrait="11" shadowSize="12" stageHP="0" variant="582" tags="nodelirium" >
+        <gibs amount="30" blood="0" bone="0" dust="1" eye="0" gut="0" large="0" rock="1" />
+    </entity>
+
+
+    <entity anm2path="reverie/960.581_book shelf.anm2" baseHP="1" boss="0" champion="0" collisionDamage="0" collisionMass="200" collisionRadius="40" collisionRadiusYMulti="0.4" friction="1" id="960" name="Book Shelf" numGridCollisionPoints="12" shadowSize="0" shutdoors="false" stageHP="0" variant="581">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+    </entity>
+
+    <entity name="Trader (Normal)" anm2path="reverie/989.580.0_trader normal.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="0" tags="noreroll" reroll="false" shutdoors="false" />
+
+    <entity name="Trader (Shop)" anm2path="reverie/989.580.1_trader shop.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="1" tags="noreroll" reroll="false" shutdoors="false" />
+
+    <entity name="Trader (Secret)" anm2path="reverie/989.580.2_trader secret.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="2" tags="noreroll" reroll="false" shutdoors="false" />
+
+    <entity name="Trader (Boss)" anm2path="reverie/989.580.3_trader boss.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="3" tags="noreroll" reroll="false" shutdoors="false" />
+
+    <entity name="Trader (Devil)" anm2path="reverie/989.580.4_trader devil.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="4" tags="noreroll" reroll="false" shutdoors="false" />
+
+    <entity name="Trader (Angel)" anm2path="reverie/989.580.5_trader angel.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="5" tags="noreroll" reroll="false" shutdoors="false" />
+
+    <entity name="Trader (Curse)" anm2path="reverie/989.580.6_trader curse.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="6" tags="noreroll" reroll="false" shutdoors="false" />
+
+    <entity name="Blood Bony" id="227" variant="580" reroll="true" baseHP="8" stageHP="2" champion="0" shieldStrength="0" boss="0" collisionDamage="0" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="14" portrait="104" anm2path="reverie/227.580_blood boney.anm2">
         <gibs amount="10" blood="1" bone="0" eye="0" gut="1" large="1" />
-		<preload id="9" variant="1" />
+        <preload id="9" variant="1" />
         <preload-snd id="116" /> <!-- SOUND_MONSTER_ROAR_1 -->
         <preload-snd id="249" /> <!-- SOUND_SCAMPER -->
     </entity>
-    <entity name="Red Bonus UFO" id="990" variant="0" anm2path="red_bonus_ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="5810"  collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
-    <entity name="Blue Bonus UFO" id="990" variant="1" anm2path="blue_bonus_ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="5810"  collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
-    <entity name="Green Bonus UFO" id="990" variant="2" anm2path="green_bonus_ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="5810"  collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
-    <entity name="Rainbow Bonus UFO" id="990" variant="3" anm2path="rainbow_bonus_ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="5810"  collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
-    
+    <entity name="Blood Bony (Pernament)" id="227" variant="580" subtype="1" reroll="true" baseHP="8" stageHP="2" champion="0" shieldStrength="0" boss="0" collisionDamage="0" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="14" portrait="104" anm2path="reverie/227.580_blood boney.anm2">
+        <gibs amount="10" blood="1" bone="0" eye="0" gut="1" large="1" />
+        <preload id="9" variant="1" />
+        <preload-snd id="116" /> <!-- SOUND_MONSTER_ROAR_1 -->
+        <preload-snd id="249" /> <!-- SOUND_SCAMPER -->
+    </entity>
+    <entity name="Blood Big Bony" anm2path="830.000_big bony.anm2" baseHP="16" boss="0" champion="0" collisionDamage="1" shieldStrength="0" collisionMass="10" collisionRadius="13" friction="1" id="830" numGridCollisionPoints="12" portrait="221" shadowSize="15" stageHP="4" variant="580">
+        <gibs amount="16" blood="0" bone="1" dust="1" eye="0" gut="0" large="0" sound_bone="1" />
+    </entity>
+
+    <entity name="Soul Bony" anm2path="reverie/227.581_soul bony.anm2" baseHP="4" stageHP="1" boss="0" champion="0" collisionDamage="0" collisionMass="14" collisionRadius="13" friction="1" id="227" numGridCollisionPoints="12" portrait="104" shadowSize="14" variant="581" gridCollision="walls">
+        <gibs amount="10" blood="0" bone="0" dust="1" eye="0" gut="0" large="1" />
+    </entity>
+
+    <entity name="Devil Bony" anm2path="reverie/277.580_devil bony.anm2" baseHP="4" stageHP="1" boss="0" champion="0" collisionDamage="0" shieldStrength="0" collisionMass="14" collisionRadius="13" friction="1" id="277" numGridCollisionPoints="12" portrait="104" shadowSize="14" variant="580">
+        <gibs amount="10" blood="0" bone="1" dust="1" eye="0" gut="0" sound_bone="1" />
+    </entity>
+
+
+    <entity name="Red Bonus UFO" id="990" variant="580" subtype="0" anm2path="reverie/990.580.0_red bonus ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="0" collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
+
+    <entity name="Blue Bonus UFO" id="990" variant="580" subtype="1" anm2path="reverie/990.580.1_blue bonus ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="0" collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
+
+    <entity name="Green Bonus UFO" id="990" variant="580" subtype="2" anm2path="reverie/990.580.2_green bonus ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="0" collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
+
+    <entity name="Rainbow Bonus UFO" id="990" variant="580" subtype="3" anm2path="reverie/990.580.3_rainbow bonus ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="0" collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
+
+    <!-- Doremy -->
     <entity name="Dream World Backdrop" anm2path="doremy/backdrop/dream_world_backdrop.anm2" id="1000" variant="58123" subtype="0" collisionRadius="0" numGridCollisionPoints="0" />
     <entity name="Dream World Backdground" anm2path="doremy/backdrop/dream_world_background.anm2" id="1000" variant="58123" subtype="1" collisionRadius="0" numGridCollisionPoints="0" />
     <entity name="Doremy Spell Card Backdground" anm2path="doremy/backdrop/spell_card_background.anm2" id="1000" variant="58123" subtype="2" collisionRadius="0" numGridCollisionPoints="0" />
@@ -168,13 +389,8 @@
     <entity name="Doremy Image" anm2path="doremy/bosses/doremy.anm2" id="1000" variant="58126" collisionRadius="0" numGridCollisionPoints="0" shadowSize="16" />
     <entity name="Isaac Image" anm2path="doremy/effects/isaac_image.anm2" id="1000" variant="58126" subtype="1" collisionRadius="0" numGridCollisionPoints="0" shadowSize="16" />
     <entity name="Dream Cushion" anm2path="doremy/effects/dream_cushion.anm2" id="1000" variant="58127" subtype="0" collisionRadius="0" numGridCollisionPoints="0" />
-    <entity name="Doremy Sweet" id="998" variant="58123" anm2path="doremy/bosses/doremy.anm2" boss="1" baseHP="4000"
-    bossID="58123" 
-    collisionDamage="1" collisionRadius="16" numGridCollisionPoints="8" collisionMass="100" friction="1" shadowSize="16"
-    tags="nodelirium noreroll" gridCollision="walls" reroll="false" shutdoors="true" shieldStrength="60" portrait="0" >
+    <entity name="Doremy Sweet" id="998" variant="58123" anm2path="doremy/bosses/doremy.anm2" boss="1" baseHP="4000" bossID="1258" collisionDamage="1" collisionRadius="16" numGridCollisionPoints="8" collisionMass="100" friction="1" shadowSize="16" tags="nodelirium noreroll" gridCollision="walls" reroll="false" shutdoors="true" shieldStrength="1230" portrait="0">
         <bestiary transform="0,0,1" anim="Idle" />
     </entity>
 
-    <entity baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="3" name="Wheelchair Hitbox" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5555"/>
-    <entity anm2path="komeiji_meter.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Komeiji Meter" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5555"/>
 </entities>

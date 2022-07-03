@@ -1,4 +1,5 @@
 local Detection = CuerLib.Detection;
+local CompareEntity = Detection.CompareEntity;
 local Halos = THI.Halos;
 
 local FrozenSakura = ModItem("Frozen Sakura", "FrozenSakura");
@@ -8,89 +9,76 @@ FrozenSakura.FreezeHalo  = {
 };
 FrozenSakura.SlowColor = Color(1,1,1,1,0.2,0.2,0.2);
 
-function FrozenSakura:GetPlayerData(player, init)
+local function GetPlayerData(player, init)
     return FrozenSakura:GetData(player, init, function() return {
         Halo = nil
     } end);
 end
 
-function FrozenSakura:GetNPCData(npc, init)
+local function GetNPCData(npc, init)
     return FrozenSakura:GetData(npc, init, function() return {
         WillFreeze = false,
-        UnfreezeTime = 0,
+        FreezeTimeout = 0,
     } end);
 end
 
-function FrozenSakura:GetHaloData(halo, init)
-    return FrozenSakura:GetData(halo, init, function() return {
-        DamageCoolDown = 0
-    } end);
-end
 
-function FrozenSakura.HasHalo(player)
+local function HasHalo(player)
     return player:HasCollectible(FrozenSakura.Item);
 end
 
-function FrozenSakura:onHaloUpdate(effect, variant)
-    -- Make halos damage enemies.
-    local haloData = FrozenSakura:GetHaloData(effect, true);
-    local cooldown = haloData.DamageCoolDown;
-    if (effect.Parent == nil) then
+local function PostHaloUpdate(mod, effect)
+    local parent = effect.Parent;
+    if (not parent) then
         effect:Remove();
         return;
     else
-        if (effect.Type == EntityType.ENTITY_PLAYER and not FrozenSakura.HasHalo(effect:ToPlayer())) then
+        local player = parent:ToPlayer();
+        local playerData = GetPlayerData(player);
+        if (player and not CompareEntity(playerData.Halo, effect)) then
             effect:Remove();
             return;
         end
     end
-    cooldown = cooldown - 1
-    local ref = EntityRef(effect);
-    if (cooldown <= 0) then
-        for index, ent in pairs(Isaac:GetRoomEntities()) do
-            if (ent.Position:Distance(effect.Position) < 128 + ent.Size / 2) then
-                if (Detection.IsValidEnemy(ent)) then
-                    ent:TakeDamage(1, 0, ref, 0)
-                    ent:AddEntityFlags(EntityFlag.FLAG_ICE);
-                    ent:AddSlowing (ref, 30, 0.5, FrozenSakura.SlowColor);
-                    local entData = FrozenSakura:GetNPCData(ent, true);
-                    entData.WillFreeze = true;
-                    entData.UnfreezeTime = 2;
-                end
-            end
-        end
-        cooldown = 7;
-    end
-    haloData.DamageCoolDown = cooldown;
 
-    for index, ent in pairs(Isaac.FindByType(EntityType.ENTITY_PROJECTILE)) do
-        if (ent.Position:Distance(effect.Position) < 128 + ent.Size / 2) then
-            local projectile = ent:ToProjectile();
-            projectile:AddProjectileFlags (ProjectileFlags.SLOWED);
+
+    local ref = EntityRef(effect);
+    -- Make halos damage enemies and slow bullets.
+    if (effect:IsFrame(7, 0)) then
+        for _, ent in pairs(Isaac.FindInRadius(effect.Position, 128, EntityPartition.ENEMY | EntityPartition.BULLET)) do
+            if (Detection.IsValidEnemy(ent)) then
+                ent:TakeDamage(1, 0, ref, 0)
+                ent:AddEntityFlags(EntityFlag.FLAG_ICE);
+                ent:AddSlowing (ref, 30, 0.5, FrozenSakura.SlowColor);
+                local entData = GetNPCData(ent, true);
+                entData.WillFreeze = true;
+                entData.FreezeTimeout = 1;
+            elseif (ent.Type == EntityType.ENTITY_PROJECTILE) then
+                local projectile = ent:ToProjectile();
+                projectile:AddProjectileFlags (ProjectileFlags.SLOWED);
+            end
         end
     end
 end
+FrozenSakura:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, PostHaloUpdate, FrozenSakura.FreezeHalo.Variant)
 
-function FrozenSakura:onNPCUpdate(npc)
-    local data = FrozenSakura:GetNPCData(npc, false);
+local function PostNPCUpdate(mod, npc)
+    local data = GetNPCData(npc, false);
     if (data and data.WillFreeze) then
-        data.UnfreezeTime = data.UnfreezeTime - 1;
-        if (data.UnfreezeTime <= 0) then
+        data.FreezeTimeout = data.FreezeTimeout - 1;
+        if (data.FreezeTimeout < 0) then
             data.WillFreeze = false;
             npc:ClearEntityFlags(EntityFlag.FLAG_ICE);
         end
     end
 end
+FrozenSakura:AddCallback(ModCallbacks.MC_NPC_UPDATE, PostNPCUpdate)
 
 
-function FrozenSakura:onPlayerUpdate(player)
-    local data = FrozenSakura:GetPlayerData(player, true)
-    data.Halo = Halos:CheckHalo(player, data, FrozenSakura.HasHalo(player), FrozenSakura.FreezeHalo.Type, FrozenSakura.FreezeHalo.Variant)
+local function PostPlayerUpdate(mod, player)
+    local data = GetPlayerData(player, true)
+    data.Halo = Halos:CheckHalo(player, data.Halo, HasHalo(player), FrozenSakura.FreezeHalo.Type, FrozenSakura.FreezeHalo.Variant)
 end
-
-
-FrozenSakura:AddCallback(ModCallbacks.MC_NPC_UPDATE, FrozenSakura.onNPCUpdate)
-FrozenSakura:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, FrozenSakura.onHaloUpdate, FrozenSakura.FreezeHalo.Variant)
-FrozenSakura:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, FrozenSakura.onPlayerUpdate)
+FrozenSakura:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate)
 
 return FrozenSakura;

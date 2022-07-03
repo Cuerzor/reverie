@@ -15,13 +15,13 @@ function Bottle:PostBottleInit(pickup)
     pickup.TargetPosition = pickup.Position;
     local spr = pickup:GetSprite();
     if (pickup.SubType == 0) then
-        spr:ReplaceSpritesheet(1, "gfx/items/advice_restock.png");
+        spr:ReplaceSpritesheet(1, "gfx/reverie/items/advice_restock.png");
     elseif (pickup.SubType == 1) then
-        spr:ReplaceSpritesheet(1, "gfx/items/advice_black_hearts.png");
+        spr:ReplaceSpritesheet(1, "gfx/reverie/items/advice_black_hearts.png");
     elseif (pickup.SubType == 2) then
-        spr:ReplaceSpritesheet(1, "gfx/items/advice_dimes.png");
+        spr:ReplaceSpritesheet(1, "gfx/reverie/items/advice_dimes.png");
     elseif (pickup.SubType == 3 or pickup.SubType == 4) then
-        spr:ReplaceSpritesheet(1, "gfx/items/advice_free.png");
+        spr:ReplaceSpritesheet(1, "gfx/reverie/items/advice_free.png");
     elseif (pickup.SubType == 5) then
         local itemPool = THI.Game:GetItemPool();
         local seed = THI.Game:GetRoom():GetSpawnSeed();
@@ -98,12 +98,18 @@ function Bottle:PreBottleCollision(pickup, other, low)
             THI.SFXManager:Play(SoundEffect.SOUND_DIMEPICKUP);
         elseif (pickup.SubType == 3) then
             for _, ent in pairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)) do
-                ent:ToPickup().Price = 0;
+                local pickup = ent:ToPickup();
+                if (pickup.SubType > 0 and pickup.Price ~= 0) then
+                    pickup.Price = 0;
+                end
             end
             FoxInTube.AddPay("DevilRoom", 1);
         elseif (pickup.SubType == 4) then
             for _, ent in pairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)) do
-                ent:ToPickup().OptionsPickupIndex = 0;
+                local pickup = ent:ToPickup();
+                if (pickup.OptionsPickupIndex ~= 0) then
+                    pickup.OptionsPickupIndex = 0;
+                end
             end
             FoxInTube.AddPay("AngelRoom", 1);
         elseif (pickup.SubType > 32768) then

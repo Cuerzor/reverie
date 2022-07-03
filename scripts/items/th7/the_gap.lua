@@ -17,34 +17,41 @@ end
 
 Gap:AddCallback(ModCallbacks.MC_USE_ITEM, Gap.onUseGap, Gap.Item);
 
-function Gap:onPlayerEffect(player)
+function Gap:onPlayerUpdate(player)
     local effectData = GapFloor.GetPlayerGapEffectData(player);
     local standingGap = false;
     if (GapFloor.TeleportCooldown <= 0) then
         local map = GapFloor.IsStandingOnMap(player);
-        if (map ~= nil) then
+        if (map) then
             local room = THI.Game:GetRoom();
             local playerGridIndex = room:GetGridIndex(player.Position);
             local pos = room:GetGridPosition(playerGridIndex);
             if (player:HasCollectible(Gap.Item)) then
-                if (effectData.Effect == nil or effectData.lastGridIndex ~= playerGridIndex) then
+                local gapEffect = effectData.Effect;
+                if (gapEffect == nil or effectData.lastGridIndex ~= playerGridIndex) then
                     
-                    if (effectData.Effect ~= nil) then
-                        effectData.Effect:GetSprite():Play("Close Animation");
-                        effectData.Effect = nil;
+                    if (gapEffect ~= nil) then
+                        gapEffect:GetSprite():Play("Close Animation");
+                        gapEffect = nil;
                     end
-                    effectData.Effect = Isaac.Spawn(GapFloor.Effect.Type, GapFloor.Effect.Variant, 0, pos, Vector.Zero, player);
+                    gapEffect = Isaac.Spawn(GapFloor.Effect.Type, GapFloor.Effect.Variant, 0, pos, Vector.Zero, player);
                     
-                    effectData.Effect:GetSprite():Play("Open Animation");
-                    effectData.Effect.DepthOffset = -100;
+                    gapEffect:GetSprite():Play("Open Animation");
+                    gapEffect.DepthOffset = -100;
                     effectData.lastGridIndex = playerGridIndex;
                 end
+                effectData.Effect = gapEffect;
                 standingGap = true;
             end
-            if (Actives.IsActiveItemDown(player, Gap.Item)) then
+            if (Actives.IsActiveItemTriggered(player, Gap.Item)) then
                 player.Position = pos;
                 player:AnimateTrapdoor ( )
-                THI.Game:StartRoomTransition (map.State, Direction.NO_DIRECTION, RoomTransitionAnim.FADE, player);
+                local index = map.State;
+                local level = Game():GetLevel();
+                if (not level:GetRoomByIdx(index).Data) then
+                    index = -2;
+                end
+                THI.Game:StartRoomTransition (index, Direction.NO_DIRECTION, RoomTransitionAnim.FADE, player);
                 GapFloor.TeleportCooldown = 30;
             end
         end
@@ -58,6 +65,6 @@ function Gap:onPlayerEffect(player)
     end
 end
 
-Gap:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Gap.onPlayerEffect);
+Gap:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Gap.onPlayerUpdate);
 
 return Gap;

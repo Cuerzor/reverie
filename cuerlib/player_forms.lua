@@ -1,10 +1,9 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 local Callbacks = Lib.Callbacks;
 local Detection = Lib.Detection;
 
-local PlayerForms = {
-    CustomForms = {
-    }
+local PlayerForms = Lib:NewClass();
+PlayerForms.CustomForms = {
 }
 
 local sfx = THI.SFXManager;
@@ -12,7 +11,7 @@ local game = THI.Game;
 local config = Isaac.GetItemConfig();
 
 function PlayerForms:GetPlayerData(player)
-    local data = Lib:GetData(player);
+    local data = Lib:GetLibData(player);
     data.CustomForms = data.CustomForms or {
         PreparedText = nil,
         CollectibleCount = 0,
@@ -84,6 +83,7 @@ function PlayerForms:onPlayerEffect(player)
         data.PreparedText = nil;
     end
 end
+PlayerForms:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PlayerForms.onPlayerEffect);
 
 function PlayerForms:onPickCollectible(player, item, count, touched)
     -- if this collectible is not touched.
@@ -104,6 +104,7 @@ function PlayerForms:onPickCollectible(player, item, count, touched)
         end
     end
 end
+PlayerForms:AddCustomCallback(Lib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PlayerForms.onPickCollectible)
 
 function PlayerForms:onLoseCollectible(player, item, count)
     local collectible = config:GetCollectible(item);
@@ -126,17 +127,7 @@ function PlayerForms:onLoseCollectible(player, item, count)
         end
     end
 end
+PlayerForms:AddCustomCallback(Lib.CLCallbacks.CLC_POST_LOSE_COLLECTIBLE, PlayerForms.onLoseCollectible)
 
-function PlayerForms:Register(mod)
-    Callbacks:AddCallback(mod, CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PlayerForms.onPickCollectible)
-    Callbacks:AddCallback(mod, CLCallbacks.CLC_POST_LOSE_COLLECTIBLE, PlayerForms.onLoseCollectible)
-    mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PlayerForms.onPlayerEffect);
-end
-
-function PlayerForms:Unregister(mod)
-    Callbacks:RemoveCallback(mod, CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PlayerForms.onPickCollectible)
-    Callbacks:RemoveCallback(mod, CLCallbacks.CLC_POST_LOSE_COLLECTIBLE, PlayerForms.onLoseCollectible)
-    mod:RemoveCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PlayerForms.onPlayerEffect);
-end
 
 return PlayerForms;

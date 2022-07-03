@@ -3,6 +3,20 @@ local NonSpell = GensouDream.SpellCard();
 
 local tearColor = Color(1,1,1,1,0.5,0,0);
 local smallColor = Color(1,1,1,1,0.5,0.5,0.5);
+local ProjParams = ProjectileParams();
+ProjParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+ProjParams.Color = tearColor;
+ProjParams.FallingAccelModifier = -0.2;
+ProjParams.FallingSpeedModifier = 3;
+ProjParams.Scale = 2;
+
+
+local SmallParams = ProjectileParams();
+SmallParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+SmallParams.Color = smallColor;
+SmallParams.FallingAccelModifier = -0.2;
+ProjParams.FallingSpeedModifier = 3;
+SmallParams.Scale = 0.5;
 
 function NonSpell:GetDefaultData(doremy)
     return {
@@ -45,21 +59,27 @@ function NonSpell:PostUpdate(doremy)
                 local sourcePos = data.Position + offset;
 
                 local velocity = Vector.FromAngle(tearAngle) * 4;
-                local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
-                tearEntity:SetColor(tearColor, -1, 0, false, true);
-                local proj = tearEntity:ToProjectile();
-                proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
-                proj.Scale = 2;
-                table.insert(data.Projectiles, proj);
+                ProjParams.BulletFlags = self:GetProjectileFlags(doremy);
+                doremy:FireProjectiles (sourcePos, velocity, 0, ProjParams);
+                ProjParams.BulletFlags = 0;
+                -- local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
+                -- tearEntity:SetColor(tearColor, -1, 0, false, true);
+                -- local proj = tearEntity:ToProjectile();
+                -- proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
+                -- proj.Scale = 2;
+                -- table.insert(data.Projectiles, proj);
 
                 
                 local smallVelocity = Vector.FromAngle(tearAngle) * -4;
-                local smallEntity = Isaac.Spawn(9, 4, 0, sourcePos, smallVelocity, doremy);
-                smallEntity:SetColor(smallColor, -1, 0, false, true);
-                local small = smallEntity:ToProjectile();
-                small.ProjectileFlags = small.ProjectileFlags | self:GetProjectileFlags(doremy);
-                small.Scale = 0.5;
-                table.insert(data.Projectiles, small);
+                SmallParams.BulletFlags = self:GetProjectileFlags(doremy);
+                doremy:FireProjectiles (sourcePos, smallVelocity, 0, SmallParams);
+                SmallParams.BulletFlags = 0;
+                -- local smallEntity = Isaac.Spawn(9, 4, 0, sourcePos, smallVelocity, doremy);
+                -- smallEntity:SetColor(smallColor, -1, 0, false, true);
+                -- local small = smallEntity:ToProjectile();
+                -- small.ProjectileFlags = small.ProjectileFlags | self:GetProjectileFlags(doremy);
+                -- small.Scale = 0.5;
+                -- table.insert(data.Projectiles, small);
             end
 
             --THI.SFXManager:Play(SoundEffect.SOUND_BISHOP_HIT);
@@ -69,15 +89,6 @@ function NonSpell:PostUpdate(doremy)
         end
     end
 
-
-    -- Make projectiles float.
-    for i, proj in pairs(data.Projectiles) do
-        if (proj:Exists()) then
-            proj.FallingSpeed = 0;
-        else
-            data.Projectiles[i] = nil;
-        end
-    end
 end
 function NonSpell:OnCast(doremy)
     local data = self:GetData(doremy);

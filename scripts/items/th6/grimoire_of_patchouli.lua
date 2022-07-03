@@ -44,15 +44,44 @@ local RockFlag = Math.GetTearFlag(70);
 
 function Grimoire:GetPlayerData(player, init)
     return Grimoire:GetData(player, init, function() return {
-        Elements = {false,false,false,false,false,false,false}
+        Elements = {false,false,false,false,false,false,false},
+        ElementCount = 0
+    } end);
+end
+
+local function GetTempPlayerData(player, init)
+    return Grimoire:GetTempData(player, init, function() return {
+        ElementCount = nil;
     } end);
 end
 
 function Grimoire:ClearEffects(player)
     local data = Grimoire:GetPlayerData(player, true);
+    local tempData = GetTempPlayerData(player, true);
     data.Elements = {false,false,false,false,false,false,false};
+    tempData.ElementCount = nil;
     player:AddCacheFlags(CacheFlag.CACHE_TEARFLAG | CacheFlag.CACHE_TEARCOLOR);
     player:EvaluateItems();
+end
+
+function Grimoire:GetElementCount(player)
+    local tempData = GetTempPlayerData(player, true);
+    if (tempData) then
+        if (not tempData.ElementCount) then
+            local elementCount = 0;
+            local data = Grimoire:GetPlayerData(player, false);
+            if (data) then
+                for i, value in ipairs(data.Elements) do
+                    if (value) then
+                        elementCount = elementCount + 1;
+                    end
+                end
+            end
+            tempData.ElementCount = elementCount;
+        end
+        return tempData.ElementCount;
+    end
+    return 0;
 end
 
 function Grimoire:onNewLevel()
@@ -64,23 +93,28 @@ Grimoire:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, Grimoire.onNewLevel)
 
 
 
+local function TrySetTearRock(player, tear)
+    if (player) then
+        local grimoireData = Grimoire:GetPlayerData(player, false);
+                
+        if (grimoireData) then
+            local elements = grimoireData.Elements;
+            if (elements[7]) then
+                if (Tears:CanOverrideVariant(TearVariant.ROCK, tear.Variant)) then
+                    tear:ChangeVariant(TearVariant.ROCK);
+                    return true;
+                end
+            end
+        end
+    end
+    return false;
+end
 
 function Grimoire:onFireTear(tear)
     local spawner = tear.SpawnerEntity;
     if (spawner ~= nil) then
         local player = spawner:ToPlayer()
-        if (player ~= nil) then
-            local grimoireData = Grimoire:GetPlayerData(player, false);
-            
-            if (grimoireData) then
-                local elements = grimoireData.Elements;
-                if (elements[7]) then
-                    if (Tears:CanOverrideVariant(TearVariant.ROCK, tear.Variant)) then
-                        tear:ChangeVariant(TearVariant.ROCK);
-                    end
-                end
-            end
-        end
+        TrySetTearRock(player, tear)
     end
 end
 Grimoire:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, Grimoire.onFireTear);
@@ -93,8 +127,7 @@ function Grimoire:useGrimoire(t, RNG, player, flags, slot)
     local index = -1;
     local selected = false;
     local elements = grimoireData.Elements;
-    while (not selected)
-    do
+    while (not selected) do
         index = RNG:RandomInt(7) + 1;
         
         if (not elements[index]) then
@@ -111,7 +144,7 @@ function Grimoire:useGrimoire(t, RNG, player, flags, slot)
                 end
             end
             if (allSelected) then
-                if (player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES)) then
+                if (Actives.CanSpawnWisp(player, flags)) then
                     player:AddWisp(CollectibleType.COLLECTIBLE_UNDEFINED, player.Position);
                 end
                 THI.Game:StartRoomTransition(-2, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT, player)
@@ -124,6 +157,9 @@ function Grimoire:useGrimoire(t, RNG, player, flags, slot)
     
     -- Show Item Text.
     grimoireData.Elements[index] = true;
+    
+    local tempData = GetTempPlayerData(player, true);
+    tempData.ElementCount = Grimoire:GetElementCount(player) + 1;
     local strings = ElementStrings;
     key = strings.Names[index];
     descKey = strings.Descs[index];
@@ -136,7 +172,6 @@ function Grimoire:useGrimoire(t, RNG, player, flags, slot)
 
     THI.SFXManager:Play(SoundEffect.SOUND_DEVILROOM_DEAL);
     if (Actives.CanSpawnWisp(player, flags)) then
-        --player:TriggerBookOfVirtues(Grimoire.WispItems[index])
         player:AddWisp(Grimoire.WispItems[index], player.Position);
     end
     
@@ -145,6 +180,7 @@ function Grimoire:useGrimoire(t, RNG, player, flags, slot)
     
     return { ShowAnim = true };
 end
+Grimoire:AddCallback(ModCallbacks.MC_USE_ITEM, Grimoire.useGrimoire, Grimoire.Item);
 
 function Grimoire:GetTearColor(player)
     local grimoireData = Grimoire:GetPlayerData(player, false);
@@ -212,6 +248,12 @@ function Grimoire:GetTearFlags(player)
     return flags;
 end
 
+function Grimoire:ApplyTearEffects(player, tear)
+    tear.TearFlags = tear.TearFlags | self:GetTearFlags(player);
+    tear:SetColor(Grimoire:GetTearColor(player), -1, 0);
+    TrySetTearRock(player, tear)
+end
+
 function Grimoire:onEvaluateCache(player, flag)
     if (flag == CacheFlag.CACHE_TEARFLAG) then
         player.TearFlags = player.TearFlags | Grimoire:GetTearFlags(player);
@@ -219,19 +261,13 @@ function Grimoire:onEvaluateCache(player, flag)
         player.TearColor = Grimoire:GetTearColor(player);
     end
 end
-
--- function Grimoire:onGameStarted(isContinued)
---     if (isContinued) then
---         for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_PLAYER)) do
---             local player = ent:ToPlayer();
---             player:AddCacheFlags(CacheFlag.CACHE_TEARFLAG | CacheFlag.CACHE_TEARCOLOR);
---             player:EvaluateItems();
---         end
---     end
--- end
---Grimoire:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, Grimoire.onGameStarted);
-
 Grimoire:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Grimoire.onEvaluateCache);
-Grimoire:AddCallback(ModCallbacks.MC_USE_ITEM, Grimoire.useGrimoire, Grimoire.Item);
+
+local function GetShaderParams(mod, name)
+    if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
+        Actives.RenderActivesCount(Grimoire.Item, function(player) return Grimoire:GetElementCount(player) end)
+    end
+end
+Grimoire:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, GetShaderParams);
 
 return Grimoire;

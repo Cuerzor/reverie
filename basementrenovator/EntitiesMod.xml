@@ -1,4 +1,7 @@
 <data>
+    <entity Group="(Reverie)" ID="5" Image="Entities/5.580.0 - Spring Fairy.png" Kind="Pickups" Name="Spring Fairy" Variant="580" />
+    <entity Group="(Reverie)" ID="5" Image="Entities/5.581.0 - Rebecha Idle.png" Kind="Pickups" Name="Rebecha Idle" Variant="581" />
+
     <entity Group="(Reverie)" ID="581" Image="Entities/581.0.0 - The Abandoned.png" Kind="Bosses" Name="The Abandoned" Variant="0" Subtype="0" />
 
     <entity Group="(Reverie)" ID="582" Image="Entities/582.0.0 - Necrospyder.png" Kind="Bosses" PlaceVisual="0,1" Name="Necrospyder" Variant="0" Subtype="0" />
@@ -15,4 +18,7 @@
     <entity Group="(Reverie)" ID="586" Image="Entities/586.0.0 - Devilcrow.png" Kind="Bosses" PlaceVisual="0,2" Name="Devilcrow" Variant="0" Subtype="0" />
 
     <entity Group="(Reverie)" ID="587" Image="Entities/587.0.0 - Guppet.png" Kind="Bosses" Name="Guppet" Variant="0" Subtype="0" />
+
+    <entity Group="Props" ID="960" Image="Entities/960.581.0 - Book Shelf.png" Kind="Stage" Name="Book Shelf" Variant="581" Subtype="0" />
+
 </data>

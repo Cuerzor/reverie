@@ -69,7 +69,7 @@ end
 -- Events
 ------------------
 function OneOfNineTails:onPlayerEffect(player)
-    if (SaveAndLoad.GameStarted) then
+    if (Game():GetFrameCount() > 0) then
         local level = THI.Game:GetLevel();
         local num = player:GetCollectibleNum(OneOfNineTails.Item);
 
@@ -110,7 +110,7 @@ function OneOfNineTails:onNewStage()
         end
     end
 end
-OneOfNineTails:AddCustomCallback(CLCallbacks.CLC_NEW_STAGE, OneOfNineTails.onNewStage)
+OneOfNineTails:AddCustomCallback(CuerLib.CLCallbacks.CLC_NEW_STAGE, OneOfNineTails.onNewStage)
 
 function OneOfNineTails:postPickCollectible(player, item, count, touched)
     if (not touched) then
@@ -122,13 +122,13 @@ function OneOfNineTails:postPickCollectible(player, item, count, touched)
         end
     end
 end
-OneOfNineTails:AddCustomCallback(CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, OneOfNineTails.postPickCollectible, OneOfNineTails.Item);
+OneOfNineTails:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, OneOfNineTails.postPickCollectible, OneOfNineTails.Item);
 
 function OneOfNineTails:postChangeCollectibles(player, item, diff)
     player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
     player:EvaluateItems();
 end
-OneOfNineTails:AddCustomCallback(CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, OneOfNineTails.postChangeCollectibles, OneOfNineTails.Item);
+OneOfNineTails:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, OneOfNineTails.postChangeCollectibles, OneOfNineTails.Item);
 
 
 function OneOfNineTails:onEvaluateCache(player, flag)

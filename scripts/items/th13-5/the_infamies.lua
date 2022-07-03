@@ -5,14 +5,15 @@ local Callbacks = CuerLib.Callbacks;
 local Detection = CuerLib.Detection;
 
 local TheInfamies = ModItem("The Infamies", "TheInfamies");
+local rootPath = "gfx/reverie/characters/";
 TheInfamies.Costumes = {
-    Isaac.GetCostumeIdByPath("gfx/characters/costume_the_infamies_pleasure.anm2"),
-    Isaac.GetCostumeIdByPath("gfx/characters/costume_the_infamies_anger.anm2"),
-    Isaac.GetCostumeIdByPath("gfx/characters/costume_the_infamies_sorrow.anm2"),
-    Isaac.GetCostumeIdByPath("gfx/characters/costume_the_infamies_fearness.anm2")
+    Isaac.GetCostumeIdByPath(rootPath.."costume_the_infamies_pleasure.anm2"),
+    Isaac.GetCostumeIdByPath(rootPath.."costume_the_infamies_anger.anm2"),
+    Isaac.GetCostumeIdByPath(rootPath.."costume_the_infamies_sorrow.anm2"),
+    Isaac.GetCostumeIdByPath(rootPath.."costume_the_infamies_fearness.anm2")
 };
 TheInfamies.NormalHeartGFX = "gfx/familiar/familiar_276_isaacsheart.png";
-TheInfamies.MaskedHeartGFX = "gfx/familiar/isaacsheart_masked.png";
+TheInfamies.MaskedHeartGFX = "gfx/reverie/familiar/isaacsheart_masked.png";
 
 function TheInfamies.GetPlayerData(player, init)
     return TheInfamies:GetData(player, init, function() return {
@@ -98,7 +99,7 @@ function TheInfamies:PrePlayerTakeDamage(tookDamage, amount ,flags, source, coun
         end
     end
 end
-TheInfamies:AddCustomCallback(CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, TheInfamies.PrePlayerTakeDamage, EntityType.ENTITY_PLAYER); 
+TheInfamies:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, TheInfamies.PrePlayerTakeDamage, EntityType.ENTITY_PLAYER); 
 
 function TheInfamies:PreProjectileCollision(projectile, other, low)
     -- Ignore Projectile Collision and destroy the projectile.
@@ -119,7 +120,7 @@ TheInfamies:AddCallback(ModCallbacks.MC_PRE_PROJECTILE_COLLISION, TheInfamies.Pr
 
 
 function TheInfamies:PostPlayerEffect(player)
-    if (SaveAndLoad.GameStarted) then
+    if (Game():GetFrameCount() > 0) then
         local has = player:HasCollectible(TheInfamies.Item);
         if (has) then
             local playerData = TheInfamies.GetPlayerData(player, true);
@@ -267,7 +268,7 @@ function TheInfamies:PostChangeCollectibles(player, item, diff)
     player:AddCacheFlags(CacheFlag.CACHE_SPEED);
     player:EvaluateItems();
 end
-TheInfamies:AddCustomCallback(CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, TheInfamies.PostChangeCollectibles, CollectibleType.COLLECTIBLE_INFAMY); 
+TheInfamies:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, TheInfamies.PostChangeCollectibles, CollectibleType.COLLECTIBLE_INFAMY); 
 
 
 return TheInfamies;

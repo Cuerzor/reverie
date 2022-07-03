@@ -1,41 +1,13 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 
 local json = require("json")
-local SaveAndLoad = SaveAndLoad or {
-    GameStarted = false
-}
+local SaveAndLoad = Lib:NewClass();
 
 ----------------
 -- Callbacks
 ----------------
 
-local Functions = {
-    PostSave = {},
-    PostRestart = {},
-    PostLoad = {},
-    PostExit = {}
-}
 
-SLCallbacks = {
-    SLC_POST_SAVE = "PostSave",
-    SLC_POST_RESTART = "PostRestart",
-    SLC_POST_LOAD = "PostLoad",
-    SLC_POST_EXIT = "PostExit"
-}
-
-function SaveAndLoad:AddCallback(mod, callbackId, func, opt)
-    local info = { Mod = mod, Func = func, OptionalArg = opt};
-    table.insert(Functions[callbackId], info);
-end
-
-function SaveAndLoad:RemoveCallback(mod, callbackId, func)
-    for i, info in pairs(Functions[callbackId]) do
-        if (info.Mod == mod and Func == func) then
-            table.remove(Functions[callbackId], i);
-            return;
-        end
-    end
-end
 
 
 local function GetModData(mod)
@@ -94,28 +66,18 @@ function SaveAndLoad.RemoveGameState()
 end
 
 
-function SaveAndLoad:RemoveCallback(mod, callbackId, func)
-    for i, info in pairs(Functions[callbackId]) do
-        if (info.Mod == mod and Func == func) then
-            table.remove(Functions[callbackId], i);
-            return;
-        end
-    end
-end
-
-
 
 local function Save()
     local state = {};
     state.Global = Lib:GetModGlobalData();
     state.Players = {};
     for index, player in Lib.Detection.PlayerPairs(true, true) do
-        state.Players[tostring(index)] = Lib:GetModEntityData(player);
+        state.Players[tostring(index)] = Lib:GetEntityModData(player);
     end
 
     SaveAndLoad.WriteGameStateData(state);
     
-    for index, funcData in pairs(Functions.PostSave) do
+    for index, funcData in pairs(Lib.Callbacks.Functions.PostSave) do
         funcData.Func(funcData.Mod);
     end
 end
@@ -125,7 +87,7 @@ local function RestartGame()
     local info = Lib.ModInfo;
     SaveAndLoad.RemoveGameState(info.Mod);
     
-    for index, funcData in pairs(Functions.PostRestart) do
+    for index, funcData in pairs(Lib.Callbacks.Functions.PostRestart) do
         funcData.Func(funcData.Mod);
     end
 end
@@ -137,26 +99,22 @@ end
 function SaveAndLoad:preGameExit(ShouldSave)
     if (ShouldSave) then
         Save();
-        SaveAndLoad.GameStarted = false;
     else
         RestartGame();
     end
-    for index, funcData in pairs(Functions.PostExit) do
+    for index, funcData in pairs(Lib.Callbacks.Functions.PostExit) do
         funcData.Func(funcData.Mod);
     end
 end
+SaveAndLoad:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, SaveAndLoad.preGameExit)
 
-function SaveAndLoad:onUpdate()
-    if (THI.Game:GetFrameCount() > 0) then
-        SaveAndLoad.GameStarted = true;
-    end
-end
 
 function SaveAndLoad:onNewLevel()
     if (THI.Game:GetLevel():GetStage() > 1) then
         Save();
     end
 end
+SaveAndLoad:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, SaveAndLoad.onNewLevel)
 
 
 function SaveAndLoad:onGameStarted(isContinued)
@@ -174,11 +132,11 @@ function SaveAndLoad:onGameStarted(isContinued)
                     for k, v in pairs(state.Players) do
                         local index = tonumber(k);
                         if (i == index) then
-                            Lib:SetModEntityData(player, v)
+                            Lib:SetEntityModData(player, v)
                         end
                     end
                 end
-                for index, funcData in pairs(Functions.PostLoad) do
+                for index, funcData in pairs(Lib.Callbacks.Functions.PostLoad) do
                     funcData.Func(funcData.Mod);
                 end
             end
@@ -186,21 +144,7 @@ function SaveAndLoad:onGameStarted(isContinued)
             SaveAndLoad.RemoveGameState(mod);
         end
     end
-    SaveAndLoad.GameStarted = true;
 end
-
-function SaveAndLoad:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, SaveAndLoad.onGameStarted)
-    mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, SaveAndLoad.onNewLevel)
-    mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, SaveAndLoad.preGameExit)
-    mod:AddCallback(ModCallbacks.MC_POST_UPDATE, SaveAndLoad.onUpdate)
-end
-
-function SaveAndLoad:Unregister(mod)
-    mod:RemoveCallback(ModCallbacks.MC_POST_GAME_STARTED, SaveAndLoad.onGameStarted)
-    mod:RemoveCallback(ModCallbacks.MC_POST_NEW_LEVEL, SaveAndLoad.onNewLevel)
-    mod:RemoveCallback(ModCallbacks.MC_PRE_GAME_EXIT, SaveAndLoad.preGameExit)
-    mod:RemoveCallback(ModCallbacks.MC_POST_UPDATE, SaveAndLoad.onUpdate)
-end
+SaveAndLoad:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, SaveAndLoad.onGameStarted)
 
 return SaveAndLoad;

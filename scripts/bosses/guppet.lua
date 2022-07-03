@@ -3,6 +3,21 @@ local EntityExists = CuerLib.Detection.EntityExists;
 local Grids = CuerLib.Grids;
 local Guppet = ModEntity("Guppet", "GUPPET")
 
+do
+    local MaggotParams = ProjectileParams();
+    MaggotParams.FallingAccelModifier = 1;
+    MaggotParams.BulletFlags = ProjectileFlags.EXPLODE;
+    MaggotParams.Color = Color(0,1,0,1,0,0,0);
+    Guppet.MaggotParams = MaggotParams;
+
+    local DevilParams = ProjectileParams();
+    DevilParams.BulletFlags = ProjectileFlags.SIDEWAVE;
+    Guppet.DevilParams = DevilParams;
+
+    local NormalParams = ProjectileParams();
+    Guppet.NormalParams = NormalParams;
+end
+
 -- Add Boss Room.
 do
     local n = Grids.RoomGrids.Null;
@@ -42,11 +57,11 @@ do
         },
         Type = Guppet.Type,
         Variant = Guppet.Variant,
-        PortraitPath = "gfx/ui/boss/portrait_587.0_guppet.png",
+        PortraitPath = "gfx/reverie/ui/boss/portrait_587.0_guppet.png",
         PortraitOffset = Vector(0, -30),
         NamePaths = {
-            en = "gfx/ui/boss/bossname_587.0_guppet.png",
-            zh = "gfx/ui/boss/bossname_587.0_guppet_zh.png"
+            en = "gfx/reverie/ui/boss/bossname_587.0_guppet.png",
+            zh = "gfx/reverie/ui/boss/bossname_587.0_guppet_zh.png"
         }
     }
     Bosses:SetBossConfig("reverie:guppet", bossConfig, roomConfig);
@@ -63,6 +78,8 @@ do
         ANGEL = 14,
         DEVIL = 15,
     }
+    local RottenLaserColor = Color(1,1,1,1,0,0,0);
+    RottenLaserColor:SetColorize(1.5,1.8,1,1);
     function Guppet.GetGuppetData(guppet, init)
         local function getter()
             return {
@@ -82,7 +99,7 @@ do
     end
     Guppet:AddCallback(ModCallbacks.MC_POST_NPC_INIT, PostGuppetInit, Guppet.Type);
 
-    local rng = RNG();
+    
     local validStates = {
         Guppet.States.FLY,
         Guppet.States.SPIDER,
@@ -92,6 +109,8 @@ do
 
     local function PostGuppetUpdate(mod, guppet)
         if (guppet.Variant == Guppet.Variant) then
+            local rng = RNG();
+            rng:SetSeed(Random(), 0);
             local slowed = guppet:HasEntityFlags(EntityFlag.FLAG_SLOW);
 
             -- State.
@@ -167,20 +186,30 @@ do
                     if (spr:IsEventTriggered("Spit")) then
                         THI.SFXManager:Play(SoundEffect.SOUND_WHEEZY_COUGH);
                         local boomflyCount = #Isaac.FindByType(EntityType.ENTITY_BOOMFLY, 5);
-                        if (boomflyCount >= 2 or rng:RandomInt(2) == 0) then
-                            
-                            local player = guppet:GetPlayerTarget()
-                            local targetAngle = 0;
-                            if (player ) then
-                                targetAngle = (player.Position - guppet.Position):GetAngleDegrees();
-                            end
-                            for i = 1, 8 do
-                                local angle = i * 45 + targetAngle;
-                                local dir = Vector.FromAngle(angle);
-                                local vel = dir * 10;
-                                Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_NORMAL, 0, guppet.Position, vel, guppet);
-                            end
+                        if (boomflyCount >= 1 or rng:RandomInt(2) == 0) then
+                            if (rng:RandomInt(2) == 0) then
+                                -- 50% Chance to spawn Army flies.
+                                for i = 0, 5 do
+                                Isaac.Spawn(868, 0, 0, guppet.Position, Vector.Zero, guppet);
+                                end
+							else
+                                -- 50% Chance to fire proectiles.
+                                local player = guppet:GetPlayerTarget()
+                                local targetAngle = 0;
+                                if (player) then
+                                    targetAngle = (player.Position - guppet.Position):GetAngleDegrees();
+                                end
+                                for i = 1, 6 do
+                                    local angle = i * 60 + targetAngle;
+                                    local dir = Vector.FromAngle(angle);
+                                    local vel = dir * 10;
+                                    
+                                    guppet:FireProjectiles (guppet.Position, vel, 0, Guppet.NormalParams)
+                                    --Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_NORMAL, 0, guppet.Position, vel, guppet);
+                                end
+							end
                         else
+                            -- Spawn Boomflies.
                             Isaac.Spawn(EntityType.ENTITY_BOOMFLY, 5, 0, guppet.Position, Vector.Zero, guppet);
                         end
                     end
@@ -238,13 +267,18 @@ do
                         if (player ) then
                             targetAngle = (player.Position - guppet.Position):GetAngleDegrees();
                         end
-                        for i = 1, 8 do
-                            local angle = i * 45 + targetAngle;
+                        for i = 1, 6 do
+                            local angle = i * 60 + targetAngle;
                             local dir = Vector.FromAngle(angle);
                             local vel = dir * 10;
-                            Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_NORMAL, 0, guppet.Position, vel, guppet);
+                            
+                            guppet:FireProjectiles (guppet.Position, vel, 0, Guppet.NormalParams)
+                            -- Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_NORMAL, 0, guppet.Position, vel, guppet);
                         end
-                        Isaac.Spawn(EntityType.ENTITY_BOIL, 2, 0, guppet.Position, Vector.Zero, nil);
+						if (rng:RandomInt(4) == 0) then
+                            -- Only have 25% chance to spawn boils.
+                            Isaac.Spawn(EntityType.ENTITY_BOIL, 2, 0, guppet.Position, Vector.Zero, nil);
+						end
                         guppet.Velocity = Vector.Zero;
                     end
 
@@ -345,11 +379,15 @@ do
                                     local angle = rng:RandomFloat() * 60 - 30;
                                     local projDir = (-dir):Rotated(angle);
                                     local vel = projDir * (rng:RandomFloat() * 5 + 5);
-                                    local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_NORMAL, 0, guppet.Position + vel, vel, guppet):ToProjectile();
-                                    proj.FallingAccel = 1;
-                                    proj.FallingSpeed = -(rng:RandomFloat() * 20 + 20);
-                                    proj:AddProjectileFlags(ProjectileFlags.EXPLODE);
-                                    proj:SetColor(Color(0,1,0,1,0,0,0), 0, 0);
+
+                                    Guppet.MaggotParams.FallingSpeedModifier = -(rng:RandomFloat() * 20 + 20);
+                                    guppet:FireProjectiles (guppet.Position, vel, 0, Guppet.MaggotParams)
+
+                                    -- local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_NORMAL, 0, guppet.Position + vel, vel, guppet):ToProjectile();
+                                    -- proj.FallingAccel = 1;
+                                    -- proj.FallingSpeed = -(rng:RandomFloat() * 20 + 20);
+                                    -- proj:AddProjectileFlags(ProjectileFlags.EXPLODE);
+                                    -- proj:SetColor(Color(0,1,0,1,0,0,0), 0, 0);
 
                                 end
                                 guppet.I1 = 0;
@@ -387,7 +425,7 @@ do
                 local yOffset = math.sin(sin / 90 * math.pi * 3) * 30;
                 local targetPosition = center + Vector(xOffset, yOffset);
                 guppet.Velocity = guppet.Velocity * (1 - lerp) + (targetPosition - guppet.Position) * 0.3 * lerp;
-                -- Chub Projectiles.
+                -- Projectiles.
                 for i = 0, 4 do
                     local posOffset = Vector.Zero;
                     if (i == 1) then
@@ -406,10 +444,12 @@ do
                         if (target) then
                             targetPosition = target.Position;
                         end
-                        for ang = 0, 4 do
+                        for ang = 0, 2 do
                             local dir = (targetPosition - pos):Normalized():Rotated(ang * 20 - 40);
                             local vel = dir * 8;
-                            local projectile = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_NORMAL, 0, pos, vel, guppet):ToProjectile();
+                            local projectile = guppet:FireProjectiles(pos, vel, 0, Guppet.NormalParams);
+
+                            --local projectile = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_NORMAL, 0, pos, vel, guppet):ToProjectile();
                         end
                         local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, guppet.Position, Vector.Zero, guppet);
                         THI.SFXManager:Play(SoundEffect.SOUND_HEARTOUT);
@@ -422,7 +462,7 @@ do
                     guppet.Velocity = Vector.Zero;
                 end
             elseif (state == Guppet.States.DEVIL) then
-                -- Angel Form.
+                -- Devil Form.
                 RunStateFrame();
                 if (spr:IsPlaying("Idle")) then
                     spr:Play("DevilCombine");
@@ -440,6 +480,7 @@ do
                             local sign = (i * 2 - 3);
                             local angle = 90 - sign * 30;
                             local laser = EntityLaser.ShootAngle (1, guppet.Position, angle, 100, Vector(0, -24), guppet);
+                            laser:SetColor(RottenLaserColor, 0, 0);
                             laser.DepthOffset = 25;
                             laser.Parent = guppet;
                             laser.ParentOffset = Vector(sign * 96, 0);
@@ -459,8 +500,11 @@ do
                     end
                     local dir = (targetPosition - guppet.Position):Normalized();
                     local vel = dir * 10;
-                    local projectile = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_NORMAL, 0, guppet.Position, vel, guppet):ToProjectile();
-                    projectile:AddProjectileFlags(ProjectileFlags.SIDEWAVE);
+
+                    local projectile = guppet:FireProjectiles(guppet.Position, vel, 0, Guppet.DevilParams);
+
+                    --local projectile = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_NORMAL, 0, guppet.Position, vel, guppet):ToProjectile();
+                    --projectile:AddProjectileFlags(ProjectileFlags.SIDEWAVE);
                     THI.SFXManager:Play(SoundEffect.SOUND_HEARTOUT);
                     local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, guppet.Position, Vector.Zero, guppet);
                     effect.DepthOffset = 3;
@@ -473,13 +517,14 @@ do
                         laser.Timeout = 31;
                         local sign = (i * 2 - 3);
                         local angle = 90 - sign * 30;
-                        local lerp = (guppet.StateFrame - 50 )/ 210;
+                        local lerp = (guppet.StateFrame - 50 )/ 300;
                         laser.Angle = angle * (1- lerp) + 90 * lerp;
                     end
 
                     
                     -- Move.
-                    local targetPosition = Vector(320, 160);
+                    local targetPosition = Game():GetRoom():GetCenterPos() ;
+                    targetPosition.Y = 120;
                     guppet.Velocity = guppet.Velocity * 0.5 + (targetPosition - guppet.Position) * 0.1 * 0.5;
                     -- Fire.
                     if (guppet.StateFrame > 50 and guppet.StateFrame % 40 == 0) then

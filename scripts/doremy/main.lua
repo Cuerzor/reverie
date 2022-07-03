@@ -4,9 +4,6 @@ local Pickups = CuerLib.Pickups;
 local Dream = ModPart:New("Gensou Dream", "GENSOU_DREAM");
 GensouDream = Dream;
 
-if (Game():GetFrameCount() <= 0) then
-    GensouFocusPause = Options.PauseOnFocusLost;
-end
 
 local function GetDefaultGlobalData() 
     return {
@@ -25,6 +22,7 @@ local function GetDefaultTempData()
         MusicPlayed = false,
         Cleared = false,
         Dialog = {
+            LastRunning = false,
             Running = false,
             Runner = nil
         },
@@ -74,14 +72,16 @@ local DreamCushion = {
 }
 local DreamBackEntityVariant = Isaac.GetEntityVariantByName("Dream World Backdrop");
 local DreamWorldRoomType = RoomType.ROOM_PLANETARIUM;
-local DreamWorldRoomVariant = 58123;
+local DreamWorldRoomVariant = 5800;
+
+THI.Shared.SoftlockFix:AddModGotoRoom(DreamWorldRoomType, DreamWorldRoomVariant);
+
 local musicID = Isaac.GetMusicIdByName("Doremy");
 
 local CodeUtil = include("utilities/code_utility");
 
 local Require = CuerLib.Require;
 
-Dream.SpellCardEffect = Require("scripts/doremy/effects/spell_card_effect")
 Dream.SpellCard = Require("scripts/doremy/spell_card");
 
 
@@ -187,26 +187,22 @@ end
 function Dream:onNewRoom()
 
     local globalData = Dream:GetDreamData();
+    local level = THI.Game:GetLevel();
     local room = THI.Game:GetRoom();
     
     GensouDreamTempData = GetDefaultTempData();
 
 
     -- Dream Soul spawn while Ascent.
-    local hasDadsNote = false;
+    local ascent = level:IsAscent();
     local hasDreamSoul = false;
     for i, player in Detection.PlayerPairs() do 
-        if (player:HasCollectible(CollectibleType.COLLECTIBLE_DADS_NOTE)) then
-            hasDadsNote = true;
-        end
         if (player:HasCollectible(DreamSoul.Id)) then
             hasDreamSoul = true;
         end
     end
-    if (hasDadsNote and not hasDreamSoul) then
+    if (ascent and not hasDreamSoul) then
         -- if has dad's note and don't has dream soul.
-        local level = THI.Game:GetLevel();
-        local room = THI.Game:GetRoom();
         local stage = level:GetStage();
         if (stage == 1 and level:GetStageType() == 0 and room:GetType() == RoomType.ROOM_TREASURE) then
             -- if it's stage 1 treasure room.
@@ -214,7 +210,8 @@ function Dream:onNewRoom()
             local dreamSoulSpawned = globalData.DreamSoulSpawned;
             if (not dreamSoulExists and not dreamSoulSpawned) then
                 local pos = room:FindFreePickupSpawnPosition(Vector(320, 280), 0, true);
-                Pickups.SpawnFixedCollectible(DreamSoul.Id, pos, Vector.Zero, nil);
+                local collectible = Pickups.SpawnFixedCollectible(DreamSoul.Id, pos, Vector.Zero, nil);
+                collectible:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
                 globalData.DreamSoulSpawned = true;
             end
         end
@@ -273,14 +270,14 @@ function Dream:postUpdate()
         
         if (tempData.Dialog.Running) then
             -- Run Dialog.
-            Options.PauseOnFocusLost = false;
+
             local runner = tempData.Dialog.Runner;
             if (runner) then
-                runner:Run();
                 if (runner:IsFinished()) then
                     tempData.Dialog.Runner = nil;
                     tempData.Dialog.Running = false;
-                    Options.PauseOnFocusLost = GensouFocusPause;
+                else
+                    runner:Run();
                 end
             end
         else
@@ -319,6 +316,16 @@ function Dream:postUpdate()
                     StartEnding();
                 end
             end
+        end
+
+        if (tempData.Dialog.LastRunning ~= tempData.Dialog.Running) then
+            local Opt = THI.Shared.Options;
+            if (tempData.Dialog.Running) then
+                Opt:CancelPauseFocus();
+            else
+                Opt:ResumePauseFocus();
+            end
+            tempData.Dialog.LastRunning = tempData.Dialog.Running;
         end
     else
         
@@ -387,7 +394,7 @@ function Dream:postUpdate()
                     tempData.BlackScreenAlpha = tempData.GoingDreamTime / 40;
 
                     if (tempData.GoingDreamTime > 90) then
-                        THI.GotoRoom("s.planetarium.58123")
+                        THI.GotoRoom("s.planetarium."..DreamWorldRoomVariant)
                         tempData.BlackScreenAlpha = 1;
                         tempData.GoingDream = false;
                         for i, player in Detection.PlayerPairs() do
@@ -407,7 +414,9 @@ function Dream:postUpdate()
             end
         end
     end
-    
+
+    tempData.WhiteScreenAlpha = math.max(0, math.min(1, tempData.WhiteScreenAlpha + tempData.WhiteScreenAlphaSpeed));
+    tempData.BlackScreenAlpha = math.max(0, math.min(1, tempData.BlackScreenAlpha + tempData.BlackScreenAlphaSpeed));
 end
 Dream:AddCallback(ModCallbacks.MC_POST_UPDATE, Dream.postUpdate);
 
@@ -420,27 +429,42 @@ function Dream:postRender()
             tempData.Dialog.Runner:Render();
         end
     end
-    local paused = THI.Game:IsPaused()
-    if (not paused or tempData.WhiteScreenAlphaSpeed < 0) then
-        tempData.WhiteScreenAlpha = math.max(0, math.min(1, tempData.WhiteScreenAlpha + tempData.WhiteScreenAlphaSpeed / 2));
-    end
+    -- local paused = THI.Game:IsPaused()
+    -- if (not paused or tempData.WhiteScreenAlphaSpeed < 0) then
+    --     tempData.WhiteScreenAlpha = math.max(0, math.min(1, tempData.WhiteScreenAlpha + tempData.WhiteScreenAlphaSpeed / 2));
+    -- end
 
-    if (not paused or tempData.BlackScreenAlphaSpeed < 0) then
-        tempData.BlackScreenAlpha = math.max(0, math.min(1, tempData.BlackScreenAlpha + tempData.BlackScreenAlphaSpeed / 2));
-    end
+    -- if (not paused or tempData.BlackScreenAlphaSpeed < 0) then
+    --     tempData.BlackScreenAlpha = math.max(0, math.min(1, tempData.BlackScreenAlpha + tempData.BlackScreenAlphaSpeed / 2));
+    -- end
 end
 
 Dream:AddCallback(ModCallbacks.MC_POST_RENDER, Dream.postRender);
+
+local function PostPlayerUpdate(mod, player)
+    local dialogRunner;
+    local tempData = Dream:GetTempData(); 
+    if (tempData.Dialog.Running) then
+        dialogRunner = tempData.Dialog.Runner;
+    end
+    if (dialogRunner) then
+        if (Input.IsActionTriggered(ButtonAction.ACTION_MENUCONFIRM, player.ControllerIndex) or
+        Input.IsActionTriggered(ButtonAction.ACTION_MENUBACK, player.ControllerIndex)) then
+            dialogRunner:Finish();
+        end
+    end
+end
+Dream:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate);
 
 function Dream:getShaderParams(shaderName) 
     local tempData = Dream:GetTempData(); 
     if (shaderName == "Reverie White Screen") then
         return {
-            Alpha = tempData.WhiteScreenAlpha;
+            Alpha = (tempData and tempData.WhiteScreenAlpha) or 0;
         }
     elseif (shaderName == "Reverie Black Screen") then
         return {
-            Alpha = tempData.BlackScreenAlpha;
+            Alpha = (tempData and tempData.BlackScreenAlpha) or 0;
         }
     end
 end
@@ -477,7 +501,7 @@ function Dream:playerTakeDamage(tookDamage, amount, flags, source, countdown)
         return false;
     end
 end
-Dream:AddCustomCallback(CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, Dream.playerTakeDamage, EntityType.ENTITY_PLAYER);
+Dream:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, Dream.playerTakeDamage, EntityType.ENTITY_PLAYER);
 
 
 function Dream:postBackgroundUpdate(effect)

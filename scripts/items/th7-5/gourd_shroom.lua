@@ -1,5 +1,5 @@
 local SaveAndLoad = CuerLib.SaveAndLoad;
-local Explosion = CuerLib.Explosion;
+local Grids = CuerLib.Grids;
 local Stats = CuerLib.Stats;
 
 
@@ -46,7 +46,7 @@ local function SwitchMode(player, mode)
 end
 
 local function onPlayerEffect(mod, player)
-    if (SaveAndLoad.GameStarted) then
+    if (Game():GetFrameCount() > 0) then
         if (player:HasCollectible(GourdShroom.Item)) then
             local playerData = GourdShroom.GetPlayerData(player);
             if (playerData.Mode ~= 0 and playerData.Mode ~= 1) then
@@ -69,7 +69,7 @@ local function onPlayerEffect(mod, player)
                             room:DestroyGrid (index, false)
                             room:DamageGrid (index, 10000);
                             
-                            Explosion.PushToBridge(player.Position, index);
+                            Grids:PushToBridge(player.Position, index);
                         end
                     end
                 end
@@ -98,7 +98,7 @@ local function onPlayerTakeDamage(mod, tookDamage, amount, source, flags, countd
         end
     end
 end
-GourdShroom:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, onPlayerTakeDamage, EntityType.ENTITY_PLAYER);
+GourdShroom:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, onPlayerTakeDamage, EntityType.ENTITY_PLAYER);
 
 local function onEvaluateCache(mod, player, flag)
     if (player:HasCollectible(GourdShroom.Item)) then

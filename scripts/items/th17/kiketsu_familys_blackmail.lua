@@ -22,17 +22,6 @@ do
         end
     end
     Blackmail:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PostPlayerEffect);
-
-    
-    -- local function PreNPCCollision(mod, npc, other, low)
-    --     local player = other:ToPlayer();
-    --     if (player) then
-    --         if (player:HasCollectible(Blackmail.Item) and (npc:HasEntityFlags(EntityFlag.FLAG_FEAR) or npc:HasEntityFlags(EntityFlag.FLAG_CHARM))) then
-    --             return false;
-    --         end
-    --     end
-    -- end
-    -- Blackmail:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PreNPCCollision);
 end
 
 return Blackmail;

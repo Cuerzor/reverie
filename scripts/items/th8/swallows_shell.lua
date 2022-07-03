@@ -65,7 +65,7 @@ function SwallowsShell:PostPlayerTakeDamage(entity, amount, flags, source, count
         end
     end
 end
-SwallowsShell:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, SwallowsShell.PostPlayerTakeDamage, EntityType.ENTITY_PLAYER);
+SwallowsShell:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, SwallowsShell.PostPlayerTakeDamage, EntityType.ENTITY_PLAYER);
 
 function SwallowsShell.SpawnBonus(player, position)
     local game = THI.Game;
@@ -114,6 +114,6 @@ function SwallowsShell:PostNewStage()
         end
     end
 end
-SwallowsShell:AddCustomCallback(CLCallbacks.CLC_NEW_STAGE, SwallowsShell.PostNewStage);
+SwallowsShell:AddCustomCallback(CuerLib.CLCallbacks.CLC_NEW_STAGE, SwallowsShell.PostNewStage);
 
 return SwallowsShell;

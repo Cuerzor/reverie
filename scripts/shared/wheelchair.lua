@@ -1,4 +1,5 @@
 local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local CompareEntity = Detection.CompareEntity;
 local WheelChair = {};
 
@@ -11,11 +12,13 @@ WheelChair.Callbacks = {
 
 WheelChair.HitboxType = Isaac.GetEntityTypeByName("Wheelchair Hitbox");
 WheelChair.HitboxVariant = Isaac.GetEntityVariantByName("Wheelchair Hitbox");
-WheelChair.HitboxSubType = 5555;
+WheelChair.HitboxSubType = 555;
 
 WheelChair.SpeedUpSpeed = 0.005;
 WheelChair.SpeedDownSpeed = 0.08;
 WheelChair.MeterVariant = Isaac.GetEntityVariantByName("Komeiji Meter");
+
+local CrushedEnemies = {};
 
 local function LimitVelocity(vel, maxSpeed)
     local dir = vel:Normalized();
@@ -23,6 +26,21 @@ local function LimitVelocity(vel, maxSpeed)
     spd = math.min(maxSpeed, math.max(0, spd));
     vel = dir * spd;
     return vel;
+end
+
+local function MovingTowards(player, target)
+    local playerVel = player.Velocity;
+    local playerPos = player.Position;
+    local targetPos = target.Position;
+    
+    local player2Target = targetPos - playerPos;
+    local sizeSum = player.Size + target.Size;
+    local allowedAngleDiff = math.atan(sizeSum / player2Target:Length())
+    local angleDiff = math.acos(playerVel:Normalized():Dot(player2Target:Normalized()));
+    if (angleDiff <= allowedAngleDiff) then
+        return true;
+    end
+    return false;
 end
 
 function WheelChair.GetPlayerTempData(player, init)
@@ -124,20 +142,30 @@ function WheelChair:PlayerEffect(player)
     end
 
     if (self:IsOverHalfSpeed(player)) then
+        data.Charging = true;
         if (not data.Hitbox or not data.Hitbox:Exists()) then
             data.Hitbox = Isaac.Spawn(self.HitboxType, self.HitboxVariant, self.HitboxSubType, player.Position + player.Velocity, Vector.Zero, player);
         end
 
-        data.Hitbox.Position = player.Position + player.Velocity;
-        data.Hitbox.Velocity = player.Velocity;
-        data.Hitbox:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
+        local hitBox = data.Hitbox
+        hitBox.Position = player.Position + player.Velocity;
+        hitBox.Velocity = player.Velocity;
+        hitBox.Parent = player;
+        hitBox:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
 
-        if (player.FrameCount % 6 <= 2) then
-            player:SetColor(Color(1,1,1,1,0.5, 0, 0.5), 3, 99, true, true);
+        -- Invincible.
+        local movingTowardsEnemy = false;
+        for _, ent in ipairs(Isaac.GetRoomEntities()) do
+            if (ent:IsEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and MovingTowards(player, ent) and player.Position:Distance(ent.Position) < ent.Size + player.Size + 120) then
+                movingTowardsEnemy = true;
+            end
         end
-
-        player:SetMinDamageCooldown(60);
-        data.Charging = true;
+        if (movingTowardsEnemy) then
+            if (player.FrameCount % 6 <= 2) then
+                player:SetColor(Color(1,1,1,1,0.5, 0, 0.5), 3, 99, true, true);
+            end
+            player:SetMinDamageCooldown(1);
+        end
     else
         data.Charging = false;
     end
@@ -155,7 +183,7 @@ function WheelChair:PlayerEffect(player)
 end
 
 function WheelChair:PostHitboxUpdate(hitbox)
-    if (hitbox.SubType == WheelChair.HitboxSubType) then
+    if (hitbox.Variant == WheelChair.HitboxVariant and hitbox.SubType == WheelChair.HitboxSubType) then
         local spawner = hitbox.SpawnerEntity;
         if (spawner and spawner:Exists()) then
             local vel = spawner.Velocity;
@@ -163,6 +191,7 @@ function WheelChair:PostHitboxUpdate(hitbox)
             hitbox.Size = 20
             local player = spawner:ToPlayer();
             if (player) then
+                hitbox.TearFlags = player.TearFlags;
                 local data = WheelChair.GetPlayerTempData(player, false);
                 if (not WheelChair:IsOverHalfSpeed(player) or not CompareEntity(hitbox, data.Hitbox)) then
                     hitbox:Remove();
@@ -205,8 +234,49 @@ function WheelChair:PostCrushNPC(player, npc, damage)
     end
 end
 
-function WheelChair:PreHitboxCollision(hitbox, other, low)
-    if (hitbox.SubType == WheelChair.HitboxSubType) then
+
+local function PreTakeDamage(mod, tookDamage, amount , flags, source, countdown)
+    local srcEnt = source.Entity;
+    if (srcEnt and srcEnt.Type == WheelChair.HitboxType and srcEnt.Variant == WheelChair.HitboxVariant and srcEnt.SubType == WheelChair.HitboxSubType) then
+        return false;
+    end
+end
+
+function WheelChair:Crush(npc, damage, source)
+    local player = source:ToPlayer();
+    npc:TakeDamage(damage, 0, EntityRef(source), 0);
+    npc:AddEntityFlags(EntityFlag.FLAG_APPLY_IMPACT_DAMAGE);
+    if (npc:HasMortalDamage()) then
+        SFXManager():Play(SoundEffect.SOUND_DEATH_BURST_LARGE);
+        SFXManager():Play(SoundEffect.SOUND_BONE_SNAP);
+        npc:AddEntityFlags(EntityFlag.FLAG_EXTRA_GORE);
+
+        local otherSpr = npc:GetSprite();
+        table.insert(CrushedEnemies, { 
+            Entity = npc, 
+            Time = 5, 
+            Sprite = otherSpr:GetFilename(), 
+            Animation = otherSpr:GetAnimation(),
+            Frame = otherSpr:GetFrame(),
+            OverlayAnimation = otherSpr:GetOverlayAnimation(),
+            OverlayFrame = otherSpr:GetOverlayFrame(),
+            Scale = npc.SpriteScale,
+            Rotation = npc.SpriteRotation,
+            Color = npc:GetColor()
+        })
+
+        Game():ShakeScreen(10);
+    else
+        SFXManager():Play(SoundEffect.SOUND_PUNCH);
+        SFXManager():Play(SoundEffect.SOUND_ROCKET_EXPLOSION);
+        Game():ShakeScreen(10);
+    end
+    WheelChair:PostCrushNPC(source, npc, damage);
+end
+
+-- TODO Post Collision
+function WheelChair:PostHitboxCollision(hitbox, other, low)
+    if (hitbox.Variant == WheelChair.HitboxVariant and hitbox.SubType == WheelChair.HitboxSubType) then
         local spawner = hitbox.SpawnerEntity;
         if (spawner and spawner:Exists()) then
             local player = spawner:ToPlayer();
@@ -214,36 +284,27 @@ function WheelChair:PreHitboxCollision(hitbox, other, low)
             local speed = vel:Length();
             if (Detection.IsValidEnemy(other)) then
                 local damage = speed;
-                if (player and not player:IsDead()) then
+                if (player and not Players:IsDead(player)) then
                     local data = WheelChair.GetPlayerTempData(player, true);
                     -- if (data) then
                     --     multiplier = (data.SpeedUp - 0.5) * 2 * 3;
                     -- end
-                    damage = 10 + 40 * (data.SpeedUp) * player.MoveSpeed * player.Damage;
+                    damage = 10 + 140 * (data.SpeedUp) * player.MoveSpeed * (player.Damage / 3.5) ^ 0.5;
 
-                    other:TakeDamage(damage, 0, EntityRef(spawner), 0);
-                    other:AddEntityFlags(EntityFlag.FLAG_APPLY_IMPACT_DAMAGE);
-                    local player2Enemy = other.Position - spawner.Position;
+                    WheelChair:Crush(other, damage, spawner)
                     if (other:HasMortalDamage()) then
                         data.SpeedUp = data.SpeedUp - other.HitPoints / damage;
-                        SFXManager():Play(SoundEffect.SOUND_DEATH_BURST_LARGE);
-                        SFXManager():Play(SoundEffect.SOUND_BONE_SNAP);
-                        other:AddEntityFlags(EntityFlag.FLAG_EXTRA_GORE);
-                        Game():ShakeScreen(10);
                     else
+                        local player2Enemy = other.Position - spawner.Position;
                         data.SpeedUp = 0;
-                        SFXManager():Play(SoundEffect.SOUND_PUNCH);
-                        SFXManager():Play(SoundEffect.SOUND_ROCKET_EXPLOSION);
                         spawner:AddVelocity(-player2Enemy  * player.MoveSpeed / 3);
                         other:AddVelocity(player2Enemy * player.MoveSpeed);
-                        Game():ShakeScreen(10);
                     end
-                    WheelChair:PostCrushNPC(player, other:ToNPC(), damage);
                 end
             elseif(other.Type == EntityType.ENTITY_PROJECTILE) then
                 local proj = other:ToProjectile();
                 if (not proj:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER)) then
-                    if (player and not player:IsDead()) then
+                    if (player and not Players:IsDead(player)) then
                         local data = WheelChair.GetPlayerTempData(player, true);
                         data.SpeedUp = data.SpeedUp - 0.2;
                         proj:Die();
@@ -291,13 +352,42 @@ function WheelChair:PostMeterRender(effect, offset)
     end
 end
 
+local function PostUpdate(mod)
+    for i = #CrushedEnemies, 1, -1 do
+        local info = CrushedEnemies[i];
+        if (info) then
+            local ent = info.Entity;
+            if (ent and ent:IsDead() and not ent:Exists()) then
+                local image = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.DEVIL, 0, ent.Position, Vector.Zero, ent);
+                local spr = image:GetSprite();
+                spr:Load(info.Sprite, true);
+                spr:SetFrame(info.Animation, info.Frame);
+                spr:SetOverlayFrame(info.OverlayAnimation, info.OverlayFrame);
+                image.SpriteScale = Vector(1 * info.Scale.X, 0.3 * info.Scale.Y);
+                image.SpriteRotation = info.Rotation;
+                spr.Color = info.Color;
+                image:AddEntityFlags(EntityFlag.FLAG_RENDER_FLOOR);
+                table.remove(CrushedEnemies, i);
+            else 
+                if (info.Time < 0) then
+                    table.remove(CrushedEnemies, i);
+                else
+                    info.Time = info.Time - 1;
+                end
+            end
+        end
+    end
+end
+
 function WheelChair:Register(mod)
     --mod:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, self.PreNPCCollision);
-    mod:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, self.PostHitboxUpdate, self.HitboxVariant);
+    mod:AddCallback(ModCallbacks.MC_POST_KNIFE_UPDATE, self.PostHitboxUpdate);
     --mod:AddCallback(ModCallbacks.MC_PRE_PROJECTILE_COLLISION, self.PreProjectileCollision);
-    mod:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, self.PreHitboxCollision, self.HitboxVariant);
+    mod:AddCallback(ModCallbacks.MC_PRE_KNIFE_COLLISION, self.PostHitboxCollision);
+    mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage);
     mod:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, self.PostMeterUpdate, self.MeterVariant);
     mod:AddCallback(ModCallbacks.MC_POST_EFFECT_RENDER, self.PostMeterRender, self.MeterVariant);
+    mod:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 end
 
 return WheelChair;

@@ -1,14 +1,12 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 
-local Rewind = {
-    Rewinding = false,
-    RewindingData = nil;
-    LastData = {
-        Global = {},
-        Players = {};
-    }
+local Rewind = Lib:NewClass();
+Rewind.Rewinding = false;
+Rewind.RewindingData = nil;
+Rewind.LastData = {
+    Global = {},
+    Players = {};
 }
-
 
 local function Clone(origin)
     local orig_type = type(origin)
@@ -35,7 +33,7 @@ local function GetRewindData()
     data.Players = {};
     for i, player in Lib.Detection.PlayerPairs(true, false) do 
         local playerData = {};
-        playerData[dataName] = Lib:GetModEntityData(player);
+        playerData[dataName] = Lib:GetEntityModData(player);
         data.Players[tostring(i)] = playerData;
     end
 
@@ -43,7 +41,7 @@ local function GetRewindData()
     data.Ghosts = {};
     for i, player in Lib.Detection.PlayerPairs(false, true) do 
         local playerData = {};
-        playerData[dataName] = Lib:GetModEntityData(player);
+        playerData[dataName] = Lib:GetEntityModData(player);
         data.Ghosts[tostring(i)] = playerData;
     end
     return data;
@@ -60,7 +58,7 @@ local function SetPlayersData(data)
     for i, player in Lib.Detection.PlayerPairs() do 
         for index, playerData in pairs(playersData) do
             if (index == tostring(i)) then
-                Lib:SetModEntityData(player, playerData[dataName]);
+                Lib:SetEntityModData(player, playerData[dataName]);
             end
         end
     end
@@ -77,7 +75,7 @@ local function SetGhostsData(data)
     for i, player in Lib.Detection.PlayerPairs(false, true) do 
         for index, playerData in pairs(playersData) do
             if (index == tostring(i)) then
-                Lib:SetModEntityData(player, playerData[dataName]);
+                Lib:SetEntityModData(player, playerData[dataName]);
                 player:AddCacheFlags(CacheFlag.CACHE_ALL);
                 player:EvaluateItems();
             end
@@ -99,6 +97,7 @@ local function useHourglass(mod, item, rng, player, flags, slot, data)
     Rewind.Rewinding = true;
     Rewind.RewindingData = Clone(Rewind.LastData);
 end
+Rewind:AddCallback(ModCallbacks.MC_USE_ITEM, useHourglass, CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS);
 
 local function postNewRoom(mod)
     if (not Rewind.Rewinding) then
@@ -109,6 +108,7 @@ local function postNewRoom(mod)
         SetPlayersData(data.Players);
     end
 end
+Rewind:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, postNewRoom);
 
 
 local function PostUpdate()
@@ -122,17 +122,12 @@ local function PostUpdate()
         end
     end
 end
+Rewind:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 
 local function postGameStarted(mod, isContinued)
     Rewind.LastData = Clone(GetRewindData());
 end
-
-function Rewind:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
-    mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, postNewRoom);
-    mod:AddCallback(ModCallbacks.MC_USE_ITEM, useHourglass, CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS);
-    mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, postGameStarted);
-end
+Rewind:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, postGameStarted);
 
 
 return Rewind;

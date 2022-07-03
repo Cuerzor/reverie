@@ -1,8 +1,6 @@
-local Callbacks = CuerLib.Callbacks;
+local Callbacks = _TEMP_CUERLIB.Callbacks;
 
-local Stages = {
-    
-}
+local Stages = _TEMP_CUERLIB:NewClass();
 
 local stageMetatable = {
     __eq = function(tbl, level) 
@@ -40,10 +38,12 @@ function Stages:onUpdate()
         end
     end
 end
+Stages:AddCallback(ModCallbacks.MC_POST_UPDATE, Stages.onUpdate);
 
 function Stages:onNewLevel()
     IsNewStage = true;
 end
+Stages:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, Stages.onNewLevel);
 
 function Stages.GetDimension(roomDesc) -- By DeadInfinity.
     local level = THI.Game:GetLevel()
@@ -71,16 +71,5 @@ function Stages.IsInMinesEscape()
     return false;
 end
 
-
-function Stages:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_UPDATE, Stages.onUpdate);
-    mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, Stages.onNewLevel);
-end
-
-
-function Stages:Unregister(mod)
-    mod:RemoveCallback(ModCallbacks.MC_POST_UPDATE, Stages.onUpdate);
-    mod:RemoveCallback(ModCallbacks.MC_POST_NEW_LEVEL, Stages.onNewLevel);
-end
 
 return Stages;

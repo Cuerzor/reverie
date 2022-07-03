@@ -1,7 +1,7 @@
-local ModComponents = {};
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 local Callbacks = Lib.Callbacks;
 
+local ModComponents = Lib:NewClass();
 ----------------
 -- Mod Part
 ----------------
@@ -36,7 +36,7 @@ do
             error("DataName of "..className.." \""..name.."\" is not set.");
         end
 
-        local data = Lib:GetModEntityData(entity, temp);
+        local data = Lib:GetEntityModData(entity, temp);
         if (init == nil) then
             init = true;
         end
@@ -64,7 +64,7 @@ do
             error("DataName of "..className.." \""..name.."\" is not set.");
         end
 
-        local data = Lib:GetModEntityData(entity,temp);
+        local data = Lib:GetEntityModData(entity,temp);
         data[dataName] = value;
     end
 
@@ -88,7 +88,8 @@ do
         return Lib.ModInfo.Mod;
     end
 
-    function ModPart:GetGlobalData(init, defaultGetter)
+    local function GetGlobalData(self, temp, create, defaultGetter)
+        
         local dataName = self.DataName
         local className = self.ClassName;
         if (not dataName) then
@@ -96,8 +97,8 @@ do
             error("DataName of "..className.." \""..name.."\" is not set.");
         end
 
-        local globalData = Lib:GetModGlobalData();
-        if (init) then
+        local globalData = Lib:GetModGlobalData(temp);
+        if (create) then
             local default;
             if (type(defaultGetter) == "function") then
                 default = defaultGetter();
@@ -108,6 +109,34 @@ do
             globalData[dataName] = globalData[dataName] or default;
         end
         return globalData[dataName];
+    end
+
+    
+    local function SetGlobalData(self, temp, value)
+        
+        local dataName = self.DataName
+        local className = self.ClassName;
+        if (not dataName) then
+            local name = self.Name or "nil";
+            error("DataName of "..className.." \""..name.."\" is not set.");
+        end
+
+        local globalData = Lib:GetModGlobalData(temp);
+        globalData[dataName] = value;
+    end
+
+    function ModPart:GetGlobalData(init, defaultGetter)
+        return GetGlobalData(self, false, init, defaultGetter)
+    end
+    function ModPart:GetTempGlobalData(init, defaultGetter)
+        return GetGlobalData(self, true, init, defaultGetter)
+    end
+    
+    function ModPart:SetGlobalData(value)
+        SetGlobalData(self, false, value)
+    end
+    function ModPart:SetTempGlobalData(value)
+        SetGlobalData(self, true, value)
     end
 
     function ModPart:AddCallback(callback, func, optional)
@@ -121,7 +150,7 @@ do
         local function fncall(mod, ...)
             return func(self, ...);
         end
-        Callbacks:AddCallback(self:GetMod(), callback, fncall, optional, priority);
+        Callbacks:AddCallback(callback, fncall, optional, priority);
     end
 end
 
@@ -214,6 +243,51 @@ do
         });
         new.Type = Isaac.GetEntityTypeByName(name);
         new.Variant = Isaac.GetEntityVariantByName(name);
+        new.Name = name;
+        new.DataName = dataName;
+        return new;
+    end
+end
+
+----------------
+-- Mod Card
+----------------
+do 
+    local ModCard = ModPart:NewChild();
+    ModCard.ID = -1;
+    ModCard.Name = nil;
+    ModCard.DataName = nil;
+    ModCard.ClassName = "ModCard";
+
+    ModComponents.ModCard = ModCard;
+
+    function ModCard:New(name, dataName)
+        local new = setmetatable({}, {
+            __index = self
+        });
+        new.ID = Isaac.GetCardIdByName (name)
+        new.Name = name;
+        new.DataName = dataName;
+        return new;
+    end
+end
+----------------
+-- Mod Pill
+----------------
+do 
+    local ModPill = ModPart:NewChild();
+    ModPill.ID = -1;
+    ModPill.Name = nil;
+    ModPill.DataName = nil;
+    ModPill.ClassName = "ModPill";
+
+    ModComponents.ModPill = ModPill;
+
+    function ModPill:New(name, dataName)
+        local new = setmetatable({}, {
+            __index = self
+        });
+        new.ID = Isaac.GetPillEffectByName (name);
         new.Name = name;
         new.DataName = dataName;
         return new;

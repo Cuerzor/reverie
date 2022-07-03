@@ -22,7 +22,7 @@ function SpellCard:Update(doremy)
     
     -- Warning
     if (self:CanWarning(frame)) then
-        Dream.SpellCardEffect.Absorb(doremy.Position);
+        THI.Effects.SpellCardWave.Shrink(doremy.Position);
     end
     -- Cast Danmaku.
     if (self:CanCast(frame)) then

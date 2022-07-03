@@ -57,19 +57,20 @@ local UIFont = THI.Fonts.Lanapixel;
 
 local function GetPlayerCrateData(player, init)
     local function getter()
-        local storage = {
-            {
-                ID = CollectibleType.COLLECTIBLE_LATCH_KEY,
-                Type = Crate.ItemType.COLLECTIBLE,
-                Sprite = nil,
-                Touched = false,
-                Charge = 0,
-                Golden = false,
-                VarData = 0,
-            }
-        };
+        -- local storage = {
+        --     {
+        --         ID = CollectibleType.COLLECTIBLE_LATCH_KEY,
+        --         Type = Crate.ItemType.COLLECTIBLE,
+        --         Sprite = nil,
+        --         Touched = false,
+        --         Charge = 0,
+        --         Golden = false,
+        --         VarData = 0,
+        --     }
+        -- };
         return {
-            Storage = storage,
+            --Storage = storage,
+            Storage = {},
             IdentifiedRooms = {}
         }
     end
@@ -92,6 +93,7 @@ local function GetPlayerTempData(player, init)
             ValidSlots = {},
             Page = 1,
             TotalPages = 1,
+            HoldFrames ={}
         }
     end
     return Crate:GetTempData(player, init, getter);
@@ -100,14 +102,6 @@ local function ClearTempData(player)
     Crate:SetTempData(player, nil);
 end
 
-local function CrateGet(self, index)
-    local metatable = getmetatable(self);
-    if (metatable and metatable._crateget) then
-        return metatable._crateget(self, index);
-    else
-        return self[index];
-    end
-end
 
 
 -- Slots.
@@ -318,11 +312,115 @@ function Crate.GetCrateIndexPosition(player, index)
     return -1, -1;
 end
 
+function Crate:GetItemReduceList(roomType, seed, countMulti)
+    roomType = roomType or RoomType.ROOM_DEFAULT;
+    seed = seed or math.max(Random(), 1);
+    countMulti = countMulti or 1;
+
+    local rng = RNG();
+    rng:SetSeed(seed, 1);
+    local count = rng:RandomInt(4 * countMulti + 1) + 4 * countMulti;
+    local list = {};
+
+    local function GetSpecialHeartSubType(roomType)
+        if (roomType == RoomType.ROOM_SECRET) then
+            return HeartSubType.HEART_BONE
+        elseif (roomType == RoomType.ROOM_CURSE) then
+            return HeartSubType.HEART_ROTTEN
+        elseif (roomType == RoomType.ROOM_DEVIL) then
+            return HeartSubType.HEART_BLACK
+        elseif (roomType == RoomType.ROOM_ANGEL) then
+            return HeartSubType.HEART_ETERNAL
+        end
+        return 0;
+    end
+    for i = 1, count do 
+        local variant = 0;
+        local subtype = 0;
+        local skipRandom = false;
+        if (i == 1) then
+            local heartSubType = GetSpecialHeartSubType(roomType);
+            if (heartSubType > 0) then
+                variant = PickupVariant.PICKUP_HEART
+                subtype = heartSubType;
+                skipRandom = true;
+            end
+        end
+        
+        if (not skipRandom) then
+            local value = rng:RandomInt(100);
+            if (value < 10) then
+                variant = PickupVariant.PICKUP_KEY;
+            elseif (value < 25) then
+                variant = PickupVariant.PICKUP_HEART;
+            elseif (value < 50) then
+                variant = PickupVariant.PICKUP_BOMB;
+            else
+                variant = PickupVariant.PICKUP_COIN;
+            end
+        end
+        table.insert(list, {Variant = variant, SubType = subtype});
+    end
+    return list;
+end
+
+function Crate:ReduceItem(position, spawner, seed)
+    seed = seed or math.max(Random(), 1);
+
+    local rng = RNG();
+    rng:SetSeed(seed, 1);
+    local room = Game():GetRoom();
+    local player = spawner and spawner:ToPlayer();
+
+    local multi = 1;
+    if (player and player:GetPlayerType() == PlayerType.PLAYER_CAIN_B and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
+        multi = 3;
+    end
+    local list = Crate:GetItemReduceList(room:GetType(), rng:Next(), multi)
+    for _, info in ipairs(list) do
+        local type = info.Type or 5;
+        local variant = info.Variant or 0;
+        local subType = info.SubType or 0;
+
+        local angle = rng:RandomFloat() * 360;
+
+        local vel = Vector.FromAngle(angle) * 5;
+        Isaac.Spawn(type, variant ,subType, position, vel, spawner);
+    end
+end
+
+local function GetItem(self, index)
+    local metatable = getmetatable(self);
+    if (metatable and metatable._crateget) then
+        return metatable._crateget(self, index);
+    else
+        return self[index + 1];
+    end
+end
+local function SetItem(self, index, value)
+    self[index + 1] = value;
+end
+local function AddItem(self, index, source)
+    local metatable = getmetatable(self);
+    if (metatable and metatable._crateadd) then
+        metatable._crateadd(self, index, source);
+    else
+        self[index + 1] = source;
+    end
+end
+local function RemoveItem(self, index)
+    local metatable = getmetatable(self);
+    if (metatable and metatable._crateremove) then
+        metatable._crateremove(self, index);
+    else
+        self[index + 1] = false;
+    end
+end
 
 local function GetItemSprite(id, type, golden)
     type = type or Crate.ItemType.COLLECTIBLE;
     local sprite = Sprite();
-    sprite:Load("gfx/ui/yamawaro_crate.anm2", false);
+    sprite:Load("gfx/reverie/ui/yamawaro_crate.anm2", false);
 
     local col;
     if (type == Crate.ItemType.COLLECTIBLE) then
@@ -352,8 +450,7 @@ local function UpdateItemList(player, tempData)
 
     local metatable = {
         _crateadd = function(self, index, value)
-            
-            table.insert(self, math.min(#self + 1, index), value);
+            table.insert(self, math.min(#self + 1, index + 1), value);
 
             local cfg;
             if (value.Type == Crate.ItemType.COLLECTIBLE) then
@@ -366,8 +463,8 @@ local function UpdateItemList(player, tempData)
             value.Touched = true;
         end,
         _crateremove = function(self, index)
-            local source = self[index];
-            table.remove(self, index);
+            local source = self[index + 1];
+            table.remove(self, index + 1);
             if (source.Type == Crate.ItemType.COLLECTIBLE) then
                 player:RemoveCollectible (source.ID, true, source.ActiveSlot, false);
             elseif (source.Type == Crate.ItemType.TRINKET) then
@@ -464,14 +561,14 @@ local function UpdateItemList(player, tempData)
 
 
     tempData.ItemList = list;
-    tempData.TotalPages = math.floor(#list / itemsSize) + 1;
+    tempData.TotalPages = math.max(1, math.ceil(#list / itemsSize));
 end
 
 
 
 -- Render.
 local UISprite = Sprite();
-UISprite:Load("gfx/ui/yamawaro_crate.anm2", true);
+UISprite:Load("gfx/reverie/ui/yamawaro_crate.anm2", true);
 UISprite:SetAnimation("UI");
 local backgroundPosOffset = Vector(-72, -160);
 local slotsCenter = backgroundPosOffset + Vector(72, 40);
@@ -580,14 +677,14 @@ local function RenderCrate(player)
         pos = itemsPos;
         local page = tempData.Page;
         local indexOffset = Crate.GetItemsIndexOffset(player);
-        for i = 1, math.min(#tempData.ItemList - indexOffset, itemsSize) do
+        for i = 0, math.min(#tempData.ItemList - indexOffset, itemsSize - 1) do
             local index = i + indexOffset;
-            if (holdingFrom == Crate.SelectTypes.ITEMS and holdingIndex == index - 1)  then
+            if (holdingFrom == Crate.SelectTypes.ITEMS and holdingIndex == index)  then
                 goto continue
             end
-            local item = CrateGet(tempData.ItemList, index);
+            local item = GetItem(tempData.ItemList, index);
             if (item) then
-                local posIndex = i - 1;
+                local posIndex = i;
                 local slotX = math.floor(posIndex / itemsHeight);
                 local slotY = posIndex % itemsHeight;
                 local slotOffset = Vector(slotX * 16, slotY * 16);
@@ -661,11 +758,13 @@ local function RenderCrate(player)
         if (holdingFrom > 0) then
             local item;
             if (holdingFrom == Crate.SelectTypes.CRATE and data) then
-                item = data.Storage[holdingIndex + 1];
+                item = GetItem(data.Storage, holdingIndex);
             elseif (holdingFrom == Crate.SelectTypes.ITEMS) then
-                item = tempData.ItemList[holdingIndex + 1];
+                item = GetItem(tempData.ItemList, holdingIndex);
             end
-            RenderItem(item, cursorPos + Vector(8, -8));
+            if (item) then
+                RenderItem(item, cursorPos + Vector(8, -8));
+            end
         end
     end
 end
@@ -680,6 +779,7 @@ local function DropItem(player, item)
     local pickup;
     if (source.Type == Crate.ItemType.COLLECTIBLE) then
         pickup = Pickups.SpawnFixedCollectible(source.ID, pos, Vector.Zero, player):ToPickup();
+        pickup:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
     elseif (source.Type == Crate.ItemType.TRINKET) then
         local trinketID = source.ID;
         if (source.Golden) then
@@ -695,97 +795,89 @@ end
 
 local function UpdateCrateSlots(player)
     
-    local tempData = GetPlayerTempData(player, false);
-    if (tempData) then
-        
-        tempData.TotalSlotsWidth = 0;
-        local slotUpdated = false;
-        local indexOffset = 0;
-        for id, slot in pairs(ExtraSlots) do
-            local hasSlots = slot.Condition(player);
-            if (hasSlots) then
-                if (not tempData.ExtraSlots[id]) then
-                    tempData.ExtraSlots[id] = {
-                        SlotsID = id,
-                        StartIndex = indexOffset,
-                    };
-                    slotUpdated = true;
-                end
-                
-                local posX = tempData.TotalSlotsWidth;
-                local posY = 0;
-                tempData.ExtraSlots[id].PosX = posX;
-                tempData.ExtraSlots[id].PosY = posY;
-                tempData.TotalSlotsWidth = tempData.TotalSlotsWidth + slot.Width;
-            else
-                if (tempData.ExtraSlots[id]) then
-                    tempData.ExtraSlots[id] = nil;
-                    slotUpdated = true;
-                end
+    local tempData = GetPlayerTempData(player, true);
+    tempData.TotalSlotsWidth = 0;
+    local slotUpdated = false;
+    local indexOffset = 0;
+    for id, slot in pairs(ExtraSlots) do
+        local hasSlots = slot.Condition(player);
+        if (hasSlots) then
+            if (not tempData.ExtraSlots[id]) then
+                tempData.ExtraSlots[id] = {
+                    SlotsID = id,
+                    StartIndex = indexOffset,
+                };
+                slotUpdated = true;
             end
-            indexOffset = indexOffset + slot.SlotCount;
-        end 
-
-        -- Update Valid Slots.
-        if (slotUpdated) then
-            -- Clear Valid Slots.
-            for k, _ in pairs(tempData.ValidSlots) do
-                tempData.ValidSlots[k] = nil;
+            
+            local posX = tempData.TotalSlotsWidth;
+            local posY = 0;
+            tempData.ExtraSlots[id].PosX = posX;
+            tempData.ExtraSlots[id].PosY = posY;
+            tempData.TotalSlotsWidth = tempData.TotalSlotsWidth + slot.Width;
+        else
+            if (tempData.ExtraSlots[id]) then
+                tempData.ExtraSlots[id] = nil;
+                slotUpdated = true;
             end
-            -- Fill valid Slots.
-            local maxIndex = 0;
-            for id, slots in pairs(tempData.ExtraSlots) do
-                local slotsData = ExtraSlots[id];
-                for i = 0, slotsData.SlotCount - 1 do
-                    local x = math.floor(i / slotsData.Height);
-                    local y = i % slotsData.Height;
-                    local index = slots.StartIndex + i;
-                    local posX = slots.PosX + x;
-                    local posY = slots.PosY + y;
-                    local slotData = {
-                        Index = index;
-                        SlotsID = id,
-
-                        PosX = posX,
-                        PosY = posY,
-                    }
-                    table.insert(tempData.ValidSlots, slotData)
-
-                    if (index > maxIndex) then
-                        maxIndex = index;
-                    end
-                end
-            end
-            tempData.MaxIndex = maxIndex;
         end
+        indexOffset = indexOffset + slot.SlotCount;
+    end 
 
-        if (tempData.Selected.Type == Crate.SelectTypes.CRATE) then
-            if (not Crate.IsCrateSlotExists(player, tempData.Selected.Index)) then
-                tempData.Selected.Index = 0;
+    -- Update Valid Slots.
+    if (slotUpdated) then
+        -- Clear Valid Slots.
+        for k, _ in pairs(tempData.ValidSlots) do
+            tempData.ValidSlots[k] = nil;
+        end
+        -- Fill valid Slots.
+        local maxIndex = 0;
+        for id, slots in pairs(tempData.ExtraSlots) do
+            local slotsData = ExtraSlots[id];
+            for i = 0, slotsData.SlotCount - 1 do
+                local x = math.floor(i / slotsData.Height);
+                local y = i % slotsData.Height;
+                local index = slots.StartIndex + i;
+                local posX = slots.PosX + x;
+                local posY = slots.PosY + y;
+                local slotData = {
+                    Index = index;
+                    SlotsID = id,
+
+                    PosX = posX,
+                    PosY = posY,
+                }
+                table.insert(tempData.ValidSlots, slotData)
+
+                if (index > maxIndex) then
+                    maxIndex = index;
+                end
             end
+        end
+        tempData.MaxIndex = maxIndex;
+    end
+
+    if (tempData.Selected.Type == Crate.SelectTypes.CRATE) then
+        if (not Crate.IsCrateSlotExists(player, tempData.Selected.Index)) then
+            tempData.Selected.Index = 0;
         end
     end
     
     local data = GetPlayerCrateData(player, false);
     if (data) then
-
-        local data = GetPlayerCrateData(player, false);
-        if (data) then
-            
-            for i, item in pairs(data.Storage) do
-            
-                local item = data.Storage[i];
-                if (item and not Crate.IsCrateSlotExists(player, i - 1)) then
-                    DropItem(player, item);
-                    data.Storage[i] = false;
-                    item = false;
-                end
-
-            end
-        end
-        for i = 1, Crate.GetCrateSlotMaxIndex(player) + 1 do
-            if (data.Storage[i] == nil) then
+        for i, item in pairs(data.Storage) do
+        
+            local item = data.Storage[i];
+            if (item and not Crate.IsCrateSlotExists(player, i - 1)) then
+                DropItem(player, item);
                 data.Storage[i] = false;
+                item = false;
+            end
+
+        end
+        for i = 0, Crate.GetCrateSlotMaxIndex(player) do
+            if (GetItem(data.Storage, i) == nil) then
+                SetItem(data.Storage, i, false);
             end
         end
     end
@@ -796,22 +888,6 @@ local function OnUse(player, tempData)
     local holding = tempData.Holding;
     local holdingFrom = holding.From;
     local selected = tempData.Selected;
-    local function Add(self, index, source)
-        local metatable = getmetatable(self);
-        if (metatable and metatable._crateadd) then
-            metatable._crateadd(self, index, source);
-        else
-            self[index] = source;
-        end
-    end
-    local function Remove(self, index)
-        local metatable = getmetatable(self);
-        if (metatable and metatable._crateremove) then
-            metatable._crateremove(self, index);
-        else
-            self[index] = false;
-        end
-    end
     local function HasItem(player, source)
         if (source.Type == Crate.ItemType.COLLECTIBLE) then
             return player:GetCollectibleNum(source.ID, true) > 0;
@@ -820,7 +896,6 @@ local function OnUse(player, tempData)
         end
         return false;
     end
-    local Get = CrateGet;
     local indexOffset = Crate.GetItemsIndexOffset(player);
     if (holdingFrom <= 0) then
         if (selected.Type == Crate.SelectTypes.CLOSE) then
@@ -828,22 +903,21 @@ local function OnUse(player, tempData)
         elseif (selected.Type == Crate.SelectTypes.CRATE) then
             local data = GetPlayerCrateData(player, false);
             if (data) then
-                if (data.Storage[selected.Index + 1]) then
+                if (GetItem(data.Storage, selected.Index)) then
                     holding.From = selected.Type;
                     holding.Index = selected.Index;
                 end
             end
         elseif (selected.Type == Crate.SelectTypes.ITEMS) then
             local sourceTable = tempData.ItemList;
-            local sourceIndex = selected.Index + 1
-            local source = sourceTable[sourceIndex];
+            local itemIndex = indexOffset + selected.Index
+            local source = GetItem(sourceTable, itemIndex);
             if (source) then
-                
                 if (HasItem(player, source)) then
                     holding.From = selected.Type;
-                    holding.Index = indexOffset + selected.Index;
+                    holding.Index = itemIndex;
                 else
-                    Remove(sourceTable, sourceIndex);
+                    RemoveItem(sourceTable, itemIndex);
                     THI.SFXManager:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ);
                 end
             end
@@ -879,18 +953,21 @@ local function OnUse(player, tempData)
         if (selected.Type == Crate.SelectTypes.DROP) then -- Drop Item.
             
             local data = GetPlayerCrateData(player, true);
-            local sourceIndex = holding.Index + 1;
+            local sourceIndex = holding.Index;
             local sourceList;
             if (holdingFrom == Crate.SelectTypes.CRATE) then 
                 sourceList = data.Storage;
             elseif (holdingFrom == Crate.SelectTypes.ITEMS) then
                 sourceList = tempData.ItemList; 
             end
-            local source = Get(sourceList, sourceIndex);
-            Remove(sourceList, sourceIndex);
+            local source = GetItem(sourceList, sourceIndex);
+            RemoveItem(sourceList, sourceIndex);
 
             -- Spawn Item.
-            DropItem(player, source);
+            -- 现在会删除道具，而不是丢弃道具。因此将这一行注释。
+            -- DropItem(player, source);
+            Crate:ReduceItem(player.Position, player);
+            SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
 
             -- Clear Holding.
 
@@ -901,8 +978,8 @@ local function OnUse(player, tempData)
             if (holdingFrom == Crate.SelectTypes.CRATE) then
                 if (selected.Type == Crate.SelectTypes.CRATE) then -- Move inside Crate.
 
-                    local sourceIndex = holding.Index + 1;
-                    local destIndex = selected.Index + 1;
+                    local sourceIndex = holding.Index;
+                    local destIndex = selected.Index;
                     local selfMove = sourceIndex == destIndex;
                     if (not selfMove) then
                         -- Swap the source and the destination.
@@ -911,17 +988,17 @@ local function OnUse(player, tempData)
                         local sourceTable = data.Storage;
                         local destTable = data.Storage;
 
-                        local source = Get(sourceTable, sourceIndex);
-                        local destination = Get(destTable, destIndex);
-                        Add(sourceTable, destIndex, source);
-                        Add(destTable, sourceIndex, destination);
+                        local source = GetItem(sourceTable, sourceIndex);
+                        local destination = GetItem(destTable, destIndex);
+                        AddItem(sourceTable, destIndex, source);
+                        AddItem(destTable, sourceIndex, destination);
                         if (not destination) then
                             -- Clear Holding.
                             holding.From = -1;
                             holding.Index = 0;
                         else
                             holding.From = selected.Type;
-                            holding.Index = sourceIndex - 1;
+                            holding.Index = sourceIndex;
                         end
                     else
                         -- Clear Holding.
@@ -933,33 +1010,20 @@ local function OnUse(player, tempData)
         
                     local data = GetPlayerCrateData(player, true);
                     local sourceList = data.Storage;
-                    local sourceIndex = holding.Index + 1;
-                    local source = Get(sourceList, sourceIndex);
+                    local sourceIndex = holding.Index;
+                    local source = GetItem(sourceList, sourceIndex);
                     if (Crate.CanTakeOut(player, source)) then
                         
 
-                        local destIndex = selected.Index + 1;
+                        local destIndex = selected.Index;
                         local destList = tempData.ItemList;
-                        local dest = Get(destList, destIndex);
+                        local dest = GetItem(destList, destIndex);
 
                         -- Remove Source.
-                        Remove(sourceList, sourceIndex);
-                        -- if (dest) then
-                        --     Remove(destList, destIndex);
-                        -- end
+                        RemoveItem(sourceList, sourceIndex);
                         -- Put Source to Destination.
-                        Add(destList, destIndex, source);
-                        
-                        -- if (not dest) then
-                        --     -- Clear Holding.
-                        --     holding.From = -1;
-                        --     holding.Index = 0;
-                        -- else
-                        --     Add(sourceList, sourceIndex, dest);
-                        --     holding.From = holdingFrom;
-                        --     holding.Index = sourceIndex - 1;
-                        -- end
-                        
+                        AddItem(destList, destIndex, source);
+
                         -- Clear Holding.
                         holding.From = -1;
                         holding.Index = 0;
@@ -973,16 +1037,16 @@ local function OnUse(player, tempData)
 
 
                     local data = GetPlayerCrateData(player, true);
-                    local originDestIndex = selected.Index + 1
+                    local originDestIndex = selected.Index
 
-                    local sourceIndex = holding.Index + 1;
+                    local sourceIndex = holding.Index;
                     local sourceList = tempData.ItemList;
-                    local source = Get(sourceList, sourceIndex);
+                    local source = GetItem(sourceList, sourceIndex);
 
                     if (HasItem(player, source)) then
                         local destIndex = originDestIndex;
                         local destList = data.Storage;
-                        local dest = Get(destList, destIndex);
+                        local dest = GetItem(destList, destIndex);
 
                         -- Cannot put in a slot that already has an item.
                         local validSlots = tempData.ValidSlots;
@@ -996,8 +1060,8 @@ local function OnUse(player, tempData)
                                         offset = -offset; 
                                     end
                                     destIndex = originDestIndex + offset;
-                                    dest = destList[destIndex];
-                                    if (not dest and Crate.IsCrateSlotExists(player, destIndex - 1)) then
+                                    dest = GetItem(destList,destIndex);
+                                    if (not dest and Crate.IsCrateSlotExists(player, destIndex)) then
                                         goto endWhile;
                                     end
                                 end
@@ -1007,12 +1071,12 @@ local function OnUse(player, tempData)
                             ::endWhile::
                         end
                         -- If Destination has enough space.
-                        if (not dest and Crate.IsCrateSlotExists(player, destIndex - 1)) then
+                        if (not dest and Crate.IsCrateSlotExists(player, destIndex)) then
                             --Remove Source.
-                            Remove(sourceList, sourceIndex);
+                            RemoveItem(sourceList, sourceIndex);
 
                             -- Put Source to Destination.
-                            Add(destList, destIndex, source);
+                            AddItem(destList, destIndex, source);
                             -- Clear Holding.
                             holding.From = -1;
                             holding.Index = 0;
@@ -1039,21 +1103,28 @@ local function UIControl(player)
     local tempData = GetPlayerTempData(player, false);
     if (tempData) then
             
-        local function IsPressing(action)
-            local holdTime = Inputs.GetActionHoldTime(action, controllerIndex);
-            if (holdTime == 1 or holdTime >= 30) then
+        local function IsTriggered(action)
+            tempData.HoldFrames = tempData.HoldFrames or {};
+            if (Input.IsActionPressed(action, controllerIndex)) then
+                tempData.HoldFrames[action] = (tempData.HoldFrames[action] or 0) + 1;
+                if (tempData.HoldFrames[action] > 30) then
+                    return true;
+                end
+            else
+                tempData.HoldFrames[action] = nil;
+            end
+            if (Input.IsActionTriggered(action, controllerIndex)) then
                 return true;
             end
-            return false;
         end
         -- Move Vertical.
         local vertical = 0;
         if (not (Input.IsActionPressed(ButtonAction.ACTION_SHOOTDOWN, controllerIndex) and
             (Input.IsActionPressed(ButtonAction.ACTION_SHOOTUP, controllerIndex)))) then
-            if (IsPressing(ButtonAction.ACTION_SHOOTDOWN)) then
+            if (IsTriggered(ButtonAction.ACTION_SHOOTDOWN)) then
                 vertical = vertical + 1;
             end
-            if (IsPressing(ButtonAction.ACTION_SHOOTUP)) then
+            if (IsTriggered(ButtonAction.ACTION_SHOOTUP)) then
                 vertical = vertical - 1;
             end
         end
@@ -1061,10 +1132,10 @@ local function UIControl(player)
         local horizontal = 0;
         if (not (Input.IsActionPressed(ButtonAction.ACTION_SHOOTLEFT, controllerIndex) and
             (Input.IsActionPressed(ButtonAction.ACTION_SHOOTRIGHT, controllerIndex)))) then
-            if (IsPressing(ButtonAction.ACTION_SHOOTLEFT)) then
+            if (IsTriggered(ButtonAction.ACTION_SHOOTLEFT)) then
                 horizontal = horizontal - 1;
             end
-            if (IsPressing(ButtonAction.ACTION_SHOOTRIGHT)) then
+            if (IsTriggered(ButtonAction.ACTION_SHOOTRIGHT)) then
                 horizontal = horizontal + 1;
             end
 
@@ -1231,7 +1302,7 @@ local function UIControl(player)
 end
 
 do 
-    local function PostPlayerEffect(mod, player)
+    local function PostPlayerUpdate(mod, player)
         local tempData = GetPlayerTempData(player,false);
         if (tempData) then
             if (tempData.FlushCountdown) then
@@ -1246,13 +1317,10 @@ do
 
         local hasCrate = player:HasCollectible(Crate.Item);
         local opening = Crate.IsOpening(player);
-        if (hasCrate or opening) then
-            
+        if (Game():GetFrameCount() > 1 and (hasCrate or opening)) then
             UpdateCrateSlots(player);
         end
         if (opening) then
-        
-            local tempData = GetPlayerTempData(player, false);
             if (tempData) then
                 if (tempData.OperateCooldown) then
                     if (tempData.OperateCooldown > 0) then
@@ -1261,7 +1329,12 @@ do
                         tempData.OperateCooldown = nil
                     end
                 else
-                    if (Inputs.IsActionDown(ButtonAction.ACTION_MENUCONFIRM, player.ControllerIndex)) then
+                    local playerType = player:GetPlayerType();
+                    local action = ButtonAction.ACTION_ITEM;
+                    if (playerType == PlayerType.ESAU) then
+                        action = ButtonAction.ACTION_PILLCARD;
+                    end
+                    if (Input.IsActionTriggered(action, player.ControllerIndex)) then
                         OnUse(player, tempData);
                     end
                 end
@@ -1270,12 +1343,12 @@ do
 
             UIControl(player);
 
-            if (Inputs.IsActionDown(ButtonAction.ACTION_DROP, player.ControllerIndex)) then
+            if (Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex)) then
                 HoldingActive:Cancel(player);
             end
         end
     end
-    Crate:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PostPlayerEffect);
+    Crate:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate);
 
     local function PostUseCrate(mod, item, rng, player, flags, slot, varData)
         if (flags & UseFlag.USE_CARBATTERY <= 0) then

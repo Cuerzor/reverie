@@ -20,8 +20,21 @@
 	<sound name="Touhou Spell Card">
 		<sample weight="1" path="touhou/spell_card.wav" />
 	</sound>
+	<sound name="Touhou Boon">
+		<sample weight="1" path="touhou/boon.wav" />
+	</sound>
+	<sound name="Touhou Kagerou Roar">
+		<sample weight="1" path="touhou/kagerou_roar.wav" />
+	</sound>
+	<sound name="Nimble Fabric">
+		<sample weight="1" path="touhou/nimble_fabric.wav" />
+	</sound>
+	
 	<sound name="Mind Control">
 		<sample weight="1" path="mind_control.wav" />
+	</sound>
+	<sound name="Mind Wave">
+		<sample weight="1" path="mind_wave.wav" />
 	</sound>
 	<sound name="Execute">
 		<sample weight="1" path="execute.wav" />
@@ -58,8 +71,6 @@
 		<sample weight="1" path="thunder_shock2.wav" />
 		<sample weight="1" path="thunder_shock3.wav" />
 	</sound>
-
-	
 	<sound name="Magic Impact">
 		<sample weight="1" path="magic_impact1.wav" />
 		<sample weight="1" path="magic_impact2.wav" />
@@ -73,6 +84,14 @@
 	</sound>
 	<sound name="Corpse Explode Cast">
 		<sample weight="1" path="corpse_explode_cast.wav" />
+	</sound>
+	<sound name="Corpse Explode">
+		<sample weight="1" path="diablo/corpse_explode1.wav" />
+		<sample weight="1" path="diablo/corpse_explode2.wav" />
+		<sample weight="1" path="diablo/corpse_explode3.wav" />
+		<sample weight="1" path="diablo/corpse_explode4.wav" />
+		<sample weight="1" path="diablo/corpse_explode5.wav" />
+		<sample weight="1" path="diablo/corpse_explode6.wav" />
 	</sound>
 	<sound name="Revive Skeleton Cast">
 		<sample weight="1" path="revive_skeleton_cast.wav" />
@@ -88,5 +107,50 @@
 	</sound>
 	<sound name="Diablo Scroll">
 		<sample weight="1" path="diablo/scroll.wav" />
+	</sound>
+	<sound name="Rooster Crow">
+		<sample weight="1" path="rooster_crow.wav" />
+	</sound>
+	<sound name="Soul of Eika">
+		<sample weight="1" path="voiceover/soul_of_eika.wav" />
+	</sound>
+	<sound name="Soul of Satori">
+		<sample weight="1" path="voiceover/soul_of_satori.wav" />
+	</sound>
+	<sound name="Soul of Seija">
+		<sample weight="1" path="voiceover/soul_of_seija.wav" />
+	</sound>
+	<sound name="Pill of Ultramarine Orb">
+		<sample weight="1" path="voiceover/pill_of_ultramarine_orb.wav" />
+	</sound>
+	<sound name="Mega Pill of Ultramarine Orb">
+		<sample weight="1" path="voiceover/mega/pill_of_ultramarine_orb.wav" />
+	</sound>
+	<sound name="Spirit Mirror">
+		<sample weight="1" path="voiceover/spirit_mirror.wav" />
+	</sound>
+	<sound name="Situation Twist">
+		<sample weight="1" path="voiceover/situation_twist.wav" />
+	</sound>
+	<sound name="Hammer 80">
+		<sample weight="1" path="voiceover/hammer80.wav" />
+	</sound>
+	<sound name="Robot Smash">
+		<sample weight="1" path="robotsmash.wav" />
+	</sound>
+	<sound name="Earthquake">
+		<sample weight="1" path="earthquake.wav" />
+	</sound>
+	<sound name="Wild Roar">
+		<sample weight="1" path="wild_roar.wav" />
+	</sound>
+	<sound name="Wild Bite">
+		<sample weight="1" path="wild_bite.wav" />
+	</sound>
+	<sound name="Piano C4">
+		<sample weight="1" path="instruments/piano_c4.wav" />
+	</sound>
+	<sound name="Music Box C4">
+		<sample weight="1" path="instruments/music_box_C4.wav" />
 	</sound>
 </sounds>

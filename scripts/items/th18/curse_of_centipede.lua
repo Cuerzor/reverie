@@ -18,6 +18,8 @@ end
 function Centi:PostPlayerEffect(player)
     local num = player:GetCollectibleNum(Centi.Item, true);
     if (num > 0) then
+        local Seija = THI.Players.Seija;
+        local seijaNerf = Seija:WillPlayerNerf(player);
         for i = 1, num do
             player:RemoveCollectible(Centi.Item, true);
             Centi.TryAddCollectible(player, CollectibleType.COLLECTIBLE_MUTANT_SPIDER);
@@ -26,6 +28,10 @@ function Centi:PostPlayerEffect(player)
             Centi.TryAddCollectible(player, CollectibleType.COLLECTIBLE_SCHOOLBAG);
             Centi.TryAddCollectible(player, CollectibleType.COLLECTIBLE_LUCKY_FOOT);
 
+            if (seijaNerf) then
+                Centi.TryAddCollectible(player, CollectibleType.COLLECTIBLE_SACRED_HEART);
+                Centi.TryAddCollectible(player, CollectibleType.COLLECTIBLE_POLYPHEMUS);
+            end
         end
         THI.Game:ShakeScreen(10);
         THI.SFXManager:Play(THI.Sounds.SOUND_CENTIPEDE);

@@ -33,7 +33,7 @@ function Koakuma:FireTear(familiar, position, velocity)
     Familiars.ApplyTearEffect(player, tear);
 
     local Grimoire = THI.Collectibles.Grimoire;
-    tear.TearFlags = tear.TearFlags | Grimoire:GetTearFlags(player);
+    Grimoire:ApplyTearEffects(player, tear);
     
     if (player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS)) then
         tear.Scale = 4;

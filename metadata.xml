@@ -3,7 +3,7 @@
     <name>Reverie - Touhou Combinations</name>
     <directory>reverie</directory>
     <id>2538556220</id>
-    <description>Use Touhou character items in the Binding of Isaac! Including items or trinkets of some characters in Touhou Project and Secret Sealing, 7 Alt floor bosses, and 2 new characters for now!
+    <description>Use Touhou character items in the Binding of Isaac! Including items or trinkets of all characters in Touhou Project and Secret Sealing, 9 new bosses, and 3 new characters!
 ...And a secret ending!
 
 Formerly known as Cuerzor's Touhou Items, it was renamed to Reverie - Touhou Combinations on November 5, 2021.
@@ -15,17 +15,22 @@ You can post suggestions or bug reports in the discussions using English or Chin
 The mod is completely open source, you are welcome to help improve the mod, and use the mod to learn mod creation.
 
 See more information in Documentation.txt in mod folder.</description>
-    <version>7.10.1</version>
+    <version>10.4.3</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>
     <tag id="Active Items"/>
     <tag id="Trinkets"/>
+    <tag id="Pills"/>
+    <tag id="Cards"/>
     <tag id="Pickups"/>
     <tag id="Player Characters"/>
     <tag id="Familiars"/>
     <tag id="Babies"/>
+    <tag id="Rooms"/>
     <tag id="Bosses"/>
     <tag id="Challenges"/>
+    <tag id="Shaders"/>
+    <tag id="Sound Effects"/>
     <tag id="Music"/>
 </metadata>

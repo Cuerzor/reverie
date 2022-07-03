@@ -27,8 +27,11 @@ function RobeFire:PostRobeFireUpdate(robeFire)
     robeFire.Velocity = (robeFire:GetOrbitPosition(robeFire.Player.Position + robeFire.Player.Velocity) - robeFire.Position ) /3;
 
     local robe = THI.Collectibles.RobeOfFirerat;
-    for _, tear in pairs(Isaac.FindInRadius(robeFire.Position, robeFire.Size, EntityPartition.TEAR)) do
-        robe.MakeFire(tear:ToTear());
+    for _, ent in pairs(Isaac.FindInRadius(robeFire.Position, robeFire.Size, EntityPartition.TEAR)) do
+        local tear = ent:ToTear()
+        if (tear) then
+            robe.MakeFire(tear);
+        end
     end
 end
 RobeFire:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, RobeFire.PostRobeFireUpdate, RobeFire.Variant);

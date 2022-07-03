@@ -1,8 +1,6 @@
 local Detection = CuerLib.Detection;
 
 local DragonBadge = ModItem("Rainbow Dragon Badge", "DragonBadge");
-DragonBadge.Trail = Isaac.GetEntityTypeByName("Rainbow Player Trail");
-DragonBadge.TrailVariant = Isaac.GetEntityVariantByName("Rainbow Player Trail");
 DragonBadge.MaxTime = 30;
 DragonBadge.MaxUseTime = 10;
 DragonBadge.Colors ={
@@ -29,12 +27,6 @@ function DragonBadge:GetPlayerData(player)
     } end);
 end
 
-function DragonBadge:GetTrailData(trail) 
-    return DragonBadge:GetData(trail, true, function() return {
-        time = 0
-    } end);
-end
-
 function DragonBadge:GetNPCData(npc) 
     return DragonBadge:GetData(npc, true, function() return {
         pinned = false
@@ -57,7 +49,8 @@ function DragonBadge:onPlayerUpdate(player)
             player:SetColor(DragonBadge.Colors[index], 1, 1, false, false);
             playerData.useTime = playerData.useTime - 1;
             playerData.dashTime = playerData.dashTime - 1;
-            local trail = Isaac.Spawn(DragonBadge.Trail, DragonBadge.TrailVariant, 0, player.Position, Vector(0, 0), player);
+            local trailInfo = THI.Effects.PlayerTrail;
+            local trail = Isaac.Spawn(trailInfo.Type, trailInfo.Variant, trailInfo.SubTypes.RAINBOW, player.Position, Vector(0, 0), player);
             trail.SpriteScale = player.SpriteScale;
         end
     end
@@ -85,6 +78,7 @@ function DragonBadge:ShockAwayEnemies(player)
     end
 end
 
+-- TODO Post Collision
 function DragonBadge:prePlayerCollision(player, collider)
     local playerData = DragonBadge:GetPlayerData(player);
     if (playerData.dashing) then
@@ -109,7 +103,7 @@ function DragonBadge:prePlayerCollision(player, collider)
         end
     end
 end
-DragonBadge:AddCustomCallback(CLCallbacks.CLC_PRE_PLAYER_COLLISION, DragonBadge.prePlayerCollision)
+DragonBadge:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_PLAYER_COLLISION, DragonBadge.prePlayerCollision)
 
 
 function DragonBadge:onNPCUpdate(npc)
@@ -123,16 +117,6 @@ function DragonBadge:onNPCUpdate(npc)
     end
 end
 
-function DragonBadge:onTrailUpdate(trail, offset)
-    local trailData = DragonBadge:GetTrailData(trail);
-    local time = trailData.time;
-    
-    if (time >= 12) then
-        trail:Remove();
-    end
-    time = time + 1;
-    trailData.time = time;
-end
 
 function DragonBadge:useBadge(t, RNG, player, flags, slot)
     local movement = player:GetMovementVector();
@@ -154,7 +138,6 @@ end
 
 DragonBadge:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, DragonBadge.onPlayerUpdate);
 DragonBadge:AddCallback(ModCallbacks.MC_NPC_UPDATE, DragonBadge.onNPCUpdate);
-DragonBadge:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, DragonBadge.onTrailUpdate, DragonBadge.TrailVariant)
 
 
 DragonBadge:AddCallback(ModCallbacks.MC_USE_ITEM, DragonBadge.useBadge, DragonBadge.Item);

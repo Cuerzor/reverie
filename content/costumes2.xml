@@ -1,4 +1,4 @@
-<costumes anm2root="gfx/characters/">
+<costumes anm2root="gfx/reverie/characters/">
 	<costume id="3" anm2path="costume_dark_ribbon.anm2" type="passive" />
 	<costume id="4" anm2path="costume_spring_of_daiyousei.anm2" type="passive" />
 	<costume id="8" anm2path="costume_maid_suit.anm2" type="passive" />
@@ -16,31 +16,48 @@
 	<costume id="63" anm2path="costume_continue_arcade.anm2" type="passive" />	
 
 	<costume id="83" anm2path="costume_broken_amulet.anm2" type="passive" />
+	<costume id="85" anm2path="costume_wolf_eye.anm2" type="passive" hasSkinAlt="true" />
+	<costume id="93" anm2path="costume_angels_raiment.anm2" type="passive" isFlying="true" hasSkinAlt="true" />
 	
 	<costume id="102" anm2path="costume_plague_lord.anm2" type="passive" skinColor="4" overwriteColor="true"/>
 	<costume id="103" anm2path="costume_green_eyed_envy.anm2" type="passive" hasSkinAlt="true"/>	
 	<costume id="104" anm2path="costume_oni_horn.anm2" type="passive"/>	
+	<costume id="106" anm2path="costume_guppys_corpse_cart.anm2" type="passive" isFlying="true" priority="101"/>
 	<costume id="107" anm2path="costume_1107_technology_666.anm2" type="passive" hasSkinAlt="true"/>	
 	
 	<costume id="121" anm2path="costume_dowsing_rods.anm2" type="passive"/>	
+	<costume id="123" anm2path="costume_unzan.anm2" type="passive"/>	
+	<costume id="124" anm2path="costume_ghost_anchor.anm2" type="passive"/>	
+	<costume id="129" anm2path="costume_ethereal_arm.anm2" type="passive"/>	
 
 	<costume id="141" anm2path="costume_141_mountain ear.anm2" type="passive" hasSkinAlt="true"/>	
 	<costume id="142" anm2path="costume_142_zombie infestation.anm2" type="passive" skinColor="4" overwriteColor="true"/>	
+	<costume id="144" anm2path="costume_holy_thunder.anm2" type="passive" hasSkinAlt="true"/>	
+
+	<costume id="163" anm2path="costume_wild_fury.anm2" type="none" priority="100"/>
+
+	<costume id="171" anm2path="costume_rune_cape.anm2" type="passive" />	
 
 	<costume id="184" anm2path="costume_vicious_curse.anm2" type="passive" />	
+	<costume id="185" anm2path="costume_carnival_hat.anm2" type="passive" />	
 	<costume id="186" anm2path="costume_pure_fury.anm2" type="passive" />	
 	<costume id="188" anm2path="costume_dads_shares.anm2" type="passive" />	
 	<costume id="189" anm2path="costume_moms_iou.anm2" type="passive" />	
 
+	<costume id="202" anm2path="costume_yamanbas_chopper.anm2" type="passive" />	
+	
+
+	<costume id="223" anm2path="costume_cockcrow_wings.anm2" type="passive" isFlying="true" hasSkinAlt="true"/>	
 	<costume id="224" anm2path="costume_kiketsu_familys_blackmail.anm2" type="passive" />	
+	<costume id="227" anm2path="costume_brutal_horseshoe.anm2" type="passive" />	
 	
 
 	
 	<costume id="5556" anm2path="costume_satori_hair.anm2" type="none" hasSkinAlt="true" priority="99"/>
 	<costume id="5557" anm2path="costume_satori.anm2" type="none" hasSkinAlt="true" priority="0"/>
 	<costume id="5558" anm2path="costume_satori_b_hair.anm2" type="none" hasSkinAlt="true" isFlying="false" priority="99"/>
-	<costume id="5558" anm2path="costume_satori_b.anm2" type="none" hasSkinAlt="true" isFlying="false" priority="555"/>
-	<costume id="5559" anm2path="costume_satori_b_flying.anm2" type="none" hasSkinAlt="true" isFlying="true" priority="554"/>
+	<costume id="5558" anm2path="costume_satori_b.anm2" type="none" hasSkinAlt="true" isFlying="false" priority="100"/>
+	<costume id="5559" anm2path="costume_satori_b_flying.anm2" type="none" hasSkinAlt="true" isFlying="true" priority="100"/>
 	
 	<costume id="5811" anm2path="costume_musician.anm2" type="none" />
 	<costume id="5812" anm2path="character_youmu_hair.anm2" type="none" skinColor="0" priority="99" />
@@ -51,5 +68,61 @@
 	<costume id="5817" anm2path="costume_the_infamies_fearness.anm2" type="none" />
 	<costume id="5818" anm2path="costume_buddhas_bowl.anm2" type="none" skinColor="5" forceBodyColor="5" forceHeadColor="5" priority="50"/>
 	<costume id="5821" anm2path="costume_eika.anm2" type="none" priority="99"/>
+	<costume id="5822" anm2path="costume_butterfly_wings.anm2" type="none" isFlying="true" hasSkinAlt="true"/>
+	<!-- <costume id="5823" anm2path="costume_guppys_corpse_cart_b.anm2" type="none" isFlying="true" priority="101"/> -->
+	<costume id="5824" anm2path="costume_inside_rebecha.anm2" type="none" priority="2000" isFlying="true"/>
+
+	<costume id="5830" anm2path="costume_isaacs_ash.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5831" anm2path="costume_isaacs_ash_maggy.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5832" anm2path="costume_isaacs_ash_cain.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5833" anm2path="costume_isaacs_ash_judas.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5834" anm2path="costume_isaacs_ash_bluebaby.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5835" anm2path="costume_isaacs_ash_eve.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5836" anm2path="costume_isaacs_ash_samson.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5837" anm2path="costume_isaacs_ash_azazel.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5838" anm2path="costume_isaacs_ash_lazarus.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5839" anm2path="costume_isaacs_ash_eden.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5840" anm2path="costume_isaacs_ash_lost.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5841" anm2path="costume_isaacs_ash_lazarus2.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5842" anm2path="costume_isaacs_ash_dark_judas.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5843" anm2path="costume_isaacs_ash_lilith.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5844" anm2path="costume_isaacs_ash_keeper.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5845" anm2path="costume_isaacs_ash_apollyon.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5846" anm2path="costume_isaacs_ash_forgotten.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5847" anm2path="costume_isaacs_ash_forgottensoul.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5848" anm2path="costume_isaacs_ash_bethany.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5849" anm2path="costume_isaacs_ash_jacob.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5850" anm2path="costume_isaacs_ash_esau.anm2" type="none" priority="1500" isFlying="true"/>
+
+	<costume id="5851" anm2path="costume_isaacs_ash_isaac_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5852" anm2path="costume_isaacs_ash_maggy_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5853" anm2path="costume_isaacs_ash_cain_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5854" anm2path="costume_isaacs_ash_judas_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5855" anm2path="costume_isaacs_ash_bluebaby_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5856" anm2path="costume_isaacs_ash_eve_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5857" anm2path="costume_isaacs_ash_samson_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5858" anm2path="costume_isaacs_ash_azazel_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5859" anm2path="costume_isaacs_ash_lazarus_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5860" anm2path="costume_isaacs_ash_eden_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5861" anm2path="costume_isaacs_ash_lost_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5862" anm2path="costume_isaacs_ash_lilith_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5863" anm2path="costume_isaacs_ash_keeper_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5864" anm2path="costume_isaacs_ash_apollyon_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5865" anm2path="costume_isaacs_ash_forgotten_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5866" anm2path="costume_isaacs_ash_bethany_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5867" anm2path="costume_isaacs_ash_jacob_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5868" anm2path="costume_isaacs_ash_lazarus2_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5869" anm2path="costume_isaacs_ash_jacob2_b.anm2" type="none" priority="1500" isFlying="true"/>
+	<costume id="5870" anm2path="costume_isaacs_ash_forgottensoul.anm2" type="none" priority="1500" isFlying="true"/>
+
 	
+	<costume id="5871" anm2path="costume_buddhas_bowl_jupiter.anm2" type="none" priority="1" hasSkinAlt="false" />
+	<costume id="5872" anm2path="costume_buddhas_bowl_jupiter_body.anm2" type="none" priority="101" hasSkinAlt="false" />
+	<costume id="5873" anm2path="costume_buddhas_bowl_jupiter_body_angel.anm2" type="none" priority="101" isFlying="true" hasSkinAlt="false" />
+	<costume id="5874" anm2path="costume_buddhas_bowl_jupiter_body_pony.anm2" type="none" priority="101" isFlying="true" hasSkinAlt="false" />
+	<costume id="5875" anm2path="costume_buddhas_bowl_jupiter_body_whitepony.anm2" type="none" priority="101" isFlying="true" hasSkinAlt="false" />
+
+	<costume id="5876" anm2path="costume_seija.anm2" type="none" isFlying="false" priority="99"/>(
+	<costume id="5877" anm2path="costume_seija_b.anm2" type="none" isFlying="false" priority="99"/>
+
 </costumes>

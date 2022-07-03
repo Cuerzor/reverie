@@ -1,4 +1,3 @@
-local Explosion = CuerLib.Explosion;
 local Detection = CuerLib.Detection;
 
 local JarOfFireflies = ModItem("Jar of Fireflies", "JarOfFireflies");
@@ -21,7 +20,7 @@ end
 function JarOfFireflies:PostChangeJar(player, item, diff)
     THI:EvaluateCurses();
 end
-JarOfFireflies:AddCustomCallback(CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, JarOfFireflies.PostChangeJar, JarOfFireflies.Item);
+JarOfFireflies:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, JarOfFireflies.PostChangeJar, JarOfFireflies.Item);
 
 function JarOfFireflies:EvaluateCurse(curses)
     for i, player in Detection.PlayerPairs(true, true) do
@@ -31,7 +30,7 @@ function JarOfFireflies:EvaluateCurse(curses)
         end
     end
 end
-JarOfFireflies:AddCustomCallback(CLCallbacks.CLC_EVALUATE_CURSE, JarOfFireflies.EvaluateCurse, 0, -100);
+JarOfFireflies:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, JarOfFireflies.EvaluateCurse, 0, -100);
 
 function JarOfFireflies:onUseJar(item,rng,player,flags,slot,data)	
     for i = 1, 8 do
@@ -42,19 +41,6 @@ end
 JarOfFireflies:AddCallback(ModCallbacks.MC_USE_ITEM, JarOfFireflies.onUseJar, JarOfFireflies.Item);
 
 local function Explode(firefly)
-
-    -- local params = Explosion.ExplosionParams();
-    -- params.Flags = DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_IGNORE_ARMOR;
-    -- params.Damage = firefly.CollisionDamage;
-    -- if (not firefly:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
-    --     params.PlayerDamage = 1; 
-    -- else
-    --     params.PlayerDamage = 0;
-    -- end
-    -- params.Scale = 1;
-    -- params.Spawner = firefly;
-    -- Explosion.CustomExplode(firefly.Position, params);
-
     THI.Game:BombExplosionEffects (firefly.Position, 20, TearFlags.TEAR_NORMAL, Color.Default, firefly, 1, true, false, DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_IGNORE_ARMOR)
 end
 
@@ -71,7 +57,8 @@ function JarOfFireflies:onFireflyUpdate(firefly)
 end
 JarOfFireflies:AddCallback(ModCallbacks.MC_NPC_UPDATE, JarOfFireflies.onFireflyUpdate, OnfireFly.Type);
 
-function JarOfFireflies:preFireflyCollision(firefly, collider, low)
+-- TODO Post Collision
+function JarOfFireflies:postFireflyCollision(firefly, collider, low)
     if (firefly.Variant == OnfireFly.Variant) then
         local canExplode = false;
         if (firefly:HasEntityFlags(EntityFlag.FLAG_CHARM)) then
@@ -88,7 +75,7 @@ function JarOfFireflies:preFireflyCollision(firefly, collider, low)
         end
     end
 end
-JarOfFireflies:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, JarOfFireflies.preFireflyCollision, OnfireFly.Type);
+JarOfFireflies:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, JarOfFireflies.postFireflyCollision, OnfireFly.Type);
 
 function JarOfFireflies:onFireflyKill(firefly)
     if (firefly.Variant == OnfireFly.Variant) then

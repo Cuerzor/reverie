@@ -19,11 +19,11 @@ do
         },
         Type = Summoner.Type,
         Variant = Summoner.Variant,
-        PortraitPath = "gfx/ui/boss/portrait_585.0_summoner.png",
+        PortraitPath = "gfx/reverie/ui/boss/portrait_585.0_summoner.png",
         PortraitOffset = Vector(0, -10),
         NamePaths = {
-            en = "gfx/ui/boss/bossname_585.0_summoner.png",
-            zh = "gfx/ui/boss/bossname_585.0_summoner_zh.png"
+            en = "gfx/reverie/ui/boss/bossname_585.0_summoner.png",
+            zh = "gfx/reverie/ui/boss/bossname_585.0_summoner_zh.png"
         }
     }
 
@@ -96,7 +96,7 @@ do
         -- Find valid Enemies.
         local validEnemy;
         for _, ent in pairs(Isaac.GetRoomEntities()) do
-            if (ent:IsActiveEnemy() and not ent:IsBoss()) then
+            if (ent:IsActiveEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and not ent:IsBoss()) then
                 validEnemy = ent;
                 goto outOfFinding;
             end
@@ -114,7 +114,7 @@ do
         thunder.CollisionDamage = 0;
 
         for _, ent in pairs(Isaac.FindInRadius(pos, 80, EntityPartition.ENEMY)) do
-            if (ent:IsActiveEnemy() and not ent:IsBoss()) then
+            if (ent:IsActiveEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and not ent:IsBoss()) then
                 ent:Die();
             end
         end

@@ -20,7 +20,7 @@ local knockbackRadius = 80;
 local maxCharges = Isaac.GetItemConfig():GetCollectible(PsychoKnife.Item).MaxCharges;
 
 local markSprite = Sprite();
-markSprite:Load("gfx/execution_mark.anm2", true);
+markSprite:Load("gfx/reverie/execution_mark.anm2", true);
 markSprite:Play("Idle");
 
 function PsychoKnife.PlaySound()
@@ -140,13 +140,18 @@ function PsychoKnife:PostPlayerEffect(player)
     if (player:HasCollectible(PsychoKnife.Item)) then
 
         local activeCharged = false;
+        local extraCharge = player:GetEffectiveSoulCharge() + player:GetEffectiveBloodCharge();
 
         if (player:GetActiveItem(ActiveSlot.SLOT_PRIMARY) == PsychoKnife.Item) then
-            activeCharged = activeCharged or player:GetActiveCharge(ActiveSlot.SLOT_PRIMARY) >= maxCharges;
+            if (player:GetActiveCharge(ActiveSlot.SLOT_PRIMARY) >= maxCharges or extraCharge > 0) then
+                activeCharged = true;
+            end
         end
 
         if (player:GetActiveItem(ActiveSlot.SLOT_POCKET) == PsychoKnife.Item and player:GetCard(0) <= 0 and player:GetPill(0) <= 0) then
-            activeCharged = activeCharged or player:GetActiveCharge(ActiveSlot.SLOT_POCKET) >= maxCharges;
+            if (player:GetActiveCharge(ActiveSlot.SLOT_POCKET) >= maxCharges or extraCharge > 0) then
+                activeCharged = true;
+            end
         end
 
         if (game:GetFrameCount() % 2 == 0) then

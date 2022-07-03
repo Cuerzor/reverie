@@ -132,18 +132,6 @@ end
 
 
 function Dialog:Run()
-
-    if (self.CurrentKeyframe > 0) then
-        for i, player in Detection.PlayerPairs() do 
-            if (Input.IsActionTriggered(ButtonAction.ACTION_MENUCONFIRM, player.ControllerIndex) or
-                Input.IsActionTriggered(ButtonAction.ACTION_MENUBACK, player.ControllerIndex)) then
-                    self.Finished = true;
-                self:End();
-                return false;
-            end
-        end
-    end
-
     if (self.CurrentKeyframe == 0) then
         self:SwitchKeyFrame(1);
     end
@@ -211,10 +199,16 @@ function Dialog:Run()
 
     end
     if (self.CurrentKeyframe > #self:GetConfig().Keyframes) then
+        self:Finish();
+    end
+
+end
+
+function Dialog:Finish()
+    if (not self.Finished) then
         self.Finished = true;
         self:End();
     end
-
 end
 
 function Dialog:End()

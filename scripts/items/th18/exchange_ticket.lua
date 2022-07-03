@@ -6,12 +6,14 @@ local Ticket = ModItem("Exchange Ticket", "EXCTicket");
 
 Ticket.Exchange = {
     Type = RoomType.ROOM_CHEST,
-    Variant = 5810
+    Variant = 5800
 }
+THI.Shared.SoftlockFix:AddModGotoRoom(Ticket.Exchange.Type, Ticket.Exchange.Variant);
+
 
 local EmeraldFont = THI.Fonts.PFTempesta7;
 local EmeraldSprite = Sprite();
-EmeraldSprite:Load("gfx/emerald_icon.anm2", true);
+EmeraldSprite:Load("gfx/reverie/emerald_icon.anm2", true);
 EmeraldSprite:Play("Icon");
 
 function Ticket.GetPlayerData(player, init)
@@ -51,40 +53,49 @@ function Ticket.AddEmeralds(player, value)
     data.Emeralds = data.Emeralds + value;
 end
 
-function Ticket.IsExchange()
+function Ticket.IsExchange(type, variant)
     local room = THI.Game:GetRoom();
     local level = THI.Game:GetLevel();
     local desc = level:GetCurrentRoomDesc();
     local config = desc.Data;
-    return config.Type == Ticket.Exchange.Type and config.Variant == Ticket.Exchange.Variant;
+
+    type = type or config.Type;
+    variant = variant or config.Variant;
+
+    return type == Ticket.Exchange.Type and variant == Ticket.Exchange.Variant;
 end
 function Ticket.PostNewRoom()
     if (Ticket.IsExchange()) then
+        local game = Game();
+        local room = game:GetRoom();
 
-        THI.Game:GetRoom():SetClear (true);
+        room:SetClear (true);
+
+
+        -- Spawn Traders.
         local Trader = THI.Slots.Trader;
         Trader.CheckAllPlayerCollectibles();
-        for x = 0, 4 do
+        for x = 1, 3, 1 do
             for y = 0, 1 do
                 Trader.SpawnTrader(Trader.Services.SERVICE_BUY, Vector(160 + x * 80, 260 + y * 80), Random());
             end
         end
         
-        for x = 0, 4 do
+        for x = 1, 3, 1 do
             for y = 0, 1 do
                 Trader.SpawnTrader(Trader.Services.SERVICE_SELL, Vector(160 + x * 80, 500 + y * 80), Random());
             end
         end
         Trader.UpdateBuyableCache()
         
-        for x = 0, 4 do
+        for x = 1, 3, 1 do
             for y = 0, 1 do
                 Trader.SpawnTrader(Trader.Services.SERVICE_BARTER, Vector(680 + x * 80, 500 + y * 80), Random());
             end
         end
         Trader.UpdateBuyableCache()
         
-        for x = 0, 4 do
+        for x = 1, 3, 1 do
             for y = 0, 1 do
                 Trader.SpawnTrader(Trader.Services.SERVICE_RECOVERY, Vector(680 + x * 80, 260 + y * 80), Random());
             end
@@ -94,11 +105,12 @@ function Ticket.PostNewRoom()
 end
 Ticket:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Ticket.PostNewRoom);
 
+
 function Ticket:PostUseTicket(item, rng, player, flags, slot, varData)
     local beastExists = #Isaac.FindByType(EntityType.ENTITY_BEAST) > 0;
     
     if (not beastExists) then
-        THI.GotoRoom("s.chest.5810");
+        THI.GotoRoom("s.chest."..Ticket.Exchange.Variant);
         THI.Game:StartRoomTransition (-3, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT, player);
     else
         local room = Game():GetRoom();

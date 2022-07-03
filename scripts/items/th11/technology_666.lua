@@ -1,7 +1,7 @@
 local Inputs = CuerLib.Inputs;
 local Detection = CuerLib.Detection;
 local Consts = CuerLib.Consts;
-local Explosion = CuerLib.Explosion;
+local Synergies = CuerLib.Synergies;
 local Tech666 = ModItem("Technology 666", "Tech666");
 
 local CompareEntity = Detection.CompareEntity;
@@ -47,28 +47,9 @@ function Tech666.IsAllDirectionShoot(player)
                player:HasCollectible(CollectibleType.COLLECTIBLE_LUDOVICO_TECHNIQUE)
 end
 
-function Tech666.GetMarkedTarget(player)
-    local data = Tech666.GetPlayerTempData(player, true);
-    if (not EntityExists(data.MarkedTarget)) then
-        data.MarkedTarget = nil;
-        for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.TARGET)) do
-            if (CompareEntity(ent.SpawnerEntity, player)) then
-                data.MarkedTarget = ent:ToEffect();
-                break;
-            end
-        end
-        for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.OCCULT_TARGET)) do
-            if (CompareEntity(ent.SpawnerEntity, player)) then
-                data.MarkedTarget = ent:ToEffect();
-                break;
-            end
-        end
-    end
-    return data.MarkedTarget;
-end
 
 function Tech666.GetShootingVector(player)
-    local target = Tech666.GetMarkedTarget(player);
+    local target = Synergies:GetMarkedTarget(player);
     if (target) then
         return (target.Position - player.Position):Normalized();
     end
@@ -89,7 +70,7 @@ end
 
 function Tech666.FireLaser(player, dir)
     local source = Isaac.Spawn(DamageSourceAlt.Type, DamageSourceAlt.Variant, DamageSourceAlt.NuclearBrimstone, player.Position, Vector.Zero, player);
-    local laser = player:FireBrimstone(dir, source, 0.25);
+    local laser = player:FireBrimstone(dir, source, 0.15);
     laser:SetColor(LaserColor, -1, 0, false, false);
     laser.SpawnerEntity = source;
     laser.MaxDistance = -1;
@@ -163,12 +144,6 @@ function Tech666:PostNPCKill(npc)
                 end
 
                 THI.Game:BombExplosionEffects (npc.Position, npc.MaxHitPoints / 2, TearFlags.TEAR_NORMAL, LaserColor, player, 1, true, false, DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_IGNORE_ARMOR )
-                -- local params = Explosion.ExplosionParams();
-                -- params.Damage = npc.MaxHitPoints / 2;
-                -- params.DamageSource = false;
-                -- params.Spawner = npcData.BrimstoneSpawner;
-
-                -- Explosion.CustomExplode(npc.Position, params)
             end
         end
     end
@@ -212,6 +187,6 @@ function Tech666:PostTakeDamage(tookDamage, amount, flags, source, countdown)
         end
     end
 end
-Tech666:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Tech666.PostTakeDamage);
+Tech666:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Tech666.PostTakeDamage);
 
 return Tech666;

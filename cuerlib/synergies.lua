@@ -1,7 +1,6 @@
-local Math = CuerLib.Math;
-local Synergies = {
-
-};
+local Lib = _TEMP_CUERLIB;
+local Math = Lib.Math;
+local Synergies = Lib:NewClass();
 
 local function ErrorSetConstValue(tbl, key, value)
     error("Trying to set value of a constant table.")
@@ -48,6 +47,22 @@ local shotRNG = RNG();
 --     SingleShotParams.Default = setmetatable({}, mt);
 -- end
 
+function Synergies:GetMarkedTarget(player)
+    if (player:HasCollectible(CollectibleType.COLLECTIBLE_EYE_OF_THE_OCCULT)) then
+        for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.OCCULT_TARGET)) do
+            if (Lib.Detection.CompareEntity(ent.SpawnerEntity, player)) then
+                return ent:ToEffect();
+            end
+        end
+    elseif (player:HasCollectible(CollectibleType.COLLECTIBLE_MARKED)) then
+        for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.TARGET)) do
+            if (Lib.Detection.CompareEntity(ent.SpawnerEntity, player)) then
+                return ent:ToEffect();
+            end
+        end
+    end
+    return nil;
+end
 
 function Synergies.CanLungShot(player)
     return HasLung(player) and not HasMomsKnife(player);

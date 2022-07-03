@@ -1,11 +1,22 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 local Screen = Lib.Screen;
 local Inputs = Lib.Inputs;
+local Callbacks = Lib.Callbacks;
 
-local Actives = {
-    FontSprite = Sprite();
-}
+local Actives = _TEMP_CUERLIB:NewClass();
+Actives.FontSprite = Sprite();
+
 local itemConfig = Isaac.GetItemConfig();
+
+local function GetPlayerData(player, create)
+    local entData = Actives.Lib:GetLibData(player, true);
+    if (create) then
+        entData._ACTIVES = entData._ACTIVES or {
+            UsedCharges = {}
+        };
+    end
+    return entData._ACTIVES;
+end
 
 function Actives.GetActiveList()
     local results = {};
@@ -19,10 +30,22 @@ function Actives.GetActiveList()
     return results;
 end
 
-Actives.FontSprite:Load("gfx/ui/active_count.anm2", true);
+function Actives:GetTotalCharges(player, slot)
+    if (slot < 0) then
+        return 0;
+    end
+    local charges = player:GetActiveCharge (slot);
+    local batteryCharges = player:GetBatteryCharge (slot);
+    local soulCharges = player:GetEffectiveSoulCharge();
+    local bloodCharges = player:GetEffectiveBloodCharge();
+    return charges + batteryCharges + soulCharges + bloodCharges;
+end
+
+
+Actives.FontSprite:Load("gfx/reverie/ui/active_count.anm2", true);
 
 -- function Actives.GetPlayerData(player)
---     local data = Lib:GetData(player);
+--     local data = Lib:GetLibData(player);
 --     data._ACTIVE_DATA = data._ACTIVE_DATA or {
 --         Pressing = {},
 --         Pressed = {}
@@ -58,21 +81,21 @@ local function IsActiveInput(player, slot, check)
     return false;
 end
 
-function Actives.IsActiveButtonDown(player, slot)
-    return IsActiveInput(player, slot, Inputs.IsActionDown);
+function Actives.IsActiveButtonTriggered(player, slot)
+    return IsActiveInput(player, slot, Input.IsActionTriggered);
 end
 
-function Actives.IsActiveItemDown(player, item)
+function Actives.IsActiveItemTriggered(player, item)
     for i=0,3 do
         if (player:GetActiveItem(i) == item) then
-            if (Actives.IsActiveButtonDown(player, i)) then
+            if (Actives.IsActiveButtonTriggered(player, i)) then
                 return true, i;
-            end
+            end 
         end
     end
     return false, -1;
-    
 end
+
 
 function Actives.IsActivePressed(player, slot)
     return IsActiveInput(player, slot, Input.IsActionPressed);
@@ -114,11 +137,21 @@ end
 ----------------
 
 local countNums = {};
-function Actives:DrawMultiplier(pos)
+function Actives:DrawMultiplier(pos, color)
+    color = color or Color.Default;
+    self.FontSprite.Color = color;
     self.FontSprite:SetFrame("Characters", 12);
     self.FontSprite:Render(pos, Vector.Zero, Vector.Zero);
 end
-function Actives:DrawSingleNumber(num, pos)
+function Actives:DrawMinus(pos, color)
+    color = color or Color.Default;
+    self.FontSprite.Color = color;
+    self.FontSprite:SetFrame("Characters", 11);
+    self.FontSprite:Render(pos, Vector.Zero, Vector.Zero);
+end
+function Actives:DrawSingleNumber(num, pos, color)
+    color = color or Color.Default;
+    self.FontSprite.Color = color;
     self.FontSprite:SetFrame("Characters", num);
     self.FontSprite:Render(pos, Vector.Zero, Vector.Zero);
 end
@@ -139,37 +172,46 @@ local function GetCharWidth(char)
     return CharWidths[char];
 end
 
-function Actives.DrawActiveCount(pos, count, pivot)
+function Actives.DrawActiveCount(pos, count, pivot, color)
     pivot = pivot or Vector.Zero;
     local exp = 1;
-    local index = 1;
     for i = #countNums, 1, -1 do
         table.remove(countNums, i);
     end
 
+    local negative = false;
     if (count == 0) then
         countNums[1] = 0;
     else
+        if (count < 0) then
+            count = -count;
+            negative = true;
+        end
 
         while (exp <= count) do
             local num = math.floor(count % (exp * 10) / exp)
-            countNums[index] = num;
+            table.insert(countNums, num);
             exp = exp * 10;
-            index = index + 1;
         end
     end
 
     local posOffset = Vector(4, 0);
     pos = pos + Vector(-pivot.X * (1 + #countNums) * 4, -8 * pivot.Y);
-    Actives:DrawMultiplier(pos);
+    Actives:DrawMultiplier(pos, color);
     pos = pos + posOffset;
     local charNum = #countNums;
     if (charNum > 1 ) then
         pos = pos + Vector(-1, 0);
     end
+
+    if (negative) then
+        Actives:DrawMinus(pos + Vector(1,0), color);
+        pos = pos + posOffset;
+    end
+
     for i = charNum, 1, -1 do
         local char = countNums[i];
-        Actives:DrawSingleNumber(char, pos);
+        Actives:DrawSingleNumber(char, pos, color);
         posOffset.X = GetCharWidth(char);
         pos = pos + posOffset;
     end
@@ -211,7 +253,7 @@ function Actives.GetPlayerActiveUIPos(player, slot, playerIndex)
                 y = screenSize.Y - 42 - 6 * hudOffset;
             else
                 x = screenSize.X - 21 - 16 * hudOffset;
-                y = screenSize.Y - 6 - 6 * hudOffset;
+                y = screenSize.Y - 10 - 6 * hudOffset;
             end
         end
     end
@@ -242,8 +284,8 @@ function Actives.RenderOnActive(item, func)
 
 
         local function RenderActive(player, playerIndex)
-            for slot = ActiveSlot.SLOT_PRIMARY , ActiveSlot.SLOT_POCKET, 2 do
-                if (player:GetActiveItem(slot) == item) then
+            for slot = ActiveSlot.SLOT_PRIMARY , ActiveSlot.SLOT_POCKET2, 2 do
+                if (player:GetActiveItem(slot) == item and (slot < ActiveSlot.SLOT_POCKET or player:GetCard(0) + player:GetPill(0) <= 0)) then
                     local pos = Actives.GetPlayerActiveUIPos(player, slot, playerIndex)
                     local scale = Actives.GetPlayerActiveUIScale(player, slot, playerIndex);
                     func(player, playerIndex, slot, pos, scale);
@@ -270,26 +312,20 @@ function Actives.RenderOnActive(item, func)
     end
 end
 
-function Actives.RenderActivesCount(item, countGetter)
+function Actives.RenderActivesCount(item, infoGetter)
     local function func(player, playerIndex, slot, pos, scale)
         local pivot = Vector(0.5, 0.5);
         local pos = GetPlayerActiveCountPos(player, slot, playerIndex);
         local count = 0;
-        if (type(countGetter) == "function") then
-            count = countGetter(player);
+        local color = Color.Default;
+        if (type(infoGetter) == "function") then
+            count, color = infoGetter(player);
         else
-            count = countGetter;
+            count = infoGetter;
         end
-        Actives.DrawActiveCount(pos, count, pivot);
+        Actives.DrawActiveCount(pos, count, pivot, color);
     end
     Actives.RenderOnActive(item, func);
-end
-
-function Actives.GetTotalCharges(player,slot)
-    local charges = player:GetActiveCharge (slot);
-    local soulCharges = player:GetEffectiveSoulCharge();
-    local bloodCharges = player:GetEffectiveBloodCharge();
-    return charges + soulCharges + bloodCharges;
 end
 
 
@@ -314,14 +350,113 @@ end
 -- end
 
 
-function Actives:Register(mod)
-    --mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Actives.onPlayerUpdate)
-end
+do -- Try Use Active.
+    
+    --- Get the charges of the active item which player trying to use.
+    --- If the active item is not being tried to use, return -1.
+    ---@param player EntityPlayer
+    ---@param slot integer
+    ---@return integer charges
+    function Actives:GetUseTryCharges(player, slot)
+        local data = GetPlayerData(player, false);
+        return (data and data.UsedCharges[slot]) or -1;
+    end
 
-function Actives:Unregister(mod)
-    --mod:RemoveCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Actives.onPlayerUpdate)
-end
+    --- Set the charges of the active item which player trying to use.
+    --- This will set the charges of the active item into `charges` at next update.
+    ---@param player EntityPlayer
+    ---@param slot integer
+    ---@param charges integer 
+    function Actives:SetUseTryCharges(player, slot, charges)
+        local data = GetPlayerData(player, true);
+        data.UsedCharges[slot] = charges;
+    end
 
+    --- End current active use try of an active slot.
+    --- Remember to call this when you want to discharge the item.
+    ---@param player EntityPlayer
+    ---@param slot integer
+    function Actives:EndUseTry(player, slot)
+        self:SetUseTryCharges(player, slot, nil);
+    end
+    function Actives:CostUseTryCharges(player, item, slot, cost)
+        local maxCharges = Isaac.GetItemConfig():GetCollectible(item).MaxCharges;
+        local charges = Actives:GetUseTryCharges(player, slot);
+        if (not charges or charges < 0) then
+            charges = player:GetActiveCharge (slot) + player:GetBatteryCharge (slot);
+        end
+
+        local needCost = cost;
+        if (needCost > 0) then
+            local cost = math.min(needCost, charges);
+            Actives:SetUseTryCharges(player, slot, charges - cost);
+            needCost = needCost - cost;
+        end
+        if (needCost > 0) then
+            local soulCharges = player:GetEffectiveSoulCharge();
+            local cost = math.min(needCost, soulCharges);
+            player:AddSoulCharge(-cost);
+            needCost = needCost - cost;
+        end
+        if (needCost > 0) then
+            local bloodCharges = player:GetEffectiveBloodCharge();
+            local cost = math.min(needCost, bloodCharges);
+            player:AddBloodCharge(-cost);
+            needCost = needCost - cost;
+        end
+    end
+
+    local function InputAction(mod, entity, hook, action)
+        local player = entity and entity:ToPlayer();
+        if (player and player:AreControlsEnabled ()) then
+            if (hook == InputHook.IS_ACTION_TRIGGERED and not Game():IsPaused()) then
+                local itemConfig = Isaac.GetItemConfig();
+                for slot = ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_POCKET, 2 do
+                    local item = player:GetActiveItem(slot);
+                    if (item > 0 and Actives.IsActiveButtonTriggered(player, slot)) then
+                        local data = GetPlayerData(player, false);
+                        if (not data or not data.UsedCharges[slot] ) then
+                            local maxCharges = itemConfig:GetCollectible(item).MaxCharges;
+                            local charges = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot);
+                            local soulCharges = player:GetEffectiveSoulCharge();
+                            local bloodCharges = player:GetEffectiveBloodCharge();
+                            local totalCharges = charges + soulCharges + bloodCharges;
+                            if (totalCharges < maxCharges) then
+
+                                local canUse = false;
+                                for i, info in ipairs(Callbacks.Functions.TryUseItem) do
+                                    if (not info.OptionalArg or info.OptionalArg <=0 or info.OptionalArg == item) then
+                                        local result = info.Func(info.Mod, item, player, slot);
+                                        canUse = result;
+                                    end
+                                end
+                                if (canUse) then
+                                    player:SetActiveCharge(math.max(0, maxCharges - bloodCharges - soulCharges), slot);
+                                    local data = GetPlayerData(player, true);
+                                    data.UsedCharges[slot] = charges;
+                                end
+                            end
+                        end
+                    end 
+                end
+            end
+        end
+
+    end
+    Actives:AddCallback(ModCallbacks.MC_INPUT_ACTION, InputAction)
+
+
+    local function PostPlayerUpdate(mod, player)
+        local data = GetPlayerData(player, false);
+        if (data) then
+            for slot, charge in pairs(data.UsedCharges) do
+                player:SetActiveCharge(math.max(0, charge), slot);
+                data.UsedCharges[slot] = nil;
+            end
+        end
+    end
+    Actives:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate)
+end
 
 
 return Actives;

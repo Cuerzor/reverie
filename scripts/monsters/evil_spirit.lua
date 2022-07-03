@@ -60,8 +60,7 @@ do
         if (spirit.Variant == Spirit.Variant) then
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, spirit.Position, Vector.Zero, spirit);
             local SpellCardWave = THI.Effects.SpellCardWave;
-            local wave = Isaac.Spawn(SpellCardWave.Type, SpellCardWave.Variant, 0, spirit.Position, Vector.Zero, spirit);
-            wave:GetSprite():Play("Burst");
+            local wave = Isaac.Spawn(SpellCardWave.Type, SpellCardWave.Variant, SpellCardWave.SubTypes.BURST, spirit.Position, Vector.Zero, spirit);
             wave.SpriteScale = Vector(0.5, 0.5);
             wave.PositionOffset = Vector(0, -16 * spirit.SpriteScale.Y) + spirit.PositionOffset; 
             THI.SFXManager:Play(THI.Sounds.SOUND_MAGIC_IMPACT);
@@ -71,7 +70,14 @@ do
 
     local function PreSpiritCollision(mod, npc, other, low)
         if (npc.Variant == Spirit.Variant) then
-            if (other.Type == EntityType.ENTITY_PLAYER) then
+            local canCollide = other.Type == EntityType.ENTITY_PLAYER;
+            if (npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+                canCollide = other.Type ~= EntityType.ENTITY_PLAYER and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY);
+            end
+            if (canCollide) then
+                if (other:IsVulnerableEnemy()) then
+                    other:TakeDamage(100, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(npc), 0);
+                end
                 npc:Die();
             else
                 return true;

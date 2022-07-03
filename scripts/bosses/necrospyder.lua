@@ -5,6 +5,15 @@ local Grids = CuerLib.Grids;
 local Necrospyder = ModEntity("Necrospyder", "NECROSPYDER");
 
 local NecrospyderHole = ModEntity("Necrospyder Hole", "NECROSPYDER_HOLE");
+do
+
+    local BulletParams = ProjectileParams();
+    BulletParams.BulletFlags = ProjectileFlags.ACCELERATE_EX | ProjectileFlags.BURST8;
+    BulletParams.Scale = 2;
+    BulletParams.Variant = ProjectileVariant.PROJECTILE_PUKE;
+    Necrospyder.BulletParams = BulletParams;
+end
+
 -- Hole.
 do
 
@@ -83,11 +92,11 @@ do
         },
         Type = Necrospyder.Type,
         Variant = Necrospyder.Variant,
-        PortraitPath = "gfx/ui/boss/portrait_582.0_necrospyder.png",
+        PortraitPath = "gfx/reverie/ui/boss/portrait_582.0_necrospyder.png",
         PortraitOffset = Vector(0, 0),
         NamePaths = {
-            en = "gfx/ui/boss/bossname_582.0_necrospyder.png",
-            zh = "gfx/ui/boss/bossname_582.0_necrospyder_zh.png"
+            en = "gfx/reverie/ui/boss/bossname_582.0_necrospyder.png",
+            zh = "gfx/reverie/ui/boss/bossname_582.0_necrospyder_zh.png"
         }
     }
     Bosses:SetBossConfig("reverie:necrospyder", bossConfig, roomConfig);
@@ -189,7 +198,13 @@ do
     end
 
     local function GetOut(spider)
-        local holes = Isaac.FindByType(NecrospyderHole.Type, NecrospyderHole.Variant);
+        
+        local holes = {};
+        for _, ent in pairs(Isaac.FindByType(NecrospyderHole.Type, NecrospyderHole.Variant)) do
+            if (not ent.Child or not ent.Child:Exists()) then
+                table.insert(holes, ent);
+            end
+        end
         if (#holes > 0) then
             local playerNearHole = nil;
             for i, ent in pairs(holes) do
@@ -215,7 +230,15 @@ do
             end
             local rotation = hole.SpriteRotation;
             local offset = Vector.FromAngle(rotation + 90) * 26;
+
+
+            if (spider.Parent and spider.Parent:Exists()) then
+                spider.Parent.Child = nil;
+            end
+
             spider.Position = hole.Position + offset;
+            spider.Parent = hole;
+            hole.Child = spider;
             spider.TargetPosition = spider.Position;
             spider.SpriteRotation = rotation;
             SetState(spider, state);
@@ -336,16 +359,26 @@ do
                     if (data.StateTime > 10) then
                         spider.I2 = spider.I2 + 1;
                         local dir = Vector.FromAngle(spider.SpriteRotation + 90)
-                        local vel = dir * (10 + spider.I2* 5);
+                        local vel = dir * (2 + spider.I2* 8) * Vector(1, 0.6);
                         THI.SFXManager:Play(SoundEffect.SOUND_LITTLE_SPIT);
-                        local bullet = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, 0, 0, spider.Position, vel, spider) :ToProjectile();
-                        bullet:AddProjectileFlags(ProjectileFlags.ACCELERATE_EX | ProjectileFlags.BURST8);
-                        bullet.Scale = 3;
-                        local dis = spider:GetPlayerTarget().Position - (spider.Position + vel);
-                        local distance = dis:Dot(dir);
-                        local time = distance / vel:Length() / 2;
 
-                        bullet.Height = -(time + 9 * (1 - 0.9 ^ time) );
+                        Necrospyder.BulletParams.HeightModifier = (spider.I2 * -1) - 2 +23.5;
+                        spider:FireProjectiles(spider.Position, vel, 0, Necrospyder.BulletParams)
+                        Necrospyder.BulletParams.HeightModifier = 0;
+
+                        -- local bullet = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, 3, 0, spider.Position, vel, spider) :ToProjectile();
+                        -- bullet:AddProjectileFlags(ProjectileFlags.ACCELERATE_EX | ProjectileFlags.BURST8);
+                        -- bullet.Scale = 2;
+
+                        -- -- Projectile range depends on player distance.
+                        -- local dis = spider:GetPlayerTarget().Position - (spider.Position + vel);
+                        -- local distance = dis:Dot(dir);
+                        -- local time = distance / vel:Length() / 2;
+                        -- bullet.Height = -(time + 9 * (1 - 0.9 ^ time) );
+
+                        -- Projectile range is fixed.
+                        -- bullet.Height = -6 + (spider.I2 * -2);
+
                         spr:Play("Spit", true);
                         data.StateTime = 0;
                     end
@@ -385,8 +418,8 @@ do
                         spider.I2 = 1;
                         THI.SFXManager:Play(SoundEffect.SOUND_WHEEZY_COUGH);
                         for layer = 1, 2 do
-                            for i = 1, 8 do
-                                local dir = Vector.FromAngle(spider.SpriteRotation + i / 8 * 180);
+                            for i = 0, 6 do
+                                local dir = Vector.FromAngle(spider.SpriteRotation + i / 6 * 180);
                                 local gas = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SMOKE_CLOUD, 0, spider.Position + dir * 80 * layer, Vector.Zero, spider):ToEffect();
                                 gas.Timeout = GasTimeout;
                             end
@@ -427,10 +460,6 @@ do
         end
     end
     Necrospyder:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, PostNecrospyderKill, Necrospyder.Type);
-    -- local function PostProjectileUpdate(mod, proj)
-    --     print(proj.FrameCount, string.format("%.2f",proj.FallingSpeed));
-    -- end
-    -- Necrospyder:AddCallback(ModCallbacks.MC_POST_PROJECTILE_UPDATE, PostProjectileUpdate);
 end
 
 return Necrospyder;

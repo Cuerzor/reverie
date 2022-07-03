@@ -566,11 +566,11 @@
 	<!-- Lemegeton/Book of Virtues -->
 	<wisp id="s18" hp="4" damage="3" layer="0" flameColor="flame_purple" coreColor="core_white" coreGfx="item.png" tearColor="tear_purple" tearFlags="2" />
 
-	<wisp id="588" hp="2.5" damage="1.5" tearScale="0.6" tearFlags="2" fireDelay="60" flameColor="flame_purple" coreColor="default" tearColor="tear_purple" coreGfx="sol.png" />
-    <wisp id="589" hp="2" damage="1.5" tearScale="0.6" tearFlags="13" fireDelay="60" flameColor="flame_purple" coreColor="default" tearColor="tear_pink" coreGfx="luna.png" />
-    <wisp id="590" hp="2" damage="1" tearScale="0.6" tearFlags="3" fireDelay="30" flameColor="flame_purple" coreColor="default" tearColor="tear_cyan" coreGfx="mercurius.png" />
-	<wisp id="591" hp="1" damage="1.5" tearScale="0.6" tearFlags="66" fireDelay="15" flameColor="flame_purple" coreColor="default" tearColor="tear_black" coreGfx="venus.png" />
-	<wisp id="593" hp="2" damage="3.5" tearScale="0.6" tearFlags="22" fireDelay="90" flameColor="flame_purple" coreColor="default" tearColor="tear_orange" coreGfx="mars.png" />
-    <wisp id="594" hp="2.5" damage="2" tearScale="0.6" tearFlags="4" fireDelay="60" flameColor="flame_purple" coreColor="default" tearColor="tear_green" coreGfx="jupiter.png" />
-    <wisp id="595" hp="5" damage="1.5" tearScale="0.6" tearFlags="70" fireDelay="60" flameColor="flame_purple" coreColor="default" tearColor="tear_grey" coreGfx="saturnus.png" />
+	<wisp id="588" hp="2.5" damage="1.5" tearScale="0.6" tearFlags="2" fireDelay="60" flameColor="flame_purple" coreColor="default" tearColor="tear_purple" coreGfx="reverie/sol.png" />
+    <wisp id="589" hp="2" damage="1.5" tearScale="0.6" tearFlags="13" fireDelay="60" flameColor="flame_purple" coreColor="default" tearColor="tear_pink" coreGfx="reverie/luna.png" />
+    <wisp id="590" hp="2" damage="1" tearScale="0.6" tearFlags="3" fireDelay="30" flameColor="flame_purple" coreColor="default" tearColor="tear_cyan" coreGfx="reverie/mercurius.png" />
+	<wisp id="591" hp="1" damage="1.5" tearScale="0.6" tearFlags="66" fireDelay="15" flameColor="flame_purple" coreColor="default" tearColor="tear_black" coreGfx="reverie/venus.png" />
+	<wisp id="593" hp="2" damage="3.5" tearScale="0.6" tearFlags="22" fireDelay="90" flameColor="flame_purple" coreColor="default" tearColor="tear_orange" coreGfx="reverie/mars.png" />
+    <wisp id="594" hp="2.5" damage="2" tearScale="0.6" tearFlags="4" fireDelay="60" flameColor="flame_purple" coreColor="default" tearColor="tear_green" coreGfx="reverie/jupiter.png" />
+    <wisp id="595" hp="5" damage="1.5" tearScale="0.6" tearFlags="70" fireDelay="60" flameColor="flame_purple" coreColor="default" tearColor="tear_grey" coreGfx="reverie/saturnus.png" />
 </wisps>

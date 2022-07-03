@@ -4,6 +4,7 @@ local CompareEntity = Detection.CompareEntity;
 local EntityExists = Detection.EntityExists;
 local Bosses = CuerLib.Bosses;
 local Grids = CuerLib.Grids;
+local CLCallbacks = CuerLib.CLCallbacks;
 local Pyroplume = ModEntity("Pyroplume", "PYROPLUME");
 
 Pyroplume.Variants = {
@@ -11,6 +12,19 @@ Pyroplume.Variants = {
     PHASE2 = Isaac.GetEntityVariantByName("Pyroplume 2"),
     PHASE3 = Isaac.GetEntityVariantByName("Pyroplume 3"),
 }
+
+-- Projectile Params.
+do
+    local FeatherParams = ProjectileParams()
+    FeatherParams.Variant = ProjectileVariant.PROJECTILE_WING
+    FeatherParams.Color = Color(1,1,1,1,1,0.5,0);
+    FeatherParams.BulletFlags = ProjectileFlags.NO_WALL_COLLIDE;
+    Pyroplume.FeatherParams = FeatherParams;
+    
+    local FireParams = ProjectileParams();
+    FireParams.Variant = ProjectileVariant.PROJECTILE_FIRE
+    Pyroplume.FireParams = FireParams
+end
 
 do
     local r = Grids.RoomGrids.Rock;
@@ -131,11 +145,11 @@ do
         },
         Type = Pyroplume.Type,
         Variant = Pyroplume.Variant,
-        PortraitPath = "gfx/ui/boss/portrait_584.0_pyroplume.png",
+        PortraitPath = "gfx/reverie/ui/boss/portrait_584.0_pyroplume.png",
         PortraitOffset = Vector(0, -30),
         NamePaths = {
-            en = "gfx/ui/boss/bossname_584.0_pyroplume.png",
-            zh = "gfx/ui/boss/bossname_584.0_pyroplume_zh.png"
+            en = "gfx/reverie/ui/boss/bossname_584.0_pyroplume.png",
+            zh = "gfx/reverie/ui/boss/bossname_584.0_pyroplume_zh.png"
         }
     }
     Bosses:SetBossConfig("reverie:pyroplume", bossConfig, roomConfig);
@@ -204,11 +218,15 @@ do
     end
     
     local function SpawnFeather(pos, velocity, bird)
-        local feather = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_WING, 0, pos, velocity, bird):ToProjectile();
-        feather:SetColor(Color(1,1,1,1,1,0.5,0), -1, 0);
-        feather:SetColor(Color(0,0,0,0,0,0,0), 5, 1, true, true);
-        feather:AddProjectileFlags(ProjectileFlags.NO_WALL_COLLIDE);
-        return feather;
+        
+
+        local feather = bird:FireProjectiles (pos, velocity, 0, Pyroplume.FeatherParams)
+        -- local feather = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_WING, 0, pos, velocity, bird):ToProjectile();
+        -- feather:SetColor(Color(0,0,0,0,0,0,0), 5, 1, true, true);
+        -- feather:SetColor(Color(1,1,1,1,1,0.5,0), -1, 0);
+        -- feather:AddProjectileFlags(ProjectileFlags.NO_WALL_COLLIDE);
+        
+        -- return feather;
     end
     
     local function PostPyroplumeInit(mod, bird)
@@ -273,7 +291,8 @@ do
                                 local angle = a * 90 + bird.FrameCount * 3;
                                 local dir = Vector.FromAngle(angle);
                                 local vel = dir * 5;
-                                Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_FIRE, 0, bird.Position, vel, bird);
+
+                                bird:FireProjectiles(bird.Position, vel, 0, Pyroplume.FireParams);
                             end
                         end
                         
@@ -283,7 +302,7 @@ do
                                 local angle = a * 60 + bird.FrameCount * 5 + 15;
                                 local dir = Vector.FromAngle(angle);
                                 local vel = dir * 7;
-                                local feather = SpawnFeather(bird.Position, vel, bird);
+                                SpawnFeather(bird.Position, vel, bird);
                             end
                         end
                     end
@@ -521,6 +540,9 @@ do
                     end
                     local new = Isaac.Spawn(bird.Type, targetVariant, bird.SubType, bird.Position, bird.Velocity, bird.SpawnerEntity);
                     new:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
+                    if (bird:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+                        new:AddCharmed(EntityRef(bird), -1);
+                    end
                     bird:Remove();
                 end
             end

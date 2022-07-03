@@ -22,7 +22,7 @@ Published.
 
 1.2-2021.7.7
 -Added Frozen Sakura and Chen Baby。
--加入了被冻结的樱花和橙宝宝。
+-加入了冻结的樱花和橙宝宝。
 -Removed Dark Ribbon from curse room pool and red chest pool, and removed tooth of vampire from curse room pool.
 -将黑暗缎带从诅咒房和红箱子移除，并将吸血鬼之牙从诅咒房移除。
 -Fixed an issue that explosions created when cataclysm wisps put out will deal 10 heart damage to Isaac.
@@ -50,7 +50,7 @@ Published.
 
 1.5-2021.7.8
 -Added Aromatic Flower.
--添加了常樱之花。
+-加入了常樱之花。
 -Fairies' animations now become smoother.
 -妖精的动画现在变得更加平滑了。
 -Added a sound for Shanghai Doll.
@@ -68,7 +68,7 @@ Published.
 
 1.7-2021.7.10
 -Added DELETED ERHU.
--添加了被删除的二胡。
+-加入了被删除的二胡。
 -Metronome and DELETED ERHU are now included in Musician transformation.
 -音乐家套装现在包括节拍器和被删除的二胡。
 
@@ -115,7 +115,7 @@ Published.
 
 1.9-2021.7.14
 -Added Fried Tofu.
--添加了油炸豆腐。
+-加入了油炸豆腐。
 -Removed Maid Suit from Greed Shop.
 -将女仆装从贪婪商店中移除。
 -Tainted Jacob now will not transform into the Lost if collided by Dark Esau while reviving from Fan of the Dead and Aromatic Flower.
@@ -127,7 +127,7 @@ Published.
 
 1.10-2021.7.16
 -Added Roukanken.
--添加了楼观剑。
+-加入了楼观剑。
 -Weights of all items increase to 5.
 -将所有道具的出现权重提升到5。
 
@@ -153,7 +153,7 @@ Published.
 
 1.11-2021.7.18
 -Added The Gap.
--添加了隙间。
+-加入了隙间。
 -Added EID Description of Roukanken and The Gap.
 -添加了楼观剑和隙间的EID说明。
 -White Fire Place now cannot be destroyed by Roukanken.
@@ -199,7 +199,7 @@ Published.
 
 2.2-2021.7.22
 -Added Pathseeker.
--添加了寻道者。
+-加入了寻道者。
 -Starseeker crystal balls now will not spawn in Death Certificate Rooms.
 -寻星者水晶球不再会在死亡证明房间中生成。
 -Fixed an issue that cloned crystal balls created by Starseeker cannot be picked up.
@@ -231,7 +231,7 @@ Published.
 
 2.4-2021.9.14
 -Added a secret boss and an ending!
--添加了一个秘密BOSS和结局！
+-加入了一个秘密BOSS和结局！
 -Fixed an issue that halos created by Dark Ribbon or Frozen Sakura will disappear after Tainted Lazarus switchs forms.
 -修复了腐化拉撒路在切换人物形态后，黑暗缎带和冻结樱花的光环会消失的BUG。
 
@@ -245,7 +245,7 @@ Published.
 
 2.4.3-2021.9.15
 -Added EID support for the secret item.
--添加了秘密道具的EID说明支持。
+-加入了秘密道具的EID说明支持。
 -The secret item now will no longer spawn in Death Certificate rooms.
 -秘密道具现在不会出现在死亡证明中。
 -The secret boss now will correctly damage enemies when being charmed or friendly.
@@ -253,7 +253,7 @@ Published.
 
 2.5.0-2021.9.15
 -Added Gourd-Shroom.
--添加了葫芦菇。
+-加入了葫芦菇。
 -The secret item will no longer spawn in some unexpected floors.
 -某些层不再会生成秘密道具。
 -Fixed an issue that some data will not be loaded after continue a game.
@@ -319,13 +319,13 @@ Published.
 
 2.10.0-2021.9.21
 -Added Illusion, Peerless Elixir and Pure Fury.
--添加了幻象、无双之药和纯粹的愤怒。
+-加入了幻象、无双之药和纯粹的愤怒。
 -Resprited Rabbit Trap's Trap.
 -重新绘制了兔之陷阱的陷阱图像。
 
 2.11.0-2021.9.22
 -Added Dragon Neck Jewel and The Infames (Experimental).
--添加了龙颈之玉和耻辱一族（实验性）。
+-加入了龙颈之玉和耻辱一族（实验性）。
 -Illusion now can be duplicated buy Box of Friends.
 -幻象现在可以被朋友盒复制。
 -Illusions now will try to rotate to the target position through a smaller angle.
@@ -354,7 +354,7 @@ Published.
 -加入了蓬莱玉枝。
 
 2.15.0-2021.9.27
--Added Ash of Pheonix.
+-Added Ash of Phoenix.
 -加入了不死鸟灰烬。
 -Made over most of codes for easier coding.
 -翻新了大部分代码，以更好地编程。
@@ -382,13 +382,13 @@ Published.
 -修复了达摩克里斯之剑更新速率变为1000倍的BUG。
 
 3.0.2-2021.9.28
--Added all character's ash sprites of Ash of Pheonix.
--添加了所有人物的灰烬图像。
--Players will only get damage cooldown of 1 seconds if they die with Ash of Pheonix.
+-Added all character's ash sprites of Ash of Phoenix.
+-加入了所有人物的灰烬图像。
+-Players will only get damage cooldown of 1 seconds if they die with Ash of Phoenix.
 -玩家在持有不死鸟灰烬死亡时，现在只会有1秒受伤冷却。
 
 3.0.3-2021.9.29
--If player has shields when died while holding Ash of Pheonix, the revive timer will start countdown after the shield disappeared.
+-If player has shields when died while holding Ash of Phoenix, the revive timer will start countdown after the shield disappeared.
 -如果玩家在拥有不死鸟灰烬死亡时拥有护盾，则重生计时器会在护盾结束后才开始计时。
 -Changed All weights of items in item pools to 2.
 -将所有道具池中道具的权重改为了2.
@@ -407,13 +407,13 @@ Published.
 
 3.1.0-2021.10.1
 -Added Empty Book.
--添加了空白书本。
+-加入了空白书本。
 -Fixed an issue that cannot touch white fire when player has Robe of Firerat.
 -修复了在拥有火鼠的皮衣时无法撞白火的BUG。
 
 3.2.0-2021.10.2
 -Added D2147483647.
--添加了D2147483647。
+-加入了D2147483647。
 -Increased the damage of Forbidden of Empty Book to 20/60/180 from 5/15/40.
 -将空白书本的禁术伤害从5/15/40提升到20/60/180。
 -Fixed an issue that cannot dash while using Roukanken.
@@ -421,7 +421,7 @@ Published.
 
 3.3.0-2021.10.3
 -Added Bishamonten's Pagota.
--添加了毗沙门天的宝塔。
+-加入了毗沙门天的宝塔。
 -Remade D2147483647.
 -重做了D2147483647。
 
@@ -436,7 +436,7 @@ Published.
 
 4.0.0-2021.10.19
 -Added a new character: Eika.
--添加了新人物：璎花。
+-加入了新人物：璎花。
 -Removed Yin-Yang Orb and Rainbow Dragon Badge from golden chest pool.
 -将阴阳玉和虹龙徽章从金箱子道具池中移除。
 -Modified decrease rate of items in item pools, to morely fit vanilla pools.
@@ -447,7 +447,7 @@ Published.
 -女仆装现在会在怪物播放完毕出现动画后才暂停时间。
 -Fixed an issue that Grimorie of Patchouli cannot give player magnetizing effect or rock effect.
 -修复了帕秋莉的魔导书无法给予玩家磁化或石头效果的BUG。
--Fixed some interaction between Ash of Pheonix and other revive items.
+-Fixed some interaction between Ash of Phoenix and other revive items.
 -修复了一些不死鸟灰烬与其他复活道具之间的互动。
 
 4.0.2-2021.10.20
@@ -458,12 +458,12 @@ Published.
 
 
 4.0.3-2021.10.21
--Added Eika's ash for Ash of Pheonix.
+-Added Eika's ash for Ash of Phoenix.
 -为不死鸟灰烬添加了璎花的灰烬。
 -Eika's damage multiplier has reduced to 1.25 from 1.5.
 -璎花的伤害倍数从1.5降低到了1.25。
 -Added the interaction between Eika and Dead Tooth.
--添加了璎花和死牙之间的互动。
+-加入了璎花和死牙之间的互动。
 -Fixed the interaction between Eika and Mega Mush.
 -修复了璎花和超级蘑菇之间的互动。
 -Fixed an issue that the halo of Dark Ribbon will persistently exists if player use Genesis.
@@ -483,8 +483,8 @@ Published.
 
 4.1.0-2021.10.27
 -Added Tainted Eika.
--添加了腐化璎花。
--Changed the Icon of Ash Of Pheonix.
+-加入了腐化璎花。
+-Changed the Icon of Ash Of Phoenix.
 -更改了不死鸟灰烬的图标。
 
 4.1.1-2021.10.29
@@ -499,7 +499,7 @@ Published.
 
 4.2.0-2021.11.1
 -Added Hunger.
--添加了饥饿。
+-加入了饥饿。
 -Fixed an issue that rocks spawned when Eika has Monstro's Lung have no gravity.
 -修复了璎花+怪蛋的肺的石头没有下落重力的BUG。
 -Fixed an issue that Bishamonten's Pagota will not instantly transform troll bombs into golden troll bombs.
@@ -527,13 +527,13 @@ Published.
 
 4.5.0-2021.11.4
 -Added Isaac's Last Wills.
--添加了以撒的遗书。
+-加入了以撒的遗书。
 
 5.0.0-2021.11.5
 -Renamed to Reverie - Touhou Combinations.
 -更名为《幻想曲MOD-东方的结合》。
 -Added Lunatic Mode. Can be enabled by input "thlunatic" in console.
--添加了疯狂模式。可以通过在控制台中输入thlunatic开启。
+-加入了疯狂模式。可以通过在控制台中输入thlunatic开启。
 -Now clock sounds will be played while in time stop of Maid Suit.
 -女仆装现在在暂停时间时会播放钟表转动的音效。
 -Change the damage of fire generated by Robe of Firerat to 3x of the tear's damage, and the lifetime of fire to 3.33 seconds.
@@ -603,8 +603,8 @@ Published.
 -Shortened the animation time of Psycho Knife to the half.
 -将疯人刀的动画时间减半。
 -Added the wisp of Book of Virtues for Psycho Knife.
--添加了疯人刀的美德之书鬼火。
--Fixed an issue that Warpping Hairpin cannot warp to the correct room if player is in L-shaped rooms.
+-加入了疯人刀的美德之书鬼火。
+-Fixed an issue that Warping Hairpin cannot warp to the correct room if player is in L-shaped rooms.
 -修复了穿墙簪子无法在L型房间中传送到正确房间的BUG。
 
 5.5.1-2021.11.12
@@ -691,7 +691,7 @@ Published.
 
 5.10.0-2021.11.18
 -Added Continue? and Rod of Remorse.
--添加了继续？和悔悟棒。
+-加入了继续？和悔悟棒。
 -Fixed an issue that enemies stopped my Maid Suit cannot restore from stop after become friendly.
 -修复了被女仆装暂停后，被变为友方的敌人无法被取消暂停的BUG。
 
@@ -710,7 +710,7 @@ Published.
 6.1.0-2021.11.20
 -将“古明地觉”MOD（https://steamcommunity.com/sharedfiles/filedetails/?id=2648315673）中的觉和腐化觉合并进了该MOD。
 -Merged Satori and Tainted Satori into this mod from "Satori Komeiji" MOD (https://steamcommunity.com/sharedfiles/filedetails/?id=2648315673).
--添加了哆来咪对Enhanced Boss Bars MOD的支持。
+-加入了哆来咪对Enhanced Boss Bars MOD的支持。
 -Added support of Doremy for Enhanced Boss Bars Mod.
 
 6.1.1-2021.11.21
@@ -721,7 +721,7 @@ Published.
 
 6.2.0-2021.11.21
 -Added Broken Amulet.
--添加了破碎的护身符。
+-加入了破碎的护身符。
 -Changed the damage formula of Tainted Satori's crush.
 -改变了堕化觉的撞击伤害公式。
 -Tainted Satori no longer crush friendly monsters.
@@ -732,7 +732,7 @@ Published.
 -修复了以撒魔像会被炸死的BUG。
 
 6.2.1-2021.11.21
--添加了四个新人物的初始房间控制提示。
+-加入了四个新人物的初始房间控制提示。
 -Added control tips for the 4 new characters.
 
 6.3.0-2021.11.22
@@ -783,9 +783,9 @@ Published.
 
 6.4.0-2021.11.26
 -Added Saucer Remote.
--添加了飞碟遥控器。
+-加入了飞碟遥控器。
 -Added the interaction of Book of Virtues and Extending Arm.
--添加了美德之书和延展手臂的互动。
+-加入了美德之书和延展手臂的互动。
 -Fixed an issue that Extending Arm cannot pull shopkeepers.
 -修复了延展手臂无法拉取店长的BUG。
 
@@ -833,7 +833,7 @@ Published.
 
 6.4.7-2021.11.27
 -Added Chinese Language Support for Collectibles and Trinkets (Only works on pickup)
--添加了道具和饰品的中文适配（仅限捡起时）
+-加入了道具和饰品的中文适配（仅限捡起时）
 
 6.4.8-2021.11.27
 -Fixed some mistakes on EID support and Chinese language.
@@ -869,7 +869,7 @@ Published.
 
 6.6.0-2021.12.03
 -Added D Flip.
--添加了镜像骰子。
+-加入了镜像骰子。
 
 6.6.1-2021.12.03
 -Updated D Flip's Animation.
@@ -927,7 +927,7 @@ Published.
 
 6.7.0-2021.12.05
 -Added Wisdom of Gods.
--添加了诸神智慧。
+-加入了诸神智慧。
 
 6.8.0-2021.12.06
 -Replaced Wisdom of Gods into Rune Sword.
@@ -993,7 +993,7 @@ Published.
 
 6.9.0-2021.12.10
 -Added Scaring Umbrella.
--添加了惊吓唐伞。
+-加入了惊吓唐伞。
 -Tears created by Jeweled Branch no longer push bombs.
 -蓬莱玉枝的眼泪不再与炸弹碰撞。
 
@@ -1079,7 +1079,7 @@ Published.
 
 6.13.0-2021.12.24
 -Added Devilcrow as a Gehanna Boss.
--添加了恶魔鸦，作为炼狱层的BOSS。
+-加入了恶魔鸦，作为炼狱层的BOSS。
 -Fixed an issue that devil deals are free when has Fan of the Dead .
 -修复了在拥有死者之扇时，恶魔交易免费的BUG。
 -Fixed an issue that some active items will spawn wisps when has Car Battery.
@@ -1101,7 +1101,7 @@ Published.
 
 6.14.0-2021.12.27
 -Added The Centipede as a Mines Boss.
--添加了大百足，作为矿场层的BOSS。
+-加入了大百足，作为矿场层的BOSS。
 
 6.14.1-2021.12.28
 -Fixed an issue that Eika cannot throw rocks.
@@ -1109,17 +1109,17 @@ Published.
 
 6.15.0-2021.12.27
 -Added The Abandoned as a Downpour Boss.
--添加了遗忘伞，作为下水道的BOSS。
+-加入了遗忘伞，作为下水道的BOSS。
 
 6.16.0-2021.12.27
 -Added Necrospyder as a Dross Boss.
--添加了尸变蛛，作为污水道的BOSS。
+-加入了尸变蛛，作为污水道的BOSS。
 -The Abandoned and her water balls no longer burst red splats.
 -遗忘伞和她的水球不再爆出红色粒子效果。
 
 6.17.0-2022.1.2
 -Added Pyroplume as a Ashpit Boss.
--添加了火羽，作为灰坑的BOSS。
+-加入了火羽，作为灰坑的BOSS。
 -Reduced the weights of some powerful items and Vicious Curse.
 -降低了部分强力道具和恶毒的诅咒的权重。
 
@@ -1237,7 +1237,7 @@ Published.
 
 7.4.0-2022.1.21
 -Added Sorcerer's Scroll.
--添加了魔人经卷。
+-加入了魔人经卷。
 -Added EID Support for Empty Book's Finished Books.
 -为空白书本的成书添加了EID支持。
 -Fried Tofu now increase range and luck instead when has Binge Eater.
@@ -1257,7 +1257,7 @@ Published.
 
 7.5.0-2022.1.22
 -Added Mountain Ear.
--添加了山谷之耳。
+-加入了山谷之耳。
 
 7.6.0-2022.1.23
 -Added Zombie Infestation.
@@ -1312,3 +1312,897 @@ Published.
 -加入了鬼之角。
 -Modified the tears up mechanic.
 -修改了射速加成的机制。
+
+7.11.0-2022.1.28
+-Added Ethereal Arm.
+-加入了虚无断臂。
+-Updated some alt stage bosses' behaviours. Thanks to RedStinger(https://www.youtube.com/channel/UC0Cb0nB_xkxzH_BPBnpPz2A).
+-更新了部分支线BOSS的行为。感谢RedStinger(https://www.youtube.com/channel/UC0Cb0nB_xkxzH_BPBnpPz2A)。
+-Fixed an issue that Yamawaro's Crate can trigger Damocles.
+-修复了山童的木箱会触发达摩剑的BUG。
+
+7.11.1-2022.1.29
+-Fixed an issue that Teleport! cannot spawn correctly when player has Little Baggy and Ethereal Arm.
+-修复了玩家在拥有小药袋和虚空断臂时，无法正常生成“传送！”的BUG。
+
+7.11.2-2022.1.30
+-Jump into a gap floor that has not corresponding room will now teleport player to Error Room.
+-现在跳入没有对应房间的隙间地板会将玩家传送到错误房。
+-Fixed an issue that Starseeker doesn't trigger in Devil or Angel room.
+-修复了寻星者不在恶魔或天使房触发的BUG。
+-Fixed an issue that Little Baggy will transform dropped Void Hands into pills, make them unable to be removed.
+-修复了小药袋会将掉落的虚空之手替换为药丸，使它们无法被正常移除的BUG。
+
+7.11.3-2022.1.30
+-Fixed an issue that Use Sorcerer's Scroll when is all soul hearts will kill Isaac.
+-修复了在全魂心的情况下使用魔人经卷会杀死以撒的BUG。
+
+7.12.0-2022.1.30
+-Added Delusion Pipe.
+-加入了迷幻烟斗。
+
+7.13.0-2022.1.31
+-Added Soul Magatama.
+-加入了灵魂勾玉。
+
+7.14.0-2022.2.2
+-Added Cockcrow Wings.
+-加入了啼日之翼。
+-Added Shield of Loyalty and Sword of Loyalty.
+-加入了忠诚之盾和忠诚之剑。
+
+7.14.1-2022.2.3
+-Some items' description has been changed.
+Plague lord: The cycle of life is over -> Toxic Infection
+Dowsing Rods: Fortunately, it's not an active item -> More Treasures
+Zombie Infestation: Youshika has successfully eliminated all lives on Earth. -> Resident Evil
+Cockcrow Wings: The morning sun has vanquished the horrible night. -> Round the clock
+Lion Statue: Guardian Beast-> A pair of divine beasts
+Shield of Loyalty: So, there's only one answer left! -> We are your shield
+Sword of Loyalty: I swear my loyalty to you! -> I swear my loyalty to you
+-部分道具描述发生更改：
+瘟疫领主：生命的轮回结束了->剧毒传染
+探宝棒：庆幸吧，好歹他不是主动道具->更多宝藏
+僵尸感染：芳香已成功消灭世界上的所有生命。 ->内在邪恶
+啼日之翼：黎明的曙光驱散了黑夜。->夜以继日
+狮子雕像：守护神兽->成对的神兽
+忠诚之盾：那么，答案就只有一个了！ ->我们是你的护盾
+忠诚之剑：我将效忠于你！->我将效忠于你
+-Cockcrow Wings no longer provides soul heart, reduced its stats increament, and will reduce another state during day and night.
+-啼日之翼不再提供魂心，降低了属性加成，并且在白天和夜晚会降低另一项属性。
+-Meteor of Daitengu Telescope now can only spawn in main dimension.
+-大天狗望远镜的陨石现在只能在主维度中生成。
+
+7.15.0-2022.2.4
+-Added Brutal Horseshoe.
+-加入了残暴马蹄铁。
+-Fixed an issue that Rune Sword's Perthro cannot reroll switching pedstals made by Soul of Isaac.
+-修复了符文剑无法重掷来回切换的底座道具的BUG。
+
+7.15.1-2022.2.4
+-Fixed an issue that Bethany and Tainted Bethany can infinitely use Benediction.
+-修复了伯大尼和堕化伯大尼可以无限使用祈愿的BUG。
+
+7.15.2-2022.2.5
+-Fixed an issue that cannot use Soul Magatama when has Car Battery.
+-修复了在拥有车载电池时不能使用灵魂勾玉的BUG。
+
+7.15.3-2022.2.5
+-Added Bundled Statue.
+-加入了襁褓石像。
+
+7.15.4-2022.2.6
+-Nerfed the gravity for enemy projectiles.
+-削弱了襁褓石像对于子弹的重力。
+-The Following item pools have been modified:
+Golden Chest: Removed Daitengu Telescope
+Secret: Added Daitengu Telescope
+Red Chest: Added Green Eyed Envy, Ethereal Arm, Fox in Tube
+Beggar: Added Baked Sweet Potato, Peerless Elixir
+Devil Beggar: Added Delusion Pipe, Peerless Elixir, Oni Horn, Kiketsu Family's Blackmail, Brutal Horseshoe
+Crane Game: Added D Flip, Daitengu Telescope, Bishamonten's Pagota, Continue?, Melancholic Violin, Maniac Trumpet, Illusionary Keyboard, Saucer Remote, Tengu Camera, Tengu Cellphone
+Rotten Beggar: Added Zombie Infestation, Plague Lord
+Wooden Chest: Added Leaf Shield, Yamawaro's Crate
+Ultra Secret: Added Brutal Horseshoe
+Greed Shop: Added D Flip
+-以下道具池发生更改：
+金箱子：移除大天狗望远镜
+隐藏房：添加大天狗望远镜
+红箱子：添加绿眼的嫉妒，虚无断臂，管中狐
+乞丐：添加烤红薯，无双之药
+恶魔乞丐：添加迷幻烟管，无双之药，鬼之角，鬼杰组的要挟，残暴马蹄铁
+娃娃机：添加镜像骰子，大天狗望远镜，毗沙门天的宝塔，继续？，忧郁提琴，狂躁小号，幻想键盘，飞碟遥控器，天狗相机，天狗手机
+腐烂乞丐：添加僵尸感染，瘟疫领主
+木箱子：添加飞叶护盾，山童的木箱
+究极隐藏：添加残暴马蹄铁
+贪婪商店：添加镜像骰子
+
+7.16.0-2022.2.6
+-Added Lightbombs.
+-加入了圣光炸弹。
+
+7.16.1-2022.2.7
+-Fixed an issue that explosions will log errors.
+-修复了爆炸会在控制台输出错误的BUG。
+
+7.17.0-2022.2.8
+-Added Hekate.
+-加入了权神星。
+
+7.17.1-2022.2.8
+-Fixed an issue that Illusion and Hekate planets twitches after new room.
+-修复了幻象和权神星的星球在进入房间后会抽搐的BUG。
+
+7.18.0-2022.2.10
+-Added Rune Cape.
+-加入了符文披风。
+-Modified Hekate's Sprite.
+-修改了权神星的图标。
+-The size of flames from Robe of Firerat is now no more than 100%, so as to prevent covering the screen.
+-火鼠的皮衣的火焰现在的大小最多不超过100%，防止遮挡屏幕。
+-Zombie Infestation now can only have 5 zombie monsters at most in the same time.
+-僵尸感染现在最多只能同时拥有5只僵尸怪物。
+-Void Hands is now no longer included in card pools.
+-虚空之手不再会出现在卡牌随机池中。
+-Fixed an issue that Bethany and Tainted Bethany cannot use Psycho Knife when has soul charges or blood charges.
+-修复了伯大尼和堕化伯大尼无法在拥有魂心充能或红心充能时使用疯人刀的BUG。
+-Fixed an issue that Tainted Forgotten with Fan of the Dead can no longer be controlled after killed while the soul lifting the forgotten.
+-修复了堕化遗骸在有死者之扇时，举起遗骸时被杀死，会导致遗骸无法被控制的BUG。
+
+7.19.0-2022.2.10
+-Added Thunder Drum.
+-加入了雷霆太鼓。
+-Daitengu Telescope now can no longer destroy invincible objects (like TV).
+-大天狗望远镜的陨石不再摧毁无敌的物体（如电视）。
+
+7.19.1-2022.2.10
+-Renamed the chinese name of Thunder Drum.
+-将雷霆太鼓改名为雷霆大鼓。
+-Thunder Drum now is a required collectible of Musician transformation.
+-雷霆大鼓现在属于音乐家套装。
+-Musician transformation now can also give +1 tears.
+-音乐家套装现在还会使玩家射速+1。
+
+7.19.2-2022.2.11
+-Thunder Drum's lasers' timeout reduced to 0.333, and can only deal 15 damage in a single time.
+-雷霆大鼓的激光的持续时间减少到0.333秒，且现在只能造成单次15点伤害。
+-Thunder Drum is now included in Crane Game and Ultra Secret item pool.
+-雷霆大鼓现在包含在娃娃机和究极隐藏道具池。
+
+7.19.3-2022.2.11
+-The trigger cooldown of Thunder Drum has now been changed to 5 seconds, and the trigger cooldown of bone club has been reduced to 0.833 seconds.
+-雷霆大鼓的触发冷却时间现在啊变为5秒，同时骨棒触发冷却时间缩短至0.833秒。
+
+7.19.4-2022.2.11
+-Added Butterfly Wings.
+-加入了蝴蝶翅膀。
+-The volume of laser sounds from Thunder Drum has been reduced to 30%.
+-雷霆大鼓的激光音效音量降低至30%。
+
+7.20.0-2022.2.12
+-Added Ghost Anchor.
+-加入了幽灵船锚。
+
+7.20.1-2022.2.12
+-Considering that some mod characters may have movement problems when they get Ghost Anchor, turn Ghost Anchor into trinket.
+-考虑到部分MOD人物拿到幽灵船锚可能会出现移动问题的情况，将幽灵船锚变为了饰品。
+
+8.0.0-2022.2.13
+-Added Soul of Eika and Soul of Satori.
+-加入了璎花的魂石和觉的魂石。
+-Updated Marisa's Broom's EID description.
+-更新了魔理沙的扫帚的EID描述。
+-Fixed an issue that Rod of Remorse can teleport player to devil room before it opens.
+-修复了悔悟棒在恶魔房开启前能够将玩家传送到恶魔房的BUG。
+
+8.0.1-2022.2.13
+-Fixed an issue that Midas Flash's ID has been confused with Eika's placeholder.
+-修复了点金闪光的ID和璎花的占位符物体ID混淆的BUG。
+
+8.1.0-2022.2.14
+-Remade Tainted Eika.
+-重做了腐化璎花。
+-Soul of Eika also transform hearts in the room into friendly bonies.
+-璎花之魂现在同时也会将当前房间的心转换为对应的友方骷髅。
+-Fixed an issue that Void Hand is invisible when holding a pocket active item.
+-修复了在拥有副手主动道具时，虚空之手不可见的BUG。
+-Fixed an issue that Green Eyed Envy takes effect on friendly monsters.
+-修复了绿眼的嫉妒会对友方怪物起效的BUG。
+
+8.1.1-2022.2.14
+-Tainted Eika now no longer dies after takes Fan of the Dead, Abaddon and Brittle Bones.
+-腐化璎花在拿到死者之扇、亚巴顿和成骨不全症之后不再死亡。
+
+8.1.2-2022.2.15
+-Tainted Eika's pernament bonies now drop hearts that exists for 3 seconds upon death.
+-腐化璎花的永久骷髅现在会在死亡后掉落存在3秒的心。
+-Tainted Eika's birthright has been changed into Corpse Explosion.
+-腐化璎花的长子名分现在改为了尸体爆炸效果。
+-Green Eyed Envy now no longer triggers on some bosses.
+-绿眼的嫉妒现在不再对某些BOSS触发。
+
+8.1.3-2022.2.15
+-Using XIX - The Sun? as Tainted Eika now no longer kills player.
+-现在使用XIX - 太阳？不再会使腐化璎花立即死亡。
+-Fixed an issue that Tainted Eika will transform all charges of Alabaster Box into Soul Bonies if she has both Alabaster Box and soul hearts.
+-修复了腐化璎花在同时拥有白玉香膏盒和魂心时，会立即将所有充能转化为灵魂骷髅的BUG.
+
+8.1.4-2022.2.15
+-Added unique costumes for several items.
+-为腐化璎花加入了少数道具的独特外观。
+
+8.1.5-2022.2.15
+-Blood bonies' bone damage has changed from 5 + player damage to player damage * 120%.
+-血骷髅的骨头伤害从5+玩家伤害变为玩家伤害*120%。
+-The blue flame damage of Soul Bonies is reduced from player damage * 3 per hit to player damage.
+-灵魂骷髅的蓝火伤害从每下玩家伤害*3降低到等同于玩家伤害。
+
+8.1.6-2022.2.15
+-Tainted Eika's Birthright effect no longer damages other friendly enemies.
+-腐化璎花的长子权效果不再会炸到其他友方怪物。
+-Removed Blood Bony, Soul Bony and Devil Bony's collision damage.
+-移除了血骷髅、灵魂骷髅和恶魔骷髅的接触伤害。
+
+8.1.7-2022.2.16
+-Added some new unique costumes for several items.
+-为腐化璎花加入了少数道具的独特外观。
+-Blood bonies, soul bonies, devil bonies and big bonies now reduced health, but can only take up to 1 damage per second.
+-血骷髅、灵魂骷髅、恶魔骷髅和骷髅肥仔现在血量减少，但每秒最多只能受到1点伤害。
+-The Birthright effect of Tainted Eika is now deals 5 damage of the max HP of bonies.
+-腐化璎花的长子权现在改为造成骷髅最大血量*5点伤害。
+-Soul bonies now fire weak bones, has 50% chance to fire blue flames.
+-灵魂骷髅现在改为发射弱骨头，有50%的几率射出蓝火。
+-Tainted Eika will now turn deals that require heart containers into shop spikes.
+-腐化璎花现在会将需要心之容器的交易变为尖刺交易。
+
+8.1.8-2022.2.16
+-Added some new unique costumes for several items.
+-为腐化璎花加入了少数道具的新独特外观。
+-The Birthright's corpse explosion of Tainted Eika now ignores armor.
+-腐化璎花的长子权的尸体爆炸现在无视护甲。
+-Fixed an issue that Benediction is not included in normal Angel Room.
+-修复了祈愿不在普通天使道具池的BUG。
+
+8.1.9-2022.2.18
+-Mom's IOU is now free in shop.
+-妈妈的欠条现在在商店中免费。
+-Eika and Tainted Eika's speed now is 0.85.
+-璎花和腐化璎花的速度现在改为0.85。
+-Soul Bonies and Devil Bonies now can stack and upgrade like Cube of Meat.
+-魂骷髅和恶魔骷髅现在会像肉块一样堆叠并升级。
+
+8.1.10-2022.2.18
+-Canceled Tainted Eika's devil room spikes.
+-取消了腐化璎花的恶魔房尖刺机制。
+
+8.1.11-2022.2.19
+-Added some new unique costumes for several items.
+-为腐化璎花加入了一些道具的新独特外观。
+-Due to issues when player only has soul hearts, Mom's IOU's price is now back to 1 coin.
+-因为在玩家只有魂心时会出现问题，现在妈妈的欠条价格改回了1钱币。
+
+8.1.12-2022.2.20
+-Added new unique costumes for all items.
+-为腐化璎花加入了所有道具的独特外观。
+-Soul Bonies' blue flame's per hit damage reduced to 20% * player damage.
+-魂骷髅的蓝火伤害的每击伤害降低到20%的玩家伤害。
+-When fighting Rotgut, friendly blood bonies will now keep a certain distance from the dead boss to prevent them from being killed by the boss when player enters its maw.
+-对战腐脏BOSS时，友方血骷髅现在会和死去的一阶段腐脏保持一定距离，防止玩家被吸入时被腐脏杀死。
+-Fixed an issue that the 7th sacrifice of Rod of Remorse will spawn Redemption multiple times in a single run.
+-修复了悔悟棒的第7次献祭会重复出现赎罪的BUG。
+
+8.1.13-2022.2.20
+-Fixed an issue that every character will gain a new heart container after picked up Abaddon.
+-修复了每个人物拿起亚巴顿都会获得一个新的心之容器的BUG。
+
+8.2.0-2022.2.21
+-Added How to Read A Book and Dangos.
+-加入了如何阅读一本书和团子。
+-Ghost Anchor now has +0.3 speed.
+-幽灵船锚现在+0.3速度。
+
+8.3.0-2022.2.22
+-Added Sake of Forgotten.
+-加入了遗忘清酒。
+-Resprited some items.
+-重绘了部分道具图标。
+-Tainted Satori's crush damage formula has been changed, now deals less damage when player has high damage.
+-堕化觉的碾压伤害公式改变，现在在高伤害时造成的伤害更低了。
+-Tainted Satori now leaves a squashed monster image after crushed a enemy without death animation and kills it.
+-堕化觉在碾压没有死亡动画的怪物致死时，现在会留下一个被压扁的怪物。
+-Fixed an issue that UFO's collecting pedestal collectibles' velocity will be reset after switched by Tainted Isaac or Glitched Crown.
+-修复了UFO收集中的底座道具的速度会在被腐化以撒或者错误王冠切换后重置的BUG。
+
+8.4.0-2022.2.23
+-Added Wolf Eye.
+-加入了狼眼。
+
+8.4.1-2022.2.24
+-Sake of Forgotten now can only spawn sake bottle in odd floors or chapters which has not second floor.
+-遗忘清酒现在只会在单数层或者没有第二层的层生成酒瓶。
+-Sake of Forgotten now provides Curse of Labyrinth, Maze and Lost instead.
+-遗忘清酒提供的诅咒变为了迷宫诅咒、混乱诅咒和迷途诅咒。
+-Updated soulstones announcer voice.
+-更新了魂石的语音。
+
+8.5.0-2022.2.25
+-Added Escape.
+-加入了逃跑。
+-Sake Bottle will no longer collide with players.
+-清酒瓶现在不再会挤开玩家。
+-Fixed an issue that player become half heart container after transformed all heart container to other hearts.
+-修复了腐化璎花会在转化所有心之容器之后变为半血上限的BUG。
+
+8.6.0-2022.2.25
+-Added Sunny Fairy, Lunar Fairy and Star Fairy.
+-加入了太阳妖精、月亮妖精和星星妖精。
+-Fixed an issue that Escape will not trigger if player has multiple holy mantle items.
+-修复了角色在拥有多个神圣斗篷的情况下，逃跑不会触发的BUG。
+
+8.7.0-2022.2.26
+-Added Miracle Mallet Replica.
+-加入了万宝槌仿制品。
+
+8.8.0-2022.3.1
+-Added Rebel Mecha Caller.
+-加入了反狱机甲呼叫机。
+
+8.8.1-2022.3.1
+-Player will no longer break holy mantle while inside Mecha.
+-玩家在机甲中时，斗篷不再碎裂。
+
+8.8.2-2022.3.2
+-Mecha now will no longer get debuffed.
+-机甲现在不再会中负面效果。
+-Fixed an issue that mecha's death explosion cannot damage player inside it.
+-修复了机甲的爆炸无法伤害其中的玩家的BUG。
+
+8.8.3-2022.3.2
+-Fried Tofu now will correctly reduce 0.03 speed while player has Binge Eater.
+-油炸豆腐现在在角色拥有大胃王时会正确地减少0.03移速。
+-Fixed an issue that Tainted Forgotten's Soul cannot enter mecha correctly while holding Tainted Forgotten,
+-修复了腐化遗骸的灵魂在举起遗骸时，无法正确进入机甲的BUG。
+
+8.8.4-2022.3.2
+-Added a super secret room Layout, a bad shop layout and a greed mode super secret room layout.
+-加入了一个超级隐藏房布局，一个坏商店布局和一个贪婪模式超级隐藏房布局。
+
+8.9.0-2022.3.3
+-Added Geographic Chain.
+-加入了山海铁链。
+-Added more room layouts.
+-加入了更多房间布局。
+
+8.9.1-2022.3.4
+-Fixed an issue that game crashes after enter Exchange or Dream World.
+-修复了在进入交易所或者梦境世界时，游戏崩溃的BUG。
+
+8.10.0-2022.3.4
+-Added Lunatic Gun.
+-加入了月狂之枪。
+
+8.10.1-2022.3.4
+-Fixed an issue that loading will fail if player has Encyclopedia mod.
+-修复了在拥有Encyclopedia Mod时加载会失败的BUG。
+
+8.11.0-2022.3.6
+-Added Carnival Hat.
+-加入了狂欢帽。
+
+8.12.0-2022.3.10
+-Added Keystone.
+-加入了要石。
+
+8.13.0-2022.3.14
+-Added Angel's Raiment and Holy Thunder.
+-加入了天之羽衣和圣雷。
+
+8.14.0-2022.3.20
+-Added Onbashira and Young Native God.
+-Resprited Holy Thunder.
+-重绘了圣雷的图标。
+-Holy Thunder now is compatible with most of player's attacks.
+-圣雷现在兼容大部分玩家的攻击。
+-Saucer Remote's max charges increased to 6 from 4.
+-飞碟遥控器的充能数从4提升到6。
+-Added Angel's Raiment into Ultra Secret.
+-将天之羽衣加入了究极隐藏房。
+-Fixed an issue that D2147483647 will not display collectibles' icons when use at the first time.
+-修复了2147483647面骰在初次使用时不显示道具图标的BUG。
+-Fixed an issue that D2147483647 can transform into active collectible while has 1 charge during Lunatic Mode.
+-修复了疯狂模式下，2147483647面骰可以在拥有一充能时变形主动道具的BUG。
+
+8.15.0-2022.3.23
+-Added Geomantic Detector.
+-加入了风水探测器。
+-The land location of projectiles fired by Necrospyder is fixed now.
+-尸变蛛的子弹落点现在固定。
+
+8.15.1-2022.3.23
+-Fixed an issue that Geomantic Detector's small icon is not correct.
+-修复了风水探测器的小图标不正确的BUG。
+
+8.15.2-2022.3.24
+-Grimorie of Patchuli now will display a counter for elements player gained.
+-帕秋莉的魔导书现在会显示一个计数器，表示玩家获得的元素数量。
+-Peerless Elixir's item pool weight now become 0.5.
+-无双之药的道具池权重现在变为0.5。
+-The number of traders in a region of exchange has been reduced to 6 from 10.
+-交易所内每个区域中交易者的数量从10降低到6。
+-Carnival Hat now is quality 0, and has been removed from Devil Room.
+-狂欢帽现在品质为0，并且被移除出恶魔房道具池。
+
+8.16.0-2022.3.25
+-Added Dancer Servants and Back Door.
+-加入了狂舞童子和背后之门。
+-Added Rune Cape, Miracle Mallet Replica, Rebel Mecha Caller, Lunatic Gun, Carnival Hat and Geomantic Detector into Crane Game item pool.
+-将符文披风、万宝槌仿制品、反狱机甲呼叫机、月狂之枪、狂欢帽、风水探测器加入了娃娃机道具池。
+-Carnival Hat now will give player +0.1 damage up after him takes explosion damage.
+-狂欢帽现在会在玩家受到爆炸伤害后+0.1伤害。
+-Carnival Hat's quality is now 2.
+-狂欢帽的品质变为了2。
+-Sunflower Pot's damage to player is now explosion.
+-向日葵盆栽对玩家造成的伤害现在属于爆炸。
+-Fixed an issue that game will be softlocked if player use Joker in exchange.
+-修复了玩家在交易所使用鬼牌会造成游戏死锁的BUG。
+
+8.16.1-2022.3.25
+-Fixed an issue that use some MOD Active item when holding Book of Virtues will crash the game.
+-修复了在拥有美德之书时，使用部分MOD主动会导致游戏崩溃的BUG。
+-Glasses of Knowledge now gives stats based on collectible count instead of collectible kind count.
+-博学眼睛现在改为根据玩家总道具数提升属性。
+
+8.17.0-2022.3.27
+-Added Wild Fury.
+-加入了野性狂暴。
+
+8.17.1-2022.3.28
+-Wild Fury's max charges is now 6.
+-野性狂暴的充能数现在为6。
+
+8.17.2-2022.3.29
+-Decorated EID's item descriptions.
+-美化了EID的物品说明。
+-Soul Magatama is now 2 charges.
+-灵魂勾玉现在为2充能。
+-Carnival Hat's quality is now 1.
+-狂欢帽的品质变为了1。
+-Delusion Pipe's quality is now 1.
+-迷幻烟管的品质变为了1。
+-Fixed an issue that Jeweled Branch will aim Rebel Mecha.
+-修复了蓬莱玉枝会瞄准反狱机甲的BUG。
+-Fixed an issue that frozen enemies will damage Rebel Mecha.
+-修复了冰冻的敌人会砸伤反狱机甲的BUG。
+
+8.18.0-2022.4.2
+-Added Guppy's Corpse Cart.
+-加入了嗝屁猫的尸体推车。
+-Corrected Buddha's Bowl's chinese name.
+-将佛御钵之石的中文名更正为佛御石之钵。
+-Reduced Wild Fury's roar damage to 76 from 200, to fit Larynx's damage.
+-将野性狂暴的吼叫伤害从200降低到了76，以符合声带的伤害。
+-Added fixed collectible pairs of Starter Deck - Little Baggy, Miracle Mallet - Miracle Mallet Replica and Wolf Eye - Wild Fury for D Flip.
+-为镜像骰子添加了新手牌组-小药袋、万宝槌-伪造的万宝槌和狼眼-野性狂暴的固定组合。
+
+8.18.1-2022.4.3
+-Added Challenge "Pure Purist" and "Photo Exam".
+-加入了挑战“纯粹的纯粹主义者”和“摄影考试”。
+-Increased Eika's tears multiplier to 100% from 60%.
+-将表璎花的射速倍率从60%提升到100%。
+-Eika now can use Active Item or pocket items while stacking.
+-现在表樱花可以在叠石头时使用主动或口袋物品。
+
+8.19.0-2022.4.4
+-Added Card "A Small Stone" and "Spirit Mirror".
+-加入了卡牌“小石块”和“精神之镜”。
+-All mod boss can now work correctly during friendly state.
+-现在所有MOD boss的友方状态都能正常工作。
+
+8.20.0-2022.4.4
+-Added Bucket of Wisps.
+-加入了鬼火桶。
+
+8.20.1-2022.4.7
+-Roukanken will no longer set tears into 0, and will increase slash speed based on tears.
+-楼观剑现在不再将射速变为0，且现在会根据射速增加挥刀速度。
+-Dream Catcher now will make Doremy's Dream catcher spell card not fires projectiles.
+-捕梦网现在会让哆来咪的捕梦网符卡不再发射子弹。
+-Added announcer voice for Spirit Mirror.
+-为精神之镜添加了卡牌语音。
+-Improved net-coop experience.
+-改进部分联机体验。
+-Fixed an issue that Isaac's Last Wills can send empty pedstals.
+-修复了以撒的遗书可以把空底座送向下一局的BUG。
+-Fixed an issue that Soul of Judas's passive effect will still triggers after losing Rune Sword.
+-修复了在符文佩剑镶嵌犹大的魂石后，换掉符文佩剑仍会触发犹大魂石效果的BUG。
+
+8.21.0-2022.4.7
+-Added Nimble Fabric.
+-加入了闪避布。
+-Almond Milk can now restore 3 hungers for Hunger.
+-杏仁奶现在为饥饿恢复3点饱食度。
+
+8.21.1-2022.4.8
+-Rebel mecha and mod familiar will now aim at the position of the target when the player has Eye of occult.
+-反狱机甲和MOD跟班现在会在玩家拥有玄秘魔眼时瞄准准星的位置。
+-Technology 666 will no longer aim at Epic Fetus's target.
+-科技666现在不再瞄准史诗胎儿博士的准星。
+-After entering rebel mecha, the glow layer of the character (such as Holy Mantle or Immaculate Heart) will be hidden.
+-进入反狱机甲后，角色身上的光芒图层（如神圣斗篷、无瑕圣心）会被隐藏。
+
+8.21.2-2022.4.9
+-Rebel Mecha Caller's weight in all item pools has been reduced to 0.5.
+-反狱机甲呼叫机在所有道具池中的权重变为0.5。
+-Shanghai Doll, Leaf Shield, Hekate, Back Door and Rebel Mecha Caller now lose Offensive tag.
+-上海人偶、飞叶护盾、权神星、背后之门、反狱机甲呼叫机失去了进攻性标签。
+-Warping Hairpin and D2147483647 now gain Offensive tag.
+-穿墙发簪、2147483647面骰获得了进攻性标签。
+-Fixed an issue that some invalid enemies will give souls to Bucket of Wisps. 
+-修复了一些无效的敌人会给鬼火桶灵魂的BUG。
+-Fixed an issue that Nimble Fabric's Charge bar cannot be shown correctly when in flooded rooms. 
+-修复了闪避布的充能条无法在淹没的房间内显示的BUG。
+
+8.22.0-2022.4.9
+-Added Unzan.
+-加入了云山。
+-Fixed an issue that rebel mecha will not aim mouse position correctly when mouse control enabled.
+-修复了反狱机甲会在鼠标控制启用时不正确瞄准鼠标位置的BUG。
+
+8.22.1-2022.4.10
+-Added Pill of Ultramarine Orb.
+-加入了绀珠药丸。
+-Unzan's damage is now (5 * currentFloor).
+-云山的伤害现在为（5*当前层数）。
+-Unzan now works correctly in Greed Mode.
+-云山现在会在贪婪模式中正常生效。
+-Found Soul will no longer trigger mod revive effect.
+-失而复得的灵魂不再触发MOD复活效果。
+
+8.23.0-2022.4.12
+-Added Carving Tools.
+-加入了雕刻工具。
+
+8.23.1-2022.4.13
+-Optimized Haniwa's path finding.
+-优化了埴轮的寻路。
+
+8.23.2-2022.4.14
+-Rebel Mecha Caller's max charges is now 12 and  quality is now 3.
+-反狱机甲呼叫机的最大充能数现在为12，品质现在为3。
+-Isaac's Last Wills now can send pickups in the room to next run, and quality is now 3.
+-以撒的遗书现在可以将本房间内的基础掉落送向下一局，现在品质为3。
+-Increased Hunger's movement hunger cost to 1 hunger per 40 seconds from 1 hunger per 66 seconds.
+-饥饿的移动饱食度消耗提升，从66秒1饱食度提升到40秒1饱食度。
+-Hunger is no longer nerfed in Lunatic Mode.
+-饥饿的在疯狂模式不再被削弱。
+-Lengthened the animation duration of Book of Years.
+-延长了岁月史书使用动画的时长。
+-Player now will lose shields like Book of Shadows when becomes ash pile by using Ash of Pheonix.
+-变为不死鸟灰烬时，现在会失去所有类似影之书的护盾。
+
+8.23.3-2022.4.15
+-Rebel Mecha Caller now has Offensive tag.
+-反狱机甲呼叫机现在具有攻击性标签。
+-Fixed an issue that Benediction will have wrong interaction with Bethany or Tainted Bethany.
+-修复了祈愿现在与伯大尼或者堕化伯大尼拥有错误互动的问题。
+
+8.23.4-2022.4.15
+-Fixed an issue that Using Rune Sword will cause some character's pocket active item disappear.
+-修复了使用符文佩剑会导致部分角色的副主动消失的BUG。
+-Added compatibility for vanilla character's damage multiplier.
+-增加了对原版人物伤害倍率的兼容。
+
+8.23.5-2022.4.18
+-Optimized network co-op experience.
+-优化了联机多人模式的体验。
+-Modified the formula of damage calculating, now the result is more precise.
+-修改了玩家伤害的计算公式，现在会更准确地对伤害进行计算。
+
+8.23.6-2022.4.20
+-Fixed an issue that can pick up empty items in Yamawaro's Crate.
+-修复了可以在山童的木箱中拿起空道具的BUG。
+-Fixed an issue that chests generated by Rod of Remorse has a greater chance of becoming a special chest.
+-修复了悔悟棒生成的箱子有更大的几率变为特殊箱子的BUG。
+-Fixed an issue  that Isaac's Last Wills couldn't send collectibles to the next game.
+-修复了以撒的遗书无法将道具送向下一局的BUG。
+
+8.23.7-2022.4.22
+-Canceled Melancholic Violin's tears limit of 10.
+-取消了忧郁提琴最多10点射速的限制。
+-Modified the formula of tears. Now mod items can give player up to 2 additional tears, and will be affected by the tears multiplier.
+-修改了射速的公式。现在MOD道具可以给予玩家最多2点额外射速，并且会受到射速倍率的影响。
+-Fixed an issue that fractional luck will make some effects baseed on luck not trigger.
+-修复了小数幸运会导致部分基于幸运的效果不会触发的BUG。
+
+9.0.0-2022.4.30
+-Added Reverie Music.
+-加入了幻想曲乐谱。
+-Benediction and Spring of Daiyousei's quality has been reduced to 3 from 4.
+-祈愿和大妖精之泉的品质从4降低为3。
+-Yamawaro's Crate now no longer includes Latch Key.
+-山童的木箱现在不再内含弹簧锁钥匙。
+-Fixed an issue that LV 3 Devil Bony's brimstone ball will damage other friendly monsters.
+-修复了3级恶魔骷髅仔的硫磺火球会伤害其他友方怪物的BUG。
+-Fixed an issue that the boss door of devilcrow will cause the lost soul to contact the boss and lead to its death.
+-修复了恶魔鸦的BOSS房门在上方会导致迷失游魂接触BOSS，从而导致其死亡的BUG。
+-Fixed an issue that Unzan displayed at the wrong position in big rooms.
+-修复了云山在大房间内显示位置不正确的BUG。
+
+
+9.0.1-2022.4.30
+-Pitch of the music playing at Reverie Boss Fight will no longer be changed.
+-幻想曲战斗中播放的音乐音调现在不再能被更改。
+-Reverie's background notes will now no longer take any damage.
+-幻想曲的音符现在不再会在处在背景时受到任何伤害。
+-Updated support for Enhanced Boss Bars Mod.
+-更新了该MOD对于Enhanced Boss Bars MOD的支持。
+
+9.0.2-2022.4.30
+-Spirit Mirror no longer works on Reverie fight.
+-精神之镜不再对幻想曲BOSS起效。
+-Fixed an issue that friendly enemies cannot contact with other enemies.
+-修复了友方怪物无法接触其他怪物的BUG。
+-Fixed an issue that Hecatia Note's moons can be friendly.
+-修复了赫卡提亚音符的月球可以成为友方的BUG。
+
+9.0.3-2022.4.30
+-Reverie boss room's item pool has become I AM Error room pool.
+-幻想曲BOSS房间的道具池变为了错误房的道具池。
+-Modified the effect of Pill of Ultramarine Orb.
+-修改了绀珠药丸的效果。
+-Added voice announcer for Pill of Ultramarine Orb.
+-为绀珠药丸添加了配音。
+-Reverie Music now won't spawn only one Music Box every run.
+-幻想曲八音盒现在不再每局只生成一个。
+-Fixed an issue that Lachryphagy has bad synergies with Eika.
+-修复了璎花与食泪症兼容极差的BUG。
+-Fixed an issue that Reverie Music will not spawn during Curse of Labyrinth.
+-修复了迷宫诅咒下不会生成幻想曲乐谱的BUG。
+
+9.0.4-2022.5.3
+-Fixed an issue that Rebel Mecha will collide with friendly monsters.
+-修复了反狱机甲会与友方怪物碰撞的BUG。
+-Fixed an issue that Reverie would touch and damage player after finished the opening animation.
+-修复了幻想曲会在入场动画完成后的瞬间触碰并伤害角色的BUG。
+
+9.0.5-2022.5.4
+-Buddha's Bowl now supports Jupiter's costume.
+-佛御石之钵现在支持木星的外观。
+-Fixed an issue that exit and continue a game while driving a Rebel mecha will make player invisible.
+-修复了在驾驶反狱机甲重新进出游戏后角色会隐形的BUG。
+-Fixed an issue that skip the opening animation before Doremy fight with Jacob & Esau will spawn 2 Doremy.
+-修复了在哆来咪战前使用雅各和以扫跳过开场动画会导致生成两个哆来咪的BUG。
+
+9.0.6-2022.5.7
+-Shop items from Tengu Cellphone while in Dice room now includes D1 and D infinity.
+-天狗手机的骰子房货品现在包括一面骰和无限面骰。
+
+9.1.0-2022.5.15
+-Added Gambling D6.
+-加入了赌博六面骰。
+
+9.1.1-2022.5.17
+-Fixed an issue that Bishamonten's Pagota will transform opened chests into golden chests.
+-修复了毗沙门天的宝塔会将打开的箱子转换为金箱子的BUG。
+-Fixed an issue that some rerolls will make the rerolled items touched. 
+-修复了部分道具重置会导致被重置的道具被摸过的BUG。
+-Fixed an issue that Boss Challenge Room's item pool is Treasure Room.
+-修复了BOSS挑战房的道具池是宝箱房道具池的BUG。
+
+9.1.2-2022.5.19
+-Fixed an issue that Eika will cause issues while has Mom's Knife.
+-修复了璎花配合妈妈的菜刀会出现错误的Bug。
+
+10.0.0-2022.5.27
+-Added Seija.
+-加入了正邪。
+-D Flip now will always try to pair collectibles which has symmetrical qualities with 2 as the center.
+-镜像骰子现在总会尝试将道具的品质以2为对称中心配对。
+
+10.0.1-2022.5.28
+-Seija's Strange Attactor tears now scales the shocking radius to the triple when in rooms with water.
+-现在正邪的怪异磁铁会在有水的房间内将电击范围扩大至3倍。
+-Fixed an issue that mechanisms using D6 like restock machines will also remove collectibles while using Seija.
+-修复了在使用正邪时，刷新机等会触发六面骰效果的机制也会导致道具消失的BUG。
+
+10.0.2-2022.5.28
+-Fixed an issue that The Abandoned's room layouts may not sync while playing net co-op. 
+-修复了在网络多人模式下，遗忘伞的房间布局不同步的BUG。
+
+10.0.3-2022.5.28
+-Added Seija's controls texture.
+-添加了正邪的操作说明贴图。
+-Fixed an issue that Use glitched active items will transform them into D2147483647.
+-修复了在使用主动错误道具时将其变为2147483647面骰的BUG。
+-Fixed an issue that D Flip of Seija will be fully charged after continued the game.
+-修复了正邪重新进入游戏后会为镜像骰子重新充能的BUG。
+
+10.0.4-2022.5.28
+-Fixed an issue that continue a game as Seija after restart the game will cause game crash.
+-修复了正邪在重启游戏后继续游戏会导致游戏崩溃的BUG。
+
+10.0.5-2022.5.28
+-Updated Seija's character descriptions.
+-更新关于正邪的人物描述。
+
+10.0.6-2022.5.29
+-Items rerolled by D Flip now will be not touched.
+-被镜像骰子重置的道具现在不再属于被角色摸过的道具。
+
+10.1.0-2022.5.31
+-Added Tainted Seija and D Siphon.
+-加入了堕化正邪和虹吸骰子。
+-D Flip now will reroll D Flip into D Siphon.
+-镜像骰子现在会将镜像骰子变为虹吸骰子。
+-Added Seija nerf for Psy Fly.
+-加入了正邪对灵能苍蝇的削弱。
+-Seija's Portable Slot now has 50% chance to not give a penny.
+-正邪的便携式老虎机现在有50%的几率不给予钱币。
+-Fixed an issue that Seija's Teleport! will teleport to the wrong position while in floors without treasure rooms.
+-修复了正邪的传送！在没有宝箱房的层会传送至错误位置的BUG。
+
+10.1.1-2022.5.31
+-Tainted Seija now can only meet quality 2 items.
+-堕化正邪现在改为只能遇到2级道具。
+-Seija's Dataminer's stats up is now halved.
+-正邪的数据破解加成减半。
+-Fixed an issue that Seija's Cursed Penny also has the effect of Teleport!.
+-修复了正邪的诅咒硬币也会有传送！的效果的BUG。
+-Fixed an issue that Seija's Infestation 2 will spawn a new strider after killed a strider.
+-修复了正邪的害虫横行II击杀水蜘蛛会不停生成水蜘蛛的BUG。
+-Keystone is quality 2 from quality 3.
+*要石从品质3变为品质2。
+-Soul Magatama is quality 2 from quality 3.
+*灵魂勾玉从品质3变为品质2。
+-Gourd-Shroom is quality 3 from quality 2.
+*葫芦菇从品质2变为品质3。
+-Continue? is quality 1 from quality 2.
+*继续？从品质2变为品质1。
+
+10.1.2-2022.6.1
+-Dark Ribbon is now not in Curse Room item pool.
+-黑暗缎带现在不属于诅咒房道具池。
+-Maid Suit's dropping rate of The World has reduced to 10% + 5% per room cleared from 20% + 20% per room cleared.
+-女仆装的世界卡掉落率从20%+每清理房间20%降低到10%+每清理房间5%。
+-Void Hands created by Ethereal Arm can only transform 1 pocket item during Lunatic Mode.
+-虚无断臂的虚空之手现在在疯狂模式只能变形一个口袋物品。
+-D Siphon's reverse thresold is now 4 from 3, max charges is now 2 from 3.
+-虹吸骰子的反转阈值从3个计数提升至4个，充能从3降低至2。
+-D Siphon's reverse effect now will cost 1 counter for each pedestal item, instead of cost 3 for all items.
+-虹吸骰子的反转效果现在会为每个道具-1计数，而不是为所有道具-3计数。
+-Added use animation for D Siphon.
+-为虹吸骰子加入了使用特效。
+
+10.2.0-2022.6.6
+-Updated the icon sprite for Psyche Eye.
+-更新了精神眼的贴图。
+-Unzan now only fire fists on both sides of the player, and the firerate has been changed to once every 2 seconds.
+-云山现在只在玩家两侧生成拳头，且攻速变为2秒一次。
+-Unzan's fists will collide in the center, causing crushing damage.
+-云山的拳头会在中心相撞，造成挤压伤害。
+-The damage multiplier of technology 666 has been reduced from 25% to 15%.
+-科技666的伤害倍率从25%降低至15%。
+-Tainted Seija will now not get multiple same collectibles from item pools like library.
+-堕化正邪现在不会在类似图书馆的道具池连续出很多个一样的道具。
+-The charges of D Flip has been increased from 3 to 6.
+-镜像骰子的充能从3提升至6。
+-The charges of D Siphon is increased from 2 to 3.
+-虹吸骰子的充能从2提升至3。
+-Psyche eye has been changed to controlling enemies nearby by charging for 2.5 seconds, instead of by firing tears.
+-精神眼从发射眼泪控制怪物改为蓄力2.5秒控制眼睛周围的敌人。
+-Now players can use Psyche Eye to release mind blast to kill friendly monsters by pressing the drop key + shoot key.
+-现在可以通过按住丢弃键+射击键使用精神眼释放心灵震爆击杀友方小怪。
+-Satori's birthright effect has been changed to "double the stats up given by mind blast".
+-觉的射速倍率从125%降低至80%。
+-Satori's tears multiplier was reduced from 125% to 80%.
+-觉的长子名分效果改为“心灵震爆给予的属性加成翻倍”。
+-Tainted satori is now only invincible when charging towards monsters.
+-堕化觉现在只在冲向怪物时无敌。
+-The weight of super secret room with a Rebecha inside it is reduced to 0.5, and the number of keys required is reduced by 1.
+-反狱机甲的超级隐藏房的权重降低至0.5，并且所需的钥匙数量减少了1把。
+-Bishamonten's pagota's weight in shops was reduced to 0.5.
+-毗沙门天的宝塔在商店中的权重降低至0.5。
+
+10.2.1-2022.6.7
+-Fixed a small issue during Doremy battle.
+-修复了哆来咪战中的一个小BUG。
+
+10.2.2-2022.6.8
+-Fixed an issue that Tainted Seija can meet collectibles which is not quality 2.
+-修复了堕化正邪会遇见品质不为2的道具的BUG。
+
+10.2.3-2022.6.9
+-Fixed a small issue during Doremy battle.
+-修复了哆来咪战中的一个小BUG。
+
+10.2.4-2022.6.10
+-Satori now gets stats up when controlled enemy, and gains temporary giant stats up after killed friendly monsters.
+-觉现在改为在控制敌人后会获得属性提升，并且在击杀友方小怪之后获得暂时的巨大属性提升。
+
+
+10.3.0-2022.6.13
+-Added Soul of Seija and Situation Twist.
+-加入了正邪的魂石和形势反转。
+-Seija's Holy Light damage has been increased to 33% player damage from 1.
+-正邪的圣光伤害从1点提升到33%玩家伤害。
+-Reverie Music now will no longer spawn in Greed Mode.
+-幻想曲乐谱现在不会在贪婪模式生成。
+-Yamawaro's Crate now can only destroy collectibles instead of drop them.
+-山童的木箱现在只能销毁道具，而不是丢弃道具。
+-Wild Fury's temporary stats up now becomes 150% instead of 200%.
+-野性狂暴的临时属性提升从200%降低至150%。
+-Ethereal Arm's Void Hand now can only transform 1 pocket item at a time.
+-虚无断臂的虚空之手现在一次只能转换一个口袋物品。
+-The weight of shop layout with both Donation Machine and Restock Machine inside it has been reduced into 0.5.
+-具有捐款机和补货机的商店布局现在权重为0.5。
+-Fixed an issue that Libra cannot balance speed over 2.0.
+-修复了天秤座无法平衡超过2.0的移速的BUG。
+-Fixed an issue that Guppy's Corpse Cart has damage cooldown after crush enemy.
+-修复了嗝屁猫的尸体推车撞人后会有无敌时间的BUG。
+
+
+10.3.1-2022.6.13
+-Yamawaro's Crate now can reduce items and trinkets into pickups instead of destroy them.
+-山童的木箱现在可以将道具和饰品拆成基础掉落，而不是销毁道具。
+
+10.3.2-2022.6.15
+-Added synergy for Soul of Seija and Rune Sword.
+-添加了正邪的魂石与符文佩剑的组合。
+-Rune Sword now no longer inserts the rune immediately when used with Car Battery, it will spawn 2 runes instead.
+-符文佩剑现在在有车载电池的情况下不再会立即镶嵌获得的符文，改为生成两个符文。
+-Canceled Rune Sword's Lunatic mode nerf.
+-取消了符文佩剑的疯狂模式削弱。
+
+10.3.3-2022.6.15
+-Fixed the formula of tears up.
+-修正了射速上升的公式。
+
+10.3.4-2022.6.15
+-Soul of Seija now has synergy with D Flip and itself.
+-正邪的魂石现在与镜像骰子及其自身具有配合。
+-Changed the voice of Soul of Seija.
+-修改了正邪的魂石的语音。
+
+10.3.5-2022.6.18
+-Fixed an issue that Seija's Twisted Pair will reduce damage twice.
+-修复了正邪的作孽双子会降低伤害2次的BUG。
+-Fixed an issue that Seija's Pyromaniac doesn't work properly.
+-修复了正邪的纵火狂工作不正常的BUG。
+
+10.3.6-2022.6.19
+-Broken Amulet now has synergies with Ludovico Technique.
+-破碎的护身符现在与鲁多维科科技具有联动效果。
+-Fixed an issue that using cards or pills during net-coop with different announcer settings will make game desynced.
+-修复了联机玩家具有不同卡牌语音设置时，使用卡牌或药丸会导致游戏不同步的BUG。
+
+10.3.7-2022.6.19
+-Fixed an issue that Seija's Brimstone + Technology will not be nerfed.
+-修复了正邪的硫磺火+科技不会被削弱的BUG。
+
+10.3.8-2022.6.19
+-Seija's Razor Blade now gives player √(UseTime + 1) damage multiplier instead of 2 ^ UseTime.
+-正邪的剃刀片现在会给予角色√(使用次数 + 1)的伤害倍率，而不是2^使用次数。
+
+10.3.9-2022.6.20
+-Fixed an issue that Seija's Clicker will not spawn quality 4 item.
+-修复了正邪的遥控器不会生成品质4道具的BUG。
+
+10.4.0-2022.6.22
+-Doremy now has 1230 shield, instead a huge damage limit.
+-哆来咪现在有1230点的护甲，而不再限制伤害。
+-Seija's Bum Friend now has only 50% chance to spawn collectibles.
+-正邪的乞丐朋友现在只有50%的概率生成道具。
+
+10.4.1-2022.6.26
+-Seija's Pageant Boy's coin convert chance has been halved.
+-正邪的盛装男孩的钱币转化几率减半。
+
+10.4.2-2022.6.30
+-Wild Fury is now quality 4, and will be nerfed by Seija.
+-野性狂暴现在品质为4，并且会被正邪削弱。
+-Fixed an issue that Reverie Music will spawn music box when It lives in the Void is defeated.
+-修复了幻想曲乐谱会在虚空层击杀“它还活着”后变为音乐盒的BUG。
+
+
+-Changed the quote of Zombie Infestation into "Biohazard" from "Resident Evil".
+-将僵尸感染的描述从“内在邪恶”改为“生化危机”。

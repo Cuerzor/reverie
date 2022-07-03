@@ -1,4 +1,5 @@
 local Revive = CuerLib.Revive;
+local Players = CuerLib.Players;
 
 local ContinueArcade = ModItem("Continue?", "ContinueArcade");
 
@@ -21,6 +22,8 @@ function ContinueArcade.SpawnDroppedCoin(rng, path, position, spawner, sprPath)
     spr:Play("Appear");
 end
 
+
+---@type ReviveCallback
 local function PostRevive(player, reviver)
     player:AnimateCollectible(ContinueArcade.Item, "UseItem")
 
@@ -62,7 +65,7 @@ local function PostRevive(player, reviver)
     playerType == PlayerType.PLAYER_BETHANY_B or playerType == PlayerType.PLAYER_THEFORGOTTEN_B or 
     playerType == PlayerType.PLAYER_THESOUL) then
         local currentHeart = player:GetSoulHearts();
-        player:AddSoulHearts(6 - currentHeart);
+        Players:AddRawSoulHearts(player, 6 - currentHeart);
     elseif (playerType == PlayerType.PLAYER_JUDAS_B or playerType == PlayerType.PLAYER_BLACKJUDAS) then
         local currentHeart = player:GetSoulHearts();
         player:AddBlackHearts(4 - currentHeart);
@@ -77,24 +80,30 @@ local function PostRevive(player, reviver)
     end
 end
 
-local function CanRevive(player)
+local function PreRevive(mod, player)
     if (player:HasCollectible(ContinueArcade.Item)) then
         local cost = 3;
         local data = ContinueArcade.GetPlayerData(player, false);
         if (data) then
             cost = data.ReviveCost or 3;
         end
-        return player:GetNumCoins() >= cost;
+        if (player:GetNumCoins() >= cost) then
+            return {
+                BeforeVanilla = false,
+                Callback = PostRevive
+            }
+        end
     end
 end
+ContinueArcade:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, PreRevive);
 
-Revive.AddReviveInfo(false, nil, nil, CanRevive, PostRevive)
+--Revive.AddReviveInfo(false, nil, nil, CanRevive, PostRevive)
 
 -- function ContinueArcade:PostGainContinue(player, item, count, touched)
 --     if (not touched) then
 --         player:AddCoins(3);
 --     end
 -- end
--- ContinueArcade:AddCustomCallback(CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, ContinueArcade.PostGainContinue, ContinueArcade.Item);
+-- ContinueArcade:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, ContinueArcade.PostGainContinue, ContinueArcade.Item);
 
 return ContinueArcade;

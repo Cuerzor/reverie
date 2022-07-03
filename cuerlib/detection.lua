@@ -1,8 +1,6 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 
-local Detection = {
-
-}
+local Detection = Lib:NewClass();
 
 function Detection.IsValidEnemy(entity, includeNoTarget)
     local valid =  entity:IsVulnerableEnemy() and not entity:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)
@@ -173,6 +171,11 @@ do
         if (pos1:Distance(pos2) > size1 + size2) then
             return false;
         end
+
+        if (math.abs(sizeMulti1.X - sizeMulti1.Y) <= 0.01 and math.abs(sizeMulti2.X - sizeMulti2.Y) <= 0.01) then
+            return true;
+        end
+
         local startA, endA, axeA, radiusA, verticalA = GetEntityCollideInfo(pos1, size1, sizeMulti1);
         local startB, endB, axeB, radiusB, verticalB = GetEntityCollideInfo(pos2, size2, sizeMulti2);
         return CheckCapsuleCollide(startA, endA, axeA, verticalA, radiusA, startB, endB, axeB, verticalB, radiusB);
@@ -196,11 +199,8 @@ local function ExecutePrePlayerCollision(mod, player, collider, low)
     for i, info in pairs(Callbacks.Functions.PostPlayerCollision) do
         info.Func(mod, player, collider, low);
     end
-
 end
+Detection:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, ExecutePrePlayerCollision);
 
-function Detection:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, ExecutePrePlayerCollision);
-end
 
 return Detection;

@@ -19,7 +19,7 @@ function RobeOfFirerat.MakeFire(tear)
     fire.CollisionDamage = tear.CollisionDamage * 4;
     fire.Timeout = 100;
     -- tear Scale.
-    fire.Scale = tear.Scale;
+    fire.Scale = math.min(1, tear.Scale);
     fire:SetColor(Color(0,0,0,0,0,0,0), 1, 0, false, false);
     tear:Remove();
 end
@@ -102,7 +102,7 @@ function RobeOfFirerat:PrePlayerTakeDamage(entity, amount, flags, source, countd
         end
     end
 end
-RobeOfFirerat:AddCustomCallback(CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, RobeOfFirerat.PrePlayerTakeDamage, EntityType.ENTITY_PLAYER, 255);
+RobeOfFirerat:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, RobeOfFirerat.PrePlayerTakeDamage, EntityType.ENTITY_PLAYER, 255);
 
 function RobeOfFirerat:PreFireplaceCollision(fireplace, other, low)
     if (fireplace.Variant ~= 4) then

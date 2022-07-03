@@ -1,7 +1,4 @@
-local Rooms = {
-    Cells = {}
-
-}
+local Rooms = _TEMP_CUERLIB.NewClass();
 Rooms.Cells = {
     CELL_TOP_LEFT = 1,
     CELL_TOP_RIGHT = 2,
@@ -63,10 +60,10 @@ function Rooms.GetAdjacentIndexes(index, shape)
     
     local results = {}
     local cells = Rooms.GetShapeCells(shape);
-    local cellPositiones = {};
+    local cellPositions = {};
 
     local function IsIndexInCells(x, y)
-        for _, pos in pairs(cellPositiones) do
+        for _, pos in pairs(cellPositions) do
             if (pos.X == x and pos.Y == y) then
                 return true;
             end
@@ -81,11 +78,11 @@ function Rooms.GetAdjacentIndexes(index, shape)
         if (cell > 0) then
             -- Has this cell.
             local x, y = Rooms.GetCellPosOffset(cell);
-            table.insert(cellPositiones, {X = x, Y = y});
+            table.insert(cellPositions, {X = x, Y = y});
         end
     end
 
-    for _, pos in pairs(cellPositiones) do
+    for _, pos in pairs(cellPositions) do
         -- Loop for each adjacent rooms.
         for dir = 0, 3 do
             local x, y = 1, 0;

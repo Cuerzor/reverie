@@ -1,5 +1,4 @@
-local Bosses = {
-}
+local Bosses = _TEMP_CUERLIB:NewClass();
 
 function Bosses:SetBossConfig(name, config, roomConfigs)
     local names = config.NamePaths;
@@ -16,10 +15,6 @@ function Bosses:SetBossConfig(name, config, roomConfigs)
     for i, stage in pairs(stages) do
         StageAPI.AddBossToBaseFloorPool({BossID = name, Weight = stage.Weight or 1}, stage.Stage, stage.Type, true);
     end
-    
-end
-
-function Bosses:Register(mod)
 end
 
 return Bosses;

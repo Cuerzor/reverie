@@ -3,17 +3,54 @@ local Detection = CuerLib.Detection;
 local Familiars = CuerLib.Familiars;
 local Screen = CuerLib.Screen;
 local Math = CuerLib.Math;
+local Tears = CuerLib.Tears;
 local PsycheEye = ModEntity("Psyche Eye Familiar", "PsycheEye");
-local mindControlColor = Color(1, 0, 1, 1, 0, 0, 0);
-local maxControlCount = 3;
-
-
 local CompareEntity = Detection.CompareEntity;
 local EntityExists = Detection.EntityExists;
 
+PsycheEye.FriendlyLimit = 5;
+PsycheEye.TearColor = Color(1, 0, 1, 1, 0, 0, 0);
 PsycheEye.VesselVariant = Isaac.GetEntityVariantByName("Psyche Eye Vessel");
+PsycheEye.MaxCharge = 75;
+PsycheEye.WaveColor = Color(1,1,1,1,0,0,0);
+PsycheEye.WaveColor:SetColorize(1,0,1,1);
+-- PsycheEye.WaveRange = 60;
 
-function PsycheEye.GetVesselPosition(familiar, player, right)
+local function GetPlayerData(player, init)
+    return PsycheEye:GetData(player, init, function() return {
+        EyeCount = 0,
+        ControlledCount = 0,
+        WaveKills = 0,
+    } end);
+end
+
+local function GetNPCData(npc, init)
+    return PsycheEye:GetTempData(npc, init, function() return {
+        WaveKillPlayer = nil,
+        WaveKillTimeout = -1
+    } end);
+end
+
+local function GetFamiliarTempData(familiar, init)
+    return PsycheEye:GetTempData(familiar, init, function() 
+        
+        local chargeBar = Sprite();
+        chargeBar:Load("gfx/chargebar.anm2", true)
+        chargeBar:Play("Charging");
+        return {
+            Index = 0,
+            VesselLeft = nil,
+            VesselRight = nil,
+            MindBlastCharge = 0,
+            -- MindBlastCooldown = 0,
+            MindControlCharge = 0,
+            ChargeBarSprite = chargeBar;
+        } 
+    end);
+end
+
+
+function PsycheEye:GetVesselPosition(familiar, player, right)
     local player2Fam = familiar.Position - player.Position;
     local angle = -90;
     if (right) then
@@ -23,54 +60,142 @@ function PsycheEye.GetVesselPosition(familiar, player, right)
     return (familiar.Position + familiar.Velocity + player.Velocity + player.Position) / 2 + offset;
 end
 
-function PsycheEye.GetTearData(tear, init)
-    return PsycheEye:GetData(tear, init, function() return {
-        MindControl = false
-    } end);
+PsycheEye.GetPlayerData = GetPlayerData;
+PsycheEye.GetFamiliarTempData = GetFamiliarTempData;
+
+-- Mind Control Tear.
+Tears:RegisterModTearFlag("Mind Control");
+function PsycheEye:AddMindControlTear(tear)
+    local flags = Tears.GetModTearFlags(tear, true);
+    flags:Add(Tears.TearFlags["Mind Control"]);
 end
 
---function PsycheEye.GetNPCData(npc, init)
---    return PsycheEye:GetData(npc, init, function() return {
-        --MindControlled = false
---    } end);
---end
-
-function PsycheEye.GetPlayerData(player, init)
-    return PsycheEye:GetData(player, init, function() return {
-        EyeCount = 0, 
-        ControlledCount = 0
-    } end);
+function PsycheEye:IsMindControlTear(tear)
+    local flags = Tears.GetModTearFlags(tear, false);
+    return flags and flags:Has(Tears.TearFlags["Mind Control"]);
 end
 
-function PsycheEye.GetFamiliarTempData(familiar, init)
-    local data = familiar:GetData();
-    if (init) then
-        if (not data._PSYCHE_EYE) then
-            local sprite = Sprite();
-            sprite:Load(familiar:GetSprite():GetFilename(), true);
-            sprite:Play("Vessel");
-            data._PSYCHE_EYE = {
-                Index = 0,
-                VesselLeft = nil,
-                VesselRight = nil
-            }
+function PsycheEye:IsOverLimit()
+    local friendlyCount = 0;
+    local eyeCount = #Isaac.FindByType(PsycheEye.Type, PsycheEye.Variant);
+    for _, ent in ipairs(Isaac.GetRoomEntities()) do
+        if (ent:IsActiveEnemy() and ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+            friendlyCount = friendlyCount + 1;
+            if (friendlyCount >= PsycheEye.FriendlyLimit * eyeCount) then
+                return true;
+            end
         end
     end
-    return data._PSYCHE_EYE;
+    return false;
+end
+function PsycheEye:UpdateEyeState(familiar)
+    if (PsycheEye:IsOverLimit()) then
+        familiar.State = 1;
+    else
+        familiar.State = 0;
+    end
 end
 
-function PsycheEye.FireTear(familiar, position, velocity)
-    local player = familiar.Player;
-    local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, 1, 0, position, velocity, familiar):ToTear();
-    
-    tear.CollisionDamage = 2.5;
+function PsycheEye:CanControl(entity)
+    if (entity and entity:Exists() and entity:IsActiveEnemy() and entity:CanShutDoors()and not entity:HasEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS) and not entity:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then 
+        local EntityTags = THI.Shared.EntityTags;
+        local isFly = EntityTags:EntityFits(entity, "ConvertToBlueFlies");
+        local isSpider = EntityTags:EntityFits(entity, "ConvertToBlueSpiders");
 
-    Familiars.ApplyTearEffect(player, tear);
-    return tear;
+        return true;
+    end
+    return false;
+end
+
+
+function PsycheEye:ControlEntity(target, source)
+    if (target:IsBoss() or target.Type == EntityType.ENTITY_THE_HAUNT or target.Type == EntityType.ENTITY_EXORCIST) then
+        target:AddCharmed( EntityRef(source), 150);
+    else
+        local EntityTags = THI.Shared.EntityTags;
+        local isFly = EntityTags:EntityFits(target, "ConvertToBlueFlies");
+        local isSpider = EntityTags:EntityFits(target, "ConvertToBlueSpiders");
+        if (isFly) then
+            target:Remove();
+            source:AddBlueFlies (1, target.Position, nil)
+        elseif (isSpider) then
+            target:Remove();
+            source:AddBlueSpider(target.Position)
+        else
+            target:AddCharmed( EntityRef(source), -1);
+        end
+        self:AddControlCount(source, 1);
+
+        THI.SFXManager:Play(THI.Sounds.SOUND_MIND_CONTROL);
+    end
+end
+
+function PsycheEye:SpawnWave(pos, source, range)
+    for i = 1, 3 do
+        local wave = Isaac.Spawn(1000, 151, 10, pos, Vector.Zero, nil):ToEffect();
+        wave:SetColor(PsycheEye.WaveColor, -1, 0)
+        wave.SpriteScale = Vector.Zero;
+        wave.CollisionDamage = 0;
+        wave.State = 1;
+        wave.Scale = 1; 
+        wave.MaxRadius = range / 3;
+        wave.MinRadius = 0;
+        wave.TargetPosition = pos;
+        wave.DepthOffset = 400;
+        wave.LifeSpan = i * 10;
+        wave.Timeout = wave.LifeSpan;
+    end
+end
+
+function PsycheEye:SetControlCount(player, count)
+    local data = GetPlayerData(player, true)
+    data.ControlledCount = count;
+    player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_RANGE)
+    player:EvaluateItems();
+end
+function PsycheEye:GetControlCount(player)
+    local data = GetPlayerData(player, false)
+    return (data and data.ControlledCount) or 0;
+end
+function PsycheEye:AddControlCount(player, count)
+    self:SetControlCount(player, self:GetControlCount(player) + count)
+end
+
+
+function PsycheEye:SetWaveKills(player, count)
+    local data = GetPlayerData(player, true)
+    data.WaveKills = count;
+    player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_RANGE)
+    player:EvaluateItems();
+end
+function PsycheEye:GetWaveKills(player)
+    local data = GetPlayerData(player, false)
+    return (data and data.WaveKills) or 0;
+end
+function PsycheEye:AddWaveKills(player, count)
+    self:SetWaveKills(player, self:GetWaveKills(player) + count)
+end
+function PsycheEye:MarkWaveKill(npc, player)
+    local npcData = GetNPCData(npc, true);
+    npcData.WaveKillTimeout = 2;
+    npcData.WaveKillPlayer = player;
+end
+
+
+function PsycheEye:SetWaveKillDecay(player, count)
+    local data = GetPlayerData(player, true)
+    data.WaveKillDecay = count;
+end
+function PsycheEye:GetWaveKillDecay(player)
+    local data = GetPlayerData(player, false)
+    return (data and data.WaveKillDecay) or 0;
+end
+function PsycheEye:AddWaveKillDecay(player, count)
+    self:SetWaveKillDecay(player, self:GetWaveKillDecay(player) + count)
 end
 
 function PsycheEye.SpawnVessel(familiar, player, right)
-    local pos = PsycheEye.GetVesselPosition(familiar, player, right);
+    local pos = PsycheEye:GetVesselPosition(familiar, player, right);
     local vessel = Isaac.Spawn(EntityType.ENTITY_EFFECT, PsycheEye.VesselVariant, 0, pos, Vector.Zero, familiar);
     vessel.Parent = player;
     vessel.Child = familiar;
@@ -84,30 +209,136 @@ end
 
 function PsycheEye:PostFamiliarUpdate(familiar)
     local player = familiar.Player;
-    local data = PsycheEye.GetFamiliarTempData(familiar, true);
+    local data = GetFamiliarTempData(familiar, true);
     local dir = player:GetFireDirection();
     
     familiar.PositionOffset = Vector(0, -3);
     
     local headDirection = player:GetHeadDirection();
     local facingVector = Consts.DirectionVectors[headDirection + 1];
-    local fireDir = Familiars:GetFireVector(familiar, dir)
-    Familiars:DoFireCooldown(familiar);
-    if (dir ~= Direction.NO_DIRECTION and Familiars:canFire(familiar) and (player == nil or player:IsExtraAnimationFinished())) then
-        
-        familiar.HeadFrameDelay = 15;
-        familiar.FireCooldown = 30;
-        local tear = PsycheEye.FireTear(familiar, familiar.Position, fireDir * 10);
-        local tearData = PsycheEye.GetTearData(tear, true);
-        tearData.MindControl = true;
-        tear:SetColor(mindControlColor, -1, 0, false, false);
+    local controllerIndex = player.ControllerIndex;
+    local holdingDrop = Input.IsActionPressed(ButtonAction.ACTION_DROP, controllerIndex);
+    local shooting = player:GetShootingJoystick():Length() > 0.1 or player:AreOpposingShootDirectionsPressed ( );
+
+    if (not holdingDrop or not shooting) then
+        data.MindBlastCharge = 0;
     end
-    
-    Familiars:AnimationUpdate(familiar, facingVector);
-    
-    local player = familiar.Player;
+    -- if (data.MindBlastCooldown >= 0) then
+    --     data.MindBlastCooldown = data.MindBlastCooldown - 1;
+    -- end
+    if (holdingDrop) then
+        -- if (shooting and data.MindBlastCooldown < 0) then
+        if (shooting) then
+            data.MindBlastCharge = data.MindBlastCharge +1;
+            if (data.MindBlastCharge == 15) then
+                SFXManager():Play(THI.Sounds.SOUND_TOUHOU_CHARGE)
+                local Wave = THI.Effects.SpellCardWave;
+                local wave = Isaac.Spawn(Wave.Type, Wave.Variant, 0, familiar.Position, Vector.Zero, familiar);
+                wave.Parent = familiar;
+                wave:SetColor(Color(1,0,1,1,0,0,0),-1,0);
+            end
+            if (data.MindBlastCharge == 45) then
+                SFXManager():Play(THI.Sounds.SOUND_TOUHOU_CHARGE_RELEASE)
+                Game():ShakeScreen(30);
+                for _, ent in ipairs(Isaac.GetRoomEntities()) do
+                    if (not ent:IsDead() and ent:IsActiveEnemy() and ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and not ent:HasEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)) then
+                        
+                        PsycheEye:MarkWaveKill(ent, player);
+                        ent:Kill();
+                        ent:BloodExplode();
+                        -- if (not ent:IsBoss()) then
+                        --     PsycheEye:MarkFountain(ent);
+                        -- end
+                    else
+                        local distance = ent.Position:Distance(familiar.Position);
+                        if (ent.Type ~= EntityType.ENTITY_PLAYER and ent.Type ~= EntityType.ENTITY_LASER and ent.Type ~= EntityType.ENTITY_EFFECT and  distance <= 240) then
+                            ent:AddVelocity((ent.Position - familiar.Position):Resized((240 - distance) / 240 * 50));
+                        end
+
+                        if (ent:IsActiveEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+                            ent:AddConfusion(EntityRef(familiar), 90);
+                        end
+                    end
+                end
+                -- data.MindBlastCooldown = 90;
+
+                local Wave = THI.Effects.SpellCardWave;
+                for i = 1, 3 do
+                
+                    local wave = Isaac.Spawn(Wave.Type, Wave.Variant, Wave.SubTypes.BURST, familiar.Position, Vector.Zero, familiar);
+                    wave:SetColor(Color(1,0,1,1,0,0,0),-1,0);
+                    wave.SpriteScale = Vector(i, i);
+                end
+            end
+        end
+    end
+
+    -- Update State.
+    if (familiar:IsFrame(15, 0)) then
+        PsycheEye:UpdateEyeState(familiar)
+    end
+
+    -- Charge.
+    local barSpr = data.ChargeBarSprite;
+    if (player:IsExtraAnimationFinished()) then
+        
+        if (not holdingDrop and shooting and familiar.State ~= 1) then
+            if(data.MindControlCharge < PsycheEye.MaxCharge) then
+                data.MindControlCharge = data.MindControlCharge + 1;
+            end
+            local charge = data.MindControlCharge;
+            if(data.MindControlCharge < PsycheEye.MaxCharge) then
+                barSpr:SetFrame("Charging", math.floor(charge / PsycheEye.MaxCharge * 100));
+            else
+                local anim = "Charged";
+                if (not barSpr:IsFinished("StartCharged") and not barSpr:IsPlaying("Charged")) then
+                    anim = "StartCharged"
+                end
+                
+                barSpr:Play(anim);
+            end
+        else
+
+
+            if (not holdingDrop) then
+                
+                if(data.MindControlCharge >= PsycheEye.MaxCharge) then
+                    data.MindControlCharge = 0;
+
+                    local range = player.TearRange / 4;
+                    -- Spawn Wave.
+                    PsycheEye:SpawnWave(familiar.Position, familiar, range);
+                    SFXManager():Play(SoundEffect.SOUND_MAW_OF_VOID);
+                    SFXManager():Play(THI.Sounds.SOUND_MIND_WAVE);
+                    -- Game():ShakeScreen(10);
+
+                    for _, ent in ipairs(Isaac.FindInRadius(familiar.Position, range, EntityPartition.ENEMY)) do
+                        if (ent:IsVulnerableEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+                            PsycheEye:ControlEntity(ent, player);
+                        end
+                    end
+
+                    PsycheEye:UpdateEyeState(familiar);
+                end
+            end
+
+            data.MindControlCharge = 0;
+            barSpr:Play("Disappear");
+        end
+    end
+    barSpr:Update();
+
+    -- Animation.
+    if (holdingDrop or shooting or familiar.State == 1) then 
+        Familiars:PlayShootAnimation(familiar, headDirection);
+    else
+        
+        Familiars:PlayNormalAnimation(familiar, headDirection);
+    end
+
+    -- Position Update.
     if (player) then
-        local playerData = PsycheEye.GetPlayerData(player, false);
+        local playerData = GetPlayerData(player, false);
         local angle = (data.Index - 1) * 15;
         if (playerData) then
             angle = angle - (playerData.EyeCount - 1) * 7.5;
@@ -135,25 +366,46 @@ function PsycheEye:PostFamiliarUpdate(familiar)
 end
 PsycheEye:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, PsycheEye.PostFamiliarUpdate, PsycheEye.Variant)
 
--- function PsycheEye:PostFamiliarRender(familiar, offset)
---     local data = PsycheEye.GetFamiliarTempData(familiar, false);
---     local player = familiar.Player;
---     if (data and player) then
---         local pos = Screen.GetEntityOffsetedRenderPosition(familiar, offset, Vector(0, -6));
---         local playerPos = player.Position;
---         local spr = data.VesselSprite;
---         spr.Rotation = (playerPos - familiar.Position):GetAngleDegrees() + 90;
---         spr:Render(pos)
---     end
--- end
--- PsycheEye:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, PsycheEye.PostFamiliarRender, PsycheEye.Variant)
+
+local function PostPlayerUpdate(mod, player)
+    if (player:IsFrame(14, 0)) then
+        
+        local decay = PsycheEye:GetWaveKillDecay(player);
+        if (decay > 0) then
+            local kills = PsycheEye:GetWaveKills(player);
+            if (kills > 0) then
+                PsycheEye:SetWaveKills(player, math.max(0, kills - decay));
+            else
+                PsycheEye:SetWaveKillDecay(player, 0);
+            end
+        end
+    end
+end
+PsycheEye:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate)
+
+local function PostFamiliarRender(mod, familiar, offset)
+    if (Game():GetRoom():GetRenderMode() ~= RenderMode.RENDER_WATER_REFLECT) then
+        local data = GetFamiliarTempData(familiar, false);
+        if (data) then
+            local barSpr = data.ChargeBarSprite;
+            local charge = (data and data.MindControlCharge) or 0;
+            local xOffset = 24;
+            if (familiar.Position.X < familiar.Player.Position.X and math.abs(familiar.Position.Y- familiar.Player.Position.Y) < 16) then
+                xOffset = - xOffset;
+            end
+            local pos = Screen.GetEntityOffsetedRenderPosition(familiar, offset, familiar.PositionOffset + Vector(xOffset * familiar.SpriteScale.X, -24 * familiar.SpriteScale.Y));
+            barSpr:Render(pos, Vector.Zero, Vector.Zero);
+        end
+    end
+end
+PsycheEye:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, PostFamiliarRender, PsycheEye.Variant)
 
 
-function PsycheEye:PostVesselUpdate(effect)
+local function PostVesselUpdate(mod, effect)
     local parent = effect.Parent;
     local child = effect.Child;
     if (parent and child) then
-        local pos = PsycheEye.GetVesselPosition(child, parent, not effect.FlipX);
+        local pos = PsycheEye:GetVesselPosition(child, parent, not effect.FlipX);
         effect.PositionOffset = Vector(0, -15);
         effect.DepthOffset = -3;
         effect.Friction = 1;
@@ -167,74 +419,48 @@ function PsycheEye:PostVesselUpdate(effect)
         effect:Remove();
     end
 end
-PsycheEye:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, PsycheEye.PostVesselUpdate, PsycheEye.VesselVariant)
+PsycheEye:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, PostVesselUpdate, PsycheEye.VesselVariant)
 
-function PsycheEye:PreTearCollision(tear, other, low)
-    if (other:IsVulnerableEnemy() and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
-        local tearData = PsycheEye.GetTearData(tear, false);
-        if (tearData and tearData.MindControl) then
+local function PreTearCollision(mod, tear, other, low)
+    if (other:IsVulnerableEnemy()) then
+        if (PsycheEye:IsMindControlTear(tear) and PsycheEye:CanControl(other)) then
             local spawner = tear.SpawnerEntity;
-            local familiar = nil;
-            local player = nil;
-            if (spawner) then
-                familiar = spawner:ToFamiliar();
-            end
-            if (familiar) then
-                player = familiar.Player;
-            end
-            if (player) then
-                local playerData = PsycheEye.GetPlayerData(player, true);
-                if (other:IsBoss() or other.Type == EntityType.ENTITY_THE_HAUNT or other.Type == EntityType.ENTITY_EXORCIST) then -- or playerData.ControlledCount >= maxControlCount) then
-                    other:AddCharmed( EntityRef(player), 150);
-                else
-                    other:AddCharmed( EntityRef(player), -1);
-                    --local npcData = PsycheEye.GetNPCData(other, true);
-                    --npcData.MindControlled = true;
-                    --playerData.ControlledCount = playerData.ControlledCount + 1;
-                    THI.SFXManager:Play(THI.Sounds.SOUND_MIND_CONTROL);
-                    if (not tear:HasTearFlags(TearFlags.TEAR_PIERCING)) then
-                        tear:Die();
-                    end
-                end
+            PsycheEye:ControllEntity(other, spawner);
+        end
+    end
+end
+PsycheEye:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, PreTearCollision)
+
+
+local function PostNPCUpdate(mod, npc)
+    local npcData = GetNPCData(npc, false);
+    if (npcData and npcData.WaveKillTimeout >= 0) then
+        npcData.WaveKillTimeout = npcData.WaveKillTimeout - 1;
+        if (npcData.WaveKillTimeout < 0) then
+            npcData.WaveKillTimeout = -1;
+            npcData.WaveKillPlayer = nil
+        end
+    end
+end
+PsycheEye:AddCallback(ModCallbacks.MC_NPC_UPDATE, PostNPCUpdate)
+
+
+local function PostEntityRemove(mod, entity)
+    if (entity:IsActiveEnemy(true)) then
+        
+        if (entity:IsDead()) then
+            local npcData = GetNPCData(entity, false);
+            if (npcData and npcData.WaveKillPlayer) then
+                PsycheEye:AddWaveKills(npcData.WaveKillPlayer, 100);
+                PsycheEye:AddWaveKillDecay(npcData.WaveKillPlayer, 5);
             end
         end
     end
 end
-PsycheEye:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, PsycheEye.PreTearCollision)
+PsycheEye:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, PostEntityRemove)
 
--- function PsycheEye:PostPlayerEffect(player)
 
---     local playerData = PsycheEye.GetPlayerData(player, false);
---     if (playerData) then
---         local npcs = playerData.ControlledNPC;
---         for i = #npcs, 1, -1 do
---             local ent = npcs[i];
---             if (not ent or not ent:Exists()) then
---                 table.remove(playerData.ControlledNPC, i);
---             end
---         end
---     end
--- end
--- PsycheEye:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PsycheEye.PostPlayerEffect)
 
-function PsycheEye:PostNewRoom()
 
-    local game = THI.Game;
-    for i, player in Detection.PlayerPairs(true, true) do
-        local playerData = PsycheEye.GetPlayerData(player, false);
-        if (playerData) then
-            playerData.ControlledCount = 0;
-        end
-    end
-    -- for i, ent in pairs(Isaac.GetRoomEntities()) do
-    --     if (ent:IsEnemy()) then
-    --         local npcData = PsycheEye.GetNPCData(ent, false);
-    --         if (npcData and npcData.MindControlled) then
-    --             ent:Remove();
-    --         end
-    --     end
-    -- end
-end
-PsycheEye:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PsycheEye.PostNewRoom)
 
 return PsycheEye;

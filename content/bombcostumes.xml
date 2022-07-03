@@ -1,0 +1,24 @@
+<bombcostumes anm2root="gfx/reverie/items/pick ups/bombs/">
+<!--
+	Rules are evaluated from top to bottom. A rule will only trigger if all of its conditions are true.
+	
+	Conditions:
+		- includeFlags: True if all provided flags are set
+		- excludeFlags: True if none of the provided flags are set
+	Layers (in rendering order):
+		- back
+		- body
+		- body2
+		- front
+		- front2
+		- overlay
+	GFX suffixes:
+		- suffix
+		- suffix2
+-->
+	<bomb variant="0"> <!-- Normal bomb -->
+		<rule includeFlags="39" excludeFlags="75" body="light.anm2" />
+		<rule includeFlags="39 22" excludeFlags="75" body="light_hot.anm2" />
+	</bomb>
+</bombcostumes>
+

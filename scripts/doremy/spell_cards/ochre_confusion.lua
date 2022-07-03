@@ -2,6 +2,21 @@ local OchreConfusion = GensouDream.SpellCard();
 
 local centerColor = Color(1,1,1,1,0.5,0.5,0);
 local boundColor = Color(1,1,1,1,1,1,0);
+local CenterParams = ProjectileParams();
+CenterParams.BulletFlags = ProjectileFlags.ACCELERATE;
+CenterParams.Acceleration = 1.05;
+CenterParams.FallingAccelModifier = -0.2;
+CenterParams.FallingSpeedModifier = 3;
+CenterParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+CenterParams.Color = centerColor;
+
+local BoundParams = ProjectileParams();
+BoundParams.BulletFlags = ProjectileFlags.ACCELERATE;
+BoundParams.Acceleration = 1.05;
+BoundParams.FallingAccelModifier = -0.2;
+BoundParams.FallingSpeedModifier = 3;
+BoundParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+BoundParams.Color = boundColor;
     
 function OchreConfusion:GetDefaultData(doremy)
     return {
@@ -49,24 +64,28 @@ function OchreConfusion:PostUpdate(doremy)
                 else
                     tearAngle = (i - 3) * 30 + angleOffset + 150;
                 end
-                local color;
-                local speed = 0.06;
+                local params;
+                local speed = 1;
                 if (i == 1 or i == 4) then
-                    color = centerColor;
+                    params = CenterParams;
                 else
-                    color = boundColor;
+                    params = BoundParams;
                 end
                 local velocity = Vector.FromAngle(tearAngle) * speed;
-                local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
-                
-                tearEntity:SetColor(color, -1, 0,false, true);
-                local proj = tearEntity:ToProjectile();
-                proj.ProjectileFlags = proj.ProjectileFlags | OchreConfusion:GetProjectileFlags(doremy);
-                table.insert(data.Projectiles, {
-                    Projectile = proj,
-                    Speed = speed
-                }
-                );
+
+                params.BulletFlags = self:GetProjectileFlags(doremy) | ProjectileFlags.ACCELERATE;
+                doremy:FireProjectiles (sourcePos, velocity, 0, params);
+                params.BulletFlags = ProjectileFlags.ACCELERATE;
+
+                -- local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
+                -- tearEntity:SetColor(color, -1, 0,false, true);
+                -- local proj = tearEntity:ToProjectile();
+                -- proj.ProjectileFlags = proj.ProjectileFlags | OchreConfusion:GetProjectileFlags(doremy);
+                -- table.insert(data.Projectiles, {
+                --     Projectile = proj,
+                --     Speed = speed
+                -- }
+                -- );
             end
             
             --THI.SFXManager:Play(SoundEffect.SOUND_BISHOP_HIT);
@@ -77,15 +96,15 @@ function OchreConfusion:PostUpdate(doremy)
 
 
     -- Make projectiles float and increase speed.
-    for i, info in pairs(data.Projectiles) do
-        local proj = info.Projectile;
-        if (proj:Exists()) then
-            proj.Velocity = proj.Velocity + proj.Velocity:Normalized() * info.Speed;
-            proj.FallingSpeed = 0;
-        else
-            data.Projectiles[i] = nil;
-        end
-    end
+    -- for i, info in pairs(data.Projectiles) do
+    --     local proj = info.Projectile;
+    --     if (proj:Exists()) then
+    --         proj.Velocity = proj.Velocity + proj.Velocity:Normalized() * info.Speed;
+    --         proj.FallingSpeed = 0;
+    --     else
+    --         data.Projectiles[i] = nil;
+    --     end
+    -- end
 end
 function OchreConfusion:OnCast(doremy)
     local data = OchreConfusion:GetData(doremy);

@@ -1,8 +1,7 @@
-local Lib = CuerLib;
+local Lib = _TEMP_CUERLIB;
 local Callbacks = Lib.Callbacks;
 
-local Pickups = {
-}
+local Pickups = Lib:NewClass();
 
 local ChestVariants = {
     PickupVariant.PICKUP_CHEST,
@@ -65,7 +64,23 @@ function Pickups.CanCollect(player, pickup)
             return true;
         end
     elseif (variant == PickupVariant.PICKUP_LIL_BATTERY) then
-        return player:NeedsCharge(0) or player:NeedsCharge(1) or player:NeedsCharge(2) or player:NeedsCharge(3);
+        local condition = player:NeedsCharge(0) or player:NeedsCharge(1) or player:NeedsCharge(2) or player:NeedsCharge(3);
+        -- Mega Battery.
+        if (subType == BatterySubType.BATTERY_MEGA) then
+            local config = Isaac.GetItemConfig();
+            for slot = 0, 3 do
+                local itemConfig = config:GetCollectible(player:GetActiveItem(slot));
+                if (itemConfig and itemConfig.ChargeType ~= 2) then
+                    local maxCharges = itemConfig.MaxCharges;
+                    local battery = player:GetBatteryCharge(slot);
+                    condition = condition or battery < maxCharges;
+                end
+                if (condition) then
+                    break;
+                end
+            end
+        end
+        return condition;
     elseif (variant == PickupVariant.PICKUP_COIN) then
         return subType ~= CoinSubType.COIN_STICKYNICKEL;
     elseif (variant == PickupVariant.PICKUP_KEY or
@@ -99,8 +114,18 @@ function Pickups.TryCollect(player, pickup)
     end
 end
 
+-- local function GetPlayerTempData(player, create)
+--     local data = Lib:GetLibData(player, true);
+--     if (create) then
+--         data._PICKUP = data._PICKUP or {
+--             PickingCard = nil
+--         }
+--     end
+--     return data._PICKUP;
+-- end
+
 function Pickups:GetPickupData(pickup) 
-    local data = Lib:GetData(pickup);
+    local data = Lib:GetLibData(pickup);
     data._PICKUP = data._PICKUP or {
         FakeCollected = false,
         Moved = false,
@@ -121,11 +146,16 @@ function Pickups.Collect(player, pickup)
     end
 end
 
+local PickingCard = nil;
 local function PostCollectPickup(player, pickup)
     
     local pickupData = Pickups:GetPickupData(pickup) ;
     if (pickupData.Moved) then
         pickup.Position = pickupData.OriginPosition;
+    end
+
+    if (pickup.Variant == PickupVariant.PICKUP_TAROTCARD) then
+        PickingCard = pickup;
     end
 
     for i, info in pairs(Callbacks.Functions.PostPickupCollected) do
@@ -168,21 +198,22 @@ function Pickups:PostPickupUpdate(pickup)
         end
     end
 end
+Pickups:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, Pickups.PostPickupUpdate);
 
 function Pickups:onPickupCollision(pickup, collider, low)
+
+    for i, info in pairs(Callbacks.Functions.PrePickupCollision) do
+        if (info.OptionalArg == nil or info.OptionalArg < 0 or info.OptionalArg == pickup.Variant) then
+            local result = info.Func(info.Mod, pickup, collider, low);
+            if (result ~= nil) then
+                return result;
+            end
+        end
+    end
     local pickupData = Pickups:GetPickupData(pickup);
     if (pickupData.FakeCollected) then
         return true;
     else
-
-        for i, info in pairs(Callbacks.Functions.PrePickupCollision) do
-            if (info.OptionalArg == nil or info.OptionalArg < 0 or info.OptionalArg == pickup.Variant) then
-                local result = info.Func(info.Mod, pickup, collider, low);
-                if (result ~= nil) then
-                    return result;
-                end
-            end
-        end
 
         local player = collider:ToPlayer();
         if (player) then
@@ -192,16 +223,35 @@ function Pickups:onPickupCollision(pickup, collider, low)
         end
     end
 end
+Pickups:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, Pickups.onPickupCollision);
 
-function Pickups:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, Pickups.onPickupCollision);
-    mod:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, Pickups.PostPickupUpdate);
+local function PostUpdate(mod)
+    -- local data = GetPlayerTempData(player, false);
+    -- if (data) then
+        if (PickingCard) then
+            local pickup = PickingCard;
+            PickingCard = nil;
+            if (not pickup:Exists() or pickup:IsDead()) then
+                for p, player in Lib.Detection.PlayerPairs() do
+                    for slot = 0, 3 do
+                        local card = player:GetCard(slot);
+                        if (card == pickup.SubType) then
+                            -- Execute Callbacks.
+                            for i, info in pairs(Callbacks.Functions.PostPickUpCard) do
+                                if (info.OptionalArg == nil or info.OptionalArg <= 0 or info.OptionalArg == pickup.Variant) then
+                                    info.Func(info.Mod, player, card);
+                                end
+                            end 
+    
+                            return;
+                        end
+                    end
+                end
+            end
+        end
+    --end
 end
-
-function Pickups:Unregister(mod)
-    mod:RemoveCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, Pickups.onPickupCollision);
-    mod:RemoveCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, Pickups.PostPickupUpdate);
-end
+Pickups:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 
 
 return Pickups;

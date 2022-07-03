@@ -8,6 +8,8 @@ local Greed = CuerLib.Greed;
 local Detection = CuerLib.Detection;
 local EntityExists = CuerLib.Detection.EntityExists;
 local Tears = CuerLib.Tears;
+local Players = CuerLib.Players;
+local ItemPools = CuerLib.ItemPools;
 local RuneSword = ModItem("Rune Sword", "RUNE_SWORD");
 
 local runeTexts = {
@@ -42,7 +44,12 @@ local runeTexts = {
 }
 RuneSword.Texts = runeTexts;
 
-RuneSword.CustomRunes = {}
+RuneSword.CustomRunes = {
+    [THI.Cards.SoulOfEika.ID] = "#RUNE_SWORD_EIKA" ,
+    [THI.Cards.SoulOfSatori.ID] = "#RUNE_SWORD_SATORI",
+    [THI.Cards.SoulOfSeija.ID] = "#RUNE_SWORD_SEIJA",
+    [THI.Cards.SoulOfSeija.ReversedID] = "#RUNE_SWORD_SEIJA_REVERSED"
+}
 
 local function GetChanceCounts(chance, value)
     local maxCount = math.ceil(chance / 100);
@@ -102,7 +109,7 @@ function RuneSword:ShowRuneText(rune)
     
     local title = "";
     local desc = "";
-    local stringKey = texts[rune] or customTexts[tostring(rune)];
+    local stringKey = texts[rune] or customTexts[rune];
     if (stringKey) then
         local category = THI.StringCategories.DEFAULT;
         title = THI.GetText(category, stringKey.."_NAME");
@@ -126,7 +133,7 @@ end
 
 function RuneSword:InsertRune(player, rune)
     local data = self:GetPlayerData(player, true);
-    local key = tostring(rune);
+    local key = rune;
     data.InsertedRunes[key] = (data.InsertedRunes[key] or 0) + 1;
 
     self:EvaluateInsertedRunes(player);
@@ -138,7 +145,7 @@ function RuneSword:GetInsertedRuneNum(player, rune, raw)
     end
     local data = self:GetPlayerData(player, false);
     if (data) then
-        local key = tostring(rune);
+        local key = rune;
         return data.InsertedRunes[key] or 0;
     end
     return 0;
@@ -150,12 +157,12 @@ function RuneSword:HasInsertedRune(player, rune, raw)
     end
     local data = self:GetPlayerData(player, false);
     if (data) then
-        local key = tostring(rune);
+        local key = rune;
         return data.InsertedRunes[key] ~= nil;
     end
     return false;
 end
-function RuneSword:GetRuneCount(player, rune, raw)
+function RuneSword:GetRuneCount(player, raw)
     if (not raw and not RuneSword:HasSword(player)) then
         return 0;
     end
@@ -188,7 +195,7 @@ end
 
 function RuneSword:RemoveRune(player, rune)
     local data = self:GetPlayerData(player, true);
-    local key = tostring(rune);
+    local key = rune;
     local runes = data.InsertedRunes[key] or 0;
     if (runes > 1) then
         data.InsertedRunes[key] = runes - 1;
@@ -205,7 +212,7 @@ function RuneSword.IsRune(rune)
     if (rune >= Card.CARD_SOUL_ISAAC and rune <= Card.CARD_SOUL_JACOB) then
         return true;
     end
-    if (RuneSword.CustomRunes[tostring(rune)]) then
+    if (RuneSword.CustomRunes[rune]) then
         return true;
     end
     return false;
@@ -250,18 +257,18 @@ function RuneSword.UpdateVisibleRooms()
                     end
                 end
             end
-            level:UpdateVisibility ( );
         end
     end
+    level:UpdateVisibility ( );
 end
 
 function RuneSword:AddCustomRune(id, stringKey)
-    local key = tostring(id);
+    local key = id;
     RuneSword.CustomRunes[key] = stringKey;
 end
 
 function RuneSword:RemoveCustomRune(id, texts)
-    local key = tostring(id);
+    local key = id;
     RuneSword.CustomRunes[key] = nil
 end
 
@@ -277,20 +284,22 @@ function RuneSword:PostGainRuneSword(player, item, count, touched)
         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, rune, player.Position, Vector.Zero, player);
     end
 end
-RuneSword:AddCustomCallback(CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, RuneSword.PostGainRuneSword, RuneSword.Item);
+RuneSword:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, RuneSword.PostGainRuneSword, RuneSword.Item);
 
 function RuneSword:UseSword(item, rng, player, flags, slot, varData)
     local slot = 0;
     local rune = player:GetCard(slot);
     local showAnim = true;
-    if (RuneSword.IsRune(rune)) then
+    if (RuneSword.IsRune(rune) and flags & UseFlag.USE_CARBATTERY <= 0) then
         rune = RuneSword:PreInsertRune(player, rune);
         RuneSword:InsertRune(player, rune)
         RuneSword:ShowRuneText(rune);
         THI.SFXManager:Play(SoundEffect.SOUND_TOOTH_AND_NAIL);
         THI.SFXManager:Play(SoundEffect.SOUND_POWERUP1);
         player:AnimateCollectible(RuneSword.Item, "Pickup");
-        player:SetCard (slot, 0)
+        --if (player:GetCard(slot) == rune) then
+            Players:RemoveCardPill(player, slot)
+        --end
         showAnim = false;
     else
         local itemPool = THI.Game:GetItemPool();
@@ -318,12 +327,23 @@ function RuneSword:PostFireTear(tear)
                 end
             end
         end
+
+        -- Soul of Satori.
+        local satoriCount = RuneSword:GetInsertedRuneNum(player, THI.Cards.SoulOfSatori.ID);
+        if (satoriCount > 0) then
+            local value = Random() % 100;
+            if (value < satoriCount * 20) then
+                local PsycheEye = THI.Familiars.PsycheEye;
+                PsycheEye:AddMindControlTear(tear);
+                tear:SetColor(PsycheEye.TearColor, 0, 0);
+            end
+        end
     end
 end
 RuneSword:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, RuneSword.PostFireTear);
 
 function RuneSword:GetShaderParams(name)
-    if (name == "HUD Hack") then
+    if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
         Actives.RenderActivesCount(RuneSword.Item, function(player) return RuneSword:GetRuneCount(player) end)
     end
 end
@@ -346,9 +366,9 @@ local function ClearLevel()
     
         if (spawn) then
             local chance = 100;
-            if (THI.IsLunatic()) then
-                chance = RuneSword:GetGlobalRuneCount(Card.RUNE_EHWAZ) * 50;
-            end
+            -- if (THI.IsLunatic()) then
+            --     chance = RuneSword:GetGlobalRuneCount(Card.RUNE_EHWAZ) * 50;
+            -- end
             local value = room:GetDecorationSeed() % 100;
             if (value < chance) then
                 local initPos = room:GetCenterPos() + Vector(0, 40);
@@ -483,14 +503,14 @@ function RuneSword:PostNewGreedWave(wave)
     PostNewWave();
     PostRoomStart();
 end
-RuneSword:AddCustomCallback(CLCallbacks.CLC_POST_NEW_GREED_WAVE, RuneSword.PostNewGreedWave);
+RuneSword:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_NEW_GREED_WAVE, RuneSword.PostNewGreedWave);
 
 function RuneSword:PostGreedWaveEnd(state)
     if (state == Greed.GreedState.GREED_BOSS_CLEARED) then
         ClearLevel();
     end
 end
-RuneSword:AddCustomCallback(CLCallbacks.CLC_POST_GREED_WAVE_END, RuneSword.PostGreedWaveEnd);
+RuneSword:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GREED_WAVE_END, RuneSword.PostGreedWaveEnd);
 
 local function CanDuplicate(pickup)
     if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or Pickups.IsSpecialPickup(pickup.Variant)) then
@@ -577,13 +597,15 @@ RuneSword:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, RuneSword.PostNewRoom);
 function RuneSword:PreProjectileCollision(proj, other, low)
     if (not proj:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER)) then
         if (other.Type == EntityType.ENTITY_PLAYER) then
-            local data = RuneSword:GetPlayerData(other, false);
-            if (data and data.JudasCount > 0) then
-                local player = other:ToPlayer();
-                if (not player:HasInvincibility()) then
-                    local flags = UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC | UseFlag.USE_NOCOSTUME;
-                    player:UseCard(Card.CARD_SOUL_JUDAS, flags);
-                    data.JudasCount = data.JudasCount - 1;
+            local player = other:ToPlayer();
+            if (RuneSword:HasInsertedRune(player, Card.CARD_SOUL_JUDAS)) then
+                local data = RuneSword:GetPlayerData(other, false);
+                if (data and data.JudasCount > 0) then
+                    if (not player:HasInvincibility()) then
+                        local flags = UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC | UseFlag.USE_NOCOSTUME;
+                        player:UseCard(Card.CARD_SOUL_JUDAS, flags);
+                        data.JudasCount = data.JudasCount - 1;
+                    end
                 end
             end
         end
@@ -593,16 +615,18 @@ RuneSword:AddCallback(ModCallbacks.MC_PRE_PROJECTILE_COLLISION, RuneSword.PrePro
 
 function RuneSword:PreNPCCollision(npc, other, low)
     if (not npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and npc.CollisionDamage > 0) then
-        if (npc.Type ~= EntityType.ENTITY_FIREPLACE and
+        if (npc:IsActiveEnemy() and
             other.Type == EntityType.ENTITY_PLAYER) then
-            local data = RuneSword:GetPlayerData(other, false);
-            local judasCount = (data and data.JudasCount) or 0;
-            if (judasCount > 0) then
-                local player = other:ToPlayer();
-                if (not player:HasInvincibility()) then
-                    local flags = UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC | UseFlag.USE_NOCOSTUME;
-                    player:UseCard(Card.CARD_SOUL_JUDAS, flags);
-                    data.JudasCount = data.JudasCount - 1;
+            local player = other:ToPlayer();
+            if (RuneSword:HasInsertedRune(player, Card.CARD_SOUL_JUDAS)) then
+                local data = RuneSword:GetPlayerData(other, false);
+                local judasCount = (data and data.JudasCount) or 0;
+                if (judasCount > 0) then
+                    if (not player:HasInvincibility()) then
+                        local flags = UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC | UseFlag.USE_NOCOSTUME;
+                        player:UseCard(Card.CARD_SOUL_JUDAS, flags);
+                        data.JudasCount = data.JudasCount - 1;
+                    end
                 end
             end
         end
@@ -682,7 +706,7 @@ function RuneSword:EvaluateCurse(curses)
         return 0;
     end
 end
-RuneSword:AddCustomCallback(CLCallbacks.CLC_EVALUATE_CURSE, RuneSword.EvaluateCurse, 0, -100);
+RuneSword:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, RuneSword.EvaluateCurse, 0, -100);
 
 function RuneSword:EvaluateCache(player, cache)
     local blackRuneCount = RuneSword:GetInsertedRuneNum(player, Card.RUNE_BLACK);
@@ -697,7 +721,9 @@ function RuneSword:EvaluateCache(player, cache)
     elseif (cache == CacheFlag.CACHE_RANGE) then
         player.TearRange = player.TearRange + blackRuneCount *1.5;
     elseif (cache == CacheFlag.CACHE_FIREDELAY) then
-        Stats:AddTearsUp(player, 0.5 * blackRuneCount);
+        Stats:AddTearsModifier(player, function(tears)
+            return tears + 0.5 * blackRuneCount
+        end);
     elseif (cache == CacheFlag.CACHE_COLOR) then
         local data = RuneSword:GetPlayerData(player, false);
         if (data) then
@@ -773,7 +799,7 @@ function RuneSword:PostTakeDamage(tookDamage, amount, flags, source, countdown)
         end
     end
 end
-RuneSword:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, RuneSword.PostTakeDamage);
+RuneSword:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, RuneSword.PostTakeDamage);
 
 -- function RuneSword:PreEntitySpawn(Type, Variant, SubType, Position, Velocity, Spawner, Seed)
 --     if (Type == EntityType.ENTITY_PICKUP) then
@@ -821,8 +847,9 @@ function RuneSword:PostBombRemoved(entity)
             if (canReroll) then
                 local radius = 80 * bomb.RadiusMultiplier;
                 for _, pick in pairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)) do
-                    if (pick.SubType > 0 and bomb.Position:Distance(pick.Position) <= radius) then
-                        if (pick.FrameCount > 60) then
+                    if (pick.SubType > 0 and pick.SubType ~= CollectibleType.COLLECTIBLE_DADS_NOTE and bomb.Position:Distance(pick.Position) <= radius) then
+                        local pickup = pick:ToPickup();
+                        if (pickup.Wait <= 0) then
                             local seed = pick.InitSeed;
                             local rdm = seed % 100;
                             local disappearChance = (30 + 40*0.5^perthroCoount)
@@ -832,9 +859,10 @@ function RuneSword:PostBombRemoved(entity)
                                 local game = THI.Game;
                                 local room = game:GetRoom();
                                 local itemPool = game:GetItemPool();
-                                local pool = itemPool:GetPoolForRoom(room:GetType(), seed);
+                                local pool = ItemPools:GetPoolForRoom(room:GetType(), seed);
                                 local item = itemPool:GetCollectible(pool, true, seed);
-                                pick:ToPickup():Morph(pick.Type, pick.Variant, item, true, false, true);
+                                pickup:Morph(pick.Type, pick.Variant, item, true, false, false);
+                                pickup.Touched = false;
                             end 
                             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pick.Position, Vector.Zero, nil);
                         end
@@ -848,9 +876,9 @@ function RuneSword:PostBombRemoved(entity)
 end
 RuneSword:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, RuneSword.PostBombRemoved, EntityType.ENTITY_BOMBDROP);
 
-function RuneSword:PostEntityKill(entity)
+local function PostEntityKill(mod, entity)
     local npc = entity:ToNPC();
-    if (npc and entity:IsEnemy()) then
+    if (npc and npc:IsActiveEnemy(true)) then
         local count = RuneSword:GetGlobalRuneCount(Card.CARD_SOUL_KEEPER)
         if (count > 0) then
             local chance = count * 40;
@@ -861,9 +889,25 @@ function RuneSword:PostEntityKill(entity)
                 coin.Timeout = 60;
             end
         end
+        
+        local eikaCount = RuneSword:GetGlobalRuneCount(THI.Cards.SoulOfEika.ID);
+        if (eikaCount > 0) then
+            local firstPlayer = RuneSword:GetFirstPlayerWithRune(THI.Cards.SoulOfEika.ID);
+            local chance = math.min(eikaCount * 2, 20);
+            local value = npc.DropSeed % 100;
+            local times = GetChanceCounts(chance, value);
+            if (value < chance) then
+                local BloodBony = THI.Monsters.BloodBony;
+                local bony = Isaac.Spawn(BloodBony.Type, BloodBony.Variant, BloodBony.SubTypes.PERNAMENT, npc.Position, Vector.Zero, firstPlayer);
+                bony:AddCharmed(EntityRef(firstPlayer), -1);
+                THI.SFXManager:Play(SoundEffect.SOUND_MONSTER_ROAR_0);
+            end
+        end
     end
 end
-RuneSword:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, RuneSword.PostEntityKill);
+RuneSword:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, PostEntityKill);
+
+
 
 function RuneSword:PreInsertRune(player, rune)
     if (rune == Card.RUNE_SHARD or rune == Card.RUNE_BLANK) then
@@ -890,7 +934,7 @@ function RuneSword:PostInsertRune(player, rune)
     elseif (rune == Card.CARD_SOUL_EDEN) then
         local itemPool = THI.Game:GetItemPool();
         local seed = player:GetCollectibleRNG(RuneSword.Item):Next();
-        local pool = itemPool:GetPoolForRoom (RoomType.ROOM_ERROR, seed);
+        local pool = ItemPools:GetPoolForRoom(RoomType.ROOM_ERROR, seed);
         local col = itemPool:GetCollectible (pool, true, seed);
         local room = THI.Game:GetRoom();
         local pos = room:FindFreePickupSpawnPosition(player.Position);
@@ -904,19 +948,37 @@ function RuneSword:PostInsertRune(player, rune)
         local room = THI.Game:GetRoom();
         local pos = room:FindFreePickupSpawnPosition(player.Position);
         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_BIRTHRIGHT, pos, Vector.Zero, player);
+    else
+        local SoulOfSeija = THI.Cards.SoulOfSeija;
+        if (rune == SoulOfSeija.ID or rune == SoulOfSeija.ReversedID) then
+            player:AddCacheFlags(CacheFlag.CACHE_ALL);
+            player:EvaluateItems();
+        end
     end
 end
 
 do
-    local function ReviveCondition(player)
-        return RuneSword:HasInsertedRune(player, Card.CARD_SOUL_LAZARUS);
-    end
+    -- local function ReviveCondition(player)
+    --     return RuneSword:HasInsertedRune(player, Card.CARD_SOUL_LAZARUS);
+    -- end
 
+    ---@type ReviveCallback
     local function ReviveCallback(player, reviver)
         player:AnimateCard(Card.CARD_SOUL_LAZARUS);
         RuneSword:RemoveRune(reviver, Card.CARD_SOUL_LAZARUS);
     end
-    Revive.AddReviveInfo(true, nil, nil, ReviveCondition, ReviveCallback, true, -10)
+    --Revive.AddReviveInfo(true, nil, nil, ReviveCondition, ReviveCallback, true, -10)
+
+    local function PreRevive(mod, player)
+        if (RuneSword:HasInsertedRune(player, Card.CARD_SOUL_LAZARUS)) then
+            ---@type ReviveInfo
+            return {
+                BeforeVanilla = true,
+                Callback = ReviveCallback,
+            }
+        end
+    end
+    RuneSword:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, PreRevive, nil, -10)
 end
 
 return RuneSword;

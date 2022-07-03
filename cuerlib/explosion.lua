@@ -1,7 +1,7 @@
-local Math = CuerLib.Math;
-local Lib = CuerLib;
+local Math = _TEMP_CUERLIB.Math;
+local Lib = _TEMP_CUERLIB;
 
-local Explosion = {};
+local Explosion = Lib:NewClass();
 Explosion.ExplosionParams = {};
 
 local expMetadata = {

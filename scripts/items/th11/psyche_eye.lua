@@ -33,19 +33,19 @@ function PsycheEye:OnEvaluateCache(player, cache)
 end
 PsycheEye:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, PsycheEye.OnEvaluateCache)
 
-function PsycheEye:PostChangePsycheEye(player, item, diff)
-    THI:EvaluateCurses();
-end
-PsycheEye:AddCustomCallback(CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, PsycheEye.PostChangePsycheEye, PsycheEye.Item);
+-- function PsycheEye:PostChangePsycheEye(player, item, diff)
+--     THI:EvaluateCurses();
+-- end
+-- PsycheEye:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, PsycheEye.PostChangePsycheEye, PsycheEye.Item);
 
-function PsycheEye:EvaluateCurse(curses)
-    for i, player in Detection.PlayerPairs(true, true) do
-        local effects = player:GetEffects();
-        if (player:HasCollectible(PsycheEye.Item) or effects:HasCollectibleEffect(PsycheEye.Item)) then
-            return curses & ~(LevelCurse.CURSE_OF_BLIND | LevelCurse.CURSE_OF_THE_LOST | LevelCurse.CURSE_OF_THE_UNKNOWN);    
-        end
-    end
-end
-PsycheEye:AddCustomCallback(CLCallbacks.CLC_EVALUATE_CURSE, PsycheEye.EvaluateCurse, 0, -100);
+-- function PsycheEye:EvaluateCurse(curses)
+--     for i, player in Detection.PlayerPairs(true, true) do
+--         local effects = player:GetEffects();
+--         if (player:HasCollectible(PsycheEye.Item) or effects:HasCollectibleEffect(PsycheEye.Item)) then
+--             return curses & ~(LevelCurse.CURSE_OF_BLIND | LevelCurse.CURSE_OF_THE_LOST | LevelCurse.CURSE_OF_THE_UNKNOWN);    
+--         end
+--     end
+-- end
+-- PsycheEye:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, PsycheEye.EvaluateCurse, 0, -100);
 
 return PsycheEye;

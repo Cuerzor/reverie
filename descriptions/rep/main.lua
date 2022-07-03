@@ -1,30 +1,141 @@
 local Lib = CuerLib;
 
+local ModName = THI.Name;
 local languages = {
     {Language = "en_us", Code = "en"},
     {Language = "zh_cn", Code = "zh"},
 }
+
+-- Cards.
+local Cards = {
+    [THI.Cards.SoulOfEika.ID] = {
+        Frame = 0
+    },
+    [THI.Cards.SoulOfSatori.ID] = {
+        Frame = 1
+    },
+    [THI.Cards.ASmallStone.ID] = {
+        Frame = 2
+    },
+    [THI.Cards.SpiritMirror.ID] = {
+        Frame = 3
+    },
+    [THI.Cards.SoulOfSeija.ID] = {
+        Frame = 4
+    },
+    [THI.Cards.SoulOfSeija.ReversedID] = {
+        Frame = 5
+    },
+    [THI.Cards.SituationTwist.ID] = {
+        Frame = 6
+    },
+}
+
+for id, card in pairs(Cards) do
+    local spr = Sprite();
+    spr:Load("gfx/eid/reverie_cardpill_icons.anm2", true)
+    EID:addIcon("Card"..id, "Card", card.Frame, 16, 16, 0, 1, spr)
+end
+
 -- Transformations.
 local Transformations = {
     ReverieMusician = {
-        Icon = "gfx/eid/icons.anm2"
+        Icon = "gfx/eid/reverie_transformation_icons.anm2"
     }
 }
+
+local RuneSwordVariables = {
+    [Card.RUNE_ANSUZ] = {
+        DISTANCE = function(count, global) return global + 1; end
+    },
+    [Card.RUNE_HAGALAZ] =  {
+        CHANCE = function(count, global) return math.min(100, math.floor(count / 3 * 100)); end
+    },
+    [Card.RUNE_PERTHRO] = {
+        CHANCE = function(count, global) return math.min(100, 30+40*0.5^count); end
+    },
+    [Card.RUNE_BERKANO] = {
+        COUNT = function(count, global) return 3 * count; end
+    },
+    [Card.RUNE_ALGIZ] = {
+        CHANCE = function(count, global) return math.min(100, 20 * count); end
+    },
+    [Card.RUNE_JERA] = {
+        CHANCE = function(count, global) return 50 * global; end
+    },
+    [Card.CARD_SOUL_ISAAC] = {
+        CHANCE = function(count, global) return math.min(100, 50 * count); end
+    },
+    [Card.CARD_SOUL_CAIN] = {
+        CHANCE = function(count, global) return math.min(20, 5 * global); end
+    },
+    [Card.CARD_SOUL_JUDAS] = {
+        COUNT = function(count, global) return count; end
+    },
+    [Card.CARD_SOUL_EVE] = {
+        COUNT = function(count, global) return 2 * count; end
+    },
+    [Card.CARD_SOUL_SAMSON] = {
+        DAMAGE = function(count, global, stage) return (100 + 65*stage) * (0.5 + 0.5 /count); end
+    },
+    [Card.CARD_SOUL_LOST] = {
+        CHANCE = function(count, global) return math.min(100, count * 10); end
+    },
+    [Card.CARD_SOUL_KEEPER] = {
+        CHANCE = function(count, global) return global * 40; end
+    },
+    [Card.CARD_SOUL_APOLLYON] = {
+        COUNT = function(count, global) return count * 3; end
+    },
+    [Card.CARD_SOUL_FORGOTTEN] = {
+        CHANCE = function(count, global) return math.min(50, count * 10); end
+    },
+    [Card.CARD_SOUL_BETHANY] = {
+        COUNT = function(count, global) return count; end
+    },
+    [THI.Cards.SoulOfEika.ID] = {
+        CHANCE = function(count, global) return math.min(20, global * 2); end
+    },
+    [THI.Cards.SoulOfSatori.ID] = {
+        CHANCE = function(count, global) return math.min(100, count * 20); end
+    }
+}
+
 for id, trans in pairs(Transformations) do
     local musicianSprite = Sprite();
     musicianSprite:Load(trans.Icon, true)
     EID:addIcon(id, "Transformation", -1, 16, 16, nil, nil, musicianSprite)
 end
 
+local Players = THI.Players;
+local playerSprite = Sprite();
+playerSprite:Load("gfx/eid/reverie_player_icons.anm2", true)
+EID:addIcon("Player"..Players.Eika.Type, "Players", 0, 12, 12, -1, 1, playerSprite);
+EID:addIcon("Player"..Players.EikaB.Type, "Players", 1, 12, 12, -1, 1, playerSprite);
+EID:addIcon("Player"..Players.Satori.Type, "Players", 2, 12, 12, -1, 1, playerSprite);
+EID:addIcon("Player"..Players.SatoriB.Type, "Players", 3, 12, 12, -1, 1, playerSprite);
+EID:addIcon("Player"..Players.Seija.Type, "Players", 4, 12, 12, -1, 1, playerSprite);
+EID:addIcon("Player"..Players.SeijaB.Type, "Players", 5, 12, 12, -1, 1, playerSprite);
+
+
 -- Transformation Assignations.
 local Collectibles = THI.Collectibles;
 local CollectibleTransformations = {
+    [Collectibles.GuppysCorpseCart.Item] = EID.TRANSFORMATION.GUPPY,
+
     [Collectibles.Grimoire.Item] = EID.TRANSFORMATION.BOOKWORM,
     [Collectibles.BookOfYears.Item] = EID.TRANSFORMATION.BOOKWORM,
     [Collectibles.EmptyBook.Item] = EID.TRANSFORMATION.BOOKWORM,
 
     [Collectibles.Koakuma.Item] = EID.TRANSFORMATION.CONJOINED,
     [Collectibles.ChenBaby.Item] = EID.TRANSFORMATION.CONJOINED,
+    [Collectibles.SunnyFairy.Item] = EID.TRANSFORMATION.CONJOINED,
+    [Collectibles.LunarFairy.Item] = EID.TRANSFORMATION.CONJOINED,
+    [Collectibles.StarFairy.Item] = EID.TRANSFORMATION.CONJOINED,
+    [Collectibles.DancerServants.Item] = EID.TRANSFORMATION.CONJOINED,
+
+    
+    [Collectibles.AngelsRaiment.Item] = EID.TRANSFORMATION.ANGEL,
 
     [Collectibles.MomsIOU.Item] = EID.TRANSFORMATION.MOM,
 
@@ -36,6 +147,8 @@ local CollectibleTransformations = {
     [Collectibles.DeletedErhu.Item] = "ReverieMusician",
     [Collectibles.SongOfNightbird.Item] = "ReverieMusician",
     [Collectibles.MountainEar.Item] = "ReverieMusician",
+    [Collectibles.ThunderDrum.Item] = "ReverieMusician",
+    [Collectibles.ReverieMusic.Item] = "ReverieMusician",
 
     [Collectibles.JarOfFireflies.Item] = EID.TRANSFORMATION.LORD_OF_THE_FLIES,
 
@@ -47,20 +160,20 @@ for id, trans in pairs(CollectibleTransformations) do
     EID:assignTransformation("collectible", id, trans);
 end
 
-local function AddKosuzuBookActive(size, active, name, description, language)
-	language = language or "en_us"
-	EID.descriptions[language].reverieKosuzuActive[size.."."..active] = {name, description};
-end
-local function AddKosuzuBookPassive(passive, description, language)
-	language = language or "en_us"
-	EID.descriptions[language].reverieKosuzuPassive[passive + 1] = description;
-end
-
 local function LoadEID(language)
     local lang = language.Language or "en_us";
     local descriptions = EID.descriptions[lang];
     local languageCode = language.Code;
     local EIDInfo = include("descriptions/rep/"..lang);
+
+    do -- Encyclopedia
+        local Pedia = Encyclopedia;
+        if (Pedia and lang == "en_us") then
+            local ItemPools = include("descriptions/rep/itempools");
+            local wiki = include("compatilities/encyclopedia/main");
+            wiki:Register(EIDInfo, ItemPools);
+        end
+    end
 
     do --Collectibles
         for id, col in pairs(EIDInfo.Collectibles) do
@@ -72,6 +185,11 @@ local function LoadEID(language)
             if (col.BookOfBelial and descriptions.bookOfBelialBuffs) then
                 descriptions.bookOfBelialBuffs[id] = col.BookOfBelial;
             end
+
+            if (col.BingeEater and descriptions.bingeEaterBuffs) then
+                descriptions.bingeEaterBuffs[id] = col.BingeEater;
+            end
+
         end
     end
 
@@ -85,6 +203,13 @@ local function LoadEID(language)
         end
     end
 
+    for id, card in pairs(EIDInfo.Cards) do
+        EID:addCard(id, card.Description, card.Name, lang);
+    end
+    for id, pill in pairs(EIDInfo.Pills) do
+        EID:addPill(id, pill.Description, pill.Name, lang);
+    end
+
     -- Transformations.
     do
         for id, trans in pairs(EIDInfo.Transformations) do
@@ -94,7 +219,13 @@ local function LoadEID(language)
 
     -- Birthrights.
     for id, br in pairs(EIDInfo.Birthrights) do
-        EID:addBirthright(id, br.Description, br.PlayerName);
+        EID:addBirthright(id, br.Description, br.PlayerName, lang);
+    end
+
+    -- Rune Sword.
+    descriptions.reverieRuneSword = {};
+    for id, desc in pairs(EIDInfo.RuneSword) do
+        descriptions.reverieRuneSword[id] = desc;
     end
 
     
@@ -113,6 +244,11 @@ local function LoadEID(language)
         local kosuzuDescriptions = EIDInfo.KosuzuDescriptions;
         for i, id in pairs(EmptyBook.FinishedBooks) do
             local size = i - 1
+            do
+                local name = EmptyBook.GetBookName(-1, size, languageCode);
+                local description = kosuzuDescriptions.Default;
+                descriptions.reverieKosuzuActive[size..".nil"] = {name, description};
+            end
             for _, active in pairs(EmptyBook.ActiveEffects) do
                 local name = EmptyBook.GetBookName(active, size, languageCode);
                 local description = kosuzuDescriptions.Actives[size][active];
@@ -136,6 +272,18 @@ local function LoadEID(language)
         end
     end
 
+    do -- Seija Descriptions
+        descriptions.reverieSeijaBuffs = {}
+        for id, desc in pairs(EIDInfo.SeijaBuffs.Collectibles) do
+            descriptions.reverieSeijaBuffs["100."..id] = desc;
+        end
+        descriptions.reverieSeijaBuffs["Modded"] = EIDInfo.SeijaBuffs.Modded;
+        descriptions.reverieSeijaNerfs = {}
+        for id, desc in pairs(EIDInfo.SeijaNerfs.Collectibles) do
+            descriptions.reverieSeijaNerfs["100."..id] = desc;
+        end
+        descriptions.reverieSeijaNerfs["Modded"] = EIDInfo.SeijaNerfs.Modded;
+    end
 end
 
 
@@ -176,12 +324,20 @@ do
         for i, id in pairs(EmptyBook.FinishedBooks) do
             if (subType == id) then
                 local size = i - 1;
-                local activeEntry = EID:getDescriptionEntry("reverieKosuzuActive", size.."."..active);
-                local passiveEntry = EID:getDescriptionEntry("reverieKosuzuPassive", passive + 1);
-                local name = activeEntry[1];
-                local activeDesc = activeEntry[2];
-                local passiveDesc = passiveEntry;
-                local description = activeDesc.."#"..passiveDesc;
+                local description;
+                local name;
+                if (active >= 0) then
+                    local activeEntry = EID:getDescriptionEntry("reverieKosuzuActive", size.."."..active);
+                    local passiveEntry = EID:getDescriptionEntry("reverieKosuzuPassive", passive + 1);
+                    name = activeEntry[1]
+                    local activeDesc = activeEntry[2];
+                    local passiveDesc = passiveEntry;
+                    description= activeDesc.."#"..passiveDesc;
+                else
+                    local activeEntry = EID:getDescriptionEntry("reverieKosuzuActive", size..".nil");
+                    name = activeEntry[1];
+                    description = activeEntry[2];
+                end
                 
                 descObj.Name = name;
                 EID:appendToDescription(descObj, description);
@@ -215,5 +371,195 @@ do
         return descObj;
     end
     EID:addDescriptionModifier("reverieLunatic", LunaticCondition, LunaticCallback);
+    
+end
+
+
+-- Rune Sword.
+do
+
+    local function Condition(descObj)
+        local RuneSword = THI.Collectibles.RuneSword;
+        local game = Game();
+        for i = 0, game:GetNumPlayers(0) - 1 do
+            local player = game:GetPlayer(i);
+            if (player:HasCollectible(RuneSword.Item)) then
+                return true;
+            end
+        end
+        return false;
+    end
+    local function Callback(descObj)
+        local id = descObj.ObjType;
+        local variant = descObj.ObjVariant;
+        local subType = descObj.ObjSubType;
+        if (id == 5 and variant == PickupVariant.PICKUP_TAROTCARD) then
+            local desc = EID:getDescriptionEntry("reverieRuneSword", subType);
+            if (desc) then
+                local RuneSword = THI.Collectibles.RuneSword;
+
+                local variables = RuneSwordVariables[subType];
+                if (variables) then
+                    local game = Game();
+                    local level = game:GetLevel();
+                    local stage = level:GetStage();
+                    local globalCount = RuneSword:GetGlobalRuneCount(subType) + 1;
+                    local nearestPlayer;
+                    local nearestDis;
+                    
+                    for i = 0, game:GetNumPlayers(0) - 1 do
+                        local player = game:GetPlayer(i);
+                        local dis = descObj.Entity.Position:Distance(player.Position);
+                        if (player:HasCollectible(RuneSword.Item) and not nearestPlayer or dis < nearestDis) then
+                            nearestPlayer = player;
+                            nearestDis = dis;
+                        end
+                    end
+                    local nextCount =  RuneSword:GetInsertedRuneNum(nearestPlayer, subType) + 1;
+                    for name, func in pairs(variables) do
+                        local str = string.format("%.0f", func(nextCount, globalCount, stage));
+                        str = "{{ColorYellow}}"..str.."{{CR}}"
+                        desc = string.gsub(desc, "{"..name.."}", str)
+                    end
+                end
+
+                desc = "#"..desc;
+                local repl = "#{{Collectible"..RuneSword.Item.."}} "
+                desc = string.gsub(desc, "#", repl)
+                EID:appendToDescription(descObj, desc);
+            end
+        end
+        return descObj;
+    end
+    EID:addDescriptionModifier("reverieRuneSword", Condition, Callback);
+    
+end
+
+
+-- D Flip.
+do
+
+    local function Condition(descObj)
+        local DFlip = THI.Collectibles.DFlip;
+        local SoulOfSeija = THI.Cards.SoulOfSeija;
+        local game = Game();
+        for i = 0, game:GetNumPlayers(0) - 1 do
+            local player = game:GetPlayer(i);
+            if (player:HasCollectible(DFlip.Item)) then
+                return true;
+            end
+            for slot = 0, 1 do
+                local card = player:GetCard(slot);
+                if (card == SoulOfSeija.ID or card == SoulOfSeija.ReversedID) then
+                    return true;
+                end
+            end
+        end
+        return false;
+    end
+    local function Callback(descObj)
+        local id = descObj.ObjType;
+        local variant = descObj.ObjVariant;
+        local subType = descObj.ObjSubType;
+        local DFlip = THI.Collectibles.DFlip;
+        local another = DFlip:GetFixedAnother(id, variant, subType)
+        if (another) then
+            local desc = "#{{Collectible"..DFlip.Item.."}} ";
+            local function GetDesc(type, variant ,subtype)
+                
+                if (type == 5) then
+                    if (variant == PickupVariant.PICKUP_COLLECTIBLE) then
+                        return "{{Collectible"..subtype.."}}"
+                    elseif (variant == PickupVariant.PICKUP_TRINKET) then
+                        return "{{Trinket"..subtype.."}}"
+                    elseif (variant == PickupVariant.PICKUP_TAROTCARD) then
+                        return "{{Card"..subtype.."}}"
+                    end
+                end
+                return "{{QuestionMark}}"
+            end
+
+            local thisDesc = GetDesc(id, variant, subType);
+            local anotherDesc = GetDesc(another[1] or 5, another[2] or 0, another[3] or 0);
+
+            desc = desc..thisDesc.."<=>"..anotherDesc;
+
+            EID:appendToDescription(descObj, desc);
+        end
+        return descObj;
+    end
+    EID:addDescriptionModifier("reverieDFlip", Condition, Callback);
+    
+end
+
+-- Seija.
+do
+
+    local function SeijaBuffCondition(descObj)
+        local Seija = THI.Players.Seija;
+        local game = Game();
+        for i = 0, game:GetNumPlayers(0) - 1 do
+            local player = game:GetPlayer(i);
+            if (Seija:WillPlayerBuff(player)) then
+                return true;
+            end
+        end
+        return false;
+    end
+    local function SeijaBuffCallback(descObj)
+        local id = descObj.ObjType;
+        local variant = descObj.ObjVariant;
+        local subType = descObj.ObjSubType;
+        if (id == 5) then
+            local Seija = THI.Players.Seija;
+            local desc = EID:getDescriptionEntry("reverieSeijaBuffs", variant.."."..subType);
+            if (not desc) then
+                if (Seija:IsModQuality0(subType)) then
+                    desc = EID:getDescriptionEntry("reverieSeijaBuffs", "Modded");
+                end
+            end
+            if (desc) then
+                desc = "#"..desc;
+                local repl = "#{{Player"..Seija.Type.."}} "
+                desc = string.gsub(desc, "#", repl)
+                EID:appendToDescription(descObj, desc);
+            end
+        end
+        return descObj;
+    end
+    local function SeijaNerfCondition(descObj)
+        local Seija = THI.Players.Seija;
+        local game = Game();
+        for i = 0, game:GetNumPlayers(0) - 1 do
+            local player = game:GetPlayer(i);
+            if (Seija:WillPlayerNerf(player)) then
+                return true;
+            end
+        end
+        return false;
+    end
+    local function SeijaNerfCallback(descObj)
+        local id = descObj.ObjType;
+        local variant = descObj.ObjVariant;
+        local subType = descObj.ObjSubType;
+        if (id == 5) then
+            local Seija = THI.Players.Seija;
+            local desc = EID:getDescriptionEntry("reverieSeijaNerfs", variant.."."..subType);
+            if (not desc) then
+                if (Seija:IsModQuality4(subType)) then
+                    desc = EID:getDescriptionEntry("reverieSeijaNerfs", "Modded");
+                end
+            end
+            if (desc) then
+                desc = "#"..desc;
+                local repl = "#{{Player"..Seija.Type.."}} "
+                desc = string.gsub(desc, "#", repl)
+                EID:appendToDescription(descObj, desc);
+            end
+        end
+        return descObj;
+    end
+    EID:addDescriptionModifier("reverieSeijaBuffs", SeijaBuffCondition, SeijaBuffCallback);
+    EID:addDescriptionModifier("reverieSeijaNerfs", SeijaNerfCondition, SeijaNerfCallback);
     
 end

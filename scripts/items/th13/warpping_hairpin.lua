@@ -1,6 +1,6 @@
 local Detection = CuerLib.Detection;
 
-local Hairpin = ModItem("Warpping Hairpin", "WarpHairpin");
+local Hairpin = ModItem("Warping Hairpin", "WarpHairpin");
 
 local isWarpped = false;
 local appearPos = Vector(0, 0);

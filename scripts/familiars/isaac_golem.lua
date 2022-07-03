@@ -5,6 +5,7 @@ local Screen = CuerLib.Screen;
 
 local IsaacGolem = ModEntity("Isaac Golem", "IsaacGolem")
 
+local debugRender = false;
 local maxCheckCooldown = 10;
 local maxPathFindCooldown = 10;
 local maxDamageCooldown = 30;
@@ -84,153 +85,15 @@ end
 -- Path Finding
 ----------------
 
-local openGrids = {};
-local closedGrids = {};
 local gridSize = 40;
-
-
-local function GetGridEsicost(index, targetIndex)
-    local room = THI.Game:GetRoom();
-    -- local width = room:GetGridWidth();
-    -- local targetX = targetIndex % width;
-    -- local targetY = math.ceil(targetIndex / width);
-    -- local indexX = index % width;
-    -- local indexY = math.ceil(index / width);
-    -- return math.abs(targetX-indexX) + math.abs(targetY - indexY);
-    return (room:GetGridPosition(targetIndex) - room:GetGridPosition(index)):Length() / gridSize;
-end
-local function GetLowestCostGrid()
-    local cur = openGrids[1];
-    local index = 1;
-    for i = #openGrids, 1, -1 do
-        local grid = openGrids[i];
-        if (grid.Cost < cur.Cost) then
-            cur = grid;
-            index = i;
-        end
-    end
-    return index, cur;
-end
-local function IsIndexOpen(index)
-    for _, i in pairs(openGrids) do
-        if (i.Index == index) then
-            return true, i;
-        end
-    end
-    return false;
-end
-local function IsIndexClosed(index)
-    for _, i in pairs(closedGrids) do
-        if (i == index) then
-            return true;
-        end
-    end
-    return false;
-end
-local function GetAdjacent(index, dir)
-    local width = THI.Game:GetRoom():GetGridWidth();
-    if (dir == Direction.UP) then
-        return index - width;
-    elseif (dir == Direction.DOWN) then
-        return index + width;
-    elseif (dir == Direction.LEFT) then
-        return index - 1;
-    elseif (dir == Direction.RIGHT) then
-        return index + 1;
-    elseif (dir == 4) then
-        return index - width - 1;
-    elseif (dir == 5) then
-        return index - width + 1;
-    elseif (dir == 6) then
-        return index + width - 1;
-    elseif (dir == 7) then
-        return index + width + 1;
-    end
-    return nil;
+local function FindPath(entIndex, targetIndex)
+    local PathFinding = THI.Shared.PathFinding;
+    return PathFinding:FindPath(entIndex, targetIndex);
 end
 
-local function CanPass(index)
-    local room = THI.Game:GetRoom();
-    local gridEnt = room:GetGridEntity(index);
-    if (not gridEnt or gridEnt.CollisionClass == GridCollisionClass.COLLISION_NONE) then
-        return true;
-    end
-    return room:GetGridPath(index) < 900;
-end
-local function FindPath(golemIndex, targetIndex)
-    local room = THI.Game:GetRoom();
-    local width = room:GetGridWidth();
-
-    if (not CanPass(targetIndex)) then
-        return nil, nil;
-    end
-
-    -- Clear open and closed list.
-    for i = #openGrids, 1, -1 do
-        table.remove(openGrids, i);
-    end
-    for i = #closedGrids, 1, -1 do
-        table.remove(closedGrids, i);
-    end
-
-    -- Add current grid to open.
-    table.insert(openGrids, 
-        { 
-            Index = golemIndex, 
-            StartCost = 0, 
-            Cost = 0,
-            Parent = nil
-        }
-    );
-
-    local current;
-    while (#openGrids > 0) do
-        local listIndex;
-        listIndex, current = GetLowestCostGrid();
-        table.remove(openGrids, listIndex);
-        table.insert(closedGrids, current.Index);
-
-        if (current.Index == targetIndex) then
-            -- Found path.
-            local results = {};
-            local lastOne = nil;
-            local thridLastOne = nil;
-            while (current.Parent) do
-                thridLastOne = lastOne;
-                lastOne = current.Index;
-                table.insert(results, current.Parent.Index);
-                current = current.Parent;
-            end
-            local result = thridLastOne or lastOne or current.Index;
-            return result, results;
-        end
-
-        for i = 0, 3 do 
-            local adjacentIndex = GetAdjacent(current.Index, i);
-            if (CanPass(adjacentIndex) and not IsIndexClosed(adjacentIndex)) then
-                local isOpen, gridInfo = IsIndexOpen(adjacentIndex);
-                if (not isOpen) then
-                    local adj = {};
-                    adj.Index = adjacentIndex;
-                    adj.StartCost = current.StartCost + 1;--room:GetGridPosition(adjacentIndex):Distance(room:GetGridPosition(golemIndex)) / gridSize;
-                    adj.Cost = adj.StartCost + GetGridEsicost(adjacentIndex, targetIndex);
-                    adj.Parent = current;
-                    table.insert(openGrids, adj);
-                else
-                    local newStartCost = current.StartCost + 1;--room:GetGridPosition(adjacentIndex):Distance(room:GetGridPosition(golemIndex)) / gridSize;
-                    if (newStartCost < gridInfo.StartCost) then
-                        gridInfo.StartCost = newStartCost;
-                        gridInfo.Cost = gridInfo.Cost - gridInfo.StartCost + newStartCost;
-                        gridInfo.Parent = current;
-                    end
-                end
-            end
-        end
-    end
-end
-local function FindPathInPos(golemPos, targetPos)
-    local room = THI.Game:GetRoom();
-    return FindPath(room:GetGridIndex(golemPos), room:GetGridIndex(targetPos));
+local function FindPathInPos(entityPos, targetPos)
+    local PathFinding = THI.Shared.PathFinding;
+    return PathFinding:FindPathInPos(entityPos, targetPos);
 end
 
 
@@ -250,7 +113,14 @@ local function MoveToTarget(golem, moveTarget, maxCooldown, targetDistance)
         if (
         data.PathFindData.Cooldown <= 0) then
             data.PathFindData.Cooldown = maxCooldown;
-            data.PathFindData.Node, data.PathFindData.Nodes = FindPath(currentIndex, targetIndex);
+            local nodes = FindPath(currentIndex, targetIndex);
+            data.PathFindData.Nodes = nodes
+            local node = nil;
+            if (nodes) then
+                local num = #nodes;
+                node =  nodes[num - 2] or nodes[num - 1] or nodes[num];
+            end
+            data.PathFindData.Node = node;
         end
 
         if (data.PathFindData.Node) then
@@ -413,7 +283,7 @@ local function UpdateAttackState(golem)
         local standPos = data.AttackData.TargetPos;
         MoveToTarget(golem, standPos);
 
-        local canSeeTarget, blockedPos = room:CheckLine(target.Position, golem.Position, 2);
+        local canSeeTarget, blockedPos = room:CheckLine(target.Position, golem.Position, 3);
         if (canSeeTarget and golem.Position:Distance(target.Position) < maxRange) then
             
             local direction = data.AttackData.AttackDirection;
@@ -484,7 +354,6 @@ function IsaacGolem.FindPressurePlates(golem, isAttacking)
                 -- if not in combat, or this is a red button.
                 if (not isAttacking or variant == 9) then
                     if (FindPathInPos(golem.Position, gridEntity.Position)) then
-
                         table.insert(tbl, gridEntity:ToPressurePlate());
                         hasButton = true;
                     end
@@ -693,11 +562,9 @@ function IsaacGolem:postGolemUpdate(golem)
 end
 IsaacGolem:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, IsaacGolem.postGolemUpdate, IsaacGolem.Variant);
 
+
 function IsaacGolem:postGolemRender(golem, offset)
     local data = IsaacGolem.GetGolemData(golem);
-
-    
-
 
     local sprite = golem:GetSprite();    
     local pos = Screen.GetEntityOffsetedRenderPosition(golem, offset);;
@@ -705,21 +572,24 @@ function IsaacGolem:postGolemRender(golem, offset)
     sprite:SetOverlayFrame (data.Sprites.Head.Animation, data.Sprites.Head.Frame)
     sprite.Color = golem:GetColor();
 
-    --local targePos = Isaac.WorldToScreen(data.AttackData.TargetPos);
-    --Isaac.RenderText("Here!", targePos.X, targePos.Y, 1,1,1,1);
-    --Isaac.RenderText(data.State..", Chests: "..#data.TrickChestData.Chests, pos.X, pos.Y - 40, 1,1,1,1);
+    if (debugRender) then
+        
+        local targePos = Isaac.WorldToScreen(data.AttackData.TargetPos);
+        Isaac.RenderText("Here!", targePos.X, targePos.Y, 1,1,1,1);
+        Isaac.RenderText(data.State..", Chests: "..#data.TrickChestData.Chests, pos.X, pos.Y - 40, 1,1,1,1);
 
-    -- if (data.PathFindData.Node) then
-    --     local screen = Isaac.WorldToScreen(THI.Game:GetRoom():GetGridPosition(data.PathFindData.Node));
-    --     Isaac.RenderText("Node", screen.X, screen.Y, 1,1,1,1);
-    -- end
+        if (data.PathFindData.Node) then
+            local screen = Isaac.WorldToScreen(THI.Game:GetRoom():GetGridPosition(data.PathFindData.Node));
+            Isaac.RenderText("Node", screen.X, screen.Y, 1,1,1,1);
+        end
 
-    -- if (data.PathFindData.Nodes) then
-    --     for k, v in pairs(data.PathFindData.Nodes) do
-    --         local screen = Isaac.WorldToScreen(THI.Game:GetRoom():GetGridPosition(v));
-    --         Isaac.RenderText(k, screen.X, screen.Y, 1,1,1,1);
-    --     end
-    -- end
+        if (data.PathFindData.Nodes) then
+            for k, v in pairs(data.PathFindData.Nodes) do
+                local screen = Isaac.WorldToScreen(THI.Game:GetRoom():GetGridPosition(v));
+                Isaac.RenderText(k, screen.X, screen.Y, 1,1,1,1);
+            end
+        end
+    end
 end
 IsaacGolem:AddCallback(ModCallbacks.MC_POST_FAMILIAR_RENDER, IsaacGolem.postGolemRender, IsaacGolem.Variant);
 

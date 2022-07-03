@@ -3,6 +3,7 @@ local SaveAndLoad = CuerLib.SaveAndLoad
 local Collectibles = CuerLib.Collectibles
 local Callbacks = CuerLib.Callbacks;
 local Stages = CuerLib.Stages;
+local ItemPools = CuerLib.ItemPools;
 
 local Starseeker = ModItem("Starseeker", "Starseeker");
 Starseeker.Ball = {
@@ -23,7 +24,6 @@ local rng = RNG();
 
 local function GetGlobalData()
     return Starseeker:GetGlobalData(true, function() return {
-        NewRoom = false,
         Triggered = false,
         Seed = THI.Game:GetSeeds():GetStartSeed(),
         --Balls = {},
@@ -86,11 +86,7 @@ function Starseeker.InitBallItem(ball)
     if (item == nil) then
         local seed = GetSeekerNextSeed();
 
-        local poolType = itemPool:GetPoolForRoom(roomType, seed)
-        if (poolType < 0) then
-            poolType = 0;
-        end
-
+        local poolType = ItemPools:GetPoolForRoom(roomType, seed);
         local tries = 0;
         while (item == nil and tries < 4) do
             isGetingBallItem = true;
@@ -186,14 +182,14 @@ end
 ---------------------------------
 -- Events
 ---------------------------------
-function Starseeker:preGetCollectible(pool, decrease, seed)
-    if (decrease) then
+function Starseeker:preGetCollectible(pool, decrease, seed, loopCount)
+    if (decrease and loopCount == 1) then
         local room = THI.Game:GetRoom();
         local roomType = room:GetType();
         if (Starseeker.HasFuture(roomType)) then
             if (not isGetingBallItem) then
                 local item = Starseeker.DequeueFuture(roomType);
-                if (item ~= 0) then
+                if (item > 0) then
                     return item;
                 end
             end
@@ -201,26 +197,41 @@ function Starseeker:preGetCollectible(pool, decrease, seed)
     end
 end
     
-Starseeker:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, Starseeker.preGetCollectible);
+Starseeker:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, Starseeker.preGetCollectible, nil, 50);
 
 
 --local ballsDataBuffer = {};
 function Starseeker:onUpdate()
     local globalData = GetGlobalData();
-    if (globalData.NewRoom) then
-        
-        globalData.NewRoom = false;
-        local level = THI.Game:GetLevel();
-        local key = Starseeker.GetCurrentRoomKey();
-
-        local count = 0;
-        for _, ent in pairs(Isaac.FindByType(5, 100)) do
-            if (ent.SubType ~= 0) then
-                count = count + 1;
+    
+    local level = THI.Game:GetLevel();
+    local room = THI.Game:GetRoom();
+    
+    if (room:GetFrameCount() == 1) then
+        local canTrigger = false;
+        if (room:IsFirstVisit()) then
+            if (Collectibles.IsAnyHasCollectible(Starseeker.Item)) then
+                local roomDesc = level:GetCurrentRoomDesc();
+                local dimension = Stages.GetDimension(roomDesc);
+                if (dimension ~= 2) then -- No Death Certificate
+                    if (roomDesc.Data.Type ~= RoomType.ROOM_DUNGEON) then
+                        canTrigger = true;
+                    end
+                end
             end
         end
-        globalData.Triggered = count > 0;
-        globalData.RoomItemCount[key] = count;
+
+        if (canTrigger) then
+            local key = Starseeker.GetCurrentRoomKey();
+            local count = 0;
+            for _, ent in pairs(Isaac.FindByType(5, 100)) do
+                if (ent.SubType ~= 0) then
+                    count = count + 1;
+                end
+            end
+            globalData.Triggered = count > 0;
+            globalData.RoomItemCount[key] = count;
+        end
     end
 
     if (Starseeker.BallSpawnCooldown > 0) then
@@ -283,30 +294,6 @@ end
 
 Starseeker:AddCallback(ModCallbacks.MC_POST_UPDATE, Starseeker.onUpdate);
 
-
-function Starseeker:PostNewRoom()
-    local room = THI.Game:GetRoom();
-    
-    local globalData = GetGlobalData();
-    local key = Starseeker.GetCurrentRoomKey();
-    local count = globalData.RoomItemCount[key] or 0;
-    globalData.Triggered = count > 0;
-    if (room:IsFirstVisit()) then
-        if (Collectibles.IsAnyHasCollectible(Starseeker.Item)) then
-            local level = THI.Game:GetLevel();
-            local roomDesc = level:GetCurrentRoomDesc();
-            local dimension = Stages.GetDimension(roomDesc);
-            if (dimension ~= 2 and roomDesc.GridIndex >= 0) then
-                if (roomDesc.Data.Type ~= RoomType.ROOM_DUNGEON) then
-                    globalData.NewRoom = true;
-                end
-            end
-        end
-    end
-end
-Starseeker:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Starseeker.PostNewRoom);
-
-
 ---- Ball -------------------
 function Starseeker:PostBallInit(ball)
     Starseeker.InitBallItem(ball);
@@ -314,7 +301,7 @@ end
 Starseeker:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, Starseeker.PostBallInit, Starseeker.Ball.Variant);
 
 function Starseeker:onBallUpdate(ball)
-    if (SaveAndLoad.GameStarted) then
+    if (Game():GetFrameCount() > 0) then
 
         local sprite = ball:GetSprite();
         if (sprite:IsEventTriggered("Appear")) then

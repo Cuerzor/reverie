@@ -72,6 +72,10 @@ Translation.Default = {
     ["#RUNE_SWORD_FORGOTTEN_NAME"] = "Soul of the Forgotten", 
     ["#RUNE_SWORD_BETHANY_NAME"] = "Soul of Bethany", 
     ["#RUNE_SWORD_JACOB_NAME"] = "Soul of Jacob and Esau", 
+    ["#RUNE_SWORD_EIKA_NAME"] = "Soul of Eika", 
+    ["#RUNE_SWORD_SATORI_NAME"] = "Soul of Satori", 
+    ["#RUNE_SWORD_SEIJA_NAME"] = "Soul of Seija", 
+    ["#RUNE_SWORD_SEIJA_REVERSED_NAME"] = "Soul of Seija", 
     
     ["#RUNE_SWORD_HAGALAZ_DESCRIPTION"] = "Rock Tears" ,
     ["#RUNE_SWORD_JERA_DESCRIPTION"] = "1+1, or more" ,
@@ -101,6 +105,10 @@ Translation.Default = {
     ["#RUNE_SWORD_FORGOTTEN_DESCRIPTION"] = "What does not kill me, makes me stronger" ,
     ["#RUNE_SWORD_BETHANY_DESCRIPTION"] = "Wisp collector" ,
     ["#RUNE_SWORD_JACOB_DESCRIPTION"] = "Swear to me first" ,
+    ["#RUNE_SWORD_EIKA_DESCRIPTION"] = "Blood resurrection", 
+    ["#RUNE_SWORD_SATORI_DESCRIPTION"] = "Mind control tears", 
+    ["#RUNE_SWORD_SEIJA_DESCRIPTION"] = "The weak will dominate", 
+    ["#RUNE_SWORD_SEIJA_REVERSED_DESCRIPTION"] = "The strong will perish", 
 
     ["#CELLPHONE_PURCHASE_TITLE"] = "Thanks for your purchase!",
     ["#CELLPHONE_PURCHASE_DESCRIPTION"] ="Your goods are on the way!",
@@ -153,6 +161,8 @@ Translation.Default = {
     ["#YAMAWARO_CRATE_ITEMS"] = "Items",
     ["#YAMAWARO_CRATE_PAGE"] = "{CURRENT}/{ALL}",
 
+    ["#MAGATAMA_ERROR"] = "!\"Division by Zero\" Attack!",
+
 
     ["#SPELL_CARD_SCARLET_NIGHTMARE"] = "Dream Sign \"Scarlet Nightmare\"",
     ["#SPELL_CARD_OCHRE_CONFUSION"] = "Dream Sign \"Ochre Confusion\"",
@@ -161,6 +171,8 @@ Translation.Default = {
     
     ["#DOREMY_ENDING_TITLE"] = "Thanks for playing!",
     ["#DOREMY_ENDING_SUBTITLE"] = "May Isaac live a happy new life.",
+
+    ["#COLLECTED_MUSIC"] = "Music: {{CURRENT}}/{{MAX}}",
 
 }
 

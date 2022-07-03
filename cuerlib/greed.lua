@@ -1,8 +1,6 @@
-local Lib = CuerLib;
-local Callbacks = CuerLib.Callbacks;
-local Greed = {
-
-}
+local Lib = _TEMP_CUERLIB;
+local Callbacks = Lib.Callbacks;
+local Greed = Lib:NewClass();
 
 local GreedState = {
     GREED_NOT_CLEARED = 0,
@@ -57,14 +55,6 @@ local function PostUpdate(mod)
         data.Cleared = clear;
     end
 end
-
-
-function Greed:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
-end
-
-function Greed:Unregister(mod)
-    mod:RemoveCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
-end
+Greed:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 
 return Greed;

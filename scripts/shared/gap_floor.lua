@@ -1,6 +1,6 @@
 local GapFloor = {
     Map = {
-        Sprite = "gfx/grid/gap_map.anm2",
+        Sprite = "gfx/reverie/grid/gap_map.anm2",
         Animations = {
             [1] = "normal",
             [2] = "narrowH",
@@ -58,13 +58,19 @@ end
 function GapFloor.UpdateMapSprite(ent)
     local level = THI.Game:GetLevel();
     local currentRoomIndex = level:GetCurrentRoomDesc().SafeGridIndex;
-    local roomData = level:GetRoomByIdx(ent.State, -1).Data;
-    local roomShape = roomData.Shape;
-    local roomType = roomData.Type;
+    local desc = level:GetRoomByIdx(ent.State, -1);
+    local roomData = desc.Data;
+
     local sprite = ent:GetSprite();
     sprite:Load(GapFloor.Map.Sprite, true);
-    if (ent.State == currentRoomIndex) then
-        roomType = 0;
+    local roomShape = RoomShape.ROOMSHAPE_1x1;
+    local roomType = RoomType.ROOM_ERROR;
+    if (roomData) then
+        roomShape = roomData.Shape;
+        roomType = roomData.Type;
+        if (ent.State == currentRoomIndex) then
+            roomType = 0;
+        end
     end
     sprite:SetFrame(GapFloor.Map.Animations[roomShape] or "normal", roomType);
 end
@@ -123,57 +129,66 @@ function GapFloor.IsStandingOnMap(player)
     if (entity ~= nil and GapFloor.IsGridGap(entity)) then
         return entity;
     else
+        
+        local function IsRoomShapeFits(entity, ...)
+            if (entity ~= nil and GapFloor.IsGridGap(entity)) then
+                local roomData = level:GetRoomByIdx(entity.State).Data;
+                local shape = (roomData and roomData.Shape) or RoomShape.ROOMSHAPE_1x1;
+                for i, shp in pairs{...} do
+                    if (shape == shp) then
+                        return true;
+                    end
+                end
+            end
+            return false;
+        end
+
         -- Up
         index = playerGridIndex - roomWidth;
         entity = room:GetGridEntity(index);
-        if (entity ~= nil and GapFloor.IsGridGap(entity)) then
-            -- if Shape is Veritcal long
-            local shape = level:GetRoomByIdx(entity.State).Data.Shape;
-            if (shape == RoomShape.ROOMSHAPE_1x2 or
-            shape == RoomShape.ROOMSHAPE_IIV or
-            shape == RoomShape.ROOMSHAPE_2x2 or
-            shape == RoomShape.ROOMSHAPE_LTL or
-            shape == RoomShape.ROOMSHAPE_LTR or
-            shape == RoomShape.ROOMSHAPE_LBR) then
-                return entity;
-            end
+
+        -- if Shape is Veritcal long
+        if (IsRoomShapeFits(entity, 
+        RoomShape.ROOMSHAPE_1x2, 
+        RoomShape.ROOMSHAPE_IIV, 
+        RoomShape.ROOMSHAPE_2x2, 
+        RoomShape.ROOMSHAPE_LTL, 
+        RoomShape.ROOMSHAPE_LTR, 
+        RoomShape.ROOMSHAPE_LBR)) then
+            return entity;
         end
         -- Left
         index = playerGridIndex - 1;
         entity = room:GetGridEntity(index);
-        if (entity ~= nil and GapFloor.IsGridGap(entity)) then
-            -- if Shape is Horizontal long
-            local shape = level:GetRoomByIdx(entity.State).Data.Shape;
-            if (shape == RoomShape.ROOMSHAPE_2x1 or
-            shape == RoomShape.ROOMSHAPE_IIH or
-            shape == RoomShape.ROOMSHAPE_2x2 or
-            shape == RoomShape.ROOMSHAPE_LBL or
-            shape == RoomShape.ROOMSHAPE_LBR) then
-                return entity;
-            end
+        
+        -- if Shape is Horizontal long
+        if (IsRoomShapeFits(entity, 
+        RoomShape.ROOMSHAPE_2x1, 
+        RoomShape.ROOMSHAPE_IIH, 
+        RoomShape.ROOMSHAPE_2x2, 
+        RoomShape.ROOMSHAPE_LBL, 
+        RoomShape.ROOMSHAPE_LBR)) then
+            return entity;
         end
         -- Left Up
         index = playerGridIndex  - roomWidth - 1;
         entity = room:GetGridEntity(index);
-        if (entity ~= nil and GapFloor.IsGridGap(entity)) then
-            -- if Shape is big
-            local shape = level:GetRoomByIdx(entity.State).Data.Shape;
-            if (shape == RoomShape.ROOMSHAPE_2x2 or
-            shape == RoomShape.ROOMSHAPE_LBL or
-            shape == RoomShape.ROOMSHAPE_LTR) then
-                return entity;
-            end
+        
+        -- if Shape is big
+        if (IsRoomShapeFits(entity, 
+        RoomShape.ROOMSHAPE_2x2, 
+        RoomShape.ROOMSHAPE_LBL, 
+        RoomShape.ROOMSHAPE_LTR)) then
+            return entity;
         end
         
         -- Right Up
         index = playerGridIndex  - roomWidth + 1;
         entity = room:GetGridEntity(index);
-        if (entity ~= nil and GapFloor.IsGridGap(entity)) then
-            -- if Shape is LTL
-            local shape = level:GetRoomByIdx(entity.State).Data.Shape;
-            if (shape == RoomShape.ROOMSHAPE_LTL) then
-                return entity;
-            end
+        -- if Shape is LTL
+        if (IsRoomShapeFits(entity, 
+        RoomShape.ROOMSHAPE_LTL)) then
+            return entity;
         end
     end
     return nil;

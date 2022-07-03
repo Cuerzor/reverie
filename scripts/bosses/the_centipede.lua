@@ -5,6 +5,12 @@ local Bosses = CuerLib.Bosses;
 local Grids = CuerLib.Grids;
 local Centi = ModEntity("The Centipede", "CENTIPEDE");
 
+do
+    local RockParams = ProjectileParams();
+    RockParams.Variant = ProjectileVariant.PROJECTILE_ROCK;
+    Centi.RockParams = RockParams;
+end
+
 local SegmentPrice = 5;
 function Centi.GetCentipedeData(centipede, init)
     local getter = function ()
@@ -153,11 +159,11 @@ do
         },
         Type = Centi.Type,
         Variant = Centi.Variant,
-        PortraitPath = "gfx/ui/boss/portrait_583.0_the centipede.png",
+        PortraitPath = "gfx/reverie/ui/boss/portrait_583.0_the centipede.png",
         PortraitOffset = Vector(0, 0),
         NamePaths = {
-            en = "gfx/ui/boss/bossname_583.0_the centipede.png",
-            zh = "gfx/ui/boss/bossname_583.0_the centipede_zh.png"
+            en = "gfx/reverie/ui/boss/bossname_583.0_the centipede.png",
+            zh = "gfx/reverie/ui/boss/bossname_583.0_the centipede_zh.png"
         }
     }
     Bosses:SetBossConfig("reverie:the_centipede", bossConfig, roomConfigs);
@@ -279,6 +285,15 @@ local function FindParents(centipede)
                     end
                     centipede.Parent = currentSegment;
                     currentSegment.Child = centipede;
+
+                    local curNPC = currentSegment:ToNPC();
+                    if (curNPC) then
+                        
+                        if (curNPC.GroupIdx < 0) then
+                            curNPC.GroupIdx = GetPtrHash(currentSegment);
+                        end
+                        centipede.GroupIdx = curNPC.GroupIdx;
+                    end
                 end
             end
         end
@@ -367,7 +382,7 @@ local function PostCentipedeUpdate(mod, centipede)
                                 value = value - 1;
                             elseif (not EntityExists(child.Child)) then
                                 value = value - 1;
-                                local newSegment = Isaac.Spawn(Centi.Type, Centi.Variant, 0, child.Position, Vector.Zero, nil):ToNPC();
+                                local newSegment = Isaac.Spawn(Centi.Type, Centi.Variant, 0, child.Position, Vector.Zero, centipede):ToNPC();
                                 newSegment:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
 
                                 child.Child = newSegment;
@@ -411,9 +426,15 @@ local function PostCentipedeUpdate(mod, centipede)
                 -- Not Axis Aligned.
                 if (target) then
                     -- Player or Coin.
-                    if (target.Type == EntityType.ENTITY_PLAYER) then
-                        local tp = target.Position
-                        -- Player.
+                    if (target.Type == EntityType.ENTITY_PICKUP) then
+                        -- Coin.
+                        speed = speed * 1.5;
+                        if (targetChange or centipede:IsFrame(math.ceil(40 / speed), 0)) then
+                            centipede.Velocity = targetPos - centipede.Position;
+                        end
+                    else
+                        local tp = target.Position;
+                        -- Otherwise.
                         if (math.abs(tp.X - pos.X) <= 30) then
                             -- Vertical Aligned.
                             i1 = 1;
@@ -438,13 +459,6 @@ local function PostCentipedeUpdate(mod, centipede)
                                 pathFinder:MoveRandomlyAxisAligned(speed, false);
                             end
                         end
-                    elseif (target.Type == EntityType.ENTITY_PICKUP) then
-                        -- Coin.
-                        speed = speed * 1.5;
-                        if (targetChange or centipede:IsFrame(math.ceil(40 / speed), 0)) then
-                            centipede.Velocity = targetPos - centipede.Position;
-                        end
-                        
                     end
                 else
                     -- Grid Entity.
@@ -462,18 +476,23 @@ local function PostCentipedeUpdate(mod, centipede)
                     i1 = 2;
                     Game():ShakeScreen(10);
                     THI.SFXManager:Play(SoundEffect.SOUND_ROCK_CRUMBLE);
-                    for i = 1, 1 * speed do
-                        local angle = (Random() % 10000 / 10000) * 150 - 75;
-                        local dir = (-centipede.TargetPosition):Rotated(angle);
-                        local vel = dir * (Random() % 10000 / 10000 * 10 + 5);
-                        local rock = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_ROCK, 0, centipede.Position, vel, centipede):ToProjectile();
-                        rock.FallingAccel = (Random() % 10000 / 10000) * 1;
-                        rock.FallingSpeed = -rock.FallingAccel ^ 2;
-                    end
+
+                    centipede:FireBossProjectiles(math.floor(1 * speed), centipede.Position - centipede.TargetPosition * 160, 10, Centi.RockParams)
+
+                    -- for i = 1, 1 * speed do
+                    --     local angle = (Random() % 10000 / 10000) * 150 - 75;
+                    --     local dir = (-centipede.TargetPosition):Rotated(angle);
+                    --     local vel = dir * (Random() % 10000 / 10000 * 10 + 5);
+                    --     local rock = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_ROCK, 0, centipede.Position, vel, centipede):ToProjectile();
+                    --     rock.FallingAccel = (Random() % 10000 / 10000) * 1;
+                    --     rock.FallingSpeed = -rock.FallingAccel ^ 2;
+                    -- end
                 else
-                    local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CREEP_GREEN, 0, centipede.Position, Vector.Zero, centipede):ToEffect();
-                    creep.Timeout = 90;
-                    creep.Scale = 1;
+                    if (Random() % 5 == 0) then
+                        local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CREEP_GREEN, 0, centipede.Position, Vector.Zero, centipede):ToEffect();
+                        creep.Timeout = 150;
+                        creep.Scale = 1;
+                    end
                     centipede.Velocity = centipede.TargetPosition * speed;
                 end
             elseif (i1 == 2) then
@@ -526,7 +545,7 @@ local function PostPlayerDamage(mod, tookDamage, amount, flags, source, countdow
         end
     end
 end
-Centi:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostPlayerDamage, EntityType.ENTITY_PLAYER)
+Centi:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostPlayerDamage, EntityType.ENTITY_PLAYER)
 
 
 local function PostCentipedeKill(mod, npc)
@@ -552,7 +571,9 @@ Centi:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, PostCentipedeKill, Centi.Typ
 
 local function PostCentipedeCollision(mod, npc, other, low)
     if (npc.Variant == Centi.Variant and other.Type == Centi.Type and other.Variant == Centi.Variant) then
-        return true;
+        if (npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) == other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+            return true;
+        end
     end
 end
 Centi:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PostCentipedeCollision, Centi.Type)

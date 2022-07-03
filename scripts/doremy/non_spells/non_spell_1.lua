@@ -3,6 +3,12 @@ local NonSpell1 = Dream.SpellCard();
 
 
 local tearColor = Color(1,1,1,1,0.5,0,0);
+local ProjParams = ProjectileParams();
+ProjParams.Variant = ProjectileVariant.PROJECTILE_TEAR;
+ProjParams.Color = tearColor;
+ProjParams.FallingAccelModifier = -0.2;
+ProjParams.FallingSpeedModifier = 3;
+ProjParams.Scale = 2;
 
 function NonSpell1:GetDefaultData(doremy)
     return {
@@ -45,20 +51,17 @@ function NonSpell1:PostUpdate(doremy)
                 local sourcePos = data.Position + offset;
                 local velocity = Vector.FromAngle(tearAngle) * 4;
                 
-                -- local params = ProjectileParams();
-                -- params.Variant = 4;
-                -- params.Color = tearColor;
-                -- params.FallingAccelModifier = 0;
-                -- params.FallingSpeedModifier = 0;
-                -- params.Scale = 2;
-                -- doremy:FireProjectiles (sourcePos, velocity, 0, params)
-                local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
-                tearEntity:SetColor(tearColor, -1, 0, false, true);
+                ProjParams.BulletFlags = self:GetProjectileFlags(doremy);
+                doremy:FireProjectiles (sourcePos, velocity, 0, ProjParams);
+                ProjParams.BulletFlags = 0;
 
-                local proj = tearEntity:ToProjectile();
-                proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
-                proj.Scale = 2;
-                table.insert(data.Projectiles, proj);
+                -- local tearEntity = Isaac.Spawn(9, 4, 0, sourcePos, velocity, doremy);
+                -- tearEntity:SetColor(tearColor, -1, 0, false, true);
+
+                -- local proj = tearEntity:ToProjectile();
+                -- proj.ProjectileFlags = proj.ProjectileFlags | self:GetProjectileFlags(doremy);
+                -- proj.Scale = 2;
+                -- table.insert(data.Projectiles, proj);
                 --THI.SFXManager:Play(SoundEffect.SOUND_BISHOP_HIT);
                 THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_DANMAKU, 0.25);
             end
@@ -66,15 +69,14 @@ function NonSpell1:PostUpdate(doremy)
         end
     end
 
-
-    -- Make projectiles float.
-    for i, proj in pairs(data.Projectiles) do
-        if (proj:Exists()) then
-            proj.FallingSpeed = 0;
-        else
-            data.Projectiles[i] = nil;
-        end
-    end
+    -- -- Make projectiles float.
+    -- for i, proj in pairs(data.Projectiles) do
+    --     if (proj:Exists()) then
+    --         proj.FallingSpeed = 0;
+    --     else
+    --         data.Projectiles[i] = nil;
+    --     end
+    -- end
 end
 function NonSpell1:OnCast(doremy)
     local data = self:GetData(doremy);

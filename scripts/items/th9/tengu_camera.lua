@@ -25,6 +25,10 @@ function TenguCamera:GetPlayerData(player, init)
     } end)
 end
 
+function TenguCamera:GetPlayerScore(player)
+    local data = self:GetPlayerData(player, false)
+    return (data and data.Score) or 0;
+end
 
 local objList = {
     Projectiles = {},

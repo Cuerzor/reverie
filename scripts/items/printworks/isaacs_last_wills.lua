@@ -2,7 +2,13 @@ local SaveAndLoad = CuerLib.SaveAndLoad;
 local Actives = CuerLib.Actives;
 local LastWills = ModItem("Isaac's Last Wills", "IsaacsLastWills");
 
-function LastWills.HasLegacies()
+local function GetGlobalData(create)
+    return LastWills:GetGlobalData(create, function () return {
+        GreedLegacy = false;
+    }end)
+end
+
+function LastWills:HasLegacies()
     local persistentData = SaveAndLoad.ReadPersistentData();
     local willsData = persistentData.LastWills;
     if (willsData) then
@@ -17,68 +23,58 @@ local function SpawnLegacies(wills)
     local room = THI.Game:GetRoom();
     local index = room:GetGridSize() - room:GetGridWidth() * 2 + 1;
     local leftBottomCorner = room:GetGridPosition(index);
-    for i, colInfo in pairs(wills.Collectibles) do
+    for i, colInfo in pairs(wills.Pickups) do
         local pos = room:FindFreePickupSpawnPosition(leftBottomCorner, 0, true);
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, colInfo.Id, pos, Vector.Zero, nil);
-    end
-
-    
-    for i, trinkInfo in pairs(wills.Trinkets) do
-        local pos = room:FindFreePickupSpawnPosition(leftBottomCorner, 0, true);
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET, trinkInfo.Id, pos, Vector.Zero, nil);
+        Isaac.Spawn(colInfo.Type, colInfo.Variant, colInfo.SubType, pos, Vector.Zero, nil);
     end
 end
+
+function LastWills:CanSend(pickup)
+    local EntityTags = THI.Shared.EntityTags;
+    return not EntityTags:EntityFits(pickup, "LastWillsBlacklist");
+end
+
 function LastWills:UseLastWills(item, rng, player, flags, slow, varData)
 
     local game = THI.Game;
     local seeds = THI.Game:GetSeeds();
     if (not seeds:IsCustomRun()) then
-        local collectibles = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE);
-        local trinkets = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET);
-        local collectibleCount = 0;
+        local pickups = Isaac.FindByType(EntityType.ENTITY_PICKUP);
+        local validCount = 0;
 
-        for _, col in pairs(collectibles) do
-            if (col.SubType > 0) then
-                collectibleCount = collectibleCount + 1;
+        for _, pickup in pairs(pickups) do
+            if (LastWills:CanSend(pickup)) then
+                validCount = validCount + 1;
             end
         end
 
 
-        local canLegacy = collectibleCount + #trinkets > 0;
+        local canLegacy = validCount > 0;
         local canWisps = Actives.CanSpawnWisp(player, flags)
         if (canLegacy or canWisps) then
             local persistentData = SaveAndLoad.ReadPersistentData();
+            -- Init Data.
             if (not persistentData.LastWills) then
                 persistentData.LastWills = {
-                    Collectibles = {},
-                    Trinkets = {},
+                    Pickups = {},
                     Wisps = false
                 };
             end
 
+            -- Write Data.
             local willsData = persistentData.LastWills;
             if (canLegacy) then
-                for i, ent in pairs(collectibles) do
-                    local col = ent:ToPickup();
-                    if (not col:IsShopItem()) then
+                for i, ent in pairs(pickups) do
+                    local pickup = ent:ToPickup();
+                    if (not pickup:IsShopItem() and LastWills:CanSend(pickup)) then
                         local info = {
-                            Id = col.SubType
+                            Type = pickup.Type,
+                            Variant = pickup.Variant,
+                            SubType = pickup.SubType
                         }
-                        table.insert(willsData.Collectibles, info);
-                        col:Remove();
-                        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, col.Position, Vector.Zero, nil);
-                    end
-                end
-
-                for i, ent in pairs(trinkets) do
-                    local col = ent:ToPickup();
-                    if (not col:IsShopItem()) then
-                        local info = {
-                            Id = col.SubType
-                        }
-                        table.insert(willsData.Trinkets, info);
-                        col:Remove();
-                        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, col.Position, Vector.Zero, nil);
+                        table.insert(willsData.Pickups, info);
+                        pickup:Remove();
+                        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
                     end
                 end
             end
@@ -101,15 +97,13 @@ function LastWills:PostGameStarted(isContinued)
     local seeds = THI.Game:GetSeeds();
     if (not seeds:IsCustomRun()) then
         if (not isContinued) then
-            if (LastWills.HasLegacies()) then
+            if (LastWills:HasLegacies()) then
                 local persistentData = SaveAndLoad.ReadPersistentData();
-                if (game.Difficulty ~= Difficulty.DIFFICULTY_GREED and game.Difficulty ~= Difficulty.DIFFICULTY_GREEDIER) then
+                if (not game:IsGreedMode() ) then
                     SpawnLegacies(SaveAndLoad.ReadPersistentData().LastWills)
                 else
                     -- Greed Mode
-                    local globalData = LastWills:GetGlobalData(true, function () return {
-                        GreedLegacy = false;
-                    }end)
+                    local globalData = GetGlobalData(true);
                     globalData.GreedLegacy = persistentData.LastWills;
                 end
                 
@@ -131,8 +125,8 @@ LastWills:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, LastWills.PostGameStart
 
 function LastWills:PostNewRoom()
     local game = THI.Game;
-    if (game.Difficulty == Difficulty.DIFFICULTY_GREED or game.Difficulty == Difficulty.DIFFICULTY_GREEDIER) then
-        local globalData = LastWills:GetGlobalData(false)
+    if (game:IsGreedMode()) then
+        local globalData = GetGlobalData(false)
         if (globalData and globalData.GreedLegacy) then
             local level = THI.Game:GetLevel();
             local roomDesc = level:GetCurrentRoomDesc();

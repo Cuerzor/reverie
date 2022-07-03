@@ -6,7 +6,7 @@ local Detection = CuerLib.Detection;
 local Head = ModItem("Sekibanki's Head", "SEKIBANKIS_HEAD")
 
 local HeadSprite = Sprite();
-HeadSprite:Load("gfx/003.5821_sekibanki head.anm2", true);
+HeadSprite:Load("gfx/reverie/003.5821_sekibanki head.anm2", true);
 HeadSprite:Play("IdleDown");
 Head.ItemConfig = Isaac.GetItemConfig():GetCollectible(Head.Item);
 

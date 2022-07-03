@@ -1,4 +1,5 @@
 local PlayerForms = CuerLib.PlayerForms;
+local Stats = CuerLib.Stats;
 
 local Musician = {
     Pool = {
@@ -9,7 +10,7 @@ PlayerForms.CustomForms.Musician = {
     NameGetter = function(language) 
         return THI.GetText(THI.StringCategories.DEFAULT, "#TRANSFORMATION_MUSICIAN");
     end,
-    CostumeId = Isaac.GetCostumeIdByPath("gfx/characters/costume_musician.anm2"),
+    CostumeId = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_musician.anm2"),
     Pool = {
         Isaac.GetItemIdByName("Melancholic Violin"),
         Isaac.GetItemIdByName("Maniac Trumpet"),
@@ -18,7 +19,9 @@ PlayerForms.CustomForms.Musician = {
         CollectibleType.COLLECTIBLE_PLUM_FLUTE,
         Isaac.GetItemIdByName("DELETED ERHU"),
         Isaac.GetItemIdByName("Song of Nightbird"),
-        THI.Collectibles.MountainEar.Item
+        THI.Collectibles.MountainEar.Item,
+        THI.Collectibles.ThunderDrum.Item,
+        THI.Collectibles.ReverieMusic.Item
     }
 }
 
@@ -35,7 +38,7 @@ function Musician:onPlayerEffect(player)
     local has = PlayerForms:HasPlayerForm(player, "Musician");
     if (data.Has ~= has) then
         data.Has = has;
-        player:AddCacheFlags(CacheFlag.CACHE_TEARFLAG);
+        player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_TEARFLAG);
         player:EvaluateItems();
     end
 end
@@ -60,6 +63,11 @@ function Musician:onEvaluateCache(player, flag)
         local data = Musician.GetPlayerData(player);
         if (data.Has) then
             player.TearFlags = player.TearFlags | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_PIERCING;
+        end
+    elseif (flag == CacheFlag.CACHE_FIREDELAY) then
+        local data = Musician.GetPlayerData(player);
+        if (data.Has) then
+            Stats:AddTearsModifier(player, function(tears) return tears + 1; end)
         end
     end
 end

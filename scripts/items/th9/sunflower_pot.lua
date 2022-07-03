@@ -123,14 +123,14 @@ function Sunflower:PostTakeDamage(tookDamage, amount, flags, source, countdown)
         end
     end
 end
-Sunflower:AddCustomCallback(CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Sunflower.PostTakeDamage);
+Sunflower:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Sunflower.PostTakeDamage);
 
 function Sunflower:PostPlayerUpdate(player)
     local playerData = Sunflower.GetPlayerData(player, false);
     if (playerData) then
         local flower = playerData.Sunflower;
         if (EntityExists(flower)) then
-            flower.Position = player.Position;
+            flower.Velocity = player.Position - flower.Position;
             local offsetY = -40 * player.SpriteScale.Y + player:GetFlyingOffset ( ).Y;
             flower.PositionOffset = player.PositionOffset + Vector(0, offsetY);
             flower.DepthOffset = 2;
@@ -166,7 +166,7 @@ function Sunflower:PostSunflowerUpdate(familiar)
                     local playerData = Sunflower.GetPlayerData(player, true);
                     playerData.FlowerState = -1;
                     playerData.Sunflower = nil;
-                    player:TakeDamage(2, DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_NOKILL, EntityRef(familiar), 0);
+                    player:TakeDamage(2, DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_NOKILL | DamageFlag.DAMAGE_EXPLOSION, EntityRef(familiar), 0);
                 end
                 familiar:Remove();
             end
