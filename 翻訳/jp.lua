@@ -176,7 +176,7 @@ Translation.Default = {
     ["#SPELL_CARD_SCARLET_NIGHTMARE"] = "夢符「緋色の悪夢」",
     ["#SPELL_CARD_OCHRE_CONFUSION"] = "夢符「刈安色の迷夢」",
     ["#SPELL_CARD_DREAM_EXPRESS"] = "超特急「ドリームエクスプレス」",
-    ["#SPELL_CARD_DREAM_CATCHER"] = "夢符「ドリームキャッチャー」"
+    ["#SPELL_CARD_DREAM_CATCHER"] = "夢符「ドリームキャッチャー」",
     
     ["#DOREMY_ENDING_TITLE"] = "Thanks for playing!",
     ["#DOREMY_ENDING_SUBTITLE"] = "アイザックは幸せに暮らしましたとさ･･･",
@@ -247,8 +247,8 @@ Translation.Collectibles ={
 --Description neard「grimore of」series(marisa/usami).
     [Collectibles.MaidSuit.Item] = {Name="メイド服" , Description="完全で瀟洒"},
     [Collectibles.VampireTooth.Item] = {Name="吸血鬼の牙" , Description="運命を受け入れろ"},
-    [Collectibles.Destruction.Item] = {Name="破壊" , Description="大災害"},
---元の意味を表せる日本語が多く、適切であるかどうか不安です。 near word is many.i think bad translated...
+    [Collectibles.Destruction.Item] = {Name="破滅" , Description="大災害"},
+--Changed 破壊 to 破滅.
     [Collectibles.MarisasBroom.Item] = {Name="魔法のほうき" , Description="キノコの数はパワーだぜ"},
 --「弾幕はパワーだぜ」への参照です。
 --Description  Reference「danmaku is power」
@@ -256,8 +256,8 @@ Translation.Collectibles ={
     [Collectibles.ChenBaby.Item] = {Name="赤ちぇん" , Description="ちぇぇぇぇん！！！！！"},
 --baby→赤ちゃん+橙（ちぇん）
 --Description is baby→aka[chan] + [chen]
-    [Collectibles.ShanghaiDoll.Item] = {Name="上海人形" , Description="なんか違くない……？"},
---解説訳自信無いです。 Description bad translated...
+    [Collectibles.ShanghaiDoll.Item] = {Name="上海人形" , Description="私のそれとは違います……"},
+--Modified descrption from "なんか違くない……？" to "私のそれとは違います……".
     [Collectibles.MelancholicViolin.Item] = {Name="憂奏バイオリン" , Description="調律トーテム"},
 --「〇奏」で揃えたかったのですが、「憂奏」は造語になります。　プリズムリバートーテムは解説がちょっと不安です。
 --plism totem name algining 「~sou」　but「yuusou」is original word.  Description bad translated...
@@ -294,7 +294,7 @@ Translation.Collectibles ={
     [Collectibles.BookOfYears.Item] = {Name="歴史の本" , Description="過去改変"},
     [Collectibles.RabbitTrap.Item] = {Name="うさぎトラップ" , Description="足元注意！"},
     [Collectibles.Illusion.Item] = {Name="イリュージョン" , Description="どこいった？！"},
---解説に自信がないです。  Description bad translated...
+--Changed description from "どこいった？！" to "何を隠しているの？！"
     [Collectibles.PeerlessElixir.Item] = {Name="国士無双の薬" , Description="用法容量を守って正しくお使い下さい"},
 --日本の薬は薬事法などでこのように表記されます。若干ネタとしても扱われます。
     [Collectibles.DragonNeckJewel.Item] = {Name="龍の頸の玉" , Description="五色の弹丸"},
@@ -307,7 +307,7 @@ Translation.Collectibles ={
     
     [Collectibles.TenguCamera.Item] = {Name="天狗のカメラ" , Description="はいチーズ！"},
     [Collectibles.SunflowerPot.Item] = {Name="ひまわりの鉢" , Description="傷つけないで！"},
-　　[Collectibles.ContinueArcade.Item] = {Name="コンティニュー？" , Description="いくら出す？"},
+    [Collectibles.ContinueArcade.Item] = {Name="コンティニュー？" , Description="いくら出す？"},
 --これは小町への参照アイテムですが、日本ではコンティニューはどちらかと言えばフランドールに関連付けされる傾向があります。どちらの訳も紅魔郷EXを意識しています。
 --復活時に要求コインが増える点への言及でもあります。
 --this item Reference is komachi. but 「continue」 in jp Reference is flan. Description from TH6-EX.
@@ -321,10 +321,10 @@ Translation.Collectibles ={
     [Collectibles.LunarFairy.Item] = {Name="月の光の妖精" , Description="私はルナ！"},
     [Collectibles.StarFairy.Item] = {Name="星の光の妖精" , Description="私はスター！"},
     
-    [Collectibles.LeafShield.Item] = {Name="-W- リーフシールド" , Description="ヲ　ソウビ　シマシタ"},
+    [Collectibles.LeafShield.Item] = {Name="リーフシールド" , Description="ヲ　ソウビ　シマシタ"},
+-- Removed "-W-"
     [Collectibles.BakedSweetPotato.Item] = {Name="やきいも" , Description="ホクホクで甘い！"},
     [Collectibles.BrokenAmulet.Item] = {Name="壊れたお守り" , Description="みんな不吉なカンジ･･･"},
---解説に自信が無いです。Description bad translated...
     [Collectibles.ExtendingArm.Item] = {Name="のびーるアーム" , Description="掴んで離すな！"},
     [Collectibles.WolfEye.Item] = {Name="白狼の眼" , Description="千里眼"},
     [Collectibles.Benediction.Item] = {Name="祈祷" , Description="神降ろし"},
@@ -360,9 +360,11 @@ Translation.Collectibles ={
 --というボイスが一部で流行してました。
 --Reference litte meme voice　by...forget(maybe PSYCHO-PASS)「A U G H H H H H !!! I Want Run Overrrrrr!!! I WAAAAAAAAAANT!!!」
     [Collectibles.Technology666.Item] = {Name="テクノロジー666" , Description="地獄の技術"},
-    [Collectibles.PsychoKnife.Item] = {Name="ほうちょう" , Description="あ　な　た　の　う　し　ろ　に"},
+    [Collectibles.PsychoKnife.Item] = {Name="サイコナイフ" , Description="あ　な　た　の　う　し　ろ　に"},
 --包丁はアイザック含め何かとインディーズゲームと縁深いですが、名前のこのひらがな表記は「ゆめにっき」が基になってます。二次創作にはなりますが、よくこいしと絡められています。
 --name nearing is yume nikki    koisi in yume nikki mixed fanfic is common
+
+--Changed the name from "ほうちょう" to "サイコナイフ", tt's a reference to Terraria.
     [Collectibles.DowsingRods.Item] = {Name="ダウジングロッド" , Description="おたから発掘"},
     [Collectibles.ScaringUmbrella.Item] = {Name="こわーい傘" , Description="笑うな！"},
     [Collectibles.Unzan.Item] = {Name="雲山" , Description="問答無用の妖怪拳！"},
@@ -387,10 +389,10 @@ Translation.Collectibles ={
 --「bakeru」 is　「transform」beside「have Potential」
     [Collectibles.EmptyBook.Item] = {Name="白紙の本" , Description="何を書こうかな？"},
 
-    [Collectibles.TheInfamies.Item] = {Name="悪名たち" , Description="壊れやすい、その名はこころ"},
+    [Collectibles.TheInfamies.Item] = {Name="悪名たち" , Description="脆き者よ、汝の名は心"},
 --解説に自信が無いです。Description bad translated...
 
-
+--Changed the description from "壊れやすい、その名はこころ" to "脆き者よ、汝の名は心", Hamlet reference.
     [Collectibles.SekibankisHead.Item] = {Name="赤蛮奇" , Description="カワイかろ？"},
     [Collectibles.WildFury.Item] = {Name="野性の怒り" , Description="血にまみれて育つ"},
     [Collectibles.ReverieMusic.Item] = {Name="「幻想浄瑠璃」" , Description="なんだろう……？"},
