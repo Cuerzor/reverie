@@ -1,5 +1,18 @@
 local Translation = {}
 
+Translation.Fonts = {
+    ["DOREMY_DIALOG"] = THI.Fonts.Lanapixel,
+    ["DOREMY_SPELL_CARD"] = THI.Fonts.Lanapixel,
+    ["D2147483647_PAGE"] = THI.Fonts.Lanapixel,
+    ["REPAY"] = THI.Fonts.Lanapixel,
+    ["MUSICS"] = THI.Fonts.MPlus12b,
+    ["MAGATAMA"] = THI.Fonts.Lanapixel,
+    ["CAMERA_SCORE"] = THI.Fonts.Lanapixel,
+    ["UFO_TIMER"] = THI.Fonts.Terminus8,
+    ["TRADER_COUNT"] = THI.Fonts.Terminus8,
+    ["CRATE"] = THI.Fonts.Lanapixel,
+}
+
 Translation.Default = {
 --もしかしたら英語の注釈よりも日本語での注釈を翻訳サイトにかけた方が意味わかりやすいかもしれないです。
 --english Annotation is bad?sorry... please japanise Annotation running translation site.
@@ -293,7 +306,7 @@ Translation.Collectibles ={
     [Collectibles.SongOfNightbird.Item] = {Name="夜雀の歌" , Description="もう歌しか聞こえない"},
     [Collectibles.BookOfYears.Item] = {Name="歴史の本" , Description="過去改変"},
     [Collectibles.RabbitTrap.Item] = {Name="うさぎトラップ" , Description="足元注意！"},
-    [Collectibles.Illusion.Item] = {Name="イリュージョン" , Description="どこいった？！"},
+    [Collectibles.Illusion.Item] = {Name="イリュージョン" , Description="何を隠しているの？！"},
 --Changed description from "どこいった？！" to "何を隠しているの？！"
     [Collectibles.PeerlessElixir.Item] = {Name="国士無双の薬" , Description="用法容量を守って正しくお使い下さい"},
 --日本の薬は薬事法などでこのように表記されます。若干ネタとしても扱われます。
@@ -379,7 +392,7 @@ Translation.Collectibles ={
     
     [Collectibles.MountainEar.Item] = {Name="山彦ーっ！" , Description="山彦ーっ！彦ーっ！･･･っ！"},
 --山彦の小さくなっていく感じを表現する方向に寄せました。　include echo smalling
-    [Collectibles.ZombieInfestation.Item] = {Name="ゾンビハザード" , Description="レジデントイービル"},
+    [Collectibles.ZombieInfestation.Item] = {Name="ゾンビハザード" , Description="バイオハザード"},
     [Collectibles.WarpingHairpin.Item] = {Name="通り抜けヘアピン" , Description="壁の向こうはなんだろな？"},
     [Collectibles.HolyThunder.Item] = {Name="ホーリーサンダー" , Description="天からの鉄槌"},
     [Collectibles.GeomanticDetector.Item] = {Name="風水検知器" , Description="ラッキープレイスみっけ！"},
