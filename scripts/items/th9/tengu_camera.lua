@@ -2,12 +2,6 @@ local Detection = CuerLib.Detection;
 local Screen = CuerLib.Screen;
 local TenguCamera = ModItem("Tengu Camera", "TenguCamera");
 
-local ScoreFonts = {
-    en = Font(),
-    zh = Font()
-}
-ScoreFonts.en:Load("font/terminus8.fnt");
-ScoreFonts.zh:Load("font/cjk/lanapixel.fnt");
 
 -- local LightSprite = Sprite();
 -- LightSprite:Load("gfx/spotlight.anm2", true);
@@ -255,8 +249,8 @@ function TenguCamera:PostRender()
             local alpha = data.ScoreTime / 30;
             local fontColor = KColor(1,1,1,alpha);
             local scoreStr = THI.GetText(THI.StringCategories.DEFAULT, "#SCORE");
-            local enFont = ScoreFonts.en
-            local font = ScoreFonts[Options.Language] or enFont;
+            local enFont = THI.GetFont("CAMERA_SCORE", "en");
+            local font = THI.GetFont("CAMERA_SCORE");
             local scoreWidth = font:GetStringWidthUTF8(scoreStr);
             local scoreValueStr = string.format("%.2f",data.Score);
             local valueWidth = enFont:GetStringWidthUTF8(scoreValueStr);

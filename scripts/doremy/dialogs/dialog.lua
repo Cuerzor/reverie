@@ -16,15 +16,6 @@ local Dialog = {
     Finished = false,
 };
 
-local enFont = Font();
-enFont:Load("font/terminus.fnt");
-local zhFont = Font();
-zhFont:Load("font/cjk/lanapixel.fnt");
-
-Dialog.Fonts = {
-    en = enFont,
-    zh = zhFont,
-}
 Dialog.__index = Dialog;
 
 local metatable = {
@@ -235,7 +226,7 @@ function Dialog:Render()
                 local color = config.TextColors[textConfig.Color];
                 local scale = textConfig.Size or 1;
 
-                local font = Dialog.Fonts[Options.Language] or Dialog.Fonts.en;
+                local font = THI.GetFont("DOREMY_DIALOG")
                 font:DrawStringScaledUTF8(text, x, y, scale, scale, color, math.floor(width), true);
             end
         end

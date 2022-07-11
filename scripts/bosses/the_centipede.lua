@@ -163,7 +163,8 @@ do
         PortraitOffset = Vector(0, 0),
         NamePaths = {
             en = "gfx/reverie/ui/boss/bossname_583.0_the centipede.png",
-            zh = "gfx/reverie/ui/boss/bossname_583.0_the centipede_zh.png"
+            zh = "gfx/reverie/ui/boss/bossname_583.0_the centipede_zh.png",
+            jp = "gfx/reverie/ui/boss/bossname_583.0_the centipede_jp.png"
         }
     }
     Bosses:SetBossConfig("reverie:the_centipede", bossConfig, roomConfigs);

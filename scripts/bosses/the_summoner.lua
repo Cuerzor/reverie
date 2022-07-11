@@ -23,7 +23,8 @@ do
         PortraitOffset = Vector(0, -10),
         NamePaths = {
             en = "gfx/reverie/ui/boss/bossname_585.0_summoner.png",
-            zh = "gfx/reverie/ui/boss/bossname_585.0_summoner_zh.png"
+            zh = "gfx/reverie/ui/boss/bossname_585.0_summoner_zh.png",
+            jp = "gfx/reverie/ui/boss/bossname_585.0_summoner_jp.png"
         }
     }
 

@@ -9,12 +9,6 @@ local config = Isaac.GetItemConfig();
 local maxItemId = config:GetCollectibles().Size;
 local repayRNG = RNG();
 
-local RepayFonts = {
-    en = Font(),
-    zh = Font(),
-}
-RepayFonts.en:Load("font/terminus8.fnt");
-RepayFonts.zh:Load("font/cjk/lanapixel.fnt");
 local RepayStrings = {
     Normal = "#REPAY_NOT_FINISHED",
     Finished = "#REPAY_FINISHED",
@@ -214,7 +208,7 @@ function MomsIOU:PostPlayerRender(player, offset)
             str = string.gsub(str, "{REPAYMENT}", tostring(tempData.Repayment));
             str = string.gsub(str, "{REMAINED}", tostring(data.Debt));
             local renderPos = Screen.GetEntityOffsetedRenderPosition(player, offset + Vector(0, -48));
-            local font = RepayFonts[Options.Language] or RepayFonts.en;
+            local font = THI.GetFont("REPAY");
             local width = font:GetStringWidthUTF8(str);
             font:DrawStringUTF8(str, renderPos.X, renderPos.Y, color, math.floor(width / 2), false);
         end

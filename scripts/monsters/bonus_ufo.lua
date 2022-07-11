@@ -10,9 +10,6 @@ BonusUFO.SubTypes = {
     RAINBOW = 3
 }
 
-local Fonts = {
-    en = THI.Fonts.Terminus8
-}
 
 
 function BonusUFO.GetFloorData(init)
@@ -468,8 +465,7 @@ BonusUFO:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, BonusUFO
 
 local greyColor = KColor(0.5, 0.5, 0.5, 1);
 function BonusUFO:RenderUFO(ufo, offset)
-    local language = Options.Language;
-    local font = Fonts[language] or Fonts.en;
+    local font = THI.GetFont("UFO_TIMER");
 
     if (not Screen.IsReflection()) then
         local pos = Screen.GetEntityOffsetedRenderPosition(ufo, offset, Vector(0, -64));

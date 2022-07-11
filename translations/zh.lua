@@ -1,5 +1,17 @@
 local Translation = {}
 
+Translation.Fonts = {
+    ["DOREMY_DIALOG"] = THI.Fonts.Lanapixel,
+    ["DOREMY_SPELL_CARD"] = THI.Fonts.Lanapixel,
+    ["D2147483647_PAGE"] = THI.Fonts.Lanapixel,
+    ["REPAY"] = THI.Fonts.Lanapixel,
+    ["MUSICS"] = THI.Fonts.TeammeatExtended10,
+    ["MAGATAMA"] = THI.Fonts.Lanapixel,
+    ["CAMERA_SCORE"] = THI.Fonts.Lanapixel,
+    ["UFO_TIMER"] = THI.Fonts.Terminus8,
+    ["TRADER_COUNT"] = THI.Fonts.Terminus8,
+    ["CRATE"] = THI.Fonts.Lanapixel,
+}
 
 Translation.Default = {
     ["#GRIMOIRE_SUN_NAME"] = "日",

@@ -224,10 +224,6 @@ do -- Effects.
     end
     LifeSwap:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, PostEffectUpdate, LifeSwap.Variant)
 
-    local TextFonts = {
-        en = THI.Fonts.PFTempesta7,
-        zh = THI.Fonts.Lanapixel
-    }
     local function PostEffectRender(mod, effect, offset)
         local subType = effect.SubType;
         if (subType == LifeSwap.SubTypes.TEXT) then
@@ -248,7 +244,7 @@ do -- Effects.
                     end
                     str = string.format("%+.1f", value);
                 end
-                local font = TextFonts[Options.Language] or TextFonts.en;
+                local font = THI.GetFont("MAGATAMA");
                 font:DrawStringUTF8(str, pos.X - 64, pos.Y, color, 128, true);
             end
         end

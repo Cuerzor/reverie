@@ -11,14 +11,6 @@ FrameSprite:Load("gfx/reverie/ui/select_frame.anm2", true);
 FrameSprite:SetFrame("Frame", 0);
 FrameSprite.Scale = Vector(0.5, 0.5);
 
-local enFont = Font();
-enFont:Load("font/terminus8.fnt");
-local zhFont = Font();
-zhFont:Load("font/cjk/lanapixel.fnt");
-local PageFonts = {
-    en = enFont,
-    zh = zhFont,
-}
 local FontColor =KColor(1,1,1,1);
 
 
@@ -403,7 +395,7 @@ local function RenderSelecting(player)
 
         local pagePos = renderPos + pageOffset;
         local pageString = THI.GetText(THI.StringCategories.DEFAULT, "#PAGES");
-        local font = PageFonts[Options.Language] or PageFonts.en;
+        local font = THI.GetFont("D2147483647_PAGE");
         font:DrawStringUTF8(pageString.." "..page.."/"..maxPage, pagePos.X, pagePos.Y, FontColor, 64, true)
 
         local sprites = playerData.Sprites;

@@ -497,7 +497,7 @@ function Ending:Render()
     local category = THI.StringCategories.DEFAULT;
     local titleString = THI.GetText(category, strings.Title) ;
     local subtitleString = THI.GetText(category, strings.Subtitle) ;
-    local font = Dialog.Fonts[Options.Language] or Dialog.Fonts.en;
+    local font = THI.GetFont("DOREMY_DIALOG");
     font:DrawStringScaledUTF8(titleString, 0, center.Y, 2, 2, KColor(1,1,1,self.Data.ThanksAlpha), math.floor(screenSize.X), true);
     font:DrawStringScaledUTF8(subtitleString, 0, center.Y + 40, 1, 1, KColor(1,1,1,self.Data.BlessingAlpha), math.floor(screenSize.X), true);
 

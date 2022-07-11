@@ -102,6 +102,7 @@ function PsychoKnife.CanEnemyExecute(player, npc)
     return false;
 end
 
+
 function PsychoKnife.FindTargetEnemy(player)
     local position = player.Position
     local nearest = nil;
@@ -204,6 +205,7 @@ function PsychoKnife:PostPlayerEffect(player)
                 data.Time = data.Time - 1;
                 player.Visible = false;
                 player:SetMinDamageCooldown(60);
+                player.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE;
                 if (data.Time <= 0) then
                     data.Executing = false;
                     SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 1, 0, false, 0.6)
@@ -251,7 +253,7 @@ function PsychoKnife:PostPlayerEffect(player)
                                 player:AddWisp(PsychoKnife.Item, target.Position)
                             end
                         end
-                        player.EntityCollisionClass = data.PlayerCollision;
+                        player.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL;--data.PlayerCollision;
                         local room = game:GetRoom();
                         local blocked, pos2 = room:CheckLine (data.StartPosition, target.Position, 0, 0);
                         player.Position = pos2;

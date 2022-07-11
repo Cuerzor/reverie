@@ -2204,5 +2204,11 @@ Greed Shop: Added D Flip
 -修复了幻想曲乐谱会在虚空层击杀“它还活着”后变为音乐盒的BUG。
 
 
+-Added Japanese support.
+-加入了日语支持。
 -Changed the quote of Zombie Infestation into "Biohazard" from "Resident Evil".
 -将僵尸感染的描述从“内在邪恶”改为“生化危机”。
+-Robe of Firerat's flames are now blue flames (The appearance is still orange), and reduced their damage into 100% tear damage from 400% tear damage. 
+-火鼠的皮衣的火焰现在变为蓝色火焰（外观仍是橙色），并且伤害从400%子弹伤害降低至100%子弹伤害。
+-Fixed an issue that player will not collide with other entities and cannot shoot tears after used Dark Arts and Psycho Knife at the same time.
+-修复了玩家在同时使用暗仪刺刀和疯人刀之后无法与其他物体碰撞，也无法射击的BUG。

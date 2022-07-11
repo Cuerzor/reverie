@@ -171,7 +171,8 @@ do
         PortraitOffset = Vector(0, -20),
         NamePaths = {
             en = "gfx/reverie/ui/boss/bossname_586.0_devilcrow.png",
-            zh = "gfx/reverie/ui/boss/bossname_586.0_devilcrow_zh.png"
+            zh = "gfx/reverie/ui/boss/bossname_586.0_devilcrow_zh.png",
+            jp = "gfx/reverie/ui/boss/bossname_586.0_devilcrow_jp.png"
         }
     }
     Bosses:SetBossConfig("reverie:devilcrow", bossConfig, roomConfigs);

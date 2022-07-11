@@ -425,19 +425,20 @@ function Trader:PostNPCRender(npc, offset)
             if (not data.Dealt) then
                 local IReceive = data.IReceive;
                 local YouReceive = data.YouReceive;
+                local font = THI.GetFont("TRADER_COUNT");
                 if (IReceive) then
                     local pos = Screen.GetEntityOffsetedRenderPosition(npc, offset, Vector(-22, -60), true);
                     IReceive.Sprite:Render(pos);
                     
                     if (IReceive.Type == Trader.OfferType.OFFER_EMERALD) then
-                        THI.Fonts.Terminus8:DrawString(IReceive.SubType, pos.X, pos.Y - 10, KColor.White);
+                        font:DrawString(IReceive.SubType, pos.X, pos.Y - 10, KColor.White);
                     end
                 end
                 if (YouReceive) then
                     local pos = Screen.GetEntityOffsetedRenderPosition(npc, offset, Vector(22, -60), true);
                     YouReceive.Sprite:Render(pos);
                     if (YouReceive.Type == Trader.OfferType.OFFER_EMERALD) then
-                        THI.Fonts.Terminus8:DrawString(YouReceive.SubType, pos.X, pos.Y - 10, KColor.White);
+                        font:DrawString(YouReceive.SubType, pos.X, pos.Y - 10, KColor.White);
                     end
                 end
             end

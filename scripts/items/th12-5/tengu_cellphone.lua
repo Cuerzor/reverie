@@ -9,8 +9,7 @@ local Cellphone = ModItem("Tengu Cellphone", "HatateCellphone");
 local itemConfig = Isaac.GetItemConfig();
 local itemPools = THI.Game:GetItemPool();
 
-local priceFont = Font();
-priceFont:Load("font/terminus8.fnt");
+local priceFont = THI.Fonts.Terminus8;
 
 local SelectionSprite = Sprite();
 

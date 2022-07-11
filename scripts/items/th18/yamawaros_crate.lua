@@ -53,7 +53,6 @@ Crate.Scrolls = {
 }
 
 
-local UIFont = THI.Fonts.Lanapixel;
 
 local function GetPlayerCrateData(player, init)
     local function getter()
@@ -608,6 +607,7 @@ local function RenderCrate(player)
     local itemsPos = playerPos + itemsOffset;
 
     local totalCrateSlots = 8;
+    local font = THI.GetFont("CRATE");
     if (tempData) then
 
         
@@ -638,7 +638,7 @@ local function RenderCrate(player)
             end
         end 
         local string = THI.GetText(THI.StringCategories.DEFAULT, "#YAMAWARO_CRATE_TITLE");
-        UIFont:DrawStringUTF8(string, slotsPos.X, slotsPos.Y - 14, KColor.White);
+        font:DrawStringUTF8(string, slotsPos.X, slotsPos.Y - 14, KColor.White);
     end
 
     if (data) then
@@ -693,7 +693,7 @@ local function RenderCrate(player)
             ::continue::
         end
         local string = THI.GetText(THI.StringCategories.DEFAULT, "#YAMAWARO_CRATE_ITEMS");
-        UIFont:DrawStringUTF8(string, itemsPos.X, itemsPos.Y - 14, KColor.White);
+        font:DrawStringUTF8(string, itemsPos.X, itemsPos.Y - 14, KColor.White);
 
         -- Render Arrow and page displayer.
 
@@ -714,7 +714,7 @@ local function RenderCrate(player)
         local pageString = THI.GetText(THI.StringCategories.DEFAULT, "#YAMAWARO_CRATE_PAGE");
         pageString = string.gsub(pageString,"{CURRENT}",tempData.Page ); 
         pageString = string.gsub(pageString,"{ALL}",tempData.TotalPages ); 
-        UIFont:DrawStringUTF8(pageString, itemsPos.X + 4 + itemsWidth * 16, itemsPos.Y - 14 + itemsHeight * 16, KColor.White);
+        font:DrawStringUTF8(pageString, itemsPos.X + 4 + itemsWidth * 16, itemsPos.Y - 14 + itemsHeight * 16, KColor.White);
         
 
         -- Render Cursor.

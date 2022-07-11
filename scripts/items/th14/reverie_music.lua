@@ -147,10 +147,6 @@ ReverieMusic:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom);
 
 local NormalColor = KColor(1,1,1,1);
 local CompleteColor = KColor(0,1,0,1);
-ReverieMusic.Fonts = {
-    en = THI.Fonts.Teammeat10,
-    zh = THI.Fonts.TeammeatExtended10,
-}
 
 local function PostRender(mod)
     local data = GetGlobalData(false);
@@ -158,7 +154,7 @@ local function PostRender(mod)
 
         if (Game():GetHUD():IsVisible()) then
 
-            local font = ReverieMusic.Fonts[Options.Language] or ReverieMusic.Fonts.en
+            local font = THI.GetFont("MUSICS");
 
             local musicString = THI.GetText(THI.StringCategories.DEFAULT, "#COLLECTED_MUSIC");
             local max = ReverieMusic.MaxNoteCount;

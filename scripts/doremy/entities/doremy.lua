@@ -6,11 +6,9 @@ local Math = CuerLib.Math;
 local Doremy = {
     Type = Isaac.GetEntityTypeByName("Doremy Sweet"),
     Variant = Isaac.GetEntityVariantByName("Doremy Sweet"),
-    SpellCardNameFont = Font(),
+    SpellCardNameFont = "DOREMY_SPELL_CARD",
     SpellCardNameSprite = Sprite()
 }
-
-Doremy.SpellCardNameFont:Load("font/cjk/lanapixel.fnt") -- load a font into the font object
 Doremy.SpellCardNameSprite:Load("gfx/doremy/ui/spell_card_name_underline.anm2", true);
 Doremy.SpellCardNameSprite:Play("Idle");
 
@@ -334,7 +332,9 @@ local function renderSpellName(mod)
         elseif (tempData.SpellCardName.Time < 60) then
             y = (screenSize.Y - 20) * (1 -Math.EaseOut((tempData.SpellCardName.Time - 40) / 20));
         end
-        Doremy.SpellCardNameFont:DrawStringUTF8(tempData.SpellCardName.Name,x,y,KColor(1,1,1,tempData.SpellCardName.Alpha),0,true) -- render string with loaded font on position 60x50y
+
+        local font = THI.GetFont(Doremy.SpellCardNameFont);
+        font:DrawStringUTF8(tempData.SpellCardName.Name,x,y,KColor(1,1,1,tempData.SpellCardName.Alpha),0,true) -- render string with loaded font on position 60x50y
         
         Doremy.SpellCardNameSprite:Render(Vector(x, y), Vector.Zero, Vector.Zero);
     end

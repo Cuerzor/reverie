@@ -14,10 +14,17 @@ end
 function RobeOfFirerat.MakeFire(tear)
     local spawner = tear.SpawnerEntity;
 
-    local fire = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.RED_CANDLE_FLAME, 0, tear.Position, tear.Velocity, spawner):ToEffect();
-                        
-    fire.CollisionDamage = tear.CollisionDamage * 4;
-    fire.Timeout = 100;
+    -- local fire = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.RED_CANDLE_FLAME, 0, tear.Position, tear.Velocity, spawner):ToEffect();
+    -- fire.CollisionDamage = tear.CollisionDamage * 4;
+    -- fire.Timeout = 100;
+    local fire = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLUE_FLAME, 0, tear.Position, tear.Velocity, spawner):ToEffect();
+    fire.CollisionDamage = tear.CollisionDamage;
+    fire.LifeSpan = 90;
+    fire.Timeout = fire.LifeSpan;
+    local spr = fire:GetSprite()
+    spr:ReplaceSpritesheet(0, "gfx/effects/effect_005_fire.png")
+    spr:LoadGraphics();
+
     -- tear Scale.
     fire.Scale = math.min(1, tear.Scale);
     fire:SetColor(Color(0,0,0,0,0,0,0), 1, 0, false, false);

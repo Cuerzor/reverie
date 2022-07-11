@@ -922,7 +922,8 @@ Quality: 3
 Item Pools: Treasure Room, Greed Treasure Room, Ultra Secret Room
 Tags: Offensive, Summonable
 * Spawn a fire orbital some distance away from player, Dealing 10 contact damage per 7 frames.
-* All Tears pass through any fire will transform into Red Candle Flames, which have the 4x damage as the tears.
+* All Tears pass through any fire will transform into The Candle flames, which have the damage equals to the tears.
+    * The flames' colors are orange.
 * Player immunes to fire.
 
 Swallow's Shell 

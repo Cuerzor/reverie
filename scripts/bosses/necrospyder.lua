@@ -96,7 +96,8 @@ do
         PortraitOffset = Vector(0, 0),
         NamePaths = {
             en = "gfx/reverie/ui/boss/bossname_582.0_necrospyder.png",
-            zh = "gfx/reverie/ui/boss/bossname_582.0_necrospyder_zh.png"
+            zh = "gfx/reverie/ui/boss/bossname_582.0_necrospyder_zh.png",
+            jp = "gfx/reverie/ui/boss/bossname_582.0_necrospyder_jp.png"
         }
     }
     Bosses:SetBossConfig("reverie:necrospyder", bossConfig, roomConfig);
