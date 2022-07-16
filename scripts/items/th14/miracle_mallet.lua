@@ -2,6 +2,47 @@ local ItemPools = CuerLib.ItemPools;
 local Mallet = ModItem("Miracle Mallet", "MIRACLE_MALLET");
 Mallet.Affecting = false;
 
+Mallet.LargeEntities = {
+    {{Type = 5, Variant = 40, SubType = 1}, {Type = 5, Variant = 40, SubType = 7}},
+    {{Type = 5, Variant = 60, SubType = 1}, {Type = 5, Variant = 57, SubType = 1}},
+    {{Type = 5, Variant = 90, SubType = 1}, {Type = 5, Variant = 90, SubType = 3}},
+    {{Type = 5, Variant = 90, SubType = 2}, {Type = 5, Variant = 90, SubType = 3}}
+
+}
+
+function Mallet:TryEnlarge(entity)
+    if (entity.Type == EntityType.ENTITY_PICKUP) then
+        local pickup = entity:ToPickup();
+        if (pickup.Variant == PickupVariant.PICKUP_PILL) then
+            if (pickup.SubType <= 2048) then
+                pickup:Morph(pickup.Type, pickup.Variant, pickup.SubType + 2048, false, true, false);
+                return true;
+            end
+        end
+
+        for _, pair in ipairs(self.LargeEntities) do
+            local info1 = pair[1];
+            local info2 = pair[2];
+            local other = nil;
+            if (info1.Type == entity.Type and info1.Variant == entity.Variant and info1.SubType == entity.SubType) then
+                other = info2;
+            end
+
+            if (other) then
+                pickup:Morph(other.Type, other.Variant, other.SubType, false, true, false);
+                return true;
+            end
+        end
+    end
+    return false;
+end
+
+function Mallet:EnlargePickups()
+    for _, ent in ipairs(Isaac.GetRoomEntities()) do
+        self:TryEnlarge(ent);
+    end
+end
+
 function Mallet:PostUseMallet(item, rng, player, flags, slot, varData)
     local itemPool = THI.Game:GetItemPool();
     local room = THI.Game:GetRoom();
@@ -24,6 +65,9 @@ function Mallet:PostUseMallet(item, rng, player, flags, slot, varData)
     end
     Mallet.Affecting = false;
     ItemPools:EvaluateRoomBlacklist();
+
+
+    Mallet:EnlargePickups();
     THI.SFXManager:Play(SoundEffect.SOUND_DEVILROOM_DEAL);
     return {ShowAnim = true, Remove = true}
 end

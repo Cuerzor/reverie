@@ -8,7 +8,7 @@ if (THI) then
 end
 THI = RegisterMod("Reverie", 1);
 THI.Version = {
-    10,4,2
+    10,5,0
 }
 
 function THI:GetVersionString()

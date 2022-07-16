@@ -409,7 +409,7 @@ Translation.Players ={
     [Players.Satori.Type] = {Name="觉" , Birthright="恐怖催眠术"},
     [Players.SatoriB.Type] = {Name="觉" , Birthright="上帝啊，抓紧这方向盘"},
     [Players.Seija.Type] = {Name="正邪" , Birthright="再无弱者"},
-    [Players.SeijaB.Type] = {Name="正邪" , Birthright="更多弱者"},
+    [Players.SeijaB.Type] = {Name="正邪" , Birthright="可控虹吸"},
 }
 
 local Cards = THI.Cards;

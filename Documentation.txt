@@ -435,8 +435,8 @@ Like normal Seija, low quality items get buffed, high quality items get nerfed, 
 In that case, she needs to reduce the qualities of items by using D Siphon manually.
 
 Birthright:
-Description: More weak ones
-The passive effect only prevents quality 0 items from spawning.
+Description: Controlled Siphon
+Can control D Siphon's release or drain action by holding or not holding drop button.
 
 
 
@@ -1816,6 +1816,7 @@ Item Pools: Treasure room, Greed Treasure Room, Devil Room, Greed Devil Room (1 
 * Transform all collectibles in current room into Quality 4 collectibles from current room's item pool.
     * If the pool has no quality 4 items, transform it into Brimstone.
 * Gain 3 broken hearts for each collectible transformation.
+* Transform all possible pickups in the room into their BIG version.
 * If player has Book of Virtues, spawn wisps that fire midas tears.
 
 Thunder Drum

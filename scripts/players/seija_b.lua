@@ -90,18 +90,18 @@ do -- Events
     -- local gettingCollectible = false;
     local seijaBPlayer = nil;
     local seijaBCached = false;
-    local seijaBHasBirthright = nil;
+    -- local seijaBHasBirthright = nil;
 
     local function CacheSeijaBPlayer()
         if (not seijaBCached) then
             seijaBPlayer = nil;
-            seijaBHasBirthright = nil;
+            -- seijaBHasBirthright = nil;
             for p, player in Detection.PlayerPairs() do
                 if (player:GetPlayerType() == SeijaB.Type) then
                     seijaBPlayer = player;
-                    if (player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
-                        seijaBHasBirthright = true;
-                    end
+                    -- if (player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
+                    --     seijaBHasBirthright = true;
+                    -- end
                 end
             end
             seijaBCached = true;
@@ -124,16 +124,11 @@ do -- Events
         if (not DSiphon.GettingCollectible) then
             CacheSeijaBPlayer();
             if (seijaBPlayer) then
-                if (seijaBHasBirthright) then
-                    return config.Quality <= 0;
-                else
-                    -- if (conf.Quality == 2) then
-                    --     if (rng:RandomInt(100) < 33) then
-                    --         return true;
-                    --     end
-                    -- end
+                -- if (seijaBHasBirthright) then
+                --     return config.Quality >= 4;
+                -- else
                     return config.Quality ~= 2;
-                end
+                -- end
             end
         end
     end

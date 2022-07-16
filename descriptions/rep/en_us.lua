@@ -606,7 +606,8 @@ EIDInfo.Collectibles = {
     [Collectibles.MiracleMallet.Item] = {
         Description = "!!! ONE-TIME USE !!!"..
         "#Reroll all collectibles in the room into {{Quality4}}quality 4 collectibles"..
-        "#!!! Gain 3 {{BrokenHeart}}broken hearts for each reroll",
+        "#!!! Gain 3 {{BrokenHeart}}broken hearts for each reroll"..
+        "#Transform pickups into their BIG version",
         BookOfVirtues = "Midas tears"
     },
     [Collectibles.ThunderDrum.Item] = {
@@ -1622,7 +1623,9 @@ EIDInfo.Birthrights = {
         PlayerName = "Seija"
     },
     [Players.SeijaB.Type] = {
-        Description = "The passive effect only prevents quality {{Quality0}} items from spawning",
+        Description = "{{Collectible"..Collectibles.DSiphon.Item.."}}D Siphon can be controlled to drain or release qualities"..
+        "#Drains quality at default"..
+        "#Releases quality when used while holding "..EID.ButtonToIconMap[ButtonAction.ACTION_DROP].."drop button",
         PlayerName = "Tainted Seija"
     }
 }

@@ -673,7 +673,8 @@ EIDInfo.Collectibles = {
         Name = "万宝槌",
         Description = "!!! 一次性 !!!"..
         "#将本房间内的所有道具重置为{{Quality4}}品质4道具"..
-        "#!!! 每重置一个道具，获得3颗{{BrokenHeart}}碎心",
+        "#!!! 每重置一个道具，获得3颗{{BrokenHeart}}碎心"..
+        "#将基础掉落物变为它们的变大版",
         BookOfVirtues = "点金眼泪"
     },
     [Collectibles.ThunderDrum.Item] = {
@@ -1241,7 +1242,9 @@ EIDInfo.Birthrights = {
         PlayerName = "正邪"
     },
     [Players.SeijaB.Type] = {
-        Description = "被动效果改为只阻止{{Quality0}}级道具生成",
+        Description = "可控制{{Collectible"..Collectibles.DSiphon.Item.."}}虹吸骰子吸取或放出品质"..
+            "#默认吸取品质"..
+            "#按住"..EID.ButtonToIconMap[ButtonAction.ACTION_DROP].."丢弃键时使用放出品质",
         PlayerName = "堕化正邪"
     },
 }

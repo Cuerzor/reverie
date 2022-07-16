@@ -24,10 +24,23 @@ local function GetPlayerTempData(player, init)
     return data;
 end
 
+
+function DSiphon:WillRelease(player)
+    local SeijaB = THI.Players.SeijaB;
+    if (player:GetPlayerType() == SeijaB.Type and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
+        return Input.IsActionPressed(ButtonAction.ACTION_DROP, player.ControllerIndex);
+    end
+
+    local playerData = GetPlayerData(player, false);
+    local points = (playerData and playerData.SiphonPoints) or 0;
+    return points >= self.ReleaseThresold;
+
+end
+
 local function UseSiphon(mod, item, rng, player, flags, slot, vardata)
     local itemConfig = Isaac.GetItemConfig();
     local playerData = GetPlayerData(player, true);
-    local points = playerData.SiphonPoints
+    local willRelease = DSiphon:WillRelease(player);
     local reduced = false;
     local tempData = GetPlayerTempData(player, true)
     local itemPool = Game():GetItemPool();
@@ -45,7 +58,7 @@ local function UseSiphon(mod, item, rng, player, flags, slot, vardata)
             local item = -1;
             local targetQuality = quality;
             local default = CollectibleType.COLLECTIBLE_BREAKFAST
-            if (points < DSiphon.ReleaseThresold) then
+            if (not willRelease) then
                 targetQuality = quality - 1;
                 playerData.SiphonPoints = playerData.SiphonPoints + 1;
             else
@@ -71,7 +84,10 @@ local function UseSiphon(mod, item, rng, player, flags, slot, vardata)
                 DSiphon.GettingCollectible = true;
                 DSiphon.PoolCondition = condition;
                 ItemPools:EvaluateRoomBlacklist();
-                item = itemPool:GetCollectible(poolType, true, rng:Next(), default);
+                item = itemPool:GetCollectible(poolType, true, rng:Next());
+                if (item == CollectibleType.COLLECTIBLE_BREAKFAST) then
+                    item = default;
+                end
                 DSiphon.GettingCollectible = false;
             end
 
@@ -86,7 +102,7 @@ local function UseSiphon(mod, item, rng, player, flags, slot, vardata)
             local parent = pickup;
             local target = player;
             local color;
-            if (points < DSiphon.ReleaseThresold) then
+            if (not willRelease) then
                 color = Color(0, 0, 0, 1, 0.5,0,0);
                 SFXManager():Play(SoundEffect.SOUND_MIRROR_ENTER);
             else
@@ -171,7 +187,7 @@ local function GetShaderParams(mod, name)
         Actives.RenderActivesCount(DSiphon.Item, function(player) 
             local data = GetPlayerData(player, false);
             local color = Color.Default;
-            if (data and data.SiphonPoints >= DSiphon.ReleaseThresold) then
+            if (DSiphon:WillRelease(player)) then
                 color = DSiphon.FullColor;
             end
             return (data and data.SiphonPoints) or 0, color;

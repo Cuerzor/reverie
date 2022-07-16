@@ -2203,12 +2203,18 @@ Greed Shop: Added D Flip
 -Fixed an issue that Reverie Music will spawn music box when It lives in the Void is defeated.
 -修复了幻想曲乐谱会在虚空层击杀“它还活着”后变为音乐盒的BUG。
 
-
--Added Japanese support.
--加入了日语支持。
+10.5.0-2022.7.16
+-Added Japanese support. Thanks to rushiphi6421!
+-加入了日语支持。感谢rushiphi6421！
 -Changed the quote of Zombie Infestation into "Biohazard" from "Resident Evil".
 -将僵尸感染的描述从“内在邪恶”改为“生化危机”。
 -Robe of Firerat's flames are now blue flames (The appearance is still orange), and reduced their damage into 100% tear damage from 400% tear damage. 
 -火鼠的皮衣的火焰现在变为蓝色火焰（外观仍是橙色），并且伤害从400%子弹伤害降低至100%子弹伤害。
+-Miracle Mallet now can transform all possible pickups in the room into their BIG version.
+-万宝槌现在同时会将本房间内的所有可能的基础掉落物变为它们的大型版本。
+-Tainted Seija's Birthright effect has been reworked.
+-堕化正邪的长子名分效果被重做。
+-D Siphon now will reroll items into default items when both the pool of room and treasure room pool are empty.
+-虹吸骰子现在会在当前房间道具池和宝箱房道具池都空的情况下将道具重置成默认道具。
 -Fixed an issue that player will not collide with other entities and cannot shoot tears after used Dark Arts and Psycho Knife at the same time.
 -修复了玩家在同时使用暗仪刺刀和疯人刀之后无法与其他物体碰撞，也无法射击的BUG。

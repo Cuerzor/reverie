@@ -509,7 +509,8 @@ Translation.Players ={
     [Players.Seija.Type] = {Name="セイジャ" , Birthright="弱者の反乱"},
     --この「はんらん」は(圧力で虐げられていたものが）逆襲する、のような意味です。
     --this 「hanran」is「avenged」
-    [Players.SeijaB.Type] = {Name="セイジャ" , Birthright="弱者の氾濫"},
+    --[Players.SeijaB.Type] = {Name="セイジャ" , Birthright="弱者の氾濫"},
+    [Players.SeijaB.Type] = {Name="セイジャ" , Birthright="サイホン制御"}, -- Sorry but this effect has been changed
     --この「はんらん」は広がって増えていく、のような意味です。
     --this 「hanran」is「increased」
 }
@@ -523,7 +524,7 @@ Translation.Cards ={
     [Cards.SpiritMirror.ID] = {Name="スピリットミラー" , Description="共食い"},
     [Cards.SoulOfSeija.ID] = {Name="セイジャのソウル" , Description="フリップ"},
     [Cards.SoulOfSeija.ReversedID] = {Name="セイジャのソウル" , Description="フリップ"},
-    [Cards.SituationTwist.ID] = {Name="形勢逆転" , Description="リセットしてシャッフル"}
+    [Cards.SituationTwist.ID] = {Name="形勢逆転" , Description="リロールしてシャッフル"}
 }
 local Pills = THI.Pills;
 Translation.Pills ={
