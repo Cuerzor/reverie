@@ -8,7 +8,7 @@ if (THI) then
 end
 THI = RegisterMod("Reverie", 1);
 THI.Version = {
-    10,5,0
+    10,5,1
 }
 
 function THI:GetVersionString()
@@ -319,6 +319,7 @@ THI.Sounds = {
     SOUND_TOUHOU_SPELL_CARD = Isaac.GetSoundIdByName("Touhou Spell Card"),
     SOUND_TOUHOU_BOON = Isaac.GetSoundIdByName("Touhou Boon"),
     SOUND_TOUHOU_KAGEROU_ROAR = Isaac.GetSoundIdByName("Touhou Kagerou Roar"),
+    SOUND_TOUHOU_SHUTTER = Isaac.GetSoundIdByName("Touhou Shutter"),
     SOUND_NIMBLE_FABRIC = Isaac.GetSoundIdByName("Nimble Fabric"),
     SOUND_MIND_CONTROL = Isaac.GetSoundIdByName("Mind Control"),
     SOUND_MIND_WAVE = Isaac.GetSoundIdByName("Mind Wave"),

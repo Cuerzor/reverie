@@ -97,23 +97,38 @@ do
     
     local function PostPickupUpdate(mod, pickup)
         if (pickup.FrameCount == 1) then
-            local isFool = pickup.Variant == PickupVariant.PICKUP_TAROTCARD and pickup.SubType == Card.CARD_FOOL;
-            local isTelepill = false;
-            if (pickup.Variant == PickupVariant.PICKUP_PILL)  then
-                local effect = Game():GetItemPool():GetPillEffect(pickup.SubType, Isaac.GetPlayer());
-                isTelepill = effect == PillEffect.PILLEFFECT_TELEPILLS;
-            end
-            if (isFool or isTelepill) then
-                if (not pickup.SpawnerEntity and pickup.SpawnerType == 5 and pickup.SpawnerVariant == 69)then
-                    local hasArm = Collectibles.IsAnyHasCollectible(Arm.Item);
-                    if (hasArm) then
-                        local room = Game():GetRoom();
-                        local gridEntity = room:GetGridEntityFromPos(pickup.Position);
-                        if (gridEntity and gridEntity:GetType() == GridEntityType.GRID_ROCK_ALT2 and gridEntity.State == 2) then
-                            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
-                            pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_TELEPORT, true, true, true);
+            local hasArm = Collectibles.IsAnyHasCollectible(Arm.Item);
+            if (hasArm) then
+                local isFool = pickup.Variant == PickupVariant.PICKUP_TAROTCARD and pickup.SubType == Card.CARD_FOOL;
+                local isCrackedKey = pickup.Variant == PickupVariant.PICKUP_TAROTCARD and pickup.SubType == Card.CARD_CRACKED_KEY;
+                local isTelepill = false;
+                if (pickup.Variant == PickupVariant.PICKUP_PILL)  then
+                    local effect = Game():GetItemPool():GetPillEffect(pickup.SubType, Isaac.GetPlayer());
+                    isTelepill = effect == PillEffect.PILLEFFECT_TELEPILLS;
+                end
+
+                local transform = false;
+                local transformTo = CollectibleType.COLLECTIBLE_TELEPORT;
+                if (isFool or isTelepill) then
+                    local room = Game():GetRoom();
+                    local gridEntity = room:GetGridEntityFromPos(pickup.Position);
+                    if (gridEntity and gridEntity:GetType() == GridEntityType.GRID_ROCK_ALT2 and gridEntity.State == 2) then
+                        if (not pickup.SpawnerEntity and pickup.SpawnerType == 5 and pickup.SpawnerVariant == 69)then
+                            transform = true;
+                            transformTo = CollectibleType.COLLECTIBLE_TELEPORT;
                         end
                     end
+                elseif (isCrackedKey) then
+                    if (Game():GetLevel():IsAscent()) then
+                        transform = true;
+                        transformTo = CollectibleType.COLLECTIBLE_RED_KEY;
+                    end
+                end
+                
+                if (transform) then
+                    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
+                    pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, transformTo, true, true, true);
+                    pickup.Price = 0;
                 end
             end
         end

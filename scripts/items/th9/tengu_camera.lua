@@ -193,8 +193,9 @@ function TenguCamera:PostUseCamera(item, rng, player, flags, slot, varData)
         SpawnBonus(player, score);
 
         local sfx = THI.SFXManager;
-        sfx:Play(SoundEffect.SOUND_FORTUNE_COOKIE);
-        sfx:Play(SoundEffect.SOUND_FLASHBACK);
+        -- sfx:Play(SoundEffect.SOUND_FORTUNE_COOKIE);
+        -- sfx:Play(SoundEffect.SOUND_FLASHBACK);
+        sfx:Play(THI.Sounds.SOUND_TOUHOU_SHUTTER);
         return {ShowAnim = true}
     end
 end

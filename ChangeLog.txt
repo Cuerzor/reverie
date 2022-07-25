@@ -2218,3 +2218,9 @@ Greed Shop: Added D Flip
 -虹吸骰子现在会在当前房间道具池和宝箱房道具池都空的情况下将道具重置成默认道具。
 -Fixed an issue that player will not collide with other entities and cannot shoot tears after used Dark Arts and Psycho Knife at the same time.
 -修复了玩家在同时使用暗仪刺刀和疯人刀之后无法与其他物体碰撞，也无法射击的BUG。
+
+10.5.1-2022.7.24
+-Cracked Keys while ascent now will transform into Red Keys while holding Ethereal Arm.
+-拥有虚无断臂时，回溯中的红钥匙碎片会变为红钥匙。
+-Changed Tengu Camera's use sound.
+-修改了天狗相机的使用音效。
