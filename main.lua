@@ -8,7 +8,7 @@ if (THI) then
 end
 THI = RegisterMod("Reverie", 1);
 THI.Version = {
-    10,5,1
+    11,0,6
 }
 
 function THI:GetVersionString()
@@ -115,6 +115,20 @@ THI.Halos = Require("scripts/shared/halos");
 
 
 THI.Shared = Shared;
+
+-- Room Generation.
+do
+    --THI.Shared.RoomGen = Require("scripts/shared/room_gen")
+
+    function THI.GotoRoom(id)
+        Isaac.ExecuteCommand("goto "..id);
+    end
+
+    function THI.GotoAdditionalRoom(index, dimension)
+        Game():StartRoomTransition(index, Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension);
+    end
+end
+
 function THI.Random(min, max)
     if (not max) then
         max = min;
@@ -320,6 +334,7 @@ THI.Sounds = {
     SOUND_TOUHOU_BOON = Isaac.GetSoundIdByName("Touhou Boon"),
     SOUND_TOUHOU_KAGEROU_ROAR = Isaac.GetSoundIdByName("Touhou Kagerou Roar"),
     SOUND_TOUHOU_SHUTTER = Isaac.GetSoundIdByName("Touhou Shutter"),
+    SOUND_TOUHOU_TIMEOUT = Isaac.GetSoundIdByName("Touhou Timeout"),
     SOUND_NIMBLE_FABRIC = Isaac.GetSoundIdByName("Nimble Fabric"),
     SOUND_MIND_CONTROL = Isaac.GetSoundIdByName("Mind Control"),
     SOUND_MIND_WAVE = Isaac.GetSoundIdByName("Mind Wave"),
@@ -461,6 +476,11 @@ THI.Monsters = {
     EvilSpirit = Require("scripts/monsters/evil_spirit"),
     Immortal = Require("scripts/monsters/immortal"),
     Rebecha = Require("scripts/monsters/rebecha"),
+    NightmareSpider = Require("scripts/monsters/nightmare_spider"),
+    NightmarePooter = Require("scripts/monsters/nightmare_pooter"),
+    NightmareCoin = Require("scripts/monsters/nightmare_coin"),
+    NightmareSoul = Require("scripts/monsters/nightmare_Soul"),
+    DeliriousGaper = Require("scripts/monsters/delirious_gaper")
 }
 
 THI.Rooms = {
@@ -660,6 +680,9 @@ THI.Challenges = {
 
 
 THI.GensouDream = Require("scripts/doremy/main");
+function THI:IsDreamWorld()
+    return self.GensouDream:IsDreamWorld();
+end
 
 THI.Trinkets = {
     FrozenFrog = Require("scripts/trinkets/frozen_frog"),
@@ -970,9 +993,6 @@ end
 -- end
 -- THI:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, THI.PostGameStartGetItemPools);
 
-function THI.GotoRoom(id)
-    Isaac.ExecuteCommand("goto "..id);
-end
 
 -- Reevaluate caches after gameStarted.
 function THI:PostGameStartEvaluate(isContinued)

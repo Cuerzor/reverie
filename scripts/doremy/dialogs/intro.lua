@@ -311,7 +311,7 @@ function Intro:End()
     Intro.Data.Doremy:Remove();
     THI.Game:GetHUD():SetVisible(true);
     THI.SFXManager:Play(SoundEffect.SOUND_FLASHBACK);
-    Isaac.Spawn(Dream.Doremy.Type, Dream.Doremy.Variant, 0, Vector(320, 280), Vector.Zero, nil);
+    Dream:StartNonSpell();
     
     local tempData = Dream:GetTempData(); 
     

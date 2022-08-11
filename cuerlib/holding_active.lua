@@ -8,6 +8,19 @@ local function EndHolding(player)
     playerData.Slot = nil;
 end
 
+
+local function IsHoldingAnimation(anim)
+    return anim == "PickupWalkDown" or 
+            anim == "PickupWalkUp" or 
+            anim == "PickupWalkRight"  or 
+            anim == "PickupWalkLeft" or
+            anim == "WalkDown" or 
+            anim == "WalkUp" or 
+            anim == "WalkRight"  or 
+            anim == "WalkLeft" or
+            anim == "HideItem"
+end
+
 function HoldingActive:GetPlayerData(player, init)
     if (init == nil) then
         init = true;
@@ -110,22 +123,11 @@ end
 function HoldingActive:ReleaseOnShoot(player, item)
     if (HoldingActive:GetHoldingItem(player) == item) then
         local shooting = Lib.Inputs.GetRawShootingVector(player);
-        if (shooting:Length() > 0.1) then
+        local spr = player:GetSprite();
+        if (shooting:Length() > 0.1 and IsHoldingAnimation(spr:GetAnimation())) then
             HoldingActive:ReleaseActive(player, item, shooting)
         end
     end
-end
-
-local function IsHoldingAnimation(anim)
-    return anim == "PickupWalkDown" or 
-            anim == "PickupWalkUp" or 
-            anim == "PickupWalkRight"  or 
-            anim == "PickupWalkLeft" or
-            anim == "WalkDown" or 
-            anim == "WalkUp" or 
-            anim == "WalkRight"  or 
-            anim == "WalkLeft" or
-            anim == "HideItem"
 end
 
 -- Events.
@@ -136,29 +138,81 @@ local function PostPlayerEffect(mod, player)
         local spr = player:GetSprite();
         local anim = spr:GetAnimation();
         local overlayAnim = spr:GetOverlayAnimation ( );
-        if (HoldingActive:GetHoldingItem(player) > 0) then
-            -- Prevent player end holding instantly after get hit and use item, causing animation stuck.
-            if (player.FrameCount > playerData.HoldFrame + 1) then
-                -- If player has no animation or this animation is not Holding animation.
-                if (player:IsExtraAnimationFinished() or not IsHoldingAnimation(anim)) then
+        local holdingItem = HoldingActive:GetHoldingItem(player);
+        if (holdingItem > 0) then
+            if (player:IsExtraAnimationFinished()) then
+                player:AnimateCollectible(holdingItem, "LiftItem");
+            end
+            
+            if (playerData.Hit) then
+                if (not IsHoldingAnimation(anim)) then
                     EndHolding(player);
-                    return;
                 end
             end
-            if (overlayAnim == "") then
-                playerData.Lifting = true;
-            end
-            if (playerData.Lifting and overlayAnim ~= "") then
-                EndHolding(player);
-                playerData.Lifting = false;
-                return;
-            end
-        else
-            playerData.Lifting = false;
+
+        --     -- Prevent player end holding instantly after get hit and use item, causing animation stuck.
+        --     if (player.FrameCount > playerData.HoldFrame + 1) then
+        --         -- If player has no animation or this animation is not Holding animation.
+        --         if (player:IsExtraAnimationFinished() or not IsHoldingAnimation(anim)) then
+        --             EndHolding(player);
+        --             return;
+        --         end
+        --     end
+        --     if (overlayAnim == "") then
+        --         playerData.Lifting = true;
+        --     end
+        --     if (playerData.Lifting and overlayAnim ~= "") then
+        --         EndHolding(player);
+        --         playerData.Lifting = false;
+        --         return;
+        --     end
+        -- else
+        --     playerData.Lifting = false;
         end
+        playerData.Hit = false;
     end
 end
 HoldingActive:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PostPlayerEffect)
+
+local function PreTakeDamage(mod, tookDamage, amount, flags, source, countdown)
+    if (tookDamage.Type == EntityType.ENTITY_PLAYER) then
+        local player = tookDamage:ToPlayer();
+        if (HoldingActive:GetHoldingItem(player) > 0) then
+            local playerData = HoldingActive:GetPlayerData(player, true);
+            playerData.Hit = true;
+        end
+    end
+end
+HoldingActive:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage)
+
+
+local function PostUseItem(mod, item, rng, player, flags, slot, data)
+    if (flags & UseFlag.USE_NOANIM <= 0) then
+        local holdingItem = HoldingActive:GetHoldingItem(player);
+        if (holdingItem > 0 and item ~= holdingItem) then
+            local spr = player:GetSprite();
+            local anim = spr:GetAnimation();
+            local overlayanim = spr:GetOverlayAnimation();
+            if (spr:GetOverlayFrame() == -1 and string.find(anim, "PickupWalk")) then
+                EndHolding(player);
+            elseif (spr:GetOverlayFrame() == 0 and string.find(anim, "Walk") and string.find(overlayanim, "Head")) then
+                EndHolding(player);
+            end
+        end
+    end
+end
+HoldingActive:AddCallback(ModCallbacks.MC_USE_ITEM, PostUseItem)
+
+
+local function PostNewRoom(mod)
+    local Detection = Lib.Detection;
+    for p, player in Detection.PlayerPairs(true) do
+        if (HoldingActive:GetHoldingItem(player) > 0) then
+            EndHolding(player);
+        end
+    end
+end
+HoldingActive:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom)
 
 local function InputAction(mod, entity,hook, action)
     if (entity and entity.Type == EntityType.ENTITY_PLAYER) then

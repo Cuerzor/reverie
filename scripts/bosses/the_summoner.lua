@@ -32,7 +32,8 @@ do
         ID = "reverie:the_summoner",
         LuaRoomPath = "resources-dlc3/luarooms/reverie/the_summoner",
         CustomRooms = {
-            SummonerAndImmortal1 = {
+            {
+                Name = "SummonerAndImmortal1",
                 ReplaceChance = 33,
                 BossID = "reverie:the_summoner",
                 Shape = RoomShape.ROOMSHAPE_1x1,

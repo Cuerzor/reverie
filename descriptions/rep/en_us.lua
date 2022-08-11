@@ -566,7 +566,7 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.TheInfamies.Item] = {
         Description = "Switch forms after room cleared:"..
-        "#{{ColorOrange}}Pleasure:{{CR}} ↑{{Speed}}+0.3 Speed up"..
+        "#{{ColorOrange}}Pleasure:{{CR}} ↑{{Speed}}+0.15 Speed up"..
         "#{{ColorOrange}}Anger:{{CR}} ↑{{Damage}}+2 Damage up"..
         "#{{ColorOrange}}Sorrow:{{CR}} ↑{{Tears}}+1 Tears up"..
         "#{{ColorOrange}}Fearness:{{CR}} ↑{{Luck}}+1 Luck up"..

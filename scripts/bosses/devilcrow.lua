@@ -134,7 +134,8 @@ do
         ID = "reverie:devilcrow",
         LuaRoomPath = "resources-dlc3/luarooms/reverie/devilcrow",
         CustomRooms = {
-            Devilcrow1 = {
+            {
+                Name = "Devilcrow1",
                 ReplaceChance = 33,
                 BossID = "reverie:devilcrow",
                 Shape = RoomShape.ROOMSHAPE_1x1,

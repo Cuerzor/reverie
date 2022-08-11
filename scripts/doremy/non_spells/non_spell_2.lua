@@ -28,7 +28,7 @@ function NonSpell2:CanCast(frame)
     return frame % 150 == 2;
 end
 function NonSpell2:GetDuration()
-    return 450;
+    return 300;
 end
     
 function NonSpell2:PostUpdate(doremy)

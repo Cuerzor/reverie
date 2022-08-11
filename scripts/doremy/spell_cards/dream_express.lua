@@ -1,4 +1,6 @@
+local Dream = GensouDream;
 local DreamExpress = GensouDream.SpellCard();
+DreamExpress.NameKey = "#SPELL_CARD_DREAM_EXPRESS"
 
 local featherGap = 30;    
 local scaleColors = {
@@ -15,7 +17,7 @@ local scaleColors = {
 
 local FeatherParams = ProjectileParams();
 FeatherParams.BulletFlags = ProjectileFlags.ACCELERATE;
-FeatherParams.Acceleration = 1.1;
+FeatherParams.Acceleration = 1.07;
 FeatherParams.Variant = ProjectileVariant.PROJECTILE_WING;
 FeatherParams.FallingAccelModifier = -0.2;
 FeatherParams.FallingSpeedModifier = 3;
@@ -31,7 +33,7 @@ function DreamExpress:GetDefaultData(doremy)
         ScaleTime = 0,
         RingTime = 20,
         Target = Vector.Zero,
-        Projectiles = {},
+        MotherShadow = nil
     }
 end
     
@@ -41,6 +43,10 @@ end
 
 function DreamExpress:CanMove(frame)
     return frame % 60 == 0 and not self:CanCast(frame)
+end
+
+function DreamExpress:GetDuration()
+    return 1200;
 end
 
 function DreamExpress:PostUpdate(doremy)
@@ -84,7 +90,7 @@ function DreamExpress:PostUpdate(doremy)
                 local offset = fireDir * 10 + Vector.FromAngle(normalAngle) * normalOffset;
                 local sourcePos = doremy.Position + offset;
                 local color = scaleColors[i];
-                local speed = 1;
+                local speed = 2;
                 local velocity = fireDir * speed;
 
                 
@@ -142,6 +148,13 @@ function DreamExpress:PostUpdate(doremy)
         THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_DANMAKU, 0.25);
     end
 
+    local frame = self:GetFrame(doremy);
+    if (frame >= 45) then
+        if (not data.MotherShadow or not data.MotherShadow:Exists()) then
+            local Shadow = Dream.Effects.NightmareMothersShadow;
+            data.MotherShadow = Isaac.Spawn(Shadow.Type, Shadow.Variant, Shadow.SubType, Vector(-200, 0), Vector.Zero, doremy);
+        end
+    end
     -- -- Make projectiles float and increase speed.
     -- for i, info in pairs(data.Projectiles) do
     --     local proj = info.Projectile;
@@ -157,6 +170,16 @@ function DreamExpress:OnCast(doremy)
     local data = self:GetData(doremy);
     data.ScaleTime = 20;
     data.Target = self.GetRandomPlayer().Position;
+    if (data.MotherShadow and data.MotherShadow:Exists()) then
+        local Shadow = Dream.Effects.NightmareMothersShadow;
+        Shadow:StartCharge(data.MotherShadow);
+    end
+end
+function DreamExpress:End(doremy)
+    local data = self:GetData(doremy);
+    if (data.MotherShadow and data.MotherShadow:Exists()) then
+        data.MotherShadow:Remove();
+    end
 end
 
 return DreamExpress;

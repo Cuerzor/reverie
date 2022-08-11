@@ -32,7 +32,8 @@ do
         ID = "reverie:the_centipede",
         LuaRoomPath = "resources-dlc3/luarooms/reverie/the_centipede",
         CustomRooms = {
-            TheCentipede1 = {
+            {
+                Name = "TheCentipede1",
                 ReplaceChance = 20,
                 BossID = "reverie:the_centipede",
                 Shape = RoomShape.ROOMSHAPE_2x1,
@@ -68,7 +69,8 @@ do
                     {Type = 5, Variant = 20, SubType = 2, Position = Vector(1080, 160)},
                 }
             },
-            TheCentipede2 = {
+            {
+                Name = "TheCentipede2",
                 ReplaceChance = 20,
                 BossID = "reverie:the_centipede",
                 Shape = RoomShape.ROOMSHAPE_1x2,
@@ -115,7 +117,8 @@ do
                     {Type = 5, Variant = 20, SubType = 2, Position = Vector(560, 160)},
                 }
             },
-            TheCentipede3 = {
+            {
+                Name = "TheCentipede3",
                 ReplaceChance = 20,
                 BossID = "reverie:the_centipede",
                 Shape = RoomShape.ROOMSHAPE_1x1,

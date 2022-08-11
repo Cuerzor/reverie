@@ -9,9 +9,13 @@ cardSprites[THI.Cards.SoulOfSeija.ReversedID] = "gfx/reverie/005.300.587_soul of
 
 
 local Note = THI.Bosses.ReverieNote
+local Doremy = THI.GensouDream.Doremy;
 EntityTags:AddEntity("CopyBlacklist", Note.Type, Note.Variant);
 EntityTags:AddEntity("CopyBlacklist", Note.SekibankiDrone.Type, Note.SekibankiDrone.Variant);
 EntityTags:AddEntity("CopyBlacklist", Note.HecatiaMoon.Type, Note.HecatiaMoon.Variant);
+EntityTags:AddEntity("CopyBlacklist", Doremy.Type, Doremy.Variant);
+EntityTags:AddEntity("RemoveBlacklist", Doremy.Type, Doremy.Variant);
+
 
 EntityTags:AddEntity("LastWillsBlacklist", THI.Pickups.StarseekerBall.Type, THI.Pickups.StarseekerBall.Variant);
 EntityTags:AddEntity("LastWillsBlacklist", THI.Pickups.FoodPickup.Type, THI.Pickups.FoodPickup.Variant);

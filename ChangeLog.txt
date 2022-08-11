@@ -2224,3 +2224,83 @@ Greed Shop: Added D Flip
 -拥有虚无断臂时，回溯中的红钥匙碎片会变为红钥匙。
 -Changed Tengu Camera's use sound.
 -修改了天狗相机的使用音效。
+
+10.5.2-2022.7.30
+-Fixed the animation issues of liftable active items, make them can cancel the lift only when damaged, entered a new room or use another active item.
+-修改了可举起的主动道具的动画问题，使得其只会在受伤、进入房间或使用其他主动道具时取消举起的状态。
+-Players doing extra animations can no longer enter Rebel Mecha.
+-进行额外动作时的角色不再能乘上反狱机甲。
+-Rod of remorse no longer kills Found Soul.
+-悔悟棒不再会杀死复得游魂。
+
+
+10.5.3-2022.7.30
+-Modified some room's layout.
+-修改了部分房间的布局。
+
+10.5.4-2022.7.31
+-Fixed an issue that Empty Book or Tengu Cellphone can not accept their moves.
+-修复了空白书本和天狗手机无法确认动作的BUG。
+
+11.0.0-2022.8.9
+-Reworked Doremy's battle.
+-重做了哆来咪的战斗。
+-Greatly increased Brutal Horseshoe's damage.
+-残暴马蹄铁的伤害大幅度提高。
+-Reverie's last stage's total HP reduced from 3000 to 1500, armor per note has been reduced to 25 from 45.
+-幻想曲的最后一阶段的总血量从3000降低到1500，单个音符的护甲从45降低到25。
+-Blood Bonies' HP is now fixed 10 from 8 + 2 * stage.
+-血骷髅仔的血量现在固定为10（从基础8，每层增加2下调）。
+-Rebel Mecha now fires rockets instead of bombs.
+-反狱机甲现在从发射炸弹改为发射火箭。
+-Rebel Mecha now only self-destructs when player holds card button for 0.5 sec.
+-反狱机甲现在只会在玩家按住卡牌键半秒后自爆。
+-Swallow's Shell now loses tag Summonable.
+-燕的子安贝现在失去了“可召唤”标签。
+
+11.0.1-2022.8.9
+-Players with bones as weapon no longer increase range while battle with Doremy or Reverie.
+-以骨头为攻击方式的角色在幻想曲和哆来咪的战斗中不再增加射程。
+-Fixed some net co-op issues.
+-修复了一些联机问题。
+
+11.0.2-2022.8.9
+-Fixed some net co-op issues.
+-修复了一些联机问题。
+
+11.0.3-2022.8.9
+-Doremy's Non-Spell bullets has no duration time now, and must defeat her to go to the next state.
+-现在哆来咪的非符没有持续时间，必须要击败哆来咪才能进行下一阶段。
+-Doremy's Non-Spell bullets has been slightly buffed.
+-哆来咪的非符得到了部分加强。
+-Delirious Gapers now no longer take status effects.
+-精神错乱漫步尸现在不会受到任何负面状态效果。
+-Deleted Erhu now cannot remove Dogma and Doremy.
+-被删除的二胡现在无法再移除教条和哆来咪。
+-Spirit Mirror now cannot copy Doremy.
+-精神之镜现在无法再复制哆来咪。
+
+11.0.4-2022.8.9
+-Fixed some issues.
+-修复了部分BUG。
+
+11.0.5-2022.8.9
+-Fixed some net co-op issues.
+-修复了一些联机问题。
+
+11.0.6-2022.8.10
+-Doremy's Spell Card HP is now 2460 from 600, Non-Spell HP is now 400 from 200.
+-哆来咪的符卡血量从600提升至2460，非符血量从200提升至400。
+-A Blended heart will spawn instead of soul heart after cleared a spell card of Doremy.
+-现在击破哆来咪的符卡后会生成混合心，而不是魂心。
+-Fixed net co-op issues about The Abandoned.
+-修复了关于遗忘伞的联机问题。
+
+
+
+
+
+-Added colored menu item icons, Can replace manually in \resources\gfx\reverie\ui (replace "death items.png" with "death items colored.png")
+-加入了彩色的道具菜单图标，可以手动在\resources\gfx\reverie\ui中替换（将death items colored.png覆盖death items.png）
+-Doremy's veritcal line indicator is now more implicit.
+-哆来咪的位置标识现在更加隐蔽。

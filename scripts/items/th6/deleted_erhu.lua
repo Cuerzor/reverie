@@ -1,5 +1,6 @@
 local SaveAndLoad = CuerLib.SaveAndLoad
 local Callbacks = CuerLib.Callbacks;
+local EntityTags = THI.Shared.EntityTags;
 
 local DeletedErhu = ModItem("DELETED ERHU", "DeletedErhu");
 
@@ -69,7 +70,7 @@ end
 local function DeleteNPCs()
     for _, ent in pairs(Isaac.GetRoomEntities()) do
         local npc = ent:ToNPC();
-        if (npc ~= nil) then
+        if (npc and not EntityTags:EntityFits(ent, "RemoveBlacklist")) then
             DeleteNPC(npc);
             RemoveNPC(npc);
         end

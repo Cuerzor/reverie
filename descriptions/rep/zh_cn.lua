@@ -630,7 +630,7 @@ EIDInfo.Collectibles = {
     [Collectibles.TheInfamies.Item] = {
         Name = "耻辱一族",
         Description = "清理房间后切换形态："..
-        "#{{ColorOrange}}喜{{CR}}: ↑{{Speed}}+0.3移速"..
+        "#{{ColorOrange}}喜{{CR}}: ↑{{Speed}}+0.15移速"..
         "#{{ColorOrange}}怒{{CR}}: ↑{{Damage}}+2伤害"..
         "#{{ColorOrange}}哀{{CR}}: ↑{{Tears}}+1射速"..
         "#{{ColorOrange}}惧{{CR}}: ↑{{Luck}}+1运气"..
@@ -907,7 +907,7 @@ EIDInfo.Collectibles = {
             CollectibleType.COLLECTIBLE_SCHOOLBAG .. "}}书包，{{Collectible" ..
             CollectibleType.COLLECTIBLE_LUCKY_FOOT ..
             "}}幸运脚"..
-            "#{{Player"..PlayerType.PLAYER_ISAAC_B.."}} 腐化以撒拿不下的道具会掉在地上"
+            "#{{Player"..PlayerType.PLAYER_ISAAC_B.."}} 堕化以撒拿不下的道具会掉在地上"
     },
     [Collectibles.RebelMechaCaller.Item] = {
         Name="反狱机甲呼叫机",

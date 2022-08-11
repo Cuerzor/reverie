@@ -1,5 +1,5 @@
 <music root="music/">
-    <track loop="true" path="doremy/eternal_spring_dream.ogg" intro="doremy/eternal_spring_dream_intro.ogg" name="Doremy" id="58123"/>
+    <track loop="true" path="doremy/doremy.ogg" intro="doremy/doremy_intro.ogg" name="Doremy" id="58123"/>
     <track loop="true" path="doremy/ending.ogg" name="Gensou Ending" id="58124"/>
     <track loop="true" path="ufo.ogg" name="UFO" id="58125"/>
     <track loop="true" path="illusionary_joururi.ogg" intro="illusionary_joururi_intro.ogg" name="Reverie" id="58126"/>

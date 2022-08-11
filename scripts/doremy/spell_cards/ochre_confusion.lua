@@ -1,4 +1,5 @@
 local OchreConfusion = GensouDream.SpellCard();
+OchreConfusion.NameKey = "#SPELL_CARD_OCHRE_CONFUSION";
 
 local centerColor = Color(1,1,1,1,0.5,0.5,0);
 local boundColor = Color(1,1,1,1,1,1,0);
@@ -29,7 +30,7 @@ function OchreConfusion:GetDefaultData(doremy)
 end
     
 function OchreConfusion:CanCast(frame)
-    return (frame + 30) % 180 == 0;
+    return frame % 180 == 30;
 end
 
 function OchreConfusion:CanMove(frame)
@@ -37,7 +38,7 @@ function OchreConfusion:CanMove(frame)
 end
 
 function OchreConfusion:GetDuration()
-    return 850;
+    return 1200;
 end
 
 
@@ -94,6 +95,15 @@ function OchreConfusion:PostUpdate(doremy)
         end
     end
 
+    local frame = self:GetFrame(doremy);
+    if (frame % 180 == 60) then
+        Game():ShakeScreen(10);
+        SFXManager():Play(SoundEffect.SOUND_ULTRA_GREED_ROAR_1);
+        SFXManager():Play(SoundEffect.SOUND_FORESTBOSS_STOMPS);
+        local Coin = THI.Monsters.NightmareCoin;
+        Isaac.Spawn(Coin.Type, Coin.Variant, Coin.SubType, data.Position, Vector.Zero, doremy);
+    end
+
 
     -- Make projectiles float and increase speed.
     -- for i, info in pairs(data.Projectiles) do
@@ -113,5 +123,14 @@ function OchreConfusion:OnCast(doremy)
     data.Clockwise = not data.Clockwise;
     data.Position = OchreConfusion.GetRandomPlayer().Position;
 end
+
+
+function OchreConfusion:End(doremy)
+    local Coin = THI.Monsters.NightmareCoin;
+    for _, ent in ipairs(Isaac.FindByType(Coin.Type, Coin.Variant, Coin.SubType)) do
+        ent:Die();
+    end
+end
+
 
 return OchreConfusion;

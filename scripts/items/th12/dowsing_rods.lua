@@ -40,6 +40,7 @@ function Rods:PostUpdate()
                         local award = nil;
                         if (value < 10) then
                             award = Isaac.Spawn(EntityType.ENTITY_HARDY, 0, 0, pos, Vector.Zero, nil);
+                            award:AddEntityFlags(EntityFlag.FLAG_AMBUSH);
                         elseif (value < 25) then
                             award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_BOMB, BombSubType.BOMB_DOUBLEPACK, pos, RandomVector(), nil);
                         elseif (value < 26) then
@@ -52,7 +53,8 @@ function Rods:PostUpdate()
                             award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LOCKEDCHEST, 0, pos, RandomVector(), nil);
                         elseif (value < 95) then
                             for i=1, 2 do
-                                Isaac.Spawn(EntityType.ENTITY_ROCK_SPIDER, 1, 0, pos, RandomVector(), nil);
+                                local spider = Isaac.Spawn(EntityType.ENTITY_ROCK_SPIDER, 1, 0, pos, RandomVector(), nil);
+                                spider:AddEntityFlags(EntityFlag.FLAG_AMBUSH);
                             end
                         elseif (value < 100) then
                             award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, 0, pos, RandomVector(), nil);

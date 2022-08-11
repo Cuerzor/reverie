@@ -143,6 +143,10 @@ EntityTags.Tags.CopyBlacklist = {
     {Type = EntityType.ENTITY_DELIRIUM},
 }
 
+EntityTags.Tags.RemoveBlacklist = {
+    {Type = EntityType.ENTITY_DOGMA},
+}
+
 EntityTags.Tags.LastWillsBlacklist = {
     {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_THROWABLEBOMB},
     {Type = EntityType.ENTITY_PICKUP, Variant = PickupVariant.PICKUP_POOP},

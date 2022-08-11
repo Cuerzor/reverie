@@ -132,6 +132,47 @@ function Actives.ChargeByOrder(player, amount)
     end
 end
 
+function Actives.ChargeAll(player, amount, flash, playSound)
+    local hud = Game():GetHUD();
+    local sfx = SFXManager();
+    for slot = 0,3 do
+        local item = player:GetActiveItem(slot);
+        local config = itemConfig:GetCollectible(item);
+        if (config) then
+            local maxCharges = config.MaxCharges;
+            local chargeType = config.ChargeType;
+            local charged = false;
+            if (chargeType == 0) then
+                for i = 1, amount do
+                    if (player:NeedsCharge(slot)) then
+                        local charge = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot) + 1;
+                        player:SetActiveCharge(charge, slot);
+                        charged = true;
+                    end
+                end
+            elseif (chargeType == 1) then
+                if (player:NeedsCharge(slot)) then
+                    player:FullCharge(slot);
+                    charged = true;
+                end
+            end
+            
+            if (charged) then
+                if (flash) then
+                    hud:FlashChargeBar(player, slot);
+                end
+                if (playSound) then
+                    local charge = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot);
+                    sfx:Play(SoundEffect.SOUND_BEEP);
+                    if (charge >= maxCharges) then
+                        sfx:Play(SoundEffect.SOUND_BATTERYCHARGE);
+                    end
+                end
+            end
+        end
+    end
+end
+
 ----------------
 -- Render Counts
 ----------------

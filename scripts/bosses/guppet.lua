@@ -25,7 +25,8 @@ do
         ID = "reverie:guppet",
         LuaRoomPath = "resources-dlc3/luarooms/reverie/guppet",
         CustomRooms = {
-            Guppet1 =  {
+            {
+                Name = "Guppet1",
                 ReplaceChance = 25,
                 BossID = "reverie:guppet",
                 Shape = RoomShape.ROOMSHAPE_1x1,

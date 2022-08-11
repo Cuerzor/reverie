@@ -932,7 +932,7 @@ Reference: Kaguya Houraisan
 Type: Passive Item
 Quality: 3
 Item Pools: Angel Room, Greed Angel Room
-Tags: Offensive, Summonable, No Cantripped
+Tags: Offensive, No Cantripped
 * Spawn a random angel room item after player enters a new floor.
     * Spawn an extra soul heart for each baby item player has.
 * Remove one of this items after player takes damages.
@@ -2001,7 +2001,7 @@ Item Pools: Treasure Room, Curse Room, Red Chest, Devil Room, Ultra Secret, Demo
 Tags: Offensive
 * Upon use, spawn a friendly Blood Bony.
     * Throw bones to enemies like normal bonies. But bones' damage is player damage * 1.2.
-    * Can take at most (8 + currentFloor * 2) hits.
+    * Can take at most 10 hits.
 * The limit of Blood Bonies is equals to the current floor.
 * If player has Book of Virtues, spawn flesh wisps.
 

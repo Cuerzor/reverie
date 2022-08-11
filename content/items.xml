@@ -39,7 +39,7 @@
     <passive id="47" name="Dragon Neck Jewel" description="Five-Colored Shots" gfx="dragon_neck_jewel.png" quality="3" devilprice="2" tags="summonable offensive"/>
     <passive id="48" name="Buddha's Bowl" description="Indomitable Will" gfx="buddhas_bowl.png" quality="3" devilprice="2" tags="summonable nolostbr"/>
     <passive id="49" name="Robe of Firerat" description="Unhurried Mind" gfx="robe_of_firerat.png" cache="familiars" quality="3" tags="summonable offensive"/>
-    <passive id="50" name="Swallow's Shell" description="Everlasting Life" gfx="swallows_shell.png" quality="3" tags="summonable offensive nocantrip"/>
+    <passive id="50" name="Swallow's Shell" description="Everlasting Life" gfx="swallows_shell.png" quality="3" tags="offensive nocantrip"/>
     <passive id="51" name="Jeweled Branch" description="Rainbow Danmaku" gfx="jeweled_branch.png" quality="3" tags="summonable offensive"/>
     <passive id="52" name="Ash of Phoenix" description="Nirvana" gfx="ash_of_phoenix.png" quality="2"/>
 

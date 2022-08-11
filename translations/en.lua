@@ -177,10 +177,14 @@ Translation.Default = {
     ["#MAGATAMA_ERROR"] = "!\"Division by Zero\" Attack!",
 
 
+    ["#SPELL_CARD_UNKNOWN"] = "404 Spell Card not found",
     ["#SPELL_CARD_SCARLET_NIGHTMARE"] = "Dream Sign \"Scarlet Nightmare\"",
     ["#SPELL_CARD_OCHRE_CONFUSION"] = "Dream Sign \"Ochre Confusion\"",
     ["#SPELL_CARD_DREAM_EXPRESS"] = "Super-Express \"Dream Express\"",
     ["#SPELL_CARD_DREAM_CATCHER"] = "Dream Sign \"Dream Catcher\"",
+    ["#SPELL_CARD_BUTTERFLY_SUPPLANTATION"] = "Butterfly \"Butterfly Supplantation\"",
+    ["#SPELL_CARD_CREEPING_BULLET"] = "Crawling Dream \"Creeping Bullet\"",
+    ["#SPELL_CARD_ULTRAMARINE_LUNATIC_DREAM"] = "Moon Sign \"Ultramarine Lunatic Dream\"",
     
     ["#DOREMY_ENDING_TITLE"] = "Thanks for playing!",
     ["#DOREMY_ENDING_SUBTITLE"] = "May Isaac live a happy new life.",

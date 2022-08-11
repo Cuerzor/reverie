@@ -6,6 +6,7 @@ local Screen = CuerLib.Screen;
 local Players = CuerLib.Players;
 local CompareEntity = Detection.CompareEntity;
 local Rebecha = ModEntity("Rebecha", "REBECHA");
+Rebecha.MaxDestructCharge = 30;
 
 Rebecha.MechaStates = {
     NONE = 0,
@@ -45,11 +46,24 @@ end
 
 local function GetMechaTempData(player, create)
     return Rebecha:GetData(player, create, function() 
+        local chargeBar = Sprite();
+        chargeBar:Load("gfx/chargebar.anm2", true)
         return {
             DamageCooldown = -1,
             Flying = false,
             SelfDestruction = false,
-            SelfDestructionTimeout = -1;
+            SelfDestructionTimeout = -1,
+            DestructCharge = 0,
+            ChargeBarSprite = chargeBar
+        }
+    end)
+end
+
+
+local function GetBombTempData(bomb, create)
+    return Rebecha:GetData(bomb, create, function() 
+        return {
+            Direction = Vector(1, 0)
         }
     end)
 end
@@ -67,6 +81,17 @@ end
 function Rebecha:SetMechaDamageCooldown(mecha, value)
     local data = GetMechaTempData(mecha, true)
     data.DamageCooldown = value;
+end
+
+
+function Rebecha:GetMechaDestructCharge(mecha)
+    local data = GetMechaTempData(mecha, false)
+    return (data and data.DestructCharge) or 0;
+end
+
+function Rebecha:SetMechaDestructCharge(mecha, value)
+    local data = GetMechaTempData(mecha, true)
+    data.DestructCharge = value
 end
 
 function Rebecha:CanMechaDamaged(mecha, flags)
@@ -359,10 +384,10 @@ local function PostPlayerUpdate(mod, player)
                     -- Bomb.
                     if (Input.IsActionTriggered(ButtonAction.ACTION_BOMB, player.ControllerIndex)) then
                         for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_BOMBDROP)) do
-                            if (CompareEntity(ent.SpawnerEntity, player) and ent.Position:Distance(player.Position) < 80 and ent.FrameCount < 1) then
-                                --ent:Remove();
-                                -- local bomb = ent:ToBomb();
-                                -- local flags = bomb.Flags;
+                            if (ent:Exists() and CompareEntity(ent.SpawnerEntity, player) and ent.Position:Distance(player.Position) < 80 and ent.FrameCount < 1) then
+                                
+                                local bomb = ent:ToBomb();
+                                local flags = bomb.Flags;
 
                                 local pos = player.Position;
                                 local bombDir;
@@ -387,18 +412,23 @@ local function PostPlayerUpdate(mod, player)
 
                                 THI.SFXManager:Play(SoundEffect.SOUND_BULLET_SHOT);
                                 --local bomb = player:FireBomb(pos, bombDir * 10, player);
-                                ent.Position = pos;
-                                local vel = bombDir * 10;
-                                vel = vel + player:GetTearMovementInheritance(vel);
-                                ent.Velocity = vel;
+                                -- ent.Position = pos;
+                                local vel = bombDir;
+                                vel = vel + player:GetTearMovementInheritance(vel) * 0.1;
+                                -- ent.Velocity = vel;
 
-                                -- local variant = BombVariant.BOMB_ROCKET;
-                                -- if (bomb.Variant == BombVariant.BOMB_GIGA) then
-                                --     variant = BombVariant.BOMB_ROCKET_GIGA;
-                                -- end
-                                -- local newBomb = Isaac.Spawn(EntityType.ENTITY_BOMB, variant, 0, pos, bombDir, player):ToBomb();
-                                -- newBomb.SpriteRotation = bombDir:GetAngleDegrees();
-                                -- newBomb:AddTearFlags(flags);
+                                local variant = BombVariant.BOMB_ROCKET;
+                                if (bomb.Variant == BombVariant.BOMB_GIGA) then
+                                    variant = BombVariant.BOMB_ROCKET_GIGA;
+                                end
+                                local newBomb = Isaac.Spawn(EntityType.ENTITY_BOMB, variant, 0, pos, bombDir, player):ToBomb();
+                                local bombData = GetBombTempData(newBomb, true);
+                                bombData.Direction = vel;
+                                newBomb:GetSprite().Rotation = vel:GetAngleDegrees();
+                                newBomb:AddTearFlags(flags);
+                                ent:Remove();
+                                SFXManager():Play(SoundEffect.SOUND_ROCKET_LAUNCH);
+                                break;
                             end
                         end
                     
@@ -408,17 +438,27 @@ local function PostPlayerUpdate(mod, player)
                     local selfDestruct = false;
                     if (playerType == PlayerType.PLAYER_ESAU) then
                         selfDestruct = Input.IsActionPressed(ButtonAction.ACTION_DROP, player.ControllerIndex) and 
-                        Input.IsActionTriggered(ButtonAction.ACTION_PILLCARD, player.ControllerIndex)
+                        Input.IsActionPressed(ButtonAction.ACTION_PILLCARD, player.ControllerIndex)
                     elseif (playerType == PlayerType.PLAYER_JACOB) then
                         selfDestruct = Input.IsActionPressed(ButtonAction.ACTION_DROP, player.ControllerIndex) and 
-                        Input.IsActionTriggered(ButtonAction.ACTION_ITEM, player.ControllerIndex)
+                        Input.IsActionPressed(ButtonAction.ACTION_ITEM, player.ControllerIndex)
                     else
-                        selfDestruct = Input.IsActionTriggered(ButtonAction.ACTION_PILLCARD, player.ControllerIndex)
+                        selfDestruct = Input.IsActionPressed(ButtonAction.ACTION_PILLCARD, player.ControllerIndex)
                     end
+                    local charge = Rebecha:GetMechaDestructCharge(mecha);
                     if (selfDestruct) then
-                        Rebecha:StartSelfDestruction(mecha);
-                        Rebecha:ExitMecha(player);
-                        player:PlayExtraAnimation("Jump");
+                        charge = charge + 1;
+                        Rebecha:SetMechaDestructCharge(mecha, charge);
+                        if (charge >= Rebecha.MaxDestructCharge) then
+                            Rebecha:StartSelfDestruction(mecha);
+                            Rebecha:ExitMecha(player);
+                            player:PlayExtraAnimation("Jump");
+                            Rebecha:SetMechaDestructCharge(mecha, 0);
+                        end
+                    else
+                        if (charge > 0) then
+                            Rebecha:SetMechaDestructCharge(mecha, 0);
+                        end
                     end
                     
                     -- Fly.
@@ -504,6 +544,16 @@ local function PostUpdate(mod)
 end
 Rebecha:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 
+
+local function PostBombUpdate(mod, bomb)
+    local tempData = GetBombTempData(bomb, false);
+    if (tempData) then
+        bomb.Velocity = (tempData.Direction  + Vector(-0.15, 0)) * (1 + bomb.FrameCount);
+        bomb:GetSprite().Rotation = tempData.Direction:GetAngleDegrees()
+    end
+end
+Rebecha:AddCallback(ModCallbacks.MC_POST_BOMB_UPDATE, PostBombUpdate, BombVariant.BOMB_ROCKET)
+
 local function PostRebechaUpdate(mod, rebecha)
     if (rebecha.Variant == Rebecha.Variant) then
         local spr = rebecha:GetSprite();
@@ -565,6 +615,21 @@ local function PostRebechaUpdate(mod, rebecha)
                 rebecha:Remove();
             end
         end
+
+        -- Charge Bar Sprite.
+        local charge = Rebecha:GetMechaDestructCharge(rebecha);
+        local barSpr = GetMechaTempData(rebecha, true).ChargeBarSprite;
+        if (charge > 0) then
+            if(charge < Rebecha.MaxDestructCharge) then
+                barSpr:SetFrame("Charging", math.floor(charge / Rebecha.MaxDestructCharge * 100));
+            end
+        else
+            if (barSpr:GetAnimation() == "Charging") then
+                barSpr:Play("Disappear");
+            end
+        end
+        barSpr:Update();
+
         local cooldown = Rebecha:GetMechaDamageCooldown(rebecha);
         if (rebecha:IsDead() or selfDestruction) then
             cooldown = 0;
@@ -744,6 +809,15 @@ local function PostRebechaRender(mod, entity, offset)
                 spr:SetFrame("EmptyHeart", 1);
             end
             spr:Render(pos, Vector.Zero, Vector.Zero)
+        end
+
+        if (Game():GetRoom():GetRenderMode() ~= RenderMode.RENDER_WATER_REFLECT) then
+            local tempData = GetMechaTempData(entity, false);
+            if (tempData) then
+                local barSpr = tempData.ChargeBarSprite;
+                local pos = Screen.GetEntityOffsetedRenderPosition(entity, offset, Vector(-24, -24 *  entity.SpriteScale.Y));
+                barSpr:Render(pos, Vector.Zero, Vector.Zero);
+            end
         end
     end
     

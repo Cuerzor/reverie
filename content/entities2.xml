@@ -295,15 +295,15 @@
     <entity anm2path="reverie/588.580.2_reverie note(kagerou).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="2" name="Reverie Note (Kagerou)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
 
     <!-- Benben Note-->
-    <entity anm2path="reverie/588.580.3_reverie note(benben).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="3" name="Reverie Note (Benben)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <entity anm2path="reverie/588.580.3_reverie note(benben).anm2" baseHP="300" boss="1" id="588" variant="580" subtype="3" name="Reverie Note (Benben)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="25" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
     <!-- Merlin Note-->
-    <entity anm2path="reverie/588.580.4_reverie note(merlin).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="4" name="Reverie Note (Merlin)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <entity anm2path="reverie/588.580.4_reverie note(merlin).anm2" baseHP="300" boss="1" id="588" variant="580" subtype="4" name="Reverie Note (Merlin)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="25" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
     <!-- Lunasa Note-->
-    <entity anm2path="reverie/588.580.5_reverie note(lunasa).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="5" name="Reverie Note (Lunasa)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <entity anm2path="reverie/588.580.5_reverie note(lunasa).anm2" baseHP="300" boss="1" id="588" variant="580" subtype="5" name="Reverie Note (Lunasa)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="25" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
     <!-- Lyrica Note-->
-    <entity anm2path="reverie/588.580.6_reverie note(lyrica).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="6" name="Reverie Note (Lyrica)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <entity anm2path="reverie/588.580.6_reverie note(lyrica).anm2" baseHP="300" boss="1" id="588" variant="580" subtype="6" name="Reverie Note (Lyrica)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="25" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
     <!-- Yatsuhashi Note-->
-    <entity anm2path="reverie/588.580.7_reverie note(yatsuhashi).anm2" baseHP="600" boss="1" id="588" variant="580" subtype="7" name="Reverie Note (Yatsuhashi)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="45" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
+    <entity anm2path="reverie/588.580.7_reverie note(yatsuhashi).anm2" baseHP="300" boss="1" id="588" variant="580" subtype="7" name="Reverie Note (Yatsuhashi)" champion="0" collisionDamage="1" collisionMass="80" collisionRadius="16" friction="1" gridCollision="walls" numGridCollisionPoints="12" shieldStrength="25" portrait="11" shadowSize="12" stageHP="0" tags="nodelirium" />
 
 
     <!-- Flandre 1 Note-->
@@ -347,13 +347,13 @@
 
     <entity name="Trader (Curse)" anm2path="reverie/989.580.6_trader curse.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="6" tags="noreroll" reroll="false" shutdoors="false" />
 
-    <entity name="Blood Bony" id="227" variant="580" reroll="true" baseHP="8" stageHP="2" champion="0" shieldStrength="0" boss="0" collisionDamage="0" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="14" portrait="104" anm2path="reverie/227.580_blood boney.anm2">
+    <entity name="Blood Bony" id="227" variant="580" reroll="true" baseHP="10" stageHP="0" champion="0" shieldStrength="0" boss="0" collisionDamage="0" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="14" portrait="104" anm2path="reverie/227.580_blood boney.anm2">
         <gibs amount="10" blood="1" bone="0" eye="0" gut="1" large="1" />
         <preload id="9" variant="1" />
         <preload-snd id="116" /> <!-- SOUND_MONSTER_ROAR_1 -->
         <preload-snd id="249" /> <!-- SOUND_SCAMPER -->
     </entity>
-    <entity name="Blood Bony (Pernament)" id="227" variant="580" subtype="1" reroll="true" baseHP="8" stageHP="2" champion="0" shieldStrength="0" boss="0" collisionDamage="0" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="14" portrait="104" anm2path="reverie/227.580_blood boney.anm2">
+    <entity name="Blood Bony (Pernament)" id="227" variant="580" subtype="1" reroll="true" baseHP="10" stageHP="0" champion="0" shieldStrength="0" boss="0" collisionDamage="0" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="14" portrait="104" anm2path="reverie/227.580_blood boney.anm2">
         <gibs amount="10" blood="1" bone="0" eye="0" gut="1" large="1" />
         <preload id="9" variant="1" />
         <preload-snd id="116" /> <!-- SOUND_MONSTER_ROAR_1 -->
@@ -383,13 +383,38 @@
     <!-- Doremy -->
     <entity name="Dream World Backdrop" anm2path="doremy/backdrop/dream_world_backdrop.anm2" id="1000" variant="58123" subtype="0" collisionRadius="0" numGridCollisionPoints="0" />
     <entity name="Dream World Backdground" anm2path="doremy/backdrop/dream_world_background.anm2" id="1000" variant="58123" subtype="1" collisionRadius="0" numGridCollisionPoints="0" />
-    <entity name="Doremy Spell Card Backdground" anm2path="doremy/backdrop/spell_card_background.anm2" id="1000" variant="58123" subtype="2" collisionRadius="0" numGridCollisionPoints="0" />
+    <entity name="Doremy Spell Card Backdground" anm2path="doremy/backdrop/spell_card_background2.anm2" id="1000" variant="58123" subtype="2" collisionRadius="0" numGridCollisionPoints="0" />
+    <entity name="Doremy Vertical Line" anm2path="doremy/effects/vertical_line.anm2" id="1000" variant="58123" subtype="3" collisionRadius="0" numGridCollisionPoints="0" />
+    
     <entity name="Spell Card Leaf" anm2path="doremy/effects/spell_card_leaf.anm2" id="1000" variant="58124" friction="1" collisionRadius="0" numGridCollisionPoints="0" />
     <entity name="Spell Card Wave" anm2path="doremy/effects/spell_card_wave.anm2" id="1000" variant="58125" collisionRadius="0" numGridCollisionPoints="0" />
     <entity name="Doremy Image" anm2path="doremy/bosses/doremy.anm2" id="1000" variant="58126" collisionRadius="0" numGridCollisionPoints="0" shadowSize="16" />
     <entity name="Isaac Image" anm2path="doremy/effects/isaac_image.anm2" id="1000" variant="58126" subtype="1" collisionRadius="0" numGridCollisionPoints="0" shadowSize="16" />
     <entity name="Dream Cushion" anm2path="doremy/effects/dream_cushion.anm2" id="1000" variant="58127" subtype="0" collisionRadius="0" numGridCollisionPoints="0" />
-    <entity name="Doremy Sweet" id="998" variant="58123" anm2path="doremy/bosses/doremy.anm2" boss="1" baseHP="4000" bossID="1258" collisionDamage="1" collisionRadius="16" numGridCollisionPoints="8" collisionMass="100" friction="1" shadowSize="16" tags="nodelirium noreroll" gridCollision="walls" reroll="false" shutdoors="true" shieldStrength="1230" portrait="0">
+    <entity name="Nightmare Trail" id="1000" variant="58128" collisionRadius="0" numGridCollisionPoints="0" friction="1" />
+    <entity name="Nightmare Megasatan Hand" anm2path="doremy/effects/nightmare_megasatan_hand.anm2" id="1000" variant="58129" collisionRadius="0" numGridCollisionPoints="0" friction="1" portrait="12" />
+    <entity name="Nightmare Mother's Shadow" anm2path="867.000_mothers shadow.anm2" id="1000" variant="58130" collisionRadius="30" numGridCollisionPoints="0" friction="1" portrait="12" />
+    <entity name="Doremy Dream Catcher" anm2path="doremy/effects/dream_catcher.anm2" id="1000" variant="58131" subtype="0" collisionRadius="0" numGridCollisionPoints="0" />
+    <entity name="Doremy Nightmare Choice" anm2path="doremy/effects/nightmare_choice.anm2" id="1000" variant="58132" subtype="0" collisionRadius="16" numGridCollisionPoints="0" friction="1" />
+    <entity name="Doremy Dream Star" anm2path="doremy/effects/dream_star.anm2" id="1000" variant="58133" subtype="0" collisionRadius="16" numGridCollisionPoints="0" friction="1" />
+    
+    
+    <entity name="Nightmare Pooter" anm2path="doremy/nightmare_pooter.anm2" baseHP="1" boss="0" champion="0" collisionDamage="0" collisionMass="4" collisionRadius="17" friction="1" gridCollision="walls" id="14" subtype="5810" numGridCollisionPoints="4" portrait="12" reroll="true" shadowSize="11" stageHP="0" tags="fly" variant="0">
+        <preload-snd id="178"/>
+    </entity>
+    <entity name="Nightmare Spider" anm2path="doremy/nightmare_spider.anm2" baseHP="1" boss="0" champion="0" collisionDamage="1" collisionMass="5" collisionRadius="13" friction="1" id="85" subtype="5810" numGridCollisionPoints="12" portrait="12" reroll="true" shadowSize="11" stageHP="0" tags="spider" variant="0">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0"/>
+    </entity>
+    <entity name="Nightmare Coin" anm2path="doremy/nightmare_coin.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="293" subtype="5810" numGridCollisionPoints="0" portrait="12" shadowSize="14" shutdoors="true" stageHP="0" variant="2">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" worm="0"/>
+    </entity>
+    <entity name="Nightmare Soul" anm2path="doremy/nightmare_soul.anm2" baseHP="1" boss="0" champion="0" collisionDamage="1" collisionMass="5" collisionRadius="13" friction="1" id="999" variant="58122" subtype="0" numGridCollisionPoints="12" portrait="12">
+    </entity>
+    <entity name="Doremy Delirious Gaper" anm2path="doremy/delirious_gaper.anm2" baseHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="5" collisionRadius="13" friction="1" id="10" subtype="5810" numGridCollisionPoints="12" portrait="12" shutdoors="false" reroll="true" shadowSize="14" stageHP="0" variant="1">
+        <preload-snd id="165"/>
+    </entity>
+
+    <entity name="Doremy Sweet" id="998" variant="58123" anm2path="doremy/bosses/doremy.anm2" boss="1" baseHP="2460" bossID="1258" collisionDamage="1" collisionRadius="16" numGridCollisionPoints="8" collisionMass="100" friction="1" shadowSize="16" tags="nodelirium noreroll" gridCollision="walls" reroll="false" shutdoors="true" shieldStrength="30" portrait="0">
         <bestiary transform="0,0,1" anim="Idle" />
     </entity>
 

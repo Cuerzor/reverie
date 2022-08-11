@@ -167,10 +167,14 @@ Translation.Default = {
     
     ["#MAGATAMA_ERROR"] = "！\"除以零\" 攻击！",
 
+    ["#SPELL_CARD_UNKNOWN"] = "404 符卡未找到",
     ["#SPELL_CARD_SCARLET_NIGHTMARE"] = "梦符「绯色的噩梦」",
     ["#SPELL_CARD_OCHRE_CONFUSION"] = "梦符「刈安色的迷梦」",
     ["#SPELL_CARD_DREAM_EXPRESS"] = "超特急「梦幻快车」",
     ["#SPELL_CARD_DREAM_CATCHER"] = "梦符「捕梦网」",
+    ["#SPELL_CARD_BUTTERFLY_SUPPLANTATION"] = "蝴蝶「取而代之的蝴蝶」",
+    ["#SPELL_CARD_CREEPING_BULLET"] = "爬梦「爬行的子弹」",
+    ["#SPELL_CARD_ULTRAMARINE_LUNATIC_DREAM"] = "月符「绀色的狂梦」",
 
     ["#DOREMY_ENDING_TITLE"] = "感谢游玩！",
     ["#DOREMY_ENDING_SUBTITLE"] = "愿以撒度过一个幸福的新人生。",

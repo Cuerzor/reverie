@@ -2,6 +2,8 @@ local Dream = GensouDream;
 local Collectibles = CuerLib.Collectibles;
 
 local DreamCatcher = Dream.SpellCard();
+DreamCatcher.NameKey = "#SPELL_CARD_DREAM_CATCHER"
+
 local dreamLasers = {};
 local dreamLaserBuffer = {};
 local catcherProjColor = Color(1,1,1,1,0,0,1); 
@@ -206,13 +208,12 @@ function DreamCatcher:GetDefaultData(doremy)
         Time = 0,
         Index = 0,
         Position = Vector.Zero,
-        CreatorSeed = doremy.InitSeed,
         Projectiles = {}
     }
 end
 
 function DreamCatcher:CanCast(frame)
-    return (frame +60) % 180 == 0
+    return frame % 180 == 40
 end
     
 function DreamCatcher:CanWarning(frame)
@@ -222,6 +223,11 @@ end
 function DreamCatcher:CanMove(frame)
     return frame % 60 == 0 and not self:CanCast(frame)
 end
+
+function DreamCatcher:GetDuration()
+    return 1200;
+end
+
 
 function DreamCatcher:PostUpdate(doremy)
     local data = self:GetData(doremy);
@@ -236,8 +242,8 @@ function DreamCatcher:PostUpdate(doremy)
                 if (data.Index % 2 == 0) then
                     angleOffset = 15;
                 end
-                for i =0, 11 do 
-                    local angle = i * 30 + angleOffset;
+                for i =1, 8 do 
+                    local angle = i * 45 + angleOffset;
                     local dir = Vector.FromAngle(angle);
                     local sourcePos = data.Position - dir * 90;
                     
@@ -275,10 +281,11 @@ function DreamCatcher:OnCast(doremy)
         local sourcePos = player.Position - Vector.FromAngle(angle) * 120;
         local laserDir = angle + 30;
         local laser = EntityLaser.ShootAngle(3, sourcePos, laserDir, 90, Vector.Zero, doremy);
+        laser.SubType =LaserSubType.LASER_SUBTYPE_NO_IMPACT;
         laser.DisableFollowParent = true;
         laser:SetOneHit(false);
         laser.MaxDistance = 1;
-        laser:GetData().Doremy = data.CreatorSeed;
+        laser:GetData().Doremy = doremy;
         AddDreamLaser(laser);
     end
     data.Position = player.Position;
@@ -287,8 +294,36 @@ function DreamCatcher:OnCast(doremy)
     THI.Effects.SpellCardWave.Burst(doremy.Position);
     THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_LASER);
     THI.Game:ShakeScreen(10);
+
+    
+    if (not Collectibles.IsAnyHasCollectible(CollectibleType.COLLECTIBLE_DREAM_CATCHER)) then
+
+        local room = Game():GetRoom();
+
+        THI.Game:ShakeScreen(30);
+        SFXManager():Play(SoundEffect.SOUND_BEAST_INTRO_SCREAM, 2);
+
+        local Soul = THI.Monsters.NightmareSoul;
+        local margin = 80;
+        local bottomRight = room:GetBottomRightPos ( )
+        local vel = Vector(0, -1);
+        for i = 0, 4 do
+            local pos = room:GetRandomPosition (40);
+            pos.Y = bottomRight.Y;
+            local soul = Isaac.Spawn(Soul.Type, Soul.Variant, Soul.SubType, pos, vel, doremy);
+            soul:AddEntityFlags(EntityFlag.FLAG_AMBUSH);
+            soul:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
+        end
+    end
 end
 
+
+function DreamCatcher:End(doremy)
+    local Soul = THI.Monsters.NightmareSoul;
+    for _, ent in ipairs(Isaac.FindByType(Soul.Type, Soul.Variant, Soul.SubType)) do
+        ent:Die();
+    end
+end
 
 local function dreamCatcherUpdate(mod)
     local room = THI.Game:GetRoom();
@@ -297,8 +332,8 @@ local function dreamCatcherUpdate(mod)
         if (laser:Exists()) then
             
             if (not laser.Shrink) then
-                laser.Size = 8;
-                laser.SpriteScale = Vector(0.5, 1);
+                laser.Size = 4;
+                laser.SpriteScale = Vector(0.25, 1);
             end
 
             local dir = Vector.FromAngle(laser.Angle);
@@ -323,6 +358,8 @@ local function dreamCatcherUpdate(mod)
                     --local bouncedAngle = GetBounceAngle(laser.Position, endPoint, gridPos, laser.Angle);
                     if (canBounce) then
                         local bouncedLaser = EntityLaser.ShootAngle(3, endPoint + end2Start:Normalized() * 3, bouncedAngle, laser.Timeout, Vector.Zero, laser.SpawnerEntity);
+                        
+                        bouncedLaser.SubType =LaserSubType.LASER_SUBTYPE_NO_IMPACT;
                         laserInfo.BounceLaser = bouncedLaser;
                         bouncedLaser.DisableFollowParent = true;
                         bouncedLaser:SetOneHit(false);
@@ -348,7 +385,6 @@ local function dreamCatcherUpdate(mod)
         dreamLaserBuffer[k] = nil;
     end
 end
-
 
 Dream:AddCallback(ModCallbacks.MC_POST_UPDATE, dreamCatcherUpdate);
 

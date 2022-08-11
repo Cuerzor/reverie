@@ -140,7 +140,8 @@ do
                     data.DashTimeout = math.min(data.DashTimeout, 1);
                     Game():ShakeScreen(15);
                     THI.SFXManager:Play(SoundEffect.SOUND_ROCK_CRUMBLE);
-                    Game():BombExplosionEffects (player.Position, 40 + strength * 80, TearFlags.TEAR_NORMAL, Color.Default, player, 1 + strength * 1.5, true, false, DamageFlag.DAMAGE_EXPLOSION );
+                    local damage = 120 + strength * 240
+                    Game():BombExplosionEffects (player.Position, damage, TearFlags.TEAR_NORMAL, Color.Default, player, 1 + strength * 1.5, true, false, DamageFlag.DAMAGE_EXPLOSION );
                     for i = 1, 4 do
                         local crack = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKWAVE, 0, player.Position, Vector.Zero, player):ToEffect();
                         crack.Parent = player;
@@ -275,7 +276,8 @@ do
                 data.HitEnemies = data.HitEnemies or {};
                 if (not data.HitEnemies[other.InitSeed]) then
                     data.HitEnemies[other.InitSeed] = true;
-                    other:TakeDamage(player.Damage * (3 + data.DashStrength * 3) + 8, 0, EntityRef(player), 0);
+                    local damage = player.Damage * (1 +data.DashStrength) * 50 + 50
+                    other:TakeDamage(damage, 0, EntityRef(player), 0);
                     
                     local dot = player.Velocity:Dot(npc.Position - player.Position);
                     local speed = 25;

@@ -48,7 +48,7 @@ local function PrePickupCollision(mod, pickup, other, low)
     if (pickup.Wait < 0 and other.Type == EntityType.ENTITY_PLAYER) then
         local Mecha = THI.Monsters.Rebecha;
         local player = other:ToPlayer();
-        if (player:AreControlsEnabled() and Mecha:GetPlayerMechaState(player) == Mecha.MechaStates.NONE) then
+        if (player:IsExtraAnimationFinished() and player:AreControlsEnabled() and Mecha:GetPlayerMechaState(player) == Mecha.MechaStates.NONE) then
             local mecha = RebechaIdle:SpawnMecha(pickup);
             Mecha:EnterMecha(player, mecha);
             pickup:Remove();

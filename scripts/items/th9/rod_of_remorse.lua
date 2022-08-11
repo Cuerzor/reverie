@@ -161,15 +161,17 @@ end
 
 
 function RodOfRemorse:UseRod(item, rng, player, flags, slot, data)
-    local data = RodOfRemorse.GetPlayerData(player, true);
-    data.Sacrificing = true;
-    player:ResetDamageCooldown();
-    player:TakeDamage(2, DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_IV_BAG | DamageFlag.DAMAGE_NO_PENALTIES, EntityRef(player), 60);
-    player:AnimateCollectible(item, "UseItem");
-    if (teleported) then
-        player:AnimateTeleport(true);
+    if (player.Variant == 0) then
+        local data = RodOfRemorse.GetPlayerData(player, true);
+        data.Sacrificing = true;
+        player:ResetDamageCooldown();
+        player:TakeDamage(2, DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_IV_BAG | DamageFlag.DAMAGE_NO_PENALTIES, EntityRef(player), 60);
+        player:AnimateCollectible(item, "UseItem");
+        if (teleported) then
+            player:AnimateTeleport(true);
+        end
+        teleported = false;
     end
-    teleported = false;
 end
 RodOfRemorse:AddCallback(ModCallbacks.MC_USE_ITEM, RodOfRemorse.UseRod, RodOfRemorse.Item);
 

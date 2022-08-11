@@ -186,10 +186,14 @@ Translation.Default = {
 --protected error atmosphere. not translatied.
 
 
+    ["#SPELL_CARD_UNKNOWN"] = "404 Spell Card not found",
     ["#SPELL_CARD_SCARLET_NIGHTMARE"] = "夢符「緋色の悪夢」",
     ["#SPELL_CARD_OCHRE_CONFUSION"] = "夢符「刈安色の迷夢」",
     ["#SPELL_CARD_DREAM_EXPRESS"] = "超特急「ドリームエクスプレス」",
     ["#SPELL_CARD_DREAM_CATCHER"] = "夢符「ドリームキャッチャー」",
+    ["#SPELL_CARD_BUTTERFLY_SUPPLANTATION"] = "胡蝶「バタフライサプランテーション」",
+    ["#SPELL_CARD_CREEPING_BULLET"] = "這夢「クリーピングバレット」",
+    ["#SPELL_CARD_ULTRAMARINE_LUNATIC_DREAM"] = "月符「紺色の狂夢」",
     
     ["#DOREMY_ENDING_TITLE"] = "Thanks for playing!",
     ["#DOREMY_ENDING_SUBTITLE"] = "アイザックは幸せに暮らしましたとさ･･･",

@@ -11,6 +11,8 @@ metatable.__call = function()
 
 setmetatable(SpellCard, metatable);
 
+SpellCard.NameKey = "#SPELL_CARD_UNKNOWN";
+
 function SpellCard:Update(doremy)
     local sprite = doremy:GetSprite();
     local data = self:GetData(doremy);
@@ -43,7 +45,7 @@ function SpellCard:PostUpdate(doremy)
 end
 
 function SpellCard:GetDuration()
-    return 600;
+    return 1200;
 end
 
 function SpellCard:CanCast(frame)
@@ -56,6 +58,9 @@ end
 
 function SpellCard:CanWarning(frame)
     return false;
+end
+
+function SpellCard:End(doremy)
 end
 
 function SpellCard:GetProjectileFlags(doremy, projectile)
@@ -71,7 +76,7 @@ function SpellCard:GetProjectileFlags(doremy, projectile)
 end
 
 function SpellCard:GetFrame(doremy)
-    return Dream.Doremy.GetDoremyData(doremy).Frame;
+    return doremy:ToNPC().StateFrame;
 end
 
 function SpellCard:GetData(doremy)

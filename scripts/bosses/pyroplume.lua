@@ -34,7 +34,8 @@ do
         ID = "reverie:pyroplume",
         LuaRoomPath = "resources-dlc3/luarooms/reverie/pyroplume",
         CustomRooms = {
-            Pyroplume1 = {
+            {
+                Name = "Pyroplume1",
                 ReplaceChance = 20,
                 BossID = "reverie:pyroplume",
                 Shape = RoomShape.ROOMSHAPE_2x1,
@@ -67,7 +68,8 @@ do
                     {Type = 33, Variant = 0, SubType = 0, Position = Vector(1040, 400)},
                 }
             },
-            Pyroplume2 = {
+            {
+                Name = "Pyroplume2",
                 ReplaceChance = 20,
                 BossID = "reverie:pyroplume",
                 Shape = RoomShape.ROOMSHAPE_1x2,
@@ -108,7 +110,8 @@ do
                     {Type = 33, Variant = 0, SubType = 0, Position = Vector(520, 680)},
                 }
             },
-            Pyroplume3 = {
+            {
+                Name = "Pyroplume3",
                 ReplaceChance = 20,
                 BossID = "reverie:pyroplume",
                 Shape = RoomShape.ROOMSHAPE_1x1,

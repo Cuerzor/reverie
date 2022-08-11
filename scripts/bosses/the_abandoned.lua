@@ -69,8 +69,8 @@ do
         ID = "reverie:the_abandoned",
         LuaRoomPath = "resources-dlc3/luarooms/reverie/the_abandoned",
         CustomRooms = {
-
-            TheAbandoned1 = {
+            {
+                Name = "TheAbandoned1",
                 ReplaceChance = 8,
                 BossID = "reverie:the_abandoned",
                 Shape = RoomShape.ROOMSHAPE_1x1,
@@ -93,7 +93,8 @@ do
                     {Type = Kogasa.Type, Variant = Kogasa.Variant, SubType = Kogasa.SubType, Position = Vector(320, 280)},
                 }
             },
-            TheAbandoned2 = {
+            {
+                Name = "TheAbandoned2",
                 ReplaceChance = 8,
                 BossID = "reverie:the_abandoned",
                 Shape = RoomShape.ROOMSHAPE_1x1,
@@ -116,7 +117,8 @@ do
                     {Type = Kogasa.Type, Variant = Kogasa.Variant, SubType = Kogasa.SubType,  Position = Vector(320, 280)},
                 }
             },
-            TheAbandoned3 = {
+            {
+                Name = "TheAbandoned3",
                 ReplaceChance = 8,
                 BossID = "reverie:the_abandoned",
                 Shape = RoomShape.ROOMSHAPE_1x1,

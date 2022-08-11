@@ -44,7 +44,8 @@ do
         ID = "reverie:necrospyder",
         LuaRoomPath = "resources-dlc3/luarooms/reverie/necrospyder",
         CustomRooms = {
-            Necrospyder1 = {
+            {
+                Name = "Necrospyder1",
                 ReplaceChance = 20,
                 BossID = "reverie:necrospyder",
                 Shape = RoomShape.ROOMSHAPE_1x1,

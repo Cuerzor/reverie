@@ -36,7 +36,7 @@ function NonSpell:CanCast(frame)
     return frame % 150 == 2;
 end
 function NonSpell:GetDuration()
-    return 450;
+    return 300;
 end
     
 function NonSpell:PostUpdate(doremy)
@@ -48,9 +48,9 @@ function NonSpell:PostUpdate(doremy)
         data.Interval = 4;
         -- Create Projectiles.
         if (data.Time > 0) then
-            local tearAngle = data.Time * 30;
+            local tearAngle = data.Time * 23;
             if (not data.Clockwise) then
-                tearAngle = 180 - data.Time * 30;
+                tearAngle = 180 - data.Time * 23;
             end
             for i = 0, 4 do
                 
@@ -92,7 +92,7 @@ function NonSpell:PostUpdate(doremy)
 end
 function NonSpell:OnCast(doremy)
     local data = self:GetData(doremy);
-    data.Time = 20;
+    data.Time = 23;
     data.Interval = 6;
     data.Position = doremy.Position;
     data.Clockwise = not data.Clockwise;

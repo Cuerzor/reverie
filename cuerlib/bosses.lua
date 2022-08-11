@@ -516,8 +516,8 @@ end
 
 function Bosses:SetBossConfig(name, config, roomConfigs)
     self.BossConfigs[name] = config;
-    for n, room in pairs(roomConfigs.CustomRooms) do
-        table.insert(self.CustomRooms, {Name = n, Room = room})
+    for index, room in pairs(roomConfigs.CustomRooms) do
+        table.insert(self.CustomRooms, {Name = room.Name, Room = room})
     end
 end
 

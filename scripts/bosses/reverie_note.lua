@@ -2162,7 +2162,9 @@ Note:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE, PostLaserUpdate)
 local function EvaluateCache(mod, player, flag)
     if (flag == CacheFlag.CACHE_RANGE) then
         if (Note:IsBossFightStarted() and Note:IsBossRoom()) then
-            player.TearRange = math.max(player.TearRange, 800);
+            if (not player:HasWeaponType ( WeaponType.WEAPON_BONE)) then
+                player.TearRange = math.max(player.TearRange, 800);
+            end
         end
     end
 end

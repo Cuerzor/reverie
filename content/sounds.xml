@@ -29,6 +29,9 @@
 	<sound name="Touhou Shutter">
 		<sample weight="1" path="touhou/shutter.wav" />
 	</sound>
+	<sound name="Touhou Timeout">
+		<sample weight="1" path="touhou/timeout.wav" />
+	</sound>
 	<sound name="Nimble Fabric">
 		<sample weight="1" path="touhou/nimble_fabric.wav" />
 	</sound>
