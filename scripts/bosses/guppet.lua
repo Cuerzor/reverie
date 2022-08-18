@@ -34,6 +34,7 @@ do
                     {Type = StageType.STAGETYPE_REPENTANCE, Stage = LevelStage.STAGE4_1}
                 },
                 Music = Music.MUSIC_BOSS2,
+                VanishingTwinTarget = Vector(320, 280),
                 Grids = {
                     {n, n, n, n, n, n, n, n, n, n, n, n, n},
                     {n, n, n, n, n, n, n, n, n, n, n, n, n},
@@ -64,7 +65,10 @@ do
             en = "gfx/reverie/ui/boss/bossname_587.0_guppet.png",
             zh = "gfx/reverie/ui/boss/bossname_587.0_guppet_zh.png",
             jp = "gfx/reverie/ui/boss/bossname_587.0_guppet_jp.png"
-        }
+        },
+        IsEnabled = function(self)
+            return THI.IsBossEnabled(self.Name);
+        end
     }
     Bosses:SetBossConfig("reverie:guppet", bossConfig, roomConfig);
 end

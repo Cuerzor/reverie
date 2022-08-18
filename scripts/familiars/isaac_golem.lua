@@ -22,7 +22,9 @@ function IsaacGolem.GetGolemData(golem)
         AttackData = {
             Target = nil,
             TargetPos = Vector.Zero,
-            AttackDirection = 0
+            AttackDirection = 0,
+            DestroyGrid = false,
+            DestroyGridDir = 0
         },
         PressurePlateData = {
             Plates = {}
@@ -81,19 +83,65 @@ local function CheckState(golem)
     data.State = state;
 end
 
+local function IsValidPoop(gridEnt)
+    return gridEnt and gridEnt:GetType() == GridEntityType.GRID_POOP and gridEnt.CollisionClass == GridCollisionClass.COLLISION_SOLID;
+end
+
+local function CheckAllDestructable(pos, pos2)
+    local room = THI.Game:GetRoom();
+    local distance = pos:Distance(pos2);
+    
+    local hasPoop = false;
+    local vector = (pos2 - pos):Normalized();
+    for i = 0, distance, 40 do
+        local targetPos = pos + vector * i;
+        local gridEntity = room:GetGridEntityFromPos(targetPos);
+        if (gridEntity) then
+            local noStand = false;
+            local isPoop = IsValidPoop(gridEntity);
+            if (isPoop) then
+                hasPoop = true;
+            end
+            if (not isPoop and gridEntity.CollisionClass ~= GridCollisionClass.COLLISION_NONE) then
+                return 0;
+            end 
+        end
+    end
+    if (hasPoop) then
+        return 1;
+    end
+    return 2;
+end
+
 ----------------
 -- Path Finding
 ----------------
 
+local Params = {
+    PassCheck = function(index)
+
+        local room = Game():GetRoom();
+        local gridEnt = room:GetGridEntity(index);
+        if (IsValidPoop(gridEnt)) then
+            return true, 2;
+        end
+
+        local PathFinding = THI.Shared.PathFinding;
+        return PathFinding:CanPass(index);
+    end,
+    MaxStartCost = -1,
+    MaxCost = -1,
+}
+
 local gridSize = 40;
 local function FindPath(entIndex, targetIndex)
     local PathFinding = THI.Shared.PathFinding;
-    return PathFinding:FindPath(entIndex, targetIndex);
+    return PathFinding:FindPath(entIndex, targetIndex, Params);
 end
 
 local function FindPathInPos(entityPos, targetPos)
     local PathFinding = THI.Shared.PathFinding;
-    return PathFinding:FindPathInPos(entityPos, targetPos);
+    return PathFinding:FindPathInPos(entityPos, targetPos, Params);
 end
 
 
@@ -103,9 +151,9 @@ local function MoveToTarget(golem, moveTarget, maxCooldown, targetDistance)
     local data = IsaacGolem.GetGolemData(golem);
     local room = THI.Game:GetRoom();
     local target = moveTarget;
-    local canWalk, newPos = room:CheckLine(golem.Position, target, 0);
+    local canDirectlyWalk, newPos = room:CheckLine(golem.Position, target, 0);
     -- If cannot directly walk to the target.
-    if (not canWalk) then
+    if (not canDirectlyWalk) then
         
         local targetIndex = room:GetGridIndex(target);
         -- Search Path.
@@ -118,15 +166,45 @@ local function MoveToTarget(golem, moveTarget, maxCooldown, targetDistance)
             local node = nil;
             if (nodes) then
                 local num = #nodes;
-                node =  nodes[num - 2] or nodes[num - 1] or nodes[num];
+                for i = num - 2, num do
+                    local index = nodes[i];
+                    if (index) then
+                        local gridEnt = room:GetGridEntity(index);
+                        if (not gridEnt or gridEnt.CollisionClass == GridCollisionClass.COLLISION_NONE) then
+                            node = index;
+                            break;
+                        end
+                    end
+                end
             end
             data.PathFindData.Node = node;
         end
 
-        if (data.PathFindData.Node) then
+
+        local cancelMove = false;
+        if (data.PathFindData.Node and data.PathFindData.Node ~= room:GetGridIndex(golem.Position)) then
             target = room:GetGridPosition(data.PathFindData.Node);
         else
             -- Path is blocked.
+            cancelMove = true;
+        end
+
+        -- Destroy Destructables.
+        local nodes = data.PathFindData.Nodes;
+        if (nodes) then
+            local num = #nodes;
+            for i = num, num - 2, -1 do
+                local index = nodes[i];
+                if (index) then
+                    if (IsValidPoop(room:GetGridEntity(index))) then
+                        data.AttackData.DestroyGrid = true;
+                        data.AttackData.DestroyGridDir = Math.GetDirectionByAngle((golem.Position - room:GetGridPosition(index)):GetAngleDegrees())
+                        break;
+                    end
+                end
+            end
+        end
+        if (cancelMove) then
             return false;
         end
     end
@@ -179,7 +257,6 @@ local function GetAttackStandPos(targetPos, direction)
     return pos;
 end
 
-
 local function CheckAttackDirectionValid(golem, target, direction)
     if (direction == Direction.NO_DIRECTION) then
         return false;
@@ -188,6 +265,11 @@ local function CheckAttackDirectionValid(golem, target, direction)
     local room = THI.Game:GetRoom();
     local standPos = GetAttackStandPos(target.Position, direction);
     local noObstacles, newPos = room:CheckLine(target.Position, standPos, 3);
+    if (not noObstacles and CheckAllDestructable(target.Position, standPos) > 0) then
+        noObstacles = true;
+        newPos = standPos;
+    end
+    -- There's obstacles on the way.
     if (not noObstacles) then
         -- Avoid too close to target if target has collision Damage.
         if (target.CollisionDamage > 0) then
@@ -195,6 +277,11 @@ local function CheckAttackDirectionValid(golem, target, direction)
                 return false, newPos;
             end
         end
+    end
+    -- No obstacles on the way.
+    local gridEntity = room:GetGridEntityFromPos(newPos);
+    if (gridEntity and gridEntity.CollisionClass ~= GridCollisionClass.COLLISION_NONE and not IsValidPoop(gridEntity)) then
+        return false, newPos;
     end
     return true, newPos;
 end
@@ -224,107 +311,105 @@ function IsaacGolem.FindAttackTarget(golem)
                     -- Accessable Test.
                     local targetToGolem = npc.Position - golem.Position;
 
-                    -- Get Stand Direction.
-                    local direction = Direction.NO_DIRECTION;
-                    if (math.abs(targetToGolem.X) > math.abs(targetToGolem.Y)) then
-                        if (targetToGolem.X > 0) then
-                            direction = Direction.LEFT;
-                        else
-                            direction = Direction.RIGHT;
-                        end
-                    else
-                        if (targetToGolem.Y > 0) then
-                            direction = Direction.UP;
-                        else
-                            direction = Direction.DOWN;
-                        end
-                    end
-
                     -- Check whether if golem can on this direction.
-                    local canStandInDirection, newStandPos = CheckAttackDirectionValid(golem, npc, direction);
-                    if (not canStandInDirection) then
-                        -- Try other 3 directions.
-                        for dir = 0, 3 do
-                            if (direction ~= dir) then
-                                canStandInDirection, newStandPos = CheckAttackDirectionValid(golem, npc, dir);
-                                if (canStandInDirection) then
-                                    goto checkTarget;
-                                end
+                    local nearest = nil;
+                    local nearestDis = 0;
+                    local nearestDir = nil;
+                    for dir = 0, 3 do
+                        local canStand, newStandPos = CheckAttackDirectionValid(golem, npc, dir);
+                        if (canStand) then
+                            local dis = newStandPos:Distance(golem.Position);
+                            if (not nearest or dis < nearestDis) then
+                                nearest = newStandPos;
+                                nearestDis = dis;
+                                nearestDir = dir;
                             end
                         end
                     end
 
                     -- if Can stand in the shooting direction.
                     ::checkTarget::
-                    if (canStandInDirection) then
+                    if (nearest) then
                         target = npc;
                         maxWeight = weight;
-                        standPos = newStandPos;
-                        targetDir = direction;
+                        standPos = nearest;
+                        targetDir = nearestDir;
                     end
                 end
             end
         end
     end
-    
     return target, standPos, targetDir;
 end
 
-local function UpdateAttackState(golem)
+local function FireCheck(golem)
     local data = IsaacGolem.GetGolemData(golem);
     local room = THI.Game:GetRoom();
 
-    if (not (data.AttackData.Target and data.AttackData.Target:Exists())) then
-        data.AttackData.Target, data.AttackData.TargetPos, data.AttackData.AttackDirection = IsaacGolem.FindAttackTarget(golem);
-    end
-
     local target = data.AttackData.Target;
+    local fireTear = false;
+    local direction = data.AttackData.AttackDirection;
     if (target) then
         local standPos = data.AttackData.TargetPos;
         MoveToTarget(golem, standPos);
 
         local canSeeTarget, blockedPos = room:CheckLine(target.Position, golem.Position, 3);
-        if (canSeeTarget and golem.Position:Distance(target.Position) < maxRange) then
-            
-            local direction = data.AttackData.AttackDirection;
-            local fireDir = Vector(-1, 0);
-            local headAnim = "ShootDown";
-            if (direction == Direction.LEFT) then
-                fireDir = Vector(1, 0);
-                headAnim = "ShootRight";
-            elseif (direction == Direction.UP) then
-                fireDir = Vector(0, 1);
-                headAnim = "ShootDown";
-            elseif (direction == Direction.DOWN) then
-                fireDir = Vector(0, -1);
-                headAnim = "ShootUp";
-            elseif (direction == Direction.RIGHT) then
-                fireDir = Vector(-1, 0);
-                headAnim = "ShootLeft";
+        fireTear = canSeeTarget and golem.Position:Distance(target.Position) < maxRange;
+        direction = data.AttackData.AttackDirection;
+        if (not fireTear) then
+            if (CheckAllDestructable(golem.Position, target.Position) == 1) then
+                fireTear = true;
             end
-            if (Familiars:canFire(golem)) then
-                local tear = Isaac.Spawn(2, 0, 0, golem.Position, fireDir * 12 + golem.Velocity / 3, golem):ToTear();
-                local stage = THI.Game:GetLevel():GetStage();
-                
-                local damage = 3.5 + (stage - 1) * 0.9;
-                if (golem.Player) then
-                    if (golem.Player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS)) then
-                        damage = damage * 2;
-                    end
+        end
+    end
+    -- Destroy poops on the way.
+    if (not fireTear) then
+        if (data.AttackData.DestroyGrid) then
+            fireTear = true;
+            direction = data.AttackData.DestroyGridDir;
+            data.AttackData.DestroyGrid = false;
+        end
+    end
 
-                    if (golem.Player:HasTrinket(TrinketType.TRINKET_BABY_BENDER)) then
-                        tear.TearFlags = tear.TearFlags | TearFlags.TEAR_HOMING;
-                        tear:SetColor(Color(0.4, 0.15, 0.38, 1, 0.27843, 0, 0.4549), -1, 0, false, false);
-                    end
+    if (fireTear) then
+        
+        local fireDir = Vector(-1, 0);
+        local headAnim = "ShootDown";
+        if (direction == Direction.LEFT) then
+            fireDir = Vector(1, 0);
+            headAnim = "ShootRight";
+        elseif (direction == Direction.UP) then
+            fireDir = Vector(0, 1);
+            headAnim = "ShootDown";
+        elseif (direction == Direction.DOWN) then
+            fireDir = Vector(0, -1);
+            headAnim = "ShootUp";
+        elseif (direction == Direction.RIGHT) then
+            fireDir = Vector(-1, 0);
+            headAnim = "ShootLeft";
+        end
+        if (Familiars:canFire(golem)) then
+            local tear = Isaac.Spawn(2, 0, 0, golem.Position, fireDir * 12 + golem.Velocity / 3, golem):ToTear();
+            local stage = THI.Game:GetLevel():GetStage();
+            
+            local damage = 3.5 + (stage - 1) * 0.9;
+            if (golem.Player) then
+                if (golem.Player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS)) then
+                    damage = damage * 2;
                 end
-                
-                -- tear Scale.
-                tear.Scale = Math.GetTearScaleByDamage(damage);
-                tear.CollisionDamage = damage;
-                golem.FireCooldown = math.floor(10 - (stage - 1) * 0.25);
-                data.Sprites.Head.Animation = headAnim;
-                data.Sprites.Head.Frame = 0;
+
+                if (golem.Player:HasTrinket(TrinketType.TRINKET_BABY_BENDER)) then
+                    tear.TearFlags = tear.TearFlags | TearFlags.TEAR_HOMING;
+                    tear:SetColor(Color(0.4, 0.15, 0.38, 1, 0.27843, 0, 0.4549), -1, 0, false, false);
+                end
             end
+            
+            -- tear Scale.
+            tear.Scale = Math.GetTearScaleByDamage(damage);
+            tear.CollisionDamage = damage;
+            golem.FireCooldown = math.floor(10 - (stage - 1) * 0.25);
+            data.Sprites.Head.Animation = headAnim;
+            data.Sprites.Head.Frame = 0;
         end
     end
 end
@@ -479,7 +564,6 @@ function IsaacGolem:postGolemUpdate(golem)
         UpdateFollowState(golem);
     elseif (data.State == 1) then
         -- Attack State.
-        UpdateAttackState(golem);
     elseif (data.State == 2) then
         -- Pressure Plate State.
         UpdatePressurePlateState(golem);
@@ -487,6 +571,7 @@ function IsaacGolem:postGolemUpdate(golem)
         -- Trick Chest State.
         UpdateTrickChestState(golem);
     end
+    FireCheck(golem);
 
 
     -- push other golems.
@@ -538,7 +623,7 @@ function IsaacGolem:postGolemUpdate(golem)
     data.Sprites.Body.Frame = bodyFrame;
     data.Sprites.Body.Animation = "Walk"..walkDirString;
 
-    if (golem.FireCooldown <= 0) then
+    if (golem.FireCooldown < 0) then
         data.Sprites.Head.Animation = "Shoot"..walkDirString;
     end
     if (golem.FireCooldown < 5) then
@@ -559,6 +644,17 @@ function IsaacGolem:postGolemUpdate(golem)
     Familiars:DoFireCooldown(golem);
 
     data.PathFindData.Cooldown = data.PathFindData.Cooldown - 1;
+
+    -- Push other golems.
+    for _, ent in ipairs(Isaac.FindInRadius(golem.Position, 26, EntityPartition.FAMILIAR)) do
+        if (ent.Variant == IsaacGolem.Variant) then
+            local vector = ent.Position - golem.Position;
+            local distance = vector:Length()
+            local dot = vector:Normalized():Dot(ent.Velocity);
+            local speed = math.max(0, math.min((26 - distance) / 10 - dot, 2));
+            ent:AddVelocity(vector:Resized(speed));
+        end
+    end
 end
 IsaacGolem:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, IsaacGolem.postGolemUpdate, IsaacGolem.Variant);
 

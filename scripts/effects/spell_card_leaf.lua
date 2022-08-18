@@ -4,12 +4,13 @@ Leaf.RNG = RNG();
 local function PostLeafInit(mod, effect)
     local index = Leaf.RNG:RandomInt(2);
     effect:GetSprite():Play("Idle"..index);
+    effect.Timeout = 30;
 end
 Leaf:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, PostLeafInit, Leaf.Variant);
 
 local function PostLeafUpdate(mod, effect)
     local spr = effect:GetSprite();
-    if (spr:IsFinished("Burst") or spr:IsFinished("Shrink")) then
+    if (effect.Timeout <= 0) then
         effect:Remove();
     end
 end

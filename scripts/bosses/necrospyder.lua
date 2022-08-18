@@ -60,6 +60,7 @@ do
                         ent:Remove();
                     end
                 end,
+                VanishingTwinTarget = Vector(320, 280),
                 Grids = {
                     {p, p, p, w, p, n, n, n, p, w, p, p, p},
                     {w, n, n, n, n, n, n, n, n, n, n, n, w},
@@ -99,7 +100,10 @@ do
             en = "gfx/reverie/ui/boss/bossname_582.0_necrospyder.png",
             zh = "gfx/reverie/ui/boss/bossname_582.0_necrospyder_zh.png",
             jp = "gfx/reverie/ui/boss/bossname_582.0_necrospyder_jp.png"
-        }
+        },
+        IsEnabled = function(self)
+            return THI.IsBossEnabled(self.Name);
+        end
     }
     Bosses:SetBossConfig("reverie:necrospyder", bossConfig, roomConfig);
     

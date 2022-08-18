@@ -143,29 +143,6 @@ do -- Events
     end
     SeijaB:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate)
     
-    -- local function PostPickupUpdate(mod, pickup)
-    --     local room = Game():GetRoom();
-    --     local tempData = GetPickupTempData(pickup, false);
-    --     if (pickup.FrameCount == 1 and (not tempData or not tempData.Duplicated) and (room:GetFrameCount() > 1 or room:IsFirstVisit())) then
-    --         local hasSeijaB;
-    --         for p, player in Detection.PlayerPairs() do
-    --             if (player:GetPlayerType() == SeijaB.Type) then
-    --                 hasSeijaB = true;
-    --                 break;
-    --             end
-    --         end
-    --         if (hasSeijaB) then
-    --             pickup.Position = pickup.Position - Vector(pickup.Size / 2,0);
-    --             pickup.TargetPosition = pickup.Position;
-    --             local copy = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, 0, pickup.Position + Vector(pickup.Size, 0),Vector.Zero, pickup.SpawnerEntity):ToPickup();
-                
-    --             local copyTempData = GetPickupTempData(copy, true);
-    --             copyTempData.Duplicated = true;
-    --         end
-    --     end
-    -- end
-    -- SeijaB:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate, PickupVariant.PICKUP_COLLECTIBLE)
-
 
 end
 return SeijaB;

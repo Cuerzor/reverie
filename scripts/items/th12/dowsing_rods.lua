@@ -1,4 +1,5 @@
 local Collectbiles = CuerLib.Collectibles;
+local ItemPools = CuerLib.ItemPools;
 local Instruments = THI.Instruments;
 local Rods = ModItem("Dowsing Rods", "DOWSING_RODS");
 
@@ -22,8 +23,9 @@ function Rods:PostUpdate()
     local globalData = Rods.GetRodsData(false);
     if (globalData) then
         
-        local room = THI.Game:GetRoom();
-        local level = THI.Game:GetLevel();
+        local game = Game();
+        local room = game:GetRoom();
+        local level = game:GetLevel();
         local roomDesc = level:GetCurrentRoomDesc();
         local key = Rods.GetRoomKey(roomDesc);
         local index = globalData.Rooms[key];
@@ -57,7 +59,12 @@ function Rods:PostUpdate()
                                 spider:AddEntityFlags(EntityFlag.FLAG_AMBUSH);
                             end
                         elseif (value < 100) then
-                            award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, 0, pos, RandomVector(), nil);
+                            
+                            local pool = game:GetItemPool();
+                            local roomType = room:GetType();
+                            local poolType = ItemPools:GetPoolForRoom(roomType, seed);
+                            local id = pool:GetCollectible(poolType, true, seed);
+                            award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero, nil);
                         end
                     end
                     globalData.Rooms[key] = nil;

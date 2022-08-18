@@ -15,7 +15,8 @@ FrameSprite:SetFrame("Frame", 0);
 local function GetPlayerTempData(player,init)
     return GamblingD6:GetTempData(player, init, function()
         return {
-            Choice = 0
+            Choice = 0,
+            Owned = false
         }
     end)
 end
@@ -48,6 +49,61 @@ function GamblingD6:IsPickupDisappearing(pickup)
     return (data and data.Disappearing);
 end
 
+function GamblingD6:Use(player, slot)
+    local choice = GamblingD6:GetChoice(player);
+    if (choice == 0) then
+        HoldingActive:Cancel(player);
+    else
+        for _, ent in ipairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)) do
+            if (ent.SubType ~= CollectibleType.COLLECTIBLE_DADS_NOTE and ent.SubType > 0) then
+                local pickup = ent:ToPickup();
+                Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
+
+                local oldId = ent.SubType;
+
+                local game = Game();
+                local room = game:GetRoom();
+                local pool = game:GetItemPool();
+                local poolType = ItemPools:GetPoolForRoom (room:GetType(), ent.InitSeed);
+                local newItem = pool:GetCollectible(poolType, true, ent.InitSeed);
+
+                local wrong = false;
+                if (choice == -1)then
+                    wrong = newItem >= oldId;
+                else
+                    wrong = newItem <= oldId;
+                end
+
+                -- Book of Virtues.
+                if (wrong) then
+                    for _, wisp in ipairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, FamiliarVariant.WISP, GamblingD6.Item)) do
+                        if (CompareEntity(wisp:ToFamiliar().Player, player)) then
+                            wrong = false;
+                            wisp:Kill();
+                            break;
+                        end
+                    end
+                elseif (Actives.CanSpawnWisp(player, flags)) then
+                    player:AddWisp(GamblingD6.Item, ent.Position);
+                end
+
+                if (wrong)then
+                    pickup:Morph(pickup.Type, pickup.Variant, newItem, true, false, true);
+                    pickup.Timeout = 30;
+                    pickup.Wait = 60;
+                    GamblingD6:SetPickupDisappearing(pickup, true);
+                else
+                    pickup:Morph(pickup.Type, pickup.Variant, newItem, true);
+                    pickup.Touched = false;
+                end
+            end
+        end
+        HoldingActive:Cancel(player);
+        return true;
+    end
+    return false;
+end
+
 local function UseGamblingD6(mod, item, rng, player, flags, slot, vardata)
     if (flags & UseFlag.USE_CARBATTERY > 0) then
         return {ShowAnim = false, Discharge = false;}
@@ -56,62 +112,11 @@ local function UseGamblingD6(mod, item, rng, player, flags, slot, vardata)
     local holdingItem = HoldingActive:GetHoldingItem(player);
     if (holdingItem <= 0) then
         GamblingD6:ClearChoice(player);
-        HoldingActive:Hold(GamblingD6.Item, player, slot);
+        HoldingActive:Hold(GamblingD6.Item, player, slot, flags);
     elseif (holdingItem == GamblingD6.Item) then
-        local choice = GamblingD6:GetChoice(player);
-        if (choice == 0) then
-            HoldingActive:Cancel(player);
-        else
-            for _, ent in ipairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)) do
-                if (ent.SubType ~= CollectibleType.COLLECTIBLE_DADS_NOTE and ent.SubType > 0) then
-                    local pickup = ent:ToPickup();
-                    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
-
-                    local oldId = ent.SubType;
-
-                    local game = Game();
-                    local room = game:GetRoom();
-                    local pool = game:GetItemPool();
-                    local poolType = ItemPools:GetPoolForRoom (room:GetType(), ent.InitSeed);
-                    local newItem = pool:GetCollectible(poolType, true, ent.InitSeed);
-
-                    local wrong = false;
-                    if (choice == -1)then
-                        wrong = newItem >= oldId;
-                    else
-                        wrong = newItem <= oldId;
-                    end
-
-                    -- Book of Virtues.
-                    if (wrong) then
-                        for _, wisp in ipairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, FamiliarVariant.WISP, GamblingD6.Item)) do
-                            if (CompareEntity(wisp:ToFamiliar().Player, player)) then
-                                wrong = false;
-                                wisp:Kill();
-                                break;
-                            end
-                        end
-                    elseif (Actives.CanSpawnWisp(player, flags)) then
-                        player:AddWisp(GamblingD6.Item, ent.Position);
-                    end
-
-                    if (wrong)then
-                        pickup:Morph(pickup.Type, pickup.Variant, newItem, true, false, true);
-                        pickup.Timeout = 30;
-                        pickup.Wait = 60;
-                        GamblingD6:SetPickupDisappearing(pickup, true);
-                    else
-                        pickup:Morph(pickup.Type, pickup.Variant, newItem, true);
-                        pickup.Touched = false;
-                    end
-                end
-            end
-            HoldingActive:Cancel(player);
-
-            return {ShowAnim = true}
-        end
-    else
-        HoldingActive:Cancel(player);
+        local shouldDischarge = HoldingActive:ShouldDischarge(player);
+        local discharge = GamblingD6:Use(player, slot);
+        return {ShowAnim = discharge, Discharge = shouldDischarge and discharge}
     end
     return {ShowAnim = false, Discharge = false;}
 end
@@ -181,9 +186,18 @@ local function PostPlayerUpdate(mod, player)
             playerData.Choice = playerData.Choice + 1;
             playerData.Choice = math.min(playerData.Choice, 1);
         end
-        if (Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex)  or not player:HasCollectible(GamblingD6.Item)) then
+        if (Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex) or not player:HasCollectible(GamblingD6.Item, true)) then
             HoldingActive:Cancel(player);
             player:AnimateCollectible(GamblingD6.Item, "HideItem");
+        end
+
+        local triggered, slot = Actives.IsActiveItemTriggered(player, GamblingD6.Item);
+        if (triggered) then
+            if (not Actives:IsChargeFull(player, slot)) then
+                if (GamblingD6:Use(player, slot)) then
+                    player:AnimateCollectible(GamblingD6.Item, "UseItem")
+                end
+            end
         end
     end
 end

@@ -393,6 +393,20 @@ end
 
 do -- Try Use Active.
     
+
+    function Actives:IsChargeFull(player, slot)
+        local item = player:GetActiveItem(slot);
+        if (item > 0) then
+            local maxCharges = itemConfig:GetCollectible(item).MaxCharges;
+            local charges = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot);
+            local soulCharges = player:GetEffectiveSoulCharge();
+            local bloodCharges = player:GetEffectiveBloodCharge();
+            local totalCharges = charges + soulCharges + bloodCharges;
+            return totalCharges >= maxCharges;
+        end
+        return false;
+    end
+
     --- Get the charges of the active item which player trying to use.
     --- If the active item is not being tried to use, return -1.
     ---@param player EntityPlayer

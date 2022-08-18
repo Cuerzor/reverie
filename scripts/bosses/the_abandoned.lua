@@ -80,6 +80,7 @@ do
                 },
                 Music = Music.MUSIC_BOSS2,
                 EnterAction = nil,
+                VanishingTwinTarget = Vector(320, 280),
                 Grids = {
                     {n, n, n, n, n, n, n, n, n, n, n, n, n},
                     {n, n, n, n, n, n, n, n, n, n, n, n, n},
@@ -104,6 +105,7 @@ do
                 },
                 Music = Music.MUSIC_BOSS2,
                 EnterAction = nil,
+                VanishingTwinTarget = Vector(320, 280),
                 Grids = {
                     {n, p, p, p, n, n, n, n, n, p, p, p, n},
                     {n, n, p, n, n, n, n, n, n, n, p, n, n},
@@ -128,6 +130,7 @@ do
                 },
                 Music = Music.MUSIC_BOSS2,
                 EnterAction = nil,
+                VanishingTwinTarget = Vector(320, 280),
                 Grids = {
                     {p, p, p, p, p, p, n, p, p, p, p, p, p},
                     {p, p, p, p, n, n, n, n, n, p, p, p, p},
@@ -159,7 +162,10 @@ do
             en = "gfx/reverie/ui/boss/bossname_581.0_the abandoned.png",
             zh = "gfx/reverie/ui/boss/bossname_581.0_the abandoned_zh.png",
             jp = "gfx/reverie/ui/boss/bossname_581.0_the abandoned_jp.png"
-        }
+        },
+        IsEnabled = function(self)
+            return THI.IsBossEnabled(self.Name);
+        end
     }
     Bosses:SetBossConfig("reverie:the_abandoned", bossConfig, roomConfigs);
 end

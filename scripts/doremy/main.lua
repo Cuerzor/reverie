@@ -344,25 +344,27 @@ function Dream:onNewRoom()
     end
 
     -- Dream Soul spawn while Ascent.
-    local ascent = level:IsAscent();
-    local hasDreamSoul = false;
-    for i, player in Detection.PlayerPairs() do 
-        if (player:HasCollectible(DreamSoul.Id)) then
-            hasDreamSoul = true;
+    if (THI.IsBossEnabled("Doremy")) then
+        local ascent = level:IsAscent();
+        local hasDreamSoul = false;
+        for i, player in Detection.PlayerPairs() do 
+            if (player:HasCollectible(DreamSoul.Id)) then
+                hasDreamSoul = true;
+            end
         end
-    end
-    if (ascent and not hasDreamSoul) then
-        -- if has dad's note and don't has dream soul.
-        local stage = level:GetStage();
-        if (stage == 1 and level:GetStageType() == 0 and room:GetType() == RoomType.ROOM_TREASURE) then
-            -- if it's stage 1 treasure room.
-            local dreamSoulExists = #Isaac.FindByType(5,100, DreamSoul.Id) > 0;
-            local dreamSoulSpawned = globalData.DreamSoulSpawned;
-            if (not dreamSoulExists and not dreamSoulSpawned) then
-                local pos = room:FindFreePickupSpawnPosition(Vector(320, 280), 0, true);
-                local collectible = Pickups.SpawnFixedCollectible(DreamSoul.Id, pos, Vector.Zero, nil);
-                collectible:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
-                globalData.DreamSoulSpawned = true;
+        if (ascent and not hasDreamSoul) then
+            -- if has dad's note and don't has dream soul.
+            local stage = level:GetStage();
+            if (stage == 1 and level:GetStageType() == 0 and room:GetType() == RoomType.ROOM_TREASURE) then
+                -- if it's stage 1 treasure room.
+                local dreamSoulExists = #Isaac.FindByType(5,100, DreamSoul.Id) > 0;
+                local dreamSoulSpawned = globalData.DreamSoulSpawned;
+                if (not dreamSoulExists and not dreamSoulSpawned) then
+                    local pos = room:FindFreePickupSpawnPosition(Vector(320, 280), 0, true);
+                    local collectible = Pickups.SpawnFixedCollectible(DreamSoul.Id, pos, Vector.Zero, nil);
+                    collectible:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
+                    globalData.DreamSoulSpawned = true;
+                end
             end
         end
     end

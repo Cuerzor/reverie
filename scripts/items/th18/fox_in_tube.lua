@@ -1,5 +1,6 @@
 local Detection = CuerLib.Detection;
 local Collectibles = CuerLib.Collectibles;
+local ItemPools = CuerLib.ItemPools;
 local Fox = ModItem("Fox in Tube", "FOX_IN_TUBE");
 local EscapeTextKey = "#FOX_IN_TUBE_ESCAPE"
 local Fortunes = {
@@ -405,7 +406,14 @@ function Fox.PayFor(key, num, tryEscape)
                 offset.Y = 60;
             end
             local pos = room:FindFreePickupSpawnPosition(centerPos + offset);
-            local col = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, 0, pos, Vector.Zero,
+
+
+            local seed = room:GetSpawnSeed();
+            local pool = game:GetItemPool();
+            local roomType = room:GetType();
+            local poolType = ItemPools:GetPoolForRoom(roomType, seed);
+            local id = pool:GetCollectible(poolType, true, seed);
+            local col = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero,
                 nil):ToPickup();
             col.Timeout = 30;
             col:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);

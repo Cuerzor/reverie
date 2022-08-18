@@ -115,10 +115,16 @@ end
 local function PostUpdate(mod)
     blacklistCleared = false;
 end
+local function PostNewRoom(mod)
+    if (not blacklistCleared) then
+        ItemPools.RoomBlacklist = {};
+        blacklistCleared = true;
+    end
+end
 
 function ItemPools:Register(mod)
     mod:AddCallback(ModCallbacks.MC_POST_GET_COLLECTIBLE, PostGetCollectible)
-    --mod:AddCallback(ModCallbacks.MC_PRE_ROOM_ENTITY_SPAWN, PreRoomEntitySpawn)
+    mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom)
     mod:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, PreGetCollectible)
     mod:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate)
 end

@@ -229,7 +229,7 @@ function Dice:PostPlayerUpdate(player)
         end
 
         -- Cancel.
-        if (actionTrigger(ButtonAction.ACTION_DROP, player.ControllerIndex)) then
+        if (actionTrigger(ButtonAction.ACTION_DROP, player.ControllerIndex) or not player:HasCollectible(Dice.Item, true)) then
             HoldingActive:Cancel(player);
         end
     end
@@ -301,7 +301,7 @@ function Dice:UseItem(item, rng, player, flags, slot, varData)
                 
                 -- Normally Use.
                 if (not IsSelecting(player)) then
-                    HoldingActive:Hold(Dice.Item, player, slot);
+                    HoldingActive:Hold(Dice.Item, player, slot, flags);
                     Dice.UpdateActiveList(player);
                     InitSprites(playerData);
                 else

@@ -45,6 +45,7 @@ do
                 },
                 Music = Music.MUSIC_BOSS2,
                 EnterAction = nil,
+                VanishingTwinTarget = Vector(580, 280),
                 Grids = {
                     {r, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, r},
                     {n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n},
@@ -79,6 +80,7 @@ do
                 },
                 Music = Music.MUSIC_BOSS2,
                 EnterAction = nil,
+                VanishingTwinTarget = Vector(320, 400),
                 Grids = {
                     {r, n, n, n, n, n, n, n, n, n, n, n, r},
                     {n, n, n, n, n, r, n, r, n, n, n, n, n},
@@ -121,6 +123,7 @@ do
                 },
                 Music = Music.MUSIC_BOSS2,
                 EnterAction = nil,
+                VanishingTwinTarget = Vector(320, 280),
                 Grids = {
                     {n, n, n, n, n, n, n, n, n, n, n, n, n},
                     {n, n, n, n, n, n, n, n, n, n, n, n, n},
@@ -148,13 +151,22 @@ do
         },
         Type = Pyroplume.Type,
         Variant = Pyroplume.Variant,
+        VanishingTwinFindTarget = function(self, boss, target)
+            if (boss.Type == self.Type and boss.Child) then
+                return boss.Child;
+            end
+            return target;
+        end,
         PortraitPath = "gfx/reverie/ui/boss/portrait_584.0_pyroplume.png",
         PortraitOffset = Vector(0, -30),
         NamePaths = {
             en = "gfx/reverie/ui/boss/bossname_584.0_pyroplume.png",
             zh = "gfx/reverie/ui/boss/bossname_584.0_pyroplume_zh.png",
             jp = "gfx/reverie/ui/boss/bossname_584.0_pyroplume_jp.png"
-        }
+        },
+        IsEnabled = function(self)
+            return THI.IsBossEnabled(self.Name);
+        end
     }
     Bosses:SetBossConfig("reverie:pyroplume", bossConfig, roomConfig);
 end
@@ -543,6 +555,8 @@ do
                         targetVariant = phase3;
                     end
                     local new = Isaac.Spawn(bird.Type, targetVariant, bird.SubType, bird.Position, bird.Velocity, bird.SpawnerEntity);
+                    bird.Child = new;
+                    new.Parent = bird;
                     new:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
                     if (bird:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
                         new:AddCharmed(EntityRef(bird), -1);

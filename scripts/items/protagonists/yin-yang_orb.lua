@@ -11,7 +11,7 @@ YinYangOrb.Config = {
 
 function YinYangOrb:onUseItem(t, RNG, player, flags, slot)
     if (flags & UseFlag.USE_CARBATTERY <= 0) then
-        return HoldingActive:SwitchHolding(t, player, slot);
+        return HoldingActive:SwitchHolding(t, player, slot, flags);
     end
 end
 YinYangOrb:AddCallback(ModCallbacks.MC_USE_ITEM, YinYangOrb.onUseItem, YinYangOrb.Item)

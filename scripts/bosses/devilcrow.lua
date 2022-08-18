@@ -144,6 +144,7 @@ do
                 },
                 Music = Music.MUSIC_BOSS2,
                 EnterAction = nil,
+                VanishingTwinTarget = Vector(320, 220),
                 Grids = {
                     {r, r, r, r, r, r, n, r, r, r, r, r, r},
                     {r, r, r, r, n, n, n, n, n, r, r, r, r},
@@ -168,13 +169,27 @@ do
         },
         Type = Devilcrow.Type,
         Variant = Devilcrow.Variant,
+        VanishingTwinFunc = function(self, boss)
+            local devilcrows = Isaac.FindByType(self.Type, self.Variant);
+            local y = 220;
+            for i, ent in ipairs(devilcrows) do
+                local startingX = 320 - 40 * (#devilcrows - 1);
+                local x = startingX + 80 * (i - 1);
+                local pos = Vector(x, y);
+                ent.Position = pos;
+                ent.TargetPosition = pos;
+            end
+        end,
         PortraitPath = "gfx/reverie/ui/boss/portrait_586.0_devilcrow.png",
         PortraitOffset = Vector(0, -20),
         NamePaths = {
             en = "gfx/reverie/ui/boss/bossname_586.0_devilcrow.png",
             zh = "gfx/reverie/ui/boss/bossname_586.0_devilcrow_zh.png",
             jp = "gfx/reverie/ui/boss/bossname_586.0_devilcrow_jp.png"
-        }
+        },
+        IsEnabled = function(self)
+            return THI.IsBossEnabled(self.Name);
+        end
     }
     Bosses:SetBossConfig("reverie:devilcrow", bossConfig, roomConfigs);
 end

@@ -25,7 +25,10 @@ do
             en = "gfx/reverie/ui/boss/bossname_585.0_summoner.png",
             zh = "gfx/reverie/ui/boss/bossname_585.0_summoner_zh.png",
             jp = "gfx/reverie/ui/boss/bossname_585.0_summoner_jp.png"
-        }
+        },
+        IsEnabled = function(self)
+            return THI.IsBossEnabled(self.Name);
+        end
     }
 
     local roomConfigs = {
@@ -33,7 +36,7 @@ do
         LuaRoomPath = "resources-dlc3/luarooms/reverie/the_summoner",
         CustomRooms = {
             {
-                Name = "SummonerAndImmortal1",
+                Name = "TheSummoner1",
                 ReplaceChance = 33,
                 BossID = "reverie:the_summoner",
                 Shape = RoomShape.ROOMSHAPE_1x1,
@@ -41,6 +44,7 @@ do
                     {Type = StageType.STAGETYPE_REPENTANCE, Stage = LevelStage.STAGE3_1}
                 },
                 Music = Music.MUSIC_BOSS2,
+                VanishingTwinTarget = Vector(320, 280),
                 Grids = {
                     {t, n, n, n, n, n, n, n, n, n, n, n, t},
                     {n, n, n, n, n, n, n, n, n, n, n, n, n},

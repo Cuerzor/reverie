@@ -22,7 +22,7 @@ function ExtendingArm:UseArm(item, rng, player, flags, slot, varData)
     if (flags & UseFlag.USE_CARBATTERY <= 0) then
         local tempData = ExtendingArm.GetPlayerTempData(player, true);
         if (not EntityExists(tempData.Arm)) then
-            return HoldingActive:SwitchHolding(item, player, slot);
+            return HoldingActive:SwitchHolding(item, player, slot, flags);
         else
             tempData.Arm:Remove();
         end

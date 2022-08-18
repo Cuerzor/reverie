@@ -23,7 +23,7 @@ end, Mallet.Item)
 
 local function UseMallet(mod, item, rng, player, flags, slot, varData)
     if (flags & UseFlag.USE_CARBATTERY <= 0) then
-        return HoldingActive:SwitchHolding(item, player, slot);
+        return HoldingActive:SwitchHolding(item, player, slot, flags);
     end
     return {Discharge = false}
 end

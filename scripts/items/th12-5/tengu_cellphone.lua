@@ -4,6 +4,7 @@ local SaveAndLoad = CuerLib.SaveAndLoad;
 local Detection = CuerLib.Detection;
 local HoldingActive = CuerLib.HoldingActive;
 local ItemPools = CuerLib.ItemPools;
+local Actives = CuerLib.Actives;
 local Cellphone = ModItem("Tengu Cellphone", "HatateCellphone");
 
 local itemConfig = Isaac.GetItemConfig();
@@ -656,6 +657,41 @@ function Cellphone.GetUpdatedPrice(player, origin)
     end
     return origin;
 end
+function Cellphone:Use(player)
+    
+    local playerData = Cellphone.GetPlayerTempData(player, true);
+    local contents = Cellphone.GetAyazunContent(true);
+    if (playerData.Selection == 0) then
+        HoldingActive:Cancel(player);
+    else
+        -- Selecting an offering.
+        local itemInfo = contents[playerData.Selection];
+        local price = Cellphone.GetUpdatedPrice(player, itemInfo.Price);
+        if (player:GetNumCoins() >= price) then
+            HoldingActive:Cancel(player);
+            player:AnimateCollectible(CollectibleType.COLLECTIBLE_MOVING_BOX, "Pickup");
+            THI.SFXManager:Play(SoundEffect.SOUND_POWERUP3);
+
+            local purchaseStrings = PurchaseStrings;
+            local category = THI.StringCategories.DEFAULT;
+            local titleString = THI.GetText(category, purchaseStrings.Title);
+            local descString = THI.GetText(category, purchaseStrings.Desc);
+
+            THI.Game:GetHUD():ShowItemText (titleString, descString);
+            Cellphone.PurchaseItem(itemInfo);
+            player:AddCoins(-price)
+
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES)) then
+                player:AddWisp(Cellphone.Item, player.Position);
+            end
+            return true;
+        else
+            THI.SFXManager:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ);
+        end
+    end
+    return false;
+end
+
 
 function Cellphone:UseCellphone(item, rng, player, flags, slot, varData)
     if (flags & UseFlag.USE_CARBATTERY <= 0) then
@@ -664,40 +700,15 @@ function Cellphone:UseCellphone(item, rng, player, flags, slot, varData)
             local contents = Cellphone.GetAyazunContent(true);
             local holding = HoldingActive:GetHoldingItem(player);
             if (holding <= 0 )then
-                HoldingActive:Hold(item, player, slot);
+                HoldingActive:Hold(item, player, slot, flags);
                 playerData.Selection = 0;
                 if (#contents < maxContentCount) then
                     Cellphone.GenerateOffers();
                 end
             elseif (holding == Cellphone.Item) then
-                if (playerData.Selection == 0) then
-                    HoldingActive:Cancel(player);
-                else
-                    -- Selecting an offering.
-                    local itemInfo = contents[playerData.Selection];
-                    local price = Cellphone.GetUpdatedPrice(player, itemInfo.Price);
-                    if (player:GetNumCoins() >= price) then
-                        HoldingActive:Cancel(player);
-                        player:AnimateCollectible(CollectibleType.COLLECTIBLE_MOVING_BOX, "Pickup");
-                        THI.SFXManager:Play(SoundEffect.SOUND_POWERUP3);
-
-                        local purchaseStrings = PurchaseStrings;
-                        local category = THI.StringCategories.DEFAULT;
-                        local titleString = THI.GetText(category, purchaseStrings.Title);
-                        local descString = THI.GetText(category, purchaseStrings.Desc);
-
-                        THI.Game:GetHUD():ShowItemText (titleString, descString);
-                        Cellphone.PurchaseItem(itemInfo);
-                        player:AddCoins(-price)
-
-                        if (player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES)) then
-                            player:AddWisp(Cellphone.Item, player.Position);
-                        end
-                        return { Discharge = true };
-                    else
-                        THI.SFXManager:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ);
-                    end
-                end
+                local shouldDischarge = HoldingActive:ShouldDischarge(player);
+                local discharge = Cellphone:Use(player);
+                return { Discharge = shouldDischarge and discharge };
             end
             return { Discharge = false };
         end
@@ -741,8 +752,16 @@ function Cellphone:PostPlayerUpdate(player)
             end
         end
 
-        if (Input.IsActionPressed(ButtonAction.ACTION_DROP, controllerIndex)) then
+        if (Input.IsActionPressed(ButtonAction.ACTION_DROP, controllerIndex) or not player:HasCollectible(Cellphone.Item, true)) then
             HoldingActive:Cancel(player);
+        end
+
+        
+        local triggered, slot = Actives.IsActiveItemTriggered(player, Cellphone.Item);
+        if (triggered) then
+            if (not Actives:IsChargeFull(player, slot)) then
+                Cellphone:Use(player);
+            end
         end
     end
 end

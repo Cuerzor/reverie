@@ -11,7 +11,9 @@ function GourdShroom.GetDefaultPlayerData()
 end
 
 function GourdShroom.GetPlayerData(player, init)
-    init = init or true;
+    if (init == nil) then
+        init = true
+    end
     return GourdShroom:GetData(player, init, GourdShroom.GetDefaultPlayerData);
 end
 
@@ -31,7 +33,7 @@ local function GetMinisaacsBack(player, count)
 end
 
 local function SwitchMode(player, mode)
-    local playerData = GourdShroom.GetPlayerData(player);
+    local playerData = GourdShroom.GetPlayerData(player, true);
     playerData.Mode = mode;
     if (mode == 1) then
         GetMinisaacsBack(player);
@@ -48,7 +50,7 @@ end
 local function onPlayerEffect(mod, player)
     if (Game():GetFrameCount() > 0) then
         if (player:HasCollectible(GourdShroom.Item)) then
-            local playerData = GourdShroom.GetPlayerData(player);
+            local playerData = GourdShroom.GetPlayerData(player, true);
             if (playerData.Mode ~= 0 and playerData.Mode ~= 1) then
                 SwitchMode(player, 1);
             end
@@ -76,8 +78,8 @@ local function onPlayerEffect(mod, player)
             end
         else
             
-            local playerData = GourdShroom.GetPlayerData(player);
-            if (playerData.Mode >= 0) then
+            local playerData = GourdShroom.GetPlayerData(player, false);
+            if (playerData and playerData.Mode >= 0) then
                 SwitchMode(player, -1);
             end
         end
@@ -89,7 +91,7 @@ GourdShroom:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, onPlayerEffect);
 local function onPlayerTakeDamage(mod, tookDamage, amount, source, flags, countdown)
     local player = tookDamage:ToPlayer();
     if (player:HasCollectible(GourdShroom.Item)) then
-        local playerData = GourdShroom.GetPlayerData(player);
+        local playerData = GourdShroom.GetPlayerData(player, true);
         
         if (playerData.Mode == 0) then
             SwitchMode(player, 1);

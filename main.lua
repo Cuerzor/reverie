@@ -8,7 +8,7 @@ if (THI) then
 end
 THI = RegisterMod("Reverie", 1);
 THI.Version = {
-    11,0,6
+    11,0,14
 }
 
 function THI:GetVersionString()
@@ -237,7 +237,7 @@ do -- Announcers.
         return AnnouncerEnabled;
     end
 
-    function THI.SetAnnouncerEnabled(value)
+    function THI.DisableBoss(value)
         local persistent = Lib.SaveAndLoad.ReadPersistentData();
         persistent.AnnouncerEnabled = value;
         AnnouncerEnabled = value;
@@ -263,6 +263,8 @@ do -- Announcers.
     end
 
 end
+
+THI.BossBlacklist = Require("scripts/boss_blacklist");
 
 function ModEntity(name, dataName) 
     return Lib.ModComponents.ModEntity:New(name, dataName);

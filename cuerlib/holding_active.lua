@@ -6,6 +6,7 @@ local function EndHolding(player)
     local playerData = HoldingActive:GetPlayerData(player, true);
     playerData.Item = nil;
     playerData.Slot = nil;
+    playerData.Mimic = false;
 end
 
 
@@ -28,7 +29,9 @@ function HoldingActive:GetPlayerData(player, init)
     local playerData = Lib:GetLibData(player, true);
     if (init) then
         playerData.HoldingActive = playerData.HoldingActive or {
-            HoldFrame = 0
+            HoldFrame = 0,
+            Mimic = false,
+            PreMimicCheck = false,
         }
     end
     return playerData.HoldingActive;
@@ -39,24 +42,43 @@ function HoldingActive:GetHoldingItem(player)
     return (playerData and playerData.Item) or -1;
 end
 
-function HoldingActive:SwitchHolding(id, player, slot)
+
+function HoldingActive:ShouldDischarge(player)
+    local playerData = self:GetPlayerData(player, false);
+    if (playerData) then
+        return not playerData.Mimic;
+    end
+    return true;
+end
+
+function HoldingActive:GetHoldingSlot(player)
+    local playerData = self:GetPlayerData(player, false);
+    return (playerData and playerData.Slot) or -1;
+end
+
+function HoldingActive:SwitchHolding(id, player, slot, flags)
     local playerData = self:GetPlayerData(player, false);
     local holding = HoldingActive:GetHoldingItem(player);
     if (holding <= 0) then
-        HoldingActive:Hold(id, player, slot);
+        HoldingActive:Hold(id, player, slot, flags);
     elseif (holding == id) then
         HoldingActive:Cancel(player)
     end
     return { Discharge = false }
 end
 
-function HoldingActive:Hold(id, player, slot)
+function HoldingActive:Hold(id, player, slot, flags)
     local playerData = self:GetPlayerData(player, true);
     playerData.Item = id;
     playerData.Slot = slot;
     player:AnimateCollectible(id, "LiftItem");
     playerData.Lifting = false;
     playerData.HoldFrame = player.FrameCount;
+    if (flags & UseFlag.USE_OWNED <= 0) then
+        playerData.Mimic = true;
+    else
+        playerData.PreMimicCheck = true;
+    end
 end
 
 function HoldingActive:Cancel(player)
@@ -170,6 +192,7 @@ local function PostPlayerEffect(mod, player)
         --     playerData.Lifting = false;
         end
         playerData.Hit = false;
+        playerData.PreMimicCheck = false;
     end
 end
 HoldingActive:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PostPlayerEffect)
@@ -202,6 +225,19 @@ local function PostUseItem(mod, item, rng, player, flags, slot, data)
     end
 end
 HoldingActive:AddCallback(ModCallbacks.MC_USE_ITEM, PostUseItem)
+
+
+local function PostUseCard(mod, card, player, flags)
+    if (card == Card.CARD_QUESTIONMARK or card == Card.CARD_WILD) then
+        local playerData = HoldingActive:GetPlayerData(player, false);
+        if (playerData and playerData.PreMimicCheck) then
+            playerData.Mimic = true;
+            playerData.PreMimicCheck = false;
+        end
+    end
+end
+HoldingActive:AddCallback(ModCallbacks.MC_USE_CARD, PostUseCard)
+
 
 
 local function PostNewRoom(mod)

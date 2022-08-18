@@ -47,13 +47,16 @@ local function GetAdjacent(index, dir)
     return -1;
 end
 
-local function CanPass(index)
+function PathFinding:CanPass(index)
     local room = Game():GetRoom();
     local gridEnt = room:GetGridEntity(index);
     if (not gridEnt or gridEnt.CollisionClass == GridCollisionClass.COLLISION_NONE) then
-        return true;
+        return true, 1;
     end
-    return room:GetGridPath(index) < 900;
+    return room:GetGridPath(index) < 900, 1;
+end
+local function CanPass(index)
+    return PathFinding:CanPass(index);
 end
 
 local defaultParams = {
@@ -183,34 +186,38 @@ function PathFinding:FindPath(entityIndex, targetIndex, params)
                     goto continue;
                 end
 
-                local newGCost = curInfo.GCost + 1;
-                local newFCost = newGCost + GetGridEsicost(adjacentIndex, targetIndex)
                 -- If this adjacent grid can be passed, and is not closed.
-                if ((maxStartCost < 0 or newGCost <= maxStartCost) and 
-                (maxCost < 0 or newFCost <= maxCost) and 
-                passFunction(adjacentIndex) and not IsGridClosed(adjacentIndex)) then
-                    local isOpen, gridInfo = IsGridOpen(adjacentIndex);
-                    
-                    -- if this grid is open.
-                    if (isOpen) then
-                        -- If current grid's start cost + 1 is less than this grid's start cost
-                        -- Then set this grid's start cost to the lower start cost
-                        -- And set the grid's parent grid info to current grid info.
-                        if (newGCost < gridInfo.GCost) then
-                            gridInfo.FCost = newFCost;--gridInfo.FCost + (newGCost - gridInfo.GCost);
-                            gridInfo.GCost = newGCost;
-                            gridInfo.Parent = curInfo;
-                        end
-                    else -- if this grid is not open.
+                if (not IsGridClosed(adjacentIndex)) then
+                    local canPass, cost = passFunction(adjacentIndex);
+                    cost = cost or 1;
+                    if (canPass) then
+                        local newGCost = curInfo.GCost + cost;
+                        local newFCost = newGCost + GetGridEsicost(adjacentIndex, targetIndex)
+                        if ((maxStartCost < 0 or newGCost <= maxStartCost) and (maxCost < 0 or newFCost <= maxCost)) then
+                            local isOpen, gridInfo = IsGridOpen(adjacentIndex);
+                            
+                            -- if this grid is open.
+                            if (isOpen) then
+                                -- If current grid's start cost + 1 is less than this grid's start cost
+                                -- Then set this grid's start cost to the lower start cost
+                                -- And set the grid's parent grid info to current grid info.
+                                if (newGCost < gridInfo.GCost) then
+                                    gridInfo.FCost = newFCost;--gridInfo.FCost + (newGCost - gridInfo.GCost);
+                                    gridInfo.GCost = newGCost;
+                                    gridInfo.Parent = curInfo;
+                                end
+                            else -- if this grid is not open.
 
-                        -- Add this grid to open grids.
-                        openGrids[adjacentIndex] = {
-                            Index = adjacentIndex,
-                            GCost = newGCost,
-                            FCost = newFCost,
-                            Parent = curInfo
-                        };
-                        openCount = openCount + 1;
+                                -- Add this grid to open grids.
+                                openGrids[adjacentIndex] = {
+                                    Index = adjacentIndex,
+                                    GCost = newGCost,
+                                    FCost = newFCost,
+                                    Parent = curInfo
+                                };
+                                openCount = openCount + 1;
+                            end
+                        end
                     end
                 end
                 ::continue::

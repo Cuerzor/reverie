@@ -725,6 +725,15 @@ local Pools = {
         Pedia.ItemPools.POOL_ULTRA_SECRET,
         Pedia.ItemPools.POOL_CRANE_GAME
     },
+    [Collectibles.DSiphon.Item] = 
+    {
+        Pedia.ItemPools.POOL_TREASURE,
+        Pedia.ItemPools.POOL_GREED_TREASURE,
+        Pedia.ItemPools.POOL_SECRET,
+        Pedia.ItemPools.POOL_GREED_SECRET,
+        Pedia.ItemPools.POOL_CRANE_GAME,
+        Pedia.ItemPools.POOL_GREED_SHOP
+    },
     [Collectibles.DreamSoul.Item] = 
     {
     }

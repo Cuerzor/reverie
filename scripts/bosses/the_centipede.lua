@@ -43,6 +43,7 @@ do
                 },
                 Music = Music.MUSIC_BOSS2,
                 EnterAction = nil,
+                VanishingTwinTarget = Vector(560, 280),
                 Grids = {
                     {g, r, r, r, r, r, n, r, r, r, r, r, r, r, r, r, r, r, r, n, r, r, r, r, r, n},
                     {r, r, r, r, r, r, n, r, r, r, r, r, n, n, r, r, r, r, r, n, r, r, r, r, r, r},
@@ -80,6 +81,7 @@ do
                 },
                 Music = Music.MUSIC_BOSS2,
                 EnterAction = nil,
+                VanishingTwinTarget = Vector(320, 400),
                 Grids = {
                     {r, r, r, r, r, r, n, r, r, r, r, r, n},
                     {r, n, n, n, g, r, n, r, r, r, r, r, r},
@@ -128,6 +130,7 @@ do
                 },
                 Music = Music.MUSIC_BOSS2,
                 EnterAction = nil,
+                VanishingTwinTarget = Vector(320, 280),
                 Grids = {
                     {r, r, r, r, r, r, n, r, r, r, r, r, r},
                     {r, n, n, n, g, r, n, r, r, r, r, n, r},
@@ -162,13 +165,21 @@ do
         },
         Type = Centi.Type,
         Variant = Centi.Variant,
+        VanishingTwinFunc = function(self, boss)
+            for i = 1, 5 do 
+                Isaac.Spawn(self.Type, self.Variant, self.SubType or 0, boss.Position, Vector.Zero, boss);
+            end
+        end,
         PortraitPath = "gfx/reverie/ui/boss/portrait_583.0_the centipede.png",
         PortraitOffset = Vector(0, 0),
         NamePaths = {
             en = "gfx/reverie/ui/boss/bossname_583.0_the centipede.png",
             zh = "gfx/reverie/ui/boss/bossname_583.0_the centipede_zh.png",
             jp = "gfx/reverie/ui/boss/bossname_583.0_the centipede_jp.png"
-        }
+        },
+        IsEnabled = function(self)
+            return THI.IsBossEnabled(self.Name);
+        end
     }
     Bosses:SetBossConfig("reverie:the_centipede", bossConfig, roomConfigs);
 end

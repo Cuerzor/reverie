@@ -1343,7 +1343,7 @@ do
 
             UIControl(player);
 
-            if (Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex)) then
+            if (Input.IsActionTriggered(ButtonAction.ACTION_DROP, player.ControllerIndex) or not player:HasCollectible(Crate.Item, true)) then
                 HoldingActive:Cancel(player);
             end
         end
@@ -1359,7 +1359,7 @@ do
                 local data = GetPlayerTempData(player, true);
                 GetPlayerCrateData(player, true);
                 UpdateItemList(player, data);
-                HoldingActive:Hold(item,player,  slot);
+                HoldingActive:Hold(item,player,  slot, flags);
                 data.OperateCooldown = 2;
             end
         end 

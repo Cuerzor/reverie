@@ -6,6 +6,7 @@ local function GetPlayerData(player)
     data._WEAPONS = data._WEAPONS or {
         noWeapon = false,
         pickaxeBanned = false,
+        urnBanned = false,
         ludoTear = nil
     }
     return data._WEAPONS;
@@ -21,11 +22,13 @@ local function GetTempPlayerData(player, create)
     return data._WEAPONS;
 end
 
-local function GetWeaponData(weapon)
+local function GetWeaponData(weapon, create)
     local data = Lib:GetLibData(weapon);
-    data._WEAPONS = data._WEAPONS or {
-        effected = false;
-    }
+    if (create) then
+        data._WEAPONS = data._WEAPONS or {
+            effected = false;
+        }
+    end
     return data._WEAPONS;
 end
 
@@ -33,14 +36,21 @@ local function StopOrHideWeapons(player)
     local playerData = GetPlayerData(player);
     local weaponEntity = player:GetActiveWeaponEntity();
     if (weaponEntity ~= nil) then
-        local weaponData = GetWeaponData(weaponEntity);
+        local weaponData = GetWeaponData(weaponEntity, true);
         local entType = weaponEntity.Type;
         local variant = weaponEntity.Variant;
+        local subtype = weaponEntity.SubType;
 
         local willBan = true;
         -- Pickaxe
-        if (entType == 8 and variant == 9) then
-            willBan = playerData.pickaxeBanned;
+        if (entType == 8 and variant == 9 and subtype == 0) then
+            if (playerData.pickaxeBanned) then
+                local effects = player:GetEffects();
+                if (effects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_NOTCHED_AXE)) then
+                    effects:RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_NOTCHED_AXE, -1)
+                end
+            end
+            willBan = false;
         end
 
         -- Sword of Spirit
@@ -49,66 +59,51 @@ local function StopOrHideWeapons(player)
         end
 
         -- Urn of soul
-        if (entType == 1000 or variant == 178) then
+        if (entType == 1000 and variant == 178) then
+            if (playerData.urnBanned) then
+                local effects = player:GetEffects();
+                if (effects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_URN_OF_SOULS)) then
+                    effects:RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_URN_OF_SOULS, -1)
+                end
+            end
             willBan = false;
         end
 
         if (willBan) then
             weaponEntity.EntityCollisionClass = 0
-            weaponEntity.CollisionDamage = 0
-            weaponEntity:SetColor(Color(0,0,0,0,0,0,0), 1, 0, false, false);
-            weaponEntity.SpriteScale = Vector.Zero;
-
+            weaponEntity.Visible = false;
+            weaponEntity:Remove();
+            weaponData.effected = true;
             -- Epic Fetus Target
             if (entType == 1000 and variant == 30) then
                 weaponEntity:Remove();
             end
-            weaponData.effected = true;
 
-            if (player:HasWeaponType(WeaponType.WEAPON_LUDOVICO_TECHNIQUE)) then
-                if (entType == EntityType.ENTITY_TEAR) then
-                    playerData.ludoTear = weaponEntity:ToTear();
-                end
-            end
-            if (playerData.ludoTear) then
-                playerData.ludoTear.Position = player.Position + player:GetShootingJoystick():Normalized() * 10;
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_LUDOVICO_TECHNIQUE)) then
+                weaponEntity.Position = player.Position + player:GetShootingJoystick():Normalized() * 10;
             end
         end
     end
 end
 
-
 ------ Public Functions -------------
-function Weapons.BanishWeapon(player, pickaxe)
+function Weapons.BanishWeapon(player, pickaxe, urn)
     pickaxe = pickaxe or false;
     local playerData = GetPlayerData(player);
     playerData.noWeapon = true;
     playerData.pickaxeBanned = pickaxe;
-    -- player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY);
-    -- player:EvaluateItems();
+    playerData.urnBanned = urn;
 end
 
 function Weapons.UnbanWeapon(player)
     local playerData = GetPlayerData(player);
     playerData.noWeapon = false;
     playerData.pickaxeBanned = false;
-    -- -- Set Player's Fire delay and familiar's fire delay.
-    -- player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY);
-    -- player:EvaluateItems();
-    -- player.FireDelay = 0;
-    -- player.HeadFrameDelay = 1;
-    -- for i, ent in pairs(Isaac.FindByType(3)) do
-    --     local familiar = ent:ToFamiliar();
-    --     if (familiar.Player == player) then
-    --         familiar.FireCooldown = 1;
-    --     end
-    -- end
-
+    playerData.urnBanned = false;
     -- Remove all effected entities to reset the state.;
     for _,ent in pairs(Isaac.GetRoomEntities()) do
-        local weaponData = ent:GetData();
-        if (weaponData._CUERLIB_DATA ~= nil and 
-        weaponData._CUERLIB_DATA.Weapons ~= nil and weaponData._CUERLIB_DATA.Weapons.effected) then
+        local weaponData = GetWeaponData(ent, false);
+        if (weaponData and weaponData.effected) then
             ent:Remove();
         end
     end
@@ -121,11 +116,9 @@ function Weapons:IsWeaponsBanned(player)
 end
 
 ------ Events ----------
-function Weapons:onPlayerEffect(player)
+local function PostPlayerUpdate(mod, player)
     local playerData = GetPlayerData(player);
     local tempData = GetTempPlayerData(player, false);
-    -- effects = player:GetEffects();
-    --local blindfolded = effects:HasNullEffect(NullItemID.ID_BLINDFOLD);
     local blindfolded = tempData and tempData.Blindfolded;
     local game = Game();
     if (playerData.noWeapon) then
@@ -149,19 +142,9 @@ function Weapons:onPlayerEffect(player)
         end
     end
 end
-Weapons:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Weapons.onPlayerEffect);
 
--- function Weapons:evaluateCache(player, flag)
---     local playerData = GetPlayerData(player);
---     if (playerData.noWeapon and not player:HasWeaponType(WeaponType.WEAPON_SPIRIT_SWORD)) then
---         if (flag == CacheFlag.CACHE_FIREDELAY) then
---             Lib.Stats:AddTearsModifier(player, function (tears)
---                 return 0.0001;
---             end, 1000000)
---         end
---     end
--- end
--- Weapons:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Weapons.evaluateCache);
-
+function Weapons:Register(mod)
+    mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate);
+end
 
 return Weapons;

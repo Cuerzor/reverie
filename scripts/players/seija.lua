@@ -1041,24 +1041,36 @@ do -- Events
                 end
             end
         else -- NPC.
-            local pyromaniacPlayer;
-            for p, player in Detection.PlayerPairs() do
-                if (Seija:WillPlayerNerf(player)) then
-                    if (not pyromaniacPlayer and player:HasCollectible(CollectibleType.COLLECTIBLE_PYROMANIAC)) then
-                        pyromaniacPlayer = player;
+            -- Pyromaniac.
+            if (flags & DamageFlag.DAMAGE_EXPLOSION > 0) then
+                local canHeal = true;
+                -- Avoid Tuff twin and The Shell
+                if (tookDamage.Type == EntityType.ENTITY_LARRYJR) then
+                    if (tookDamage.Variant == 2 or tookDamage.Variant == 3) then
+                        local npc = tookDamage:ToNPC();
+                        if (npc.I2 == 0) then
+                            canHeal = false;
+                        end
                     end
                 end
-            end
-            -- Pyromaniac.
-            if (pyromaniacPlayer) then
-                if (flags & DamageFlag.DAMAGE_EXPLOSION > 0) then
-                    if (tookDamage.HitPoints < tookDamage.MaxHitPoints) then
-                        tookDamage.HitPoints = math.min(tookDamage.MaxHitPoints, tookDamage.HitPoints + amount);
-                        local heart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HEART, 0, tookDamage.Position, Vector.Zero, tookDamage);
-                        heart.DepthOffset = 10;
-                        heart.PositionOffset = Vector(0, -10);
+                if (canHeal) then
+                    local pyromaniacPlayer;
+                    for p, player in Detection.PlayerPairs() do
+                        if (Seija:WillPlayerNerf(player)) then
+                            if (not pyromaniacPlayer and player:HasCollectible(CollectibleType.COLLECTIBLE_PYROMANIAC)) then
+                                pyromaniacPlayer = player;
+                            end
+                        end
                     end
-                    return false;
+                    if (pyromaniacPlayer) then
+                        if (tookDamage.HitPoints < tookDamage.MaxHitPoints) then
+                            tookDamage.HitPoints = math.min(tookDamage.HitPoints + amount, tookDamage.MaxHitPoints);
+                            local heart = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HEART, 0, tookDamage.Position, Vector.Zero, tookDamage);
+                            heart.DepthOffset = 10;
+                            heart.PositionOffset = Vector(0, -10);
+                        end
+                        return false;
+                    end
                 end
             end
         end

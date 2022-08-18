@@ -15,7 +15,7 @@ do
             local room = Game():GetRoom();
             local itemPool = Game():GetItemPool();
             local rng = player:GetCollectibleRNG(Cape.Item);
-            for i = 1, 3 do
+            for i = 1, 3 * count do
                 local pos = room:FindFreePickupSpawnPosition(player.Position, 0, true);
                 local rune = itemPool:GetCard(rng:Next(), false, true, true);
                 Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, rune, pos, Vector.Zero, nil);

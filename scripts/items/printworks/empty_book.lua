@@ -280,17 +280,17 @@ function EmptyBook:UseEmptyBook(item, rng, player, flags, slot, varData)
         local playerData = EmptyBook:GetPlayerData(player, true);
         local holding = HoldingActive:GetHoldingItem(player);
         if (holding <= 0) then
-            HoldingActive:Hold(item, player, slot);
+            HoldingActive:Hold(item, player, slot, flags);
         elseif (holding == EmptyBook.Item) then
             local globalData = EmptyBook:GetGlobalBookData(true);
             if (globalData.ChooseTime == 0) then
                 globalData.MakingEffect = GetChoiceId(playerData.Choice, globalData.ChooseTime);
                 THI.SFXManager:Play(SoundEffect.SOUND_POWERUP1);
-                HoldingActive:Hold(item, player, slot);
+                HoldingActive:Hold(item, player, slot, flags);
             elseif (globalData.ChooseTime == 1) then
                 globalData.MakingEffect = globalData.MakingEffect + GetChoiceId(playerData.Choice, globalData.ChooseTime) * 3;
                 THI.SFXManager:Play(SoundEffect.SOUND_POWERUP1);
-                HoldingActive:Hold(item, player, slot);
+                HoldingActive:Hold(item, player, slot, flags);
             else
                 globalData.MakingEffect = globalData.MakingEffect + GetChoiceId(playerData.Choice, globalData.ChooseTime) * 3 * 7;
                 THI.SFXManager:Play(SoundEffect.SOUND_POWERUP_SPEWER);

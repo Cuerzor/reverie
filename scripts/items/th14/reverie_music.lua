@@ -123,23 +123,26 @@ end
 ReverieMusic:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 
 local function PostNewRoom(mod)
-    local tempData = GetTempGlobalData(false);
-    if (tempData and tempData.PaperSpawned)then
-        tempData.PaperSpawned = false;
-    end
+    
+    if (THI.IsBossEnabled("Reverie")) then
+        local tempData = GetTempGlobalData(false);
+        if (tempData and tempData.PaperSpawned)then
+            tempData.PaperSpawned = false;
+        end
 
-    local game = Game();
-    local level = game:GetLevel();
-    local room = game:GetRoom();
-    local data = GetGlobalData(true);
-    local stageType = level:GetStageType();
-    local stage1 = level:GetStage() == 1 and stageType ~= StageType.STAGETYPE_GREEDMODE and stageType ~= StageType.STAGETYPE_REPENTANCE and stageType ~= StageType.STAGETYPE_REPENTANCE_B;
-    if (game.Challenge == 0 and data.MusicNum >= 5 and not data.MusicSpawned and stage1
-    and room:GetType() == RoomType.ROOM_TREASURE and not level:IsAscent ( ) and not game:IsGreedMode()) then
-        local pos = room:FindFreePickupSpawnPosition(room:GetCenterPos() + Vector(0, 80));
-        local col = Pickups.SpawnFixedCollectible(ReverieMusic.Item, pos, Vector.Zero, nil);
-        col:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
-        data.MusicSpawned = true;
+        local game = Game();
+        local level = game:GetLevel();
+        local room = game:GetRoom();
+        local data = GetGlobalData(true);
+        local stageType = level:GetStageType();
+        local stage1 = level:GetStage() == 1 and stageType ~= StageType.STAGETYPE_GREEDMODE and stageType ~= StageType.STAGETYPE_REPENTANCE and stageType ~= StageType.STAGETYPE_REPENTANCE_B;
+        if (game.Challenge == 0 and data.MusicNum >= 5 and not data.MusicSpawned and stage1
+        and room:GetType() == RoomType.ROOM_TREASURE and not level:IsAscent ( ) and not game:IsGreedMode()) then
+            local pos = room:FindFreePickupSpawnPosition(room:GetCenterPos() + Vector(0, 80));
+            local col = Pickups.SpawnFixedCollectible(ReverieMusic.Item, pos, Vector.Zero, nil);
+            col:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
+            data.MusicSpawned = true;
+        end
     end
 end
 ReverieMusic:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom);

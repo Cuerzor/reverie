@@ -2296,11 +2296,48 @@ Greed Shop: Added D Flip
 -Fixed net co-op issues about The Abandoned.
 -修复了关于遗忘伞的联机问题。
 
-
-
-
-
+11.0.7-2022.8.12
 -Added colored menu item icons, Can replace manually in \resources\gfx\reverie\ui (replace "death items.png" with "death items colored.png")
 -加入了彩色的道具菜单图标，可以手动在\resources\gfx\reverie\ui中替换（将death items colored.png覆盖death items.png）
 -Doremy's veritcal line indicator is now more implicit.
 -哆来咪的位置标识现在更加隐蔽。
+-Doremy's Nightmare Coins now no longer be aimed by homing tears.
+-哆来咪的噩梦金币不再会被跟踪。
+-Monsters spawned by Dowsing Rods will not damage player for some seconds after spawned.
+-因探宝棒而生成的怪物在一段时间内不再会伤害角色。
+-Seija's Pyromaniac no longer heals or protects shelled Tuff Twin or The Shell.
+-正邪的纵火狂不再治疗或保护有壳的灰岩子虫或枯壳虫。
+
+11.0.8-2022.8.12
+-Fixed some net co-op issues.
+-修复了一些联机问题。
+
+11.0.9-2022.8.15
+-Isaac Golem now will try to destroy poops.
+-以撒魔像现在会尝试摧毁大便。
+-Isaac Golem now will push each others.
+-以撒魔像现在会将其他魔像挤开。
+
+11.0.10-2022.8.16
+-Now can use Mod Config Menu mod to configue mod bosses that should appear in the game.
+-现在可以使用Mod Config Menu模组来配置游戏中可以出现的MOD头目。
+-Secret room items spawned by Fox in Tube and items spawned by Dowsing Rods now based on the seeds.
+-管中狐生成的隐藏房道具和探宝棒生成的道具现在视种子而定。
+
+11.0.11-2022.8.16
+-Updated the support for Custom Stage API.
+-更新了对于Custom Stage API的支持。
+
+11.0.12-2022.8.16
+-Added a synergy for Urn of Souls + Roukanken.
+-加入了一个楼观剑与灵魂瓶的配合。
+
+11.0.13-2022.8.17
+-Now you can choose the choices correctly while triggering Tengu Cellphone and Gambling D6 with ? card or wild card, without the cost of active charges.
+-现在使用？卡与万用牌触发天狗手机和赌博六面骰的效果时，可以正确选择选项，并且不会消耗充能。
+-Tengu Cellphone, Gambling D6 and Yamawaro's Crate can no longer be triggered when player does not has the item.
+-现在角色无法在不拥有天狗手机、赌博六面骰或山童的木箱时触发它们的效果。
+
+11.0.14-2022.8.18
+-Alt-floor bosses now supports Vanishing Twin.
+-现在支线层的BOSS支持消失的胞胎。

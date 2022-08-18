@@ -198,12 +198,42 @@ function Roukanken.SlashDash(player)
         local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, player.Position, Vector.Zero, player);
         poof:SetColor(Color(1,1,1,1,0.5,0.5,0.5), -1, 0, false, false);
 
+        local lastPosition = player.Position;
         local target = GetDashTarget(player, player.Velocity:Normalized());
         player.Position = target;
         THI.SFXManager:Play(SoundEffect.SOUND_TOOTH_AND_NAIL, 0.75);
         THI.Game:ShakeScreen(10);
         poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, player.Position, Vector.Zero, player);
         poof:SetColor(Color(1,1,1,1,0.5,0.5,0.5), -1, 0, false, false);
+
+        -- Urn of soul Synergy.
+        if (player:HasCollectible(CollectibleType.COLLECTIBLE_URN_OF_SOULS)) then
+            local movedVector = target - lastPosition;
+            local distance = movedVector:Length();
+            local moveAngle = movedVector:GetAngleDegrees();
+            for i = 0, 1 do
+                for a = 0, 1080, 45 do
+                    local angle = a;
+                    if (i == 1) then
+                        angle = angle + 180;
+                    end
+                    local rad = math.rad(angle);
+                    local sin = math.sin(rad);
+                    local yOffset = sin * distance / 20;
+                    local x = a / 1080 * distance;
+                    local offset = Vector(x, yOffset):Rotated(moveAngle);
+                    local pos = lastPosition + offset;
+                    local vel = Vector.FromAngle(a * math.pi) * 10;
+                    local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.FIRE, 0, pos, vel, player):ToTear();
+                    tear.FallingAcceleration = -0.08;
+                    tear:AddTearFlags(TearFlags.TEAR_HOMING | TearFlags.TEAR_ORBIT_ADVANCED)
+                    tear.CollisionDamage = player.Damage * 6;
+                end
+            end
+            SFXManager():Play(SoundEffect.SOUND_FLAMETHROWER_END, 2)
+            SFXManager():Play(SoundEffect.SOUND_GHOST_ROAR)
+        end
+
 
         dashData.Cooldown = Roukanken.Config.DashCooldown;
         player:SetMinDamageCooldown(30);
@@ -362,7 +392,7 @@ function Roukanken:onPlayerEffect(player)
             local weaponBanned = Weapons:IsWeaponsBanned(player);
             if (shouldBan ~= weaponBanned) then
                 if (shouldBan) then
-                    Weapons.BanishWeapon(player, true);
+                    Weapons.BanishWeapon(player, true, false);
                 else
                     Weapons.UnbanWeapon(player);
                 end
@@ -457,6 +487,19 @@ function Roukanken.SwingSword(player)
 
         local hitboxData = Roukanken.GetHitboxData(hitbox, true);
         hitboxData.SwingVelocity = player:GetAimDirection():Rotated(swingAngle);
+
+        -- Urn of Soul Synergy.
+        if (player:HasCollectible(CollectibleType.COLLECTIBLE_URN_OF_SOULS)) then
+            local rotation = player:GetAimDirection():GetAngleDegrees() - 45;
+            local position = player.Position + player:GetAimDirection() * 50;
+            for i = 1, 5 do 
+                local angle = i * 18 + rotation;
+                local vel = Vector.FromAngle(angle) * 10 + player.Velocity;
+                local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.FIRE, 0, position, vel, player):ToTear();
+                tear.CollisionDamage = player.Damage;
+            end
+            THI.SFXManager:Play(SoundEffect.SOUND_FLAMETHROWER_END, 2)
+        end
 
         -- Play Sound.
         THI.SFXManager:Play(SoundEffect.SOUND_SHELLGAME)
@@ -593,6 +636,9 @@ do
         local hitbox = Roukanken.SpawnHitbox(player, position, size, damage, rotation, spriteOffset, subType);
         local hitboxData = Roukanken.GetHitboxData(hitbox, true);
         hitboxData.Offset = position - player.Position;
+
+
+        
     
         return hitbox;
     end

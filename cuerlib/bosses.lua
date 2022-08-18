@@ -268,21 +268,22 @@ local function CreateBossReplacements()
         local selectedList = {};
         -- Get valid room configs.
         for index, roomConfig in pairs(Bosses.CustomRooms) do
-            local bossID = roomConfig.BossID;
             local config = roomConfig.Room;
+            local bossID = config.BossID;
             if (not blacklist[tostring(bossID)]) then
                 -- If current room fits.
                 if (IsRoomFits(currentBossRoom.Index, currentBossRoom.Type, config)) then
-                    local bossID = config.BossID;
                     local bossConfig = Bosses.BossConfigs[bossID];
-                    local encountered = true;
-                    if (bossConfig) then
-                        encountered = game:HasEncounteredBoss (bossConfig.Type, bossConfig.Variant);
-                    end
-                    if (not encountered) then
-                        local value = rng:RandomInt(100);
-                        if (value < config.ReplaceChance or Bosses.ForceCustomBoss) then
-                            table.insert(selectedList, index);
+                    if (not bossConfig.IsEnabled or bossConfig:IsEnabled()) then
+                        local encountered = true;
+                        if (bossConfig) then
+                            encountered = game:HasEncounteredBoss (bossConfig.Type, bossConfig.Variant);
+                        end
+                        if (not encountered) then
+                            local value = rng:RandomInt(100);
+                            if (value < config.ReplaceChance or Bosses.ForceCustomBoss) then
+                                table.insert(selectedList, index);
+                            end
                         end
                     end
                 end
@@ -525,6 +526,17 @@ function Bosses:IsPlayingSplashSprite()
     return self.PlayingSplashSprite ~= nil;
 end
 
+function Bosses:UpdateBosses()
+    -- Empty Function.
+end
+
+function Bosses:IsForceCustomBosses()
+    return self.ForceCustomBoss;
+end
+function Bosses:SetForceCustomBosses(value)
+    self.ForceCustomBoss = value;
+end
+
 local function ClearBossReplacements()
     local globalData = GetGlobalData(false);
     if (globalData and globalData.ReplacedBosses) then
@@ -638,5 +650,50 @@ local function ExecuteCMD(mod, cmd, params)
     end    
 end
 Bosses:AddCallback(ModCallbacks.MC_EXECUTE_CMD, ExecuteCMD);
+
+do -- Vanishing Twin
+    
+    local function PostNewRoom(mod)
+        local replacedBoss = GetRoomConfigForCurrent();
+        if (replacedBoss) then
+            for _, ent in ipairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, FamiliarVariant.VANISHING_TWIN)) do
+                local familiar = ent:ToFamiliar();
+                if (familiar.Coins > 0) then
+                    local bossConfig = Bosses.BossConfigs[replacedBoss.BossID];
+                    familiar.Coins = bossConfig.Type;
+                    familiar.Hearts = bossConfig.Variant or 0;
+                    familiar.Keys = bossConfig.SubType or 0;
+                    if (replacedBoss.VanishingTwinTarget) then
+                        familiar.TargetPosition = replacedBoss.VanishingTwinTarget;
+                    end
+                end
+            end
+        end
+    end
+    Bosses:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom)
+
+    local function PostFamiliarUpdate(mod, familiar)
+        if (familiar.Variant == FamiliarVariant.VANISHING_TWIN) then
+            local replacedBoss = GetRoomConfigForCurrent();
+            if (replacedBoss) then
+                local bossConfig = Bosses.BossConfigs[replacedBoss.BossID];
+
+                local boss = familiar.Target;
+                if (boss and boss:Exists()) then
+                    if (boss.FrameCount == 0) then
+                        if (bossConfig.VanishingTwinFunc) then
+                            bossConfig:VanishingTwinFunc(boss);
+                        end
+                    end
+                elseif (boss and not boss:Exists()) then
+                    if (bossConfig.VanishingTwinFindTarget) then
+                        familiar.Target = bossConfig:VanishingTwinFindTarget(boss, familiar.Target);
+                    end
+                end
+            end
+        end
+    end
+    Bosses:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, PostFamiliarUpdate)
+end
 
 return Bosses;
