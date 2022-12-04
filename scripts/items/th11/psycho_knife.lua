@@ -1,7 +1,9 @@
 local Maths = CuerLib.Math;
 local Screen = CuerLib.Screen;
 local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local CompareEntity = Detection.CompareEntity;
+local Mod = THI;
 local PsychoKnife = ModItem("Psycho Knife", "PsychoKnife");
 
 PsychoKnife.SlashVariant = Isaac.GetEntityVariantByName("Psycho Slash");
@@ -24,11 +26,7 @@ markSprite:Load("gfx/reverie/execution_mark.anm2", true);
 markSprite:Play("Idle");
 
 function PsychoKnife.PlaySound()
-    -- soundPlaying = true;
-    -- soundVolume = 2;
-    -- soundTime = 0;
-    --THI.SFXManager:Play(SoundEffect.SOUND_TOOTH_AND_NAIL, 1, 0, false, 1.3)
-    THI.SFXManager:Play(THI.Sounds.SOUND_EXECUTE, 0.8, 0, false, 1)
+    SFXManager():Play(Mod.Sounds.SOUND_EXECUTE, 0.8, 0, false, 1)
 end
 
 function PsychoKnife.GetPlayerTempData(player, init)
@@ -132,11 +130,11 @@ function PsychoKnife.Execute(player, target)
     end
     data.PlayerCollision = player.EntityCollisionClass;
     player.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE;
-    THI.Game:ShakeScreen(5);
+    Game():ShakeScreen(5);
 end
 function PsychoKnife:PostPlayerEffect(player)
     
-    local game = THI.Game;
+    local game = Game();
 
     if (player:HasCollectible(PsychoKnife.Item)) then
 
@@ -181,6 +179,7 @@ function PsychoKnife:PostPlayerEffect(player)
     if (data) then
         if (data.Executing) then
             local center = player.Position;
+            local judasBook = Players.HasJudasBook(player);
             
             local target = data.Target;
             if (target) then
@@ -194,7 +193,11 @@ function PsychoKnife:PostPlayerEffect(player)
             end
             local pos = center + RandomVector() * smokeRNG:RandomFloat() * 30;
             local smoke = Isaac.Spawn(1000, 59, 0, pos, RandomVector() * smokeRNG:RandomFloat() *1, nil):ToEffect();
-            smoke.Color = Color(0.3,0.3,0.3,1,0,0,0);
+            local color = Color(0.3,0.3,0.3,1,0,0,0);
+            if (judasBook) then
+                color = Color(0.5, 0, 0, 1, 0, 0, 0);
+            end
+            smoke.Color = color;
             smoke.SpriteScale = Vector(2, 2);
             smoke.LifeSpan = 20;
             smoke.Timeout = 20;
@@ -210,7 +213,7 @@ function PsychoKnife:PostPlayerEffect(player)
                     data.Executing = false;
                     SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 1, 0, false, 0.6)
                     SFXManager():Play(SoundEffect.SOUND_DEATH_BURST_LARGE, 1, 0, false, 1)
-                    THI.Game:ShakeScreen(15);
+                    game:ShakeScreen(15);
                     player.Visible = true;
                     local slash = Isaac.Spawn(EntityType.ENTITY_EFFECT, PsychoKnife.SlashVariant, 0, center, Vector.Zero, player):ToEffect();
                     slash.SpriteScale = Vector(2, 2);
@@ -251,6 +254,11 @@ function PsychoKnife:PostPlayerEffect(player)
                             
                             if (player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES)) then
                                 player:AddWisp(PsychoKnife.Item, target.Position)
+                            end
+                            if (judasBook) then
+                                if (target:IsDead() or target:HasMortalDamage()) then
+                                    Mod:AddTemporaryDamage(player, 1, 300);
+                                end
                             end
                         end
                         player.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL;--data.PlayerCollision;
@@ -294,7 +302,7 @@ function PsychoKnife:PostNPCRender(npc, offset)
     local data = PsychoKnife.GetNPCTempData(npc, false);
     if (data and not npc:IsDead()) then
         if (data.MarkAlpha > 0) then
-            local game = THI.Game;
+            local game = Game();
             markSprite.Color = Color(1,1,1,data.MarkAlpha);
             local pos = Screen.GetEntityOffsetedRenderPosition(npc, offset, Vector(0, -16));
             markSprite:Render(pos);

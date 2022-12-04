@@ -966,7 +966,7 @@ local function OnUse(player, tempData)
             -- Spawn Item.
             -- 现在会删除道具，而不是丢弃道具。因此将这一行注释。
             -- DropItem(player, source);
-            Crate:ReduceItem(player.Position, player);
+            Crate:ReduceItem(player.Position + Vector(0, 10), player);
             SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
 
             -- Clear Holding.

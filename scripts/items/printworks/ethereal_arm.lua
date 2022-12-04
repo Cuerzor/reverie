@@ -159,7 +159,7 @@ do
                         pocketIndex = 0;
                         itemCount = itemCount + 1;
                         -- Collectible.
-                        local poolType = ItemPools:GetPoolForRoom(RoomType.ROOM_ERROR, seed);
+                        local poolType = ItemPool:GetPoolForRoom(RoomType.ROOM_ERROR, seed);
                         local id = ItemPool:GetCollectible(poolType, true, seed, CollectibleType.COLLECTIBLE_BREAKFAST);
                         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
                         pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, true, false, false);

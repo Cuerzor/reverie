@@ -176,6 +176,7 @@ local function LoadEID(language)
     end
 
     do --Collectibles
+        descriptions.reverieBelialReplace = {}
         for id, col in pairs(EIDInfo.Collectibles) do
             EID:addCollectible(id, col.Description, col.Name, lang);
             if (col.BookOfVirtues and descriptions.bookOfVirtuesWisps) then
@@ -184,6 +185,10 @@ local function LoadEID(language)
             
             if (col.BookOfBelial and descriptions.bookOfBelialBuffs) then
                 descriptions.bookOfBelialBuffs[id] = col.BookOfBelial;
+            end
+
+            if (col.BookOfBelialReplace and descriptions.reverieBelialReplace) then
+                descriptions.reverieBelialReplace["5.100."..id] = col.BookOfBelialReplace;
             end
 
             if (col.BingeEater and descriptions.bingeEaterBuffs) then
@@ -371,6 +376,31 @@ do
         return descObj;
     end
     EID:addDescriptionModifier("reverieLunatic", LunaticCondition, LunaticCallback);
+    
+end
+
+-- Belial Replacement.
+do
+    local function BelialCondition(descObj)
+        return EID.collectiblesOwned[59];
+    end
+    local function BelialCallback(descObj)
+        local id = descObj.ObjType;
+        local variant = descObj.ObjVariant;
+        local subType = descObj.ObjSubType;
+        if (id == 5) then
+            local key = id.."."..variant.."."..subType;
+            local replace = EID:getDescriptionEntry("reverieBelialReplace", key);
+            local descEntry = EID:getDescriptionEntry("custom", key);
+            local desc = descEntry and descEntry[3];
+            if (desc and replace) then
+                replace = string.gsub("{{Collectible59}} "..replace, "%%", "%%%%");
+                descObj.Description = string.gsub(descObj.Description, desc, replace);
+            end
+        end
+        return descObj;
+    end
+    EID:addDescriptionModifier("reverieBelial", BelialCondition, BelialCallback);
     
 end
 

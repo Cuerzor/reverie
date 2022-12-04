@@ -3,6 +3,10 @@ local Screen = CuerLib.Screen;
 local EntityExists = Detection.EntityExists;
 
 local Arm = ModEntity("Extending Arm", "ExtendingArmEntity");
+Arm.SubTypes = {
+    NORMAL = 0,
+    BELIAL = 1
+}
 
 local shrinkSpeed = 20;
 
@@ -255,7 +259,7 @@ function Arm:PostArmUpdate(arm)
                 end
 
             end
-        elseif (data.DragMode == 1) then
+        elseif (data.DragMode == 1) then -- Drag the player to the target.
             local dir = (arm.Position - parent.Position):Normalized();
             parent.Position = arm.Position - dir * data.PulledDistance;
             data.PulledDistance = math.max(16, data.PulledDistance - 20);
@@ -279,7 +283,7 @@ function Arm:PostArmUpdate(arm)
                     end
                 end
             end
-        elseif (data.DragMode == 2 or data.DragMode == 3) then
+        elseif (data.DragMode == 2 or data.DragMode == 3) then  -- Drag the enemy or pickup.
             local parentToArm = arm.Position - parentPos;
             local ent = data.LockedEntity;
             local nextArmPosition;
@@ -342,6 +346,19 @@ function Arm:PostArmUpdate(arm)
             arm.SpriteRotation = (nextArmPosition - parentPos):GetAngleDegrees();
             
             if (nextArmPosition:Distance(parentPos) <= 32) then
+                -- Chain the enemy..
+                if (arm.SubType == Arm.SubTypes.BELIAL) then
+                    if (ent and ent:IsActiveEnemy()) then
+                        local entData = ent:GetData();
+                        if (not entData.ReverieBelialArmCooldown) then
+                            entData.ReverieBelialArmCooldown = 300;
+                            local chain = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.ANIMA_CHAIN, 0, ent.Position, Vector.Zero, arm):ToEffect();
+                            chain.LifeSpan = 270;
+                            chain.Timeout = chain.LifeSpan;
+                            chain.Target = ent;
+                        end
+                    end
+                end
                 arm:Remove();
             end
         end
@@ -350,6 +367,20 @@ function Arm:PostArmUpdate(arm)
     end
 end
 Arm:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, Arm.PostArmUpdate, Arm.Variant);
+
+
+function Arm:BelialCountdown()
+    for _, ent in ipairs(Isaac.GetRoomEntities()) do
+        local entData = ent:GetData();
+        if (entData and entData.ReverieBelialArmCooldown) then
+            entData.ReverieBelialArmCooldown = entData.ReverieBelialArmCooldown - 1;
+            if (entData.ReverieBelialArmCooldown <= 0) then
+                entData.ReverieBelialArmCooldown = nil;
+            end
+        end
+    end
+end
+Arm:AddCallback(ModCallbacks.MC_POST_UPDATE, Arm.BelialCountdown);
 
 function Arm:PostArmRender(arm, offset)
     local data = Arm.GetArmData(arm, false);

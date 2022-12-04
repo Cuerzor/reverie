@@ -7,8 +7,8 @@ local DarkRibbon = ModItem("Dark Ribbon", "DarkRibbon");
 DarkRibbon.DarkHaloEntity = Isaac.GetEntityTypeByName("Dark Halo");
 DarkRibbon.DarkHaloEntityVariant = Isaac.GetEntityVariantByName("Dark Halo");
 
-local function GetPlayerData(player)
-    return DarkRibbon:GetData(player, true, function() return {
+local function GetPlayerData(player, create)
+    return DarkRibbon:GetData(player, create, function() return {
         BoostedCount = 0,
         BoostCount = 0
     } end);
@@ -32,7 +32,8 @@ local function PostHaloUpdate(mod, effect)
         return;
     else
         local player = parent:ToPlayer();
-        local playerData = GetPlayerData(player);
+        local playerData = GetPlayerData(player, false);
+        local halo = playerData and playerData.Halo;
         if (player and not CompareEntity(playerData.Halo, effect)) then
             effect:Remove();
             return;
@@ -51,13 +52,17 @@ end
 DarkRibbon:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, PostHaloUpdate, DarkRibbon.DarkHaloEntityVariant)
 
 local function PostPlayerUpdate(mod, player)
-    local ribbonData = GetPlayerData(player)
-    ribbonData.Halo = Halos:CheckHalo(player, ribbonData.Halo, HasHalo(player), DarkRibbon.DarkHaloEntity, DarkRibbon.DarkHaloEntityVariant)
+    local ribbonData = GetPlayerData(player, false)
+    local prevHalo = not not (ribbonData and ribbonData.Halo);
+    local hasHalo = HasHalo(player);
+    if (prevHalo ~= hasHalo or prevHalo) then
+        local ribbonData = GetPlayerData(player, true)
+        ribbonData.Halo = Halos:CheckHalo(player, ribbonData.Halo, hasHalo, DarkRibbon.DarkHaloEntity, DarkRibbon.DarkHaloEntityVariant)
+    end
 end
 DarkRibbon:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate)
 
 local function PostPlayerEffect(mod, player)
-    local ribbonData = GetPlayerData(player)
     
     -- Damage Boost
     local boostCount = 0;
@@ -66,24 +71,29 @@ local function PostPlayerEffect(mod, player)
             boostCount = boostCount + 1;
         end
     end
-    ribbonData.BoostCount = boostCount;
-    if (boostCount ~= ribbonData.BoostedCount) then
+    
+    local ribbonData = GetPlayerData(player, false);
+    local boostedCount = (ribbonData and ribbonData.BoostCount) or 0;
+    if (boostedCount ~= boostCount) then
+        ribbonData = GetPlayerData(player, true);
+        ribbonData.BoostCount = boostCount;
         player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
         player:EvaluateItems()
-        ribbonData.BoostedCount = boostCount;
     end
 end
 DarkRibbon:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, PostPlayerEffect)
 
 local function EvaluateCache(mod, player, flag)
     if (flag == CacheFlag.CACHE_DAMAGE) then
-        local ribbonData = GetPlayerData(player);
-        local targetCount = ribbonData.BoostCount;
-        --player.Damage = player.Damage * 1.5^targetCount;
-        if (THI.IsLunatic()) then
-            Stats:MultiplyDamage(player, 1.2 ^ targetCount);
-        else
-            Stats:MultiplyDamage(player, 1.5 ^ targetCount);
+        local ribbonData = GetPlayerData(player, false);
+        if (ribbonData) then
+            local targetCount = ribbonData.BoostCount;
+            --player.Damage = player.Damage * 1.5^targetCount;
+            if (THI.IsLunatic()) then
+                Stats:MultiplyDamage(player, 1.2 ^ targetCount);
+            else
+                Stats:MultiplyDamage(player, 1.5 ^ targetCount);
+            end
         end
     end
 end

@@ -1,6 +1,7 @@
 local Detection = CuerLib.Detection;
 local Instruments = THI.Instruments;
 local Stats = CuerLib.Stats;
+local Players = CuerLib.Players;
 
 local Trumpet = ModItem("Maniac Trumpet", "MANIAC_TRUMPET");
 Trumpet.Config = {
@@ -11,6 +12,7 @@ Trumpet.Entity = {
     SpriteFilename = Isaac.GetItemConfig():GetCollectible(Trumpet.Item).GfxFileName;
 };
 Trumpet.WaveColor = Color(1,0,0,0.5,0,0,0);
+Trumpet.WaveColorDemonic = Color(0.5,0,0,0.5,0,0,0);
 
 function Trumpet.GetPlayerData(player, init)
     return Trumpet:GetData(player, init, function() return {
@@ -39,7 +41,10 @@ function Trumpet:onPlayerEffect(player)
 end
 
 function Trumpet:onUseItem(itemType, rng, player, flags, slot, data)
-    Instruments.CreateInstrument(player, player.Position, Trumpet.Entity.SubType, 300);
+    local instrument = Instruments.CreateInstrument(player, player.Position, Trumpet.Entity.SubType, 300);
+    if (Players.HasJudasBook(player)) then
+        instrument.State = 2;
+    end
 
     return { ShowAnim = true }
 end
@@ -57,7 +62,13 @@ function Trumpet:onTrumpetUpdate(effect)
         local range = Trumpet.Config.Range;
         local data = Instruments.GetInstrumentData(effect);
         if (data.WaveCooldown <= 0) then
-            Instruments.CreateMusicWave(effect, range* 2, range * 2, Trumpet.WaveColor)
+            
+            local demonic = effect.State == 2;
+            local color = Trumpet.WaveColor;
+            if( demonic) then
+                color = Trumpet.WaveColorDemonic
+            end
+            Instruments.CreateMusicWave(effect, range* 2, range * 2, color)
             Instruments.CreateNote(effect);
             data.WaveCooldown = 10;
             for _, ent in pairs(Isaac.GetRoomEntities()) do
@@ -65,6 +76,9 @@ function Trumpet:onTrumpetUpdate(effect)
                     if (ent.Position:Distance(effect.Position) < range + ent.Size / 2) then
                         ent:AddVelocity((ent.Position - effect.Position):Normalized() * 5);
                         ent:TakeDamage(2, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(effect), 0)
+                        if (demonic) then
+                            ent:AddEntityFlags(EntityFlag.FLAG_BLEED_OUT);
+                        end
                     end
                 end
             end

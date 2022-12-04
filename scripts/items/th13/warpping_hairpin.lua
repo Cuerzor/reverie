@@ -1,8 +1,10 @@
 local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local Hairpin = ModItem("Warping Hairpin", "WarpHairpin");
 
 local isWarpped = false;
+local warpPlayer = nil;
 local appearPos = Vector(0, 0);
 local warpDir = Direction.NO_DIRECTION;
 
@@ -86,6 +88,7 @@ function Hairpin:UseHairpin(item, rng, player, flags, slot, varData)
                 appearPos = Hairpin.GetGlobalPosFromRoom(player.Position, roomDesc.GridIndex);
                 warpDir = moveDir;
                 isWarpped = true;
+                warpPlayer = player;
                 game:StartRoomTransition(targetRoomIndex, -1, RoomTransitionAnim.WALK, player)
                 THI.SFXManager:Play(SoundEffect.SOUND_HELL_PORTAL1);
 
@@ -127,7 +130,15 @@ function Hairpin:PostNewRoom()
             player.Position = playerPos;
         end
 
+        if (warpPlayer) then
+            if (Players.HasJudasBook(warpPlayer)) then
+                local flags = UseFlag.USE_NOANIM;
+                warpPlayer:UseActiveItem(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL, flags);
+            end
+        end
+
         isWarpped = false;
+        warpPlayer = nil;
         appearPos = Vector.Zero;
         warpDir = Direction.NO_DIRECTION;
     end

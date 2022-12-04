@@ -6,7 +6,7 @@ function Stats.GetAddFireRate(firedelay, addition)
 end
 
 local function GetPlayerData(player, init)
-    local data = Lib:GetLibData(player);
+    local data = Lib:GetLibData(player, true);
     if (init) then
         data.Stats = data.Stats or {
             Damage = {

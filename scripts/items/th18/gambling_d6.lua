@@ -64,7 +64,7 @@ function GamblingD6:Use(player, slot)
                 local game = Game();
                 local room = game:GetRoom();
                 local pool = game:GetItemPool();
-                local poolType = ItemPools:GetPoolForRoom (room:GetType(), ent.InitSeed);
+                local poolType = ItemPools:GetRoomPool(ent.InitSeed);
                 local newItem = pool:GetCollectible(poolType, true, ent.InitSeed);
 
                 local wrong = false;

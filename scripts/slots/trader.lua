@@ -49,10 +49,19 @@ function Trader.CheckAllPlayerCollectibles()
     for p, player in Detection.PlayerPairs() do
         local collectibles = Collectibles.GetPlayerCollectibles(player);
         for id, num in pairs(collectibles) do
+            
+            if (player:GetActiveItem(ActiveSlot.SLOT_POCKET) == id) then
+                num = num - 1;
+            end
+            if (player:GetActiveItem(ActiveSlot.SLOT_POCKET2) == id) then
+                num = num - 1;
+            end
+            if (num > 0) then
             local col = config:GetCollectible(id);
-            if (col and not col:HasTags(ItemConfig.TAG_QUEST)) then
-                results[id] = (results[id] or 0) + num;
-                count = count + num;
+                if (col and not col:HasTags(ItemConfig.TAG_QUEST)) then
+                    results[id] = (results[id] or 0) + num;
+                    count = count + num;
+                end
             end
         end
     end
@@ -400,7 +409,7 @@ function Trader:PostNPCUpdate(npc)
                                 THI.SFXManager:Play(SoundEffect.SOUND_SLOTSPAWN);
                             elseif (YouReceive.Type == Trader.OfferType.OFFER_EMERALD) then
                                 local Ticket = THI.Collectibles.ExchangeTicket;
-                                Ticket.AddEmeralds(data.DealerPlayer, YouReceive.SubType);
+                                Ticket:AddEmeralds(data.DealerPlayer, YouReceive.SubType);
                                 THI.SFXManager:Play(SoundEffect.SOUND_CASH_REGISTER);
                             end
                         end
@@ -480,8 +489,8 @@ function Trader:PostPlayerCollision(player, other, low)
                         end
                     elseif (IReceive.Type == Trader.OfferType.OFFER_EMERALD) then
                         local Ticket = THI.Collectibles.ExchangeTicket;
-                        if (Ticket.GetEmeralds(player) >= IReceive.SubType) then
-                            Ticket.AddEmeralds(player, -IReceive.SubType);
+                        if (Ticket:GetEmeralds(player) >= IReceive.SubType) then
+                            Ticket:AddEmeralds(player, -IReceive.SubType);
                             NiceDeal(player)
                         else
                             Cannot()

@@ -8,7 +8,7 @@ if (THI) then
 end
 THI = RegisterMod("Reverie", 1);
 THI.Version = {
-    11,0,14
+    12,2,0
 }
 
 function THI:GetVersionString()
@@ -102,6 +102,10 @@ Lib:Register(THI, "_TOUHOU_DATA", getter, setter);
 local Shared = {};
 THI.Instruments = Require("scripts/shared/instruments");
 THI.GapFloor = Require("scripts/shared/gap_floor");
+THI.TemporaryDamage = include("scripts/temporary_damage");
+THI.GridDetection = include("scripts/grid_detection");
+THI.Machines = include("scripts/machines");
+
 Shared.Wheelchair = include("scripts/shared/wheelchair");
 Shared.Wheelchair:Register(THI);
 Shared.LightFairies = include("scripts/shared/light_fairies");
@@ -374,9 +378,10 @@ THI.Sounds = {
     SOUND_EARTHQUAKE = Isaac.GetSoundIdByName("Earthquake"),
     SOUND_WILD_ROAR = Isaac.GetSoundIdByName("Wild Roar"),
     SOUND_WILD_BITE = Isaac.GetSoundIdByName("Wild Bite"),
+    SOUND_RAGING_DEMON = Isaac.GetSoundIdByName("Raging Demon"),
     SOUND_PIANO_C4 = Isaac.GetSoundIdByName("Piano C4"),
     SOUND_MUSIC_BOX_C4 = Isaac.GetSoundIdByName("Music Box C4"),
-    
+    SOUND_ACID_RAIN = Isaac.GetSoundIdByName("Acid Rain"),
 }
 
 
@@ -448,6 +453,10 @@ THI.Effects = {
     SeijasShade = Require("scripts/effects/seijas_shade"),
     ItemSoul = Require("scripts/effects/item_soul"),
     RemainsFountain = Require("scripts/effects/remains_fountain"),
+    RagingDemonBackground = Require("scripts/effects/raging_demon_background"),
+    SpiderbabyWeb = Require("scripts/effects/spiderbaby_web"),
+    AcidRaindrop = Require("scripts/effects/acid_raindrop"),
+    DaggerWarning = Require("scripts/effects/dagger_warning"),
 }
 THI.Familiars = {
     Illusion = Require("scripts/familiars/illusion"),
@@ -470,6 +479,7 @@ THI.Familiars = {
 }
 THI.Slots = {
     Trader = Require("scripts/slots/trader"),
+    DoorKeeper = Require("scripts/slots/doorkeeper")
 }
 
 THI.Monsters = {
@@ -482,11 +492,22 @@ THI.Monsters = {
     NightmarePooter = Require("scripts/monsters/nightmare_pooter"),
     NightmareCoin = Require("scripts/monsters/nightmare_coin"),
     NightmareSoul = Require("scripts/monsters/nightmare_Soul"),
-    DeliriousGaper = Require("scripts/monsters/delirious_gaper")
+    DeliriousGaper = Require("scripts/monsters/delirious_gaper"),
+    ZunKeeper = Require("scripts/monsters/zun_keeper")
 }
 
 THI.Rooms = {
-    MovedShop = Require("scripts/rooms/moved_shop")
+    MovedShop = Require("scripts/rooms/moved_shop"),
+    HiddenRoukanken = Require("scripts/rooms/hidden_roukanken"),
+    FortuneTeller = Require("scripts/rooms/fortune_teller"),
+    DrunkardsBase = Require("scripts/rooms/drunkards_base"),
+    UndergroundBar = Require("scripts/rooms/underground_bar"),
+    RinsGraveyard = Require("scripts/rooms/rins_graveyard"),
+    ReimuInWater = Require("scripts/rooms/reimu_in_water"),
+    Bankis = Require("scripts/rooms/bankis"),
+    MarisaStake = Require("scripts/rooms/marisa_stake"),
+    ReverseAll = Require("scripts/rooms/reverse_all"),
+    Tentacles = Require("scripts/rooms/tentacles"),
 }
 
 local Collectibles = {};
@@ -590,6 +611,7 @@ Collectibles.MiracleMallet = Require("scripts/items/th14/miracle_mallet");
 Collectibles.ThunderDrum = Require("scripts/items/th14/thunder_drum");
 -- Collectibles.DualDivision = Require("scripts/items/th14/dual_division");
 Collectibles.DSiphon = Require("scripts/items/th14/d_siphon");
+Collectibles.THTRAINER = Require("scripts/items/th14/thtrainer");
 -- TH14.3
 Collectibles.NimbleFabric = Require("scripts/items/th14-3/nimble_fabric");
 Collectibles.MiracleMalletReplica = Require("scripts/items/th14-3/miracle_mallet_replica");
@@ -630,6 +652,14 @@ Collectibles.FoxInTube = Require("scripts/items/th18/fox_in_tube");
 Collectibles.DaitenguTelescope = Require("scripts/items/th18/daitengu_telescope");
 Collectibles.ExchangeTicket = Require("scripts/items/th18/exchange_ticket");
 Collectibles.CurseOfCentipede = Require("scripts/items/th18/curse_of_centipede");
+
+
+-- TH6 ALT
+Collectibles.FairyDust = Require("scripts/items/th6/fairy_dust");
+Collectibles.SpiritCannon = Require("scripts/items/th6/spirit_cannon");
+Collectibles.Asthma = Require("scripts/items/th6/asthma");
+Collectibles.DaggerOfServants = Require("scripts/items/th6/dagger_of_servants");
+
 
 -- Make resistance of player at the last.
 Collectibles.BuddhasBowl = Require("scripts/items/th8/buddhas_bowl");
@@ -700,7 +730,11 @@ THI.Trinkets = {
     BundledStatue = Require("scripts/trinkets/bundled_statue"),
     ShieldOfLoyalty = Require("scripts/trinkets/shield_of_loyalty"),
     SwordOfLoyalty = Require("scripts/trinkets/sword_of_loyalty"),
-    ButterflyWings = Require("scripts/trinkets/butterfly_wings")
+    ButterflyWings = Require("scripts/trinkets/butterfly_wings"),
+
+    -- TH6 ALT
+    Snowflake = Require("scripts/trinkets/snowflake"),
+    HeartSticker = Require("scripts/trinkets/heart_sticker")
 }
 
 
@@ -976,6 +1010,7 @@ do
     local LunaticIcon = Sprite();
     LunaticIcon:Load("gfx/reverie/ui/lunatic.anm2", true);
     LunaticIcon:Play("Icon");
+    LunaticIcon.Color = Color(1,1,1,0.3)
     function Lunatic:PostRender()
         if (THI.Game:GetHUD():IsVisible ( ) and THI.IsLunatic()) then
             local size = Lib.Screen.GetScreenSize() 
@@ -986,14 +1021,6 @@ do
     THI:AddCallback(ModCallbacks.MC_POST_RENDER, Lunatic.PostRender)
 
 end
-
--- function THI:PostGameStartGetItemPools(isContinued)
---     if (not isContinued) then
---         THI.Config.CollectibleItemPools = Lib.ItemPools.GetItemPoolCollectibles()
---     end
---     --print("Collectible Item Pools Loaded.");
--- end
--- THI:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, THI.PostGameStartGetItemPools);
 
 
 -- Reevaluate caches after gameStarted.
@@ -1061,6 +1088,7 @@ do -- Queued Item.
     end
     THI:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate);
 end
+
 
 if (not StageAPI) then
     -- Custom Boss.

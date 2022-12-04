@@ -77,9 +77,9 @@ function SongOfNightbird:onTakeDamage(tookDamage, amount, flags, source, countdo
             
             if (hasSong and allPlayersFarAway) then
                 damageLock = true;
-                tookDamage:TakeDamage(amount * 1.5, flags, source, 0)
+                tookDamage:TakeDamage(amount * 0.5, flags, source, 0)
                 damageLock = false;
-                return false;
+                --return false;
             end
         end
     end

@@ -1,6 +1,8 @@
 local SaveAndLoad = CuerLib.SaveAndLoad
 local Callbacks = CuerLib.Callbacks;
 local EntityTags = THI.Shared.EntityTags;
+local Players = CuerLib.Players;
+local Stats = CuerLib.Stats;
 
 local DeletedErhu = ModItem("DELETED ERHU", "DeletedErhu");
 
@@ -13,6 +15,13 @@ function DeletedErhu.GetErhuData(init)
         }
     }end);
 end
+
+function DeletedErhu:GetPlayerData(player, init)
+    return DeletedErhu:GetData(player, init, function() return {
+        BelialCount = 0
+    }end);
+end
+
 
 function DeletedErhu.CanGridRemove(type, collisionClass)
     if (type == GridEntityType.GRID_ROCK or 
@@ -57,7 +66,14 @@ function DeletedErhu.IsNPCRemoved(npc)
 end
 
 local function DeleteNPC(npc)
-    DeletedErhu.GetErhuData(true).Deleted.Entities[tostring(npc.Type).."."..tostring(npc.Variant)] = true;
+    local data = DeletedErhu.GetErhuData(true)
+    local list = data.Deleted.Entities;
+    local key = tostring(npc.Type).."."..tostring(npc.Variant);
+    if (not list[key]) then
+        list[key] = true;  
+        return true;
+    end
+    return false;
 end
 
 local function RemoveNPC(npc)
@@ -68,37 +84,57 @@ local function RemoveNPC(npc)
 end
 
 local function DeleteNPCs()
+    local deletedCount = 0;
     for _, ent in pairs(Isaac.GetRoomEntities()) do
         local npc = ent:ToNPC();
         if (npc and not EntityTags:EntityFits(ent, "RemoveBlacklist")) then
-            DeleteNPC(npc);
+            if (DeleteNPC(npc)) then
+                deletedCount = deletedCount + 1;
+            end
             RemoveNPC(npc);
         end
     end
+    return deletedCount;
 end
 
 
 
 
 function DeletedErhu:onUseErhu(t, rng, player, flags, slot, vardata)
-    local room = THI.Game:GetRoom();
+    local room = Game():GetRoom();
 
+    local judasBook = Players.HasJudasBook(player);
+
+    local deletedCount = 0;
+    local erhuData = DeletedErhu.GetErhuData(true);
+    local deletedData = erhuData.Deleted;
+    local gridList = deletedData.Grids;
     for i = 0,room:GetGridSize() - 1 do
         local entity = room:GetGridEntity(i);
         if (entity ~= nil) then
             local type = entity:GetType();
-            local variant = entity:GetVariant();
+            local key = tostring(type);
             local collision = entity.CollisionClass;
             if (DeletedErhu.CanGridRemove(type, collision))then
                 Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, room:GetGridPosition(i), Vector(0, 0), nil);
                 room:RemoveGridEntity(i, 0, true);
-                DeletedErhu.GetErhuData(true).Deleted.Grids[tostring(type)] = true;
+                if (not gridList[key]) then
+                    gridList[key] = true;
+                    deletedCount = deletedCount + 1;
+                end
             end
         end
     end
 
-    DeleteNPCs();
-    return { Remove = true, ShowAnim = true }
+    deletedCount = deletedCount + DeleteNPCs();
+    if (judasBook) then
+        local playerData = DeletedErhu:GetPlayerData(player, true);
+        playerData.BelialCount = playerData.BelialCount + deletedCount;
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
+        player:EvaluateItems();
+    end
+
+    return { Discharge = false, Remove = true, ShowAnim = true }
 end
 
 function DeletedErhu:onNPCInit(npc)
@@ -139,6 +175,14 @@ function DeletedErhu:PostGameStarted(isContinued)
 end
 DeletedErhu:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, DeletedErhu.PostGameStarted);
 
+function DeletedErhu:EvaluateCache(player, flag)
+    if (flag == CacheFlag.CACHE_DAMAGE) then
+        local data = DeletedErhu:GetPlayerData(player, false);
+        if (data) then
+            Stats:AddDamageUp(player, 0.2 * data.BelialCount);
+        end
+    end
+end
 
 function DeletedErhu:onFamiliarKilled(familiar)
     if (familiar.Variant == FamiliarVariant.WISP and familiar.SubType == DeletedErhu.Item) then
@@ -149,5 +193,6 @@ end
 DeletedErhu:AddCallback(ModCallbacks.MC_USE_ITEM, DeletedErhu.onUseErhu, DeletedErhu.Item);
 DeletedErhu:AddCallback(ModCallbacks.MC_NPC_UPDATE, DeletedErhu.onNPCUpdate);
 DeletedErhu:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, DeletedErhu.onNewRoom);
+DeletedErhu:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, DeletedErhu.EvaluateCache);
 DeletedErhu:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, DeletedErhu.onFamiliarKilled, EntityType.ENTITY_FAMILIAR);
 return DeletedErhu;

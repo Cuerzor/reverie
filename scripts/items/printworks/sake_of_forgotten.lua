@@ -15,8 +15,10 @@ function Sake:IsBottleSpawned()
     return (data and data.BottleSpawned);
 end
 function Sake:ClearBottleSpawned()
-    local data = GetGlobalData(true);
-    data.BottleSpawned = false;
+    local data = GetGlobalData(false);
+    if (data and data.BottleSpawned) then
+        data.BottleSpawned = false;
+    end
 end
 
 function Sake:SpawnBottle()

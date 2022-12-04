@@ -736,6 +736,33 @@ local Pools = {
     },
     [Collectibles.DreamSoul.Item] = 
     {
-    }
+    },
+    [Collectibles.FairyDust.Item] = 
+    {
+        Pedia.ItemPools.POOL_TREASURE,
+        Pedia.ItemPools.POOL_GREED_TREASURE,
+        Pedia.ItemPools.POOL_ANGEL,
+        Pedia.ItemPools.POOL_GREED_ANGEL
+    },
+    [Collectibles.SpiritCannon.Item] = 
+    {
+        Pedia.ItemPools.POOL_TREASURE,
+        Pedia.ItemPools.POOL_GREED_TREASURE,
+        Pedia.ItemPools.POOL_ANGEL,
+        Pedia.ItemPools.POOL_GREED_ANGEL
+    },
+    [Collectibles.DaggerOfServants.Item] = 
+    {
+        Pedia.ItemPools.POOL_RED_CHEST,
+        Pedia.ItemPools.POOL_CURSE,
+        Pedia.ItemPools.POOL_DEVIL,
+        Pedia.ItemPools.POOL_DEMON_BEGGAR,
+        Pedia.ItemPools.POOL_ULTRA_SECRET,
+    },
+    [Collectibles.Asthma.Item] = 
+    {
+        Pedia.ItemPools.POOL_TREASURE,
+        Pedia.ItemPools.POOL_GREED_TREASURE,
+    },
 }
 return Pools;

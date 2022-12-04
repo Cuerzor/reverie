@@ -3977,6 +3977,7 @@ TearFlags = {
 	TEAR_JACOBS = TEARFLAG(55),						-- Jacobs ladder tears
 	TEAR_HORN = TEARFLAG(56),						-- Little Horn tears
 	TEAR_LASER = TEARFLAG(57),						-- Technology Zero
+	TEAR_LASER = TEARFLAG(57),						-- Technology Zero
 	TEAR_POP = TEARFLAG(58),						-- Pop!
 	TEAR_ABSORB = TEARFLAG(59),						-- Hungry Tears
 	TEAR_LASERSHOT = TEARFLAG(60),					-- Trisagion, generates a laser on top of the tear

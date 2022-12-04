@@ -102,14 +102,19 @@ local function IsWriting(player)
 end
 
 function EmptyBook:GetGlobalBookData(init)
-    return EmptyBook:GetGlobalData(init, function () return {
-        Seed = 0,
-        ChooseTime = 0,
-        Effect = -1,
-        MakingEffect = 0,
-        ActiveChoices = {0, 1, 2},
-        PassiveChoices = {0, 1, 2}
-    }end);
+    return EmptyBook:GetGlobalData(init, function () 
+        local seed = Game():GetSeeds():GetStartSeed();
+        local rng = RNG();
+        rng:SetSeed(seed, 0);
+        return {
+            ChooseTime = 0,
+            Effect = -1,
+            MakingEffect = 0,
+            Seed = seed,
+            ActiveChoices = EmptyBook:GenerateChoices(rng, activeEffectCount),
+            PassiveChoices = EmptyBook:GenerateChoices(rng, passiveEffectCount)
+        };
+    end);
 end
 
 function EmptyBook:GetPlayerData(player, init)
@@ -238,33 +243,30 @@ local function HasFinishedBook(player)
     player:HasCollectible(FinishedBooks[3]);
 end
 
+function EmptyBook:GenerateChoices(rng, maxCount)
+    -- Active.
+    local pool = {};
+    local results = {};
+    for i = 1, maxCount do
+        pool[i] = i - 1;
+    end
+
+    for i=1,3 do
+        local index = rng:RandomInt(#pool) + 1;
+        results[i] = pool[index];
+        table.remove(pool, index);
+    end
+    return results;
+end
+
 local function SetBookSeed(seed)
     local data = EmptyBook:GetGlobalBookData(true);
     data.Seed = seed;
+
     local rng = RNG();
     rng:SetSeed(seed, 0);
-    local pool = {};
-
-    for i = 1, activeEffectCount do
-        pool[i] = i - 1;
-    end
-
-    for i=1,3 do
-        local index = rng:RandomInt(#pool) + 1;
-        data.ActiveChoices[i] = pool[index];
-        table.remove(pool, index);
-    end
-
-    pool = {};
-    for i = 1, passiveEffectCount do
-        pool[i] = i - 1;
-    end
-
-    for i=1,3 do
-        local index = rng:RandomInt(#pool) + 1;
-        data.PassiveChoices[i] = pool[index];
-        table.remove(pool, index);
-    end
+    data.ActiveChoices = EmptyBook:GenerateChoices(rng, activeEffectCount);
+    data.PassiveChoices = EmptyBook:GenerateChoices(rng, passiveEffectCount);
 end
 
 local function NextBookSeed()
@@ -311,6 +313,7 @@ function EmptyBook:UseEmptyBook(item, rng, player, flags, slot, varData)
             globalData.ChooseTime = (globalData.ChooseTime + 1) % 3;
         end
     end
+    return {Discharge = false}
 end
 EmptyBook:AddCallback(ModCallbacks.MC_USE_ITEM, EmptyBook.UseEmptyBook, EmptyBook.Item);
 
@@ -754,13 +757,6 @@ function EmptyBook:PostRender()
     end
 end
 EmptyBook:AddCallback(ModCallbacks.MC_POST_RENDER, EmptyBook.PostRender);
-
-function EmptyBook:PostGameStarted(isContinued)
-    if (not isContinued) then
-        SetBookSeed(THI.Game:GetSeeds():GetStartSeed());
-    end
-end
-EmptyBook:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, EmptyBook.PostGameStarted);
 
 
 return EmptyBook;

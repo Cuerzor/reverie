@@ -66,8 +66,8 @@ end
 
 
 
-function Dream:GetDreamData()
-    return Dream:GetGlobalData(true, GetDefaultGlobalData);
+function Dream:GetDreamData(create)
+    return Dream:GetGlobalData(create, GetDefaultGlobalData);
 end
 
 
@@ -178,7 +178,7 @@ end
 
 -- Dialogs.
 local function StartIntro() 
-    local globalData = Dream:GetDreamData();
+    local globalData = Dream:GetDreamData(true);
     globalData.IntroPlayed = true;
     local dialogData = Dream:GetTempData().Dialog;
     dialogData.Running = true;
@@ -210,7 +210,10 @@ function Dream:IsDreamWorld()
     local level = game:GetLevel();
     local desc = level:GetCurrentRoomDesc();
     local config = desc.Data;
-    return config.Type == DreamWorldRoomType and config.Variant == DreamWorldRoomVariant;
+    if (config) then
+        return config.Type == DreamWorldRoomType and config.Variant == DreamWorldRoomVariant;
+    end
+    return false;
 end
 local function IsDreamWorld()
     return Dream:IsDreamWorld();
@@ -324,7 +327,7 @@ end
 
 function Dream:onNewRoom()
 
-    local globalData = Dream:GetDreamData();
+    local globalData = Dream:GetDreamData(false);
     local level = THI.Game:GetLevel();
     local room = THI.Game:GetRoom();
 
@@ -358,11 +361,12 @@ function Dream:onNewRoom()
             if (stage == 1 and level:GetStageType() == 0 and room:GetType() == RoomType.ROOM_TREASURE) then
                 -- if it's stage 1 treasure room.
                 local dreamSoulExists = #Isaac.FindByType(5,100, DreamSoul.Id) > 0;
-                local dreamSoulSpawned = globalData.DreamSoulSpawned;
+                local dreamSoulSpawned = globalData and globalData.DreamSoulSpawned;
                 if (not dreamSoulExists and not dreamSoulSpawned) then
                     local pos = room:FindFreePickupSpawnPosition(Vector(320, 280), 0, true);
                     local collectible = Pickups.SpawnFixedCollectible(DreamSoul.Id, pos, Vector.Zero, nil);
                     collectible:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
+                    globalData = Dream:GetDreamData(true);
                     globalData.DreamSoulSpawned = true;
                 end
             end
@@ -374,7 +378,7 @@ function Dream:onNewRoom()
             room:RemoveDoor(i);
         end
         CreateDreamBack();
-        if (not globalData.IntroPlayed) then
+        if (not globalData or not globalData.IntroPlayed) then
             StartIntro();
         else
             Dream:StartNonSpell();
@@ -386,7 +390,7 @@ function Dream:onNewRoom()
         if (stage == LevelStage.STAGE8 and level:GetStageType() == 0) then
             -- If it's home, and not dogma home.
             
-            if (globalData.DreamTriggered) then
+            if (globalData and globalData.DreamTriggered) then
                 
                 local roomDesc = level:GetCurrentRoomDesc ( );
                 local room = THI.Game:GetRoom();
@@ -404,7 +408,6 @@ end
 Dream:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Dream.onNewRoom);
 
 function Dream:postUpdate()
-    local globalData = Dream:GetDreamData();
     local tempData = Dream:GetTempData(); 
     local music = MusicManager();
 
@@ -438,7 +441,8 @@ function Dream:postUpdate()
             end
         else
             -- If no dialog is running.
-            if (globalData.IntroPlayed) then
+            local globalData = Dream:GetDreamData(false);
+            if (globalData and globalData.IntroPlayed) then
                 -- local hasDoremy = false;
                 -- for k, v in pairs(Isaac.FindByType(Dream.Doremy.Type, Dream.Doremy.Variant)) do
                 --     if (not v:IsDead() and not v:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
@@ -448,7 +452,7 @@ function Dream:postUpdate()
                 
                 -- Play Music.
                 local cleared = false;
-                cleared = #tempData.FightData.ClearedSpells >= #Dream.SpellCards;
+                cleared = Dream:IsAllCleared();
                 if (not cleared) then
                     if (music:GetCurrentMusicID() ~= musicID and not tempData.MusicPlayed) then
                         music:Play(musicID, 0);
@@ -497,6 +501,8 @@ function Dream:postUpdate()
         local stage = level:GetStage();
         if (stage == LevelStage.STAGE8 and level:GetStageType() == 0) then
             -- If it's home, and not dogma home.
+            
+            local globalData = Dream:GetDreamData(true);
             local roomDesc = level:GetCurrentRoomDesc ( );
             local room = THI.Game:GetRoom();
             if (roomDesc.ListIndex == 3) then

@@ -1,7 +1,5 @@
 local Lib = _TEMP_CUERLIB;
 local Callbacks = Lib.Callbacks;
-local SaveAndLoad = Lib.SaveAndLoad;
-local Callbacks = Lib.Callbacks;
 
 local Collectibles = Lib:NewClass()
 
@@ -52,19 +50,7 @@ local function PostChangeCollectibles(player, item, diff)
 end
 
 -- Config.
-local config = Isaac:GetItemConfig();
-local function GetItems()
-    local collectibles = config:GetCollectibles();
-    local size = collectibles.Size;
-    local result = {};
-    for i=1, size do
-        local item = config:GetCollectible(i);
-        if (item ~= nil) then
-            table.insert(result, i);
-        end
-    end
-    return result;
-end
+local itemConfig = Isaac.GetItemConfig();
 
 
 
@@ -98,7 +84,6 @@ end
 
 function Collectibles.FindCollectibles(condition)
     local results = {};
-    local itemConfig = Isaac.GetItemConfig();
     local collectibleCount = itemConfig:GetCollectibles().Size;
     for i = 1, collectibleCount do
         local config = itemConfig:GetCollectible(i);
@@ -111,7 +96,6 @@ end
 
 function Collectibles.GetPlayerCollectibles(player)
     local results = {}
-    local itemConfig = Isaac.GetItemConfig();
     local collectibleCount = itemConfig:GetCollectibles().Size;
     for i = 1, collectibleCount do
         local config = itemConfig:GetCollectible(i);
@@ -135,18 +119,6 @@ function Collectibles.IsAnyHasCollectible(item, onlyTrue)
         end
     end
     return false;
-end
-
-local function GainItem(player, itemInfo, queued)
-    local id = itemInfo.Item;
-    local data = GetPlayerData(player, true);
-    local key = tostring(id);
-
-    data.Items[key] = (data.Items[key] or 0) + 1;
-    data.Count = (data.Count or 0) + 1;
-    
-    PostGainCollectible(player, id, 1, itemInfo.Touched, queued);
-    PostChangeCollectibles(player, id, 1);
 end
 
 local function CheckCollectibleChanged(player)
@@ -178,7 +150,6 @@ local function UpdateCollectibles(player)
     local queuedItem = data.QueueingItem;
 
     -- Update Collectibles.
-    local itemConfig = Isaac.GetItemConfig();
     local collectibleCount = itemConfig:GetCollectibles().Size;
     for item = 1, collectibleCount do
         local config = itemConfig:GetCollectible(item);
@@ -300,7 +271,6 @@ function Collectibles:onGameStarted(isContinued)
             local data = GetPlayerData(player, true);
             data.Count = player:GetCollectibleCount();
 
-            local itemConfig = Isaac.GetItemConfig();
             local collectibleCount = itemConfig:GetCollectibles().Size;
             for item = 1, collectibleCount do
                 local config = itemConfig:GetCollectible(item);

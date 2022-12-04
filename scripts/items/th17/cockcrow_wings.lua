@@ -27,10 +27,19 @@ do
         if (globalData.Time ~= time) then
             local lastTime = globalData.Time;
             globalData.Time = time;
-            Wings:UpdateTime(lastTime);
+            self:UpdateTime(lastTime);
         end
     end
     
+    function Wings:ResetTime()
+        local globalData = GetGlobalData(false);
+        local time = self.Time.NONE;
+        if (globalData and globalData.Time ~= time) then
+            local lastTime = globalData.Time;
+            globalData.Time = time;
+            self:UpdateTime(lastTime);
+        end
+    end
     function Wings:GetTime()
         local globalData = GetGlobalData(false);
         return (globalData and globalData.Time) or self.Time.NONE
@@ -164,7 +173,7 @@ do -- Events.
             if (Collectibles.IsAnyHasCollectible(Wings.Item)) then
                 Wings:SetTime(Wings:GetTimeByFrame(frameCount))
             else
-                Wings:SetTime(Wings.Time.NONE);
+                Wings:ResetTime();
             end
         end
 
@@ -188,7 +197,7 @@ do -- Events.
         if (Collectibles.IsAnyHasCollectible(Wings.Item)) then
             Wings:SetTime(Wings:GetTimeByFrame(frameCount))
         else
-            Wings:SetTime(Wings.Time.NONE);
+            Wings:ResetTime();
         end
     end
     Wings:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, PostWingsChanged, Wings.Item)

@@ -10,6 +10,7 @@
     <entity name="Echo Tear" anm2path="reverie/002.5814_echo tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5814" />
     <entity name="Echo Blood Tear" anm2path="reverie/002.5815_echo blood tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5815" />
     <entity name="Magatama Tear" anm2path="reverie/002.5816_magatama tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5816" />
+    <entity name="Magatama Tear (Dark)" anm2path="reverie/002.5816.1_magatama tear dark.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5816" subtype="1" />
     <entity name="Shuriken Tear" anm2path="reverie/002.5817_shuriken tear.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="8" friction="1" id="2" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5817" />
     <!-- Projectiles -->
     <entity name="Yin-Yang Orb Projectile" anm2path="reverie/002.5810_yin-yang orb.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="12" collisionRadius="11" friction="1" id="9" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="5800" />
@@ -68,7 +69,7 @@
     <entity name="Soul of Seija Reversed" anm2path="reverie/005.300.587_soul of seija reversed.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="587" />
 
     <!-- Mod Pickups -->
-    <entity name="Sake Bottle" anm2path="reverie/005.380.581_sake bottle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="10" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="380" subtype="581"/>
+    <entity name="Sake Bottle" anm2path="reverie/006.580_sake bottle.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="10" collisionRadius="12" friction="1" id="6" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="580" subtype="0"/>
 
     <entity name="Reverie Music Box" anm2path="reverie/005.380.582_reverie music box.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="10" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="380" subtype="582"/>
 
@@ -84,6 +85,12 @@
 
     <entity name="Fox's Advice Bottle" anm2path="reverie/005.584_foxs advice bottle.anm2" baseHP="3" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="584" tags="noreroll" reroll="false" />
 
+
+    <!-- Lasers -->
+    <entity name="Laser (Rainbow Spirit)" anm2path="reverie/007.5800_spirit laser.anm2" baseHP="0" boss="0" champion="0" collisionDamage="36" collisionMass="8" collisionRadius="70" friction="1" id="7" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5800">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+    </entity>
+
     <!-- Knives -->
     <entity baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" name="Wheelchair Hitbox" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="555" subtype="555" />
 
@@ -93,11 +100,17 @@
 
     <entity name="Roukanken Dash Hitbox" anm2path="reverie/roukanken.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="580" subtype="582" />
 
-    <entity name="Blade Rock" anm2path="reverie/008.581_blade rock.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="8" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="581" />
+    <entity name="Roukanken (Bloody)" anm2path="reverie/roukanken_bloody.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="581" subtype="580" />
 
-    <entity name="Rock Sword" anm2path="008.010_spirit sword.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="80" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="582" />
+    <entity name="Roukanken Hitbox (Bloody)" anm2path="reverie/roukanken_bloody.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="581" subtype="581" />
 
-    <entity name="Haniwa Knife" anm2path="008.001_Bone Club.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="16" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="583" />
+    <entity name="Roukanken Dash Hitbox (Bloody)" anm2path="reverie/roukanken_bloody.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="581" subtype="582" />
+
+    <entity name="Blade Rock" anm2path="reverie/008.581_blade rock.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="12" friction="1" id="8" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="582" />
+
+    <entity name="Rock Sword" anm2path="008.010_spirit sword.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="80" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="583" />
+
+    <entity name="Haniwa Knife" anm2path="008.001_Bone Club.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="16" friction="1" id="8" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="584" />
 
     <!-- Effects -->
 
@@ -213,9 +226,17 @@
         <gibs amount="5" blood="0" bone="0" eye="0" gut="0" large="0" poop="1"/>
     </entity>
 
+    <entity name="Raging Demon Background" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5853" />
+
+    <entity name="Spiderbaby Web" anm2path="reverie/1000.90.5811_spiderbaby web.anm2" baseHP="0" boss="0" champion="0" collisionDamage="5" collisionMass="0" collisionRadius="80" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="90" subtype="5811" />
+
+    <entity name="Acid Raindrop" anm2path="reverie/1000.5854_acid raindrop.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5854" />
+
+    <entity name="Dagger Warning" anm2path="reverie/1000.5855_dagger warning.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5855" />
+
 
     <!-- Monsters -->
-    <entity name="Onfire Fly" anm2path="reverie/018.580_onfirefly.anm2" reroll="true" baseHP="5" boss="0" champion="0" collisionDamage="1" collisionMass="3" collisionRadius="17" friction="1" id="18" numGridCollisionPoints="4" shadowSize="11" stageHP="0" variant="580" portrait="5" gridCollision="walls" tags="fly" />
+    <entity name="Onfire Fly" anm2path="reverie/018.580_onfirefly.anm2" reroll="false" baseHP="5" boss="0" champion="0" collisionDamage="1" collisionMass="3" collisionRadius="17" friction="1" id="18" numGridCollisionPoints="4" shadowSize="11" stageHP="0" variant="580" portrait="5" gridCollision="walls" tags="fly" />
 
     <entity name="Rebecha" anm2path="reverie/rebecha.anm2" baseHP="3" boss="1" champion="0" collisionDamage="0" collisionMass="80" gridCollision="none" collisionRadius="24" friction="1" id="580" numGridCollisionPoints="24" shadowSize="32" stageHP="0" variant="0" subtype="0" tags="nodelirium ghost">
         <gibs amount="30" blood="0" bone="0" dust="1" eye="0" gut="0" large="0" rock="1" />
@@ -332,6 +353,9 @@
     <entity anm2path="reverie/960.581_book shelf.anm2" baseHP="1" boss="0" champion="0" collisionDamage="0" collisionMass="200" collisionRadius="40" collisionRadiusYMulti="0.4" friction="1" id="960" name="Book Shelf" numGridCollisionPoints="12" shadowSize="0" shutdoors="false" stageHP="0" variant="581">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
     </entity>
+    
+    <entity name="Door Keeper" anm2path="reverie/960.582_door keeper.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="960" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="582" tags="noreroll" reroll="false" shutdoors="false" />
+
 
     <entity name="Trader (Normal)" anm2path="reverie/989.580.0_trader normal.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="0" tags="noreroll" reroll="false" shutdoors="false" />
 
@@ -346,7 +370,7 @@
     <entity name="Trader (Angel)" anm2path="reverie/989.580.5_trader angel.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="5" tags="noreroll" reroll="false" shutdoors="false" />
 
     <entity name="Trader (Curse)" anm2path="reverie/989.580.6_trader curse.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="989" numGridCollisionPoints="24" shadowSize="24" stageHP="0" variant="580" subtype="6" tags="noreroll" reroll="false" shutdoors="false" />
-
+    
     <entity name="Blood Bony" id="227" variant="580" reroll="true" baseHP="10" stageHP="0" champion="0" shieldStrength="0" boss="0" collisionDamage="0" collisionMass="14" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="14" portrait="104" anm2path="reverie/227.580_blood boney.anm2">
         <gibs amount="10" blood="1" bone="0" eye="0" gut="1" large="1" />
         <preload id="9" variant="1" />
@@ -370,6 +394,11 @@
     <entity name="Devil Bony" anm2path="reverie/277.580_devil bony.anm2" baseHP="4" stageHP="1" boss="0" champion="0" collisionDamage="0" shieldStrength="0" collisionMass="14" collisionRadius="13" friction="1" id="277" numGridCollisionPoints="12" portrait="104" shadowSize="14" variant="580">
         <gibs amount="10" blood="0" bone="1" dust="1" eye="0" gut="0" sound_bone="1" />
     </entity>
+
+    <entity name="Devil Bony (Temporary)" anm2path="reverie/277.580_devil bony.anm2" baseHP="4" stageHP="1" boss="0" champion="0" collisionDamage="0" shieldStrength="0" collisionMass="14" collisionRadius="13" friction="1" id="277" numGridCollisionPoints="12" portrait="104" shadowSize="14" variant="581">
+        <gibs amount="10" blood="0" bone="1" dust="1" eye="0" gut="0" sound_bone="1" />
+    </entity>
+
 
 
     <entity name="Red Bonus UFO" id="990" variant="580" subtype="0" anm2path="reverie/990.580.0_red bonus ufo.anm2" gibAmount="0" boss="1" baseHP="5" shieldStrength="8" stageHP="12" bossID="0" collisionDamage="0" collisionRadius="24" numGridCollisionPoints="12" collisionMass="64" friction="1" shadowSize="32" tags="nodelirium noreroll" gridCollision="none" reroll="false" shutdoors="true" portrait="1" />
@@ -399,18 +428,18 @@
     <entity name="Doremy Dream Star" anm2path="doremy/effects/dream_star.anm2" id="1000" variant="58133" subtype="0" collisionRadius="16" numGridCollisionPoints="0" friction="1" />
     
     
-    <entity name="Nightmare Pooter" anm2path="doremy/nightmare_pooter.anm2" baseHP="1" boss="0" champion="0" collisionDamage="0" collisionMass="4" collisionRadius="17" friction="1" gridCollision="walls" id="14" subtype="5810" numGridCollisionPoints="4" portrait="12" reroll="true" shadowSize="11" stageHP="0" tags="fly" variant="0">
+    <entity name="Nightmare Pooter" anm2path="doremy/nightmare_pooter.anm2" baseHP="1" boss="0" champion="0" collisionDamage="0" collisionMass="4" collisionRadius="17" friction="1" gridCollision="walls" id="14" subtype="5810" numGridCollisionPoints="4" portrait="12" reroll="false" shadowSize="11" stageHP="0" tags="fly noreroll" variant="0">
         <preload-snd id="178"/>
     </entity>
-    <entity name="Nightmare Spider" anm2path="doremy/nightmare_spider.anm2" baseHP="1" boss="0" champion="0" collisionDamage="1" collisionMass="5" collisionRadius="13" friction="1" id="85" subtype="5810" numGridCollisionPoints="12" portrait="12" reroll="true" shadowSize="11" stageHP="0" tags="spider" variant="0">
+    <entity name="Nightmare Spider" anm2path="doremy/nightmare_spider.anm2" baseHP="1" boss="0" champion="0" collisionDamage="1" collisionMass="5" collisionRadius="13" friction="1" id="85" subtype="5810" numGridCollisionPoints="12" portrait="12" reroll="false" shadowSize="11" stageHP="0" tags="spider noreroll" variant="0">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0"/>
     </entity>
-    <entity name="Nightmare Coin" anm2path="doremy/nightmare_coin.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="293" subtype="5810" numGridCollisionPoints="0" portrait="12" shadowSize="14" shutdoors="true" stageHP="0" variant="2">
+    <entity name="Nightmare Coin" anm2path="doremy/nightmare_coin.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="293" subtype="5810" numGridCollisionPoints="0" portrait="12" reroll="false" shadowSize="14" shutdoors="true" stageHP="0" tags="noreroll" variant="2">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" worm="0"/>
     </entity>
-    <entity name="Nightmare Soul" anm2path="doremy/nightmare_soul.anm2" baseHP="1" boss="0" champion="0" collisionDamage="1" collisionMass="5" collisionRadius="13" friction="1" id="999" variant="58122" subtype="0" numGridCollisionPoints="12" portrait="12">
+    <entity name="Nightmare Soul" anm2path="doremy/nightmare_soul.anm2" baseHP="1" boss="0" champion="0" collisionDamage="1" collisionMass="5" collisionRadius="13" friction="1" id="999" variant="58122" subtype="0" numGridCollisionPoints="12"  reroll="false" tags="noreroll" portrait="12">
     </entity>
-    <entity name="Doremy Delirious Gaper" anm2path="doremy/delirious_gaper.anm2" baseHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="5" collisionRadius="13" friction="1" id="10" subtype="5810" numGridCollisionPoints="12" portrait="12" shutdoors="false" reroll="true" shadowSize="14" stageHP="0" variant="1">
+    <entity name="Doremy Delirious Gaper" anm2path="doremy/delirious_gaper.anm2" baseHP="0" boss="0" champion="0" collisionDamage="1" collisionMass="5" collisionRadius="13" friction="1" id="10" subtype="5810" numGridCollisionPoints="12" portrait="12" shutdoors="false" reroll="false" shadowSize="14" stageHP="0" tags="noreroll" variant="1">
         <preload-snd id="165"/>
     </entity>
 

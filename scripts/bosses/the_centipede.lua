@@ -17,9 +17,40 @@ function Centi.GetCentipedeData(centipede, init)
         return {
             LastPositions = {},
             ChildCount = 5,
+            RNG = RNG()
         }
     end;
     return Centi:GetData(centipede, init, getter);
+end
+
+local randomSet = {};
+function Centi:MoveRandomly(centipede, speed)
+    local data = self.GetCentipedeData(centipede, true);
+    if (not data.RNG) then
+        local rng = RNG();
+        rng:SetSeed(centipede.InitSeed, 1);
+        data.RNG = rng;
+    end
+
+    for i = 1, 4 do
+        randomSet[i] = i;
+    end
+    
+    local room = Game():GetRoom();
+    local vel = Vector.Zero;
+    for i = 1, 4 do
+        local index = data.RNG:RandomInt(#randomSet) + 1;
+        local angle = randomSet[index] * 90;
+        local v = Vector.FromAngle(angle) * speed;
+        local grid = room:GetGridCollisionAtPos(centipede.Position + v);
+        if (grid ~= GridCollisionClass.COLLISION_WALL and grid ~= GridCollisionClass.COLLISION_WALL_EXCEPT_PLAYER) then
+            vel = v;
+            break;
+        else
+            table.remove(randomSet, index);
+        end
+    end
+    centipede.Velocity = vel;
 end
 
 -- Add Boss Room.
@@ -318,8 +349,12 @@ local function FindParents(centipede)
 end
 
 local function PostCentipedeInit(mod, centipede)
-    
     if (centipede.Variant == Centi.Variant) then
+        local room = Game():GetRoom();
+        if (room:GetType() == RoomType.ROOM_DUNGEON) then
+            centipede.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NOPITS;
+        end
+        
         FindParents(centipede);
     end
 end
@@ -367,7 +402,11 @@ local function PostCentipedeUpdate(mod, centipede)
             -- Head.
 
             -- Crush Rocks.
-            pathFinder:SetCanCrushRocks (true);
+            if (room:GetType() == RoomType.ROOM_DUNGEON) then
+                pathFinder:SetCanCrushRocks (false);
+            else
+                pathFinder:SetCanCrushRocks (true);
+            end
             for i = 1, 8 do
                 local angle = i * 45;
                 local dir = Vector.FromAngle(angle) * centipede.Size;
@@ -419,107 +458,97 @@ local function PostCentipedeUpdate(mod, centipede)
             end
             local boost =  1 - (math.min(5, math.max(0, data.ChildCount or 5)) - 1) / 4
             speed = (boost * 0.2 + 1 )* speed;
-            if (i1 == 0) then
-                -- Wandering.
+            if (i1 == 0) then -- Wandering.
+
+                -- Update Target.
                 local target = centipede.Target;
-                local targetChange = false;
+                local targetJustChanged = false;
+                -- Update the target every second, or when target is not exists.
                 if (not EntityExists(target) or centipede:IsFrame(30, 0)) then
                     centipede.Target, centipede.TargetPosition = GetHeadTarget(centipede);
-                    if (not CompareEntity(target, centipede.Target)) then
-                        targetChange = true;
-                    end
-                    if ((target == nil or centipede.Target == nil) and target ~= centipede.Target) then
-                        targetChange = true;
+
+                    -- if target is changed.
+                    if (not CompareEntity(target, centipede.Target) or 
+                    ((target == nil or centipede.Target == nil) and target ~= centipede.Target)) then
+                        targetJustChanged = true;
                     end
                 end
-                target = centipede.Target;
-                local targetPos = centipede.TargetPosition;
 
+                target = centipede.Target;
+
+
+                local targetPos = centipede.TargetPosition;
                 local pos = centipede.Position;
                 local playSound = false;
                 
-                -- Not Axis Aligned.
-                if (target) then
-                    -- Player or Coin.
-                    if (target.Type == EntityType.ENTITY_PICKUP) then
-                        -- Coin.
-                        speed = speed * 1.5;
-                        if (targetChange or centipede:IsFrame(math.ceil(40 / speed), 0)) then
-                            centipede.Velocity = targetPos - centipede.Position;
-                        end
-                    else
-                        local tp = target.Position;
-                        -- Otherwise.
-                        if (math.abs(tp.X - pos.X) <= 30) then
-                            -- Vertical Aligned.
-                            i1 = 1;
-                            playSound = true;
-                            if (tp.Y < pos.Y) then
-                                centipede.TargetPosition = Vector(0, -1);
-                            else
-                                centipede.TargetPosition = Vector(0, 1);
-                            end
-                        elseif (math.abs(tp.Y - pos.Y) <= 30) then
-                            -- Horizontal Aligned.
-                            i1 = 1;
-                            playSound = true;
-                            if (tp.X < pos.X) then
-                                centipede.TargetPosition = Vector(-1, 0);
-                            else
-                                centipede.TargetPosition = Vector(1, 0);
-                            end
-                        else
-                            if (centipede:IsFrame(math.ceil(80 / speed), 0) ) then
-                                pathFinder:MoveRandomlyBoss(false);
-                                pathFinder:MoveRandomlyAxisAligned(speed, false);
-                            end
-                        end
-                    end
-                else
-                    -- Grid Entity.
+                if (not target or target.Type == EntityType.ENTITY_PICKUP) then -- Found a coin or fool's gold.
                     speed = speed * 1.5;
-                    if (targetChange or centipede:IsFrame(math.ceil(40 / speed), 0)) then
+                    if (targetJustChanged or centipede:IsFrame(math.ceil(40 / speed), 0)) then
                         centipede.Velocity = targetPos - centipede.Position;
+                    end
+                else -- Found its enemy
+                    local tp = target.Position;
+                    if (math.abs(tp.X - pos.X) <= 30) then -- centipede and its enemy is vertically Aligned.
+                        -- Charges.
+                        i1 = 1;
+                        playSound = true;
+                        if (tp.Y < pos.Y) then
+                            centipede.V1 = Vector(0, -1);
+                        else
+                            centipede.V1 = Vector(0, 1);
+                        end
+                    elseif (math.abs(tp.Y - pos.Y) <= 30) then -- centipede and its enemy is horizontally Aligned.
+                        -- Charges.
+                        i1 = 1;
+                        playSound = true;
+                        if (tp.X < pos.X) then
+                            centipede.V1 = Vector(-1, 0);
+                        else
+                            centipede.V1 = Vector(1, 0);
+                        end
+                    else    -- centipede and its enemy is not aligned.
+                        if (centipede:IsFrame(math.ceil(80 / speed), 0) ) then
+                            pathFinder:MoveRandomlyBoss(false);
+                            pathFinder:MoveRandomlyAxisAligned (speed, false);
+
+                            --Centi:MoveRandomly(centipede, speed);
+                        end
                     end
                 end
                 if (playSound) then
                     THI.SFXManager:Play(SoundEffect.SOUND_MONSTER_ROAR_0)
                 end
-            elseif (i1 == 1) then
-                -- Charging.
+            elseif (i1 == 1) then -- Charging.
                 if (centipede:CollidesWithGrid()) then
+                -- local collided = false;
+                -- local vel = centipede.Velocity;
+                -- vel = vel:Resized(vel:Length() + centipede.Size);
+                -- if (room:GetGridCollisionAtPos(centipede.Position + vel) == GridCollisionClass.COLLISION_WALL) then
+                --     collided = true;
+                -- end
+                -- if (collided) then
                     i1 = 2;
                     Game():ShakeScreen(10);
                     THI.SFXManager:Play(SoundEffect.SOUND_ROCK_CRUMBLE);
 
-                    centipede:FireBossProjectiles(math.floor(1 * speed), centipede.Position - centipede.TargetPosition * 160, 10, Centi.RockParams)
-
-                    -- for i = 1, 1 * speed do
-                    --     local angle = (Random() % 10000 / 10000) * 150 - 75;
-                    --     local dir = (-centipede.TargetPosition):Rotated(angle);
-                    --     local vel = dir * (Random() % 10000 / 10000 * 10 + 5);
-                    --     local rock = Isaac.Spawn(EntityType.ENTITY_PROJECTILE, ProjectileVariant.PROJECTILE_ROCK, 0, centipede.Position, vel, centipede):ToProjectile();
-                    --     rock.FallingAccel = (Random() % 10000 / 10000) * 1;
-                    --     rock.FallingSpeed = -rock.FallingAccel ^ 2;
-                    -- end
+                    centipede:FireBossProjectiles(math.floor(1 * speed), centipede.Position - centipede.V1 * 160, 10, Centi.RockParams)
                 else
                     if (Random() % 5 == 0) then
                         local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CREEP_GREEN, 0, centipede.Position, Vector.Zero, centipede):ToEffect();
                         creep.Timeout = 150;
                         creep.Scale = 1;
                     end
-                    centipede.Velocity = centipede.TargetPosition * speed;
+                    centipede.Velocity = centipede.V1 * speed;
                 end
-            elseif (i1 == 2) then
+            elseif (i1 == 2) then -- Stunned.
                 
-                -- Stunned.
                 centipede.Velocity = Vector.Zero;
                 if (data.StateTime < math.ceil(data.ChildCount * 6)) then
                     RunStateTime();
                 else
                     data.StateTime = 0;
                     i1 = 0;
-                    centipede.Velocity = -centipede.TargetPosition;
+                    centipede.Velocity = -centipede.V1;
                 end
             end
             

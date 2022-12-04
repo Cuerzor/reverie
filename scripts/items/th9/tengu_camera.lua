@@ -1,5 +1,7 @@
 local Detection = CuerLib.Detection;
 local Screen = CuerLib.Screen;
+local Players = CuerLib.Players;
+local Mod = THI;
 local TenguCamera = ModItem("Tengu Camera", "TenguCamera");
 
 
@@ -100,7 +102,7 @@ local function GetEnemyScore(enemy)
 end
 
 local function SpawnBonus(player, score)
-    local room = THI.Game:GetRoom();
+    local room = Game():GetRoom();
     local pos = room:FindFreePickupSpawnPosition(player.Position, 0, true);
     if (score >= 10) then
         if (score < 12) then
@@ -126,7 +128,7 @@ local function SpawnBonus(player, score)
         end 
     end
 
-    local sfx = THI.SFXManager;
+    local sfx = SFXManager();
     if (score >= 60) then
         if (score < 100) then
             sfx:Play(SoundEffect.SOUND_THUMBSUP);
@@ -137,7 +139,7 @@ local function SpawnBonus(player, score)
 end
 
 function TenguCamera:PostUseCamera(item, rng, player, flags, slot, varData)
-    local spotlight = THI.Effects.TenguSpotlight;
+    local spotlight = Mod.Effects.TenguSpotlight;
     if (flags & UseFlag.USE_CARBATTERY <= 0) then
         local hasCarBattery = player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY);
         local damage = 5;
@@ -146,6 +148,7 @@ function TenguCamera:PostUseCamera(item, rng, player, flags, slot, varData)
         end
 
         local score = 0;
+        local judasBook = Players.HasJudasBook(player);
         for i, ent in pairs(Isaac.GetRoomEntities()) do
             if (ent.Type == EntityType.ENTITY_PROJECTILE) then
                 if (IsInRange(player, ent)) then
@@ -164,10 +167,13 @@ function TenguCamera:PostUseCamera(item, rng, player, flags, slot, varData)
                 if (IsInRange(player, ent)) then
                     local ref = EntityRef(player);
                     local freezeTime = 150;
-                    if (THI.IsLunatic()) then
+                    if (Mod.IsLunatic()) then
                         freezeTime = 120;
                     end
                     ent:AddFreeze(ref, freezeTime);
+                    if (judasBook) then
+                        ent:AddBurn(EntityRef(player), 150, player.Damage);
+                    end
                     ent:TakeDamage(damage, 0, ref, 0)
 
                     score = score + GetEnemyScore(ent);
@@ -182,6 +188,10 @@ function TenguCamera:PostUseCamera(item, rng, player, flags, slot, varData)
             score = score * 1.5;
         end
 
+        if (judasBook and score > 0) then
+            Mod:AddTemporaryDamage(player, score * 0.03, 150, false);
+        end
+        
         local data = TenguCamera:GetPlayerData(player, true);
         
         data.Score = score;
@@ -192,10 +202,10 @@ function TenguCamera:PostUseCamera(item, rng, player, flags, slot, varData)
         end
         SpawnBonus(player, score);
 
-        local sfx = THI.SFXManager;
+        local sfx = SFXManager();
         -- sfx:Play(SoundEffect.SOUND_FORTUNE_COOKIE);
         -- sfx:Play(SoundEffect.SOUND_FLASHBACK);
-        sfx:Play(THI.Sounds.SOUND_TOUHOU_SHUTTER);
+        sfx:Play(Mod.Sounds.SOUND_TOUHOU_SHUTTER);
         return {ShowAnim = true}
     end
 end
@@ -216,7 +226,7 @@ end
 TenguCamera:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, TenguCamera.PostPlayerUpdate);
 
 function TenguCamera:PostPlayerEffect(player)
-    local spotlight = THI.Effects.TenguSpotlight;
+    local spotlight = Mod.Effects.TenguSpotlight;
     if (player:GetActiveItem() == TenguCamera.Item or 
         player:GetActiveItem(ActiveSlot.SLOT_POCKET) == TenguCamera.Item) then
         
@@ -241,7 +251,7 @@ TenguCamera:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, TenguCamera.PostPla
 
 
 function TenguCamera:PostRender()
-    local game = THI.Game;
+    local game = Game();
     for p, player in Detection.PlayerPairs() do
         local pos = Screen.GetEntityRenderPosition(player);
         
@@ -249,9 +259,9 @@ function TenguCamera:PostRender()
         if (data and data.ScoreTime > 0) then
             local alpha = data.ScoreTime / 30;
             local fontColor = KColor(1,1,1,alpha);
-            local scoreStr = THI.GetText(THI.StringCategories.DEFAULT, "#SCORE");
-            local enFont = THI.GetFont("CAMERA_SCORE", "en");
-            local font = THI.GetFont("CAMERA_SCORE");
+            local scoreStr = Mod.GetText(Mod.StringCategories.DEFAULT, "#SCORE");
+            local enFont = Mod.GetFont("CAMERA_SCORE", "en");
+            local font = Mod.GetFont("CAMERA_SCORE");
             local scoreWidth = font:GetStringWidthUTF8(scoreStr);
             local scoreValueStr = string.format("%.2f",data.Score);
             local valueWidth = enFont:GetStringWidthUTF8(scoreValueStr);

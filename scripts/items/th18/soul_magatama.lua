@@ -1,8 +1,9 @@
 local HoldingActive = CuerLib.HoldingActive;
 local Screen = CuerLib.Screen;
+local Players = CuerLib.Players;
 local Magatama = ModItem("Soul Magatama", "SOUL_MAGATAMA");
 
-function Magatama:SwapHP(ent1, ent2)
+function Magatama:SwapHP(ent1, ent2, extraDrain)
     local function GetHP(ent)
         local player = ent:ToPlayer();
         if (player) then
@@ -50,7 +51,7 @@ function Magatama:SwapHP(ent1, ent2)
             local maxHP = ent.MaxHitPoints;
             local isBoss = ent:IsBoss();
             if (hp) then
-                local targetHp = hp * maxHP;
+                local targetHp = math.min(hp * maxHP, maxHP);
                 if (isBoss) then
                     targetHp = math.max(math.min(ent.HitPoints, maxHP * 0.25), targetHp);
                 end
@@ -84,6 +85,9 @@ function Magatama:SwapHP(ent1, ent2)
 
     local hp1 = GetHP(ent1);
     local hp2 = GetHP(ent2);
+    local drain = hp1 * extraDrain;
+    hp1 = hp1 - drain;
+    hp2 = hp2 + drain;
     local changed1 = ApplyHP(ent1, hp2);
     local changed2 = ApplyHP(ent2, hp1);
     return changed1, changed2, ent1, ent2;
@@ -92,14 +96,23 @@ end
 do -- Tears.
 
     local MagatamaTear = ModEntity("Magatama Tear", "SOUL_MAGATAMA");
+    MagatamaTear.SubTypes = {
+        NORMAL = 0,
+        DARK = 1
+    }
     Magatama.TearEntity = MagatamaTear;
     local MagatamaColor = Color(0,1,0,1,0,0,0);
+    local DarkMagatamaColor = Color(0.2, 0, 0, 1, 0, 0, 0);
 
     local function PreTearCollision(mod, tear, other, low)
         local spawner = tear.SpawnerEntity;
         if (spawner) then
             if (other:IsActiveEnemy() and other:IsVulnerableEnemy() and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
-                local changed1, changed2 = Magatama:SwapHP(spawner, other);
+                local drain = 0;
+                if (tear.SubType == MagatamaTear.SubTypes.DARK) then
+                    drain = 0.5;
+                end
+                local changed1, changed2 = Magatama:SwapHP(spawner, other, drain);
                 local LifeSwap = Magatama.LifeSwap;
                 local swap = Isaac.Spawn(LifeSwap.Type, LifeSwap.Variant, LifeSwap.SubTypes.SWAP, spawner.Position, spawner.Velocity, spawner);
                 swap.Parent = spawner;
@@ -140,8 +153,12 @@ do -- Tears.
         tear.SpriteRotation = tear.Velocity:GetAngleDegrees();
         if (tear:IsDead()) then
             local impact = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.IMPACT, 0, tear.Position + tear.PositionOffset, Vector.Zero, nil);
-            impact:SetColor(MagatamaColor, 0, 0);
-            Game():SpawnParticles (tear.Position, EffectVariant.NAIL_PARTICLE, 2, 5, MagatamaColor);
+            local color = MagatamaColor;
+            if (tear.SubType == MagatamaTear.SubTypes.DARK) then
+                color = DarkMagatamaColor;
+            end
+            impact:SetColor(color, 0, 0);
+            Game():SpawnParticles (tear.Position, EffectVariant.NAIL_PARTICLE, 2, 5, color);
             THI.SFXManager:Play(SoundEffect.SOUND_POT_BREAK, 1, 0, false, 2);
         end
     end
@@ -255,7 +272,11 @@ end
 function Magatama:FireMagatama(player, position, velocity)
     local tearInfo = Magatama.TearEntity;
     THI.SFXManager:Play(SoundEffect.SOUND_SHELLGAME);
-    local tearEnt = Isaac.Spawn(tearInfo.Type, tearInfo.Variant, 0, position, velocity, player)
+    local subType = tearInfo.SubTypes.NORMAL;
+    if (Players.HasJudasBook(player)) then
+        subType = tearInfo.SubTypes.DARK;
+    end
+    local tearEnt = Isaac.Spawn(tearInfo.Type, tearInfo.Variant, subType, position, velocity, player)
     local tear = tearEnt:ToTear();
     tear.CollisionDamage = 1;
 end

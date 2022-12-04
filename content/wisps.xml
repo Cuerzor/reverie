@@ -286,6 +286,8 @@
 	<!-- D Siphon -->
 	<wisp id="251" count="0" hp="24" layer="0" damage="2" tearScale="0.6" flameColor="flame_black" coreColor="core_black" tearColor="tear_black" coreGfx="dice.png" />
 	
+	<!-- Spirit Cannon -->
+	<wisp id="505" hp="2" damage="3" flameColor="flame_red" coreColor="core_dark_red" canShoot="false" coreGfx="reverie/pentastar.png" />
 	
 	<!-- My Manual -->
 	<wisp id="149" hp="2" layer="2" damage="2" flameColor="default" coreColor="default" coreGfx="core.png" />

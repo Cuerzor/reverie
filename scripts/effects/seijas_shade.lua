@@ -13,6 +13,7 @@ end
 local function PostEffectInit(mod, effect)
     effect.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL;
     effect.DepthOffset = -10;
+    effect.CollisionDamage = (2 + Game():GetLevel():GetStage() * 1) / 15;
 end
 SeijasShade:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, PostEffectInit, SeijasShade.Variant)
 

@@ -14,7 +14,8 @@ local Consts = {
         BounceTear = Color(1, 1, 0.8, 1, 0.1, 0.1, 0.1),
         BurnTear = BurnTearColor,
         PoisonTear = Color(0.4, 0.97, 0.5, 1, 0, 0, 0),
-        PoopTear = poopTearColor;
+        PoopTear = poopTearColor,
+        Green = Color(0,1,0,1,0,0,0),
     },
     DirectionVectors = {
         [0] = Vector(0, 0),

@@ -3,25 +3,13 @@ local Callbacks = Lib.Callbacks;
 local ItemPools = Lib:NewClass();
 ItemPools.RoomBlacklist = {};
 
-function ItemPools:GetItemPoolCollectibles()
-    local game = Game();
-    local list = {};
-    local itemPools = game:GetItemPool();
-    for pool = 0, ItemPoolType.NUM_ITEMPOOLS - 1 do
-        local col = itemPools:GetCollectible(pool, false, Random(), -1);
-        while (col > 0) do
-            list[col] = list[col] or {};
-            table.insert(list[col], pool);
-            itemPools:AddRoomBlacklist (col);
-            col = itemPools:GetCollectible(pool, false, Random(), -1);
-        end
-        itemPools:ResetRoomBlacklist();
-    end
-    return list;
-end
-
-function ItemPools:GetPoolForRoom(roomType, seed)
+--- 获取本房间的道具池，会考虑BOSS挑战以及堕落恶魔。
+---@param seed integer @随机种子
+function ItemPools:GetRoomPool(seed)
     local itemPool = Game():GetItemPool();
+    local level = Game():GetLevel();
+    local room = Game():GetRoom();
+    local roomType = room:GetType();
     local newPool = itemPool:GetPoolForRoom (roomType, seed);
 
     if (roomType == RoomType.ROOM_CHALLENGE and Game():GetLevel():HasBossChallenge()) then
@@ -32,35 +20,12 @@ function ItemPools:GetPoolForRoom(roomType, seed)
         newPool = ItemPoolType.POOL_TREASURE;
     end
 
-    if (Game():GetRoom():GetBossID() == 23) then
-        newPool = ItemPoolType.POOL_DEVIL;
-    end
-    return newPool;
-end
-
-function ItemPools:GetQuality4Item(pool, decrease, seed, default)
-    local condition = function(id, config) return config.Quality < 4 end
-    ItemPools:AddPoolBlacklist(condition)
-    local item = Game():GetItemPool():GetCollectible(pool, decrease, seed, default)
-    return item;
-end
-
-function ItemPools:AddPoolBlacklist(condition)
-    local itemPool = Game():GetItemPool();
-    local itemConfig = Isaac.GetItemConfig();
-
-    -- Exclude items that not fits the condition.
-    local collectibles = itemConfig:GetCollectibles();
-    for i = 1, collectibles.Size do
-        local config = itemConfig:GetCollectible(i);
-        if (config and condition(i, config)) then
-            itemPool:AddRoomBlacklist(i);
+    if (roomType == RoomType.ROOM_BOSS) then
+        if (room:GetBossID() == 23 or level:GetStateFlag(LevelStateFlag.STATE_SATANIC_BIBLE_USED)) then
+            newPool = ItemPoolType.POOL_DEVIL;
         end
     end
-end
-function ItemPools:ResetRoomBlacklist()
-    local itemPool = Game():GetItemPool();
-    itemPool:ResetRoomBlacklist();
+    return newPool;
 end
 
 function ItemPools:EvaluateRoomBlacklist()
@@ -86,9 +51,6 @@ function ItemPools:EvaluateRoomBlacklist()
             end
         end
     end
-    -- for func, _ in ipairs(affectedFunctions) do
-    --     print("function #"..func.." has the effect.")
-    -- end
 end
 
 local function PostGetCollectible(mod, id, pool, decrease, seed)

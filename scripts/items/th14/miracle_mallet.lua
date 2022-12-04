@@ -1,4 +1,5 @@
 local ItemPools = CuerLib.ItemPools;
+local Players = CuerLib.Players;
 local Mallet = ModItem("Miracle Mallet", "MIRACLE_MALLET");
 Mallet.Affecting = false;
 
@@ -52,7 +53,7 @@ function Mallet:PostUseMallet(item, rng, player, flags, slot, varData)
     for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)) do
         if (ent.SubType > 0 and ent.SubType ~= CollectibleType.COLLECTIBLE_DADS_NOTE) then
             local seed = rng:Next();
-            local pool = ItemPools:GetPoolForRoom(roomType, seed);
+            local pool = ItemPools:GetRoomPool(seed);
 
             local item = itemPool:GetCollectible(pool, true, seed, CollectibleType.COLLECTIBLE_BRIMSTONE);
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, ent.Position, Vector.Zero, nil);
@@ -60,7 +61,11 @@ function Mallet:PostUseMallet(item, rng, player, flags, slot, varData)
             pickup:Morph(ent.Type, ent.Variant, item, true, false, true);
             pickup.Touched = false;
 
-            player:AddBrokenHearts(3);
+            if (roomType == RoomType.ROOM_DEVIL and Players.HasJudasBook(player)) then
+                player:AddBlackHearts(6);
+            else
+                player:AddBrokenHearts(3);
+            end
         end
     end
     Mallet.Affecting = false;

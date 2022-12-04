@@ -2341,3 +2341,143 @@ Greed Shop: Added D Flip
 11.0.14-2022.8.18
 -Alt-floor bosses now supports Vanishing Twin.
 -现在支线层的BOSS支持消失的胞胎。
+
+11.1.0-2022.8.24
+-Saucer Remote no longer rerolls collectibles nor trinkets.
+-飞碟遥控器现在不再重置道具和饰品。
+-UFOs no longer drop an additional heart upon death.
+-UFO死亡后不再掉落额外的一颗心。
+-Saucer Remote's weight in Treasure Room increased to 1 from 0.2.
+-飞碟遥控器在宝箱房中的权重从0.2提升至1。
+-Saucer Remote is now quality 3 from quality 4.
+-飞碟遥控器现在从品质4降到了品质3。
+-Rune Sword under Lunatic Mode now can only insert at most 6 runes.
+-疯狂模式下的符文佩剑现在最多只能镶嵌6个符文。
+-Wild Fury under Lunatic Mode now only affects damage.
+-疯狂模式下的野性狂暴现在只影响伤害。
+-Song of Nightbird now will deal an additional 50% damage instead of change the damage to 150%.
+-夜雀之歌从造成150%的伤害改为了造成额外一次50%的伤害。
+
+11.1.1-2022.8.25
+-Fixed an issue that Seija cannot nerf powerful items correctly.
+-修复了正邪无法正确削弱强力道具的BUG。
+
+11.2.0-2022.8.30
+-Added many synergies of active items with Judas' Birthright.
+-加入了众多主动道具与犹大长子名分的配合。
+-Added a super secret room layout and 10 crawlspace layouts.
+-加入了一个超级隐藏房布局和10个地下夹层布局。
+-The punch damage of the Rainbow Dragon Dadge has been reduced to 20 + 10 * player damage from 40 + 10 * player damage.
+-虹龙徽章的撞击伤害从40+10*角色伤害降低至20+10*角色伤害。
+-Blood Bonies' bone damage has been reduced to 80% player damage from 120% character damage.
+-血骷髅仔的骨头伤害从120%角色伤害降低至80%角色伤害。
+-Now the counter will turn green when the Bucket of Wisps can be used.
+-现在鬼火桶在可以使用时，数字指示器会变为绿色。
+-Lunatic mode's icon is now less obvious.
+-疯狂模式的图标现在不再那么明显。
+-Carving Tools no longer spawn haniwas after the rocks is picked up, but after the rock is thrown and destroyed.
+-雕刻工具现在不再会在石头被搬走后生成埴轮，改为石头被摧毁后才会生成。
+
+11.2.1-2022.9.1
+-Fixed some issues.
+-修复了一些问题。
+
+11.2.2-2022.9.1
+-Fixed an issue that doremy's dream catcher and choices will be removed if there are too many effects.
+-修复了哆来咪的捕梦网和噩梦选项会在特效过多时被移除的问题。
+
+11.2.3-2022.9.11
+-Fixed an issue that Frozen Sakura does nothing.
+-修复了被冻结的樱花无法正确生效的BUG。
+
+11.2.4-2022.9.11
+-Fixed an issue that the game shows black screen on some gpus.
+-修复了在部分显卡上会导致游戏黑屏的BUG。
+
+11.2.5-2022.10.10
+-Unborns spawned by Seija + C section will no longer close the room door.
+-正邪+剖腹产生成的死胎不再会关闭房间门。
+-Pickups spawned by reducing collectibles using Yamawaro's Crate will move down a certain distance to prevent player from being damaged by troll bombs.
+-山童的木箱拆解道具生成的掉落物会向下移一段距离，防止角色被即爆炸弹炸伤。
+-The continuous tear damage of Seija + Hushy has been reduced from 200% player damage to 100% player damage.
+-正邪+死寂宝宝的连续统眼泪伤害从200%角色伤害降低到100%角色伤害。
+-Seija + Hushy will now be affected by Forgotten Lullaby.
+-正邪+死寂宝宝现在会受到遗忘的摇篮曲的影响。
+-The attack criteria of Seija + Best Bud changed from "distance between monster and player" to "distance between monster and the white fly".
+-正邪+生死之交的攻击判定条件从“怪物与玩家之间的距离”变为“怪物与白苍蝇之间的距离”。
+
+11.2.6-2022.10.11
+-Added some Error Room Layout.
+-加入了部分错误房布局。
+-Modified a crawlspace layout.
+-修改了一个夹层的布局。
+
+11.3.0-2022.11.8
+-Modified Seija's item compatibilities to fit the new quality update.
+-修改了正邪的道具兼容，以符合新版本的品质列表。
+-The shop price of Yin-Yang Orb, Jar of Fireflies, Tengu Camera, Extending Arm, Tengu Cellphone, Warpping Hairpin, Nimble Fabric, Miracle Mallet Replica and Yamawaro's Crate has been reduced to 10 pennies.
+-阴阳玉、萤火虫罐、天狗相机、延展手臂、天狗手机、穿墙发簪、闪避布、万宝槌仿制品、山童的木箱的商店价格变为了10钱币。
+-Greatly reduced the duration of Judas + Birthright + Rainbow Dragon Badge.
+-大幅度缩减了犹大+长子名分+虹龙徽章的动画时间。
+
+11.3.1-2022.11.8
+-Added some layouts for I AM ERROR room.
+-增加了几个错误房布局。
+-Modified the texture of Seija + Lemon Mishap's raindrop, and the transparency of yellow creeps.
+-修改了正邪+烦事柠檬的酸雨贴图，以及酸液池的透明度。
+
+11.3.2-2022.11.9
+-Fixed an issue that cannot create local 2P players.
+-修复了无法创建本地2P玩家的BUG。
+
+11.3.3-2022.11.9
+-Seija + Missing No. no longer disables TMTRAINER.
+-正邪+编号丢失不再屏蔽错误技。
+-Fixed an issue that player cannot buy goods with Tengu Cellphone while he has just enough pennies.
+-修复了在硬币数量刚好时，无法购买天狗手机货品的问题。
+
+11.3.4-2022.11.9
+-Fixed an issue that player will go to a wrong place after a new stage while holding Seija + TMTRAINER.
+-修复了正邪在拥有错误技时会在下层之后去到错误位置的BUG。
+
+11.3.5-2022.11.11
+-Restored Seija's nerf for Pyromaniac since it has been a quality 4 item again.
+-因为纵火狂又变成了品质4道具，还原了正邪对其的削弱。
+-Seija's 20/20 now -6.75% damage down.
+-正邪的完美视力现在会减少6.75%的伤害。
+
+12.0.0-2022.12.1
+-Added Fairy Dust and Snowflake.
+-加入了妖精尘和雪花。
+
+12.0.1-2022.12.1
+-Dowsing Rods' treasure appear chance has been reduced to 40% from 75%.
+-探宝棒的宝藏出现概率从75%降低到40%。
+-Snowflake now will only reroll items after the item's cooldown time is over.
+-雪花现在只会在道具的拾取冷却时间结束后重置道具。
+-Fixed an issue that some rerolls will reroll items into devil room items after Satanic Bible used whatever current room type is.
+-修复了在使用撒旦圣经之后，部分道具重置会无视当前房间道具类型将道具重置为恶魔房道具的BUG。
+
+12.1.0-2022.12.3
+-Added Spirit Cannon and Dagger of Servants.
+-加入了气功炮和从者之刃。
+
+12.1.1-2022.12.3
+-Spirit Cannon and Dagger of Servants are now Quality 3.
+-气功炮和从者之刃现在为品质3。
+-Spirit Cannon and Dagger of Servants now have death screen icon.
+-气功炮和从者之刃现在有了死亡界面图标。
+-Dagger of Servants now grants +0.6 damage up instead of +1.
+-从者之刃从+1伤害改为了+0.6伤害。
+-The warning icon of Dagger of Servants now become smaller.
+-从者之刃的警告图标现在变得更小了。
+
+12.1.2-2022.12.4
+-Added Book of Virtues wisp for Spirit Cannon.
+-加入了气功炮的魂火。
+-Fixed an issue that Dagger of Servants will continuously deal damage while charging Cursed Eye until player is nearly dead.
+-修复了从者之刃在诅咒之眼蓄力时造成伤害，会一直造成伤害直到玩家濒死为止的BUG。
+
+12.2.0-2022.12.4
+-Added Asthma and Heart Sticker.
+-加入了哮喘和红心贴纸。

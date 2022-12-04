@@ -3,6 +3,7 @@ local CompareEntity = Detection.CompareEntity;
 local EntityExists = Detection.EntityExists;
 local HoldingActive = CuerLib.HoldingActive;
 local Inputs = CuerLib.Inputs;
+local Players = CuerLib.Players;
 
 local ExtendingArm = ModItem("Extending Arm", "ExtendingArm");
 
@@ -49,7 +50,11 @@ function ExtendingArm:PostPlayerEffect(player)
                 THI.SFXManager:Play(SoundEffect.SOUND_SHELLGAME);
                 
                 local Arm = THI.Effects.ExtendingArm;
-                local arm = Isaac.Spawn(Arm.Type, Arm.Variant, 0, player.Position, vel, player);
+                local subtype = Arm.SubTypes.NORMAL;
+                if (Players.HasJudasBook(player)) then
+                    subtype = Arm.SubTypes.BELIAL;
+                end
+                local arm = Isaac.Spawn(Arm.Type, Arm.Variant, subtype, player.Position, vel, player);
                 local armData = Arm.GetArmData(arm, true);
                 arm.Parent = player;
                 armData.Velocity = vel;

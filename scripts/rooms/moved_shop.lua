@@ -1,7 +1,4 @@
 local MovedShop = {};
-MovedShop.List = {
-    5812
-}
 MovedShop.Keyword = "Moved Shop"
 function MovedShop:IsMovedShop(roomDesc)
     if (roomDesc and roomDesc.Data) then

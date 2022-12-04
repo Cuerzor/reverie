@@ -19,19 +19,7 @@ function BonusUFO.GetFloorData(init)
 end
 
 local timeLimit = 450;
--- BonusUFO.Collected = {};
--- local ufoCollected = BonusUFO.Collected;
 function BonusUFO.GetUFOData(ufo, init)
-    -- local data = ufoCollected;
-    -- if (init) then
-    --     data[ufo.Index] = data[ufo.Index] or {
-    --         Collected = {
-    --             Collectibles = {},
-    --             Pickups = {}
-    --         }
-    --     }
-    -- end
-    -- return data[ufo.Index];
     return BonusUFO:GetData(ufo, init, function() return {
         BonusTimes = 2,
         Collected = {
@@ -40,6 +28,9 @@ function BonusUFO.GetUFOData(ufo, init)
         },
         Direction = Vector.Zero
     } end);
+end
+function BonusUFO.GetPickupData(pickup, init)
+    return BonusUFO:GetData(pickup, init, function() return {} end);
 end
 
 function BonusUFO.GetUFOTime(npc)
@@ -51,9 +42,11 @@ end
 -- end
 
 function BonusUFO:PostUFOInit(npc)
-    npc:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
-    npc:AddEntityFlags(EntityFlag.FLAG_NO_SPIKE_DAMAGE | EntityFlag.FLAG_NO_PLAYER_CONTROL | EntityFlag.FLAG_NO_BLOOD_SPLASH);
-    npc.PositionOffset = Vector(0, -16);
+    if (npc.Variant == BonusUFO.Variant) then
+        npc:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
+        npc:AddEntityFlags(EntityFlag.FLAG_NO_SPIKE_DAMAGE | EntityFlag.FLAG_NO_PLAYER_CONTROL | EntityFlag.FLAG_NO_BLOOD_SPLASH | EntityFlag.FLAG_NO_REWARD);
+        npc.PositionOffset = Vector(0, -16);
+    end
 end
 BonusUFO:AddCallback(ModCallbacks.MC_POST_NPC_INIT, BonusUFO.PostUFOInit, BonusUFO.Type);
 
@@ -182,17 +175,17 @@ local function Collect(npc, pickup)
         local info = {
             Type = pickup.Type,
             Variant = variant,
-            SubType = 0
+            SubType = subType
         }
         
         table.insert(data.Collected.Collectibles, info)
     else
-        if (variant == PickupVariant.PICKUP_TRINKET 
-        -- or variant == PickupVariant.PICKUP_TAROTCARD 
-        -- or variant == PickupVariant.PICKUP_PILL
-        ) then
-            subType = 0;
-        end
+        -- if (variant == PickupVariant.PICKUP_TRINKET 
+        -- -- or variant == PickupVariant.PICKUP_TAROTCARD 
+        -- -- or variant == PickupVariant.PICKUP_PILL
+        -- ) then
+        --     subType = 0;
+        -- end
         local info = {
             Type = pickup.Type,
             Variant = variant,
@@ -401,13 +394,17 @@ function BonusUFO:PostNPCUpdate(npc)
                 for i, info in pairs(data.Collected.Collectibles) do
                     for t = 1, times do
                         local pos = room:FindFreePickupSpawnPosition(npc.Position, 0, true);
-                        Isaac.Spawn(info.Type, info.Variant, info.SubType, pos, Vector.Zero, npc);
+                        local pickup = Isaac.Spawn(info.Type, info.Variant, info.SubType, pos, Vector.Zero, npc);
+                        local pickupData = BonusUFO.GetPickupData(pickup, true);
+                        pickupData.UFOReward = true;
                     end
                 end
                 for i, info in pairs(data.Collected.Pickups) do
                     for t = 1, times do
                         local pos = npc.Position;
-                        Isaac.Spawn(info.Type, info.Variant, info.SubType, pos, RandomVector() * rng:RandomFloat() * 3, npc);
+                        local pickup = Isaac.Spawn(info.Type, info.Variant, info.SubType, pos, RandomVector() * rng:RandomFloat() * 3, npc);
+                        local pickupData = BonusUFO.GetPickupData(pickup, true);
+                        pickupData.UFOReward = true;
                     end
                 end
             end
@@ -448,6 +445,23 @@ function BonusUFO:PostUFODeath(npc)
     THI.Game:ShakeScreen(30);
     THI.SFXManager:Play(THI.Sounds.SOUND_TOUHOU_CHARGE_RELEASE);
     THI.SFXManager:Play(SoundEffect.SOUND_DOGMA_TV_BREAK);
+
+
+    
+    -- Avoid a heart from spawning
+    for _, ent in ipairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART)) do
+        if (ent.FrameCount <= 1) then
+            local pickupData = BonusUFO.GetPickupData(ent, false);
+            if (not pickupData or not pickupData.UFOReward) then
+                local distance = ent.Position:Distance(npc.Position);
+                if (distance < 50) then
+                    ent:Remove();
+                else
+                    print(distance)
+                end
+            end
+        end
+    end
 end
 BonusUFO:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, BonusUFO.PostUFODeath, BonusUFO.Type);
 
@@ -509,8 +523,10 @@ end
 BonusUFO:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, BonusUFO.PostUFORemove, BonusUFO.Type);
 
 function BonusUFO.PostNewLevel()
-    local globalData = BonusUFO.GetFloorData(true);
-    globalData.DestroyedCount = 0;
+    local globalData = BonusUFO.GetFloorData(false);
+    if (globalData and globalData.DestroyedCount) then
+        globalData.DestroyedCount = 0;
+    end
 end
 BonusUFO:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, BonusUFO.PostNewLevel, BonusUFO.Type);
 

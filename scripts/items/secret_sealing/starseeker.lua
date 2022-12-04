@@ -22,11 +22,10 @@ local rng = RNG();
 ---------------------------------
 
 
-local function GetGlobalData()
-    return Starseeker:GetGlobalData(true, function() return {
+local function GetGlobalData(create)
+    return Starseeker:GetGlobalData(create, function() return {
         Triggered = false,
-        Seed = THI.Game:GetSeeds():GetStartSeed(),
-        --Balls = {},
+        Seed = Game():GetSeeds():GetStartSeed(),
         Futures = {},
         RoomItemCount = {}
     }end )
@@ -42,9 +41,10 @@ local function GetBallData(ball, init)
 end
 
 local function GetSeekerNextSeed()
-    rng:SetSeed(GetGlobalData().Seed, 0);
+    local data = GetGlobalData(true);
+    rng:SetSeed(data.Seed, 0);
     local value = rng:Next();
-    GetGlobalData().Seed = rng:GetSeed();
+    data.Seed = rng:GetSeed();
     return value;
 end
 
@@ -52,15 +52,6 @@ local function PickupBall(ball)
     Starseeker.RemoveBall(ball);
     
     Starseeker.EnqueueFuture(Game():GetRoom():GetType(), ball.SubType);
-    
-    -- local tbl = GetGlobalData().Balls;
-    
-    -- for i, info in pairs(GetGlobalData().Balls) do
-    --     if (info.Seed == ball.InitSeed) then
-    --         table.remove(tbl, i);
-    --         break;
-    --     end
-    -- end
 
     if (ball.OptionsPickupIndex ~= 0) then
         
@@ -86,7 +77,7 @@ function Starseeker.InitBallItem(ball)
     if (item == nil) then
         local seed = GetSeekerNextSeed();
 
-        local poolType = ItemPools:GetPoolForRoom(roomType, seed);
+        local poolType = ItemPools:GetRoomPool(seed);
         local tries = 0;
         while (item == nil and tries < 4) do
             isGetingBallItem = true;
@@ -125,7 +116,8 @@ function Starseeker.SpawnBall(pos)
     local ball = Isaac.Spawn(Starseeker.Ball.Id, Starseeker.Ball.Variant, 0, pos, Vector(0, 0), nil) : ToPickup();
     Starseeker.InitBallItem(ball);
     local itemId = ball.SubType;
-    --table.insert(GetGlobalData().Balls, { Seed = ball.InitSeed, RoomType = roomType, Item = itemId });
+    
+    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, ball.Position, Vector.Zero, ball);
     return ball;
 end
 
@@ -135,25 +127,30 @@ function Starseeker.RemoveBall(ball)
 end
 
 function Starseeker.EnqueueFuture(roomType, item)
-    table.insert(GetGlobalData().Futures, {RoomType = roomType, Item = item});
+    local data = GetGlobalData(true);
+    table.insert(data.Futures, {RoomType = roomType, Item = item});
 end
 
 function Starseeker.HasFuture(roomType)
-    local data = GetGlobalData();
-    for i, info in pairs(data.Futures) do
-        if (info.RoomType == roomType) then
-            return true;
+    local data = GetGlobalData(false);
+    if (data) then
+        for i, info in pairs(data.Futures) do
+            if (info.RoomType == roomType) then
+                return true;
+            end
         end
     end
     return false;
 end
 
 function Starseeker.GetFutureCount(roomType)
-    local data = GetGlobalData();
+    local data = GetGlobalData(false);
     local count = 0;
-    for i, info in pairs(data.Futures) do
-        if (info.RoomType == roomType) then
-            count = count + 1;
+    if (data) then
+        for i, info in pairs(data.Futures) do
+            if (info.RoomType == roomType) then
+                count = count + 1;
+            end
         end
     end
     return count;
@@ -161,11 +158,13 @@ end
 
 
 function Starseeker.DequeueFuture(roomType)
-    local data = GetGlobalData();
-    for i, info in pairs(data.Futures) do
-        if (info.RoomType == roomType) then
-            table.remove(data.Futures, i);
-            return info.Item;
+    local data = GetGlobalData(false);
+    if (data) then
+        for i, info in pairs(data.Futures) do
+            if (info.RoomType == roomType) then
+                table.remove(data.Futures, i);
+                return info.Item;
+            end
         end
     end
     return 0;
@@ -202,8 +201,7 @@ Starseeker:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, Starse
 
 --local ballsDataBuffer = {};
 function Starseeker:onUpdate()
-    local globalData = GetGlobalData();
-    
+    local globalData = GetGlobalData(false);
     local level = THI.Game:GetLevel();
     local room = THI.Game:GetRoom();
     
@@ -229,8 +227,11 @@ function Starseeker:onUpdate()
                     count = count + 1;
                 end
             end
-            globalData.Triggered = count > 0;
-            globalData.RoomItemCount[key] = count;
+            if (count > 0) then
+                globalData = GetGlobalData(true);
+                globalData.Triggered = count > 0;
+                globalData.RoomItemCount[key] = count;
+            end
         end
     end
 
@@ -238,11 +239,11 @@ function Starseeker:onUpdate()
         Starseeker.BallSpawnCooldown = Starseeker.BallSpawnCooldown - 1;
     end
 
-    if (globalData.Triggered) then
+    if (globalData and globalData.Triggered) then
         if (Starseeker.BallSpawnCooldown <= 0) then 
             local level = THI.Game:GetLevel();
             local roomKey = Starseeker.GetCurrentRoomKey();
-            local itemCount = globalData.RoomItemCount[roomKey] or 0;
+            local itemCount = (globalData and globalData.RoomItemCount[roomKey]) or 0;
             if (itemCount > 0) then
                 -- Will not create balls if there are balls in this room.
                 if (#Isaac.FindByType(Starseeker.Ball.Id, Starseeker.Ball.Variant) > 0) then
@@ -263,33 +264,12 @@ function Starseeker:onUpdate()
                 end
                 globalData.Triggered = itemCount > 1;
                 globalData.RoomItemCount[roomKey] = itemCount - 1;
-                
+                if (globalData.RoomItemCount[roomKey] <= 0) then
+                    globalData.RoomItemCount[roomKey] = nil;
+                end
             end
         end
     end
-
-
-    -- for i, _ in pairs(ballsDataBuffer) do
-    --     ballsDataBuffer[i] = nil;
-    -- end
-    -- for i, ballData in pairs(globalData.Balls) do
-    --     ballsDataBuffer[i] = ballData;
-    -- end
-
-    -- local balls = Isaac.FindByType(Starseeker.Ball.Id, Starseeker.Ball.Variant);
-    -- for _, ball in pairs(balls) do
-    --     local shouldExists = false;
-    --     for i, info in pairs(ballsDataBuffer) do
-    --         if (info.Seed == ball.InitSeed) then
-    --             shouldExists = true;
-    --             ballsDataBuffer[i] = nil;
-    --             break;
-    --         end
-    --     end
-    --     if (not shouldExists) then
-    --         ball:Remove();
-    --     end
-    -- end
 end
 
 Starseeker:AddCallback(ModCallbacks.MC_POST_UPDATE, Starseeker.onUpdate);
@@ -305,7 +285,6 @@ function Starseeker:onBallUpdate(ball)
 
         local sprite = ball:GetSprite();
         if (sprite:IsEventTriggered("Appear")) then
-            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, ball.Position, Vector.Zero, ball);
             sprite:Play("Idle");
         end
 

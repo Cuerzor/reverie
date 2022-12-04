@@ -11,6 +11,7 @@ local Tears = CuerLib.Tears;
 local Players = CuerLib.Players;
 local ItemPools = CuerLib.ItemPools;
 local RuneSword = ModItem("Rune Sword", "RUNE_SWORD");
+RuneSword.MaxRuneSlot = 6;
 
 local runeTexts = {
     [Card.RUNE_HAGALAZ] = "#RUNE_SWORD_HAGALAZ",
@@ -290,7 +291,8 @@ function RuneSword:UseSword(item, rng, player, flags, slot, varData)
     local slot = 0;
     local rune = player:GetCard(slot);
     local showAnim = true;
-    if (RuneSword.IsRune(rune) and flags & UseFlag.USE_CARBATTERY <= 0) then
+    if (RuneSword.IsRune(rune) and flags & UseFlag.USE_CARBATTERY <= 0 and 
+    not (THI.IsLunatic() and RuneSword:GetRuneCount(player) >= RuneSword.MaxRuneSlot)) then
         rune = RuneSword:PreInsertRune(player, rune);
         RuneSword:InsertRune(player, rune)
         RuneSword:ShowRuneText(rune);
@@ -344,7 +346,15 @@ RuneSword:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, RuneSword.PostFireTear);
 
 function RuneSword:GetShaderParams(name)
     if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
-        Actives.RenderActivesCount(RuneSword.Item, function(player) return RuneSword:GetRuneCount(player) end)
+        Actives.RenderActivesCount(RuneSword.Item, function(player) 
+            local count = RuneSword:GetRuneCount(player);
+            local color = nil;
+            if (THI.IsLunatic()) then
+                local comp = (RuneSword.MaxRuneSlot - count) / RuneSword.MaxRuneSlot;
+                color = Color(1,comp,comp,1,0,0,0);
+            end
+            return count, color
+        end)
     end
 end
 RuneSword:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, RuneSword.GetShaderParams);
@@ -859,7 +869,7 @@ function RuneSword:PostBombRemoved(entity)
                                 local game = THI.Game;
                                 local room = game:GetRoom();
                                 local itemPool = game:GetItemPool();
-                                local pool = ItemPools:GetPoolForRoom(room:GetType(), seed);
+                                local pool = ItemPools:GetRoomPool(seed);
                                 local item = itemPool:GetCollectible(pool, true, seed);
                                 pickup:Morph(pick.Type, pick.Variant, item, true, false, false);
                                 pickup.Touched = false;
@@ -934,7 +944,7 @@ function RuneSword:PostInsertRune(player, rune)
     elseif (rune == Card.CARD_SOUL_EDEN) then
         local itemPool = THI.Game:GetItemPool();
         local seed = player:GetCollectibleRNG(RuneSword.Item):Next();
-        local pool = ItemPools:GetPoolForRoom(RoomType.ROOM_ERROR, seed);
+        local pool = itemPool:GetPoolForRoom(RoomType.ROOM_ERROR, seed);
         local col = itemPool:GetCollectible (pool, true, seed);
         local room = THI.Game:GetRoom();
         local pos = room:FindFreePickupSpawnPosition(player.Position);

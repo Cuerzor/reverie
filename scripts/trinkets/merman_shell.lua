@@ -32,10 +32,12 @@ function Shell.IsRoomIncluded(index)
     end
 
     local data = room.Data;
-    local roomType = data.Type;
-    for i, type in pairs(RoomTypeWhiteList) do
-        if (type == roomType) then
-            return true;
+    if (data) then
+        local roomType = data.Type;
+        for i, type in pairs(RoomTypeWhiteList) do
+            if (type == roomType) then
+                return true;
+            end
         end
     end
     return false;

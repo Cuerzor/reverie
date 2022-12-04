@@ -5,11 +5,11 @@ function Math.GetDirectionByAngle(angle)
     local dir = Direction.NO_DIRECTION;
     if (math.abs(angle - 0) < 45 or math.abs(angle - 360) < 45) then
         dir = Direction.RIGHT;
-    elseif (math.abs(angle - 270) < 45) then
+    elseif (math.abs(angle - 270) <= 45) then
         dir = Direction.UP;
     elseif (math.abs(angle - 180) < 45) then
         dir = Direction.LEFT;
-    elseif (math.abs(angle - 90) < 45) then
+    else
         dir = Direction.DOWN;
     end
     return dir;
@@ -64,6 +64,9 @@ function Math.GetAngleDiff(angle1, angle2)
     includedAngle = includedAngle % 360
     if (includedAngle > 180) then
         includedAngle = includedAngle - 360;
+    end 
+    if (includedAngle < -180) then
+        includedAngle = includedAngle + 360;
     end 
     return includedAngle;
 end

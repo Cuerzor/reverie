@@ -1684,7 +1684,7 @@ do --战斗。
     local function PreGetCollectible(mod, pool, decrease, seed, loopCount)
         if (BossFight:IsBossRoom() and pool == ItemPoolType.POOL_LIBRARY and loopCount <= 1) then
             local itemPool = Game():GetItemPool();
-            local newPool = ItemPools:GetPoolForRoom(RoomType.ROOM_ERROR, seed)
+            local newPool = itemPool:GetPoolForRoom(RoomType.ROOM_ERROR, seed)
             local item = itemPool:GetCollectible(newPool, decrease, seed);
             return item
         end

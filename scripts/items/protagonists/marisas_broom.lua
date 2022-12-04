@@ -18,24 +18,25 @@ end
 local MushroomList = GetMushroomList();
 
 
-local function GetPlayerData(player)
-    return MarisasBroom:GetData(player, true, function() return {
+local function GetPlayerData(player, create)
+    return MarisasBroom:GetData(player, create, function() return {
         GotMushrooms = {},
         MushroomCount = 0
     } end);
 end
 
 function MarisasBroom:CheckMushroom(player, id)
-    local data = GetPlayerData(player);
+    local data = GetPlayerData(player, false);
     local key = tostring(id);
     if (player:HasCollectible(id)) then
-        if (data.GotMushrooms[key] ~= true) then
-            data.MushroomCount = data.MushroomCount + 1;
+        if (not data or not data.GotMushrooms[key]) then
+            data = GetPlayerData(player, true);
+            data.MushroomCount = (data.MushroomCount or 0) + 1;
             data.GotMushrooms[key] = true
             return true;
         end
     else 
-        if (data.GotMushrooms[key] == true) then
+        if (data and data.GotMushrooms[key]) then
             data.MushroomCount = data.MushroomCount - 1;
             data.GotMushrooms[key] = false
             
@@ -60,8 +61,8 @@ function MarisasBroom:CheckMushrooms(player)
 end
 
 function MarisasBroom:ClearMushrooms(player)
-    local data = GetPlayerData(player);
-    if (data.MushroomCount > 0) then
+    local data = GetPlayerData(player, false);
+    if (data and data.MushroomCount > 0) then
         data.GotMushrooms = {};
         data.MushroomCount = 0;
         player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_SPEED | CacheFlag.CACHE_FIREDELAY);
@@ -79,13 +80,13 @@ function MarisasBroom:onPlayerEffect(player)
 end
 
 function MarisasBroom:onEvaluateCache(player, flags)
-    local data = GetPlayerData(player);
+    local data = GetPlayerData(player, false);
     if (player:HasCollectible(MarisasBroom.Item)) then
         if (flags == CacheFlag.CACHE_FLYING) then
             player.CanFly = true;
         end
     end
-    local count = data.MushroomCount;
+    local count = (data and data.MushroomCount) or 0;
     if (flags == CacheFlag.CACHE_DAMAGE) then
         --player.Damage = player.Damage + 1 * count;
         Stats:AddDamageUp(player, 1 * count);
@@ -96,7 +97,6 @@ function MarisasBroom:onEvaluateCache(player, flags)
     if (flags == CacheFlag.CACHE_FIREDELAY) then
         Stats:AddTearsUp(player, 0.5 * count);
     end
-    local data = GetPlayerData(player);
 end
 
 MarisasBroom:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, MarisasBroom.onPlayerEffect);

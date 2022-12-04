@@ -145,16 +145,7 @@ local function EvaluateCache(mod, player, flag)
     if (nerf) then
         nerfMultiplier = 0.9999 ^ growth;
     end
-    if (flag == CacheFlag.CACHE_SPEED) then
-        if (nerf) then
-            player.MoveSpeed = player.MoveSpeed - growth * 0.0002;
-        else
-            player.MoveSpeed = player.MoveSpeed + growth * 0.0002;
-        end
-        if (timeout >= 0) then
-            player.MoveSpeed = player.MoveSpeed * multiplier;
-        end
-    elseif (flag == CacheFlag.CACHE_DAMAGE) then
+    if (flag == CacheFlag.CACHE_DAMAGE) then
         if (nerf) then
             Stats:MultiplyDamage(player, nerfMultiplier);
         else
@@ -163,26 +154,39 @@ local function EvaluateCache(mod, player, flag)
         if (timeout >= 0) then
             Stats:MultiplyDamage(player, multiplier);
         end
-    elseif (flag == CacheFlag.CACHE_FIREDELAY) then
-        Stats:AddTearsModifier(player, function(tears) 
-            if (nerf) then
-                tears = tears * nerfMultiplier;
-            else
-                tears = tears + (growth * 0.001) ^ 0.5;
+    else
+        if (not THI.IsLunatic()) then
+            if (flag == CacheFlag.CACHE_SPEED) then
+                if (nerf) then
+                    player.MoveSpeed = player.MoveSpeed - growth * 0.0002;
+                else
+                    player.MoveSpeed = player.MoveSpeed + growth * 0.0002;
+                end
+                if (timeout >= 0) then
+                    player.MoveSpeed = player.MoveSpeed * multiplier;
+                end
+            elseif (flag == CacheFlag.CACHE_FIREDELAY) then
+                Stats:AddTearsModifier(player, function(tears) 
+                    if (nerf) then
+                        tears = tears * nerfMultiplier;
+                    else
+                        tears = tears + (growth * 0.001) ^ 0.5;
+                    end
+                    if (timeout >= 0) then
+                        tears = tears * multiplier;
+                    end
+                    return tears
+                end);
+            elseif (flag == CacheFlag.CACHE_RANGE) then
+                if (nerf) then
+                    player.TearRange = player.TearRange - growth * 0.04;
+                else
+                    player.TearRange = player.TearRange + growth * 0.04;
+                end
+                if (timeout >= 0) then
+                    player.TearRange = player.TearRange * multiplier;
+                end
             end
-            if (timeout >= 0) then
-                tears = tears * multiplier;
-            end
-            return tears
-        end);
-    elseif (flag == CacheFlag.CACHE_RANGE) then
-        if (nerf) then
-            player.TearRange = player.TearRange - growth * 0.04;
-        else
-            player.TearRange = player.TearRange + growth * 0.04;
-        end
-        if (timeout >= 0) then
-            player.TearRange = player.TearRange * multiplier;
         end
     end
 end

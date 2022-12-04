@@ -371,7 +371,7 @@ local function DevilcrowUpdate(devilcrow)
             if (data.LightColor.A >= 0.49) then
                 for p, player in Detection.PlayerPairs() do
                     local Rebecha = THI.Monsters.Rebecha;
-                    local defended = Rebecha:GetPlayerMecha(player) ~= nil;
+                    local defended = Rebecha and Rebecha:GetPlayerMecha(player) ~= nil;
                     if (not player:IsCoopGhost ( ) and not Players:IsDead(player) and isInRange(devilcrow, player) and not defended) then
                         local playerData = Devilcrow.GetPlayerData(player, true);
                         playerData.Radiated = true;

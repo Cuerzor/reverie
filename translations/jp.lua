@@ -423,6 +423,7 @@ Translation.Collectibles ={
     [Collectibles.MiracleMalletReplica.Item] = {Name="打ち出の小づち（レプリカ）" , Description="はい、ドーン！"},
 
     [Collectibles.RuneCape.Item] = {Name="ルーンマント" , Description="ショットスピードアップ、ミライモミエマス"},
+    [Collectibles.THTRAINER.Item] = {Name="バグ技" , Description="th14.exe catastrophic failure"},
 
     [Collectibles.LunaticGun.Item] = {Name="ルナティックガン" , Description="異次元からの手助け"},
     [Collectibles.ViciousCurse.Item] = {Name="悪い呪い" , Description="あなたが刺されて死ねばいいのに"},
@@ -478,7 +479,12 @@ Translation.Collectibles ={
     -- {Name="我的手册" , Description="这是我写的！"},
     -- {Name="我的指南" , Description="这是我写的！"},
     -- {Name="我的史书" , Description="这是我写的！"},
-    [Collectibles.DreamSoul.Item] = {Name="夢魂" , Description="目覚めよ"}
+    [Collectibles.DreamSoul.Item] = {Name="夢魂" , Description="目覚めよ"},
+
+    [Collectibles.FairyDust.Item] = {Name="妖精の塵" , Description="飛び立つ願い"},
+    [Collectibles.SpiritCannon.Item] = {Name="気功砲" , Description="新気功砲ぉぉぉぉぉぉぉ！！！"},
+    [Collectibles.DaggerOfServants.Item] = {Name="従者の刃" , Description="あなたの心を犠牲にして"},
+    [Collectibles.Asthma.Item] = {Name="ぜんそく" , Description="魔法アップ、再生ダウン"},
 }
 
 local Trinkets = THI.Trinkets;
@@ -502,6 +508,9 @@ Translation.Trinkets ={
     [Trinkets.BundledStatue.Trinket] = {Name="おくるみ石像" , Description="ハイグラビティー"},
     [Trinkets.ShieldOfLoyalty.Trinket] = {Name="忠義の盾" , Description="我々はあなたの盾"},
     [Trinkets.SwordOfLoyalty.Trinket] = {Name="忠義の剑" , Description="あなたに忠誠を誓います"},
+
+    [Trinkets.Snowflake.Trinket] = {Name="雪片" , Description="ユニークでパーフェクト"},
+    [Trinkets.HeartSticker.Trinket] = {Name="ハート形シール" , Description="<3"},
 }
 
 local Players = THI.Players;

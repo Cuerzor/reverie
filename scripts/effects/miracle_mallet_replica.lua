@@ -21,7 +21,7 @@ local function PostEffectUpdate(mod, effect)
         THI.SFXManager:Play(SoundEffect.SOUND_BULLET_SHOT);
         THI.SFXManager:Play(SoundEffect.SOUND_ROCK_CRUMBLE);
         Game():ShakeScreen(15);
-        Game():BombDamage(effect.Position, 80, 40, true, effect.SpawnerEntity, TearFlags.TEAR_NORMAL, DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_IGNORE_ARMOR, false);
+        Game():BombDamage(effect.Position, 80, 40, true, effect.SpawnerEntity, TearFlags.TEAR_NORMAL, DamageFlag.DAMAGE_CRUSH | DamageFlag.DAMAGE_IGNORE_ARMOR, false);
 
         local shockwave = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SHOCKWAVE, 0, effect.Position, Vector.Zero, effect.SpawnerEntity):ToEffect();
         shockwave.Parent = effect.SpawnerEntity;

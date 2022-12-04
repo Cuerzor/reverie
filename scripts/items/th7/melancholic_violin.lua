@@ -1,6 +1,7 @@
 local Detection = CuerLib.Detection;
 local Instruments = THI.Instruments;
 local Stats = CuerLib.Stats;
+local Players = CuerLib.Players;
 
 local Violin = ModItem("Melancholic Violin", "MELAN_VIOLIN");
 Violin.Config = {
@@ -11,6 +12,7 @@ Violin.Entity = {
     SpriteFilename = Isaac.GetItemConfig():GetCollectible(Violin.Item).GfxFileName;
 };
 Violin.WaveColor = Color(0,0,1,0.5,0,0,0);
+Violin.WaveColorDemonic = Color(0,0,0.5,0.5,0,0,0);
 Violin.SlowColor = Color(1,1,1,1,0,0,1);
 
 function Violin.GetPlayerData(player, init)
@@ -20,7 +22,6 @@ function Violin.GetPlayerData(player, init)
 end
 
 function Violin:onPlayerEffect(player)
-    local data = Violin.GetPlayerData(player);
     local range = Violin.Config.Range;
 
     local count = 0;
@@ -41,7 +42,11 @@ function Violin:onPlayerEffect(player)
 end
 
 function Violin:onUseItem(itemType, rng, player, flags, slot, data)
-    Instruments.CreateInstrument(player, player.Position, Violin.Entity.SubType, 300);
+    local instrument = Instruments.CreateInstrument(player, player.Position, Violin.Entity.SubType, 300);
+    
+    if (Players.HasJudasBook(player)) then
+        instrument.State = 2;
+    end
 
     return { ShowAnim = true }
 end
@@ -59,14 +64,23 @@ function Violin:onViolinUpdate(effect)
         local range = Violin.Config.Range;
         local data = Instruments.GetInstrumentData(effect);
         if (data.WaveCooldown <= 0) then
-            Instruments.CreateMusicWave(effect, range* 2, range * 2, Violin.WaveColor)
+            local demonic = effect.State == 2;
+            local color = Violin.WaveColor;
+            if( demonic) then
+                color = Violin.WaveColorDemonic
+            end
+            Instruments.CreateMusicWave(effect, range* 2, range * 2, color)
             Instruments.CreateNote(effect);
             data.WaveCooldown = 10;
+
 
             for _, ent in pairs(Isaac.GetRoomEntities()) do
                 if (Detection.IsValidEnemy(ent)) then
                     if (ent.Position:Distance(effect.Position) < range + ent.Size / 2) then
                         ent:AddSlowing(EntityRef(effect), 10, 0.5, Violin.SlowColor);
+                        if (demonic) then
+                            ent:AddEntityFlags(EntityFlag.FLAG_WEAKNESS);
+                        end
                     end
                 end
             end
@@ -76,7 +90,7 @@ end
 
 function Violin:onEvaluateCache(player, flag)
     if (flag == CacheFlag.CACHE_FIREDELAY) then
-        local data = Violin.GetPlayerData(player);
+        local data = Violin.GetPlayerData(player, false);
         if (data and data.Count > 0) then
             Stats:AddTearsModifier(player, function(tears, original)
                 return tears + 5 * data.Count;

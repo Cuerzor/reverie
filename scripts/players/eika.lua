@@ -689,7 +689,7 @@ function RockEffects.FireBrimstone(ent, player)
     end
 end
 
-function RockEffects.FallRocket(position)
+function RockEffects.FallRocket(position, player)
     local target = Isaac.Spawn(1000, EffectVariant.TARGET, 0, position, Vector.Zero, player):ToEffect();
     local rocket = Isaac.Spawn(1000, EffectVariant.ROCKET, 0, position, Vector.Zero, player):ToEffect();
     rocket:SetColor(Color(1, 1, 1, 0, 0, 0, 0), 1, 0, false, true);
@@ -735,15 +735,17 @@ function Eika:ApplyRockEffect(player, ent, data)
     if (data.TechX and isInRoom) then
         if (not EntityExists(data.TechXRing)) then
             local laser = player:FireTechXLaser(ent.Position, ent.Velocity, 60);
+            laser.Timeout = 99999;
+            laser.SubType = LaserSubType.LASER_SUBTYPE_RING_FOLLOW_PARENT;
             laser.CollisionDamage = ent.CollisionDamage;
             laser.Parent = ent;
             data.TechXRing = laser;
         end
 
-        local ring = data.TechXRing;
-        ring.Position = ent.Position;
-        ring.Velocity = ent.Velocity;
-        ring.PositionOffset = ent.PositionOffset;
+        -- local ring = data.TechXRing;
+        -- ring.Position = ent.Position;
+        -- ring.Velocity = ent.Velocity;
+        -- ring.PositionOffset = ent.PositionOffset;
     else
         if (EntityExists(data.TechXRing)) then
             data.TechXRing:Remove();
@@ -824,7 +826,7 @@ function Eika:ApplyRockEffect(player, ent, data)
 
         if (data.EpicFetus) then
             if (not data.IsDropping) then
-                RockEffects.FallRocket(ent.Position);
+                RockEffects.FallRocket(ent.Position, player);
             end
         end
     end
@@ -1866,7 +1868,7 @@ function Eika:PreTearCollision(tear, other, low)
 
                 if (data.EpicFetus) then
                     if (not data.IsDropping) then
-                        RockEffects.FallRocket(tear.Position);
+                        RockEffects.FallRocket(tear.Position, player);
                     end
                 end
 

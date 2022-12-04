@@ -10,7 +10,7 @@ local Math = CuerLib.Math;
 local Stages = CuerLib.Stages;
 local Seija = ModPlayer("Seija", false, "SEIJA");
 Seija.CacheItems = {
-    [CollectibleType.COLLECTIBLE_OUIJA_BOARD] = CacheFlag.CACHE_FIREDELAY,
+    --[CollectibleType.COLLECTIBLE_OUIJA_BOARD] = CacheFlag.CACHE_FIREDELAY,
 
     [CollectibleType.COLLECTIBLE_CRICKETS_HEAD] = CacheFlag.CACHE_FIREDELAY,
     [CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM] = CacheFlag.CACHE_SPEED,
@@ -23,9 +23,23 @@ Seija.CacheItems = {
     [CollectibleType.COLLECTIBLE_INCUBUS] = CacheFlag.CACHE_DAMAGE,
     [CollectibleType.COLLECTIBLE_TECH_X] = CacheFlag.CACHE_SHOTSPEED,
     [CollectibleType.COLLECTIBLE_TWISTED_PAIR] = CacheFlag.CACHE_DAMAGE,
+    [CollectibleType.COLLECTIBLE_GHOST_PEPPER] = CacheFlag.CACHE_LUCK,
 
     
     [CollectibleType.COLLECTIBLE_BIRTHRIGHT] = CacheFlag.CACHE_ALL
+}
+Seija.DipSubTypes = {
+    0, --normal
+    1,--red
+    2,--corny
+    3,--golden
+    4,--rainbow
+    5,--black
+    6,--holy
+    12,--stone
+    13,--flaming
+    14,--poison
+    20--brownie
 }
 Seija.Costume = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_seija.anm2");
 Seija.Sprite = "gfx/reverie/seija.anm2"
@@ -34,6 +48,7 @@ Seija.SpriteFlying = "gfx/reverie/seija_flying.anm2"
 Seija.ShurikenVariant = Isaac.GetEntityVariantByName("Shuriken Tear");
 Tears:RegisterModTearFlag("SHURIKEN");
 Tears:RegisterModTearFlag("SHOCKS_ENEMY");
+Tears:RegisterModTearFlag("ReverieSpiderWeb");
 
 local ufoParams = ProjectileParams();
 ufoParams.Variant = ProjectileVariant.PROJECTILE_HUSH;
@@ -43,6 +58,13 @@ local FoodItems = Collectibles.FindCollectibles(function(id, config)
     return config:HasTags(ItemConfig.TAG_FOOD) 
 end)
 
+local function GetGlobalTempData(create)
+    return Seija:GetTempGlobalData(create, function()
+        return {
+            AcidRainTimeout = 0
+        }
+    end)
+end
 
 local function GetPlayerData(player, create)
     return Seija:GetData(player, create, function()
@@ -99,6 +121,7 @@ local function GetTearTempData(tear, create)
     return Seija:GetTempData(tear, create, function()
         return {
             GlaucomaHitEnemies = {},
+            SpiderWebHitEnemies = {},
         }
     end)
 end
@@ -217,6 +240,15 @@ local function FallMeteor(player)
     meteor.SpriteRotation = -15;
 end
 
+local function FallRaindrop()
+    local room = Game():GetRoom();
+    local pos = room:GetRandomPosition(0);
+    local raindrop = THI.Effects.AcidRaindrop;
+    local drop = Isaac.Spawn(raindrop.Type, raindrop.Variant, raindrop.SubType, pos, Vector.Zero, nil):ToEffect();
+    drop.LifeSpan = 15;
+    drop.Timeout = 15;
+    drop.SpriteRotation = 15;
+end
 
 function Seija:WillPlayerBuff(player)
     local playerType = player:GetPlayerType();
@@ -234,22 +266,30 @@ function Seija:WillPlayerBuff(player)
 end
 
 function Seija:WillPlayerNerf(player)
-    local playerType = player:GetPlayerType();
-    if (playerType == Seija.Type and not player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
-        return true;
-    end
-    local SeijaB = THI.Players.SeijaB;
-    if (playerType == SeijaB.Type) then
-        return true;
-    end
-
     local RuneSword = THI.Collectibles.RuneSword;
     local SoulOfSeija = THI.Cards.SoulOfSeija;
-    if (RuneSword:HasInsertedRune(player, SoulOfSeija.ID) ~= RuneSword:HasInsertedRune(player, SoulOfSeija.ReversedID)) then
-        return true;
+    local nerf = false;
+
+
+    local hasRune1 = RuneSword:HasInsertedRune(player, SoulOfSeija.ID);
+    local hasRune2 = RuneSword:HasInsertedRune(player, SoulOfSeija.ReversedID);
+    local playerType = player:GetPlayerType();
+    local SeijaB = THI.Players.SeijaB;
+    if (playerType == Seija.Type or playerType == SeijaB.Type or (hasRune1 or hasRune2)) then
+        nerf = true;
     end
 
-    return false;
+    if (playerType == Seija.Type and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
+        return false;
+    end
+    
+    if (hasRune1 and hasRune2) then
+        return false;
+    end
+    
+
+
+    return nerf;
 end
 function Seija:IsModQuality0(item)
     if (item < CollectibleType.NUM_COLLECTIBLES or THI:ContainsCollectible(item)) then
@@ -352,19 +392,29 @@ do -- Events
             if (player:HasCollectible(CollectibleType.COLLECTIBLE_TAURUS)) then
                 player.MoveSpeed = 1.95;
             end
-            -- My Shadow.
-            if (player:HasCollectible(CollectibleType.COLLECTIBLE_MY_SHADOW)) then
-                if (room:GetFrameCount() % 90 == 89) then
-                    local maggotCount = #Isaac.FindByType(EntityType.ENTITY_CHARGER, 0, 1);
-                    for _, ent in ipairs(Isaac.GetRoomEntities()) do
-                        if (maggotCount < 6 and ent:IsVulnerableEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
-                            local maggot = Isaac.Spawn(EntityType.ENTITY_CHARGER, 0, 1, ent.Position, Vector.Zero, player);
-                            maggot:AddCharmed(EntityRef(player), -1);
-                            maggotCount = maggotCount + 1;
-                        end
-                    end
+            -- TMTrainer.
+            local tmtrainerCount = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_TMTRAINER, true);
+            if (tmtrainerCount > 0) then
+                for i = 1, tmtrainerCount do
+                    player:RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER, true);
+                    player:AddCollectible(THI.Collectibles.THTRAINER.Item, 0, false);
                 end
+                player:PlayExtraAnimation("Glitch");
+                SFXManager():Play(SoundEffect.SOUND_EDEN_GLITCH);
             end
+            -- My Shadow. (Obsoleted)
+            -- if (player:HasCollectible(CollectibleType.COLLECTIBLE_MY_SHADOW)) then
+            --     if (room:GetFrameCount() % 90 == 89) then
+            --         local maggotCount = #Isaac.FindByType(EntityType.ENTITY_CHARGER, 0, 1);
+            --         for _, ent in ipairs(Isaac.GetRoomEntities()) do
+            --             if (maggotCount < 6 and ent:IsVulnerableEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+            --                 local maggot = Isaac.Spawn(EntityType.ENTITY_CHARGER, 0, 1, ent.Position, Vector.Zero, player);
+            --                 maggot:AddCharmed(EntityRef(player), -1);
+            --                 maggotCount = maggotCount + 1;
+            --             end
+            --         end
+            --     end
+            -- end
             local itemConfig = Isaac.GetItemConfig();
             for slot = ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_POCKET do
                 local item = player:GetActiveItem(slot);
@@ -387,12 +437,49 @@ do -- Events
                         result = math.min(result + speed, maxCharge);
                     end
                     player:SetActiveCharge(result, slot);
-                elseif (item == CollectibleType.COLLECTIBLE_BREATH_OF_LIFE) then
-                    -- Breath of Life
-                    local configCharges = itemConfig:GetCollectible(item).MaxCharges;
-                    if (charge < configCharges and charge > 0) then
-                        player:SetMinDamageCooldown(3);
+                -- elseif (item == CollectibleType.COLLECTIBLE_BREATH_OF_LIFE) then
+                --     -- Breath of Life (Obsoleted)
+                --     local configCharges = itemConfig:GetCollectible(item).MaxCharges;
+                --     if (charge < configCharges and charge > 0) then
+                --         player:SetMinDamageCooldown(3);
+                --     end
+                end
+            end
+
+            -- IBS
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_IBS)) then
+                if (player.IBSCharge >= 0.98) then
+                    player.IBSCharge = 0;
+                    Game():ButterBeanFart (player.Position, 80, player, true, false);
+                    local rng = player:GetCollectibleRNG(CollectibleType.COLLECTIBLE_IBS);
+                    for i = 1, 3 do
+                        local index = rng:RandomInt(#Seija.DipSubTypes) + 1;
+                        local subtype = Seija.DipSubTypes[index];
+                        local offset = Vector.FromAngle(rng:RandomFloat() * 360) * rng:RandomFloat() * 40;
+                        player:ThrowFriendlyDip(subtype, player.Position, player.Position + offset);
                     end
+                    player:UsePoopSpell(PoopSpellType.SPELL_LIQUID);
+                end
+            end
+
+            -- A Quarter
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_QUARTER)) then
+                if (player:GetNumCoins() < 25) then
+                    local rng = RNG();
+                    local v = RandomVector()*(rng:RandomFloat()*2+2); 
+                    local poof = Isaac.Spawn(1000,15,100,player.Position,v,player);
+                    local spr = poof:GetSprite();
+                    spr:Load("gfx/005.350_Trinket.anm2", true);
+                    local quarterConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_QUARTER);
+                    spr:ReplaceSpritesheet(0, quarterConfig.GfxFileName);
+                    spr:LoadGraphics()
+                    spr:Play("Appear");
+
+
+                    SFXManager():Play(SoundEffect.SOUND_DIMEPICKUP);
+                    SFXManager():Play(SoundEffect.SOUND_CASH_REGISTER);
+                    player:AddCoins(25);
+                    player:RemoveCollectible(CollectibleType.COLLECTIBLE_QUARTER);
                 end
             end
 
@@ -404,8 +491,37 @@ do -- Events
             else
                 tempData.VoidAbyssLifting = false;
             end
+            
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_LITTLE_BAGGY)) then
+                local itemPool = Game():GetItemPool();
+                for slot = 0, 1 do
+                    local pillColor = player:GetPill(slot);
+                    if (pillColor & PillColor.PILL_COLOR_MASK > 0) then
+                        if (pillColor & PillColor.PILL_GIANT_FLAG <= 0) then
+                            pillColor = pillColor | PillColor.PILL_GIANT_FLAG;
+                            player:SetPill(slot, pillColor);
+                        end
+
+                        if (not itemPool:IsPillIdentified(pillColor)) then
+                            itemPool:IdentifyPill(pillColor);
+                        end
+                    end
+                end
+            end
         else
             
+
+            -- TMTrainer.
+            local thtrainerCount = player:GetCollectibleNum(THI.Collectibles.THTRAINER.Item, true);
+            if (thtrainerCount > 0) then
+                for i = 1, thtrainerCount do
+                    player:RemoveCollectible(THI.Collectibles.THTRAINER.Item, true);
+                    player:AddCollectible(CollectibleType.COLLECTIBLE_TMTRAINER, 0, false);
+                end
+                player:PlayExtraAnimation("Glitch");
+                SFXManager():Play(SoundEffect.SOUND_EDEN_GLITCH);
+            end
+
             local tempData = GetPlayerTempData(player, false);
             if (tempData and tempData.SeijaClicker) then
                 tempData.SeijaClicker = false;
@@ -579,24 +695,24 @@ do -- Events
                 end
             end
         end
-        -- Betrayal.
-        if (betrayalPlayer) then
-            local validEnemies = {};
-            for _, ent in ipairs(Isaac.GetRoomEntities()) do
-                if (ent:IsActiveEnemy() and ent:CanShutDoors() and ent.MaxHitPoints > 0 and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and not ent:HasEntityFlags(EntityFlag.FLAG_CHARM)) then
-                    table.insert(validEnemies, ent);
-                end
-            end
+        -- Betrayal. (Obsoleted)
+        -- if (betrayalPlayer) then
+        --     local validEnemies = {};
+        --     for _, ent in ipairs(Isaac.GetRoomEntities()) do
+        --         if (ent:IsActiveEnemy() and ent:CanShutDoors() and ent.MaxHitPoints > 0 and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and not ent:HasEntityFlags(EntityFlag.FLAG_CHARM)) then
+        --             table.insert(validEnemies, ent);
+        --         end
+        --     end
             
-            local times = math.ceil(#validEnemies / 2);
-            for i = 1, times do
-                local rng = betrayalPlayer:GetCollectibleRNG(CollectibleType.COLLECTIBLE_BETRAYAL);
-                local index = rng:RandomInt(#validEnemies) + 1;
-                validEnemies[index]:AddCharmed(EntityRef(betrayalPlayer), 300);
-                table.remove(validEnemies, index);
-            end
-        end
-        -- Shade.
+        --     local times = math.ceil(#validEnemies / 2);
+        --     for i = 1, times do
+        --         local rng = betrayalPlayer:GetCollectibleRNG(CollectibleType.COLLECTIBLE_BETRAYAL);
+        --         local index = rng:RandomInt(#validEnemies) + 1;
+        --         validEnemies[index]:AddCharmed(EntityRef(betrayalPlayer), 300);
+        --         table.remove(validEnemies, index);
+        --     end
+        -- end
+        -- Shade. 
         if (shadePlayer) then
             local SeijasShade = THI.Effects.SeijasShade;
             for _, ent in ipairs(Isaac.GetRoomEntities()) do
@@ -605,6 +721,11 @@ do -- Events
                     shade.Parent = ent;
                 end
             end
+        end
+
+        local globalData = GetGlobalTempData(false);
+        if (globalData) then
+            globalData.AcidRainTimeout = 0;
         end
     end
     Seija:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom)
@@ -615,7 +736,7 @@ do -- Events
             if (Seija:WillPlayerBuff(player)) then
                 -- Missing No.
                 if (player:HasCollectible(CollectibleType.COLLECTIBLE_MISSING_NO)) then
-                    Game():GetItemPool():RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER);
+                    --Game():GetItemPool():RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER);
                     player:AddSoulHearts(player:GetHeartLimit());
                 end
 
@@ -625,11 +746,12 @@ do -- Events
                 end
             end
         end
-        if (cainsOtherEyePlayer) then
-            local level = Game():GetLevel()
-            level:ApplyMapEffect ( );
-            level:UpdateVisibility();
-        end
+        -- Cain's other eye (Obsoleted)
+        -- if (cainsOtherEyePlayer) then
+        --     local level = Game():GetLevel()
+        --     level:ApplyMapEffect ( );
+        --     level:UpdateVisibility();
+        -- end
     end
     Seija:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, PostNewLevel)
 
@@ -645,14 +767,14 @@ do -- Events
                     Stats:AddTearsModifier(player, function(tears) return tears * 2 end);
                 end
             end
-            -- My Reflection Tear Flags.
-            if (player:HasCollectible(CollectibleType.COLLECTIBLE_MY_REFLECTION)) then
-                if (flag == CacheFlag.CACHE_TEARFLAG) then
-                    player.TearFlags = player.TearFlags | TearFlags.TEAR_PIERCING | TearFlags.TEAR_SPECTRAL;
-                elseif (flag == CacheFlag.CACHE_RANGE) then
-                    player.TearRange = player.TearRange * 0.75;
-                end
-            end
+            -- My Reflection Tear Flags. (Obsoleted)
+            -- if (player:HasCollectible(CollectibleType.COLLECTIBLE_MY_REFLECTION)) then
+            --     if (flag == CacheFlag.CACHE_TEARFLAG) then
+            --         player.TearFlags = player.TearFlags | TearFlags.TEAR_PIERCING | TearFlags.TEAR_SPECTRAL;
+            --     elseif (flag == CacheFlag.CACHE_RANGE) then
+            --         player.TearRange = player.TearRange * 0.75;
+            --     end
+            -- end
             
             -- Missing Page 2.
             local missingPage2Num = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_MISSING_PAGE_2);
@@ -673,16 +795,15 @@ do -- Events
             --         player.MoveSpeed = 1.95;
             --     end
             -- end
-            -- Bucket of Lard.
-            -- Ouija Board
-            local ouijaCount = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_OUIJA_BOARD);
-            if (ouijaCount > 0) then
-                if (flag == CacheFlag.CACHE_TEARFLAG) then
-                    player.TearFlags = player.TearFlags | TearFlags.TEAR_PIERCING;
-                elseif (flag == CacheFlag.CACHE_FIREDELAY) then
-                    Stats:AddTearsModifier(player, function(tears) return tears + 1 * ouijaCount end);
-                end
-            end
+            -- Ouija Board (Obsoleted)
+            -- local ouijaCount = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_OUIJA_BOARD);
+            -- if (ouijaCount > 0) then
+            --     if (flag == CacheFlag.CACHE_TEARFLAG) then
+            --         player.TearFlags = player.TearFlags | TearFlags.TEAR_PIERCING;
+            --     elseif (flag == CacheFlag.CACHE_FIREDELAY) then
+            --         Stats:AddTearsModifier(player, function(tears) return tears + 1 * ouijaCount end);
+            --     end
+            -- end
             -- Bucket of Lard.
             local lardCount = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BUCKET_OF_LARD);
             if (lardCount) then
@@ -867,7 +988,30 @@ do -- Events
                 elseif (flag == CacheFlag.CACHE_SHOTSPEED) then
                     player.ShotSpeed = player.ShotSpeed * 2;
                 elseif (flag == CacheFlag.CACHE_LUCK) then
-                    player.Luck = player.Luck * 2;
+                    if (player.Luck > 0) then
+                        player.Luck = player.Luck * 2;
+                    else
+                        player.Luck = player.Luck / 2;
+                    end
+                end
+            end
+            -- Ghost Pepper
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_GHOST_PEPPER)) then
+                if (flag == CacheFlag.CACHE_LUCK) then
+                    player.Luck = player.Luck - 8;
+                end
+            end
+            -- 20/20
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_20_20)) then
+                if (flag == CacheFlag.CACHE_DAMAGE) then
+                    Stats:MultiplyDamage(player, 0.9325);
+                end
+            end
+            
+            -- Haemolacria.
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_HAEMOLACRIA)) then
+                if (flag == CacheFlag.CACHE_TEARFLAG) then
+                    player.TearFlags = player.TearFlags | TearFlags.TEAR_PIERCING;
                 end
             end
         end
@@ -940,6 +1084,23 @@ do -- Events
     end
     Seija:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, PreGetCollectible, nil, 100)
 
+    local function PostGetCollectible(mod, item, pool, decrease, seed)
+        if (item == CollectibleType.COLLECTIBLE_TMTRAINER) then
+            local seijaPlayer;
+            for p, player in Detection.PlayerPairs() do
+                if (Seija:WillPlayerBuff(player)) then
+                    if (not seijaPlayer) then
+                        seijaPlayer = player;
+                    end
+                end
+            end
+            if (seijaPlayer) then
+                return THI.Collectibles.THTRAINER.Item;
+            end
+        end
+    end
+    Seija:AddCallback(ModCallbacks.MC_POST_GET_COLLECTIBLE, PostGetCollectible)
+
     local ClickerGetting = false;
     local function EvaluatePoolBlacklist(mod, id, config)
         if (ClickerGetting) then
@@ -957,7 +1118,7 @@ do -- Events
             local game = Game();
             local level = game:GetLevel();
             local room = game:GetRoom();
-            if (level:GetCurrentRoomIndex() == level:GetStartingRoomIndex ( ) and room:GetFrameCount() <= 0) then
+            if (room:IsFirstVisit() and level:GetCurrentRoomIndex() == level:GetStartingRoomIndex ( ) and room:GetFrameCount() <= 0) then
                 if (config.Type == ItemType.ITEM_ACTIVE) then
                     return true;
                 end
@@ -965,13 +1126,14 @@ do -- Events
             if (config.Quality >= 4 and Seija:WillPlayerNerf(missingNoPlayer)) then
                 return true;
             end
-            return id == CollectibleType.COLLECTIBLE_TMTRAINER;
+            --return id == CollectibleType.COLLECTIBLE_TMTRAINER;
+            return false;
         end
        
     end
     Seija:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluatePoolBlacklist)
 
-    local function PostGainCollectible(mod, player, item, count, touched)
+    local function PostGainCollectible(mod, player, item, count, touched, queued)
         if (player.Variant == 0 and not player:IsCoopGhost()) then
             if (Seija:WillPlayerBuff(player)) then
                 local game = Game();
@@ -1002,7 +1164,21 @@ do -- Events
                         player:AddHearts(player:GetEffectiveMaxHearts());
                     end
                 elseif (item == CollectibleType.COLLECTIBLE_MISSING_NO) then
-                    Game():GetItemPool():RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER);
+                    --Game():GetItemPool():RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER);
+                elseif (item == CollectibleType.COLLECTIBLE_BOX) then
+                    if (queued and not touched) then
+                        local rng = player:GetCollectibleRNG(CollectibleType.COLLECTIBLE_BOX);
+                        local pos = room:FindFreePickupSpawnPosition(player.Position, 0, true);
+                        local subtype = CollectibleType.COLLECTIBLE_BOX;
+                        if (rng:RandomInt(100) < 75) then
+                            local seed = rng:Next();
+                            local itemPool = Game():GetItemPool();
+                            local poolType = itemPool:GetPoolForRoom (RoomType.ROOM_ERROR, seed);
+                            subtype = itemPool:GetCollectible(poolType, true, seed)
+                        end
+                        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, subtype, pos, Vector.Zero, player);
+                        SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
+                    end
                 end
             end
         end
@@ -1010,18 +1186,27 @@ do -- Events
     Seija:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainCollectible)
 
 
-
     local function PreEntitySpawn(mod, type, variant, subtype, position, velocity, spawner, seed)
-        -- Bum Friend.
-        if (type == 5 and variant ~= PickupVariant.PICKUP_TRINKET and spawner) then
-            if (spawner.Type == EntityType.ENTITY_FAMILIAR and spawner.Variant == FamiliarVariant.BUM_FRIEND) then
-                local familiar = spawner:ToFamiliar();
-                if (familiar.Player and Seija:WillPlayerBuff(familiar.Player)) then
-                    if (seed % 100 < 50) then
-                        local itemPool = Game():GetItemPool();
-                        local poolType = ItemPoolType.POOL_BEGGAR;
-                        local id = itemPool:GetCollectible(poolType, true, seed);
-                        return {type, PickupVariant.PICKUP_COLLECTIBLE, id, seed};
+    --     -- Bum Friend. (Obsoleted)
+    --     if (type == 5 and variant ~= PickupVariant.PICKUP_TRINKET and spawner) then
+    --         if (spawner.Type == EntityType.ENTITY_FAMILIAR and spawner.Variant == FamiliarVariant.BUM_FRIEND) then
+    --             local familiar = spawner:ToFamiliar();
+    --             if (familiar.Player and Seija:WillPlayerBuff(familiar.Player)) then
+    --                 if (seed % 100 < 50) then
+    --                     local itemPool = Game():GetItemPool();
+    --                     local poolType = ItemPoolType.POOL_BEGGAR;
+    --                     local id = itemPool:GetCollectible(poolType, true, seed);
+    --                     return {type, PickupVariant.PICKUP_COLLECTIBLE, id, seed};
+    --                 end
+    --             end
+    --         end
+    --     end
+        -- Battery Pack.
+        if (type == 5 and variant == PickupVariant.PICKUP_LIL_BATTERY and subtype == BatterySubType.BATTERY_MICRO) then
+            for p, player in Detection.PlayerPairs() do
+                if (Seija:WillPlayerBuff(player)) then
+                    if (player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY_PACK)) then
+                        return {type, variant, BatterySubType.BATTERY_NORMAL, seed};
                     end
                 end
             end
@@ -1041,7 +1226,7 @@ do -- Events
                 end
             end
         else -- NPC.
-            -- Pyromaniac.
+            --Pyromaniac.
             if (flags & DamageFlag.DAMAGE_EXPLOSION > 0) then
                 local canHeal = true;
                 -- Avoid Tuff twin and The Shell
@@ -1089,10 +1274,10 @@ do -- Events
                 if (player:HasCollectible(CollectibleType.COLLECTIBLE_MISSING_PAGE_2)) then
                     player:UseActiveItem(CollectibleType.COLLECTIBLE_NECRONOMICON, UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOANIM);
                 end
-                -- Betrayal.
-                if (player:HasCollectible(CollectibleType.COLLECTIBLE_BETRAYAL)) then
-                    player:UseCard(THI.Cards.SoulOfSatori.ID, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER);
-                end
+                -- Betrayal. (Obsoleted)
+                -- if (player:HasCollectible(CollectibleType.COLLECTIBLE_BETRAYAL)) then
+                --     player:UseCard(THI.Cards.SoulOfSatori.ID, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER);
+                -- end
             end
             if (Seija:WillPlayerNerf(player)) then
                 -- Wafer.
@@ -1148,16 +1333,16 @@ do -- Events
                         end
                     end
                 end
-                if (Seija:WillPlayerNerf(player)) then
-                    -- Maw of the Void.
-                    if (player:HasCollectible(CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID)) then
-                        if (flags & DamageFlag.DAMAGE_LASER > 0) then
-                            local data = GetNPCTempData(tookDamage, true)
-                            data.MawVoidExplosion = true;
-                            --Game():BombExplosionEffects(tookDamage.Position, 1, TearFlags.TEAR_NORMAL, Color.Black, tookDamage, 1, true, false, DamageFlag.DAMAGE_EXPLOSION)
-                        end
-                    end
-                end
+                -- if (Seija:WillPlayerNerf(player)) then
+                    -- Maw of the Void. (Obsoleted)
+                    -- if (player:HasCollectible(CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID)) then
+                    --     if (flags & DamageFlag.DAMAGE_LASER > 0) then
+                    --         local data = GetNPCTempData(tookDamage, true)
+                    --         data.MawVoidExplosion = true;
+                    --         --Game():BombExplosionEffects(tookDamage.Position, 1, TearFlags.TEAR_NORMAL, Color.Black, tookDamage, 1, true, false, DamageFlag.DAMAGE_EXPLOSION)
+                    --     end
+                    -- end
+                -- end
             end
 
         end
@@ -1209,21 +1394,21 @@ do -- Events
                 BlackBeanEffect(blackBeanPlayer, ent.Position);
             end
             
-            -- My Shadow.
-            if (ent.Type == EntityType.ENTITY_CHARGER and ent.Variant == 0 and ent.SubType == 1) then
-                if (ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and myShadowPlayer) then
-                    Game():BombExplosionEffects(ent.Position, 185, TearFlags.TEAR_NORMAL, Color.Default, myShadowPlayer, 1, true, false, DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_IGNORE_ARMOR);
-                end
-            end
+            -- My Shadow. (Obsoleted)
+            -- if (ent.Type == EntityType.ENTITY_CHARGER and ent.Variant == 0 and ent.SubType == 1) then
+            --     if (ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and myShadowPlayer) then
+            --         Game():BombExplosionEffects(ent.Position, 185, TearFlags.TEAR_NORMAL, Color.Default, myShadowPlayer, 1, true, false, DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_IGNORE_ARMOR);
+            --     end
+            -- end
             
-            --Infestation II.
-            if (infestationIIPlayer) then
-                if (ent.Type ~= EntityType.ENTITY_SPIDER and ent.Type ~= EntityType.ENTITY_STRIDER) then
-                    local spider = EntityNPC.ThrowSpider (ent.Position, ent, ent.Position + RandomVector() * 10, false, -10 );
-                    spider.MaxHitPoints = infestationIIPlayer.Damage * 10;
-                    spider.HitPoints = spider.MaxHitPoints;
-                end
-            end
+            --Infestation II. (Obsoleted)
+            -- if (infestationIIPlayer) then
+            --     if (ent.Type ~= EntityType.ENTITY_SPIDER and ent.Type ~= EntityType.ENTITY_STRIDER) then
+            --         local spider = EntityNPC.ThrowSpider (ent.Position, ent, ent.Position + RandomVector() * 10, false, -10 );
+            --         spider.MaxHitPoints = infestationIIPlayer.Damage * 10;
+            --         spider.HitPoints = spider.MaxHitPoints;
+            --     end
+            -- end
 
             -- Dark Ribbon.
             if (not (ent.Type == EntityType.ENTITY_CHARGER and ent.Variant == 0 and ent.SubType == 1)) then
@@ -1314,6 +1499,37 @@ do -- Events
     end
     Seija:AddCallback(ModCallbacks.MC_NPC_UPDATE, PostNPCUpdate)
 
+    local function PostUpdate(mod)
+        local data = GetGlobalTempData(false);
+        if (data) then
+            if (data.AcidRainTimeout > 0) then
+                data.AcidRainTimeout = data.AcidRainTimeout - 1;
+                for i = 1, 6 do
+                    FallRaindrop();
+                end
+                local room = Game():GetRoom();
+                if (room:GetFrameCount() % 2 == 1) then
+                    for _, ent in ipairs(Isaac.GetRoomEntities()) do
+                        if (ent:IsEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+                            ent:TakeDamage(ent.MaxHitPoints * 0.3 / 450, DamageFlag.DAMAGE_CRUSH | DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(nil), 0);
+                            ent:TakeDamage(100 / 450, DamageFlag.DAMAGE_CRUSH, EntityRef(nil), 0);
+                        end
+                    end
+                end
+                
+                local sfx = SFXManager();
+                if (not sfx:IsPlaying(THI.Sounds.SOUND_ACID_RAIN)) then
+                    sfx:Play(THI.Sounds.SOUND_ACID_RAIN, 1, 2, true);
+                end
+            else
+                local sfx = SFXManager();
+                if (sfx:IsPlaying(THI.Sounds.SOUND_ACID_RAIN)) then
+                    sfx:Stop(THI.Sounds.SOUND_ACID_RAIN);
+                end
+            end
+        end
+    end
+    Seija:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate)
     
     -- Familiar.
     local function PostFamiliarInit(mod, familiar)
@@ -1336,9 +1552,14 @@ do -- Events
         if (player) then
             if (Seija:WillPlayerBuff(player)) then
                 local hasBFF = player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS);
+                local hasLullaby = player:HasTrinket(TrinketType.TRINKET_FORGOTTEN_LULLABY);
                 local damageMulti = 1;
+                local delayMulti = 1;
                 if (hasBFF) then
                     damageMulti = 2;
+                end
+                if (hasLullaby) then
+                    delayMulti = 0.5;
                 end
                 -- Abel.
                 if (familiar.Variant == FamiliarVariant.ABEL) then
@@ -1394,9 +1615,9 @@ do -- Events
                     else
                         if (familiar:IsFrame(5, 0)) then
                             local nearest, nearestDis;
-                            for i, ent in ipairs(Isaac.FindInRadius(player.Position, 80, EntityPartition.ENEMY)) do
+                            for i, ent in ipairs(Isaac.FindInRadius(familiar.Position, 80, EntityPartition.ENEMY)) do
                                 if (ent:IsVulnerableEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
-                                    local dis = ent.Position:Distance(player.Position);
+                                    local dis = ent.Position:Distance(familiar.Position);
                                     if (not nearest or nearestDis > dis) then
                                         nearest = ent;
                                         nearestDis = dis;
@@ -1456,13 +1677,14 @@ do -- Events
                 end
                 -- Hushy
                 if (familiar.Variant == FamiliarVariant.HUSHY) then
-                    if (familiar:IsFrame(5, 0)) then
+                    local interval = math.ceil(6 * delayMulti);
+                    if (familiar:IsFrame(interval, 0)) then
                         if (player:GetFireDirection() >= 0) then
                             local oriVel = Inputs:GetShootingVector(player) * 20;
                             for i = 1, 3 do
                                 local vel = oriVel:Rotated((i - 2) * 10)
                                 local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.MULTIDIMENSIONAL, 0, familiar.Position, vel, familiar):ToTear();
-                                tear.CollisionDamage = player.Damage * 2 * damageMulti;
+                                tear.CollisionDamage = player.Damage * 1 * damageMulti;
                                 tear.Scale = Math.GetTearScaleByDamage(tear.CollisionDamage);
                                 tear:AddTearFlags(TearFlags.TEAR_CONTINUUM |TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_WIGGLE);
                                 tear.FallingAcceleration = -0.07;
@@ -1532,10 +1754,19 @@ do -- Events
 
     local function PreSpawnCleanAward(mod, rng, position)
         local jarPlayer;
+        local batteryPackPlayer;
+        local luck = 0;
         for p, player in Detection.PlayerPairs() do
+            if (player.Variant == 0) then
+                luck = luck + player.Luck;
+            end
+
             if (Seija:WillPlayerBuff(player)) then
                 if (not jarPlayer and player:HasCollectible(CollectibleType.COLLECTIBLE_THE_JAR)) then
                     jarPlayer = player;
+                end
+                if (not batteryPackPlayer and player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY_PACK)) then
+                    batteryPackPlayer = player;
                 end
             end
 
@@ -1559,10 +1790,41 @@ do -- Events
             local pos = Game():GetRoom():FindFreePickupSpawnPosition(position);
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 0, pos, Vector.Zero, nil);
         end
+        -- Battery Pack.
+        if (batteryPackPlayer) then
+            local chance = 100 / math.max(1, 16 - luck);
+            if (rng:RandomInt(100) < chance) then
+                local pos = Game():GetRoom():FindFreePickupSpawnPosition(position);
+                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, 0, pos, Vector.Zero, nil);
+            end
+        end
     end
     Seija:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, PreSpawnCleanAward);
 
     local function PostPickupSelection(mod, pickup, variant, subtype)
+        local batteryPackPlayer;
+        for p, player in Detection.PlayerPairs() do
+            if (Seija:WillPlayerBuff(player)) then
+                if (not batteryPackPlayer and player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY_PACK)) then
+                    batteryPackPlayer = player;
+                end
+            end
+        end
+        -- Battery Pack.
+        if (variant == PickupVariant.PICKUP_LIL_BATTERY) then
+            if (batteryPackPlayer) then
+                local rng = batteryPackPlayer:GetCollectibleRNG(CollectibleType.COLLECTIBLE_BATTERY_PACK);
+                if (subtype == BatterySubType.BATTERY_MICRO) then
+                    subtype = BatterySubType.BATTERY_NORMAL
+                end
+                if (subtype == BatterySubType.BATTERY_NORMAL) then
+                    if (rng:RandomInt(100) < 5) then
+                        subtype = BatterySubType.BATTERY_MEGA;
+                    end
+                end
+                return { variant, subtype };
+            end
+        end
     end
     Seija:AddCallback(ModCallbacks.MC_POST_PICKUP_SELECTION, PostPickupSelection);
 
@@ -1599,6 +1861,16 @@ do -- Events
         end
 
 
+        -- Little Baggy.
+        if (pickup.Type == 5 and pickup.Variant == PickupVariant.PICKUP_PILL and pickup.SubType & PillColor.PILL_COLOR_MASK > 0 and pickup.SubType & PillColor.PILL_GIANT_FLAG <= 0) then
+            for p, player in Detection.PlayerPairs() do
+                if (Seija:WillPlayerBuff(player)) then
+                    if (player:HasCollectible(CollectibleType.COLLECTIBLE_LITTLE_BAGGY)) then
+                        pickup:Morph(pickup.Type, pickup.Variant, pickup.SubType | PillColor.PILL_GIANT_FLAG, true, true, true)
+                    end
+                end
+            end
+        end
     end
     Seija:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, PostPickupInit)
 
@@ -1635,18 +1907,18 @@ do -- Events
                     laser:SetMaxDistance(distance);
                 end
             end
-            -- Athame
-            if (laser.Variant == 1 and laser.SubType == 3) then
-                if (player:HasCollectible(CollectibleType.COLLECTIBLE_ATHAME) and Seija:WillPlayerBuff(player)) then
-                    laser.BlackHpDropChance = laser.BlackHpDropChance + 0.2;
-                end
+            -- Athame (Obsoleted)
+            -- if (laser.Variant == 1 and laser.SubType == 3) then
+            --     if (player:HasCollectible(CollectibleType.COLLECTIBLE_ATHAME) and Seija:WillPlayerBuff(player)) then
+            --         laser.BlackHpDropChance = laser.BlackHpDropChance + 0.2;
+            --     end
                 
-                -- if (player:HasCollectible(CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID) and Seija:WillPlayerNerf(player)) then
-                --     print(laser.TearFlags);
-                --     -- laser.TearFlags = laser.TearFlags | TearFlags.TEAR_EXPLOSIVE;
-                --     -- print(laser.TearFlags);
-                -- end
-            end
+            --     -- if (player:HasCollectible(CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID) and Seija:WillPlayerNerf(player)) then
+            --     --     print(laser.TearFlags);
+            --     --     -- laser.TearFlags = laser.TearFlags | TearFlags.TEAR_EXPLOSIVE;
+            --     --     -- print(laser.TearFlags);
+            --     -- end
+            -- end
             -- Mega Blast.
             if (laser.Variant == 6 and CompareEntity(laser.SpawnerEntity, player)) then
                 if (Seija:WillPlayerNerf(player)) then
@@ -1671,7 +1943,8 @@ do -- Events
                     if (Tears:CanOverrideVariant(Seija.ShurikenVariant,tear.Variant)) then
                         tear:ChangeVariant(Seija.ShurikenVariant);
                     end
-                    Tears.GetModTearFlags(tear, true):Add(Tears.TearFlags.SHURIKEN)
+                    -- Add shuriken tear flag. (Obsoleted)
+                    -- Tears.GetModTearFlags(tear, true):Add(Tears.TearFlags.SHURIKEN)
                 end
 
                 -- Strange Attractor.
@@ -1694,14 +1967,29 @@ do -- Events
                         end
                     end
                 end
+
+                -- Spider Baby.
+                if (player:HasCollectible(CollectibleType.COLLECTIBLE_SPIDERBABY)) then
+                    
+                    local value = Random() % 10000 / 10000;
+                    local thresold = 1 / math.max(2, 10 - player.Luck);
+                    if (value < thresold) then
+                        --tear:AddTearFlags(TearFlags.TEAR_EGG);
+                        Tears.GetModTearFlags(tear, true):Add(Tears.TearFlags.ReverieSpiderWeb);
+                        if (Tears:CanOverrideVariant(TearVariant.EGG, tear.Variant)) then
+                            tear:ChangeVariant(TearVariant.EGG);
+                        end
+                    end
+                end
             end
             if (Seija:WillPlayerNerf(player)) then
                 if (tear.Variant == 50 and player:HasCollectible(CollectibleType.COLLECTIBLE_C_SECTION)) then
                     if (tear.InitSeed % 100 < 5) then
                         tear:Remove();
-                        local unborn = Isaac.Spawn(EntityType.ENTITY_UNBORN, 0, 0, tear.Position, tear.Velocity, player);
+                        local unborn = Isaac.Spawn(EntityType.ENTITY_UNBORN, 0, 0, tear.Position, tear.Velocity, player):ToNPC();
                         unborn:AddEntityFlags(EntityFlag.FLAG_AMBUSH);
                         unborn:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
+                        unborn.CanShutDoors = false;
                     end
                 end
             end
@@ -1710,33 +1998,33 @@ do -- Events
     end
     Seija:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, PostFireTear)
 
-    local function PostTearInit(mod, tear)
-        -- Cain's Other Eye.
-        if (tear.SpawnerEntity and tear.SpawnerEntity.Type == EntityType.ENTITY_FAMILIAR and tear.SpawnerEntity.Variant == FamiliarVariant.CAINS_OTHER_EYE) then
-            local familiar = tear.SpawnerEntity:ToFamiliar();
-            local player = familiar.Player;
-            if (player and Seija:WillPlayerBuff(player)) then
-                local target, targetDis;
-                for _, ent in ipairs(Isaac.GetRoomEntities()) do
-                    if (ent:IsVulnerableEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
-                        local dis = ent.Position:Distance(familiar.Position);
-                        if (not target or targetDis > dis) then
-                            target = ent;
-                            targetDis = dis;
-                        end
-                    end
-                end
-                local angle = Inputs.GetRawShootingVector(player, familiar.Position):GetAngleDegrees();
-                if (target) then
-                    angle = (target.Position - familiar.Position):GetAngleDegrees();
-                end
-                local laser = EntityLaser.ShootAngle(1, familiar.Position, angle, 2, familiar.PositionOffset + Vector(0, -10), familiar);
-                laser.CollisionDamage = player.Damage;
-                tear:Remove();
-            end
-        end
-    end
-    Seija:AddCallback(ModCallbacks.MC_POST_TEAR_INIT, PostTearInit)
+    -- Cain's Other Eye. (Obsoleted)
+    -- local function PostTearInit(mod, tear)
+    --     if (tear.SpawnerEntity and tear.SpawnerEntity.Type == EntityType.ENTITY_FAMILIAR and tear.SpawnerEntity.Variant == FamiliarVariant.CAINS_OTHER_EYE) then
+    --         local familiar = tear.SpawnerEntity:ToFamiliar();
+    --         local player = familiar.Player;
+    --         if (player and Seija:WillPlayerBuff(player)) then
+    --             local target, targetDis;
+    --             for _, ent in ipairs(Isaac.GetRoomEntities()) do
+    --                 if (ent:IsVulnerableEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+    --                     local dis = ent.Position:Distance(familiar.Position);
+    --                     if (not target or targetDis > dis) then
+    --                         target = ent;
+    --                         targetDis = dis;
+    --                     end
+    --                 end
+    --             end
+    --             local angle = Inputs.GetRawShootingVector(player, familiar.Position):GetAngleDegrees();
+    --             if (target) then
+    --                 angle = (target.Position - familiar.Position):GetAngleDegrees();
+    --             end
+    --             local laser = EntityLaser.ShootAngle(1, familiar.Position, angle, 2, familiar.PositionOffset + Vector(0, -10), familiar);
+    --             laser.CollisionDamage = player.Damage;
+    --             tear:Remove();
+    --         end
+    --     end
+    -- end
+    -- Seija:AddCallback(ModCallbacks.MC_POST_TEAR_INIT, PostTearInit)
 
     local function PostTearUpdate(mod, tear)
         -- Shuriken Update.
@@ -1749,32 +2037,34 @@ do -- Events
         
         -- Strange Attractor.
         local flags = Tears.GetModTearFlags(tear, false)
-        if (flags and flags:Has(Tears.TearFlags.SHOCKS_ENEMY)) then
-            if (tear:IsFrame(5, 0)) then
-                local pos = tear.Position;
-                local radius = 80;
-                if (Game():GetRoom():HasWater()) then
-                    radius = radius * 3;
-                end
-                for _, ent in ipairs(Isaac.FindInRadius(pos, tear.Size + radius, EntityPartition.ENEMY)) do
-                    if (ent:IsVulnerableEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
-                        local laser = Isaac.Spawn(EntityType.ENTITY_LASER, 10, LaserSubType.LASER_SUBTYPE_LINEAR, pos, Vector.Zero, tear):ToLaser();
-                        laser.Timeout = 3;
-                        laser.OneHit = true;
-                        laser.CollisionDamage = tear.CollisionDamage;
-                        laser.PositionOffset = Vector(0, -10);
-                        laser.Parent = tear;
-                        laser.DisableFollowParent = true;
+        if (flags) then
+            if (flags:Has(Tears.TearFlags.SHOCKS_ENEMY)) then
+                if (tear:IsFrame(5, 0)) then
+                    local pos = tear.Position;
+                    local radius = 80;
+                    if (Game():GetRoom():HasWater()) then
+                        radius = radius * 3;
+                    end
+                    for _, ent in ipairs(Isaac.FindInRadius(pos, tear.Size + radius, EntityPartition.ENEMY)) do
+                        if (ent:IsVulnerableEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+                            local laser = Isaac.Spawn(EntityType.ENTITY_LASER, 10, LaserSubType.LASER_SUBTYPE_LINEAR, pos, Vector.Zero, tear):ToLaser();
+                            laser.Timeout = 3;
+                            laser.OneHit = true;
+                            laser.CollisionDamage = tear.CollisionDamage;
+                            laser.PositionOffset = Vector(0, -10);
+                            laser.Parent = tear;
+                            laser.DisableFollowParent = true;
 
-                        local ent2Source = ent.Position - pos;
-                        if (ent2Source:Length() < 0.1) then
-                            ent2Source = Vector(0, 1);
+                            local ent2Source = ent.Position - pos;
+                            if (ent2Source:Length() < 0.1) then
+                                ent2Source = Vector(0, 1);
+                            end
+                            ent2Source = ent2Source:Resized(math.max(8, ent2Source:Length()))
+                            laser.AngleDegrees = ent2Source:GetAngleDegrees();
+                            laser.MaxDistance = ent2Source:Length() + ent.Size;
+                            laser.Position = laser.Position - ent2Source:Normalized() * ent.Size / 2;
+                            laser.TearFlags = laser.TearFlags | TearFlags.TEAR_PIERCING;
                         end
-                        ent2Source = ent2Source:Resized(math.max(8, ent2Source:Length()))
-                        laser.AngleDegrees = ent2Source:GetAngleDegrees();
-                        laser.MaxDistance = ent2Source:Length() + ent.Size;
-                        laser.Position = laser.Position - ent2Source:Normalized() * ent.Size / 2;
-                        laser.TearFlags = laser.TearFlags | TearFlags.TEAR_PIERCING;
                     end
                 end
             end
@@ -1784,15 +2074,70 @@ do -- Events
 
     local function PreTearCollision(mod, tear, other, low)
         local flags = Tears.GetModTearFlags(tear, false)
-        if (flags and flags:Has(Tears.TearFlags.SHURIKEN)) then
-            if (other:IsVulnerableEnemy()) then
-                local damageFlags = 0;
-                other:TakeDamage(tear.CollisionDamage, damageFlags, EntityRef(tear), 0);
-                --return true;
+        local enemyActive = other:IsActiveEnemy() and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY);
+        if (flags) then
+            if (flags:Has(Tears.TearFlags.SHURIKEN)) then
+                if (other:IsVulnerableEnemy()) then
+                    local damageFlags = 0;
+                    other:TakeDamage(tear.CollisionDamage, damageFlags, EntityRef(tear), 0);
+                    --return true;
+                end
+            end
+            if (flags:Has(Tears.TearFlags.ReverieSpiderWeb) and enemyActive) then
+                local hash = GetPtrHash(other);
+                local data = GetTearTempData(tear, true);
+                if (not data.SpiderWebHitEnemies[hash]) then
+                    data.SpiderWebHitEnemies[hash] = true;
+
+                    local Web = THI.Effects.SpiderbabyWeb;
+                    local web = Isaac.Spawn(Web.Type, Web.Variant, Web.SubType, tear.Position, Vector.Zero, tear.SpawnerEntity):ToEffect();
+                    web.CollisionDamage = tear.CollisionDamage;
+                    local webFlags = 0;
+                    if (tear:HasTearFlags(TearFlags.TEAR_POISON) or tear:HasTearFlags(TearFlags.TEAR_MYSTERIOUS_LIQUID_CREEP)) then
+                        webFlags = webFlags | Web.Flags.POISON;
+                    end
+                    if (tear:HasTearFlags(TearFlags.TEAR_BURN)) then
+                        webFlags = webFlags | Web.Flags.FIRE;
+                    end
+                    if (tear:HasTearFlags(TearFlags.TEAR_ICE)) then
+                        webFlags = webFlags | Web.Flags.ICE;
+                    end
+                    if (tear:HasTearFlags(TearFlags.TEAR_JACOBS) or tear:HasTearFlags(TearFlags.TEAR_LASER)) then
+                        webFlags = webFlags | Web.Flags.ELEC;
+                    end
+                    web.DamageSource = webFlags;
+
+                    local player = nil;
+                    local spawner = tear.SpawnerEntity;
+                    if (spawner) then
+                        local spawnerPlayer = spawner:ToPlayer();
+                        if (spawnerPlayer) then
+                            player = spawnerPlayer;
+                        else
+                            local spawnerSpawner = spawner and spawner.SpawnerEntity;
+                            local p = spawnerSpawner:ToPlayer()
+                            if (p) then
+                                player = p;
+                            end
+                        end
+                    end
+                    local seed = tear.InitSeed;
+                    for i = 1, seed % 3 + 1 do
+                        if (player) then
+                            player:ThrowBlueSpider(tear.Position, tear.Position + RandomVector() * 20);
+                        else
+                            local spider = Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.BLUE_SPIDER, 0, tear.Position, RandomVector() * 5, tear.SpawnerEntity):ToFamiliar();
+                            spider.OrbitSpeed = -6;
+                            spider.OrbitDistance = Vector(0, 4);
+                        end
+                    end
+                    
+                    SFXManager():Play(SoundEffect.SOUND_BOIL_HATCH);
+                end
             end
         end
 
-        if (tear:HasTearFlags(TearFlags.TEAR_PERMANENT_CONFUSION) and other:IsActiveEnemy() and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+        if (tear:HasTearFlags(TearFlags.TEAR_PERMANENT_CONFUSION) and enemyActive) then
             local player = GetSpawnerPlayer(tear);
 
             if (player and Seija:WillPlayerBuff(player)) then
@@ -1822,6 +2167,7 @@ do -- Events
                 end
             end
         end
+        
     end
     Seija:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, PreTearCollision)
 
@@ -1906,7 +2252,7 @@ do -- Events
     Seija:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, PostEffectUpdate)
 
     local function PostUseItem(mod, item, rng, player, flags, varData)
-        if (Seija:WillPlayerBuff(player)) then
+        if (Seija:WillPlayerBuff(player) and flags & UseFlag.USE_OWNED > 0) then
             local game = Game();
             local room = game:GetRoom();
             -- Poop.
@@ -1954,16 +2300,16 @@ do -- Events
                 end
             elseif (item == CollectibleType.COLLECTIBLE_PLAN_C) then-- Plan C
                 player:AddCollectible(CollectibleType.COLLECTIBLE_1UP, 0, false)
-            elseif (item == CollectibleType.COLLECTIBLE_D10) then-- D10
-                for _, ent in ipairs(Isaac.GetRoomEntities()) do
-                    if (not ent:IsBoss() and ent:IsActiveEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
-                        if (rng:RandomInt(100) < 80) then
-                            local npc = ent:ToNPC();
-                            npc:Remove();
-                            Isaac.Spawn( EntityType.ENTITY_FLY, 0, 0, npc.Position, Vector.Zero, player);
-                        end
-                    end
-                end
+            -- elseif (item == CollectibleType.COLLECTIBLE_D10) then-- D10 (Obsoleted)
+            --     for _, ent in ipairs(Isaac.GetRoomEntities()) do
+            --         if (not ent:IsBoss() and ent:IsActiveEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
+            --             if (rng:RandomInt(100) < 80) then
+            --                 local npc = ent:ToNPC();
+            --                 npc:Remove();
+            --                 Isaac.Spawn( EntityType.ENTITY_FLY, 0, 0, npc.Position, Vector.Zero, player);
+            --             end
+            --         end
+            --     end
             elseif (item == CollectibleType.COLLECTIBLE_BOOK_OF_SECRETS) then-- Book of Secrets
                 if (flags & UseFlag.USE_OWNED > 0) then
                     for i = 1, 3 do
@@ -1976,17 +2322,19 @@ do -- Events
                 player:AddCacheFlags(CacheFlag.CACHE_ALL);
                 player:EvaluateItems();
             elseif (item == CollectibleType.COLLECTIBLE_SCOOPER) then-- Scooper
-                if (flags & UseFlag.USE_OWNED > 0) then
-                    for i = 1, 5 do
-                        player:UseActiveItem(item, 0);
-                    end
+                for i = 1, 5 do
+                    player:UseActiveItem(item, 0);
                 end
 
                 local data = GetPlayerData(player, true);
-                data.ScooperDamage = data.ScooperDamage + 5;
+                data.ScooperDamage = data.ScooperDamage + 5 * 5;
                 player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
                 player:EvaluateItems();
 
+            elseif (item == CollectibleType.COLLECTIBLE_LEMON_MISHAP) then -- Lemon Mishap.
+                local data = GetGlobalTempData(true);
+                data.AcidRainTimeout = (data.AcidRainTimeout or 0) + 900;
+                
             end
         end
         if (item == CollectibleType.COLLECTIBLE_CLICKER) then-- Clicker
@@ -1994,7 +2342,7 @@ do -- Events
             if (tempData and tempData.SeijaClicker) then
                 local seed = math.max(1, rng:Next())
                 local itemPool = Game():GetItemPool();
-                local pool = ItemPools:GetPoolForRoom(RoomType.ROOM_ERROR, seed);
+                local pool = itemPool:GetPoolForRoom(RoomType.ROOM_ERROR, seed);
                 ClickerGetting = true;
                 local item = itemPool:GetCollectible(pool, true, seed, CollectibleType.COLLECTIBLE_BRIMSTONE);
                 ClickerGetting = false;
@@ -2003,17 +2351,15 @@ do -- Events
             end
         end
         
-        if (Seija:WillPlayerNerf(player)) then
+        if (Seija:WillPlayerNerf(player) and flags & UseFlag.USE_OWNED > 0) then
             if (item == CollectibleType.COLLECTIBLE_SATANIC_BIBLE) then-- Satanic Bible
                 player:AddBrokenHearts(1);
             elseif (item == CollectibleType.COLLECTIBLE_D6) then-- D6
-                if (flags & UseFlag.USE_OWNED > 0) then
-                    for _, ent in ipairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)) do
-                        if (ent.SubType > 0 and ent.SubType ~= CollectibleType.COLLECTIBLE_DADS_NOTE) then
-                            local value = rng:RandomInt(100);
-                            if (value < 30) then
-                                ent:Remove();
-                            end
+                for _, ent in ipairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)) do
+                    if (ent.SubType > 0 and ent.SubType ~= CollectibleType.COLLECTIBLE_DADS_NOTE) then
+                        local value = rng:RandomInt(100);
+                        if (value < 30) then
+                            ent:Remove();
                         end
                     end
                 end
@@ -2091,5 +2437,6 @@ do -- Events
     end
     Seija:AddCallback(ModCallbacks.MC_USE_ITEM, PostUseItem)
 end
+
 
 return Seija;

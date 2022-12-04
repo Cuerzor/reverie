@@ -12,6 +12,7 @@ local function PostEffectInit(mod, effect)
     effect.TargetPosition = effect.Position;
     local spr = effect:GetSprite();
     spr:Play(Dream:GetAnimationNameBySpellID(effect.SubType));
+    effect:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE);
 end
 Dream:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, PostEffectInit, Choice.Variant);
 

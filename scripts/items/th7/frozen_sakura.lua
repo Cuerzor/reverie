@@ -15,13 +15,6 @@ local function GetPlayerData(player, init)
     } end);
 end
 
-local function GetNPCData(npc, init)
-    return FrozenSakura:GetData(npc, init, function() return {
-        WillFreeze = false,
-        FreezeTimeout = 0,
-    } end);
-end
-
 
 local function HasHalo(player)
     return player:HasCollectible(FrozenSakura.Item);
@@ -34,8 +27,9 @@ local function PostHaloUpdate(mod, effect)
         return;
     else
         local player = parent:ToPlayer();
-        local playerData = GetPlayerData(player);
-        if (player and not CompareEntity(playerData.Halo, effect)) then
+        local playerData = GetPlayerData(player, false);
+        local halo = playerData and playerData.Halo;
+        if (player and not CompareEntity(halo, effect)) then
             effect:Remove();
             return;
         end
@@ -50,9 +44,8 @@ local function PostHaloUpdate(mod, effect)
                 ent:TakeDamage(1, 0, ref, 0)
                 ent:AddEntityFlags(EntityFlag.FLAG_ICE);
                 ent:AddSlowing (ref, 30, 0.5, FrozenSakura.SlowColor);
-                local entData = GetNPCData(ent, true);
-                entData.WillFreeze = true;
-                entData.FreezeTimeout = 1;
+                local entData = ent:GetData();
+                entData.Reverie_FreezeTimeout = 1;
             elseif (ent.Type == EntityType.ENTITY_PROJECTILE) then
                 local projectile = ent:ToProjectile();
                 projectile:AddProjectileFlags (ProjectileFlags.SLOWED);
@@ -63,12 +56,12 @@ end
 FrozenSakura:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, PostHaloUpdate, FrozenSakura.FreezeHalo.Variant)
 
 local function PostNPCUpdate(mod, npc)
-    local data = GetNPCData(npc, false);
-    if (data and data.WillFreeze) then
-        data.FreezeTimeout = data.FreezeTimeout - 1;
-        if (data.FreezeTimeout < 0) then
-            data.WillFreeze = false;
+    local data = npc:GetData();
+    if (data.Reverie_FreezeTimeout and data.Reverie_FreezeTimeout >= 0) then
+        data.Reverie_FreezeTimeout = data.Reverie_FreezeTimeout - 1;
+        if (data.Reverie_FreezeTimeout < 0) then
             npc:ClearEntityFlags(EntityFlag.FLAG_ICE);
+            data.Reverie_FreezeTimeout = nil;
         end
     end
 end
@@ -76,8 +69,13 @@ FrozenSakura:AddCallback(ModCallbacks.MC_NPC_UPDATE, PostNPCUpdate)
 
 
 local function PostPlayerUpdate(mod, player)
-    local data = GetPlayerData(player, true)
-    data.Halo = Halos:CheckHalo(player, data.Halo, HasHalo(player), FrozenSakura.FreezeHalo.Type, FrozenSakura.FreezeHalo.Variant)
+    local data = GetPlayerData(player, false);
+    local prevHalo = not not (data and data.Halo);
+    local hasHalo = HasHalo(player);
+    if (prevHalo ~= hasHalo or prevHalo) then
+        data = GetPlayerData(player, true);
+        data.Halo = Halos:CheckHalo(player, data.Halo, hasHalo, FrozenSakura.FreezeHalo.Type, FrozenSakura.FreezeHalo.Variant)
+    end
 end
 FrozenSakura:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate)
 

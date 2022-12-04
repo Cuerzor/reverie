@@ -285,11 +285,11 @@ Dice:AddCustomCallback(CuerLib.CLCallbacks.CLC_TRY_USE_ITEM, TryUseDice, Dice.It
 
 
 function Dice:UseItem(item, rng, player, flags, slot, varData)
-    local playerData = Dice:GetPlayerData(player, true);
     if (item == Dice.Item) then
 
         if (player:GetActiveItem(slot) == Dice.Item) then
             
+            local playerData = Dice:GetPlayerData(player, true);
             -- Use Dice when transforming into itself.
             if (playerData and playerData.SelectedItem and item == playerData.SelectedItem) then
 
@@ -354,6 +354,7 @@ function Dice:UseItem(item, rng, player, flags, slot, varData)
             end
         end
     else
+        local playerData = Dice:GetPlayerData(player, false);
         if (playerData and playerData.SelectedItem and item == playerData.SelectedItem) then
             if (player:GetActiveItem(slot) == item and flags & UseFlag.USE_OWNED) then
                 playerData.SelectedItem = nil;

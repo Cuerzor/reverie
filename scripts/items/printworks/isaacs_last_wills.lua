@@ -1,10 +1,14 @@
 local SaveAndLoad = CuerLib.SaveAndLoad;
 local Actives = CuerLib.Actives;
+local Players = CuerLib.Players;
+local Stats = CuerLib.Stats;
+local Detection = CuerLib.Detection;
 local LastWills = ModItem("Isaac's Last Wills", "IsaacsLastWills");
 
 local function GetGlobalData(create)
     return LastWills:GetGlobalData(create, function () return {
-        GreedLegacy = false;
+        GreedLegacy = false,
+        DamageUp = false
     }end)
 end
 
@@ -57,7 +61,8 @@ function LastWills:UseLastWills(item, rng, player, flags, slow, varData)
             if (not persistentData.LastWills) then
                 persistentData.LastWills = {
                     Pickups = {},
-                    Wisps = false
+                    Wisps = false,
+                    DamageUp = false
                 };
             end
 
@@ -81,6 +86,10 @@ function LastWills:UseLastWills(item, rng, player, flags, slow, varData)
 
             if (canWisps) then
                 willsData.Wisps = true;
+            end
+            
+            if (Players.HasJudasBook(player)) then
+                willsData.DamageUp = true;
             end
 
             SaveAndLoad.WritePersistentData(persistentData);
@@ -113,6 +122,14 @@ function LastWills:PostGameStarted(isContinued)
                         player:AddWisp (LastWills.Item, player.Position);
                     end
                 end
+                if (persistentData.LastWills.DamageUp) then
+                    local data = GetGlobalData(true);
+                    data.DamageUp = true;
+                    for p, player in Detection.PlayerPairs() do
+                        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
+                        player:EvaluateItems();
+                    end
+                end
                 -- Remove Legacies.
                 persistentData.LastWills = nil;
                 SaveAndLoad.WritePersistentData(persistentData);
@@ -122,6 +139,17 @@ function LastWills:PostGameStarted(isContinued)
 end
 
 LastWills:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, LastWills.PostGameStarted)
+
+
+function LastWills:EvaluateCache(player, flag)
+    local globalData = GetGlobalData(false)
+    if (globalData and globalData.DamageUp) then
+        if (flag == CacheFlag.CACHE_DAMAGE) then
+            Stats:AddDamageUp(player, 1);
+        end
+    end
+end
+LastWills:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, LastWills.EvaluateCache)
 
 function LastWills:PostNewRoom()
     local game = THI.Game;

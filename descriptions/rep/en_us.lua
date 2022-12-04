@@ -48,10 +48,11 @@ EIDInfo.Collectibles = {
         "#Fairies will {{Heart}}fully heal player and grant 1 {{SoulHeart}}soul heart"
     },
     [Collectibles.DragonBadge.Item] = {
-        Description = "Dash into enemies"..
+        Description = "Dash into enemies and punch them"..
         "#Invincible while dashing"..
         "#Release fists and gain more dash time upon hit",
-        BookOfVirtues = "Fist tears"
+        BookOfVirtues = "Fist tears",
+        BookOfBelialReplace = "Deal 3% player damage 1000 times to the enemy when hit"
     },
     [Collectibles.Koakuma.Item] = {
         Description = "Large tear familiar"..
@@ -87,7 +88,8 @@ EIDInfo.Collectibles = {
         Description = "!!! ONE-TIME USE !!!"..
         "#Remove all enemies and obstacles in current room"..
         "#Removed enemies or obstacles will no longer appear in current game",
-        BookOfVirtues = "Glitched wisp"
+        BookOfVirtues = "Glitched wisp",
+        BookOfBelial = "↑{{Damage}}+0.2 damage up for each kind of deleted monster and obstacle"
     },
 
 
@@ -110,25 +112,29 @@ EIDInfo.Collectibles = {
         Description = "Spawn a violin for 10 seconds"..
         "#↑  {{Tears}}+5 Tears up in the range"..
         "#{{Slow}} Slow enemies in the range",
-        BookOfVirtues = "Slow tears"
+        BookOfVirtues = "Slowing tears",
+        BookOfBelial = "Also inflicts weakness",
     },
     [Collectibles.ManiacTrumpet.Item] = {
         Description = "Spawn a trumpet for 10 seconds"..
         "#↑  {{Damage}}+50% Damage up in the range"..
         "#Damage enemies in the range",
-        BookOfVirtues = "Confuse tears"
+        BookOfVirtues = "Confusing tears",
+        BookOfBelial = "{{BleedingOut}}Also inflicts bleed out",
     },
     [Collectibles.IllusionaryKeyboard.Item] = {
         Description = "Spawn a keyboard for 10 seconds"..
         "#↑  {{Speed}}+1 Speed up in the range"..
         "#Remove all projectiles in the range",
-        BookOfVirtues = "Charming tears"
+        BookOfVirtues = "Charming tears",
+        BookOfBelial = "Also inflicts petrified",
     },
     [Collectibles.Roukanken.Item] = {
         Description = "Cut enemies by sword in 18 second, deals 5x {{Damage}}player damage per hit and can destroy obstalces"..
         "#Will dash into movement direciton if use again, deals 2x {{Damage}}player damage per hit"..
         "#{{Battery}} Charges active items after kills using dash",
-        BookOfVirtues = "Melee wisp that can destory obstacles"
+        BookOfVirtues = "Melee wisp that can destory obstacles",
+        BookOfBelial = "Bloody edge, increases its range and damage"
     },
     [Collectibles.FanOfTheDead.Item] = {
         Description = "Flight"..
@@ -193,12 +199,13 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.SongOfNightbird.Item] = {
         Description = "{{CurseDarkness}} Has Curse of Darkness permanently"..
-        "#{{Confusion}} Monsters far away against player get confused, and will take 1.5x damage"
+        "#{{Confusion}} Monsters far away against player get confused, and will take additional 0.5x damage"
     },
     [Collectibles.BookOfYears.Item] = {
         Description = "Remove a random passive collectible item with the lowest quality"..
         "#Spawn a random collectible",
-        BookOfVirtues = "Spawn {{Collectible"..CollectibleType.COLLECTIBLE_MISSING_PAGE_2.."}}Missing Page 2 upon put out"
+        BookOfVirtues = "Spawn {{Collectible"..CollectibleType.COLLECTIBLE_MISSING_PAGE_2.."}}Missing Page 2 upon put out",
+        BookOfBelial = "50% chance to spawn a {{DevilRoom}}devil room item"
     },
     [Collectibles.RabbitTrap.Item] = {
         Description = "↑  {{Luck}}+1 Luck up"..
@@ -251,15 +258,12 @@ EIDInfo.Collectibles = {
         Description = "Display a fanshaped area when held"..
         "#Freeze and deal 5 damage to enemies, remove projectiles in the area after use"..
         "#Spawn bonuses based on the score:"..
-        "#{{Blank}} 10: 1 {{Coin}}penny 12: 1 {{Key}}key"..
-        "#{{Blank}} 16: 1 {{Bomb}}bomb  22: 1 {{Pill}}pill"..
-        "#{{Blank}} 30: 1 {{Card}}card"..
-        "#{{Blank}} 40: 1 {{Trinket}}trinket"..
-        "#{{Blank}} 52: 1 {{SoulHeart}}soul heart"..
-        "#{{Blank}} 66: {{Collectible"..CollectibleType.COLLECTIBLE_NEGATIVE.."}}Negative"..
-        "#{{Blank}} 82: {{Collectible"..CollectibleType.COLLECTIBLE_TORN_PHOTO.."}}Torn Photo"..
-        "#{{Blank}} 100: {{Collectible"..CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE.."}}Death Certificate",
-        BookOfVirtues = "Turn projectiles into black wisps that cannot shoot"
+        "#{{Blank}} 10: {{Coin}} 12: {{Key}} 16: {{Bomb}}"..
+        "#{{Blank}} 22: {{Pill}} 30: {{Card}} 40: {{Trinket}}"..
+        "#{{Blank}} 52: {{SoulHeart}} 66: {{Collectible"..CollectibleType.COLLECTIBLE_NEGATIVE.."}}"..
+        "#{{Blank}} 82: {{Collectible"..CollectibleType.COLLECTIBLE_TORN_PHOTO.."}} 100: {{Collectible"..CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE.."}}",
+        BookOfVirtues = "Turn projectiles into black wisps that cannot shoot",
+        BookOfBelial = "{{Burning}}Burn flashed enemies, Gain {{Damage}}damage up decays in 5 seconds, amount based on the score"
     },
     [Collectibles.SunflowerPot.Item] = {
         Description = "Sunflower familiar on player's head"..
@@ -275,17 +279,19 @@ EIDInfo.Collectibles = {
         "#!!! Every resurrection triples the cost"
     },
     [Collectibles.RodOfRemorse.Item] = {
-        Description = "Take a heart of damage (Red hearts first), triggers {{SacrificeRoom}}sacrifice room's effect once"..
-        "#Sacrifice count is not related to any sacrifice rooms, and will be reset after floors",
-        BookOfVirtues = "Has 25% chance to drop a red heart upon put out"
+        Description = "{{SacrificeRoom}} Take a heart of damage ({{Heart}}Red hearts first), triggers sacrifice room's effect once"..
+        "#Sacrifice count is not related to any sacrifice rooms, and will be reset after new floor",
+        BookOfVirtues = "Has 25% chance to drop a red heart upon put out",
+        BookOfBelial = "{{DevilRoom}} Do the reversed demonic sacrifice instead"
     },
 
     [Collectibles.IsaacsLastWills.Item] = {
         Description = "!!! ONE-TIME USE !!!"..
-        "#Send all collectibles and trinkets in the current room to the next run"..
+        "#Send all collectibles and pickups in the current room to the next run"..
         "#!!! Doesn't work in seeded runs or challenges"..
         "#!!! Has no effect if the mod is disabled, it works again until the mod get enabled",
-        BookOfVirtues = "Spawn powerful wisps in the next run"
+        BookOfVirtues = "Spawn powerful wisps in the next run",
+        BookOfBelial = "↑ Pernamently {{Damage}}+1 damage up next run"
     },
     [Collectibles.SunnyFairy.Item] = {
         Name = "Sunny Fairy",
@@ -334,7 +340,8 @@ EIDInfo.Collectibles = {
         "#After hit an obstacle, pull player to it"..
         "#After hit a pickup, pull the pickup to player"..
         "#Player will be invincible until pulling is over",
-        BookOfVirtues = "Spawn temporary green wisps when extending"
+        BookOfVirtues = "Spawn temporary green wisps when extending",
+        BookOfBelial = "{{Collectible722}}Lock the enemy after pulling it to the player"
     },
     [Collectibles.WolfEye.Item] = {
         Name = "Wolf Eye",
@@ -357,7 +364,21 @@ EIDInfo.Collectibles = {
         "#10: {{Collectible"..CollectibleType.COLLECTIBLE_REVELATION.."}}Revelation"..
         "#11: {{Collectible"..CollectibleType.COLLECTIBLE_SACRED_HEART.."}}Sacred Heart"..
         "#12: {{Collectible"..CollectibleType.COLLECTIBLE_SACRED_ORB.."}}Sacred Orb",
-        BookOfVirtues = "Wisp's HP depends on charges"
+        BookOfVirtues = "Wisp's HP depends on charges",
+        BookOfBelialReplace = "Can be used at any charges"..
+        "#Get a {{DevilRoom}}devil room collectible based on the charges until next floor:"..
+        "#1: {{Collectible"..CollectibleType.COLLECTIBLE_SHADE.."}}Shade"..
+        "#2: {{Collectible"..CollectibleType.COLLECTIBLE_GUPPYS_HAIRBALL.."}}Guppy's Hairball"..
+        "#3: {{Collectible"..CollectibleType.COLLECTIBLE_SACRIFICIAL_DAGGER.."}}Sacrificial Dagger".. 
+        "#4: {{Collectible"..CollectibleType.COLLECTIBLE_CONTRACT_FROM_BELOW.."}}Contract from Below"..
+        "#5: {{Collectible"..CollectibleType.COLLECTIBLE_SUCCUBUS.."}}Succubus"..
+        "#6: {{Collectible"..CollectibleType.COLLECTIBLE_DARK_BUM.."}}Dark Bum"..
+        "#7: {{Collectible"..CollectibleType.COLLECTIBLE_DEATHS_TOUCH.."}}Death's Touch"..
+        "#8: {{Collectible"..CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID.."}}Maw of the Void"..
+        "#9: {{Collectible"..CollectibleType.COLLECTIBLE_INCUBUS.."}}Incubus"..
+        "#10: {{Collectible"..CollectibleType.COLLECTIBLE_TWISTED_PAIR.."}}Twisted Pair"..
+        "#11: {{Collectible"..CollectibleType.COLLECTIBLE_BRIMSTONE.."}}Brimstone"..
+        "#12: {{Collectible"..CollectibleType.COLLECTIBLE_MOMS_KNIFE.."}}Mom's Knife",
     },
     [Collectibles.Onbashira.Item] = {
         Name = "Onbashira",
@@ -414,7 +435,8 @@ EIDInfo.Collectibles = {
         Description = "Gains souls each time an enemy dies"..
         "#Cost 8 souls to produce a wisp when used"..
         "#Wisps' hp and tear damage is based on the enemies' max hp",
-        BookOfVirtues = "Double produced wisps"
+        BookOfVirtues = "Double produced wisps",
+        BookOfBelial = "Spawn Book of Belial's wisp instead, but inherits the wisp's HP"
     },
     [Collectibles.PlagueLord.Item] = {
         Name = "Plague Lord",
@@ -457,7 +479,8 @@ EIDInfo.Collectibles = {
         Description = "Execute a nearby enemy"..
         "#Will instantly kill monsters, and deal huge damage which ignores armor to bosses, then shakes enemies away"..
         "#If enemy has low health or some debuffs, the range is doubled",
-        BookOfVirtues = "Dark wisps"
+        BookOfVirtues = "Dark wisps",
+        BookOfBelial = "↑{{Damage}}+1 Damage up in 10 seconds after kills by the execution"
     },
 
     
@@ -486,7 +509,8 @@ EIDInfo.Collectibles = {
         "#{{Coin}} Needs coins as charges"..
         "#Turn the whole floor gold, and transform all pickups and poops to golden version"..
         "#Freeze all enemies and midas them for 5 seconds",
-        BookOfVirtues = "12 golden wisps, fire midas tears"
+        BookOfVirtues = "12 golden wisps, fire midas tears",
+        BookOfBelial = "↑ {{Damage}}+12 damage up this floor"
     },
     [Collectibles.SorcerersScroll.Item] = {
         Description = "!!! Remove all {{SoulHeart}}soul hearts (will not kill player)"..
@@ -510,7 +534,8 @@ EIDInfo.Collectibles = {
         "#The goods are determined according to the current room type"..
         "#The purchased goods will be delivered to the next floor"..
         "#{{Collectible"..CollectibleType.COLLECTIBLE_STEAM_SALE.."}} Steam Sale will give these goods discounts",
-        BookOfVirtues = "Midas tears"
+        BookOfVirtues = "Midas tears",
+        BookOfBelial = "The first offer costs hearts"
     },
     [Collectibles.EtherealArm.Item] = {
         Name = "Ethereal Arm",
@@ -533,7 +558,8 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.WarpingHairpin.Item] = {
         Description = "Teleports to the room at the other side of a wall",
-        BookOfVirtues = "Weak gold tears"
+        BookOfVirtues = "Weak gold tears",
+        BookOfBelial = "↑ Gain {{Damage}}damage up in the room after warp"
     },
     [Collectibles.HolyThunder.Item] = {
         Name = "Holy Thunder",
@@ -605,10 +631,11 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.MiracleMallet.Item] = {
         Description = "!!! ONE-TIME USE !!!"..
-        "#Reroll all collectibles in the room into {{Quality4}}quality 4 collectibles"..
+        "#Reroll all collectibles in the room into quality {{Quality4}} collectibles"..
         "#!!! Gain 3 {{BrokenHeart}}broken hearts for each reroll"..
         "#Transform pickups into their BIG version",
-        BookOfVirtues = "Midas tears"
+        BookOfVirtues = "Midas tears",
+        BookOfBelial = "If used in {{DevilRoom}}devil room, {{BlackHeart}}+3 black hearts instead of {{BrokenHeart}}broken hearts"
     },
     [Collectibles.ThunderDrum.Item] = {
         Name = "Thunder Drum",
@@ -635,6 +662,10 @@ EIDInfo.Collectibles = {
         "#Drop 3 random runes"
     },
     
+    [Collectibles.THTRAINER.Item] = {
+        Name = "THTRAINER",
+        Description = "Replaces all {{SuperSecretRoom}}super secret rooms to I AM ERROR room"
+    },
 
     --TH15
     [Collectibles.LunaticGun.Item] = {
@@ -714,7 +745,8 @@ EIDInfo.Collectibles = {
         Name = "Fetus Blood",
         Description = "Spawn a friendly blood bony fighting for you"..
         "#Count limit equals to current floor",
-        BookOfVirtues = "Flesh wisps"
+        BookOfVirtues = "Flesh wisps",
+        BookOfBelial = "Spawn Devil Bonies"
     },
     [Collectibles.CockcrowWings.Item] = {
         Name = "Cockcrow Wings",
@@ -801,7 +833,8 @@ EIDInfo.Collectibles = {
         "#Life swapping is based on their percentages"..
         "#!!! Cannot reduce bosses' hp below 25%"..
         "#if player has no heart containers, transform monsters into error keepers, or reduce bosses' hp into 25%",
-        BookOfVirtues = "Lifestealing wisps"
+        BookOfVirtues = "Lifestealing wisps",
+        BookOfBelial = "Fires dark magatama, drain 50% extra health from the enemy after hit"
     },
     [Collectibles.FoxInTube.Item] = {
         Description = "Provides helps in some situations"..
@@ -819,7 +852,8 @@ EIDInfo.Collectibles = {
     [Collectibles.ExchangeTicket.Item] = {
         Description = "Teleport player to the exchange to trade collectibles"..
         "#!!! Everything will be refreshed after reentered",
-        BookOfVirtues = "Spawned wisps can be used as emeralds"
+        BookOfVirtues = "Spawned wisps can be used as emeralds",
+        BookOfBelial = "Includes a {{DevilRoom}}devil deal"
     },
     [Collectibles.CurseOfCentipede.Item] = {
         Description = "Turns into {{Collectible" .. CollectibleType.COLLECTIBLE_MUTANT_SPIDER ..
@@ -850,8 +884,36 @@ EIDInfo.Collectibles = {
     [Collectibles.DreamSoul.Item] = {
         Description = "Can only spawn in the {{TreasureRoom}}treasure room at Basement I while ascent"..
         "#Remove the door of mom's room, then spawn a cushion to the dream world in Isaac's room."
-    }
+    },
 
+    --TH6 ALT
+    [Collectibles.FairyDust.Item] = {
+        Description = "Flight while holding 3 Fairy Dusts"..
+        "#Enemies have chance to drop fairy dusts"..
+        "#10% at 10 {{Luck}}Luck"..
+        "#!!! No longer drops when all players have 3 Fairy Dusts"
+    },
+    [Collectibles.SpiritCannon.Item] = {
+        Name = "Spirit Cannon",
+        Description = "When used:"..
+        "#{{BrokenHeart}} +1 Broken Heart"..
+        "#{{Collectible118}} Fire a rainbow giant brimstone laser in current room, which lasts for 5 seconds"..
+        "#Deals 150x{{Damage}}player damage per second",
+        BookOfVirtues = "Star wisp fires short rainbow laser while shooting"
+    },
+    [Collectibles.DaggerOfServants.Item] = {
+        Name = "Dagger of Servants",
+        Description = "After 4 entering new rooms, removes player's rightmost heart, ↑+0.6{{Damage}}damage up"..
+        "#{{BrokenHeart}} Can remove broken hearts"..
+        "#!!! Not lethal"
+    },
+    [Collectibles.Asthma.Item] = {
+        Name = "Asthma",
+        Description = "50% to change {{Heart}}heart pickup into random {{Card}}card/{{Rune}}rune"..
+        "#45% to disappear"..
+        "#5% to change it into lucky penny"..
+        "#!!! Hearts spawned by cards/items will not be changed"
+    },
 }
 local EmptyBook= Collectibles.EmptyBook;
 EIDInfo.KosuzuDescriptions = {
@@ -1023,7 +1085,16 @@ EIDInfo.Trinkets = {
         Description = "Has 25% chance to drop 1 temporary {{Coin}}coin after a monster died"..
         "#Bosses will always drop 3 random temporary {{Coin}}coins",
         GoldenInfo = {t={1, 3}}
-    }
+    },
+    [Trinkets.Snowflake.Trinket] = {
+        Name = "Snowflake",
+        Description = "When player trying to pick up an item that they already has, reroll it instead",
+    },
+    [Trinkets.HeartSticker.Trinket] = {
+        Name = "Heart Sticker",
+        Description = "Whenever player uses a card, spawn 1 {{Heart}}red heart",
+        GoldenInfo = {t={1}}
+    },
 }
 
 
@@ -1357,8 +1428,8 @@ EIDInfo.Characters = {
                 {str = "Pageant Boy", fsize = 2, halign = 0},
                 {str = "Spawn an additional nickel, dime, golden penny and lucky penny upon picked up."},
                 {str = "Pennies have a chance to be replaced by nickel, dime, golden penny or lucky penny."},
-                {str = "Bum Friend", fsize = 2, halign = 0},
-                {str = "50% chance to give collectibles from beggar item pool instead."},
+                --{str = "Bum Friend", fsize = 2, halign = 0},
+                --{str = "50% chance to give collectibles from beggar item pool instead."},
                 {str = "Infestation", fsize = 2, halign = 0},
                 {str = "Has 50% chance to poison the enemy and spawn a blue fly when an enemy is damaged."},
                 {str = "Portable Slot", fsize = 2, halign = 0},
@@ -1369,7 +1440,7 @@ EIDInfo.Characters = {
                 {str = "Blood Rights", fsize = 2, halign = 0},
                 {str = "Deals 40 additional damage, all enemies bleeds pernamently."},
                 {str = "Bleeding enemies drops temporary red hearts when dies."},
-                {str = "-Abel"},
+                {str = "Abel"},
                 {str = "Deals 128 damage per second to nearby enemies and makes them burn."},
                 {str = "Link the player and abel with laser, deals damage to enemies touch the laser."},
                 {str = "Tiny Planet", fsize = 2, halign = 0},
@@ -1383,8 +1454,8 @@ EIDInfo.Characters = {
                 {str = "The white fly will knockback enemies close to player, deal damages and make them confusion."},
                 {str = "Isaac's Heart", fsize = 2, halign = 0},
                 {str = "The heart repels enemies."},
-                {str = "D10", fsize = 2, halign = 0},
-                {str = "All non-Boss enemies has 80% chance to turn to fly."},
+                --{str = "D10", fsize = 2, halign = 0},
+                --{str = "All non-Boss enemies has 80% chance to turn to fly."},
                 {str = "Book of Secrets", fsize = 2, halign = 0},
                 {str = "Use four times in one time."},
                 {str = "Key Bum", fsize = 2, halign = 0},
@@ -1399,24 +1470,24 @@ EIDInfo.Characters = {
                 {str = "Tears will shock enemies nearby."},
                 {str = "Cursed Eye", fsize = 2, halign = 0},
                 {str = "Doubles Tears."},
-                {str = "Cain's Other Eye", fsize = 2, halign = 0},
-                {str = "Fire brimstone laser to the nearest enemy."},
-                {str = "Displays this floor's rooms after new floor."},
+                -- {str = "Cain's Other Eye", fsize = 2, halign = 0},
+                -- {str = "Fire brimstone laser to the nearest enemy."},
+                -- {str = "Displays this floor's rooms after new floor."},
                 {str = "Isaac's Tears", fsize = 2, halign = 0},
                 {str = "Only needs shot to fully recharge."},
-                {str = "Breath of Life", fsize = 2, halign = 0},
-                {str = "Invincible while charges is not full."},
-                {str = "Betrayal", fsize = 2, halign = 0},
-                {str = "Charm 50% enemies when entered a new room."},
-                {str = "Use Soul of Satori when damaged."},
+                -- {str = "Breath of Life", fsize = 2, halign = 0},
+                -- {str = "Invincible while charges is not full."},
+                -- {str = "Betrayal", fsize = 2, halign = 0},
+                -- {str = "Charm 50% enemies when entered a new room."},
+                -- {str = "Use Soul of Satori when damaged."},
                 {str = "Linger Bean", fsize = 2, halign = 0},
                 {str = "Clouds appears more frequently, and will chase enemies."},
-                {str = "My Shadow", fsize = 2, halign = 0},
-                {str = "Spawn black chargers under enemies."},
-                {str = "Black chargers explode upon death, won't damage player."},
+                -- {str = "My Shadow", fsize = 2, halign = 0},
+                -- {str = "Spawn black chargers under enemies."},
+                -- {str = "Black chargers explode upon death, won't damage player."},
                 {str = "Shade", fsize = 2, halign = 0},
                 {str = "Spawn a Seija's shade for each enemies after entered a room."},
-                {str = "Deal 90 contact damage per second."},
+                {str = "Deal (2+1 * stage) contact damage per second."},
                 {str = "Disappears when enemy dies."},
                 {str = "Hushy", fsize = 2, halign = 0},
                 {str = "Fire 3 lines of Continuum tears when stopped."},
@@ -1438,18 +1509,36 @@ EIDInfo.Characters = {
                 {str = "Explosion resistance."},
                 {str = "Missing No.", fsize = 2, halign = 0},
                 {str = "Get full soul heart after floor."},
-                {str = "Won't meet TMTRAINER."},
-                {str = "Ouija Board", fsize = 2, halign = 0},
-                {str = "+1 Tears up."},
-                {str = "Piercing tears."},
+                -- {str = "Ouija Board", fsize = 2, halign = 0},
+                -- {str = "+1 Tears up."},
+                -- {str = "Piercing tears."},
+                {str = "IBS", fsize = 2, halign = 0},
+                {str = "Remove the original effect, spawn 3 random dips and leave buffing creep after dealt enough damage instead."},
+                {str = "TMTRAINER", fsize = 2, halign = 0},
+                {str = "Replace this item to a new one, which replaces all super secret rooms to I AM ERROR room."},
+                {str = "Battery Pack", fsize = 2, halign = 0},
+                {str = "No longer spawns micro batteries, normal batteries has 5% chance to turn to mega battery."},
+                {str = "Chance to spawn a battery after room cleared, 100% at 15 luck."},
+                {str = "Little Baggy", fsize = 2, halign = 0},
+                {str = "Turns all pills to horse pills."},
+                {str = "Identify all pills."},
+                {str = "Box", fsize = 2, halign = 0},
+                {str = "25% chance to spawn another Box, or spawn an item from a random item pool."},
+                {str = "A Quarter", fsize = 2, halign = 0},
+                {str = "Lose this item, and gain 25 coins when coins are less than 25."},
+                {str = "Spiderbaby", fsize = 2, halign = 0},
+                {str = "Chance to fire spider web tears, which spawn blue spiders and spider webs on hit, slow enemies inside the webs."},
+                {str = "50% at 8 Luck"},
+                {str = "Lemon Mishap", fsize = 2, halign = 0},
+                {str = "Starts an acid rain in the room lasts for 30 secs, Dealing 30% armor-ignoring damage + 100 damage in total, and can destroy obstacles."},
                 {str = "Glaucoma", fsize = 2, halign = 0},
                 {str = "Additional chance to fire confusion tears."},
                 {str = "Flashes on hit, confuses all enemies nearby and deals 200% player damage to them, and clear bullets."},
                 {str = "50% at 9 luck."},
                 {str = "The Wiz", fsize = 2, halign = 0},
                 {str = "Homing and piercing tears."},
-                {str = "Athame", fsize = 2, halign = 0},
-                {str = "Enemies killed by black laser has 20% chance to drop a black heart."},
+                -- {str = "Athame", fsize = 2, halign = 0},
+                -- {str = "Enemies killed by black laser has 20% chance to drop a black heart."},
                 {str = "Taurus", fsize = 2, halign = 0},
                 {str = "Speed becomes 1.95."},
                 {str = "Green Eyed Envy", fsize = 2, halign = 0},
@@ -1463,6 +1552,8 @@ EIDInfo.Characters = {
             },
             { -- Nerfs
                 {str = "Nerfs", fsize = 2, clr = 3, halign = 0},
+                {str = "Missing No.", fsize = 2, halign = 0},
+                {str = "Won't meet quality 4 items."},
                 {str = "Cricket's Head", fsize = 2, halign = 0},
                 {str = "-33% Tears down."},
                 {str = "Magic Mushroom", fsize = 2, halign = 0},
@@ -1495,8 +1586,10 @@ EIDInfo.Characters = {
                 {str = "Enemy restores HP instead of taking explosion damage."},
                 {str = "Stop Watch", fsize = 2, halign = 0},
                 {str = "-0.6 Speed down."},
-                {str = "Infestation 2", fsize = 2, halign = 0},
-                {str = "Spawn enemy spiders when an enemy dies."},
+                -- {str = "Infestation 2", fsize = 2, halign = 0},
+                -- {str = "Spawn enemy spiders when an enemy dies."},
+                {str = "20/20", fsize = 2, halign = 0},
+                {str = "-6.75% damage down."},
                 {str = "Proptosis", fsize = 2, halign = 0},
                 {str = "-1 Shotspeed down."},
                 {str = "Satanic Bible", fsize = 2, halign = 0},
@@ -1509,8 +1602,8 @@ EIDInfo.Characters = {
                 {str = "-25 %Damage down."},
                 {str = "Tech X", fsize = 2, halign = 0},
                 {str = "+2 Shotspeed up."},
-                {str = "Maw of the Void", fsize = 2, halign = 0},
-                {str = "Enemies killed by lasers explodes."},
+                -- {str = "Maw of the Void", fsize = 2, halign = 0},
+                -- {str = "Enemies killed by lasers explodes."},
                 {str = "Crown of the Light", fsize = 2, halign = 0},
                 {str = "Red hearts run off slowly."},
                 {str = "Mega Blast", fsize = 2, halign = 0},
@@ -1541,6 +1634,10 @@ EIDInfo.Characters = {
                 {str = "50% chance to remove pedestal items."},
                 {str = "Spindown Dice", fsize = 2, halign = 0},
                 {str = "Reduces items' ID by 0-2 again randomly."},
+                {str = "Ghost Pepper", fsize = 2, halign = 0},
+                {str = "-8 Luck down."},
+                {str = "Haemolacria", fsize = 2, halign = 0},
+                {str = "Piercing Tears."},
                 {str = "Rock Bottom", fsize = 2, halign = 0},
                 {str = "All stats get doubled, then no longer changes."},
                 {str = "Holy Light", fsize = 2, halign = 0},
@@ -1642,12 +1739,13 @@ EIDInfo.LunaticDescs = {
         [Collectibles.Starseeker.Item] = "Choices become 2",
         [Collectibles.BookOfYears.Item] = "Has 30% chance to not spawn item",
         [Collectibles.TenguCamera.Item] = "Freeze 4 seconds instead",
-        --[Collectibles.RuneSword.Item] = "Ehwaz's effect become chance-based, the chance is (RuneCount * 50%)",
         [Collectibles.Pagota.Item] = "No longer midas enemies",
         [Collectibles.ZombieInfestation.Item] = "Monsters has only 50% chance to spawn friendly clones",
         [Collectibles.D2147483647.Item] = "Needs 2 charges to transform, and excluded {{Collectible" ..
             CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE .. "}} Death Certificate",
         [Collectibles.TheInfamies.Item] = "No longer charms bosses",
+        [Collectibles.RuneSword.Item] = "Can insert at most 6 runes",
+        [Collectibles.WildFury.Item] = "Only affects {{Damage}} damage",
     },
     Trinkets = {
         [Trinkets.FortuneCatPaw.Trinket] = "The chance of dropping coins from Boss reduced to 60%",
@@ -1655,8 +1753,7 @@ EIDInfo.LunaticDescs = {
 }
 EIDInfo.SeijaBuffs = {
     Collectibles = {
-        [CollectibleType.COLLECTIBLE_MY_REFLECTION] = "↓ x0.75{{Range}}Range "..
-        "#Fires shuriken tears which is piercing and spectral, will deal contact damage every frame",
+        [CollectibleType.COLLECTIBLE_MY_REFLECTION] = "Fires shuriken tears (visual effect only)",
         [CollectibleType.COLLECTIBLE_SKATOLE] = "Turns all flies friendly"..
         "#Spawn a blue fly when an enemy dies",
         [CollectibleType.COLLECTIBLE_BOOM] = "+89 additional bombs",
@@ -1666,10 +1763,10 @@ EIDInfo.SeijaBuffs = {
         [CollectibleType.COLLECTIBLE_TELEPORT] = "Teleport you to the unvisited {{TreasureRoom}}Treasure room, {{UltraSecretRoom}}Ultra Secret Room, {{DevilRoom}}Devil/{{AngelRoom}}Angel Room, I AM Error Room in the order",
         [CollectibleType.COLLECTIBLE_BEAN] = "All enemies farts and get poisoned",
         [CollectibleType.COLLECTIBLE_DEAD_BIRD] = "Spawn a dead bird when enemy killed",
-        [CollectibleType.COLLECTIBLE_RAZOR_BLADE] = "Doubles {{Damage}}Damage and triggers{{Card"..Card.CARD_SOUL_MAGDALENE.."}}Soul of Magdalane's Effect",
+        [CollectibleType.COLLECTIBLE_RAZOR_BLADE] = "Gain {{Damage}}Damage multiplier and triggers{{Card"..Card.CARD_SOUL_MAGDALENE.."}}Soul of Magdalane's Effect",
         [CollectibleType.COLLECTIBLE_PAGEANT_BOY] = "Spawn an additional nickel, dime, golden penny and lucky penny upon picked up"..
         "#Pennies have a chance to be replaced by nickel, dime, golden penny or lucky penny",
-        [CollectibleType.COLLECTIBLE_BUM_FRIEND] = "50% chance to gives collectibles from beggar item pool instead",
+        --[CollectibleType.COLLECTIBLE_BUM_FRIEND] = "50% chance to gives collectibles from beggar item pool instead",
         [CollectibleType.COLLECTIBLE_INFESTATION] = "Has 50% chance to {{Poison}}poison the enemy and spawn a blue fly when an enemy is damaged",
         [CollectibleType.COLLECTIBLE_PORTABLE_SLOT] = "50% chance to gain 1 {{Coin}}penny when failed",
         [CollectibleType.COLLECTIBLE_BLACK_BEAN] = "Enemies nearby farts and get {{Poison}}poisoned when player is damaged"..
@@ -1685,7 +1782,7 @@ EIDInfo.SeijaBuffs = {
         [CollectibleType.COLLECTIBLE_BEST_BUD] = "Always has the white fly"..
         "#The white fly will knockback enemies close to player, deal damages and make them confusion",
         [CollectibleType.COLLECTIBLE_ISAACS_HEART] = "The heart repels enemies",
-        [CollectibleType.COLLECTIBLE_D10] = "All non-Boss enemies has 80% chance to turn to fly",
+        --[CollectibleType.COLLECTIBLE_D10] = "All non-Boss enemies has 80% chance to turn to fly",
         [CollectibleType.COLLECTIBLE_BOOK_OF_SECRETS] = "Use four times in one time",
         [CollectibleType.COLLECTIBLE_KEY_BUM] = "Gives an additional {{Collectible"..CollectibleType.COLLECTIBLE_LATCH_KEY.."}}Latch Key",
         [CollectibleType.COLLECTIBLE_PUNCHING_BAG] = "Pull the nearby enemies to its side and punch repeatedly",
@@ -1693,17 +1790,17 @@ EIDInfo.SeijaBuffs = {
         [CollectibleType.COLLECTIBLE_THE_JAR] = "Drop 1 additional random heart after room cleared",
         [CollectibleType.COLLECTIBLE_STRANGE_ATTRACTOR] = "Tears will shock enemies nearby",
         [CollectibleType.COLLECTIBLE_CURSED_EYE] = "↑ {{Tears}} Doubles Tears",
-        [CollectibleType.COLLECTIBLE_CAINS_OTHER_EYE] = "Fire brimstone laser to the nearest enemy"..
-        "#Displays this floor's rooms after new floor",
+        -- [CollectibleType.COLLECTIBLE_CAINS_OTHER_EYE] = "Fire brimstone laser to the nearest enemy"..
+        -- "#Displays this floor's rooms after new floor",
         [CollectibleType.COLLECTIBLE_ISAACS_TEARS] = "Only needs shot to fully recharge",
-        [CollectibleType.COLLECTIBLE_BREATH_OF_LIFE] = "Invincible while charges is not full",
-        [CollectibleType.COLLECTIBLE_BETRAYAL] = "{{Charm}}Charm 50% enemies when entered a new room"..
-        "#Use {{Card"..THI.Cards.SoulOfSatori.ID.."}}Soul of Satori when damaged",
+        --[CollectibleType.COLLECTIBLE_BREATH_OF_LIFE] = "Invincible while charges is not full",
+        -- [CollectibleType.COLLECTIBLE_BETRAYAL] = "{{Charm}}Charm 50% enemies when entered a new room"..
+        -- "#Use {{Card"..THI.Cards.SoulOfSatori.ID.."}}Soul of Satori when damaged",
         [CollectibleType.COLLECTIBLE_LINGER_BEAN] = "Clouds appears more frequently, and will chase enemies",
-         [CollectibleType.COLLECTIBLE_MY_SHADOW] = "Spawn black chargers under enemies"..
-        "#Black chargers explode upon death, won't damage player",
+        --  [CollectibleType.COLLECTIBLE_MY_SHADOW] = "Spawn black chargers under enemies"..
+        -- "#Black chargers explode upon death, won't damage player",
         [CollectibleType.COLLECTIBLE_SHADE] = "Spawn a Seija's shade for each enemies after entered a room"..
-        "#Deal 90 contact damage per second"..
+        "#Deal (2+1*stage) contact damage per second"..
         "#Disappears when enemy dies",
         [CollectibleType.COLLECTIBLE_HUSHY] = "Fire 3 lines of {{Collectible"..CollectibleType.COLLECTIBLE_CONTINUUM.."}}Continuum tears when stopped",
         [CollectibleType.COLLECTIBLE_PLAN_C] = "Gain {{Collectible"..CollectibleType.COLLECTIBLE_1UP.."}}1UP!",
@@ -1716,18 +1813,31 @@ EIDInfo.SeijaBuffs = {
         "#↑ +5 Damage up after each use, reduce 1.07 damage every second",
 
         [CollectibleType.COLLECTIBLE_BROWN_NUGGET] = "Only needs 0.5 seconds for fully charged",
-
         [CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER] = "Explosion resistance",
-        [CollectibleType.COLLECTIBLE_MISSING_NO] = "Get full soul heart after floor"..
-        "#Won't meet {{Collectible"..CollectibleType.COLLECTIBLE_TMTRAINER.."}}TMTRAINER",
-        [CollectibleType.COLLECTIBLE_OUIJA_BOARD] = "↑ +1{{Tears}}Tears up"..
-        "#Piercing tears",
+        [CollectibleType.COLLECTIBLE_MISSING_NO] = "Get full soul heart after floor",
+        
+        [CollectibleType.COLLECTIBLE_IBS] = "Remove the original effect, spawn 3 random dips and leave buffing creep after dealt enough damage instead",
+        [CollectibleType.COLLECTIBLE_TMTRAINER] = "Replace this item to a new one, which replaces all {{SuperSecretRoom}}super secret rooms to I AM ERROR room",
+        [CollectibleType.COLLECTIBLE_BATTERY_PACK] = "No longer spawns micro batteries, normal batteries has 5% chance to turn to mega battery"..
+        "#Chance to spawn a battery after room cleared"..
+        "#100% at 15 luck",
+        [CollectibleType.COLLECTIBLE_LITTLE_BAGGY] = "Turns all pills to horse pills"..
+        "#Identify all pills",
+        [CollectibleType.COLLECTIBLE_BOX] = "25% chance to spawn another {{Collectible"..CollectibleType.COLLECTIBLE_BOX.."}}Box, or spawn an item from a random item pool",
+        [CollectibleType.COLLECTIBLE_QUARTER] = "Lose this item, and gain 25 {{Coin}}coins when coins are less than 25",
+        [CollectibleType.COLLECTIBLE_SPIDERBABY] = "Chance to fire spider web tears, which spawn blue spiders and spider webs on hit, slow enemies inside the webs"..
+        "#50% at 8 {{Luck}}Luck",
+        [CollectibleType.COLLECTIBLE_LEMON_MISHAP] = "Starts an acid rain in the room lasts for 30 secs"..
+        "#Dealing 30% armor-ignoring damage + 100 damage in total"..
+        "#Can destroy obstacles",
+        -- [CollectibleType.COLLECTIBLE_OUIJA_BOARD] = "↑ +1{{Tears}}Tears up"..
+        -- "#Piercing tears",
         [CollectibleType.COLLECTIBLE_GLAUCOMA] = "Additional chance to fire confusion tears"..
         "#Flashes on hit, confuses all enemies nearby and deals 200% player damage to them, and clear bullets"..
         "#50% at 9 luck",
         [CollectibleType.COLLECTIBLE_TAURUS] = "{{Speed}}Speed becomes 1.95",
         [CollectibleType.COLLECTIBLE_THE_WIZ] = "Homing and piercing tears",
-        [CollectibleType.COLLECTIBLE_ATHAME] = "Enemies killed by black laser has 20% chance to drop a black heart",
+        -- [CollectibleType.COLLECTIBLE_ATHAME] = "Enemies killed by black laser has 20% chance to drop a black heart",
         [Collectibles.GreenEyedEnvy.Item] = "Enemy copies get charmed for 5 minutes",
         [Collectibles.ViciousCurse.Item] = "No longer damages player, +1 soul heart"..
         "#Restore {{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}Damocles' update speed"..
@@ -1752,14 +1862,15 @@ EIDInfo.SeijaNerfs = {
         "#↑ +1{{Shotspeed}}Shotspeed up",
         [CollectibleType.COLLECTIBLE_PYROMANIAC] = "Enemy restores HP instead of taking explosion damage",
         [CollectibleType.COLLECTIBLE_STOP_WATCH] = "↓ -0.6{{Speed}} Speed down",
-        [CollectibleType.COLLECTIBLE_INFESTATION_2] = "Spawn enemy spiders when an enemy dies",
+        -- [CollectibleType.COLLECTIBLE_INFESTATION_2] = "Spawn enemy spiders when an enemy dies",
+        [CollectibleType.COLLECTIBLE_20_20] = "↓ -6.75%{{Damage}} Damage down",
         [CollectibleType.COLLECTIBLE_PROPTOSIS] = "↓ -1{{Shotspeed}} Shotspeed down",
         [CollectibleType.COLLECTIBLE_SATANIC_BIBLE] = "+1{{BrokenHeart}}Broken Heart when used",
         [CollectibleType.COLLECTIBLE_HOLY_MANTLE] = "Become {{Player"..PlayerType.PLAYER_THELOST.."}}The Lost forever",
         [CollectibleType.COLLECTIBLE_GODHEAD] = "↑ +2.3{{Shotspeed}}Shotspeed up",
         [CollectibleType.COLLECTIBLE_INCUBUS] = "↓ -25%{{Damage}}Damage down",
         [CollectibleType.COLLECTIBLE_TECH_X] = "↑ +2{{Shotspeed}}Shotspeed up",
-        [CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID] = "Enemies killed by lasers explodes",
+        -- [CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID] = "Enemies killed by lasers explodes",
         [CollectibleType.COLLECTIBLE_CROWN_OF_LIGHT] = "{{Heart}}Red hearts run off slowly",
         [CollectibleType.COLLECTIBLE_MEGA_BLAST] = "Blood laser's range is limited by player's {{Range}}range",
         [CollectibleType.COLLECTIBLE_VOID] = "↓ All stats slightly down after consumed a collectible",
@@ -1775,8 +1886,11 @@ EIDInfo.SeijaNerfs = {
         [CollectibleType.COLLECTIBLE_BAG_OF_CRAFTING] = "75% chance to fail the crafting",
         [CollectibleType.COLLECTIBLE_FLIP] = "50% chance to remove pedestal items",
         [CollectibleType.COLLECTIBLE_SPINDOWN_DICE] = "Reduces items' ID by 0-2 again randomly",
+        [CollectibleType.COLLECTIBLE_GHOST_PEPPER] = "↓-8 {{Luck}}Luck down",
+        [CollectibleType.COLLECTIBLE_HAEMOLACRIA] = "Piercing tears",
         [CollectibleType.COLLECTIBLE_ROCK_BOTTOM] = "↑ All stats get doubled, then no longer changes",
         [CollectibleType.COLLECTIBLE_HOLY_LIGHT] = "Lightbolts have only 33% player damage",
+        
         [Collectibles.DarkRibbon.Item] = "Enemies die inside the halo spawn enemy black chargers",
         [Collectibles.VampireTooth.Item] = "All hearts run off slowly",
         [Collectibles.FanOfTheDead.Item] = "Revives at the last room",

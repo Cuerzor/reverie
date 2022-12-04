@@ -188,10 +188,8 @@ local function ExecutePrePlayerCollision(mod, player, collider, low)
     for i, info in pairs(Callbacks.Functions.PrePlayerCollision) do
         if (info.OptionalArg == nil or info.OptionalArg == player.Variant) then
             local result = info.Func(mod, player, collider, low);
-            if (result == true) then
-                return true;
-            elseif (result ~= nil) then
-                return false;
+            if (result ~= nil) then
+                return not not result;
             end
         end
     end

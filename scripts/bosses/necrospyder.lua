@@ -290,13 +290,13 @@ do
                         local statePool = {
                             Necrospyder.States.SHOOT
                         };
-                        if (#Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.CREEP_WHITE) <= 0) then
+                        if (#Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.CREEP_WHITE, -1) <= 0) then
                             table.insert(statePool, Necrospyder.States.CREEP);
                         end
-                        if (#Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.SMOKE_CLOUD) <= 0) then
+                        if (#Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.SMOKE_CLOUD, -1) <= 0) then
                             table.insert(statePool, Necrospyder.States.POISON);
                         end
-                        if (#Isaac.FindByType(EntityType.ENTITY_HOPPER, 1) < 1) then
+                        if (#Isaac.FindByType(EntityType.ENTITY_HOPPER, 1, -1) < 1) then
                             table.insert(statePool, Necrospyder.States.SUMMON);
                         end
                         local nextState

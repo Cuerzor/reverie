@@ -153,10 +153,16 @@
 	<sound name="Wild Bite">
 		<sample weight="1" path="wild_bite.wav" />
 	</sound>
+	<sound name="Raging Demon">
+		<sample weight="1" path="raging_demon.wav" />
+	</sound>
 	<sound name="Piano C4">
 		<sample weight="1" path="instruments/piano_c4.wav" />
 	</sound>
 	<sound name="Music Box C4">
 		<sample weight="1" path="instruments/music_box_C4.wav" />
+	</sound>
+	<sound name="Acid Rain">
+		<sample weight="1" path="acid_rain.wav"/>
 	</sound>
 </sounds>

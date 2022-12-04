@@ -1,9 +1,14 @@
 local Detection = CuerLib.Detection;
 local Actives = CuerLib.Actives;
 local Math = CuerLib.Math;
+local Consts = CuerLib.Consts;
+local Players = CuerLib.Players;
 local Bucket = ModItem("Bucket of Wisps", "BUCKET_OF_WISPS")
 Bucket.Soul = ModEntity("Bucket Soul", "BUCKET_OF_WISPS")
-Bucket.Soul.SubType = 580
+Bucket.Soul.SubTypes = {
+    BLUE = 0,
+    RED = 1
+}
 
 local function GetPlayerData(player, create)
     return Bucket:GetData(player, create, function()
@@ -37,7 +42,11 @@ local function PostNPCUpdate(mod, npc)
     if (npc:IsActiveEnemy(true) and npc.CanShutDoors and npc:IsDead()) then
         for _, player in Detection.PlayerPairs() do
             if (player:HasCollectible(Bucket.Item))  then
-                local soul = Isaac.Spawn(Bucket.Soul.Type, Bucket.Soul.Variant, Bucket.Soul.SubType, npc.Position, RandomVector() * 10, npc):ToEffect();
+                local subType = Bucket.Soul.SubTypes.BLUE;
+                if (Players.HasJudasBook(player)) then
+                    subType = Bucket.Soul.SubTypes.RED;
+                end
+                local soul = Isaac.Spawn(Bucket.Soul.Type, Bucket.Soul.Variant, subType, npc.Position, RandomVector() * 10, npc):ToEffect();
                 soul.Target = player;
                 soul.MaxHitPoints = npc.MaxHitPoints;
             end
@@ -47,8 +56,15 @@ end
 Bucket:AddCallback(ModCallbacks.MC_NPC_UPDATE, PostNPCUpdate)
 
 do -- Bucket Soul
+    local function PostEffectInit(mod, effect)
+        if (effect.SubType == Bucket.Soul.SubTypes.RED) then
+            effect:SetColor(Color(1, 0, 0, 1, 0, 0, 0), -1, 0);
+        end
+    end
+    Bucket:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, PostEffectInit, Bucket.Soul.Variant)
+
     local function PostEffectUpdate(mod, effect)
-        if (effect.Variant == Bucket.Soul.Variant and effect.SubType == Bucket.Soul.SubType) then
+        if (effect.Variant == Bucket.Soul.Variant) then
 
             if (not effect.Child) then
                 local trail = Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.SPRITE_TRAIL, 0, effect.Position, Vector.Zero, effect):ToEffect()
@@ -56,7 +72,13 @@ do -- Bucket Soul
                 trail.MaxRadius = 0.15;
                 trail.SpriteScale = Vector(2,2);
                 trail.Parent = effect;
-                trail:SetColor(Color(0.3, 0.6, 1, 0.5, 0, 0, 0), -1, 0);
+                local color;
+                if (effect.SubType == Bucket.Soul.SubTypes.RED) then
+                    color = Color(1, 0, 0, 0.5, 0, 0, 0);
+                else
+                    color = Color(0.3, 0.6, 1, 0.5, 0, 0, 0);
+                end
+                trail:SetColor(color, -1, 0);
                 effect.Child = trail;
             else 
                 effect.Child.Position = effect.Position + Vector(0,-24);
@@ -121,7 +143,7 @@ do -- Bucket Soul
     Bucket:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, PostEffectUpdate)
 
     local function PostEntityRemove(mod, entity)
-        if (entity.Type == Bucket.Soul.Type and entity.Variant == Bucket.Soul.Variant and entity.SubType == Bucket.Soul.SubType) then
+        if (entity.Type == Bucket.Soul.Type and entity.Variant == Bucket.Soul.Variant) then
             if (entity.Child and entity.Child:Exists()) then
                 entity.Child:Remove();
             end
@@ -150,9 +172,13 @@ local function PostUseBucket(mod, item, rng, player, flags, slot, varData)
         if (player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES)) then
             count = 2;
         end
+        local wispID = Bucket.Item;
+        if (Players.HasJudasBook(player)) then
+            wispID = CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL
+        end
         for i = 1, count do
             local resultHP = math.max(0, math.min(24, math.ceil(2 * (total / 40) ^ 0.5)));
-            local wisp = player:AddWisp(Bucket.Item, player.Position);
+            local wisp = player:AddWisp(wispID, player.Position);
             wisp.MaxHitPoints = resultHP;
             wisp.HitPoints = resultHP;
         end
@@ -181,7 +207,12 @@ Bucket:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, PostTearUpdate);
 local function GetShaderParams(mod, name)
     if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
         Actives.RenderActivesCount(Bucket.Item, function(player) 
-            return Bucket:GetSoulNum(player);
+            local num = Bucket:GetSoulNum(player);
+            local color = Color.Default;
+            if (num >= 8) then
+                color = Consts.Colors.Green;
+            end
+            return num, color;
         end);
     end
 end

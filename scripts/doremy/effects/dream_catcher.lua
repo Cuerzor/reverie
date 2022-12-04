@@ -14,6 +14,13 @@ function DreamCatcher:TurnRed(entity)
     end
 end
 
+
+local function PostEffectInit(mod, effect)
+    effect:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE);
+end
+Dream:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, PostEffectInit, DreamCatcher.Variant);
+    
+
 local function PostEffectUpdate(mod, effect)
     local spr = effect:GetSprite();
     effect.DepthOffset = 50-effect.Position.Y 

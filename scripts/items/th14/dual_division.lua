@@ -90,7 +90,7 @@ local function PostPlayerUpdate(mod, player)
                 local globalData = GetGlobalData(true);
 
                 local itemPool = Game():GetItemPool();
-                local poolType = math.max(0, ItemPools:GetPoolForRoom(room:GetType(), rng:Next()));
+                local poolType = math.max(0, ItemPools:GetRoomPool(rng:Next()));
 
                 local function worseCondition(id, conf)
                     return conf.Quality == math.max(0, playerData.SpawningQuality - 1);

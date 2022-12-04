@@ -343,6 +343,7 @@ Translation.Collectibles ={
     
     [Collectibles.NimbleFabric.Item] = {Name="闪避布" , Description="充能式闪避"},
     [Collectibles.MiracleMalletReplica.Item] = {Name="万宝槌仿制品" , Description="大哥，搞定！"},
+    [Collectibles.THTRAINER.Item] = {Name="错误姬" , Description="th14.exe灾难性故障"},
 
     [Collectibles.RuneCape.Item] = {Name="符文披风" , Description="弹速上升+我能看见未来"},
 
@@ -385,7 +386,12 @@ Translation.Collectibles ={
     -- {Name="我的手册" , Description="这是我写的！"},
     -- {Name="我的指南" , Description="这是我写的！"},
     -- {Name="我的史书" , Description="这是我写的！"},
-    [Collectibles.DreamSoul.Item] = {Name="梦魂" , Description="醒来吧"}
+    [Collectibles.DreamSoul.Item] = {Name="梦魂" , Description="醒来吧"},
+
+    [Collectibles.FairyDust.Item] = {Name="妖精尘" , Description="飞翔的愿望"},
+    [Collectibles.SpiritCannon.Item] = {Name="气功炮" , Description="新气功炮！！！"},
+    [Collectibles.DaggerOfServants.Item] = {Name="从者之刃" , Description="献出你的心脏"},
+    [Collectibles.Asthma.Item] = {Name="哮喘" , Description="魔力上升，再生力下降"},
 }
 
 local Trinkets = THI.Trinkets;
@@ -404,6 +410,9 @@ Translation.Trinkets ={
     [Trinkets.BundledStatue.Trinket] = {Name="襁褓石像" , Description="超乎寻常的重力"},
     [Trinkets.ShieldOfLoyalty.Trinket] = {Name="忠诚之盾" , Description="我们是你的护盾"},
     [Trinkets.SwordOfLoyalty.Trinket] = {Name="忠诚之剑" , Description="我将效忠于你"},
+
+    [Trinkets.Snowflake.Trinket] = {Name="雪花" , Description="独特而完美"},
+    [Trinkets.HeartSticker.Trinket] = {Name="红心贴纸" , Description="<3"},
 }
 
 local Players = THI.Players;

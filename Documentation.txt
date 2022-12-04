@@ -28,6 +28,8 @@ The mod is completely open source, you are welcome to help improve the mod, and 
     Zombie Infestation: Monsters has only 50% chance to spawn friendly clones.
     D2147483647: Needs 2 charges to transform, and excluded Death Certificate.
     The Infamies: No longer charm Bosses.
+    Rune Sword: Can only insert at most 6 runes.
+    Wild Fury: Only affects damage.
     Fortune Cat Paw: The coin drop rate of bosses reduced to 60%.
 
 Introduction to Characters:
@@ -179,9 +181,11 @@ All quality 0 and some quality 1 items included in vanilla game and this mod get
 All quality 4 and some quality 3 items included in vanilla game and this mod get nerfed.
 
 The following items get buffed:
-My Reflection:
+My Reflection (Obsoleted):
     x0.75 Range.
     Fires shuriken tears which is piercing and spectral, will deal contact damage every frame.
+My Reflection:
+    Fires shuriken tears. (Only has visual effects)
 Skatole:
     Turns all flies friendly.
     Spawn a blue fly when an enemy dies.
@@ -204,7 +208,7 @@ Razor Blade:
 Pageant Boy: 
     Spawn an additional nickel, dime, golden penny and lucky penny upon picked up.
     Pennies have a chance to be replaced by nickel, dime, golden penny or lucky penny.
-Bum Friend: 
+Bum Friend (Obsoleted): 
     50% chance to give collectibles from beggar item pool instead.
 Infestation: 
     Has 50% chance to poison the enemy and spawn a blue fly when an enemy is damaged.
@@ -230,7 +234,7 @@ Best Bud:
     The white fly will knockback enemies close to player, deal damages and make them confusion.
 Isaac's Heart: 
     The heart repels enemies.
-D10: 
+D10 (Obsoleted): 
     All non-Boss enemies has 80% chance to turn to fly.
 Book of Secrets: 
     Use four times in one time.
@@ -246,14 +250,14 @@ Strange Attactor:
     Tears will shock enemies nearby.
 Cursed Eye: 
      Doubles Tears.
-Cain's Other Eye: 
+Cain's Other Eye (Obsoleted): 
     Fire brimstone laser to the nearest enemy.
     Displays this floor's rooms after new floor.
 Isaac's Tears: 
     Only needs shot to fully recharge.
-Breath of Life: 
+Breath of Life (Obsoleted): 
     Invincible while charges is not full.
-Betrayal: 
+Betrayal (Obsoleted): 
     Charm 50% enemies when entered a new room.
     Use Soul of Satori when damaged.
 Linger Bean: 
@@ -263,7 +267,7 @@ My Shadow:
     Black chargers explode upon death, won't damage player.
 Shade: 
     Spawn a Seija's shade for each enemies after entered a room.
-    Deal 90 contact damage per second.
+    Deal (2+1*stage) contact damage per second.
     Disappears when enemy dies.
 Hushy: 
     Fire 3 lines of Continuum tears when stopped.
@@ -285,8 +289,26 @@ Curse of the Tower:
     Explosion resistance.
 Missing No.: 
     Get full soul heart after floor.
-    Won't meet TMTRAINER.
-Ouija Board: 
+IBS: 
+    Remove the original effect, spawn 3 random dips and leave buffing creep after dealt enough damage instead.
+TMTRAINER: 
+    Replace this item to a new one, which replaces all super secret rooms to I AM ERROR room.
+Battery Pack: 
+    No longer spawns micro batteries, normal batteries has 5% chance to turn to mega battery.
+    Chance to spawn a battery after room cleared, 100% at 15 luck.
+Little Baggy: 
+    Turns all pills to horse pills.
+    Identify all pills.
+Box: 
+    25% chance to sspawn another Box, or spawn an item from a random item pool.
+A Quarter:
+    Lose this item, and gain 25 coins when coins are less than 25.
+Spiderbaby:
+    Chance to fire spider web tears, which spawn blue spiders and spider webs on hit, slow enemies inside the webs, 50% at 8 Luck.
+    If the tears has fire, ice, electric or poison effect, spawned web will also have these effects.
+Lemon Mishap:
+    Starts an acid rain in the room lasts for 30 secs, Dealing 30% armor-ignoring damage + 100 damage in total, and can destroy obstacles.
+Ouija Board (Obsoleted): 
     +1 Tears up.
     Piercing tears.
 Glaucoma: 
@@ -295,7 +317,7 @@ Glaucoma:
     50% at 9 luck.
 The Wiz: 
     Homing and piercing tears.
-Athame: 
+Athame (Obsoleted): 
     Enemies killed by black laser has 20% chance to drop a black heart.
 Taurus: 
     Speed becomes 1.95.
@@ -311,6 +333,8 @@ Other mod's quality 0 items:
 
 
 The following items get nerfed:
+Missing No.:
+    Won't meet quality 4 items.
 Cricket's Head: 
     -33% Tears down.
 Magic Mushroom: 
@@ -343,8 +367,10 @@ Pyromaniac:
     Enemy restores HP instead of taking explosion damage.
 Stop Watch: 
     -0.6 Speed down.
-Infestation 2: 
+Infestation 2 (Obsoleted): 
     Spawn enemy spiders when an enemy dies.
+20/20: 
+    -6.75% Damage down.
 Proptosis: 
     -1 Shotspeed down.
 Satanic Bible: 
@@ -357,7 +383,7 @@ Incubus:
     -25 %Damage down.
 Tech X: 
     +2 Shotspeed up.
-Maw of the Void: 
+Maw of the Void (Obsoleted): 
     Enemies killed by lasers explodes.
 Crown of the Light: 
     Red hearts run off slowly.
@@ -389,6 +415,10 @@ Flip:
     50% chance to remove pedestal items.
 Spindown Dice: 
     Reduces items' ID by 0-2 again randomly.
+Ghost Pepper: 
+    -8 Luck down.
+Haemolacria:
+    Piecing tears.
 Rock Bottom: 
     All stats get doubled, then no longer changes.
 Holy Light: 
@@ -536,11 +566,23 @@ Description: Blessing of Fairies
 Reference: Daiyousei
 Type: Passive Item
 Quality: 3
-Item Pools: Angel Room, Greed Angel Room
 Tags: No Cantripped, No Lost Birthright
+Item Pools: Angel Room, Greed Angel Room
 * Upon picking up, Restore all player's red hearts, gain 2 soul hearts and recharge player's actives.
 * Hearts that players met has a chance of 10% to transform into a fairy.
     * Fairies will fly irregularly in the room. After picking up, it will restore all the players' hearts and grant player a soul heart.
+
+Fairy Dust
+Description: Flying Wish
+Reference: Daiyousei
+Type: Passive Item
+Quality: 2
+Tags: No Lost Birthright, No Cantripped
+Item Pools: Treasure Room, Greed Treasure Room, Angel Room, Greed Angel Room
+* Flight while holding 3 Fairy Dusts.
+* Enemies have chance to drop Fairy Dust pedstal item.
+    * Chance = (Luck)%, down to 1%, up to 10%.
+    * No longer drops while all players has 3 Fairy Dusts.
 
 Rainbow Dragon Badge
 Description: Fight 'em!
@@ -548,12 +590,25 @@ Reference: Hong Meiling
 Type: Active Item
 Charges: Timed
 Quality: 3
-Item Pools: Treasure Room, Golden Chest, Greed Treasure Room, Greed Shop
 Tags: Offensive
+Item Pools: Treasure Room, Golden Chest, Greed Treasure Room, Greed Shop
 * Upon use, if the user is moving, he become invincible and dash into his moving direction, then lose invincible after about 1 second.
-    * Player deals (40 + 10 * playerDamage) damage to every collided enemies in dash, and creates a circle of punch tears.
+    * Player deals (20 + 10 * playerDamage) damage to every collided enemies in dash, and creates a circle of punch tears.
     * Increase 1 second to the invinciblility time upon hit an enemy.
 * If player has the Book of Virtues, spawn Star wisps, they will shoot punch tears.
+* If player is Judas and has Birthright, Deal 3% player damage 1000 times to an enemy instead.
+
+Spirit Cannon
+Description: Shin-Kikouhooooooooou!!!
+Reference: Hong Meiling
+Type: Active Item
+Quality：3
+Tags: Offensive
+Item Pools: Treasure Room, Greed Treasure Room, Angel Room, Greed Angel Room
+* After use, +1 broken heart, fire a rainbow giant brimstone laser in current room.
+    * The laser deals 150x player damage per second.
+* If player has Book of Virtues, spawn red star wisps.
+    * Will short rainbow laser while player shooting.
 
 Koakuma Baby
 Description: Libraian Buddy
@@ -581,13 +636,23 @@ Tags: Offensive, Book
 * If player has the Book of Virtues, spawn wisps that corresponding to gained effect. Each wisp has the same tear effect with the gained effect, and has different stats.
     * Spawn ERROR wisp when enters I AM ERROR room (Same as Undefined).
 
+Asthma
+Description: Mana up, Regeneration down
+Reference: Patchouli Knowledge
+Type: Passive Item
+Quality: 2
+Tags: Offensive, Summonable, No Cantripped
+Item Pools: Treasure Room, Greed Treasure Room
+* Heart pickups has 50% chance to transform into random cards/runes, 45% chance to disappear, 5% chance to transform into lucky pennies.
+    * Hearts spawned by cards/items won't be replaced.
+
 Maid Suit
 Description: Perfect and elegant
 Reference: Sakuya Izayoi
 Type: Passive Item
 Quality: 3
-Item Pools: Shop, Golden Chest
 Tags: Offensive, No Cantripped, No Greed
+Item Pools: Shop, Golden Chest
 * Spawn XXI - The World.
 * After player enters a room, if there are enemies in the room, pause all enemies for 3 seconds.
 * After player cleared a room, has 10% chance to drop XXI - The World. 
@@ -596,6 +661,17 @@ Tags: Offensive, No Cantripped, No Greed
     * Resets after the floor.
 * Using XXI - The World will also pause all enemies for 3 seconds, and spawn 9 suspending knifes around them.
     * After the pause, the knifes will fly to the enemies and deal 20 damages each knife.
+
+Dagger of Servants
+Description: Offer your heart
+Reference: Sakuya Izayoi
+Type: Passive Item
+Quality: 3
+Tags: No Lost Birthright, No Cantripped, No Greed
+Item Pools: Red Chest, Curse Room, Demon Beggar, Devil Room, Ultra Secret
+* After 4 entering new rooms, removes player's rightmost heart, +0.6 damage up.
+    * Can remove broken hearts.
+    * Won't kill player.
 
 Tooth of Vampire
 Description: Accept your fate
@@ -642,6 +718,7 @@ Transformation: Musician
     * will not delete room doors, trapdoors or teleporters and other important grid entities.
 * If player has the Book of Virtues, spawn a glitch wisp.
     * If glitch wisp was put out, delete all enemies in the current room.
+* If player is Judas and has Birthright, +0.2 damage up for each deleted enemy and obstacle.
 
 Frozen Sakura
 Description: Spring Snow
@@ -691,6 +768,7 @@ Transformation: Musician
     * The tears of players in range increase by 5.
     * Enemies in range is slowed.
 * If player has the Book of Virtues, spawn note wisps that fires slow tears.
+* If player is Judas and has Birthright, also inflicts weakness to enemies in the range.
 
 Maniac Trumpet
 Description: Aggressive Totem
@@ -705,6 +783,7 @@ Transformation: Musician
     * The damages of players in range increase 50%.
     * Enemies in range take 2 damage per 10 frames.
 * If player has the Book of Virtues, spawn note wisps that fires confusing tears.
+* If player is Judas and has Birthright, also inflicts bleeding out to enemies in the range.
 
 Illusionary Keyboard
 Description: Maneuverable Totem
@@ -719,6 +798,7 @@ Transformation: Musician
     * The speeds of players in range increase by 1.
     * Projectiles in range will be removed.
 * If player has the Book of Virtues, spawn note wisps that fires charming tears.
+* If player is Judas and has Birthright, also inflicts freezing to enemies in the range.
 
 Roukanken
 Description: Roukan no ken wo ku ra e!
@@ -734,6 +814,7 @@ Tags: Offensive
 * If player use this again in Spirit state, he will dash to his moving direction.
     * Dash deals playerDamage * 2 damage, and charges player's active items after killed an enemy.
 * If player has The Book of Virtues, spawn white wisps, will deal melee damage instead of tears, and can destroy obstacles.
+* If player is Judas and has Birthright, the blade becomes bloody, increase range and damage by 50%.
 
 Fan of the Dead
 Description: Live to Death
@@ -857,6 +938,7 @@ Item Pools: Secret Room, Library, Greed Secret Room
 Tags: Offensive, Bookworm
 * Remove a random passive collectible item with the lowest quality, spawn a random collectible.
 * If player has the Book of Virtues, spawn grey wisps, they spawns Missing Page 2 collectibles after being put out. 
+* If player is Judas and has Birthright, has 50% chance to get collectible from devil room pool.
 
 Rabbit Trap
 Description: Watch your step!
@@ -989,6 +1071,7 @@ Tags: Offensive, No Greed Mode
     * If multiple objects of the same type are captured, gained score will be reduced.
 * If player has Car Battery, multiply score with 1.5 and deal 10 damage instead.
 * If player has Book of Virtues, generate a wisp that cannot fire tears for each captured projectile.
+* If player is Judas and has Birthright, flashed enemies get burnt.
 
 Sunflower Pot
 Description: Don't get it hurt!
@@ -1026,6 +1109,7 @@ Item Pools: Treasure Room, Angel Room
 * After use, deal one heart damage to player (red hearts first) and trigger the effect of sacrifice room once.
 * The sacrifice count of Rod of Remorse is not related to any sacrifice room and will be reset after new floor.
 * If the player has the Book of Virtues, spawn red wisps, which has 25% chance to drop a red heart after it's put out.
+* If player is Judas and has Birthright, do the reversed devil sacrifice.
 
 Isaac's Last Wills 
 Description: Dear diary: Today I died 
@@ -1038,6 +1122,7 @@ Item Pools: Secret Room, Old Chest, Greed Secret Room
 * One-time Use! 
 * Upon use, send all collectibles, trinkets and pickups in current room to the next run.
 * If player has Book of Virtues, spawn a ring of powerful wisps in the next run.
+* If player is Judas and has Birthright, pernamently +1 damage up next run.
 * Has no effects in runs that disable achievements.
 * Will not receive items when disabling this mod. The legacies will not be received until next run with this mod.
 
@@ -1128,6 +1213,7 @@ Tags: No Lost Birthright
 * After hook hit a target, player will be invincible until pulling is over.
 * If player has Book of Virtues, spawn green wisps in a line when hook is extending.
     * Wisps will disappear after 3 seconds, and cannot be brought out room.
+* If player is Judas and has Birthright, lock the enemy after it was pulled to the front of player.
 
 Wolf Eye
 Description: Far see in the sight
@@ -1163,6 +1249,19 @@ Item Pools: Angel Room, Greed Angel Room
     *11: Sacred Heart
     *12: Sacred Orb
 * If player has Book of Virtues, spawn wisps which has HP that corresponding with charges.
+* If player is Judas and has Birthright, get a devil item instead:
+    *1: Shade
+    *2: Guppy's Hairball
+    *3: Sacrificial Dagger
+    *4: Contract from Below
+    *5: Succubus
+    *6: Dark Bum
+    *7: Death's Touch
+    *8: Maw of the Void
+    *9: Incubus
+    *10: Twisted Pair
+    *11: Brimstone
+    *12: Mom's knife
 
 Onbashira
 Description: Totem of the sky
@@ -1302,6 +1401,7 @@ Item Pools: Treasure Room, Greed Treasure Room, Wooden Chest
         * HP is:  2 * √( TotalMaxHP / 40 ) (round up, up to 24)。
         * Tear damage is: HP / 3 (round up)。
 * If player has Book of Virtues, double produced wisps.
+* If player is Judas and has Birthright, spawn Book of Belial's wisp instead, but inherits the wisp's HP.
 
 Plague Lord
 Description: Toxic Infection
@@ -1392,6 +1492,7 @@ Item Pools: Devil Room, Greed Devil Room (1 Hearr)
     * If the enemy's HP is less than or equal to (2 * player damage) or 20% of the maximum HP, or is confused, charmed, freeze or fear, the radius is doubled.
 * Executable enemies will show red dots.
 * If player has the Book of Virtues, spawn dark wisps.
+* If player is Judas and has Birthright, +1 Damage up in 10 seconds after kills by the execution.
 
 Dowsing Rods
 Description: More Treasures
@@ -1457,6 +1558,7 @@ Tags: Offensive, No Greed Mode
     * Trinkets to Golden Trinkets
     * Pills to Golden Pills
 * If player has Book of Virtues, Spawn 12 coin wisps which have 10% chance to fire midas tears.
+* If player is Judas and has Birthright, +12 damage up in the golden floor.
 
 Sorcerer's Scroll
 Description: Strengthen your body
@@ -1475,8 +1577,8 @@ Saucer Remote
 Description: Incoming!
 Reference: Nue Houjuu
 Type: Active Item
-Charges: 4
-Quality: 4
+Charges: 6
+Quality: 3
 Tags: Offensive
 Item Pools: Treasure Room, Greed Treasure Room, Crane Game
 * Spawn a UFO which takes all free pickups and collectibles in current room away.
@@ -1489,7 +1591,6 @@ Item Pools: Treasure Room, Greed Treasure Room, Crane Game
         u = Destoryed UFO count in current floor.
         p = Taken pickup count.
 * Spawn double pickups and collectibles after destroyed UFO.
-    * Collectibles and trinkets are whole new.
     * If player has Car Battery, spawn triple.
 * UFO will leave and disappear in 15 seconds.
 * If player has Book of Virtues, spawn UFO token wisps.
@@ -1521,6 +1622,7 @@ Item Pools: Shop, Treasure Room, Greed Shop, Greed Treasure Room, Crane Game
     Quality 3: 20 coins
     Quality 4: 30 coins
 * If player has the Book of Virtues, a wisp with a chance to fire midas tears will be spawned after purchase.
+* If player is Judas and has Birthright, the first offer costs hearts.
 
 Ethereal Arm
 Description: Give up for asking more
@@ -1569,6 +1671,7 @@ Item Pools: Treasure Room, Shop
 Tags: Offensive, No Cantripped
 * After using against a wall, if there is a room opposite, teleport to the room.
 * If you have Book of virtues, spawn a fragile golden wisp when teleported to a room.
+* If player is Judas and has Birthright, damage up while in the warped room.
 
 Holy Thunder
 Description: Fist of the Heavens
@@ -1818,6 +1921,7 @@ Item Pools: Treasure room, Greed Treasure Room, Devil Room, Greed Devil Room (1 
 * Gain 3 broken hearts for each collectible transformation.
 * Transform all possible pickups in the room into their BIG version.
 * If player has Book of Virtues, spawn wisps that fire midas tears.
+* If player is Judas and has Birthright, if used in devil room, +3 black hearts instead of broken hearts.
 
 Thunder Drum
 Description: Beat the celestial drum
@@ -2000,17 +2104,18 @@ Quality: 3
 Item Pools: Treasure Room, Curse Room, Red Chest, Devil Room, Ultra Secret, Demon Beggar, Greed Treasure Room, Greed Devil Room, Greed Curse Room (1 Heart)
 Tags: Offensive
 * Upon use, spawn a friendly Blood Bony.
-    * Throw bones to enemies like normal bonies. But bones' damage is player damage * 1.2.
+    * Throw bones to enemies like normal bonies. But bones' damage is 80% player damage.
     * Can take at most 10 hits.
 * The limit of Blood Bonies is equals to the current floor.
 * If player has Book of Virtues, spawn flesh wisps.
+* If player is Judas and has Birthright, spawn devil bonies.
 
 Cockcrow Wings 
 Description: Round the clock
 Reference: Kutaka Niwatari
 Type: Passive Item 
 Quality: 3 
-Tags: Offensive 
+Tags: Offensive
 Item Pools: Angel Room, Greed Angel Room 
 * Flight.
 * Gain these based on game timer: 
@@ -2169,6 +2274,7 @@ Item Pools: Angel Room, Greed Angel Room
 * Cannot reduce boss' HP below its 25%.
 * Eg. The result of swapping between an enemy with 66% hp and a player with 5 heart containers + 1.5 red hearts is: Enemy become 30% hp, player become 3.5 red hearts.
 * If player has Book of Virtues, spawn Magatama wisps, which fire lifestealing tears.
+* If player is Judas and has Birthright, fire dark magatama, which drains 50% extra health from the enemy.
 
 Fox in Tube
 Description: How could I lie to you?
@@ -2212,6 +2318,7 @@ Item Pools: Shop, Greed Shop
     * Lower right: Use the collectibles sold by the lower left traders in exchange for new collectibles.
     * Upper right: Use the collectiblessold by the lower right traders to exchange for emeralds.
 * If the player has the book of virtues, spawn emerald wisps, which can be used as 1 emerald.
+* If player is Judas and has Birthright, spawns a devil deal inside the exchange.
 
 Curse of Centipede
 Description: MMMMuuuullllttttiiiipppplllleeee
@@ -2271,6 +2378,18 @@ Description: Ice Touch
 Reference: Cirno
 Type: Trinket
 * Instantly freeze any non-boss enemies player touches.
+
+Snowflake
+Description: Unique and Perfect
+Reference: Cirno
+Type: Trinket
+* When the player trying to pick up an item that they already has, reroll it instead.
+
+Heart Sticker
+Description: <3
+Reference: Koakuma
+Type: Trinket
+* Whenever player uses a card, spawn a red heart.
 
 Aromatic Flower
 Description: Spring Die Twice

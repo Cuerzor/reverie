@@ -80,7 +80,7 @@ local function UseSiphon(mod, item, rng, player, flags, slot, vardata)
                     return conf.Quality == targetQuality
                 end
 
-                local poolType = ItemPools:GetPoolForRoom(Game():GetRoom():GetType(), rng:Next())
+                local poolType = ItemPools:GetRoomPool(rng:Next())
                 DSiphon.GettingCollectible = true;
                 DSiphon.PoolCondition = condition;
                 ItemPools:EvaluateRoomBlacklist();

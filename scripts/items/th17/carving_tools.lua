@@ -9,30 +9,6 @@ local function GetTempGlobalData(create)
     end)
 end
 
-local Rocks = {
-    GridEntityType.GRID_ROCK,
-    GridEntityType.GRID_ROCK_ALT,
-    GridEntityType.GRID_ROCK_ALT2,
-    GridEntityType.GRID_ROCK_BOMB,
-    GridEntityType.GRID_ROCK_GOLD,
-    GridEntityType.GRID_ROCK_SPIKED,
-    GridEntityType.GRID_ROCK_SS,
-    GridEntityType.GRID_ROCKT
-}
-Tools.HaniwaSubTypes = nil;
-
-function Tools:IsRock(gridEntity)
-    if (gridEntity) then
-        local type = gridEntity:GetType();
-        for _, t in ipairs(Rocks) do
-            if (type == t) then
-                return true;
-            end
-        end
-    end
-    return false;
-end
-
 function Tools:SpawnHaniwa(position, subtype)
     local Haniwa = THI.Familiars.Haniwa;
     return Haniwa:TrySpawnHaniwa(position, subtype);
@@ -95,38 +71,49 @@ function Tools:GetHaniwaSubType(gridType)
     return Haniwa.SubTypes.HANIWA_SOLDIER;
 end
 
-local function PostUpdate(mod)
-    if (Collectibles.IsAnyHasCollectible(Tools.Item)) then
-        local game = Game();
-        local room = game:GetRoom();
-        local level = game:GetLevel();
-        local width = room:GetGridWidth();
-        local height = room:GetGridHeight();
-
-        local data = GetTempGlobalData(true);
-        for x = 1, width - 1 do
-            for y = 1, height - 1 do
-                local index = x + y * width;
-                -- Check Changes.
-                local gridEntity = room:GetGridEntity(index);
-                local isRock = Tools:IsRock(gridEntity);
-                local isBreak = gridEntity and (gridEntity.State ~= 1 or gridEntity:GetType() == GridEntityType.GRID_STAIRS)
-                if (data.Rocks[index]) then
-                    if (isBreak) then
-                        Tools:SpawnHaniwa(gridEntity.Position, Tools:GetHaniwaSubType(data.Rocks[index]))
-                    end
-                end
-
-                if (isRock and not isBreak) then
-                    data.Rocks[index] = gridEntity:GetType();
-                else
-                    data.Rocks[index] = nil;
-                end
-            end
+local function PostGridDestroyed(gridData)
+    local prevType = gridData.Type;
+    local prevRock = THI:IsGridTypeRock(prevType);
+    if (prevRock) then
+        if (Collectibles.IsAnyHasCollectible(Tools.Item)) then
+            Tools:SpawnHaniwa(gridData.Position, Tools:GetHaniwaSubType(prevType))
         end
     end
 end
-Tools:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate)
+THI:OnGridDestroyed(PostGridDestroyed)
+
+-- local function PostUpdate(mod)
+--     if (Collectibles.IsAnyHasCollectible(Tools.Item)) then
+--         local game = Game();
+--         local room = game:GetRoom();
+--         local level = game:GetLevel();
+--         local width = room:GetGridWidth();
+--         local height = room:GetGridHeight();
+
+--         local data = GetTempGlobalData(true);
+--         for x = 1, width - 1 do
+--             for y = 1, height - 1 do
+--                 local index = x + y * width;
+--                 -- Check Changes.
+--                 local gridEntity = room:GetGridEntity(index);
+--                 local isRock = Tools:IsRock(gridEntity);
+--                 local isBreak = gridEntity and (gridEntity.State ~= 1 or gridEntity:GetType() == GridEntityType.GRID_STAIRS)
+--                 if (data.Rocks[index]) then
+--                     if (isBreak) then
+--                         Tools:SpawnHaniwa(gridEntity.Position, Tools:GetHaniwaSubType(data.Rocks[index]))
+--                     end
+--                 end
+
+--                 if (isRock and not isBreak) then
+--                     data.Rocks[index] = gridEntity:GetType();
+--                 else
+--                     data.Rocks[index] = nil;
+--                 end
+--             end
+--         end
+--     end
+-- end
+-- Tools:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate)
 
 local function PostNewRoom(mod)
     local data = GetTempGlobalData(false)

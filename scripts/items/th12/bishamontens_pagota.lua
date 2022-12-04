@@ -1,6 +1,8 @@
 local Lib = CuerLib;
 local Detection = Lib.Detection;
 local Pickups = Lib.Pickups;
+local Players = Lib.Players;
+local Stats = Lib.Stats;
 
 local function IsPickupNotGoldenChest(pickup)
     local variant = pickup.Variant;
@@ -133,7 +135,8 @@ local maxCharges = Isaac.GetItemConfig():GetCollectible(Pagota.Item).MaxCharges;
 -- Pagota.
 function Pagota:GetPagotaData(init)
     return Pagota:GetGlobalData(init, function() return {
-        Golden = false
+        Golden = false,
+        GoldenBelial = false
     }end);
 end
 
@@ -153,6 +156,13 @@ function Pagota:UsePagota(item, rng, player, flags, slot, varData)
     THI.SFXManager:Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY);
     local data = Pagota:GetPagotaData(true);
     data.Golden = true;
+    if (Players.HasJudasBook(player)) then
+        data.GoldenBelial = true;
+        for p, player in Detection.PlayerPairs() do
+            player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
+            player:EvaluateItems();
+        end
+    end
     
     Isaac.Spawn(MidasFlash.Type, MidasFlash.Variant, 0, player.Position, Vector.Zero, player);
 
@@ -302,11 +312,29 @@ function Pagota:PostPlayerUpdate(player)
 end
 Pagota:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Pagota.PostPlayerUpdate);
 
+
+function Pagota:EvaluateCache(player, flag)
+    if (flag == CacheFlag.CACHE_DAMAGE) then
+        local data = Pagota:GetPagotaData(false);
+        if (data and data.GoldenBelial) then
+            Stats:AddDamageUp(player, 12);
+        end
+    end
+end
+Pagota:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Pagota.EvaluateCache);
+
 function Pagota:NewLevel()
     local data = Pagota:GetPagotaData(false);
     
     if (data) then
         data.Golden = false;
+        if (data.GoldenBelial) then
+            data.GoldenBelial = false;
+            for p, player in Detection.PlayerPairs() do
+                player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
+                player:EvaluateItems();
+            end
+        end
         turnGoldInUpdate = false;
     end
 end

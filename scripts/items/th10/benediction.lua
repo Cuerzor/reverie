@@ -1,6 +1,7 @@
 local Actives = CuerLib.Actives;
 local Detection = CuerLib.Detection;
 local Consts = CuerLib.Consts;
+local Players = CuerLib.Players;
 local Benediction = ModItem("Benediction", "BENEDICTION");
 
 local config = Isaac.GetItemConfig();
@@ -43,15 +44,60 @@ Benediction.ItemList = {
         Item = CollectibleType.COLLECTIBLE_SACRED_ORB
     }
 }
-for i, item in pairs(Benediction.ItemList ) do
+Benediction.DevilItemList = {
+    [1] = {
+        Item = CollectibleType.COLLECTIBLE_SHADE,
+    },
+    [2] = {
+        Item = CollectibleType.COLLECTIBLE_GUPPYS_HAIRBALL,
+    },
+    [3] = {
+        Item = CollectibleType.COLLECTIBLE_SACRIFICIAL_DAGGER,
+    },
+    [4] = {
+        Item = CollectibleType.COLLECTIBLE_CONTRACT_FROM_BELOW,
+    },
+    [5] = {
+        Item = CollectibleType.COLLECTIBLE_SUCCUBUS,
+    },
+    [6] = {
+        Item = CollectibleType.COLLECTIBLE_DARK_BUM,
+    },
+    [7] = {
+        Item = CollectibleType.COLLECTIBLE_DEATHS_TOUCH,
+    },
+    [8] = {
+        Item = CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID,
+    },
+    [9] = {
+        Item = CollectibleType.COLLECTIBLE_INCUBUS,
+    },
+    [10] = {
+        Item = CollectibleType.COLLECTIBLE_TWISTED_PAIR,
+    },
+    [11] = {
+        Item = CollectibleType.COLLECTIBLE_BRIMSTONE,
+    },
+    [12] = {
+        Item = CollectibleType.COLLECTIBLE_MOMS_KNIFE
+    }
+}
+
+local function GetItemSprite(ID)
     local spr = Sprite();
     spr:Load("gfx/reverie/ui/benediction_displayer.anm2", false);
-    local gfx = config:GetCollectible(item.Item).GfxFileName;
+    local gfx = config:GetCollectible(ID).GfxFileName;
     spr:ReplaceSpritesheet(0, gfx);
     spr:ReplaceSpritesheet(1, gfx);
     spr:LoadGraphics();
     spr:Play("UI");
-    item.Sprite = spr;
+    return spr;
+end
+for i, item in pairs(Benediction.ItemList) do
+    item.Sprite = GetItemSprite(item.Item);
+end
+for i, item in pairs(Benediction.DevilItemList) do
+    item.Sprite = GetItemSprite(item.Item);
 end
 
 local function GetPlayerData(player, create)
@@ -92,8 +138,16 @@ do
 
     local function PostUseBenediction(mod, item, rng, player, flags, slot, varData)
         local data = GetPlayerData(player, true);
+
+        local itemList = Benediction.ItemList;
+        local judasBook = Players.HasJudasBook(player);
+        if (judasBook) then
+            itemList = Benediction.DevilItemList;
+        end
+
+        
         if (flags & UseFlag.USE_CARBATTERY > 0) then
-            local item = Benediction.ItemList[1].Item;
+            local item = itemList[1].Item;
             Benediction:GainItem(player, item);
         else
             local maxCharges = MaxCharges;
@@ -105,11 +159,16 @@ do
                 charges = Actives:GetTotalCharges(player, slot);
             end
             local totalCharges = math.max(1, math.min(maxCharges, charges + extraCharges));
-            local item = Benediction.ItemList[totalCharges].Item;
+            local item = itemList[totalCharges].Item;
 
             Benediction:GainItem(player, item);
-            THI.SFXManager:Play(SoundEffect.SOUND_POWERUP1);
-            THI.SFXManager:Play(SoundEffect.SOUND_CHOIR_UNLOCK);
+            local sfx = SFXManager();
+            sfx:Play(SoundEffect.SOUND_POWERUP1);
+            if (judasBook) then
+                sfx:Play(SoundEffect.SOUND_SATAN_GROW);
+            else
+                sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK);
+            end
             Game():GetHUD():ShowItemText(player, config:GetCollectible(item));
             player:AnimateCollectible(item);
 
@@ -146,7 +205,13 @@ do
                 local charges = Actives:GetTotalCharges(player, slot);
                 charges = math.min(charges, MaxCharges);
                 if (charges > 0) then
-                    local sprite = Benediction.ItemList[charges].Sprite;
+                    local itemList = Benediction.ItemList;
+
+                    if (Players.HasJudasBook(player)) then
+                        itemList = Benediction.DevilItemList;
+                    end
+
+                    local sprite = itemList[charges].Sprite;
                     sprite.Scale = scale;
                     for i = 4, 0, -1 do
                         local offset = Consts.DirectionVectors[i] * 0.5 * scale;

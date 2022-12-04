@@ -25,18 +25,22 @@ PlayerForms.CustomForms.Musician = {
     }
 }
 
-function Musician.GetPlayerData(player)
+function Musician.GetPlayerData(player, create)
     local data = THI.GetData(player);
-    data.Musician = data.Musician or {
-        Has = false
-    }
+    if (create) then
+        data.Musician = data.Musician or {
+            Has = false
+        }
+    end
     return data.Musician;
 end
 
 function Musician:onPlayerEffect(player)
-    local data = Musician.GetPlayerData(player);
+    local data = Musician.GetPlayerData(player, false);
+    local prevHas = not not (data and data.Has)
     local has = PlayerForms:HasPlayerForm(player, "Musician");
-    if (data.Has ~= has) then
+    if (prevHas ~= has) then
+        data = Musician.GetPlayerData(player, true);
         data.Has = has;
         player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_TEARFLAG);
         player:EvaluateItems();
@@ -46,8 +50,8 @@ end
 function Musician:onFireTear(tear)
     local player = tear.SpawnerEntity:ToPlayer();
     if (player ~= nil) then
-        local data = Musician.GetPlayerData(player);
-        if (data.Has) then
+        local data = Musician.GetPlayerData(player, false);
+        if (data and data.Has) then
             if (tear.Variant == TearVariant.BLUE) then
                 tear:ChangeVariant(TearVariant.PUPULA);
             elseif (tear.Variant == TearVariant.BLOOD) then
@@ -59,14 +63,11 @@ function Musician:onFireTear(tear)
 end
 
 function Musician:onEvaluateCache(player, flag)
-    if (flag == CacheFlag.CACHE_TEARFLAG) then
-        local data = Musician.GetPlayerData(player);
-        if (data.Has) then
+    local data = Musician.GetPlayerData(player, false);
+    if (data and data.Has) then
+        if (flag == CacheFlag.CACHE_TEARFLAG) then
             player.TearFlags = player.TearFlags | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_PIERCING;
-        end
-    elseif (flag == CacheFlag.CACHE_FIREDELAY) then
-        local data = Musician.GetPlayerData(player);
-        if (data.Has) then
+        elseif (flag == CacheFlag.CACHE_FIREDELAY) then
             Stats:AddTearsModifier(player, function(tears) return tears + 1; end)
         end
     end

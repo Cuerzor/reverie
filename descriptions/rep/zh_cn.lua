@@ -28,7 +28,7 @@ EIDInfo.Collectibles = {
         Name = "阴阳玉",
         Description = "扔出一个反弹的阴阳玉"..
         "#造成20点碰撞伤害",
-        BookOfVirtues = "阴阳玉火焰"
+        BookOfVirtues = "阴阳玉灵火"
     },
     [Collectibles.MarisasBroom.Item] = {
         Name = "魔理沙的扫帚",
@@ -53,10 +53,11 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.DragonBadge.Item] = {
         Name = "虹龙徽章",
-        Description = "向敌人冲刺"..
+        Description = "向敌人冲刺并撞击"..
         "#冲刺时无敌"..
         "#击中敌人时释放拳弹并获得额外无敌时间",
-        BookOfVirtues = "拳弹"
+        BookOfVirtues = "拳弹",
+        BookOfBelialReplace = "击中敌人后对其造成1000次伤害，数值为3%{{Damage}}角色伤害"
     },
     [Collectibles.Koakuma.Item] = {
         Name = "小恶魔宝宝",
@@ -73,7 +74,7 @@ EIDInfo.Collectibles = {
         BookOfVirtues = "七曜子弹/错误子弹"
     },
     [Collectibles.MaidSuit.Item] = {
-        Name = "女仆服装",
+        Name = "女仆装",
         Description = "{{Card21}} 生成XXI-世界"..
         "#进入房间后暂停所有敌人"..
         "#{{Card21}} XXI-世界具有时停飞刀效果"..
@@ -91,14 +92,15 @@ EIDInfo.Collectibles = {
         Name = "毁灭",
         Description = "召唤一个会爆炸和碎成碎片的陨石"..
         "#本房间内，持续在角色的位置掉落陨石",
-        BookOfVirtues = "燃烧子弹，火焰熄灭后爆炸"
+        BookOfVirtues = "燃烧子弹，灵火熄灭后爆炸"
     },
     [Collectibles.DeletedErhu.Item] = {
         Name = "被删除的二胡",
         Description = "!!! 一次性 !!!"..
         "#移除本房间内的所有敌人和障碍物"..
         "#被移除的敌人和障碍物在本局游戏中不再出现",
-        BookOfVirtues = "错误火焰"
+        BookOfVirtues = "错误灵火",
+        BookOfBelial = "↑每删除一种不同的怪物或障碍物，永久{{Damage}}+0.2伤害"
     },
 
 
@@ -126,28 +128,32 @@ EIDInfo.Collectibles = {
         Description = "生成一个存在10秒的小提琴"..
         "#↑ 范围内{{Tears}}+5射速"..
         "#{{Slow}} 减速范围内的敌人",
-        BookOfVirtues = "减速泪弹"
+        BookOfVirtues = "减速泪弹",
+        BookOfBelial = "还会使敌人虚弱"
     },
     [Collectibles.ManiacTrumpet.Item] = {
         Name = "狂躁小号",
         Description = "生成一个存在10秒的小号"..
         "#↑ 范围内{{Damage}}+50%伤害"..
         "#伤害范围内的敌人",
-        BookOfVirtues = "混乱泪弹"
+        BookOfVirtues = "混乱泪弹",
+        BookOfBelial = "{{BleedingOut}} 还会使敌人出血"
     },
     [Collectibles.IllusionaryKeyboard.Item] = {
         Name = "幻想键盘",
         Description = "生成一个存在10秒的键盘"..
         "#↑ 范围内{{Speed}}+1移速"..
         "#消除范围内的子弹",
-        BookOfVirtues = "魅惑泪弹"
+        BookOfVirtues = "魅惑泪弹",
+        BookOfBelial = "还会使敌人石化"
     },
     [Collectibles.Roukanken.Item] = {
         Name = "楼观剑",
         Description = "在18秒内使用剑斩击，每击造成5倍{{Damage}}角色伤害，并摧毁障碍物"..
         "#再次使用会向移动方向冲刺，对路径上的敌人造成2倍{{Damage}}角色伤害"..
         "#{{Battery}} 使用冲刺杀敌会回复充能",
-        BookOfVirtues = "近战火焰，能够摧毁障碍物"
+        BookOfVirtues = "近战灵火，能够摧毁障碍物",
+        BookOfBelial = "剑身带血，攻击范围和伤害提升"
     },
     [Collectibles.FanOfTheDead.Item] = {
         Name = "死者之扇",
@@ -217,7 +223,7 @@ EIDInfo.Collectibles = {
         Description = "放出12个友方着火苍蝇"..
         "#着火苍蝇会扑向敌人，接触时爆炸并造成等同于角色伤害的伤害"..
         "#{{CurseDarkness}} 清除黑暗诅咒",
-        BookOfVirtues = "3个熄灭后生成着火苍蝇的火焰"
+        BookOfVirtues = "3个熄灭后生成着火苍蝇的灵火"
     },
     [Collectibles.SongOfNightbird.Item] = {
         Name = "夜雀之歌",
@@ -228,7 +234,8 @@ EIDInfo.Collectibles = {
         Name = "岁月史书",
         Description = "移除品质最低的一个被动道具"..
         "#生成一个随机道具",
-        BookOfVirtues = "熄灭后生成{{Collectible"..CollectibleType.COLLECTIBLE_MISSING_PAGE_2.."}}遗失书页2"
+        BookOfVirtues = "熄灭后生成{{Collectible"..CollectibleType.COLLECTIBLE_MISSING_PAGE_2.."}}遗失书页2",
+        BookOfBelial = "有50%的几率生成{{DevilRoom}}恶魔房道具"
     },
     [Collectibles.RabbitTrap.Item] = {
         Name = "兔之陷阱",
@@ -249,7 +256,7 @@ EIDInfo.Collectibles = {
         "#↑  {{Tears}}+0.6射速"..
         "#↑  {{Speed}}+0.3移速"..
         "#!!! 本层第四次使用后，角色爆炸并死亡",
-        BookOfVirtues = "强力绿色火焰，熄灭后爆炸"
+        BookOfVirtues = "强力绿色灵火，熄灭后爆炸"
     },
     [Collectibles.DragonNeckJewel.Item] = {
         Name = "龙颈之玉",
@@ -290,14 +297,12 @@ EIDInfo.Collectibles = {
         Description = "持有时显示扇形范围"..
         "#使用后石化范围内的敌人并消除子弹，造成5点伤害"..
         "#根据拍到的敌人和子弹数量生成分数和奖励："..
-        "#{{Blank}} 10: 1{{Coin}}硬币 12: 1{{Key}}钥匙"..
-        "#{{Blank}} 16: 1{{Bomb}}炸弹 22: 1{{Pill}}药丸"..
-        "#{{Blank}} 30: 1{{Card}}卡牌 40: 1{{Trinket}}饰品"..
-        "#{{Blank}} 52: 1{{SoulHeart}}魂心"..
-        "#{{Blank}} 66: {{Collectible"..CollectibleType.COLLECTIBLE_NEGATIVE.."}}底片"..
-        "#{{Blank}} 82: {{Collectible"..CollectibleType.COLLECTIBLE_TORN_PHOTO.."}}撕裂的照片"..
-        "#{{Blank}} 100: {{Collectible"..CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE.."}}死亡证明",
-        BookOfVirtues = "将敌弹变为无法发射眼泪的黑色火焰"
+        "#{{Blank}} 10: {{Coin}} 12: {{Key}} 16: {{Bomb}}"..
+        "#{{Blank}} 22: {{Pill}} 30: {{Card}} 40: {{Trinket}}"..
+        "#{{Blank}} 52: {{SoulHeart}} 66: {{Collectible"..CollectibleType.COLLECTIBLE_NEGATIVE.."}}"..
+        "#{{Blank}} 82: {{Collectible"..CollectibleType.COLLECTIBLE_TORN_PHOTO.."}} 100: {{Collectible"..CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE.."}}",
+        BookOfVirtues = "将敌弹变为无法发射眼泪的黑色灵火",
+        BookOfBelial = "{{Burning}}拍到的敌人被灼烧，并获得5秒衰减的{{Damage}}伤害提升，数值基于分数"
     },
     [Collectibles.SunflowerPot.Item] = {
         Name = "向日葵盆栽",
@@ -317,18 +322,20 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.RodOfRemorse.Item] = {
         Name = "悔悟棒",
-        Description = "受到一颗心的伤害（优先扣除红心），并触发一次{{SacrificeRoom}}献祭房的效果"..
+        Description = "{{SacrificeRoom}} 受到一颗心的伤害（优先扣除{{Heart}}红心），并触发一次献祭房的效果"..
         "#献祭次数与任何献祭房无关，并会在进入下一层后重置",
-        BookOfVirtues = "熄灭后有25%的几率掉落红心"
+        BookOfVirtues = "熄灭后有25%的几率掉落红心",
+        BookOfBelial = "{{DevilRoom}} 进行反向的恶魔献祭"
     },
 
     [Collectibles.IsaacsLastWills.Item] = {
         Name = "以撒的遗书",
         Description = "!!! 一次性 !!!"..
-        "#将当前房间中的所有道具和饰品送到下一局"..
+        "#将当前房间中的所有道具和基础掉落送到下一局"..
         "#!!! 在挑战或种子局中不起作用"..
         "#!!! 如果MOD被关闭，没有效果，直到MOD被再次开启",
-        BookOfVirtues = "下一局开始时获得一圈强力火焰"
+        BookOfVirtues = "下一局开始时获得一圈强力灵火",
+        BookOfBelial = "↑ 下一局永久{{Damage}}+1伤害"
     },
     [Collectibles.SunnyFairy.Item] = {
         Name = "太阳妖精",
@@ -381,7 +388,8 @@ EIDInfo.Collectibles = {
         "#击中障碍物后，将角色拉到障碍物前方"..
         "#击中掉落物后，将其拉到角色面前"..
         "#直到拉取结束，角色无敌",
-        BookOfVirtues = "伸长时产生停止的临时绿色火焰"
+        BookOfVirtues = "伸长时产生停止的临时绿色灵火",
+        BookOfBelial = "将抓住的敌人拉到面前时将其{{Collectible722}}锁住"
     },
     [Collectibles.WolfEye.Item] = {
         Name = "狼眼",
@@ -405,7 +413,21 @@ EIDInfo.Collectibles = {
         "#10: {{Collectible"..CollectibleType.COLLECTIBLE_REVELATION.."}}终末天启"..
         "#11: {{Collectible"..CollectibleType.COLLECTIBLE_SACRED_HEART.."}}圣心"..
         "#12: {{Collectible"..CollectibleType.COLLECTIBLE_SACRED_ORB.."}}十字圣球",
-        BookOfVirtues = "灵火血量根据充能而定"
+        BookOfVirtues = "灵火血量根据充能而定",
+        BookOfBelialReplace = "可以在任何充能时使用"..
+        "#根据当前充能获得一个{{DevilRoom}}恶魔房道具，仅持续本层："..
+        "#1: {{Collectible"..CollectibleType.COLLECTIBLE_SHADE.."}}阴影"..
+        "#2: {{Collectible"..CollectibleType.COLLECTIBLE_GUPPYS_HAIRBALL.."}}嗝屁猫的毛球"..
+        "#3: {{Collectible"..CollectibleType.COLLECTIBLE_SACRIFICIAL_DAGGER.."}}献祭匕首".. 
+        "#4: {{Collectible"..CollectibleType.COLLECTIBLE_CONTRACT_FROM_BELOW.."}}地狱契约"..
+        "#5: {{Collectible"..CollectibleType.COLLECTIBLE_SUCCUBUS.."}}魅魔"..
+        "#6: {{Collectible"..CollectibleType.COLLECTIBLE_DARK_BUM.."}}黑暗乞丐"..
+        "#7: {{Collectible"..CollectibleType.COLLECTIBLE_DEATHS_TOUCH.."}}死神之触"..
+        "#8: {{Collectible"..CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID.."}}虚空之喉"..
+        "#9: {{Collectible"..CollectibleType.COLLECTIBLE_INCUBUS.."}}淫魔"..
+        "#10: {{Collectible"..CollectibleType.COLLECTIBLE_TWISTED_PAIR.."}}作孽双子"..
+        "#11: {{Collectible"..CollectibleType.COLLECTIBLE_BRIMSTONE.."}}硫磺火"..
+        "#12: {{Collectible"..CollectibleType.COLLECTIBLE_MOMS_KNIFE.."}}妈妈的菜刀",
     },
     [Collectibles.Onbashira.Item] = {
         Name = "御柱",
@@ -462,7 +484,8 @@ EIDInfo.Collectibles = {
         Description = "怪物死亡后获得其灵魂"..
         "#使用后，花费8颗灵魂生产一团灵火"..
         "#灵火的血量和眼泪伤害基于怪物的最大血量",
-        BookOfVirtues = "翻倍生产的灵火"
+        BookOfVirtues = "翻倍生产的灵火",
+        BookOfBelial = "改为生成彼列之书的灵魂，同时继承灵火的血量"
     },
     [Collectibles.PlagueLord.Item] = {
         Name = "瘟疫领主",
@@ -508,7 +531,8 @@ EIDInfo.Collectibles = {
         Description = "处决附近的一个敌人"..
         "#会直接杀死小怪，对Boss造成大量破甲伤害，并将周围的敌人震开"..
         "#只能处决近距离的敌人。如果敌人生命值过低或处在异常状态，处决范围翻倍",
-        BookOfVirtues = "黑色火焰"
+        BookOfVirtues = "黑色灵火",
+        BookOfBelial = "↑ 击杀敌人后在10秒内{{Damage}}+1伤害"
     },
 
 
@@ -538,9 +562,10 @@ EIDInfo.Collectibles = {
         Name = "毗沙门天的宝塔",
         Description = "!!! 一次性 !!!"..
         "#{{Coin}} 需要钱币作为充能"..
-        "#将整层变为金色，并且将所有掉落物和便便变为金色版本"..
+        "#将整层变为金色，并且将所有掉落物和大便变为金色版本"..
         "#点金所有敌人5秒",
-        BookOfVirtues = "12个金色火焰，发射点金眼泪"
+        BookOfVirtues = "12个金色灵火，发射点金眼泪",
+        BookOfBelial = "↑ 在本层内{{Damage}}+12伤害"
     },
     [Collectibles.SorcerersScroll.Item] = {
         Name = "魔人经卷",
@@ -550,14 +575,14 @@ EIDInfo.Collectibles = {
         "#↑  {{Tears}}+0.2射速"..
         "#↑  {{Speed}}+0.03移速"..
         "#↑  {{Range}}+0.4射程",
-        BookOfVirtues = "咒文火焰，提升角色所有属性"
+        BookOfVirtues = "咒文灵火，提升角色所有属性"
     },
     [Collectibles.SaucerRemote.Item] = {
         Name = "飞碟遥控器",
         Description = "生成一个吸走掉落物和道具的UFO"..
         "#摧毁UFO后生成双倍奖励"..
         "#!!! 15秒后UFO逃走",
-        BookOfVirtues = "可以通过消耗3个颜色相同，或完全不同的UFO火焰来免费使用"
+        BookOfVirtues = "可以通过消耗3个颜色相同，或完全不同的UFO灵火来免费使用"
     },
 
     [Collectibles.TenguCellphone.Item] = {
@@ -567,7 +592,8 @@ EIDInfo.Collectibles = {
         "#货物根据当前房间类型决定"..
         "#购买后的货物会快递到下一层"..
         "#{{Collectible"..CollectibleType.COLLECTIBLE_STEAM_SALE.."}} 可被Steam大促降价",
-        BookOfVirtues = "点金泪弹"
+        BookOfVirtues = "点金泪弹",
+        BookOfBelial = "第一项商品需要生命来购买"
     },
     [Collectibles.EtherealArm.Item] = {
         Name = "虚无断臂",
@@ -593,7 +619,8 @@ EIDInfo.Collectibles = {
     [Collectibles.WarpingHairpin.Item] = {
         Name = "穿墙发簪",
         Description = "传送到一面墙对面的房间",
-        BookOfVirtues = "脆弱的金色火焰"
+        BookOfVirtues = "脆弱的金色灵火",
+        BookOfBelial = "↑ 穿墙后在本房间内获得{{Damage}}伤害上升"
     },
     [Collectibles.HolyThunder.Item] = {
         Name = "圣雷",
@@ -672,10 +699,11 @@ EIDInfo.Collectibles = {
     [Collectibles.MiracleMallet.Item] = {
         Name = "万宝槌",
         Description = "!!! 一次性 !!!"..
-        "#将本房间内的所有道具重置为{{Quality4}}品质4道具"..
+        "#将本房间内的所有道具重置为品质{{Quality4}}道具"..
         "#!!! 每重置一个道具，获得3颗{{BrokenHeart}}碎心"..
         "#将基础掉落物变为它们的变大版",
-        BookOfVirtues = "点金眼泪"
+        BookOfVirtues = "点金眼泪",
+        BookOfBelial = "如果在{{DevilRoom}}恶魔房使用，不再获得{{BrokenHeart}}碎心，改为{{BlackHeart}}+3黑心"
     },
     [Collectibles.ThunderDrum.Item] = {
         Name = "雷霆大鼓",
@@ -700,6 +728,10 @@ EIDInfo.Collectibles = {
         Name = "符文披风",
         Description = "↑  {{Shotspeed}}+0.16弹速"..
         "#掉落3个随机符文"
+    },
+    [Collectibles.THTRAINER.Item] = {
+        Name = "错误姬",
+        Description = "将所有{{SuperSecretRoom}}超级隐藏房替换为错误房"
     },
 
 
@@ -786,7 +818,8 @@ EIDInfo.Collectibles = {
         Name = "胎儿之血",
         Description = "生成一个为你而战的血骷髅"..
         "#数量上限等同于当前层数",
-        BookOfVirtues = "血肉灵火"
+        BookOfVirtues = "血肉灵火",
+        BookOfBelial = "生成恶魔骷髅仔"
     },
     [Collectibles.CockcrowWings.Item] = {
         Name = "啼日之翼",
@@ -876,7 +909,8 @@ EIDInfo.Collectibles = {
         "#血量交换基于双方的血量百分比"..
         "#!!! 无法将Boss的血量降低到25%以下"..
         "#如果角色没有心之容器，将小怪变为错误店主，或将Boss的血量变为25%",
-        BookOfVirtues = "吸血灵火"
+        BookOfVirtues = "吸血灵火",
+        BookOfBelial = "发射黑色勾玉，击中目标后额外吸取50%的生命"
     },
     [Collectibles.FoxInTube.Item] = {
         Name = "管中狐",
@@ -897,7 +931,8 @@ EIDInfo.Collectibles = {
         Name = "交易所门票",
         Description = "将角色传送到交易所交易道具"..
         "#!!! 重新进入后所有内容都会被刷新",
-        BookOfVirtues = "生成的灵火能被用作绿宝石"
+        BookOfVirtues = "生成的灵火能被用作绿宝石",
+        BookOfBelial = "内含一个{{DevilRoom}}恶魔交易"
     },
     [Collectibles.CurseOfCentipede.Item] = {
         Name = "百足的诅咒",
@@ -917,7 +952,7 @@ EIDInfo.Collectibles = {
         "#按下"..EID.ButtonToIconMap[ButtonAction.ACTION_BOMB].."以发射炸弹"..
         "#按下"..EID.ButtonToIconMap[ButtonAction.ACTION_DROP].."以离开机甲"..
         "#按下"..EID.ButtonToIconMap[ButtonAction.ACTION_PILLCARD].."以自爆",
-        BookOfVirtues = "棕色心火，可以抵消一次机甲受伤"
+        BookOfVirtues = "棕色心形魂火，可以抵消一次机甲受伤"
     },
     [Collectibles.DSiphon.Item] = {
         Name="虹吸骰子",
@@ -931,7 +966,37 @@ EIDInfo.Collectibles = {
         Name = "梦魂",
         Description = "只会生成在回溯时的地下室I层的{{TreasureRoom}}宝箱房内"..
         "#移除妈妈房间的门，然后在以撒的房间生成一个通往梦境世界的垫子"
-    }
+    },
+
+    -- TH6 ALT
+    [Collectibles.FairyDust.Item] = {
+        Name = "妖精尘",
+        Description = "拥有3个妖精尘时飞行"..
+        "#怪物有几率掉落妖精尘"..
+        "#{{Luck}} 10运气：10%"..
+        "#!!! 所有玩家都拥有3个妖精尘时不再掉落"
+    },
+    [Collectibles.SpiritCannon.Item] = {
+        Name = "气功炮",
+        Description = "使用后："..
+        "#{{BrokenHeart}} +1碎心"..
+        "#{{Collectible118}} 在本房间内喷射巨型彩色硫磺火，持续5秒"..
+        "#每秒造成角色{{Damage}}伤害150倍的伤害",
+        BookOfVirtues = "射击时发射短程彩色激光的星星魂火"
+    },
+    [Collectibles.DaggerOfServants.Item] = {
+        Name = "从者之刃",
+        Description = "每进入4个新房间，移除角色最右侧的心，↑+0.6{{Damage}}伤害"..
+        "#{{BrokenHeart}} 可以移除碎心"..
+        "#!!! 不致死"
+    },
+    [Collectibles.Asthma.Item] = {
+        Name = "哮喘",
+        Description = "50%的概率将{{Heart}}心掉落物变为随机{{Card}}卡牌/{{Rune}}符文"..
+        "#45%的概率消失"..
+        "#5%的概率变为幸运币"..
+        "#!!! 由角色通过卡牌/道具生成的心不会被替换"
+    },
 }
 
 local EmptyBook= Collectibles.EmptyBook;
@@ -1111,7 +1176,16 @@ EIDInfo.Trinkets = {
         Description = "敌人死亡后有25%的几率掉落1颗临时{{Coin}}钱币"..
         "#Boss总会掉落3颗临时{{Coin}}钱币",
         GoldenInfo = {t={1, 3}}
-    }
+    },
+    [Trinkets.Snowflake.Trinket] = {
+        Name = "雪花",
+        Description = "当角色尝试拿起已经拥有的道具时，改为将其重置",
+    },
+    [Trinkets.HeartSticker.Trinket] = {
+        Name = "红心贴纸",
+        Description = "每当角色使用一张卡牌，生成1颗{{Heart}}红心",
+        GoldenInfo = {t={1}}
+    },
 };
 
 EIDInfo.RuneSword = {
@@ -1261,13 +1335,13 @@ EIDInfo.LunaticDescs = {
         [Collectibles.Starseeker.Item] = "选项只有两个",
         [Collectibles.BookOfYears.Item] = "有30%的几率不生成道具",
         [Collectibles.TenguCamera.Item] = "石化时间缩短到4秒",
-        --[Collectibles.RuneSword.Item] = "马骑符文地下室生成概率降低为每个符文+50%",
         [Collectibles.Pagota.Item] = "对怪物不再有点金效果",
         [Collectibles.ZombieInfestation.Item] = "怪物只有50%的几率生成友方复制",
         [Collectibles.D2147483647.Item] = "需要2充能转换成为主动道具，并且排除了{{Collectible" ..
             CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE .. "}}死亡证明",
         [Collectibles.TheInfamies.Item] = "不再魅惑Boss",
-        --[Collectibles.Hunger.Item] = "怪物不再掉落食物",
+        [Collectibles.RuneSword.Item] = "最多只能镶嵌6个符文",
+        [Collectibles.WildFury.Item] = "只影响{{Damage}}伤害",
     },
     Trinkets = {
         [Trinkets.FortuneCatPaw.Trinket] = "boss掉落钱币的概率变为60%",
@@ -1276,8 +1350,7 @@ EIDInfo.LunaticDescs = {
 
 EIDInfo.SeijaBuffs = {
     Collectibles = {
-        [CollectibleType.COLLECTIBLE_MY_REFLECTION] = "↓ x0.75{{Range}}射程"..
-        "#发射手里剑眼泪，穿透并穿墙，并且每帧对接触到的敌人造成伤害",
+        [CollectibleType.COLLECTIBLE_MY_REFLECTION] = "发射手里剑眼泪（仅为视觉效果）",
         [CollectibleType.COLLECTIBLE_SKATOLE] = "将所有苍蝇变为友方"..
         "#敌人死亡后生成1只蓝苍蝇",
         [CollectibleType.COLLECTIBLE_BOOM] = "额外+89炸弹",
@@ -1287,10 +1360,10 @@ EIDInfo.SeijaBuffs = {
         [CollectibleType.COLLECTIBLE_TELEPORT] = "依次传送至未访问的{{TreasureRoom}}宝箱房、{{UltraSecretRoom}}究极隐藏房、{{DevilRoom}}恶魔/{{AngelRoom}}天使房、错误房",
         [CollectibleType.COLLECTIBLE_BEAN] = "所有敌人放屁并中毒",
         [CollectibleType.COLLECTIBLE_DEAD_BIRD] = "击杀敌人后在本房间内生成一只死鸟",
-        [CollectibleType.COLLECTIBLE_RAZOR_BLADE] = "使用后{{Damage}}伤害翻倍并触发{{Card"..Card.CARD_SOUL_MAGDALENE.."}}抹大拉的魂石的效果",
+        [CollectibleType.COLLECTIBLE_RAZOR_BLADE] = "使用后{{Damage}}获得伤害倍率，并触发{{Card"..Card.CARD_SOUL_MAGDALENE.."}}抹大拉的魂石的效果",
         [CollectibleType.COLLECTIBLE_PAGEANT_BOY] = "拾取时额外生成镍币，铸币，金硬币和幸运币"..
         "#硬币有几率被替换为镍币、铸币、金硬币或幸运币",
-        [CollectibleType.COLLECTIBLE_BUM_FRIEND] = "50%的几率给予乞丐道具池的道具",
+        --[CollectibleType.COLLECTIBLE_BUM_FRIEND] = "50%的几率给予乞丐道具池的道具",
         [CollectibleType.COLLECTIBLE_INFESTATION] = "敌人受击后50%几率{{Poison}}中毒并生成1只蓝苍蝇",
         [CollectibleType.COLLECTIBLE_PORTABLE_SLOT] = "失败后50%几率获得1{{Coin}}硬币",
         [CollectibleType.COLLECTIBLE_BLACK_BEAN] = "受伤后周围敌人放屁并{{Poison}}中毒"..
@@ -1306,7 +1379,7 @@ EIDInfo.SeijaBuffs = {
         [CollectibleType.COLLECTIBLE_BEST_BUD] = "一直触发效果"..
         "#白苍蝇会击退靠近的敌人，并造成伤害和眩晕",
         [CollectibleType.COLLECTIBLE_ISAACS_HEART] = "心脏对怪物具有斥力",
-        [CollectibleType.COLLECTIBLE_D10] = "所有非首领敌人有80%的几率变为苍蝇",
+        --[CollectibleType.COLLECTIBLE_D10] = "所有非首领敌人有80%的几率变为苍蝇",
         [CollectibleType.COLLECTIBLE_BOOK_OF_SECRETS] = "连续使用四次",
         [CollectibleType.COLLECTIBLE_KEY_BUM] = "额外给予一把{{Collectible"..CollectibleType.COLLECTIBLE_LATCH_KEY.."}}弹簧锁钥匙",
         [CollectibleType.COLLECTIBLE_PUNCHING_BAG] = "将附近的敌人拉至身旁反复拳击",
@@ -1314,24 +1387,24 @@ EIDInfo.SeijaBuffs = {
         [CollectibleType.COLLECTIBLE_THE_JAR] = "清理房间后必定掉落随机心",
         [CollectibleType.COLLECTIBLE_STRANGE_ATTRACTOR] = "眼泪会持续电击周围敌人",
         [CollectibleType.COLLECTIBLE_CURSED_EYE] = "↑ 翻倍{{Tears}}射速",
-        [CollectibleType.COLLECTIBLE_CAINS_OTHER_EYE] = "朝最近的敌人射击硫磺火"..
-        "#进入下一层后，揭示本层形状",
+        -- [CollectibleType.COLLECTIBLE_CAINS_OTHER_EYE] = "朝最近的敌人射击硫磺火"..
+        -- "#进入下一层后，揭示本层形状",
         [CollectibleType.COLLECTIBLE_ISAACS_TEARS] = "只需一发眼泪即可满充能",
-        [CollectibleType.COLLECTIBLE_BREATH_OF_LIFE] = "充能不满时一直无敌",
-        [CollectibleType.COLLECTIBLE_BETRAYAL] = "进入房间后魅惑50%的怪物"..
-        "#受伤后，使用{{Card"..THI.Cards.SoulOfSatori.ID.."}}觉的魂石",
-        [CollectibleType.COLLECTIBLE_MY_SHADOW] = "敌人脚下不停生成黑蛆"..
-        "#黑蛆死亡后爆炸，不伤害角色",
+        --[CollectibleType.COLLECTIBLE_BREATH_OF_LIFE] = "充能不满时一直无敌",
+        -- [CollectibleType.COLLECTIBLE_BETRAYAL] = "进入房间后魅惑50%的怪物"..
+        -- "#受伤后，使用{{Card"..THI.Cards.SoulOfSatori.ID.."}}觉的魂石",
+        -- [CollectibleType.COLLECTIBLE_MY_SHADOW] = "敌人脚下不停生成黑蛆"..
+        -- "#黑蛆死亡后爆炸，不伤害角色",
         [CollectibleType.COLLECTIBLE_LINGER_BEAN] = "毒云出现频率更快，并且会自动飞向敌人",
         [CollectibleType.COLLECTIBLE_SHADE] = "进入房间后为每个敌人生成一个正邪的影子"..
-        "#对所有接触到的敌人造成每秒90点的接触伤害"..
+        "#造成每秒(2+1*层数)点接触伤害"..
         "#敌人死亡后影子消失",
         [CollectibleType.COLLECTIBLE_HUSHY] = "停滞时发射三条{{Collectible"..CollectibleType.COLLECTIBLE_CONTINUUM.."}}连续统泪弹链",
         [CollectibleType.COLLECTIBLE_PLAN_C] = "获得{{Collectible"..CollectibleType.COLLECTIBLE_1UP.."}}1UP!",
         [CollectibleType.COLLECTIBLE_DATAMINER] = "使用后："..
         "#↑ +0.1移速 ↑ +0.25射速"..
         "#↑ +0.5伤害 ↑ +0.75射程"..
-        "#↑ +0.5幸运",
+        "#↑ +0.5运气",
         [CollectibleType.COLLECTIBLE_CLICKER] = "生成一个品质{{Quality4}}的道具",
         [CollectibleType.COLLECTIBLE_SCOOPER] = "额外使用5次"..
         "#↑ 每次使用后+5伤害，每秒减少1.07点",
@@ -1340,19 +1413,31 @@ EIDInfo.SeijaBuffs = {
     
     
         [CollectibleType.COLLECTIBLE_BROWN_NUGGET] = "充能只需半秒",
-
-
         [CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER] = "不会受到爆炸伤害",
-        [CollectibleType.COLLECTIBLE_MISSING_NO] = "进入下一层后获得满魂心"..
-        "#不再遇到{{Collectible"..CollectibleType.COLLECTIBLE_TMTRAINER.."}}错误技",
-        [CollectibleType.COLLECTIBLE_OUIJA_BOARD] = "↑ +1{{Tears}}射速"..
-        "#穿透泪弹",
+        [CollectibleType.COLLECTIBLE_MISSING_NO] = "进入下一层后获得满魂心",
+        [CollectibleType.COLLECTIBLE_THE_WIZ] = "跟踪+穿透眼泪",
+        [CollectibleType.COLLECTIBLE_IBS] = "改为造成一定伤害后生成3个随机友方粪滴，并留下提供{{Tears}}射速和{{Damage}}伤害的液体",
+        [CollectibleType.COLLECTIBLE_TMTRAINER] = "将该道具替换成另一道具，改为将所有{{SuperSecretRoom}}超级隐藏房替换为错误房",
+        [CollectibleType.COLLECTIBLE_BATTERY_PACK] = "不再出现小电池，普通电池有5%的概率变为大电池"..
+        "#清理房间后有概率生成电池"..
+        "#运气15：100%",
+        [CollectibleType.COLLECTIBLE_LITTLE_BAGGY] = "将所有药丸变为大药丸"..
+        "#识别所有药丸",
+        [CollectibleType.COLLECTIBLE_BOX] = "25%的概率生成另一个{{Collectible"..CollectibleType.COLLECTIBLE_BOX.."}}盒子，否则生成一个随机道具池的道具",
+        [CollectibleType.COLLECTIBLE_QUARTER] = "当钱币不足25时，失去该道具并获得25{{Coin}}钱币",
+        [CollectibleType.COLLECTIBLE_SPIDERBABY] = "有几率射出蛛网泪弹，击中敌人后会生成蓝蜘蛛并生成蛛网，减速内部敌人"..
+        "#{{Luck}}运气8：50%",
+        [CollectibleType.COLLECTIBLE_LEMON_MISHAP] = "在本房间内下起酸雨，持续30秒"..
+        "#造成总共30%的破甲伤害+100点伤害"..
+        "#可以摧毁障碍物",
+        -- [CollectibleType.COLLECTIBLE_OUIJA_BOARD] = "↑ +1{{Tears}}射速"..
+        -- "#穿透泪弹",
+
         [CollectibleType.COLLECTIBLE_GLAUCOMA] = "额外概率发射眩晕眼泪"..
         "#眩晕眼泪击中敌人后会闪光，眩晕周围所有敌人并对其造成200%角色伤害，且消除附近的敌弹"..
-        "#9幸运时50%",
+        "#运气9：50%",
         [CollectibleType.COLLECTIBLE_TAURUS] = "{{Speed}}移速变为1.95",
-        [CollectibleType.COLLECTIBLE_THE_WIZ] = "跟踪+穿透眼泪",
-        [CollectibleType.COLLECTIBLE_ATHAME] = "黑色激光击杀敌人20%几率掉落黑心",
+        -- [CollectibleType.COLLECTIBLE_ATHAME] = "黑色激光击杀敌人20%几率掉落黑心",
         [Collectibles.GreenEyedEnvy.Item] = "分裂出的怪物被魅惑5分钟",
         [Collectibles.ViciousCurse.Item] = "不再伤害角色，+1魂心"..
         "#复原{{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}达摩克里斯之剑的更新速度"..
@@ -1372,18 +1457,19 @@ EIDInfo.SeijaNerfs = {
         [CollectibleType.COLLECTIBLE_IPECAC] = "回旋眼泪",
         [CollectibleType.COLLECTIBLE_EPIC_FETUS] = "导弹下落时间翻倍",
         [CollectibleType.COLLECTIBLE_POLYPHEMUS] = "↓ -25%{{Tears}}射速",
-        [CollectibleType.COLLECTIBLE_SACRED_HEART] = "↓ -50%{{Tears}}射速 ↓-0.5{{Speed}}移速 ↓-2.5{{Range}}射程 ↓-3{{Luck}}幸运"..
+        [CollectibleType.COLLECTIBLE_SACRED_HEART] = "↓ -50%{{Tears}}射速 ↓-0.5{{Speed}}移速 ↓-2.5{{Range}}射程 ↓-3{{Luck}}运气"..
         "#↑ +1{{Shotspeed}}弹速",
         [CollectibleType.COLLECTIBLE_PYROMANIAC] = "敌人受到爆炸伤害时改为恢复血量",
         [CollectibleType.COLLECTIBLE_STOP_WATCH] = "↓ -0.6{{Speed}}移速",
-        [CollectibleType.COLLECTIBLE_INFESTATION_2] = "怪物死亡时生成敌对蜘蛛",
+        -- [CollectibleType.COLLECTIBLE_INFESTATION_2] = "怪物死亡时生成敌对蜘蛛",
+        [CollectibleType.COLLECTIBLE_20_20] = "↓ 再-6.75%{{Damage}}伤害",
         [CollectibleType.COLLECTIBLE_PROPTOSIS] = "↓ -1{{Shotspeed}}弹速",
         [CollectibleType.COLLECTIBLE_SATANIC_BIBLE] = "使用后+1{{BrokenHeart}}碎心",
         [CollectibleType.COLLECTIBLE_HOLY_MANTLE] = "永久变为{{Player"..PlayerType.PLAYER_THELOST.."}}游魂",
         [CollectibleType.COLLECTIBLE_GODHEAD] = "↑ +2.3{{Shotspeed}}弹速",
         [CollectibleType.COLLECTIBLE_INCUBUS] = "↓ -25%{{Damage}}伤害",
         [CollectibleType.COLLECTIBLE_TECH_X] = "↑ +2{{Shotspeed}}弹速",
-        [CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID] = "被激光击杀的怪物爆炸",
+        -- [CollectibleType.COLLECTIBLE_MAW_OF_THE_VOID] = "被激光击杀的怪物爆炸",
         [CollectibleType.COLLECTIBLE_CROWN_OF_LIGHT] = "{{Heart}}红心逐渐流失",
         [CollectibleType.COLLECTIBLE_MEGA_BLAST] = "激光受{{Range}}射程影响",
         [CollectibleType.COLLECTIBLE_VOID] = "↓ 吸收一个道具后全属性略微下降",
@@ -1399,8 +1485,12 @@ EIDInfo.SeijaNerfs = {
         [CollectibleType.COLLECTIBLE_BAG_OF_CRAFTING] = "有75%的概率合成失败",
         [CollectibleType.COLLECTIBLE_FLIP] = "有50%的概率道具消失",
         [CollectibleType.COLLECTIBLE_SPINDOWN_DICE] = "随机将道具ID再减少0-2",
+        [CollectibleType.COLLECTIBLE_GHOST_PEPPER] = " ↓-8{{Luck}}运气",
+        [CollectibleType.COLLECTIBLE_HAEMOLACRIA] = "穿透泪弹",
+
         [CollectibleType.COLLECTIBLE_ROCK_BOTTOM] = "↑ 全属性翻倍，并在之后不再变化",
         [CollectibleType.COLLECTIBLE_HOLY_LIGHT] = "圣光只有33%角色伤害",
+        
         [Collectibles.DarkRibbon.Item] = "圈内的敌人死亡后生成敌对黑蛆",
         [Collectibles.VampireTooth.Item] = "所有心逐渐流失",
         [Collectibles.FanOfTheDead.Item] = "在上一个房间复活",

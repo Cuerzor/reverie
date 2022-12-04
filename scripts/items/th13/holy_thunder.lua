@@ -88,7 +88,6 @@ local function PostTearCollision(mod, tear, other, low)
             data.HitThisFrame = true;
         end
     end
-    
 end
 Thunder:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, PostTearCollision);
 

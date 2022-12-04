@@ -1,4 +1,6 @@
 local Instruments = THI.Instruments;
+local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local Keyboard = ModItem("Illusionary Keyboard", "ILLU_KEYBOARD");
 Keyboard.Config = {
@@ -9,6 +11,7 @@ Keyboard.Entity = {
     SpriteFilename=Isaac.GetItemConfig():GetCollectible(Keyboard.Item).GfxFileName;
 };
 Keyboard.WaveColor = Color(0,1,0,0.5,0,0,0);
+Keyboard.WaveColorDemonic = Color(0,0.5,0,0.5,0,0,0);
 
 function Keyboard.GetPlayerData(player, init)
     return Keyboard:GetData(player, init, function() return {
@@ -37,7 +40,10 @@ function Keyboard:PostPlayerUpdate(player)
 end
 
 function Keyboard:onUseItem(itemType, rng, player, flags, slot, data)
-    Instruments.CreateInstrument(player, player.Position, Keyboard.Entity.SubType, 300);
+    local instrument = Instruments.CreateInstrument(player, player.Position, Keyboard.Entity.SubType, 300);
+    if (Players.HasJudasBook(player)) then
+        instrument.State = 2;
+    end
 
     return { ShowAnim = true }
 end
@@ -55,12 +61,27 @@ function Keyboard:onKeyboardUpdate(effect)
         local range = Keyboard.Config.Range;
         local data = Instruments.GetInstrumentData(effect);
         if (data.WaveCooldown <= 0) then
-            Instruments.CreateMusicWave(effect, range* 2, range * 2, Keyboard.WaveColor)
+            
+            local demonic = effect.State == 2;
+            local color = Keyboard.WaveColor;
+            if( demonic) then
+                color = Keyboard.WaveColorDemonic
+            end
+            Instruments.CreateMusicWave(effect, range* 2, range * 2, color)
             Instruments.CreateNote(effect);
             data.WaveCooldown = 10;
-            for _, ent in pairs(Isaac.FindByType(EntityType.ENTITY_PROJECTILE)) do
+            for _, ent in pairs(Isaac.GetRoomEntities()) do
                 if (ent.Position:Distance(effect.Position) < range + ent.Size / 2) then
-                    ent:Remove();
+                    if (ent.Type == EntityType.ENTITY_PROJECTILE) then
+                        local projectile = ent:ToProjectile();
+                        if (not projectile:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER)) then
+                            ent:Remove();
+                        end
+                    elseif (Detection.IsValidEnemy(ent)) then
+                        if (demonic) then
+                            ent:AddFreeze ( EntityRef(effect), 10)
+                        end
+                    end
                 end
             end
         end

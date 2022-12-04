@@ -5,7 +5,8 @@ local Rods = ModItem("Dowsing Rods", "DOWSING_RODS");
 
 function Rods.GetRodsData(init)
     return Rods:GetGlobalData(init, function() return {
-        Rooms = {}
+        Rooms = {},
+        CurrentRoomIndex = nil
     }end)
 end
 function Rods.GetPlayerData(player, init)
@@ -17,76 +18,89 @@ function Rods.GetRoomKey(roomDesc)
     return roomDesc.ListIndex;
 end
 
+function Rods:SpawnReward(pos, seed)
+    local game = Game();
+    local room = game:GetRoom();
+    local rng = RNG();
+    rng:SetSeed(seed, 1);
+    local value = rng:RandomInt(100);
+    local vel = Vector.FromAngle(rng:RandomFloat() * 360);
+    local award = nil;
+    if (value < 10) then
+        award = Isaac.Spawn(EntityType.ENTITY_HARDY, 0, 0, pos, Vector.Zero, nil);
+        award:AddEntityFlags(EntityFlag.FLAG_AMBUSH);
+    elseif (value < 25) then
+        award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_BOMB, BombSubType.BOMB_DOUBLEPACK, pos, vel, nil);
+    elseif (value < 26) then
+        for i=1, 64 do
+            award = Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.BLUE_SPIDER, 0, pos, Vector.Zero, nil);
+        end
+    elseif (value < 65) then
+        award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_CHEST, 0, pos, vel, nil);
+    elseif (value < 85) then
+        award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LOCKEDCHEST, 0, pos, vel, nil);
+    elseif (value < 95) then
+        for i=1, 2 do
+            local spider = Isaac.Spawn(EntityType.ENTITY_ROCK_SPIDER, 1, 0, pos, vel, nil):ToNPC();
+            -- spider.State = 16;
+            -- spider.V1 = Vector(-5, 0);
+            spider:AddEntityFlags(EntityFlag.FLAG_AMBUSH);
+            vel = Vector.FromAngle(rng:RandomFloat() * 360);
+        end
+    elseif (value < 100) then
+        
+        local pool = game:GetItemPool();
+        local roomType = room:GetType();
+        local poolType = ItemPools:GetRoomPool(seed);
+        local id = pool:GetCollectible(poolType, true, seed);
+        award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero, nil);
+    end
+end
+
+
+
 local HasRods = false;
 function Rods:PostUpdate()
     HasRods = Collectbiles.IsAnyHasCollectible(Rods.Item);
-    local globalData = Rods.GetRodsData(false);
-    if (globalData) then
-        
-        local game = Game();
-        local room = game:GetRoom();
-        local level = game:GetLevel();
-        local roomDesc = level:GetCurrentRoomDesc();
-        local key = Rods.GetRoomKey(roomDesc);
-        local index = globalData.Rooms[key];
-        if (index) then
-            local gridEntity = room:GetGridEntity(index);
-            if (gridEntity) then
-                if (gridEntity.State ~= 1 or gridEntity:GetType() ~= GridEntityType.GRID_ROCK) then
+end
+Rods:AddCallback(ModCallbacks.MC_POST_UPDATE, Rods.PostUpdate)
+
+
+function Rods.PostGridUpdate(index, prevData, newData)
+    if (prevData.Type == GridEntityType.GRID_ROCK and prevData.State == 1) then
+        if (newData.Type ~= GridEntityType.GRID_ROCK or newData.State ~= 1) then
+            local globalData = Rods.GetRodsData(false);
+            if (globalData) then
+                local currentIndex = globalData.CurrentRoomIndex;
+                if (currentIndex and index == currentIndex) then -- If this room has treasure.
                     -- Spawn Award.
                     if (HasRods) then
-                        local gridDesc = gridEntity.Desc;
-                        local seed = gridDesc.SpawnSeed;
-                        local value = seed % 100;
-                        local pos =  gridEntity.Position;
-                        local award = nil;
-                        if (value < 10) then
-                            award = Isaac.Spawn(EntityType.ENTITY_HARDY, 0, 0, pos, Vector.Zero, nil);
-                            award:AddEntityFlags(EntityFlag.FLAG_AMBUSH);
-                        elseif (value < 25) then
-                            award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_BOMB, BombSubType.BOMB_DOUBLEPACK, pos, RandomVector(), nil);
-                        elseif (value < 26) then
-                            for i=1, 64 do
-                                award = Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.BLUE_SPIDER, 0, pos, Vector.Zero, nil);
-                            end
-                        elseif (value < 65) then
-                            award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_CHEST, 0, pos, RandomVector(), nil);
-                        elseif (value < 85) then
-                            award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LOCKEDCHEST, 0, pos, RandomVector(), nil);
-                        elseif (value < 95) then
-                            for i=1, 2 do
-                                local spider = Isaac.Spawn(EntityType.ENTITY_ROCK_SPIDER, 1, 0, pos, RandomVector(), nil);
-                                spider:AddEntityFlags(EntityFlag.FLAG_AMBUSH);
-                            end
-                        elseif (value < 100) then
-                            
-                            local pool = game:GetItemPool();
-                            local roomType = room:GetType();
-                            local poolType = ItemPools:GetPoolForRoom(roomType, seed);
-                            local id = pool:GetCollectible(poolType, true, seed);
-                            award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero, nil);
-                        end
+                        local seed = prevData.Seed;
+                        local pos =  prevData.Position;
+                        Rods:SpawnReward(pos, seed);
                     end
+
+                    local game = Game();
+                    local level = game:GetLevel();
+                    local roomDesc = level:GetCurrentRoomDesc();
+                    local key = Rods.GetRoomKey(roomDesc);
+                    globalData.CurrentRoomIndex = nil;
                     globalData.Rooms[key] = nil;
                 end
-            else
-                globalData.Rooms[key] = nil;
             end
         end
     end
 end
-Rods:AddCallback(ModCallbacks.MC_POST_UPDATE, Rods.PostUpdate)
+THI:OnGridUpdate(Rods.PostGridUpdate)
+
 
 function Rods:PostPlayerEffect(player)
     if (player:HasCollectible(Rods.Item)) then
         local globalData = Rods.GetRodsData(false);
         if (globalData) then
             
-            local room = THI.Game:GetRoom();
-            local level = THI.Game:GetLevel();
-            local roomDesc = level:GetCurrentRoomDesc();
-            local key = Rods.GetRoomKey(roomDesc);
-            local index = globalData.Rooms[key];
+            local room = Game():GetRoom();
+            local index = globalData.CurrentRoomIndex;
             if (index) then
                 local playerData = Rods.GetPlayerData(player, true);
                 local frameCount = room:GetFrameCount();
@@ -108,15 +122,16 @@ end
 Rods:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Rods.PostPlayerEffect)
 
 function Rods:PostNewRoom()
-    local room = THI.Game:GetRoom();
+    local game = Game();
+    local room = game:GetRoom();
+    local level = game:GetLevel();
+    local roomDesc = level:GetCurrentRoomDesc();
+    local key = Rods.GetRoomKey(roomDesc);
+    local globalData = Rods.GetRodsData(true);
     if (room:IsFirstVisit()) then
-        local level = THI.Game:GetLevel();
-        local roomDesc = level:GetCurrentRoomDesc();
-        local key = Rods.GetRoomKey(roomDesc);
-        local globalData = Rods.GetRodsData(true);
         globalData.Rooms[key] = nil;
         local seed = roomDesc.SpawnSeed;
-        if (seed % 100 < 75) then
+        if (seed % 100 < 40) then
 
             local size = room:GetGridSize();
             local rocks = {};
@@ -137,6 +152,8 @@ function Rods:PostNewRoom()
             end
         end
     end
+
+    globalData.CurrentRoomIndex = globalData.Rooms[key]
 end
 Rods:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Rods.PostNewRoom)
 
@@ -144,6 +161,7 @@ Rods:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Rods.PostNewRoom)
 function Rods:PostNewLevel()
     local globalData = Rods.GetRodsData(true);
     globalData.Rooms = {};
+    globalData.CurrentRoomIndex = nil;
 end
 Rods:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, Rods.PostNewLevel)
 

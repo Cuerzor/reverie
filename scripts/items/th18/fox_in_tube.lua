@@ -411,7 +411,7 @@ function Fox.PayFor(key, num, tryEscape)
             local seed = room:GetSpawnSeed();
             local pool = game:GetItemPool();
             local roomType = room:GetType();
-            local poolType = ItemPools:GetPoolForRoom(roomType, seed);
+            local poolType = ItemPools:GetRoomPool(seed);
             local id = pool:GetCollectible(poolType, true, seed);
             local col = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero,
                 nil):ToPickup();

@@ -5,6 +5,7 @@ local Detection = CuerLib.Detection;
 local HoldingActive = CuerLib.HoldingActive;
 local ItemPools = CuerLib.ItemPools;
 local Actives = CuerLib.Actives;
+local Players = CuerLib.Players;
 local Cellphone = ModItem("Tengu Cellphone", "HatateCellphone");
 
 local itemConfig = Isaac.GetItemConfig();
@@ -20,6 +21,7 @@ SelectionSprite:Play("Frame");
 local WebsiteSprite = Sprite();
 WebsiteSprite:Load("gfx/reverie/ui/ayazun.anm2", true);
 WebsiteSprite:Play("Ayazun");
+
 local maxContentCount = 3;
 
 local PurchaseStrings = {
@@ -415,9 +417,11 @@ local function IsPurchasing(player)
     return HoldingActive:GetHoldingItem(player) == Cellphone.Item;
 end
 function Cellphone.GetAyazunData(init)
-    return Cellphone:GetGlobalData(init, function() return {
-        Purchased = {}
-    }end)
+    return Cellphone:GetGlobalData(init, function() 
+        return {
+            Purchased = {}
+        }
+    end)
 end
 local function GetTempGlobalData(init)
     return Cellphone:GetTempGlobalData(init, function() return {
@@ -522,25 +526,36 @@ function Cellphone.GetRandomPickupSubType(variant, seed, cardKind)
     end
 end
 
-function Cellphone.GetOfferData(itemInfo, seed, hidden)
+function Cellphone.GetOfferData(itemInfo, seed, secret, devil)
     local variant = itemInfo.Variant;
     local subType = itemInfo.SubType or 0;
-    local itemPool = itemInfo.ItemPool;
+    local devilPrice = 1;
     
-    if (itemPool == nil or itemPool == ItemPoolType.POOL_NULL) then
-        local room = THI.Game:GetRoom();
-        itemPool = ItemPools:GetPoolForRoom(room:GetType(), seed);
-    end
-
-    if (itemPool == ItemPoolType.NUM_ITEMPOOLS) then
-        itemPool = seed % (ItemPoolType.NUM_ITEMPOOLS - 1) + 1;
-    end
     local sprite = Sprite();
     if (variant == PickupVariant.PICKUP_COLLECTIBLE) then
 
-        if (not itemConfig:GetCollectible(subType)) then
-            subType = itemPools:GetCollectible (itemPool, false, seed, CollectibleType.COLLECTIBLE_BREAKFAST);
+        local poolType = itemInfo.ItemPool;
+        if (poolType == nil or poolType == ItemPoolType.POOL_NULL) then
+            local room = THI.Game:GetRoom();
+            poolType = ItemPools:GetRoomPool(seed);
+        end
+    
+        if (poolType == ItemPoolType.NUM_ITEMPOOLS) then
+            poolType = seed % (ItemPoolType.NUM_ITEMPOOLS - 1) + 1;
+        end
+
+        if (devil) then
+            poolType = ItemPoolType.POOL_DEVIL;
+        end
+
+        local config = itemConfig:GetCollectible(subType);
+        if (not config) then
+            subType = itemPools:GetCollectible (poolType, false, seed, CollectibleType.COLLECTIBLE_BREAKFAST);
             itemPools:AddRoomBlacklist(subType);
+            config = itemConfig:GetCollectible(subType);
+        end
+        if (config) then
+            devilPrice = config.DevilPrice;
         end
         sprite:Load("gfx/005.100_collectible.anm2", false);
         sprite:ReplaceSpritesheet(1, Cellphone.GetCollectibleGfx(subType));
@@ -564,7 +579,7 @@ function Cellphone.GetOfferData(itemInfo, seed, hidden)
         sprite:Play(sprite:GetDefaultAnimation())
     end
     local price = Cellphone.GetItemPrice(variant, subType);
-    if (hidden) then
+    if (secret) then
         sprite:Load("gfx/005.100_collectible.anm2", false);
         sprite:ReplaceSpritesheet(1, "gfx/items/collectibles/questionmark.png");
         sprite:LoadGraphics();
@@ -575,7 +590,9 @@ function Cellphone.GetOfferData(itemInfo, seed, hidden)
         Variant = variant,
         SubType = subType,
         Sprite = sprite,
-        Price = price
+        Price = price,
+        DevilPrice = devilPrice,
+        PriceSprite = nil
     }
 end
 
@@ -609,8 +626,9 @@ function Cellphone.GenerateOffers()
     -- Always Appear Items.
     if (pool.Always) then
         for _, itemInfo in pairs(pool.Always) do
-            local hidden = roomType == RoomType.ROOM_ARCADE and itemInfo.Variant == PickupVariant.PICKUP_COLLECTIBLE;
-            local offer = Cellphone.GetOfferData(itemInfo, rng:Next(), hidden);
+            local secret = roomType == RoomType.ROOM_ARCADE and itemInfo.Variant == PickupVariant.PICKUP_COLLECTIBLE;
+            local devil = false;
+            local offer = Cellphone.GetOfferData(itemInfo, rng:Next(), secret, devil);
             table.insert(contents, offer);
             startIndex = startIndex + 1;
             if (startIndex > maxContentCount) then
@@ -623,9 +641,11 @@ function Cellphone.GenerateOffers()
         local weight = rng:RandomFloat() * totalWeight;
         for _, itemInfo in pairs(pool) do
             weight = weight - (itemInfo.Weight or 0);
-            local hidden = roomType == RoomType.ROOM_ARCADE and itemInfo.Variant == PickupVariant.PICKUP_COLLECTIBLE;
             if (weight <= 0) then
-                table.insert(contents, Cellphone.GetOfferData(itemInfo, rng:Next(), hidden));
+                local secret = roomType == RoomType.ROOM_ARCADE and itemInfo.Variant == PickupVariant.PICKUP_COLLECTIBLE;
+                local devil = false;
+                local offer = Cellphone.GetOfferData(itemInfo, rng:Next(), secret, devil);
+                table.insert(contents, offer);
                 goto nextContent;
             end
         end
@@ -650,12 +670,24 @@ function Cellphone.PurchaseItem(itemInfo)
     table.insert(globalData.Purchased, info);
 end
 
-function Cellphone.GetUpdatedPrice(player, origin)
-    if (player:HasCollectible(CollectibleType.COLLECTIBLE_STEAM_SALE)) then
-        local num = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE);
-        return math.max(math.floor(origin / (2 ^ num)), 1);
+function Cellphone.GetUpdatedPrice(player, index)
+    local contents = Cellphone.GetAyazunContent(false);
+    if (contents) then
+        local offer = contents[index];
+        local price = offer.Price;
+        if (player:HasCollectible(CollectibleType.COLLECTIBLE_STEAM_SALE)) then
+            local num = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE);
+            price = math.max(math.floor(price / (2 ^ num)), 1);
+        end
+        if (Players.HasJudasBook(player)) then
+            if (index == 1) then
+                local devilprice = offer.DevilPrice or 1;
+                price = Players:GetItemPrice(player, devilprice, offer.Variant, true)
+            end
+        end
+        return price;
     end
-    return origin;
+    return 0;
 end
 function Cellphone:Use(player)
     
@@ -666,8 +698,9 @@ function Cellphone:Use(player)
     else
         -- Selecting an offering.
         local itemInfo = contents[playerData.Selection];
-        local price = Cellphone.GetUpdatedPrice(player, itemInfo.Price);
-        if (player:GetNumCoins() >= price) then
+        local price = Cellphone.GetUpdatedPrice(player, playerData.Selection);
+        local dealResult = Players:Buy(player, price);
+        if (dealResult > 0) then
             HoldingActive:Cancel(player);
             player:AnimateCollectible(CollectibleType.COLLECTIBLE_MOVING_BOX, "Pickup");
             THI.SFXManager:Play(SoundEffect.SOUND_POWERUP3);
@@ -679,7 +712,6 @@ function Cellphone:Use(player)
 
             THI.Game:GetHUD():ShowItemText (titleString, descString);
             Cellphone.PurchaseItem(itemInfo);
-            player:AddCoins(-price)
 
             if (player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES)) then
                 player:AddWisp(Cellphone.Item, player.Position);
@@ -790,13 +822,29 @@ function Cellphone:PostRender()
                     offer.Sprite:Render(offerPos);
 
                     local originPrice = offer.Price;
-                    local price = Cellphone.GetUpdatedPrice(player, originPrice);
-                    local color = KColor(1,1,1,1);
-                    if (price < originPrice) then
-                        color.Green = 0;
-                        color.Blue = 0;
+                    local price = Cellphone.GetUpdatedPrice(player, o);
+
+                    if (price >= 0 or price == PickupPrice.PRICE_FREE) then -- Money Deal.
+                        if (price == PickupPrice.PRICE_FRE) then
+                            price = 0;
+                        end
+                        local color = KColor(1,1,1,1);
+                        if (price < originPrice) then
+                            color.Green = 0;
+                            color.Blue = 0;
+                        end
+                        priceFont:DrawStringUTF8(tostring(price).."¢", offerPos.X - 16, offerPos.Y + 8, color, 32, true)
+                    else -- Heart Deal.
+                        if (not offer.PriceSprite) then
+                            local spr = Sprite();
+                            spr:Load("gfx/reverie/ui/ayazun.anm2", true);
+                            spr:Play("HeartPrices");
+                            offer.PriceSprite = spr;
+                        end
+                        local priceSpr = offer.PriceSprite
+                        priceSpr:SetFrame("HeartPrices", -price - 1);
+                        priceSpr:Render(offerPos + Vector(0, 12), Vector.Zero, Vector.Zero);
                     end
-                    priceFont:DrawStringUTF8(tostring(price).."¢", offerPos.X - 16, offerPos.Y + 8, color, 32, true)
                 end
                 if (playerData.Selection > 0) then
                     selectionPos = pos + Vector((playerData.Selection - 1) * 32 - (offerCount - 1) * 16, -30); 
@@ -810,7 +858,7 @@ end
 Cellphone:AddCallback(ModCallbacks.MC_POST_RENDER, Cellphone.PostRender);
 
 function Cellphone:PostNewStage()
-    local globalData = Cellphone:GetAyazunData(false);
+    local globalData = Cellphone.GetAyazunData(false);
     if (globalData) then
         if (#globalData.Purchased > 0) then
             local game = THI.Game;

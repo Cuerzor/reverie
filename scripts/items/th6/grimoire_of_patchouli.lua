@@ -44,8 +44,7 @@ local RockFlag = Math.GetTearFlag(70);
 
 function Grimoire:GetPlayerData(player, init)
     return Grimoire:GetData(player, init, function() return {
-        Elements = {false,false,false,false,false,false,false},
-        ElementCount = 0
+        Elements = {false,false,false,false,false,false,false}
     } end);
 end
 
@@ -56,12 +55,14 @@ local function GetTempPlayerData(player, init)
 end
 
 function Grimoire:ClearEffects(player)
-    local data = Grimoire:GetPlayerData(player, true);
-    local tempData = GetTempPlayerData(player, true);
-    data.Elements = {false,false,false,false,false,false,false};
-    tempData.ElementCount = nil;
-    player:AddCacheFlags(CacheFlag.CACHE_TEARFLAG | CacheFlag.CACHE_TEARCOLOR);
-    player:EvaluateItems();
+    local data = Grimoire:GetPlayerData(player, false);
+    if (data) then
+        data.Elements = {false,false,false,false,false,false,false};
+        local tempData = GetTempPlayerData(player, true);
+        tempData.ElementCount = nil;
+        player:AddCacheFlags(CacheFlag.CACHE_TEARFLAG | CacheFlag.CACHE_TEARCOLOR);
+        player:EvaluateItems();
+    end
 end
 
 function Grimoire:GetElementCount(player)

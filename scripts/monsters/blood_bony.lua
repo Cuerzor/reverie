@@ -24,6 +24,11 @@ BloodBony.Variants = {
             LEVEL3 = 2
         }
     },
+    DEVIL_TEMPORARY =  {
+        Type = Isaac.GetEntityTypeByName("Devil Bony (Temporary)"), 
+        Variant = Isaac.GetEntityVariantByName("Devil Bony (Temporary)"),
+        SubType = 0
+    },
     FATTY =  {
         Type = Isaac.GetEntityTypeByName("Blood Big Bony"), 
         Variant = Isaac.GetEntityVariantByName("Blood Big Bony"),
@@ -46,9 +51,20 @@ function BloodBony:IsSoulBony(ent)
     local Soul = self.Variants.SOUL;
     return ent.Type == Soul.Type and ent.Variant == Soul.Variant
 end
+function BloodBony:IsTemporaryDevilBony(ent)
+    local DevilTemporary = self.Variants.DEVIL_TEMPORARY;
+    
+    if (ent.Type == DevilTemporary.Type and ent.Variant == DevilTemporary.Variant) then
+        return true;
+    end
+    return false;
+end
 function BloodBony:IsDevilBony(ent)
     local Devil = self.Variants.DEVIL;
-    return ent.Type == Devil.Type and ent.Variant == Devil.Variant
+    if (ent.Type == Devil.Type and ent.Variant == Devil.Variant) then
+        return true;
+    end
+    return BloodBony:IsTemporaryDevilBony(ent);
 end
 function BloodBony:IsBigBony(ent)
     local Fatty = self.Variants.FATTY;
@@ -112,7 +128,8 @@ function BloodBony:PostProjectileUpdate(tear)
             local data = GetBoneData(tear, true);
             if (not data.Inited) then
                 tear:SetColor(Color(1,0,0,1,0,0,0), -1, 99, false);
-                tear.CollisionDamage = playerDamage * 1.2 -5
+                -- Bones has +5 damage itself.
+                tear.CollisionDamage = playerDamage * 0.8 -5
                 data.Inited = true;
             end
         elseif (BloodBony:IsSoulBony(spawner)) then
@@ -332,6 +349,8 @@ local function PostEntityKill(mod, entity)
     local subtype = -1;
     if (BloodBony:IsSoulBony(entity)) then
         subtype = HeartSubType.HEART_SOUL;
+    elseif (BloodBony:IsTemporaryDevilBony(entity)) then
+        subtype = -1;
     elseif (BloodBony:IsDevilBony(entity)) then
         subtype = HeartSubType.HEART_BLACK;
     elseif (BloodBony:IsBigBony(entity)) then

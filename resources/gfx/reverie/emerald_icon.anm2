@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="2021/12/1 20:39:18" Version="6" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="2022/8/26 19:59:54" Version="7" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="monsters\traders.png" Id="0"/>
@@ -17,7 +17,7 @@
 			</RootAnimation>
 			<LayerAnimations>
 				<LayerAnimation LayerId="0" Visible="true">
-					<Frame XPosition="0" YPosition="-8" XPivot="32" YPivot="32" XCrop="192" YCrop="192" Width="64" Height="64" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+					<Frame XPosition="-10" YPosition="-8" XPivot="5" YPivot="8" XCrop="192" YCrop="192" Width="10" Height="16" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>

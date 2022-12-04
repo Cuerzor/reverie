@@ -1,7 +1,8 @@
 local Detection = CuerLib.Detection;
 local Bottle = ModEntity("Sake Bottle", "SAKE_BOTTLE");
-Bottle.SubType = 581;
+Bottle.SubType = 0;
 
+local particleColor = Color(0.2, 0.2, 0.1, 1, 0, 0, 0);
 
 local function GetGlobalData(create)
     return Bottle:GetGlobalData(create, function()
@@ -99,66 +100,158 @@ end
 Bottle:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, PostCurseEvaluate);
 
 
-local function PostPickupInit(mod, pickup)
-    if (pickup.SubType == Bottle.SubType) then
-        pickup.DepthOffset = 24;
-    end
-end
-Bottle:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, PostPickupInit, Bottle.Variant);
+-- local function PostPickupInit(mod, pickup)
+--     if (pickup.SubType == Bottle.SubType) then
+--         pickup.DepthOffset = 24;
+--         pickup:AddEntityFlags(EntityFlag.FLAG_APPLY_GRAVITY);
+--         pickup.TargetPosition = pickup.Position;
+--         pickup.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL;
+--         local spr = pickup:GetSprite();
+--         spr:Play("Idle");
+--     end
+-- end
+-- Bottle:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, PostPickupInit, Bottle.Variant);
 
-local function PostPickupUpdate(mod, pickup)
-    if (pickup.SubType == Bottle.SubType) then
-        local data = GetBottleData(pickup, false);
-        local spr = pickup:GetSprite();
-        if (data) then
-            if (data.LastTouched ~= data.Touched) then
-                
-                data.LastTouched = data.Touched;
-                if (data.Touched) then
-                    spr:Play("Drink");
-                else
-                    spr:Play("Restore");
-                end
-            end
+local function UpdateBottle(bottle)
+    local data = GetBottleData(bottle, false);
+    local spr = bottle:GetSprite();
+    if (data) then
+        if (data.LastTouched ~= data.Touched) then
+            
+            data.LastTouched = data.Touched;
             if (data.Touched) then
-                local player = data.TouchPlayer;
-
-                if (spr:IsFinished("Drink") and player) then
-                    spr:Play("Idle");
-                    THI.SFXManager:Play(SoundEffect.SOUND_VAMP_GULP);
-                    local level = Game():GetLevel();
-                    Bottle:SetForgottingStage(level:GetStage(), level:GetStageType());
-                    local flags = UseFlag.USE_MIMIC | UseFlag.USE_NOANIM;
-                    player:UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, flags, -1);
-                end
-
-                if (not player or player.Position:Distance(pickup.Position) > player.Size + pickup.Size + 5) then
-                    data.Touched = false;
-                    data.TouchPlayer = nil;
-                end
+                spr:Play("Drink");
+            else
+                spr:Play("Restore");
             end
         end
-        if (spr:IsFinished("Restore")) then
-            spr:Play("Idle");
-        end
-    end
-end
-Bottle:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate, Bottle.Variant);
+        if (data.Touched) then
+            local player = data.TouchPlayer;
 
-local function PrePickupCollision(mod, pickup, other, low)
-    if (pickup.SubType == Bottle.SubType) then
-        if (other.Type == EntityType.ENTITY_PLAYER and other.Variant == 0) then
-            local player = other:ToPlayer();
-            if (not player:IsCoopGhost()) then
-                local data = GetBottleData(pickup, true);
-                data.Touched = true;
-                data.TouchPlayer = player;
-                return true;
+            if (spr:IsFinished("Drink") and player) then
+                spr:Play("Idle");
+                THI.SFXManager:Play(SoundEffect.SOUND_VAMP_GULP);
+                local level = Game():GetLevel();
+                Bottle:SetForgottingStage(level:GetStage(), level:GetStageType());
+                local flags = UseFlag.USE_MIMIC | UseFlag.USE_NOANIM;
+                player:UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, flags, -1);
+            end
+
+            if (not player or player.Position:Distance(bottle.Position) > player.Size + bottle.Size + 5) then
+                data.Touched = false;
+                data.TouchPlayer = nil;
             end
         end
     end
+    if (spr:IsFinished("Restore")) then
+        spr:Play("Idle");
+    end
+
+    if (bottle.GridCollisionClass == EntityGridCollisionClass.GRIDCOLL_GROUND) then
+        THI:RemoveRecentRewards(bottle.Position);
+
+        bottle:Remove();
+        SFXManager():Play(SoundEffect.SOUND_POT_BREAK_2, 1);
+        SFXManager():Play(SoundEffect.SOUND_GASCAN_POUR, 1);
+
+        Game():SpawnParticles (bottle.Position, EffectVariant.ROCK_PARTICLE, 5, 5, particleColor);
+        local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_HOLYWATER, 0, bottle.Position, Vector.Zero, bottle):ToEffect();
+        
+        local creepScale = 1
+		creep:GetSprite():SetFrame("BiggestBlood0"..creep.InitSeed % 6, 0)
+
+        creep.LifeSpan = 280;
+        creep.Timeout = creep.LifeSpan;
+        creep.Scale = creepScale
+        creep.Size = creepScale
+        creep.SpriteScale = Vector.Zero
+        creep:Update();
+    end
 end
-Bottle:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, PrePickupCollision, Bottle.Variant)
+
+local function PostUpdate(mod)
+    for _, ent in ipairs(Isaac.FindByType(Bottle.Type, Bottle.Variant)) do
+        UpdateBottle(ent);
+    end
+end
+Bottle:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
+
+local function OnBottleTouch(player, slot)
+    if (player.Variant == 0 and not player:IsCoopGhost()) then
+        local data = GetBottleData(slot, true);
+        data.Touched = true;
+        data.TouchPlayer = player;
+    end
+end
+THI:OnSlotTouch(OnBottleTouch, Bottle.Variant)
+
+local function PrePlayerCollision(mod, player, other, low)
+    if (other.Type == Bottle.Type and other.Variant == Bottle.Variant) then
+        return true;
+    end
+end
+Bottle:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_PLAYER_COLLISION, PrePlayerCollision)
+
+-- local function PostPickupUpdate(mod, pickup)
+--     if (pickup.SubType == Bottle.SubType) then
+--         local data = GetBottleData(pickup, false);
+--         local spr = pickup:GetSprite();
+--         if (data) then
+--             if (data.LastTouched ~= data.Touched) then
+                
+--                 data.LastTouched = data.Touched;
+--                 if (data.Touched) then
+--                     spr:Play("Drink");
+--                 else
+--                     spr:Play("Restore");
+--                 end
+--             end
+--             if (data.Touched) then
+--                 local player = data.TouchPlayer;
+
+--                 if (spr:IsFinished("Drink") and player) then
+--                     spr:Play("Idle");
+--                     THI.SFXManager:Play(SoundEffect.SOUND_VAMP_GULP);
+--                     local level = Game():GetLevel();
+--                     Bottle:SetForgottingStage(level:GetStage(), level:GetStageType());
+--                     local flags = UseFlag.USE_MIMIC | UseFlag.USE_NOANIM;
+--                     player:UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, flags, -1);
+--                 end
+
+--                 if (not player or player.Position:Distance(pickup.Position) > player.Size + pickup.Size + 5) then
+--                     data.Touched = false;
+--                     data.TouchPlayer = nil;
+--                 end
+--             end
+--         end
+--         if (spr:IsFinished("Restore")) then
+--             spr:Play("Idle");
+--         end
+        
+--         local room = Game():GetRoom();
+--         if (room:GetType() ~= RoomType.ROOM_DUNGEON) then
+--             pickup.Velocity = pickup.TargetPosition - pickup.Position;
+--         end
+--     end
+-- end
+-- Bottle:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate, Bottle.Variant);
+
+-- local function PrePickupCollision(mod, pickup, other, low)
+--     if (pickup.SubType == Bottle.SubType) then
+--         if (other.Type == EntityType.ENTITY_PLAYER and other.Variant == 0) then
+--             local player = other:ToPlayer();
+--             if (not player:IsCoopGhost()) then
+--                 local data = GetBottleData(pickup, true);
+--                 data.Touched = true;
+--                 data.TouchPlayer = player;
+--                 return true;
+--             end
+--         elseif (other.Type == EntityType.ENTITY_PICKUP or other.Type == EntityType.ENTITY_MOVABLE_TNT) then
+--             return false;
+--         end
+--     end
+-- end
+-- Bottle:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, PrePickupCollision, Bottle.Variant)
 
 
 return Bottle;

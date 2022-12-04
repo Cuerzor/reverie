@@ -11,53 +11,65 @@
             attribute vec4 RenderData;
             attribute float Scale;
 
+            // Custom attributes
             attribute float Offset;
             attribute float Alpha;
             
-            varying float OffsetOut;
-            varying float AlphaOut;
             varying vec4 Color0;
             varying vec2 TexCoord0;
+            varying vec4 RenderDataOut;
+            varying float ScaleOut;
+
+            // Custom varying
+            varying float OffsetOut;
+            varying float AlphaOut;
 
             uniform mat4 Transform;
             void main(void)
             {
-                OffsetOut = Offset;
-                AlphaOut = Alpha;
                 Color0 = Color;
                 TexCoord0 = TexCoord;
+                RenderDataOut = RenderData;
+                ScaleOut = Scale;
+
+                OffsetOut = Offset;
+                AlphaOut = Alpha;
                 gl_Position = Transform * vec4(Position.xyz, 1.0);
             }
         ]]></vertex>
         <fragment><![CDATA[
             varying lowp vec4 Color0;
             varying mediump vec2 TexCoord0;
+            varying lowp vec4 RenderDataOut;
+            varying lowp float ScaleOut;
+
+            // Custom varying
             varying lowp float OffsetOut;
             varying lowp float AlphaOut;
+            
             uniform sampler2D Texture0;
 
             vec4 MaxColor(vec4 col1, vec4 col2)
             {
-                //return max(col1.rgba, col2.rgba);
-                return min(vec4(1,1,1,1), col1.rgba+ col2.rgba);
+                return min(vec4(1.0, 1.0, 1.0, 1.0), col1.rgba+ col2.rgba);
             }
             float lerp(float a, float b, float t)
             {
-                return a * (1-t) + b*t;
+                return a * (1.0 - t) + b*t;
             }
 
             void main(void)
             {
                 vec4 Color = Color0 * texture2D(Texture0, TexCoord0);
-                float alpha = 1 * AlphaOut;
-                if (alpha > 0) {
+                float alpha = AlphaOut;
+                if (alpha > 0.0) {
                     float offset = 0.05 * OffsetOut;
-                    vec4 down = Color0 * texture2D(Texture0, TexCoord0 + vec2(0, offset));
-                    vec4 up = Color0 * texture2D(Texture0, TexCoord0 + vec2(0, -offset));
-                    vec4 right = Color0 * texture2D(Texture0, TexCoord0 + vec2(offset, 0));
-                    vec4 left = Color0 * texture2D(Texture0, TexCoord0 + vec2(-offset, 0));
-                    float colorWeight = lerp(1, 0.2, alpha);
-                    float offsetWeight = lerp( 0, 0.2, alpha);
+                    vec4 down = Color0 * texture2D(Texture0, TexCoord0 + vec2(0.0, offset));
+                    vec4 up = Color0 * texture2D(Texture0, TexCoord0 + vec2(0.0, -offset));
+                    vec4 right = Color0 * texture2D(Texture0, TexCoord0 + vec2(offset, 0.0));
+                    vec4 left = Color0 * texture2D(Texture0, TexCoord0 + vec2(-offset, 0.0));
+                    float colorWeight = lerp(1.0, 0.2, alpha);
+                    float offsetWeight = lerp(0.0, 0.2, alpha);
                     Color = (down * offsetWeight + up * offsetWeight + right * offsetWeight + left * offsetWeight + Color * colorWeight);
                 }
                 gl_FragColor = Color;
@@ -77,19 +89,23 @@
 
             attribute float Alpha;
 
-            varying vec4 RenderDataOut;
-            varying float ScaleOut;
             varying vec4 Color0;
             varying vec2 TexCoord0;
+            varying vec4 RenderDataOut;
+            varying float ScaleOut;
             
             varying float AlphaOut;
 
             uniform mat4 Transform;
             void main(void)
             {
-                AlphaOut = Alpha;
                 Color0 = Color;
                 TexCoord0 = TexCoord;
+                RenderDataOut = RenderData;
+                ScaleOut = Scale;
+                
+                AlphaOut = Alpha;
+
                 gl_Position = Transform * vec4(Position.xyz, 1.0);
             }
         ]]></vertex>
@@ -105,11 +121,11 @@
             {
                 vec4 Color = Color0 * texture2D(Texture0, TexCoord0);
                 float a = AlphaOut;
-                if (a > 1){
-                    a = 1;
+                if (a > 1.0){
+                    a = 1.0;
                 }
-                else if (a < 0){
-                    a = 0;
+                else if (a < 0.0){
+                    a = 0.0;
                 }
                 Color.rgb += a;
                 gl_FragColor = Color;
@@ -128,20 +144,24 @@
             attribute float Scale;
 
             attribute float Alpha;
-            
-            varying vec4 RenderDataOut;
-            varying float ScaleOut;
+
             varying vec4 Color0;
             varying vec2 TexCoord0;
+            varying vec4 RenderDataOut;
+            varying float ScaleOut;
             
             varying float AlphaOut;
 
             uniform mat4 Transform;
             void main(void)
             {
-                AlphaOut = Alpha;
                 Color0 = Color;
                 TexCoord0 = TexCoord;
+                RenderDataOut = RenderData;
+                ScaleOut = Scale;
+                
+                AlphaOut = Alpha;
+
                 gl_Position = Transform * vec4(Position.xyz, 1.0);
             }
         ]]></vertex>
@@ -157,13 +177,13 @@
             {
                 vec4 Color = Color0 * texture2D(Texture0, TexCoord0);
                 float a = AlphaOut;
-                if (a > 1){
-                    a = 1;
+                if (a > 1.0){
+                    a = 1.0;
                 }
-                else if (a < 0){
-                    a = 0;
+                else if (a < 0.0){
+                    a = 0.0;
                 }
-                Color.rgb *= 1-a;
+                Color.rgb *= 1.0 - a;
                 gl_FragColor = Color;
             }
         ]]></fragment>
@@ -178,18 +198,24 @@
             
             varying vec4 Color0;
             varying vec2 TexCoord0;
+            varying vec4 RenderDataOut;
+            varying float ScaleOut;
 
             uniform mat4 Transform;
             void main(void)
             {
                 Color0 = Color;
                 TexCoord0 = TexCoord;
+                RenderDataOut = RenderData;
+                ScaleOut = Scale;
                 gl_Position = Transform * vec4(Position.xyz, 1.0);
             }
         ]]></vertex>
         <fragment><![CDATA[
             varying lowp vec4 Color0;
             varying mediump vec2 TexCoord0;
+            varying vec4 RenderDataOut;
+            varying float ScaleOut;
             uniform sampler2D Texture0;
             void main(void)
             {

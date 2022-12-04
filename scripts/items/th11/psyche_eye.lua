@@ -27,8 +27,11 @@ function PsycheEye:OnEvaluateCache(player, cache)
                 index = index + 1;
             end
         end
-        local playerData = EyeFam.GetPlayerData(player, true);
-        playerData.EyeCount = index - 1;
+        local playerData = EyeFam.GetPlayerData(player, false);
+        if (index > 1 or playerData) then
+            playerData = EyeFam.GetPlayerData(player, true);
+            playerData.EyeCount = index - 1;
+        end
     end
 end
 PsycheEye:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, PsycheEye.OnEvaluateCache)

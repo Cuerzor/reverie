@@ -1,4 +1,5 @@
 local ItemPools = CuerLib.ItemPools;
+local Players = CuerLib.Players;
 local BookOfYears = ModItem("Book of Years", "BookOfYears")
 
 local config = Isaac.GetItemConfig();
@@ -40,22 +41,29 @@ function BookOfYears:onPlayerUpdate(player)
                 local spawnSeed = room:GetSpawnSeed();
                 local globalData = BookOfYears.GetBookGlobalData(true);
 
+                local spawnRng = player:GetCollectibleRNG(BookOfYears.Item);
+
                 if (THI.IsLunatic()) then
-                    local spawnRng = RNG();
-                    spawnRng:SetSeed(globalData.SpawnSeed, 0);
                     local value = spawnRng:RandomInt(100);
-                    local seed = spawnRng:Next();
                     canSpawn = value > 30;
-                    globalData.SpawnSeed = seed;
                 end
 
                 if (canSpawn) then
                     local itemPool = Game():GetItemPool();
-                    local poolType = math.max(0, ItemPools:GetPoolForRoom(room:GetType(), spawnSeed));
-                    local newId = itemPool:GetCollectible (poolType, true, spawnSeed, CollectibleType.COLLECTIBLE_BREAKFAST)
+                    local itemId = CollectibleType.COLLECTIBLE_BREAKFAST;
+                    local poolSeed = spawnRng:Next();
+                    if (Players.HasJudasBook(player) and spawnRng:RandomInt(100) < 50) then
+                        local poolType = ItemPoolType.POOL_DEVIL;
+                        itemId = itemPool:GetCollectible (poolType, true, poolSeed, CollectibleType.COLLECTIBLE_BREAKFAST)
+                    end
+
+                    if (itemId == CollectibleType.COLLECTIBLE_BREAKFAST) then
+                        local poolType = math.max(0, ItemPools:GetRoomPool(poolSeed));
+                        itemId = itemPool:GetCollectible (poolType, true, poolSeed)
+                    end
                     
                     local pos = room:FindFreePickupSpawnPosition (player.Position, 0, true);
-                    Isaac.Spawn(5, 100, newId, pos, Vector.Zero, player);
+                    Isaac.Spawn(5, 100, itemId, pos, Vector.Zero, player);
                 else
                     THI.SFXManager:Play(SoundEffect.SOUND_THUMBS_DOWN);
                 end

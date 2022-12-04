@@ -16,14 +16,20 @@ local EmeraldSprite = Sprite();
 EmeraldSprite:Load("gfx/reverie/emerald_icon.anm2", true);
 EmeraldSprite:Play("Icon");
 
-function Ticket.GetPlayerData(player, init)
-    return Ticket:GetData(player, init, function() return {
+function Ticket:GetExchangeData(init)
+    return self:GetTempGlobalData(init, function() return {
+        Belial = false
+    } end)
+end
+
+function Ticket:GetPlayerData(player, init)
+    return self:GetData(player, init, function() return {
         Emeralds = 0
     } end)
 end
 
-function Ticket.GetEmeralds(player, wisps)
-    local data = Ticket.GetPlayerData(player, false);
+function Ticket:GetEmeralds(player, wisps)
+    local data = self:GetPlayerData(player, false);
     local emeralds = (data and data.Emeralds) or 0;
     if (wisps == true) then
         emeralds = 0;
@@ -39,11 +45,11 @@ function Ticket.GetEmeralds(player, wisps)
     return emeralds;
 end
 
-function Ticket.AddEmeralds(player, value)
-    local data = Ticket.GetPlayerData(player, true);
+function Ticket:AddEmeralds(player, value)
+    local data = self:GetPlayerData(player, true);
     
     if (value < 0) then
-        for _, ent in pairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, FamiliarVariant.WISP, Ticket.Item)) do
+        for _, ent in pairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, FamiliarVariant.WISP, self.Item)) do
             if (not ent:IsDead() and ent:Exists() and CompareEntity(ent:ToFamiliar().Player, player)) then
                 value = value + 1;
                 ent:Kill();
@@ -53,19 +59,19 @@ function Ticket.AddEmeralds(player, value)
     data.Emeralds = data.Emeralds + value;
 end
 
-function Ticket.IsExchange(type, variant)
-    local room = THI.Game:GetRoom();
-    local level = THI.Game:GetLevel();
+function Ticket:IsExchange(type, variant)
+    local room = Game():GetRoom();
+    local level = Game():GetLevel();
     local desc = level:GetCurrentRoomDesc();
     local config = desc.Data;
 
     type = type or config.Type;
     variant = variant or config.Variant;
 
-    return type == Ticket.Exchange.Type and variant == Ticket.Exchange.Variant;
+    return type == self.Exchange.Type and variant == self.Exchange.Variant;
 end
 function Ticket.PostNewRoom()
-    if (Ticket.IsExchange()) then
+    if (Ticket:IsExchange()) then
         local game = Game();
         local room = game:GetRoom();
 
@@ -101,6 +107,19 @@ function Ticket.PostNewRoom()
             end
         end
         Trader.ClearSpawnCache()
+
+        
+        local data = Ticket:GetExchangeData(false);
+        if (data and data.Belial) then
+            local center = room:GetCenterPos();
+            local itemPool = game:GetItemPool();
+            local id = itemPool:GetCollectible(ItemPoolType.POOL_DEVIL, true, room:GetSpawnSeed());
+            local pos = room:FindFreePickupSpawnPosition(center);
+            local item = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero, nil):ToPickup();
+            item.ShopItemId = -2;
+            item.Price = -1;
+            data.Belial = false;
+        end
     end
 end
 Ticket:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Ticket.PostNewRoom);
@@ -111,7 +130,11 @@ function Ticket:PostUseTicket(item, rng, player, flags, slot, varData)
     
     if (not beastExists) then
         THI.GotoRoom("s.chest."..Ticket.Exchange.Variant);
-        THI.Game:StartRoomTransition (-3, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT, player);
+        Game():StartRoomTransition (-3, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT, player);
+        if (Players.HasJudasBook(player)) then
+            local data = Ticket:GetExchangeData(true);
+            data.Belial = true;
+        end
     else
         local room = Game():GetRoom();
         local pos = room:GetRandomPosition(160);
@@ -121,16 +144,16 @@ end
 Ticket:AddCallback(ModCallbacks.MC_USE_ITEM, Ticket.PostUseTicket, Ticket.Item);
 
 function Ticket:PostRender()
-    local game = THI.Game;
+    local game = Game();
     for p, player in Detection.PlayerPairs() do
-        if (Ticket.IsExchange()) then
+        if (Ticket:IsExchange()) then
             local pos = Screen.GetEntityRenderPosition(player, Vector(6, 32))
             EmeraldSprite:Render(pos);
 
-            local str = tostring(Ticket.GetEmeralds(player, false));
+            local str = tostring(Ticket:GetEmeralds(player, false));
             EmeraldFont:DrawString(str, pos.X, pos.Y - 16, KColor.White);
             
-            local wispEmeralds = Ticket.GetEmeralds(player, true);
+            local wispEmeralds = Ticket:GetEmeralds(player, true);
             if (wispEmeralds > 0) then
                 EmeraldFont:DrawString("+"..wispEmeralds, pos.X + EmeraldFont:GetStringWidth(str) + 4, pos.Y - 16, KColor.Green);
             end
@@ -141,7 +164,7 @@ Ticket:AddCallback(ModCallbacks.MC_POST_RENDER, Ticket.PostRender);
 
 -- function Ticket.PreGameExit(shouldSave)
 --     if (shouldSave) then
---         if (Ticket.IsExchange()) then
+--         if (Ticket:IsExchange()) then
 --             local level = THI.Game:GetLevel()
 --             local lastRoom = level:GetLastRoomDesc ( )
 --             print(lastRoom.SafeGridIndex);
