@@ -2489,3 +2489,7 @@ Greed Shop: Added D Flip
 12.3.0-2022.12.7
 -Added Eye of Chimera.
 -加入了嵌体怪之眼。
+
+12.3.1-2022.12.7
+-Fixed some issues about Eye of Chimera.
+-修复了嵌体怪之眼的某些BUG。

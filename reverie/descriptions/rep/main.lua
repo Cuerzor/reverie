@@ -162,8 +162,8 @@ end
 for i = 0, 12 do
     EID:addIcon("Reverie_Charge"..i, "Charges", i, 12, 12, 5, 6, tagIconSprite)
 end
-EID:addIcon("Reverie_ChargeTimed", "Charges", 13, 12, 12, 5, 6, tagIconSprite)
-EID:addIcon("Reverie_ChargeUnknown", "Charges", 14, 12, 12, 5, 6, tagIconSprite)
+EID:addIcon("Reverie_ChargeTimed", "Charges", 14, 12, 12, 5, 6, tagIconSprite)
+EID:addIcon("Reverie_ChargeUnknown", "Charges", 13, 12, 12, 5, 6, tagIconSprite)
 
 -- Transformation Assignations.
 local Collectibles = THI.Collectibles;

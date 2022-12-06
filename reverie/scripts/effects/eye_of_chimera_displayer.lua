@@ -110,9 +110,9 @@ function Displayer:PostEffectRender(effect, offset)
                 if (chargeType == ItemConfig.CHARGE_NORMAL) then
                     spr:SetFrame("Charges", charges)
                 elseif (chargeType == ItemConfig.CHARGE_TIMED) then
-                    spr:SetFrame("Charges", 15)
-                else
                     spr:SetFrame("Charges", 14)
+                else
+                    spr:SetFrame("Charges", 13)
                 end
                 spr:Render(chargePos, Vector.Zero, Vector.Zero);
             end
