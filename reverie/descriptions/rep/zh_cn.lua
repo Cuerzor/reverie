@@ -13,7 +13,8 @@ local Players = THI.Players;
 local EIDInfo = {};
 
 EIDInfo.Entries = {
-    ["Lunatic"] = "{{ColorPurple}}疯狂模式{{CR}}："
+    ["Lunatic"] = "{{ColorPurple}}疯狂模式{{CR}}：",
+    ["UnknownItem"] = "未知道具"
 }
 
 EIDInfo.Transformations = {
@@ -992,10 +993,15 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.Asthma.Item] = {
         Name = "哮喘",
-        Description = "50%的概率将{{Heart}}心掉落物变为随机{{Card}}卡牌/{{Rune}}符文"..
-        "#45%的概率消失"..
-        "#5%的概率变为幸运币"..
+        Description = "40%的概率将{{Heart}}心掉落物变为随机{{Card}}卡牌/{{Rune}}符文"..
+        "#20%的概率变为幸运币"..
         "#!!! 由角色通过卡牌/道具生成的心不会被替换"
+    },
+    [Collectibles.EyeOfChimera.Item] = {
+        Name = "嵌体怪之眼",
+        Description = "使用后重置本房间内的所有道具"..
+        "#持有时永久具有{{CurseBlind}}致盲诅咒"..
+        "#你可以看到未知道具的品质、充能、标签"
     },
 }
 
@@ -1290,7 +1296,41 @@ EIDInfo.Pills = {
         "#大药丸不会消耗",
     }
 }
-
+EIDInfo.Tags = {
+    [0] = "{{Reverie_TagDead}} 死掉的物体，用于解锁{{Collectible104}}寄生虫",
+    [1] = "{{Reverie_TagSyringe}} 嗑药套装",
+    [2] = "{{Reverie_TagMom}} 妈妈套装",
+    [3] = "{{Reverie_TagTech}} 科技道具，用于解锁{{Collectible524}}科技零",
+    [4] = "{{Reverie_TagBattery}} 电池道具，用于解锁{{Collectible520}}跨接电缆",
+    [5] = "{{Reverie_TagGuppy}} 嗝屁猫套装",
+    [6] = "{{Reverie_TagFly}} 苍蝇套装",
+    [7] = "{{Reverie_TagBob}} 鲍勃套装",
+    [8] = "{{Reverie_TagMushroom}} 蘑菇套装",
+    [9] = "{{Reverie_TagBaby}} 连体套装",
+    [10] = "{{Reverie_TagAngel}} 天使套装",
+    [11] = "{{Reverie_TagDevil}} 恶魔套装",
+    [12] = "{{Reverie_TagPoop}} 便便套装",
+    [13] = "{{Reverie_TagBook}} 书虫套装",
+    [14] = "{{Reverie_TagSpider}} 蜘蛛套装",
+    [15] = "{{Reverie_TagQuest}} 任务道具",
+    [16] = "{{Reverie_TagMonsterManual}} 可以被{{Collectible123}}怪物手册召唤",
+    [17] = "{{Reverie_TagNoGreed}} 不会出现在贪婪模式中",
+    [18] = "{{Reverie_TagFood}} 食物道具，可以被{{Collectible664}}大胃王生成",
+    [19] = "{{Reverie_TagTearsUp}} 增加射速，用于解锁{{Collectible532}}食泪症",
+    [20] = "{{Reverie_TagOffensive}} 可以被{{Player31}}堕化游魂遇到",
+    [21] = "{{Reverie_TagNoKeeper}} {{Player14}}店主和{{Player33}}堕化店主不会遇到该道具",
+    [22] = "{{Reverie_TagNoLostBr}} {{Player10}}游魂在具有{{Collectible619}}长子名分时不会遇到该道具",
+    [23] = "{{Reverie_TagStars}} 星星道具，用于解锁{{Planetarium}}星象房",
+    [24] = "{{Reverie_TagSummonable}} 可以被{{Collectible712}}所罗门魔典召唤，或被{{Trinket166}}塑性粘土所模仿",
+    [25] = "{{Reverie_TagNoCantrip}} 不会出现在挑战43“大量过牌！”中",
+    [26] = "{{Reverie_TagWisp}} 具有对应的{{Collectible584}}美德之书魂火",
+    [27] = "{{Reverie_TagUniqueFamiliar}} 是只能存在一个的独特跟班",
+    [28] = "{{Reverie_TagNoChallenge}} 挑战中不会出现",
+    [29] = "{{Reverie_TagNoDaily}} 每日挑战中不会出现",
+    [30] = "{{Reverie_TagLazShared}} {{Player29}}堕化拉撒路的两个形态共享该效果",
+    [31] = "{{Reverie_TagLazSharedGlobal}} {{Player29}}堕化拉撒路的两个形态共享该{{ColorYellow}}全局{{CR}}效果",
+    [32] = "{{Reverie_TagNoEden}} {{Player9}}伊甸不会随机出该道具"
+}
 
 EIDInfo.Birthrights = {
     [Players.Eika.Type] = {

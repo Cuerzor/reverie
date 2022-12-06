@@ -117,6 +117,53 @@ EID:addIcon("Player"..Players.SatoriB.Type, "Players", 3, 12, 12, -1, 1, playerS
 EID:addIcon("Player"..Players.Seija.Type, "Players", 4, 12, 12, -1, 1, playerSprite);
 EID:addIcon("Player"..Players.SeijaB.Type, "Players", 5, 12, 12, -1, 1, playerSprite);
 
+local TagIcons = {
+    [0] = "Dead",					-- Dead things (for the Parasite unlock)
+    [1] = "Syringe",				-- Syringes (for Little Baggy and the Spun! transformation)
+    [2] = "Mom",					-- Mom's things (for Mom's Contact and the Yes Mother? transformation)
+    [3] = "Tech",				-- Technology items (for the Technology Zero unlock)
+    [4] = "Battery",				-- Battery items (for the Jumper Cables unlock)
+    [5] = "Guppy",				-- Guppy items (Guppy transformation)
+    [6] = "Fly",					-- Fly items (Beelzebub transformation)
+    [7] = "Bob",					-- Bob items (Bob transformation)
+    [8] = "Mushroom",			-- Mushroom items (Fun Guy transformation)
+    [9] = "Baby",				-- Baby items (Conjoined transformation)
+    [10] = "Angel",				-- Angel items (Seraphim transformation)
+    [11] = "Devil",				-- Devil items (Leviathan transformation)
+    [12] = "Poop",				-- Poop items (Oh Shit transformation)
+    [13] = "Book",				-- Book items (Book Worm transformat)
+    [14] = "Spider",				-- Spider items (Spider Baby transformation)
+    [15] = "Quest",				-- Quest item (cannot be rerolled or randomly obtained)
+    [16] = "MonsterManual",		-- Can be spawned by Monster Manual
+    [17] = "NoGreed",			-- Cannot appear in Greed Mode
+    [18] = "Food",				-- Food item (for Binge Eater)
+    [19] = "TearsUp",			-- Tears up item (for Lachryphagy unlock detection)
+    [20] = "Offensive",			-- Whitelisted item for Lost B
+    [21] = "NoKeeper",			-- Blacklisted item for Keeper/Keeper B
+    [22] = "NoLostBr",			-- Blacklisted item for Lost's Birthright
+    [23] = "Stars",				-- Star themed items (for the Planetarium unlock)
+    [24] = "Summonable",			-- Summonable items (for Bethany B)
+    [25] = "NoCantrip",			-- Can't be obtained in Cantripped challenge
+    [26] = "Wisp",				-- Active items that have wisps attached to them (automatically set)
+    [27] = "UniqueFamiliar",	-- Unique familiars that cannot be duplicated
+    [28] = "NoChallenge",		-- Items that shouldn't be obtainable in challenges
+    [29] = "NoDaily",			-- Items that shouldn't be obtainable in daily runs
+    [30] = "LazShared",			-- Items that should be shared between Tainted Lazarus' forms
+    [31] = "LazSharedGlobal",	-- Items that should be shared between Tainted Lazarus' forms but only through global checks (such as PlayerManager::HasCollectible)
+    [32] = "NoEden",			-- Items that can't be randomly rolled
+}
+
+local tagIconSprite = Sprite();
+tagIconSprite:Load("gfx/reverie/ui/tag_icons.anm2", true)
+for id, name in pairs(TagIcons) do
+    EID:addIcon("Reverie_Tag"..name, "Tags", id, 16, 16, 7, 6, tagIconSprite)
+end
+
+for i = 0, 12 do
+    EID:addIcon("Reverie_Charge"..i, "Charges", i, 12, 12, 5, 6, tagIconSprite)
+end
+EID:addIcon("Reverie_ChargeTimed", "Charges", 13, 12, 12, 5, 6, tagIconSprite)
+EID:addIcon("Reverie_ChargeUnknown", "Charges", 14, 12, 12, 5, 6, tagIconSprite)
 
 -- Transformation Assignations.
 local Collectibles = THI.Collectibles;
@@ -288,6 +335,13 @@ local function LoadEID(language)
             descriptions.reverieSeijaNerfs["100."..id] = desc;
         end
         descriptions.reverieSeijaNerfs["Modded"] = EIDInfo.SeijaNerfs.Modded;
+    end
+
+    do -- Tag Descriptions
+        descriptions.reverieTagDescs = {}
+        for id, desc in pairs(EIDInfo.Tags) do
+            descriptions.reverieTagDescs[id] = desc;
+        end
     end
 end
 
@@ -592,4 +646,75 @@ do
     EID:addDescriptionModifier("reverieSeijaBuffs", SeijaBuffCondition, SeijaBuffCallback);
     EID:addDescriptionModifier("reverieSeijaNerfs", SeijaNerfCondition, SeijaNerfCallback);
     
+end
+
+
+-- Seija.
+do
+    local itemConfig = Isaac.GetItemConfig();
+    local function GetItemTagDescription(config)
+        local desc = "";
+        if (config) then
+            local tags = config.Tags;
+            local i = 0;
+            while (tags > 0) do
+                if (tags & 1 > 0 and i ~= 26) then
+                    desc = desc..EID:getDescriptionEntry("reverieTagDescs", i).."#";
+                end
+                i = i + 1;
+                tags = tags >> 1
+            end
+        end
+        return desc;
+    end
+
+    local function onRender()
+        if (EID.isDisplaying) then
+            local Chimera = THI.Collectibles.EyeOfChimera;
+            if (Chimera.HasEye) then
+                
+                local descObj = EID.previousDescs[1];
+                local ent = descObj and descObj.Entity;
+                if (ent and ent.Type == EntityType.ENTITY_PICKUP and ent.Variant == PickupVariant.PICKUP_COLLECTIBLE) then
+                    if (descObj.Description == "QuestionMark" and THI:IsUnknownItem(ent)) then
+                        local config = itemConfig:GetCollectible(ent.SubType);
+
+                        if (config) then
+                            
+                            local pos = EID:getTextPosition() + Vector(0, 0);
+                            local scale = Vector(EID.Scale, EID.Scale);
+                            local color = EID:getNameColor();
+
+                            local charge = "";
+                            if (config.Type == ItemType.ITEM_ACTIVE) then
+                                if (config.ChargeType == ItemConfig.CHARGE_NORMAL) then
+                                    charge = "{{Reverie_Charge"..config.MaxCharges.."}}"
+                                elseif (config.ChargeType == ItemConfig.CHARGE_TIMED) then
+                                    charge = "{{Reverie_ChargeTimed}}"
+                                else
+                                    charge = "{{Reverie_ChargeUnknown}}"
+                                end
+                            end
+
+                            local unknownStr = EID:getDescriptionEntry("reverieEntries", "UnknownItem")
+
+                            EID:renderString(charge..unknownStr.." {{Quality"..config.Quality.."}}", pos + Vector(12,0), scale, color)
+
+
+                            local color = EID:getTextColor();
+                            pos = pos + Vector(0, 16);
+
+                            local desc = GetItemTagDescription(config);
+
+                            local lineHeight = EID.lineHeight;
+                            EID.lineHeight = EID.Config["LineHeight"];
+                            EID:printBulletPoints(desc, pos);
+                            EID.lineHeight = lineHeight;
+                        end
+                    end
+                end
+            end
+        end
+    end
+    THI:AddCallback(ModCallbacks.MC_POST_RENDER, onRender);
 end

@@ -8,7 +8,7 @@ if (THI) then
 end
 THI = RegisterMod("Reverie", 1);
 THI.Version = {
-    12,2,0
+    12,3,0
 }
 
 function THI:GetVersionString()
@@ -105,6 +105,7 @@ THI.GapFloor = Require("scripts/shared/gap_floor");
 THI.TemporaryDamage = include("scripts/temporary_damage");
 THI.GridDetection = include("scripts/grid_detection");
 THI.Machines = include("scripts/machines");
+include("scripts/question_items");
 
 Shared.Wheelchair = include("scripts/shared/wheelchair");
 Shared.Wheelchair:Register(THI);
@@ -457,6 +458,7 @@ THI.Effects = {
     SpiderbabyWeb = Require("scripts/effects/spiderbaby_web"),
     AcidRaindrop = Require("scripts/effects/acid_raindrop"),
     DaggerWarning = Require("scripts/effects/dagger_warning"),
+    EyeOfChimeraDisplayer = Require("scripts/effects/eye_of_chimera_displayer")
 }
 THI.Familiars = {
     Illusion = Require("scripts/familiars/illusion"),
@@ -660,6 +662,8 @@ Collectibles.SpiritCannon = Require("scripts/items/th6/spirit_cannon");
 Collectibles.Asthma = Require("scripts/items/th6/asthma");
 Collectibles.DaggerOfServants = Require("scripts/items/th6/dagger_of_servants");
 
+-- TH12 ALT
+Collectibles.EyeOfChimera = Require("scripts/items/th12/eye_of_chimera");
 
 -- Make resistance of player at the last.
 Collectibles.BuddhasBowl = Require("scripts/items/th8/buddhas_bowl");

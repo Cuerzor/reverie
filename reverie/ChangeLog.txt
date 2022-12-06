@@ -2481,3 +2481,11 @@ Greed Shop: Added D Flip
 12.2.0-2022.12.4
 -Added Asthma and Heart Sticker.
 -加入了哮喘和红心贴纸。
+
+12.2.1-2022.12.4
+-Rebalanced Asthma's heart replace chance.
+-重新平衡了哮喘的心替换概率。
+
+12.3.0-2022.12.7
+-Added Eye of Chimera.
+-加入了嵌体怪之眼。

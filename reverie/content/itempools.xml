@@ -134,6 +134,8 @@
 		<Item Name="Spirit Cannon" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Asthma-->
 		<Item Name="Asthma" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Eye of Chimera-->
+		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="library">
 		<!--Grimoire of Patchouli-->
@@ -178,6 +180,8 @@
 		<Item Name="Sake of Forgotten" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Daitengu Telescope-->
 		<Item Name="Daitengu Telescope" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Eye of Chimera-->
+		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="goldenChest">
 		<!--Maid Suit-->
@@ -338,6 +342,8 @@
 		<Item Name="Fox in Tube" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Dagger of Servants-->
 		<Item Name="Dagger of Servants" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Eye of Chimera-->
+		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="angel">
 		<!--Spring of Daiyousei-->
@@ -455,7 +461,9 @@
 		<!--Daitengu Telescope-->
 		<Item Name="Daitengu Telescope" Weight="1" DecreaseBy="0.1" RemoveOn="0.1"/>
 		<!--Rebel Mecha Caller-->
-		<Item Name="Rebel Mecha Caller" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<Item Name="Rebel Mecha Caller" Weight="1" DecreaseBy="0.1" RemoveOn="0.1"/>
+		<!--Eye of Chimera-->
+		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="0.1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="oldChest">
 		<!--Fan of the Dead-->
@@ -590,6 +598,8 @@
 		<Item Name="Spirit Cannon" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Asthma-->
 		<Item Name="Asthma" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Eye of Chimera-->
+		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="greedShop">
 		<!--Yin-Yang Orb-->
@@ -734,6 +744,8 @@
 		<Item Name="Fetus Blood" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Fox in Tube-->
 		<Item Name="Fox in Tube" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Eye of Chimera-->
+		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="greedSecret">
 		<!--Marisa's Broom-->
@@ -764,6 +776,8 @@
 		<Item Name="D Siphon" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Gambling D6-->
 		<Item Name="Gambling D6" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Eye of Chimera-->
+		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="greedBoss">
 		<!--Fried Tofu-->
@@ -812,6 +826,8 @@
 		<Item Name="Plague Lord" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Zombie Infestation-->
 		<Item Name="Zombie Infestation" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Eye of Chimera-->
+		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="ultraSecret">
 		<!--Yin-Yang Orb-->

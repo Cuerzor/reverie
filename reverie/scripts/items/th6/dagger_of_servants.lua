@@ -152,7 +152,7 @@ end
 
 function DaggerOfServants:AddDamageUp(player)
     local data = self:GetPlayerData(player, true);
-    data.DamageUp = (data.DamageUp or 0) + 1;
+    data.DamageUp = (data.DamageUp or 0) + 0.6;
     player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
     player:EvaluateItems();
 end

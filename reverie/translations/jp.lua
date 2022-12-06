@@ -485,6 +485,9 @@ Translation.Collectibles ={
     [Collectibles.SpiritCannon.Item] = {Name="気功砲" , Description="新気功砲ぉぉぉぉぉぉぉ！！！"},
     [Collectibles.DaggerOfServants.Item] = {Name="従者の刃" , Description="あなたの心を犠牲にして"},
     [Collectibles.Asthma.Item] = {Name="ぜんそく" , Description="魔法アップ、再生ダウン"},
+
+    [Collectibles.EyeOfChimera.Item] = {Name="キメラの目" , Description="未知の運命を探る"},
+    
 }
 
 local Trinkets = THI.Trinkets;
@@ -511,6 +514,7 @@ Translation.Trinkets ={
 
     [Trinkets.Snowflake.Trinket] = {Name="雪片" , Description="ユニークでパーフェクト"},
     [Trinkets.HeartSticker.Trinket] = {Name="ハート形シール" , Description="<3"},
+
 }
 
 local Players = THI.Players;

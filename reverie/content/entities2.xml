@@ -234,6 +234,8 @@
 
     <entity name="Dagger Warning" anm2path="reverie/1000.5855_dagger warning.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5855" />
 
+    <entity name="Eye of Chimera Displayer" anm2path="reverie/1000.5856_eye of chimera displayer.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5856" />
+
 
     <!-- Monsters -->
     <entity name="Onfire Fly" anm2path="reverie/018.580_onfirefly.anm2" reroll="false" baseHP="5" boss="0" champion="0" collisionDamage="1" collisionMass="3" collisionRadius="17" friction="1" id="18" numGridCollisionPoints="4" shadowSize="11" stageHP="0" variant="580" portrait="5" gridCollision="walls" tags="fly" />

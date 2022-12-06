@@ -13,7 +13,8 @@ local Players = THI.Players;
 local EIDInfo = {};
 
 EIDInfo.Entries = {
-    ["Lunatic"] = "{{ColorPurple}}Lunatic Mode{{CR}}: "
+    ["Lunatic"] = "{{ColorPurple}}Lunatic Mode{{CR}}: ",
+    ["UnknownItem"] = "Unknown Item"
 }
 
 EIDInfo.Transformations = {
@@ -909,10 +910,15 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.Asthma.Item] = {
         Name = "Asthma",
-        Description = "50% to change {{Heart}}heart pickup into random {{Card}}card/{{Rune}}rune"..
-        "#45% to disappear"..
-        "#5% to change it into lucky penny"..
+        Description = "40% to change {{Heart}}heart pickup into random {{Card}}card/{{Rune}}rune"..
+        "#20% to change it into lucky penny"..
         "#!!! Hearts spawned by cards/items will not be changed"
+    },
+    [Collectibles.EyeOfChimera.Item] = {
+        Name = "Eye of Chimera",
+        Description = "Reroll all pedestal items in the room upon use"..
+        "#Has {{CurseBlind}}Curse of Blind while holding"..
+        "#You can see unknown item's qualities, charges and tags"
     },
 }
 local EmptyBook= Collectibles.EmptyBook;
@@ -1201,6 +1207,41 @@ EIDInfo.Pills = {
         Description = "Use {{Collectible"..CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS.."}}Glowing Hour Glass after hit in current room, this pill disappears"..
         "#Will not consume horse pill",
     }
+}
+EIDInfo.Tags = {
+    [0] = "{{Reverie_TagDead}} Dead thing, used for unlock {{Collectible104}}Parasite",
+    [1] = "{{Reverie_TagSyringe}} Spun Transformation",
+    [2] = "{{Reverie_TagMom}} Yes Mother Transformation",
+    [3] = "{{Reverie_TagTech}} Tech item, used for unlock {{Collectible524}}Technology Zero",
+    [4] = "{{Reverie_TagBattery}} Battery item, used for unlock {{Collectible520}}Jumper Cables",
+    [5] = "{{Reverie_TagGuppy}} Guppy Transformation",
+    [6] = "{{Reverie_TagFly}} Beelzebub Transformation",
+    [7] = "{{Reverie_TagBob}} Bob Transformation",
+    [8] = "{{Reverie_TagMom}} Fun Guy Transformation",
+    [9] = "{{Reverie_TagBaby}} Conjoined Transformation",
+    [10] = "{{Reverie_TagAngel}} Seraphim Transformation",
+    [11] = "{{Reverie_TagDevil}} Leviathan Transformation",
+    [12] = "{{Reverie_TagPoop}} Oh Crap Transformation",
+    [13] = "{{Reverie_TagBook}} Bookworm Transformation",
+    [14] = "{{Reverie_TagSpider}} Spider Baby Transformation",
+    [15] = "{{Reverie_TagQuest}} Quest item",
+    [16] = "{{Reverie_TagMonsterManual}} Can be summoned by {{Collectible123}}Monster Manual",
+    [17] = "{{Reverie_TagNoGreed}} Won't appear in Greed Mode",
+    [18] = "{{Reverie_TagFood}} Food item, can be spawned by {{Collectible664}}Binge Eater",
+    [19] = "{{Reverie_TagTearsUp}} Tears up, used for unlock {{Collectible532}}Lachryphagy",
+    [20] = "{{Reverie_TagOffensive}} Can be found by{{Player31}}Tainted Lost",
+    [21] = "{{Reverie_TagNoKeeper}} {{Player14}}Keeper and {{Player33}}Tainted Keeper won't find this",
+    [22] = "{{Reverie_TagNoLostBr}} {{Player10}}The Lost won't find this with{{Collectible619}}Birthright",
+    [23] = "{{Reverie_TagStars}} Star-related item, used for unlock {{Planetarium}}Planetarium",
+    [24] = "{{Reverie_TagSummonable}} Can be summoned by{{Collectible712}}Lemegeton, or be mimiced by{{Trinket166}}Modeling Clay",
+    [25] = "{{Reverie_TagNoCantrip}} Won't appear in challenge \"Cantripped!\"",
+    [26] = "{{Reverie_TagWisp}} Has attached {{Collectible584}}Book of Virtues wisp",
+    [27] = "{{Reverie_TagUniqueFamiliar}} Unique familiar which can only exist 1",
+    [28] = "{{Reverie_TagNoChallenge}} Won't appear in challenges",
+    [29] = "{{Reverie_TagNoDaily}} Won't appear in Daily Runs",
+    [30] = "{{Reverie_TagLazShared}} {{Player29}}Tainted Lazarus' two forms share the effect",
+    [31] = "{{Reverie_TagLazSharedGlobal}} {{Player29}}Tainted Lazarus' two forms share the {{ColorYellow}}global{{CR}} effect",
+    [32] = "{{Reverie_TagNoEden}} {{Player9}}Eden will not start with this item"
 }
 
 EIDInfo.Characters = {

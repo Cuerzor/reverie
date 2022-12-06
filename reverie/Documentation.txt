@@ -643,7 +643,7 @@ Type: Passive Item
 Quality: 2
 Tags: Offensive, Summonable, No Cantripped
 Item Pools: Treasure Room, Greed Treasure Room
-* Heart pickups has 50% chance to transform into random cards/runes, 45% chance to disappear, 5% chance to transform into lucky pennies.
+* Heart pickups has 40% chance to transform into random cards/runes, 20% chance to transform into lucky pennies.
     * Hearts spawned by cards/items won't be replaced.
 
 Maid Suit
@@ -1601,6 +1601,18 @@ Item Pools: Treasure Room, Greed Treasure Room, Crane Game
             * If wisps' color is different, spawn colorful UFO.
     * Example 1: If a red UFO has spawned, spawn a red wisp.
     * Example 2: If player has 3 red wisps, they will be costed and free to use this time. Then it always spawns red UFO.
+
+Eye of Chimera
+Description: Explore your unknown destiny
+Reference: Houjuu Nue
+Type: Active Item
+Charges: 4
+Quality: 3
+Tags: Offensive, No Cantrip, Dead
+Item Pools: Treasure Room, Greed Treasure Room, Curse Room, Greed Curse Room, Secret Room, Greed Secret Room, Rotten Beggar, Crane Game
+* Upon use, reroll all pedestal items in the room.
+* Has Curse of Blind while holding.
+* You can see unknown items's quality, charges and tags.
 
 Tengu Cellphone
 Description: Search for goods!

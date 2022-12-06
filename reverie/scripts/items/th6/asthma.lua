@@ -18,12 +18,10 @@ function Asthma:PreEntitySpawn(type, variant, subtype, pos, vel, spawner, seed)
             if (room:IsFirstVisit() or room:GetFrameCount() > 0) then
                 local rng = asthmaPlayer:GetCollectibleRNG(Asthma.Item);
                 local value = rng:RandomInt(100);
-                if (value < 50) then
-                    return {EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, seed};
-                elseif (value < 95) then
+                if (value < 40) then
                     local itemPool = game:GetItemPool();
                     return {type, PickupVariant.PICKUP_TAROTCARD, itemPool:GetCard(rng:Next(), true, true, false), seed}
-                elseif (value < 100) then
+                elseif (value < 60) then
                     return {type, PickupVariant.PICKUP_COIN, CoinSubType.COIN_LUCKYPENNY, seed};
                 end
             end
