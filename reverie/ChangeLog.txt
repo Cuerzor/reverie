@@ -2493,3 +2493,7 @@ Greed Shop: Added D Flip
 12.3.1-2022.12.7
 -Fixed some issues about Eye of Chimera.
 -修复了嵌体怪之眼的某些BUG。
+
+12.3.2-2022.12.7
+-Eye of Chimera now will display whether item is a familiar item.
+-嵌体怪之眼现在会显示道具是不是跟班道具。

@@ -49,6 +49,7 @@ function Displayer:PostEffectRender(effect, offset)
         local quality = 0;
         local charges = 0;
         local chargeType = nil;
+        local itemType = nil;
         local tags = nil;
 
         local cache = data._REVERIE_CHIMERA_EYE_CACHE;
@@ -58,6 +59,7 @@ function Displayer:PostEffectRender(effect, offset)
             tags = cache.Tags;
             charges = cache.Charges or 0;
             chargeType = cache.ChargeType;
+            itemType = cache.ItemType or ItemType.ITEM_PASSIVE;
         else
             local itemConfig = Isaac.GetItemConfig();
             local config = itemConfig:GetCollectible(effect.SubType);
@@ -76,10 +78,8 @@ function Displayer:PostEffectRender(effect, offset)
                     tagFlags = tagFlags >> 1;
                 end
                 charges = config.MaxCharges;
-                chargeType = nil;
-                if (config.Type == ItemType.ITEM_ACTIVE) then
-                    chargeType = config.ChargeType;
-                end
+                chargeType = config.ChargeType;
+                itemType = config.Type;
 
                 data._REVERIE_CHIMERA_EYE_CACHE = data._REVERIE_CHIMERA_EYE_CACHE or {};
                 local cache = data._REVERIE_CHIMERA_EYE_CACHE;
@@ -87,6 +87,7 @@ function Displayer:PostEffectRender(effect, offset)
                 cache.Tags = tags;
                 cache.Charges = charges;
                 cache.ChargeType = chargeType;
+                cache.ItemType = itemType;
                 cache.ID = effect.SubType;
                 exists = true;
             end
@@ -99,14 +100,14 @@ function Displayer:PostEffectRender(effect, offset)
             spr.Color = effect:GetColor();
 
             local qualityPos = center + Vector(0, -20);
-            if (chargeType) then
+            if (itemType == ItemType.ITEM_ACTIVE or itemType == ItemType.ITEM_FAMILIAR) then
                 qualityPos = qualityPos + Vector(-6, 0);
             end
             spr:SetFrame("Qualities", quality)
             spr:Render(qualityPos, Vector.Zero, Vector.Zero);
 
-            if (chargeType) then
-                local chargePos = center + Vector(6, -20) 
+            local typePos = qualityPos + Vector(12, 0) 
+            if (itemType == ItemType.ITEM_ACTIVE) then
                 if (chargeType == ItemConfig.CHARGE_NORMAL) then
                     spr:SetFrame("Charges", charges)
                 elseif (chargeType == ItemConfig.CHARGE_TIMED) then
@@ -114,7 +115,10 @@ function Displayer:PostEffectRender(effect, offset)
                 else
                     spr:SetFrame("Charges", 13)
                 end
-                spr:Render(chargePos, Vector.Zero, Vector.Zero);
+                spr:Render(typePos, Vector.Zero, Vector.Zero);
+            elseif (itemType == ItemType.ITEM_FAMILIAR) then
+                spr:SetFrame("Familiar", 0)
+                spr:Render(typePos, Vector.Zero, Vector.Zero);
             end
 
             local tagsPos = center + Vector(0, 0);

@@ -164,6 +164,7 @@ for i = 0, 12 do
 end
 EID:addIcon("Reverie_ChargeTimed", "Charges", 14, 12, 12, 5, 6, tagIconSprite)
 EID:addIcon("Reverie_ChargeUnknown", "Charges", 13, 12, 12, 5, 6, tagIconSprite)
+EID:addIcon("Reverie_Familiar", "Familiar", 0, 12, 12, 5, 6, tagIconSprite)
 
 -- Transformation Assignations.
 local Collectibles = THI.Collectibles;
@@ -685,20 +686,22 @@ do
                             local scale = Vector(EID.Scale, EID.Scale);
                             local color = EID:getNameColor();
 
-                            local charge = "";
+                            local typeStr = "";
                             if (config.Type == ItemType.ITEM_ACTIVE) then
                                 if (config.ChargeType == ItemConfig.CHARGE_NORMAL) then
-                                    charge = "{{Reverie_Charge"..config.MaxCharges.."}}"
+                                    typeStr = "{{Reverie_Charge"..config.MaxCharges.."}}"
                                 elseif (config.ChargeType == ItemConfig.CHARGE_TIMED) then
-                                    charge = "{{Reverie_ChargeTimed}}"
+                                    typeStr = "{{Reverie_ChargeTimed}}"
                                 else
-                                    charge = "{{Reverie_ChargeUnknown}}"
+                                    typeStr = "{{Reverie_ChargeUnknown}}"
                                 end
+                            elseif (config.Type == ItemType.ITEM_FAMILIAR) then
+                                typeStr = "{{Reverie_Familiar}}"
                             end
 
                             local unknownStr = EID:getDescriptionEntry("reverieEntries", "UnknownItem")
 
-                            EID:renderString(charge..unknownStr.." {{Quality"..config.Quality.."}}", pos + Vector(12,0), scale, color)
+                            EID:renderString(typeStr..unknownStr.." {{Quality"..config.Quality.."}}", pos + Vector(12,0), scale, color)
 
 
                             local color = EID:getTextColor();
