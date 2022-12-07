@@ -1238,6 +1238,19 @@ do -- Events
                         end
                     end
                 end
+
+                -- Dr. Fetus and Epic Fetus.
+                local sourceEnt = source.Entity;
+                if (sourceEnt) then
+                    if (sourceEnt.Type == EntityType.ENTITY_EFFECT and sourceEnt.Variant == EffectVariant.ROCKET) then
+                        canHeal = false;
+                    else
+                        local bomb = sourceEnt:ToBomb();
+                        if (bomb and bomb.IsFetus) then
+                            canHeal = false;
+                        end
+                    end
+                end
                 if (canHeal) then
                     local pyromaniacPlayer;
                     for p, player in Detection.PlayerPairs() do

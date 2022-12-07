@@ -1484,7 +1484,7 @@ function Eika:PostPlayerTakeDamage(entity, amount, flags, source, countdown)
     local player = entity:ToPlayer();
     if (player:GetPlayerType() == Eika.Type) then
 
-        if (HasCursedEye(player)) then
+        if (HasCursedEye(player) and not player:HasCollectible(CollectibleType.COLLECTIBLE_BLACK_CANDLE)) then
             local tempData = Eika:GetPlayerTempData(player, false);
             if (tempData and tempData.Stacking) then
                 tempData.CursedEyeTeleport = true;
