@@ -165,6 +165,7 @@ end
 EID:addIcon("Reverie_ChargeTimed", "Charges", 14, 12, 12, 5, 6, tagIconSprite)
 EID:addIcon("Reverie_ChargeUnknown", "Charges", 13, 12, 12, 5, 6, tagIconSprite)
 EID:addIcon("Reverie_Familiar", "Familiar", 0, 12, 12, 5, 6, tagIconSprite)
+EID:addIcon("Reverie_Mod", "Mod", 0, 16, 16, 7, 6, tagIconSprite)
 
 -- Transformation Assignations.
 local Collectibles = THI.Collectibles;
@@ -700,8 +701,12 @@ do
                             end
 
                             local unknownStr = EID:getDescriptionEntry("reverieEntries", "UnknownItem")
+                            local modStr = "";
+                            if (ent.SubType >= CollectibleType.NUM_COLLECTIBLES) then
+                                modStr = "{{Reverie_Mod}}";
+                            end
 
-                            EID:renderString(typeStr..unknownStr.." {{Quality"..config.Quality.."}}", pos + Vector(12,0), scale, color)
+                            EID:renderString(typeStr..unknownStr.." {{Quality"..config.Quality.."}}"..modStr, pos + Vector(12,0), scale, color)
 
 
                             local color = EID:getTextColor();

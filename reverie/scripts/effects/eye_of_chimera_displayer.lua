@@ -99,15 +99,21 @@ function Displayer:PostEffectRender(effect, offset)
             local spr = self.Sprite;
             spr.Color = effect:GetColor();
 
-            local qualityPos = center + Vector(0, -20);
+            local modItem = effect.SubType >= CollectibleType.NUM_COLLECTIBLES;
+            local upperPos = center + Vector(0, -20);
             if (itemType == ItemType.ITEM_ACTIVE or itemType == ItemType.ITEM_FAMILIAR) then
-                qualityPos = qualityPos + Vector(-6, 0);
+                upperPos = upperPos + Vector(-8, 0);
             end
+            if (modItem) then
+                upperPos = upperPos + Vector(-8, 0);
+            end
+            -- Qualities.
             spr:SetFrame("Qualities", quality)
-            spr:Render(qualityPos, Vector.Zero, Vector.Zero);
+            spr:Render(upperPos, Vector.Zero, Vector.Zero);
 
-            local typePos = qualityPos + Vector(12, 0) 
+            -- Charges.
             if (itemType == ItemType.ITEM_ACTIVE) then
+                upperPos = upperPos + Vector(16, 0) 
                 if (chargeType == ItemConfig.CHARGE_NORMAL) then
                     spr:SetFrame("Charges", charges)
                 elseif (chargeType == ItemConfig.CHARGE_TIMED) then
@@ -115,12 +121,20 @@ function Displayer:PostEffectRender(effect, offset)
                 else
                     spr:SetFrame("Charges", 13)
                 end
-                spr:Render(typePos, Vector.Zero, Vector.Zero);
+                spr:Render(upperPos, Vector.Zero, Vector.Zero);
             elseif (itemType == ItemType.ITEM_FAMILIAR) then
+                upperPos = upperPos + Vector(16, 0) 
                 spr:SetFrame("Familiar", 0)
-                spr:Render(typePos, Vector.Zero, Vector.Zero);
+                spr:Render(upperPos, Vector.Zero, Vector.Zero);
+            end
+            -- Mod Item.
+            if (modItem) then
+                upperPos = upperPos + Vector(16, 0) 
+                spr:SetFrame("Mod", 0)
+                spr:Render(upperPos, Vector.Zero, Vector.Zero);
             end
 
+            -- Tags.
             local tagsPos = center + Vector(0, 0);
             local tagCount = #tags;
             for i, tag in ipairs(tags) do

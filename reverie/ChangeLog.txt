@@ -2505,3 +2505,7 @@ Greed Shop: Added D Flip
 -修复了璎花在拥有黑蜡烛时，也会被诅咒之眼传送的BUG。
 -Fixed an issue that Eye of Chimera will not show chest item's information.
 -修复了嵌体怪之眼不会显示宝箱中的道具信息的BUG。
+
+12.3.4-2022.12.7
+-Eye of Chimera now will show whether the item is a mod item.
+-嵌体怪之眼现在会显示道具是否是MDO道具。
