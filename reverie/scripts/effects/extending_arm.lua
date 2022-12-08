@@ -1,6 +1,6 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Screen = CuerLib.Screen;
-local EntityExists = Detection.EntityExists;
+local EntityExists = Entities.EntityExists;
 
 local Arm = ModEntity("Extending Arm", "ExtendingArmEntity");
 Arm.SubTypes = {
@@ -180,7 +180,7 @@ function Arm.CollisionCheck(arm)
             if ((ent.Type == EntityType.ENTITY_PICKUP or ent.Type == EntityType.ENTITY_SHOPKEEPER or
             ent.EntityCollisionClass == EntityCollisionClass.ENTCOLL_PLAYEROBJECTS or 
             ent.EntityCollisionClass == EntityCollisionClass.ENTCOLL_ALL) and
-                Detection.CheckCollision(arm, ent) and not WillIgnoreEntity(ent)) then
+                Entities.CheckCollision(arm, ent) and not WillIgnoreEntity(ent)) then
                 if (WillBlockHook(ent)) then
                     data.DragMode = 1;
                     data.LockedPosition = arm.Position;

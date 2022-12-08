@@ -1,5 +1,5 @@
 local Actives = CuerLib.Actives;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Consts = CuerLib.Consts;
 local Players = CuerLib.Players;
 local Benediction = ModItem("Benediction", "BENEDICTION");

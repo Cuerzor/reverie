@@ -1,5 +1,5 @@
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Immortal = ModEntity("The Immortal", "THE_IMMORTAL");
 
 do
@@ -106,7 +106,7 @@ do
         if (not proj:IsDead()) then
             
             for i, enemy in pairs(Isaac.FindInRadius(proj.Position, proj.Size * 5, EntityPartition.ENEMY)) do
-                if (enemy.Type == Immortal.Type and enemy.Variant == Immortal.Variant and Detection.CheckCollision(enemy, proj)) then
+                if (enemy.Type == Immortal.Type and enemy.Variant == Immortal.Variant and enemy.Position:Distance(proj.Position) < enemy.Size + proj.Size) then
                     proj:Die();
                 end
             end

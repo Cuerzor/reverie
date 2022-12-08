@@ -19,41 +19,40 @@ local Require = Lib.Require;
 do --Classes
     Lib.ClassPaths = {
         -- Tools
-        UTF8 = "cuerlib/classes/utf8",
-        Consts = "cuerlib/classes/consts",
-        Detection = "cuerlib/detection",
-        Inputs = "cuerlib/inputs",
-        Math = "cuerlib/math",
-        Synergies = "cuerlib/synergies",
-        Screen = "cuerlib/screen",
-        Stats = "cuerlib/stats",
-        Damages = "cuerlib/damages",
-        Shields = "cuerlib/shield",
-        Greed = "cuerlib/greed",
-        Rooms = "cuerlib/rooms",
-        Grids = "cuerlib/grids",
-        Players = "cuerlib/players",
+        UTF8 = "cuerlib/helpers/utf8",
+        Consts = "cuerlib/helpers/consts",
+        Entities = "cuerlib/helpers/entities",
+        Inputs = "cuerlib/helpers/inputs",
+        Math = "cuerlib/helpers/math",
+        Synergies = "cuerlib/helpers/synergies",
+        Screen = "cuerlib/helpers/screen",
+        Damages = "cuerlib/helpers/damages",
+        Rooms = "cuerlib/helpers/rooms",
+        Grids = "cuerlib/helpers/grids",
+        Players = "cuerlib/helpers/players",
+        Familiars = "cuerlib/helpers/familiars",
+        ModComponents = "cuerlib/helpers/mod_components",
         
-        Familiars = "cuerlib/familiars",
-        ModComponents = "cuerlib/mod_components",
-        
-        Tears = "cuerlib/tears",
-        Actives = "cuerlib/actives",
-        Pickups = "cuerlib/pickups",
-        ItemPools = "cuerlib/item_pools",
-        HoldingActive = "cuerlib/holding_active",
-        PlayerForms = "cuerlib/player_forms",
-        SaveAndLoad = "cuerlib/save_and_load",
-        Collectibles = "cuerlib/collectibles",
-        Revive = "cuerlib/revive",
-        Rewind = "cuerlib/rewind",
-        Stages = "cuerlib/stages",
-        Weapons = "cuerlib/weapons",
+        Stats = "cuerlib/funcs/stats",
+        Shields = "cuerlib/funcs/shield",
+        Greed = "cuerlib/funcs/greed",
+        Tears = "cuerlib/funcs/tears",
+        Actives = "cuerlib/funcs/actives",
+        Pickups = "cuerlib/funcs/pickups",
+        ItemPools = "cuerlib/funcs/item_pools",
+        HoldingActive = "cuerlib/funcs/holding_active",
+        PlayerForms = "cuerlib/funcs/player_forms",
+        SaveAndLoad = "cuerlib/funcs/save_and_load",
+        Collectibles = "cuerlib/funcs/collectibles",
+        Revive = "cuerlib/funcs/revive",
+        Rewind = "cuerlib/funcs/rewind",
+        Stages = "cuerlib/funcs/stages",
+        Weapons = "cuerlib/funcs/weapons",
     }
     if (StageAPI) then
-        Lib.ClassPaths.Bosses="cuerlib/bosses_stageapi";
+        Lib.ClassPaths.Bosses="cuerlib/funcs/bosses_stageapi";
     else
-        Lib.ClassPaths.Bosses="cuerlib/bosses";
+        Lib.ClassPaths.Bosses="cuerlib/funcs/bosses";
     end
     
     local LibMetatable = {
@@ -211,9 +210,6 @@ function Lib:Init(mod, dataName, getGlobalData, setGlobalData)
     for k,v in pairs(self.ClassPaths) do
         local class = Require(v);
         Lib[k] = class;
-        if (class.Register) then
-            class:Register(mod);
-        end
     end
     LIB = nil
 end

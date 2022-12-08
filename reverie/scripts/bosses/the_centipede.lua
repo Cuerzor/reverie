@@ -1,6 +1,6 @@
-local Detection = CuerLib.Detection;
-local CompareEntity = Detection.CompareEntity;
-local EntityExists = Detection.EntityExists;
+local Entities = CuerLib.Entities;
+local CompareEntity = Entities.CompareEntity;
+local EntityExists = Entities.EntityExists;
 local Bosses = CuerLib.Bosses;
 local Grids = CuerLib.Grids;
 local Centi = ModEntity("The Centipede", "CENTIPEDE");

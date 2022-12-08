@@ -1,5 +1,5 @@
 local Tears = CuerLib.Tears;
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Thunder = ModItem("Holy Thunder", "HOLY_THUNDER");
 
 Tears:RegisterModTearFlag("ReverieHolyThunder");

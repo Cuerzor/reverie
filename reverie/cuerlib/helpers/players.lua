@@ -133,8 +133,8 @@ function Players.TeleportToPosition(player, pos)
     local spr = poof:GetSprite();
     spr:Load(player:GetSprite():GetFilename(), true);
     spr:Play("TeleportUp");
-    THI.SFXManager:Play(SoundEffect.SOUND_HELL_PORTAL1);
-    THI.SFXManager:Play(SoundEffect.SOUND_HELL_PORTAL2);
+    SFXManager():Play(SoundEffect.SOUND_HELL_PORTAL1);
+    SFXManager():Play(SoundEffect.SOUND_HELL_PORTAL2);
     player.Position = pos;
     player:AnimateTeleport(false);
     player:SetMinDamageCooldown(30);

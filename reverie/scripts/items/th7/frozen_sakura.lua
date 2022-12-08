@@ -1,5 +1,5 @@
-local Detection = CuerLib.Detection;
-local CompareEntity = Detection.CompareEntity;
+local Entities = CuerLib.Entities;
+local CompareEntity = Entities.CompareEntity;
 local Halos = THI.Halos;
 
 local FrozenSakura = ModItem("Frozen Sakura", "FrozenSakura");
@@ -40,7 +40,7 @@ local function PostHaloUpdate(mod, effect)
     -- Make halos damage enemies and slow bullets.
     if (effect:IsFrame(7, 0)) then
         for _, ent in pairs(Isaac.FindInRadius(effect.Position, 128, EntityPartition.ENEMY | EntityPartition.BULLET)) do
-            if (Detection.IsValidEnemy(ent)) then
+            if (Entities.IsValidEnemy(ent)) then
                 ent:TakeDamage(1, 0, ref, 0)
                 ent:AddEntityFlags(EntityFlag.FLAG_ICE);
                 ent:AddSlowing (ref, 30, 0.5, FrozenSakura.SlowColor);

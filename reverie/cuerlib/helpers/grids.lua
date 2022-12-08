@@ -12,7 +12,7 @@ Grids.RoomGrids = {
     Spiderweb = {Type = GridEntityType.GRID_SPIDERWEB, Variant = 0},
 };
 function Grids:PushToBridge(center, gridIndex)
-    local room = THI.Game:GetRoom();
+    local room = Game():GetRoom();
     local pos = center;
     local index = gridIndex;
 

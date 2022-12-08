@@ -1,6 +1,6 @@
 local HoldingActive = CuerLib.HoldingActive;
 local Screen = CuerLib.Screen;
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Actives = CuerLib.Actives;
 local ItemPools = CuerLib.ItemPools;
 local GamblingD6 = ModItem("Gambling D6", "GAMBLING_D6");

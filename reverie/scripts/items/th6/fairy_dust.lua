@@ -1,5 +1,5 @@
-local Detection = CuerLib.Detection;
-local EntityExists = Detection.EntityExists;
+local Entities = CuerLib.Entities;
+local EntityExists = Entities.EntityExists;
 local Players = CuerLib.Players;
 local FairyDust = ModItem("Fairy Dust", "FAIRY_DUST");
 

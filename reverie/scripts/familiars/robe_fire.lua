@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Math = CuerLib.Math;
 
 local RobeFire = ModEntity("Robe Fire", "RobeFire");
@@ -38,7 +38,7 @@ RobeFire:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, RobeFire.PostRobeFireUpdat
 
 
 function RobeFire:PreRobeFireCollision(fire, other, low)
-    if (Detection.IsValidEnemy(other)) then
+    if (Entities.IsValidEnemy(other)) then
         other:TakeDamage(10, DamageFlag.DAMAGE_FIRE, EntityRef(fire), 0);
     end
 end

@@ -2,7 +2,7 @@ local Screen = CuerLib.Screen;
 local Consts = CuerLib.Consts;
 local Math = CuerLib.Math;
 local Familiars = CuerLib.Familiars
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Drum = ModItem("Thunder Drum", "THUNDER_DRUM")
 
 Drum.ItemConfig = Isaac.GetItemConfig():GetCollectible(Drum.Item);

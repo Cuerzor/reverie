@@ -1,8 +1,8 @@
 local Familiars = CuerLib.Familiars;
 local Consts = CuerLib.Consts;
 local Math = CuerLib.Math;
-local Detection = CuerLib.Detection;
-local CompareEntity = Detection.CompareEntity;
+local Entities = CuerLib.Entities;
+local CompareEntity = Entities.CompareEntity;
 local Players = CuerLib.Players;
 local Fairies = CuerLib.ModComponents.ModPart:New("Light Fairies", "LIGHT_FAIRIES");
 Fairies.FairyInfos = {}

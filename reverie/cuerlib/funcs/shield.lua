@@ -1,6 +1,6 @@
 local Lib = LIB;
 local Callbacks = Lib.Callbacks;
-local Screen = LIB.Screen;
+local Screen = Lib.Screen;
 local Shields = Lib:NewClass();
 
 local spr = Sprite();
@@ -52,7 +52,7 @@ end
 Shields:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Shields.PostPlayerUpdate);
 
 function Shields:PostNewRoom()
-    local game = THI.Game;
+    local game = Game();
     for i, player in Lib.Players.PlayerPairs() do 
         local playerData = Shields:GetPlayerData(player, false);
         if (playerData) then

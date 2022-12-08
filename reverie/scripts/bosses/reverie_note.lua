@@ -1,7 +1,7 @@
 local Math = CuerLib.Math;
 local Consts = CuerLib.Consts;
-local Detection = CuerLib.Detection;
-local CompareEntity = Detection.CompareEntity;
+local Entities = CuerLib.Entities;
+local CompareEntity = Entities.CompareEntity;
 local Players = CuerLib.Players;
 local ItemPools = CuerLib.ItemPools;
 local Note = ModEntity("Reverie", "REVERIE_NOTE");
@@ -1461,7 +1461,7 @@ do -- 各类音符的行动AI。
 
                             --设置魔法阵颜色。
                             local hue = (i / ((length - 4) / 2)) % 1 * 360;
-                            local r, g, b = Math:HSVToRGB(hue,1,1);
+                            local r, g, b = Math.HSVToRGB(hue,1,1);
                             
                             circle.Color = Color(r,g,b,1,0,0,0);
                         end

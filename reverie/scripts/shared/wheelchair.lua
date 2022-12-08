@@ -1,6 +1,6 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Players = CuerLib.Players;
-local CompareEntity = Detection.CompareEntity;
+local CompareEntity = Entities.CompareEntity;
 local WheelChair = {};
 
 local Functions = {
@@ -282,7 +282,7 @@ function WheelChair:PostHitboxCollision(hitbox, other, low)
             local player = spawner:ToPlayer();
             local vel = spawner.Velocity;
             local speed = vel:Length();
-            if (Detection.IsValidEnemy(other)) then
+            if (Entities.IsValidEnemy(other)) then
                 local damage = speed;
                 if (player and not Players:IsDead(player)) then
                     local data = WheelChair.GetPlayerTempData(player, true);

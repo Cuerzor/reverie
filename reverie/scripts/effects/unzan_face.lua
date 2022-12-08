@@ -1,4 +1,4 @@
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Unzan = ModEntity("Unzan Face", "UNZAN");
 Unzan.TearColor = Color(1,1,1,0.5,1,0.5,0.5);
 Unzan.OffsetVector = Vector(-480, 0);

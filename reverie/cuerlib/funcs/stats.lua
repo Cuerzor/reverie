@@ -826,11 +826,9 @@ function Stats:EvaluateCache(player, cache)
         if (limit >= 0) then
             player.MoveSpeed = math.min(limit, player.MoveSpeed)
         end
+        Stats:SetSpeedLimit(player, -1);
     end
 end
-
-function Stats:Register()
-    Lib.Mod:AddPriorityCallback(ModCallbacks.MC_EVALUATE_CACHE, CallbackPriority.LATE, Stats.EvaluateCache);
-end
+Lib.Mod:AddPriorityCallback(ModCallbacks.MC_EVALUATE_CACHE, CallbackPriority.LATE, Stats.EvaluateCache);
 
 return Stats;

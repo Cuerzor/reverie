@@ -1,4 +1,4 @@
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Lunar = ModItem("Lunar Fairy", "LUNAR_FAIRY");
 local config = Isaac.GetItemConfig():GetCollectible(Lunar.Item);
 

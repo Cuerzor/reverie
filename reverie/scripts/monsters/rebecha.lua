@@ -1,10 +1,10 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Math = CuerLib.Math;
 local Consts = CuerLib.Consts;
 local Inputs = CuerLib.Inputs;
 local Screen = CuerLib.Screen;
 local Players = CuerLib.Players;
-local CompareEntity = Detection.CompareEntity;
+local CompareEntity = Entities.CompareEntity;
 local Rebecha = ModEntity("Rebecha", "REBECHA");
 Rebecha.MaxDestructCharge = 30;
 

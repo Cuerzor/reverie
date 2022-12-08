@@ -1,7 +1,7 @@
 local Inputs = CuerLib.Inputs;
-local Detection = CuerLib.Detection;
-local EntityExists = Detection.EntityExists;
-local CompareEntity = Detection.CompareEntity;
+local Entities = CuerLib.Entities;
+local EntityExists = Entities.EntityExists;
+local CompareEntity = Entities.CompareEntity;
 local Umbrella = ModEntity("Scaring Umbrella", "SCARING_UMBRELLA");
 
 local fearInterval = 300;
@@ -106,7 +106,7 @@ function Umbrella:PostUmbrellaUpdate(umbrella)
         if (umbrella.FrameCount % fearInterval == fearInterval - 1) then
             local nearEnemies = Isaac.FindInRadius(player.Position, 160, EntityPartition.ENEMY);
             for _, ent in pairs(nearEnemies) do
-                if (Detection.IsValidEnemy(ent)) then
+                if (Entities.IsValidEnemy(ent)) then
                     ent:AddFear(EntityRef(player), 120);
                 end
             end

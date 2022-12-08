@@ -76,7 +76,7 @@ function Math.GetTearFlag(x)
 end
 
 
-function Math:HSVToRGB(h,s,v)
+function Math.HSVToRGB(h,s,v)
     local R, G, B = 0,0,0;
     if (s == 0) then
         R,G,B=v,v,v;

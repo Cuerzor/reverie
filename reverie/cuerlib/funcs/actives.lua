@@ -5,6 +5,7 @@ local Callbacks = Lib.Callbacks;
 
 local Actives = LIB:NewClass();
 Actives.FontSprite = Sprite();
+Actives.FontSprite:Load("gfx/reverie/ui/active_count.anm2", true);
 
 local itemConfig = Isaac.GetItemConfig();
 
@@ -42,16 +43,6 @@ function Actives:GetTotalCharges(player, slot)
 end
 
 
-Actives.FontSprite:Load("gfx/reverie/ui/active_count.anm2", true);
-
--- function Actives.GetPlayerData(player)
---     local data = Lib:GetEntityLibData(player);
---     data._ACTIVE_DATA = data._ACTIVE_DATA or {
---         Pressing = {},
---         Pressed = {}
---     }
---     return data._ACTIVE_DATA;
--- end
 
 local function IsActiveInput(player, slot, check)
     local playerType = player:GetPlayerType();
@@ -114,7 +105,7 @@ end
 
 
 function Actives.ChargeByOrder(player, amount)
-    local hud = THI.Game:GetHUD();
+    local hud = Game():GetHUD();
     for i=1,amount do
         for slot = 0,2 do
             if (player:NeedsCharge(slot)) then

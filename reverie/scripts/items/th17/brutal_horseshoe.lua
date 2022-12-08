@@ -1,6 +1,6 @@
 local Inputs = CuerLib.Inputs;
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Horseshoe = ModItem("Brutal Horseshoe", "BRUTAL_HORSESHOE");
 
 Horseshoe.MaxChargeUp = 120;
@@ -270,6 +270,7 @@ do
     end
     Horseshoe:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, PostPlayerRender)
 
+    --#TODO POST_COLLISION
     local function PrePlayerCollision(mod, player, other, low)
         if (Horseshoe:IsDashing(player)) then
             local npc = other:ToNPC();

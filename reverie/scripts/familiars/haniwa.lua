@@ -1,5 +1,5 @@
 local Consts = CuerLib.Consts;
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Familiars = CuerLib.Familiars;
 local Haniwa = ModEntity("Haniwa Soldier", "HANIWA_SOLDIER");
 

@@ -54,7 +54,7 @@ local function PostEffectUpdate(mod, effect)
     else
         local angle = vel:GetAngleDegrees();
         local dir = Math.GetDirectionByAngle(angle);
-        local name = Consts:GetDirectionString(dir);
+        local name = Consts.GetDirectionString(dir);
         spr:Play(prefix..name);
     end
 

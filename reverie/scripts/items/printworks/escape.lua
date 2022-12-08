@@ -1,4 +1,4 @@
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Escape = ModItem("Escape", "Escape");
 
 local function GetPlayerData(player ,create)

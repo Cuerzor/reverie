@@ -71,6 +71,8 @@ function SatoriB:PostPlayerUpdate(player)
     if (playerType == SatoriB.Type) then
         UpdatePlayerSprite(player);
         Wheelchair:PlayerUpdate(player);
+    else
+        
     end
 end
 SatoriB:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, SatoriB.PostPlayerUpdate)
@@ -102,10 +104,7 @@ function SatoriB:OnEvaluateCache(player, cache)
                 multi = 0.675;
             end
             player.MoveSpeed = player.MoveSpeed * multi;
-            local currentLimit = Stats:GetSpeedLimit(player);
-            if (currentLimit < 0) then
-                Stats:SetSpeedLimit(player, limit);
-            end
+            Stats:SetSpeedLimit(player, limit);
         elseif (cache == CacheFlag.CACHE_DAMAGE) then
             Stats:MultiplyDamage(player, 0.8);
         end

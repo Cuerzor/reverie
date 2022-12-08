@@ -1,6 +1,6 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Collectibles = CuerLib.Collectibles;
-local CompareEntity = Detection.CompareEntity;
+local CompareEntity = Entities.CompareEntity;
 local Players = CuerLib.Players;
 local FetusBlood = ModItem("Fetus Blood", "FetusBlood");
 

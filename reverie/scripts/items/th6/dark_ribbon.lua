@@ -1,5 +1,5 @@
-local Detection = CuerLib.Detection;
-local CompareEntity = Detection.CompareEntity;
+local Entities = CuerLib.Entities;
+local CompareEntity = Entities.CompareEntity;
 local Halos = THI.Halos;
 local Stats = CuerLib.Stats;
 
@@ -43,7 +43,7 @@ local function PostHaloUpdate(mod, effect)
     -- Make halos damage enemies.
     if (effect:IsFrame(7, 0)) then
         for _, ent in pairs(Isaac.FindInRadius(effect.Position, 128, EntityPartition.ENEMY)) do
-            if (Detection.IsValidEnemy(ent)) then
+            if (Entities.IsValidEnemy(ent)) then
                 ent:TakeDamage (2.5, 0, EntityRef(effect), 0)
             end
         end

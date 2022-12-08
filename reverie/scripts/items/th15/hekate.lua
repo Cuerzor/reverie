@@ -1,4 +1,4 @@
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Hekate = ModItem("Hekate", "HEKATE");
 
 local config = Isaac.GetItemConfig():GetCollectible(Hekate.Item);

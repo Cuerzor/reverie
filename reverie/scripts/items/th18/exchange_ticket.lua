@@ -1,6 +1,6 @@
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
-local CompareEntity = Detection.CompareEntity;
+local Entities = CuerLib.Entities;
+local CompareEntity = Entities.CompareEntity;
 local Players = CuerLib.Players;
 local Ticket = ModItem("Exchange Ticket", "EXCTicket");
 

@@ -1,5 +1,5 @@
 local BonusUFO = ModEntity("Red Bonus UFO", "BonusUFO");
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Pickups = CuerLib.Pickups;
 local Screen = CuerLib.Screen;
 
@@ -243,10 +243,10 @@ local function CollectUpdate(npc)
                 pickup.Position = pickup.Position + dir * math.min(10, math.min(frameCount, pickup.FrameCount) / 10);
                 pickup.Velocity = pickup.Velocity + dir * 1;
             end
-            if (Detection.CheckCollision(npc, pickup)) then
-                pickup:ToPickup():PlayPickupSound();
+            if (npc.Position:Distance(pickup.Position) <= npc.Size + pickup.Size) then
+                pickup:PlayPickupSound();
                 Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
-                Collect(npc, pickup:ToPickup());
+                Collect(npc, pickup);
                 pickup:Remove();
             end
         end

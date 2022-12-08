@@ -1,5 +1,5 @@
 local Collectibles = CuerLib.Collectibles;
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Actives = CuerLib.Actives;
 local DFlip = ModItem("D Flip", "DFLIP");
 

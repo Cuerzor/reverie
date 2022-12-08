@@ -48,7 +48,7 @@ end
 function Inputs:GetShootingVector(player, center)
     center = center or player.Position;
     local shooting = self.GetRawShootingVector(player, center);
-    local target = Lib.Synergies:GetMarkedTarget(player);
+    local target = Lib.Synergies.GetMarkedTarget(player);
     if (target) then
         shooting = target.Position - player.Position;
     elseif (not player:HasCollectible(CollectibleType.COLLECTIBLE_ANALOG_STICK) and shooting:Length() > 0) then

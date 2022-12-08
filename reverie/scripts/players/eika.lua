@@ -6,7 +6,7 @@ local Consts = Lib.Consts;
 local Maths = Lib.Math;
 local Tears = Lib.Tears;
 local Inputs = Lib.Inputs;
-local Detection = Lib.Detection;
+local Entities = Lib.Entities;
 local Screen = Lib.Screen;
 local Weapons = Lib.Weapons;
 local Eika = ModPlayer("Eika", false, "Eika");
@@ -64,8 +64,8 @@ end
 
 local RandomRange = Maths.RandomRange;
 
-local CompareEntity = Detection.CompareEntity;
-local EntityExists = Detection.EntityExists;
+local CompareEntity = Entities.CompareEntity;
+local EntityExists = Entities.EntityExists;
 
 local function HasMomsKnife(player)
     return player:HasCollectible(CollectibleType.COLLECTIBLE_MOMS_KNIFE);
@@ -158,7 +158,7 @@ end
 
 -- Get player's temporary Data for this run.
 function Eika:GetPlayerTempData(player, init)
-    local data = Lib:GetLibData(player);
+    local data = self:GetTempData(player);
     if (init) then
         data._EIKA = data._EIKA or {
             CursedEyeTeleport = false,
@@ -1028,7 +1028,7 @@ local function FindBladeKnifeHomingTarget(effect)
     local nearest = nil
     local pos = effect.Child.Position;
     for i, ent in pairs(Isaac.FindInRadius(pos, 80, EntityPartition.ENEMY)) do
-        if (Detection.IsValidEnemy(ent)) then
+        if (Entities.IsValidEnemy(ent)) then
             if (not nearest or ent.Position:Distance(pos) < nearest.Position:Distance(pos)) then
                 nearest = ent;
             end

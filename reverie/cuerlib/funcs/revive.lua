@@ -349,7 +349,7 @@ do -- Events.
             player:SetMinDamageCooldown(120);
             player:AddEntityFlags(EntityFlag.FLAG_NO_DAMAGE_BLINK);
             if (player:GetSprite():IsEventTriggered("DeathSound")) then
-                THI.SFXManager:Play(SoundEffect.SOUND_ISAACDIES);
+                SFXManager():Play(SoundEffect.SOUND_ISAACDIES);
             end
             player.ControlsCooldown = math.max(player.ControlsCooldown, 1);
             player.Velocity = Vector.Zero;

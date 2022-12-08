@@ -1,4 +1,4 @@
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local ViciousCurse = ModItem("Vicious Curse", "DamoclesCurse");
 
 function ViciousCurse:PostGainCurse(player, item, count, touched)

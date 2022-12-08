@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Instruments = THI.Instruments;
 local Stats = CuerLib.Stats;
 local Players = CuerLib.Players;
@@ -72,7 +72,7 @@ function Trumpet:onTrumpetUpdate(effect)
             Instruments.CreateNote(effect);
             data.WaveCooldown = 10;
             for _, ent in pairs(Isaac.GetRoomEntities()) do
-                if (Detection.IsValidEnemy(ent)) then
+                if (Entities.IsValidEnemy(ent)) then
                     if (ent.Position:Distance(effect.Position) < range + ent.Size / 2) then
                         ent:AddVelocity((ent.Position - effect.Position):Normalized() * 5);
                         ent:TakeDamage(2, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(effect), 0)

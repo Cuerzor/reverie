@@ -1,7 +1,7 @@
 local Damages = CuerLib.Damages;
-local Detection = CuerLib.Detection;
-local CompareEntity = Detection.CompareEntity;
-local EntityExists = Detection.EntityExists;
+local Entities = CuerLib.Entities;
+local CompareEntity = Entities.CompareEntity;
+local EntityExists = Entities.EntityExists;
 local Players = CuerLib.Players;
 local Sunflower = ModItem("Sunflower Pot", "Sunflower");
 

@@ -1,8 +1,8 @@
 local Actives = CuerLib.Actives;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Players = CuerLib.Players;
 local Stats = CuerLib.Stats;
-local CompareEntity = Detection.CompareEntity;
+local CompareEntity = Entities.CompareEntity;
 local Pipe = ModItem("Delusion Pipe", "DELUSION_PIPE");
 
 Pipe.DecaySpeed = 10 / 900 * 7;

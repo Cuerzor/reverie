@@ -1,4 +1,4 @@
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Sunny = ModItem("Sunny Fairy", "SUNNY_FAIRY");
 local config = Isaac.GetItemConfig():GetCollectible(Sunny.Item);
 

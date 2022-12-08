@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Instruments = THI.Instruments;
 local Stats = CuerLib.Stats;
 local Players = CuerLib.Players;
@@ -75,7 +75,7 @@ function Violin:onViolinUpdate(effect)
 
 
             for _, ent in pairs(Isaac.GetRoomEntities()) do
-                if (Detection.IsValidEnemy(ent)) then
+                if (Entities.IsValidEnemy(ent)) then
                     if (ent.Position:Distance(effect.Position) < range + ent.Size / 2) then
                         ent:AddSlowing(EntityRef(effect), 10, 0.5, Violin.SlowColor);
                         if (demonic) then

@@ -1,8 +1,8 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local LeafShieldRing = ModEntity("Leaf Shield Ring", "LeafShieldRing");
 
-local CompareEntity = Detection.CompareEntity;
-local EntityExists = Detection.EntityExists;
+local CompareEntity = Entities.CompareEntity;
+local EntityExists = Entities.EntityExists;
 
 local leafColor = Color(0.8,0.8,0,1,0,0,0);
 

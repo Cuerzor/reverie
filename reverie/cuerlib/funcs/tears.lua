@@ -119,22 +119,15 @@ local function GetTearData(tear, create)
     local data = Lib:GetEntityLibData(tear, true);
     if (create) then
         data._TEARS = data._TEARS or {
-            TearFlags = {}
+            TearFlags = Tears.TearFlagsSet();
         }
     end
     return data._TEARS;
 end
 
-function Tears.GetModTearFlags(tear, create, modId)
-    modId = modId or Lib.DataName;
+function Tears.GetModTearFlags(tear, create)
     local tearData = GetTearData(tear, create);
-    if (tearData) then
-        if (create) then
-            tearData[modId] = tearData[modId] or Tears.TearFlagsSet();
-        end
-        return tearData[modId];
-    end
-    return nil;
+    return tearData and tearData.TearFlags;
 end
 
 do -- Variants

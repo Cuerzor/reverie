@@ -1,8 +1,8 @@
 local Callbacks = CuerLib.Callbacks;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Screen = CuerLib.Screen;
-local EntityExists = Detection.EntityExists;
-local CompareEntity = Detection.CompareEntity;
+local EntityExists = Entities.EntityExists;
+local CompareEntity = Entities.CompareEntity;
 local Players = CuerLib.Players;
 local EyeOfChimera = ModItem("Eye of Chimera", "EYE_OF_CHIMERA");
 EyeOfChimera.HasEye = nil;

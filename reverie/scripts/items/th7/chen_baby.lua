@@ -1,8 +1,8 @@
 local Consts = CuerLib.Consts;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local MathTool = CuerLib.Math;
 local Familiars = CuerLib.Familiars;
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local ChenBaby = ModItem("Chen Baby", "ChenBaby");
 ChenBaby.Baby = {
     Type = Isaac.GetEntityTypeByName("Chen Baby"),
@@ -60,7 +60,7 @@ function ChenBaby:FindEnemy(familiar)
     for _, ent in pairs(Isaac.GetRoomEntities()) do
         local dis = (ent.Position - familiar.Position):Length();
         if (dis < distance) then
-            if (Detection.IsValidEnemy(ent) and not CompareEntity(data.DamagedEnemy, ent)) then
+            if (Entities.IsValidEnemy(ent) and not CompareEntity(data.DamagedEnemy, ent)) then
                 distance = dis;
                 target = ent;
             end
@@ -71,7 +71,7 @@ end
 function ChenBaby:preChenCollision(familiar, collider, low)
     local data = ChenBaby:GetChenData(familiar);
     if (data.IsCharging) then
-        if (Detection.IsValidEnemy(collider)) then
+        if (Entities.IsValidEnemy(collider)) then
             if (not CompareEntity(data.DamagedEnemy, collider)) then
                 local damage = ChenBaby.Damage;
                 if (familiar.Player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS)) then

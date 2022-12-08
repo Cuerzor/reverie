@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Sword = ModTrinket("Sword of Loyalty", "LOYALTY_SWORD");
 
 
@@ -24,7 +24,7 @@ do
     -- TODO Post Collision
     local function PostFamiliarCollision(mod, familiar, other, low)
         if (familiar:IsFrame(7, 0)) then
-            if (Detection.IsValidEnemy(other)) then
+            if (Entities.IsValidEnemy(other)) then
                 local player = familiar.Player;
                 if (player) then
                     local multiplier = player:GetTrinketMultiplier(Sword.Trinket);

@@ -1,4 +1,4 @@
-local UTF8 = {}
+local UTF8 = LIB:NewClass();
 
 function UTF8.sub(str, i, j)
     if (not j) then

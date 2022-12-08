@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Maths = CuerLib.Math;
 local Bosses = CuerLib.Bosses;
 local Grids = CuerLib.Grids;

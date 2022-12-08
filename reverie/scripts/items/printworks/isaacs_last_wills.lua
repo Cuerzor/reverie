@@ -2,7 +2,7 @@ local SaveAndLoad = CuerLib.SaveAndLoad;
 local Actives = CuerLib.Actives;
 local Players = CuerLib.Players;
 local Stats = CuerLib.Stats;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local LastWills = ModItem("Isaac's Last Wills", "IsaacsLastWills");
 
 local function GetGlobalData(create)

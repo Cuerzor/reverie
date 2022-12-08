@@ -106,7 +106,7 @@ SaveAndLoad:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, SaveAndLoad.preGameExit)
 
 
 function SaveAndLoad:onNewLevel()
-    if (THI.Game:GetLevel():GetStage() > 1) then
+    if (Game():GetLevel():GetStage() > 1) then
         Save();
     end
 end
@@ -122,7 +122,7 @@ function SaveAndLoad:onGameStarted(isContinued)
             
             if (state) then
                 Lib:SetGlobalModData(state.Global);
-                local game = THI.Game;
+                local game = Game();
                 for i, player in Lib.Players.PlayerPairs(true, true) do
                     for k, v in pairs(state.Players) do
                         local index = tonumber(k);

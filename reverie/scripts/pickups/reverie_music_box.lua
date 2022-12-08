@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Box = ModEntity("Reverie Music Box", "REVERIE_MUSIC_BOX");
 Box.SubType = 582;
 

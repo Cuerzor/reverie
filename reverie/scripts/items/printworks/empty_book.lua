@@ -1,6 +1,6 @@
 local Inputs = CuerLib.Inputs;
 local Stats = CuerLib.Stats;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Players = CuerLib.Players;
 local Shields = CuerLib.Shields;
 local Actives = CuerLib.Actives; 
@@ -525,7 +525,7 @@ local function MassDamage(player, size, rng)
     renderRNG:SetSeed(Random(), 0);
 
     for i, ent in pairs(Isaac.GetRoomEntities()) do
-        if (Detection.IsValidEnemy(ent)) then
+        if (Entities.IsValidEnemy(ent)) then
             ent:TakeDamage(damage, DamageFlag.DAMAGE_IGNORE_ARMOR, EntityRef(player), 0);
             for i = 1, damage / 10 do
                 local blood = Isaac.Spawn(1000, 5, 0, ent.Position, RandomVector() * renderRNG:RandomFloat() * 3, player);

@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Consts = CuerLib.Consts;
 local Inputs = CuerLib.Inputs;
 local Pickups = CuerLib.Pickups;
@@ -740,7 +740,7 @@ do
     local replacingDMG = false;
     local function PreEntityDamage(mod, tookDamage, damage, flags, source, countdown)
         local srcEnt = source.Entity;
-        if source == nil or srcEnt == nil or not Detection.IsValidEnemy(tookDamage) then
+        if source == nil or srcEnt == nil or not Entities.IsValidEnemy(tookDamage) then
             return nil
         end
     

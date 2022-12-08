@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local MathTool = CuerLib.Math;
 
 local ShanghaiDoll = ModItem("Shanghai Doll", "ShanghaiDoll");
@@ -45,7 +45,7 @@ function ShanghaiDoll:CheckCharge(familiar)
     local data = ShanghaiDoll:GetDollData(familiar, true);
     if (not data.IsCharging) then
         for _,ent in pairs(Isaac.GetRoomEntities()) do
-            if (Detection.IsValidEnemy(ent) and player.Position:Distance(ent.Position) <= ShanghaiDoll.ChargeRange + ent.Size) then
+            if (Entities.IsValidEnemy(ent) and player.Position:Distance(ent.Position) <= ShanghaiDoll.ChargeRange + ent.Size) then
                 data.IsCharging = true;
                 local distance = ent.Position - familiar.Position;
                 data.targetPosition = ent.Position + distance:Normalized() * 75;
@@ -61,7 +61,7 @@ function ShanghaiDoll:PostDollCollision(familiar, collider, low)
     
     local player = familiar.Player;
     if (low) then
-        if (Detection.IsValidEnemy(collider)) then 
+        if (Entities.IsValidEnemy(collider)) then 
             local damage = ShanghaiDoll.Damage;
             if (player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS)) then
                 damage = damage * 2;

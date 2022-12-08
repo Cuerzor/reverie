@@ -1,5 +1,5 @@
 local Dream = GensouDream;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local DreamStar = {
     Type = Isaac.GetEntityTypeByName("Doremy Dream Star"),
     Variant = Isaac.GetEntityVariantByName("Doremy Dream Star"),

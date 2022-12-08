@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Familiars = CuerLib.Familiars;
 local Math = CuerLib.Math;
 local Screen = CuerLib.Screen;
@@ -294,7 +294,7 @@ function IsaacGolem.FindAttackTarget(golem)
     for _, ent in pairs(Isaac.GetRoomEntities()) do
         local npc = ent:ToNPC();
         if (npc) then
-            if (Detection.IsValidEnemy(npc) and not npc:IsDead()) then
+            if (Entities.IsValidEnemy(npc) and not npc:IsDead()) then
                 local room = THI.Game:GetRoom();
                 local weight = 0;
                 weight = weight - npc.Position:Distance(golem.Position);

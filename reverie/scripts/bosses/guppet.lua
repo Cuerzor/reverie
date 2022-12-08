@@ -1,5 +1,5 @@
 local Bosses = CuerLib.Bosses;
-local EntityExists = CuerLib.Detection.EntityExists;
+local EntityExists = CuerLib.Entities.EntityExists;
 local Grids = CuerLib.Grids;
 local Guppet = ModEntity("Guppet", "GUPPET")
 

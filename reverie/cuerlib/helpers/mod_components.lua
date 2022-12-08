@@ -9,6 +9,8 @@ local ModPart = {}
 do
     ModComponents.ModPart = ModPart;
     ModPart.ClassName = "ModPart";
+    ModPart.ClassName = "ModPart";
+    ModPart.Mod = Lib.Mod;
 
     function ModPart:NewChild()
         local instance = setmetatable({}, {
@@ -26,6 +28,8 @@ do
         new.DataName = dataName;
         return new;
     end
+
+    -- Data.
 
     local function GetData(self, entity, init, defaultGetter, temp)
         
@@ -68,26 +72,6 @@ do
         data[dataName] = value;
     end
 
-    function ModPart:GetData(entity, init, defaultGetter)
-        return GetData(self, entity, init, defaultGetter, false);
-    end
-
-    function ModPart:SetData(entity, value)
-        SetData(self, entity, value, false);
-    end
-
-    function ModPart:GetTempData(entity, init, defaultGetter)
-        return GetData(self, entity, init, defaultGetter, true);
-    end
-
-    function ModPart:SetTempData(entity, value)
-        SetData(self, entity, value, true);
-    end
-
-    function ModPart:GetMod()
-        return Lib.Mod;
-    end
-
     local function GetGlobalData(self, temp, create, defaultGetter)
         
         local dataName = self.DataName
@@ -111,7 +95,6 @@ do
         return globalData[dataName];
     end
 
-    
     local function SetGlobalData(self, temp, value)
         
         local dataName = self.DataName
@@ -123,6 +106,22 @@ do
 
         local globalData = Lib:GetGlobalModData(temp);
         globalData[dataName] = value;
+    end
+    
+    function ModPart:GetData(entity, init, defaultGetter)
+        return GetData(self, entity, init, defaultGetter, false);
+    end
+
+    function ModPart:SetData(entity, value)
+        SetData(self, entity, value, false);
+    end
+
+    function ModPart:GetTempData(entity, init, defaultGetter)
+        return GetData(self, entity, init, defaultGetter, true);
+    end
+
+    function ModPart:SetTempData(entity, value)
+        SetData(self, entity, value, true);
     end
 
     function ModPart:GetGlobalData(init, defaultGetter)
@@ -139,13 +138,20 @@ do
         SetGlobalData(self, true, value)
     end
 
+    -- Callbacks.
     function ModPart:AddCallback(callback, func, optional)
         local function fncall(mod, ...)
             return func(self, ...);
         end
-        self:GetMod():AddCallback(callback, fncall, optional);
+        self.Mod:AddCallback(callback, fncall, optional);
     end
 
+    function ModPart:AddPriorityCallback(callback, priority, func, optional)
+        local function fncall(mod, ...)
+            return func(self, ...);
+        end
+        self.Mod:AddPriorityCallback(callback, priority, fncall, optional);
+    end
     function ModPart:AddCustomCallback(callback, func, optional, priority)
         local function fncall(mod, ...)
             return func(self, ...);

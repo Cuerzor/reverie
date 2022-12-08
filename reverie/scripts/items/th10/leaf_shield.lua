@@ -1,9 +1,9 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Inputs = CuerLib.Inputs;
 local LeafShield = ModItem("Leaf Shield", "LeafShield");
 
-local CompareEntity = Detection.CompareEntity;
-local EntityExists = Detection.EntityExists;
+local CompareEntity = Entities.CompareEntity;
+local EntityExists = Entities.EntityExists;
 
 LeafShield.MaxSpawnDelay = 90;
 

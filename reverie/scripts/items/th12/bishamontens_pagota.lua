@@ -1,5 +1,5 @@
 local Lib = CuerLib;
-local Detection = Lib.Detection;
+local Entities = Lib.Entities;
 local Pickups = Lib.Pickups;
 local Players = Lib.Players;
 local Stats = Lib.Stats;
@@ -100,7 +100,7 @@ local function TurnGold()
                 ent:Remove();
                 Isaac.Spawn(type, BombVariant.BOMB_GOLDENTROLL, subType, ent.Position, ent.Velocity, nil);
             end
-        elseif (Detection.IsValidEnemy(ent) and not THI.IsLunatic()) then
+        elseif (Entities.IsValidEnemy(ent) and not THI.IsLunatic()) then
             ent:AddMidasFreeze(EntityRef(nil), 150);
         end
     end
@@ -141,7 +141,7 @@ function Pagota:GetPagotaData(init)
 end
 
 function Pagota:GetPlayerTempData(player, init)
-    local data = Lib:GetLibData(player);
+    local data = self:GetTempData(player);
     if (init) then
         data._PAGOTA_TEMP = data._PAGOTA_TEMP or {
             LastCoins = 0,

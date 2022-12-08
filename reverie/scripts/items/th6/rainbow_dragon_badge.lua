@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Players = CuerLib.Players;
 local Screen = CuerLib.Screen;
 
@@ -283,7 +283,7 @@ end
 function DragonBadge:postPlayerCollision(player, collider)
     local playerData = DragonBadge:GetPlayerData(player, false);
     if (playerData and playerData.dashing) then
-        if (Detection.IsValidEnemy(collider)) then
+        if (Entities.IsValidEnemy(collider)) then
         
             local judasBook = Players.HasJudasBook(player);
 

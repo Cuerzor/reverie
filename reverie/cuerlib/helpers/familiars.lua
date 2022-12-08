@@ -2,7 +2,7 @@ local Lib = LIB;
 local Consts = Lib.Consts; 
 local Math = Lib.Math;
 local Synergies = Lib.Synergies;
-local Detection = Lib.Detection;
+local Entities = Lib.Entities;
 
 local Familiars = Lib:NewClass();
 Familiars.AnimationNames = {
@@ -21,9 +21,9 @@ function Familiars:GetFireVector(familiar, shootDirection, noModifiers, shootRan
         if (player:HasCollectible(CollectibleType.COLLECTIBLE_KING_BABY)) then
             local enemies = Isaac.FindInRadius(familiar.Position, shootRange, EntityPartition.ENEMY);
             local enemy = nil;
-            local Detection = Lib.Detection;
+            local Entities = Lib.Entities;
             for i, ent in pairs(enemies) do
-                if (Detection.IsValidEnemy(ent) and (not enemy or familiar.Position:Distance(ent.Position) < familiar.Position:Distance(enemy.Position))) then
+                if (Entities.IsValidEnemy(ent) and (not enemy or familiar.Position:Distance(ent.Position) < familiar.Position:Distance(enemy.Position))) then
                     enemy = ent;
                 end
             end
@@ -31,7 +31,7 @@ function Familiars:GetFireVector(familiar, shootDirection, noModifiers, shootRan
                 return (enemy.Position - familiar.Position):Normalized();
             end
         else
-            local target = Synergies:GetMarkedTarget(player);
+            local target = Synergies.GetMarkedTarget(player);
             if (target) then
                 return (target.Position - familiar.Position):Normalized();
             end

@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local UTF8 = CuerLib.UTF8;
 local Dialog = {
     CurrentKeyframe = 0,

@@ -1,5 +1,5 @@
 local Dream = GensouDream;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Choice = {
     Type = Isaac.GetEntityTypeByName("Doremy Nightmare Choice"),
     Variant = Isaac.GetEntityVariantByName("Doremy Nightmare Choice"),
@@ -21,7 +21,7 @@ function Choice:OnTouch(effect)
     
     local parent = effect.Parent;
     for i, ent in ipairs(Isaac.FindByType(Choice.Type, Choice.Variant)) do
-        if (not Detection.CompareEntity(ent, effect) and Detection.CompareEntity(ent.Parent, effect.Parent)) then
+        if (not Entities.CompareEntity(ent, effect) and Entities.CompareEntity(ent.Parent, effect.Parent)) then
             ent:ToEffect().State = 2;
         end
     end
@@ -63,7 +63,7 @@ local function PostEffectUpdate(mod, effect)
         end
         local choiceCount = 0;
         for i, ent in ipairs(Isaac.FindByType(Choice.Type, Choice.Variant)) do
-            if (Detection.CompareEntity(ent.Parent, effect.Parent)) then
+            if (Entities.CompareEntity(ent.Parent, effect.Parent)) then
                 choiceCount = choiceCount + 1;
             end
         end

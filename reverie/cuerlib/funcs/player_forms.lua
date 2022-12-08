@@ -1,13 +1,13 @@
 local Lib = LIB;
 local Callbacks = Lib.Callbacks;
-local Detection = Lib.Detection;
+local Entities = Lib.Entities;
 
 local PlayerForms = Lib:NewClass();
 PlayerForms.CustomForms = {
 }
 
-local sfx = THI.SFXManager;
-local game = THI.Game;
+local sfx = SFXManager();
+local game = Game();
 local config = Isaac.GetItemConfig();
 
 function PlayerForms:GetPlayerData(player)
@@ -49,7 +49,7 @@ function PlayerForms:GainForm(player, id)
     player:AddNullCostume(form.CostumeId);
     local getter = form.NameGetter;
     data.PreparedText = getter(Options.Language);
-    THI.SFXManager:Play(SoundEffect.SOUND_POWERUP_SPEWER);
+    SFXManager():Play(SoundEffect.SOUND_POWERUP_SPEWER);
 end
 
 function PlayerForms:LoseForm(player, id)
@@ -79,7 +79,7 @@ function PlayerForms:onPlayerEffect(player)
     local data = PlayerForms:GetPlayerData(player);
 
     if (data.PreparedText ~= nil) then
-        THI.Game:GetHUD():ShowItemText(data.PreparedText);
+        Game():GetHUD():ShowItemText(data.PreparedText);
         data.PreparedText = nil;
     end
 end

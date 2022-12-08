@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Actives = CuerLib.Actives;
 local Math = CuerLib.Math;
 local Consts = CuerLib.Consts;

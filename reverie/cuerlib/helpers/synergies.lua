@@ -1,13 +1,12 @@
 local Lib = LIB;
 local Math = Lib.Math;
-local Synergies = Lib:NewClass();
+local RandomRange = Math.RandomRange;
 
+local Synergies = Lib:NewClass();
+local shotRNG = RNG();
 local function ErrorSetConstValue(tbl, key, value)
     error("Trying to set value of a constant table.")
 end
-
-local RandomRange = Math.RandomRange;
-
 local function HasMomsKnife(player)
     return player:HasCollectible(CollectibleType.COLLECTIBLE_MOMS_KNIFE);
 end
@@ -15,48 +14,17 @@ local function HasLung(player)
     return player:HasCollectible(CollectibleType.COLLECTIBLE_MONSTROS_LUNG);
 end
 
-local shotRNG = RNG();
 
--- local SingleShotParams = {
---     Height = -23.5,
---     Offset = Vector(0, 0),
---     AngleOffset = 0,
---     SpeedMultiplier = 1,
---     FallingSpeed = 0,
---     FallingAcceleration = 0,
---     AddIndex = true,
---     AddIndexPerShot = false,
---     Color = Color.Default,
---     FlyingKnife = false,
---     CanWiz = true,
--- };
--- do 
---     SingleShotParams.__index = self;
-
---     -- Create a new SingleShotParams.
---     function SingleShotParams:New()
---         local new = {};
---         setmetatable(new, self);
---         return new;
---     end
-
---     local mt = {
---         __index = SingleShotParams,
---         __newindex = ErrorSetConstValue
---     }
---     SingleShotParams.Default = setmetatable({}, mt);
--- end
-
-function Synergies:GetMarkedTarget(player)
+function Synergies.GetMarkedTarget(player)
     if (player:HasCollectible(CollectibleType.COLLECTIBLE_EYE_OF_THE_OCCULT)) then
         for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.OCCULT_TARGET)) do
-            if (Lib.Detection.CompareEntity(ent.SpawnerEntity, player)) then
+            if (Lib.Entities.CompareEntity(ent.SpawnerEntity, player)) then
                 return ent:ToEffect();
             end
         end
     elseif (player:HasCollectible(CollectibleType.COLLECTIBLE_MARKED)) then
         for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.TARGET)) do
-            if (Lib.Detection.CompareEntity(ent.SpawnerEntity, player)) then
+            if (Lib.Entities.CompareEntity(ent.SpawnerEntity, player)) then
                 return ent:ToEffect();
             end
         end
@@ -104,8 +72,6 @@ do
     
     Synergies.MultishotParams = MultishotParams;
 end
-
-
 
 local MultishotParams = Synergies.MultishotParams;
 
@@ -267,32 +233,5 @@ function Synergies.ApplyClusterTearEffect(player, dir, tearEntity)
         tear.FallingSpeed = RandomRange(shotRNG, -player.TearFallingSpeed - 15, -player.TearFallingSpeed);
     end
 end
-
---MultishotParams for Lead Pencil
--- do
---     local PencilParams = MultishotParams:New();
---     for i = 1, 12 do
---         local single = SingleShotParams:New();
---         single.FallingAcceleration = 0.5;
---         single.AddIndex = false;
---         single.FlyingKnife = true;
---         single.Color = Color(1, 0, 0, 1, 0, 0, 0);
-
---         PencilParams:AddSingleParams(single);
---     end
-
---     function Synergies.GetLeadPencilParams(player)
---         local params = PencilParams;
---         for i = 1, params.NumProjectiles do
---             local single = params.Shots[i];
-
---             single.TearHeight = player.TearHeight;
---             single.SpeedMultiplier = RandomRange(shotRNG, 0.25, 0.75);
---             single.AngleOffset = RandomRange(shotRNG, -10, 10);
---             single.FallingSpeed = RandomRange(shotRNG, -player.TearFallingSpeed - 15, -player.TearFallingSpeed);
---         end
---         return params;
---     end
--- end
 
 return Synergies;

@@ -1,8 +1,8 @@
 local Familiars = CuerLib.Familiars;
 local Math = CuerLib.Math;
 local Consts = CuerLib.Consts;
-local Detection = CuerLib.Detection;
-local CompareEntity = Detection.CompareEntity;
+local Entities = CuerLib.Entities;
+local CompareEntity = Entities.CompareEntity;
 local Head = ModEntity("Sekibanki Head", "SEKIBANKI_HEAD");
 
 Head.DirectionAnimations = {

@@ -1,6 +1,6 @@
 local Collectibles = CuerLib.Collectibles;
-local Detection = CuerLib.Detection;
-local CompareEntity = Detection.CompareEntity;
+local Entities = CuerLib.Entities;
+local CompareEntity = Entities.CompareEntity;
 local Players = CuerLib.Players;
 local Envy = ModItem("Green Eyed Envy", "EnvyCurse");
 
@@ -30,7 +30,7 @@ function Envy:PostNewRoom()
     if (Collectibles.IsAnyHasCollectible(Envy.Item, false)) then
         for i, ent in pairs(Isaac.GetRoomEntities()) do
 
-            if (not Detection.IsFinalBoss(ent) and ent:IsActiveEnemy() 
+            if (not Entities.IsFinalBoss(ent) and ent:IsActiveEnemy() 
             and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) 
             and not IsBlacklisted(ent)
             and ent.Type ~= THI.GensouDream.Doremy.Type

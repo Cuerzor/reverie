@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Collectibles = CuerLib.Collectibles;
 local ItemPools = CuerLib.ItemPools;
 local Players = CuerLib.Players;

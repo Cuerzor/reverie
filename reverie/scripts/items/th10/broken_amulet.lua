@@ -1,5 +1,5 @@
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Tears = CuerLib.Tears;
 local BrokenAmulet = ModItem("Broken Amulet", "BrokenAmulet");
 
@@ -123,7 +123,7 @@ function BrokenAmulet:PostTearUpdate(tear)
                 end
                 local size = scale * 100;
                 for i, ent in pairs(Isaac.FindInRadius(tear.Position, size, EntityPartition.ENEMY)) do
-                    if (Detection.IsValidEnemy(ent)) then
+                    if (Entities.IsValidEnemy(ent)) then
                         ent:TakeDamage(data.HaloDamage, 0, EntityRef(player), 0);
                     end
                 end

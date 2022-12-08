@@ -1,11 +1,11 @@
 
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local PsycheEye = ModItem("Psyche Eye", "PsycheEye");
 
 local itemConfig = Isaac.GetItemConfig();
 
-local CompareEntity= Detection.CompareEntity;
-local EntityExists = Detection.EntityExists;
+local CompareEntity= Entities.CompareEntity;
+local EntityExists = Entities.EntityExists;
 
 function PsycheEye:OnEvaluateCache(player, cache)
     if (cache == CacheFlag.CACHE_FAMILIARS) then

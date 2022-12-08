@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Collectibles = CuerLib.Collectibles;
 local Sake = ModItem("Sake of Forgotten", "SAKE_OF_FORGOTTEN")
 

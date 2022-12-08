@@ -1,5 +1,5 @@
 local Stats = CuerLib.Stats;
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Actives = CuerLib.Actives;
 local Players = CuerLib.Players;
 local Scroll = ModItem("Sorcerer's Scroll", "SORCERERS_SCROLL");

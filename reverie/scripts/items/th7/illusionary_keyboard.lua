@@ -1,5 +1,5 @@
 local Instruments = THI.Instruments;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Players = CuerLib.Players;
 
 local Keyboard = ModItem("Illusionary Keyboard", "ILLU_KEYBOARD");
@@ -77,7 +77,7 @@ function Keyboard:onKeyboardUpdate(effect)
                         if (not projectile:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER)) then
                             ent:Remove();
                         end
-                    elseif (Detection.IsValidEnemy(ent)) then
+                    elseif (Entities.IsValidEnemy(ent)) then
                         if (demonic) then
                             ent:AddFreeze ( EntityRef(effect), 10)
                         end

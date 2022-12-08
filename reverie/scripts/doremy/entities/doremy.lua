@@ -1,7 +1,7 @@
 local Dream = GensouDream;
 local Screen = CuerLib.Screen;
 local Math = CuerLib.Math;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Players = CuerLib.Players;
 local Actives = CuerLib.Actives;
 
@@ -91,7 +91,7 @@ local function ClearProjectiles(doremy)
     
     for k, v in pairs(Isaac.FindByType(7)) do
         local laserData = v:GetData();
-        if (Detection.CompareEntity(laserData.Doremy, doremy)) then
+        if (Entities.CompareEntity(laserData.Doremy, doremy)) then
             v:Remove();
         end
     end
@@ -152,7 +152,7 @@ end
 
 local function NextState(doremy)
     local tempData = Dream:GetTempData();
-    if (Detection.CompareEntity(tempData.Doremy, doremy)) then
+    if (Entities.CompareEntity(tempData.Doremy, doremy)) then
         local data = Doremy.GetDoremyData(doremy);
         --doremy.HitPoints = doremy.MaxHitPoints * Doremy:GetHPByState(data.SpellId, data.UsingSpell);
         local usingSpell = Doremy:IsUsingSpellCard(doremy);

@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Screen = CuerLib.Screen;
 local Players = CuerLib.Players;
 local Mod = THI;
@@ -162,7 +162,7 @@ function TenguCamera:PostUseCamera(item, rng, player, flags, slot, varData)
                         player:AddWisp (TenguCamera.Item, ent.Position)
                     end
                 end
-            elseif (Detection.IsValidEnemy(ent)) then
+            elseif (Entities.IsValidEnemy(ent)) then
                 -- Enemy.
                 if (IsInRange(player, ent)) then
                     local ref = EntityRef(player);

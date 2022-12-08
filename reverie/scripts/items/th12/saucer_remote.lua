@@ -1,4 +1,4 @@
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Actives = CuerLib.Actives;
 local SaucerRemote = ModItem("Saucer Remote", "SaucerRemote");
 

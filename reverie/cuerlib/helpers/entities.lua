@@ -1,6 +1,4 @@
-local Lib = LIB;
-
-local Entities = Lib:NewClass();
+local Entities = LIB:NewClass();
 
 function Entities.IsValidEnemy(entity, includeNoTarget)
     local valid =  entity:IsVulnerableEnemy() and not entity:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)
@@ -39,47 +37,6 @@ function Entities.IsFinalBoss(ent)
     ent.Type == EntityType.ENTITY_BEAST;
     
 end
-
-function Entities.IsActivePlayer(player)
-    if (player:IsCoopGhost ( )) then
-        return false;
-    end
-
-    if (player.Variant ~= 0) then
-        return false;
-    end
-    return true;
-end
-
-function Entities.PlayerPairs(includePlayer, includeBaby)
-    if (includePlayer == nil) then
-        includePlayer = true;
-    end
-    
-    if (includeBaby == nil) then
-        includeBaby = false;
-    end
-
-    local game = Game();
-    local num = game:GetNumPlayers();
-    local p = 0;
-    local indexList = {};
-    local function iter()
-        while (p < num) do
-            local player = game:GetPlayer(p);
-            p = p + 1;
-            local variant = player.Variant;
-            if ((includePlayer and variant == 0) or (includeBaby and variant == 1)) then
-                local curIndex = indexList[variant] or 0;
-                indexList[variant] = curIndex + 1;
-                return curIndex + variant * 16, player;
-            end
-        end
-        return nil;
-    end
-    return iter, nil, nil;
-end
-
 
 do
     local function CheckCapsuleCollide(startA, endA, axeA, verticalA, radiusA, startB, endB, axeB, verticalB, radiusB)

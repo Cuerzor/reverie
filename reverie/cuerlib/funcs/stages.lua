@@ -21,7 +21,7 @@ local StageCache = Stages.Default;
 local IsNewStage = false;
 
 function Stages.GetCurrentStage()
-    local level = THI.Game:GetLevel();;
+    local level = Game():GetLevel();;
     local stage = level:GetStage();
     local stageType = level:GetStageType();
     if (stage ~= StageCache.Stage or stageType ~= StageCache.Type ) then
@@ -46,7 +46,7 @@ end
 Stages:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, Stages.onNewLevel);
 
 function Stages.GetDimension(roomDesc) -- By DeadInfinity.
-    local level = THI.Game:GetLevel()
+    local level = Game():GetLevel()
     local desc = roomDesc or level:GetCurrentRoomDesc()
 
     local hash = GetPtrHash(desc)
@@ -63,7 +63,7 @@ function Stages.IsInDimension(num)
 end
 
 function Stages.IsInMinesEscape()
-    local level = THI.Game:GetLevel()
+    local level = Game():GetLevel()
     local stageType = level:GetStageType();
     if (level:GetStage() == LevelStage.STAGE2_2 and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)) then
         return Stages.GetDimension() == 1

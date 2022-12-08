@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local SaveAndLoad = CuerLib.SaveAndLoad
 local Collectibles = CuerLib.Collectibles
 local Stages = CuerLib.Stages;
@@ -200,7 +200,7 @@ end
 function MaidSuit:SpawnKnifes(player)
     local time = 0;
     for i, ent in pairs(Isaac.GetRoomEntities()) do
-        if (Detection.IsValidEnemy(ent)) then
+        if (Entities.IsValidEnemy(ent)) then
             local spawner = Isaac.Spawn(MaidSuit.KnifeSpawner, MaidSuit.KnifeSpawnerVariant, 0, ent.Position, Vector(0, 0), player):ToEffect();
             local spawnerData = MaidSuit:GetKnifeSpawnerData(spawner);
             spawnerData.Player = player;

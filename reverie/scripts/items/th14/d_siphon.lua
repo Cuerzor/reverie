@@ -1,5 +1,5 @@
 local Collectibles = CuerLib.Collectibles;
-local CompareEntity = CuerLib.Detection.CompareEntity;
+local CompareEntity = CuerLib.Entities.CompareEntity;
 local Actives = CuerLib.Actives;
 local ItemPools = CuerLib.ItemPools;
 local DSiphon = ModItem("D Siphon", "D_SIPHON");

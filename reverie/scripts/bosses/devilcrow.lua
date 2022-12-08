@@ -1,5 +1,5 @@
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Bosses = CuerLib.Bosses;
 local Revive = CuerLib.Revive;
 local Grids = CuerLib.Grids;

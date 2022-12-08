@@ -1,12 +1,12 @@
 local Consts = CuerLib.Consts;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Familiars = CuerLib.Familiars;
 local Screen = CuerLib.Screen;
 local Math = CuerLib.Math;
 local Tears = CuerLib.Tears;
 local PsycheEye = ModEntity("Psyche Eye Familiar", "PsycheEye");
-local CompareEntity = Detection.CompareEntity;
-local EntityExists = Detection.EntityExists;
+local CompareEntity = Entities.CompareEntity;
+local EntityExists = Entities.EntityExists;
 
 PsycheEye.MaxScanProgress = 100;
 PsycheEye.FriendlyLimit = 5;

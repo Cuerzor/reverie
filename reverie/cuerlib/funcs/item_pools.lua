@@ -58,15 +58,9 @@ local function PostGetCollectible(mod, id, pool, decrease, seed)
         table.insert(ItemPools.RoomBlacklist, id);
     end
 end
+ItemPools:AddCallback(ModCallbacks.MC_POST_GET_COLLECTIBLE, PostGetCollectible)
 
 local blacklistCleared = false;
-local function PreRoomEntitySpawn(mod, type, variant,subtype, gridIndex, seed)
-    if (not blacklistCleared) then
-        ItemPools.RoomBlacklist = {};
-        ItemPools:EvaluateRoomBlacklist()
-        blacklistCleared = true;
-    end
-end
 local function PreGetCollectible(mod, pool, decrease, seed)
     if (not blacklistCleared and Game():GetRoom():GetFrameCount() <= 0) then
         ItemPools.RoomBlacklist = {};
@@ -74,52 +68,19 @@ local function PreGetCollectible(mod, pool, decrease, seed)
         blacklistCleared = true;
     end
 end
+ItemPools:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, PreGetCollectible)
+
 local function PostUpdate(mod)
     blacklistCleared = false;
 end
+ItemPools:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate)
+
 local function PostNewRoom(mod)
     if (not blacklistCleared) then
         ItemPools.RoomBlacklist = {};
         blacklistCleared = true;
     end
 end
-
-function ItemPools:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_GET_COLLECTIBLE, PostGetCollectible)
-    mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom)
-    mod:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, PreGetCollectible)
-    mod:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate)
-end
-
--- function ItemPools:GetConditionalCollectible(pool, decrease, seed, default, condition)
---     local itemPool = Game():GetItemPool();
---     local itemConfig = Isaac.GetItemConfig();
-
---     -- Exclude items that not fits the condition.
---     ItemPools:AddPoolBlacklist(function(i, conf) return not condition(i, conf) end)
---     local item = itemPool:GetCollectible(pool, decrease, seed, default);
---     itemPool:ResetRoomBlacklist();
---     return item;
-
---     --local rng = RNG();
---     --rng:SetSeed(seed, 0);
---     -- local newSeed = seed;
---     -- local curPool = pool;
---     -- local breakfastCount = 0;
---     -- for i = 1, 1024 do
---     --     local collectible = itemPool:GetCollectible(curPool, false, newSeed);
---     --     print("Get", i)
---     --     if (collectible == CollectibleType.COLLECTIBLE_BREAKFAST) then
---     --         breakfastCount = breakfastCount + 1;
---     --     end
---     --     if (breakfastCount > 2) then
---     --         return CollectibleType.COLLECTIBLE_BREAKFAST;
---     --     end
---     --     itemPool:AddRoomBlacklist(collectible);
---     --     newSeed = rng:Next();
---     -- end
---     --return CollectibleType.COLLECTIBLE_BREAKFAST;
--- end
-
+ItemPools:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom)
 
 return ItemPools;

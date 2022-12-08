@@ -1,19 +1,18 @@
 local Screen = LIB:NewClass();
 
 function Screen.GetScreenSize() 
-    --return (Isaac.WorldToScreen(Vector(320, 280)) - THI.Game:GetRoom():GetRenderScrollOffset() - THI.Game.ScreenShakeOffset) * 2
     return Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight());
 end
 
 function Screen.GetOffsetedRenderPosition(pos, offset)
-    local game = THI.Game;
+    local game = Game();
     local room = game:GetRoom();
     return Isaac.WorldToScreen(pos) + offset - room:GetRenderScrollOffset() - game.ScreenShakeOffset;
 end
 
 function Screen.GetEntityOffsetedRenderPosition(entity, offset, positionOffset, noModifier)
     positionOffset = positionOffset or Vector.Zero;
-    local game = THI.Game;
+    local game = Game();
     local room = game:GetRoom();
     
     if (not noModifier) then
@@ -25,19 +24,14 @@ function Screen.GetEntityOffsetedRenderPosition(entity, offset, positionOffset, 
 end
 
 function Screen.IsReflection()
-    local game = THI.Game;
+    local game = Game();
     local room = game:GetRoom();
-    -- local offset =  renderOffset - room:GetRenderScrollOffset() ;
-    -- if (offset:Length() - game.ScreenShakeOffset:Length() > 0.1) then
-    --     return true;
-    -- end
-    -- return false;
     return room:GetRenderMode() == RenderMode.RENDER_WATER_REFLECT;
 end
 
 function Screen.GetEntityRenderPosition(entity, positionOffset, noModifier)
     positionOffset = positionOffset or Vector.Zero;
-    local game = THI.Game;
+    local game = Game();
     local room = game:GetRoom();
     
     if (not noModifier) then

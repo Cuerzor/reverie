@@ -1,8 +1,8 @@
 local Maths = CuerLib.Math;
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Players = CuerLib.Players;
-local CompareEntity = Detection.CompareEntity;
+local CompareEntity = Entities.CompareEntity;
 local Mod = THI;
 local PsychoKnife = ModItem("Psycho Knife", "PsychoKnife");
 

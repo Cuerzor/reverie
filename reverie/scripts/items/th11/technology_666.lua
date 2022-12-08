@@ -1,11 +1,11 @@
 local Inputs = CuerLib.Inputs;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Consts = CuerLib.Consts;
 local Synergies = CuerLib.Synergies;
 local Tech666 = ModItem("Technology 666", "Tech666");
 
-local CompareEntity = Detection.CompareEntity;
-local EntityExists = Detection.EntityExists;
+local CompareEntity = Entities.CompareEntity;
+local EntityExists = Entities.EntityExists;
 
 local LaserColor = Color(1, 1, 1, 1, 0.5, 1, 0.5);
 
@@ -49,7 +49,7 @@ end
 
 
 function Tech666.GetShootingVector(player)
-    local target = Synergies:GetMarkedTarget(player);
+    local target = Synergies.GetMarkedTarget(player);
     if (target) then
         return (target.Position - player.Position):Normalized();
     end

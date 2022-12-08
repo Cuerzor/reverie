@@ -1,5 +1,5 @@
 local ModPart = CuerLib.ModComponents.ModPart;
-local Detection = CuerLib.Detection;
+local Entities = CuerLib.Entities;
 local Pickups = CuerLib.Pickups;
 local Screen = CuerLib.Screen;
 local Players = CuerLib.Players;
@@ -743,7 +743,7 @@ local function PostPlayerUpdate(mod, player)
             local bombs = Isaac.FindByType(EntityType.ENTITY_BOMB);
             for _, ent in ipairs(bombs) do
                 local bomb = ent:ToBomb();
-                if (bomb.FrameCount == 0 and Detection.CompareEntity(bomb.SpawnerEntity, player)) then
+                if (bomb.FrameCount == 0 and Entities.CompareEntity(bomb.SpawnerEntity, player)) then
                     local giga = bomb.Variant == BombVariant.BOMB_GIGA or bomb.Variant == BombVariant.BOMB_ROCKET_GIGA ;
                     local canBomb = false;
                     if (golden or giga) then
