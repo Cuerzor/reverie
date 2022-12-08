@@ -97,7 +97,7 @@ local Require = THI.Require;
 
 local getter = function(temp) return THI:GetGlobalData(temp) end;
 local setter = function(data, temp) THI:SetGlobalData(data, temp) end
-Lib:Register(THI, "_TOUHOU_DATA", getter, setter);
+Lib:Init(THI, "_TOUHOU_DATA", getter, setter);
 
 local Shared = {};
 THI.Instruments = Require("scripts/shared/instruments");
@@ -962,8 +962,6 @@ if (HPBars) then
     Require("compatilities/boss_bars")
 end
 
-CuerLib:LateRegister();
-
 -- Lunatic.
 do
     local Lunatic = {}
@@ -1030,7 +1028,7 @@ end
 -- Reevaluate caches after gameStarted.
 function THI:PostGameStartEvaluate(isContinued)
     if  (isContinued) then
-        for index, player in Lib.Detection.PlayerPairs(true, true) do
+        for index, player in Lib.Players.PlayerPairs(true, true) do
             --local player = THI.Game:GetPlayer(p);
             --print(index);
             player:AddCacheFlags(CacheFlag.CACHE_ALL);

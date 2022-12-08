@@ -1,5 +1,6 @@
 local Detection = CuerLib.Detection;
 local EntityExists = Detection.EntityExists;
+local Players = CuerLib.Players;
 local FairyDust = ModItem("Fairy Dust", "FAIRY_DUST");
 
 FairyDust.CostumeId = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_fairy_dust.anm2");
@@ -19,7 +20,7 @@ function FairyDust:PostEntityKill(entity)
 
             local hasDust = false;
             local luck = 0;
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 luck = luck + player.Luck;
                 local dustCount = player:GetCollectibleNum(FairyDust.Item);
                 if (dustCount > 0 and dustCount < 3) then

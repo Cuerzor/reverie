@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Callbacks = Lib.Callbacks;
 local Detection = Lib.Detection;
 
@@ -11,7 +11,7 @@ local game = THI.Game;
 local config = Isaac.GetItemConfig();
 
 function PlayerForms:GetPlayerData(player)
-    local data = Lib:GetLibData(player);
+    local data = Lib:GetEntityLibData(player);
     data.CustomForms = data.CustomForms or {
         PreparedText = nil,
         CollectibleCount = 0,

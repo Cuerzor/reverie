@@ -1,6 +1,7 @@
 local Inputs = CuerLib.Inputs;
 local Stats = CuerLib.Stats;
 local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Shields = CuerLib.Shields;
 local Actives = CuerLib.Actives; 
 local Screen = CuerLib.Screen;
@@ -320,7 +321,7 @@ EmptyBook:AddCallback(ModCallbacks.MC_USE_ITEM, EmptyBook.UseEmptyBook, EmptyBoo
 
 function EmptyBook:PostNewRoom()
     local game = THI.Game;
-    for i, player in Detection.PlayerPairs(true, true) do
+    for i, player in Players.PlayerPairs(true, true) do
         local playerData = EmptyBook:GetPlayerData(player, false);
         if (playerData) then
             if (math.abs(playerData.DamageBoost - 1) < 1e08) then
@@ -352,7 +353,7 @@ function EmptyBook:PostNewLevel()
         if (passive == 0) then
             -- Goodwilled
             local num = 0;
-            for i, player in Detection.PlayerPairs() do
+            for i, player in Players.PlayerPairs() do
                 num = num + player:GetCollectibleNum(FinishedBooks[1]) + 
                     player:GetCollectibleNum(FinishedBooks[2]) + 
                     player:GetCollectibleNum(FinishedBooks[3]); 
@@ -361,7 +362,7 @@ function EmptyBook:PostNewLevel()
         elseif (passive == 2) then
             -- Precise
             local compass = false;
-            for i, player in Detection.PlayerPairs() do
+            for i, player in Players.PlayerPairs() do
                 if (HasFinishedBook(player)) then
                     compass = true;
                     break;
@@ -383,7 +384,7 @@ function EmptyBook:EvaluateCurse(curses)
         if (passive == 1) then
             -- Wise
             local dispel = false;
-            for i, player in Detection.PlayerPairs() do
+            for i, player in Players.PlayerPairs() do
                 if (HasFinishedBook(player)) then
                     dispel = true;
                     break;
@@ -750,7 +751,7 @@ end
 
 function EmptyBook:PostRender()
     local game = THI.Game;
-    for i, player in Detection.PlayerPairs() do
+    for i, player in Players.PlayerPairs() do
         if (IsWriting(player)) then
             RenderWriting(player);
         end

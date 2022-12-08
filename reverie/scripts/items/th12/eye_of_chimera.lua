@@ -3,6 +3,7 @@ local Detection = CuerLib.Detection;
 local Screen = CuerLib.Screen;
 local EntityExists = Detection.EntityExists;
 local CompareEntity = Detection.CompareEntity;
+local Players = CuerLib.Players;
 local EyeOfChimera = ModItem("Eye of Chimera", "EYE_OF_CHIMERA");
 EyeOfChimera.HasEye = nil;
 
@@ -43,7 +44,7 @@ EyeOfChimera:AddCallback(ModCallbacks.MC_USE_ITEM, EyeOfChimera.UseItem, EyeOfCh
 
 function EyeOfChimera:PostUpdate()
     EyeOfChimera.HasEye = nil;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (player:GetCollectibleNum(EyeOfChimera.Item) > 0) then
             EyeOfChimera.HasEye = true;
             break;
@@ -91,7 +92,7 @@ function EyeOfChimera:EvaluateCurse(curses)
     local game = THI.Game;
     local hasEye = false;
     local hasBlackCandle = false;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (player:HasCollectible(EyeOfChimera.Item)) then
             hasEye = true;
         end

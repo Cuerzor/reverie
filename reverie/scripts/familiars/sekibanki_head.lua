@@ -58,7 +58,7 @@ function Head.FireLaser(spawner, position, fireDir, positionOffset)
 end
 function Head.FireLasers(head, headDir, fireDir, offset)
     offset = offset or Vector.Zero;
-    local laserStartOffset = Consts.DirectionVectors[headDir + 1];
+    local laserStartOffset = Consts.DirectionVectors[headDir];
     local laserOffset = laserStartOffset:Rotated(90) * 8;
     local positionOffset;
     positionOffset = laserOffset;
@@ -135,7 +135,7 @@ do
         end
         local direction = familiar.ShootDirection;
         
-        Familiars:AnimationUpdate(familiar, Consts.DirectionVectors[direction + 1], "Idle", "Shoot");
+        Familiars:AnimationUpdate(familiar, Consts.DirectionVectors[direction], "Idle", "Shoot");
     
         -- Motion.
         if (data.Mode == Head.Mode.ORBITAL) then

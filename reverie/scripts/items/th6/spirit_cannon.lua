@@ -1,6 +1,7 @@
 local Detection = CuerLib.Detection;
 local CompareEntity = Detection.CompareEntity;
 local EntityExists = Detection.EntityExists;
+local Players = CuerLib.Players;
 local Inputs = CuerLib.Inputs;
 local Maths = CuerLib.Math;
 local Consts = CuerLib.Consts;
@@ -29,7 +30,7 @@ function SpiritCannon:GetLaserTargetAngle(player)
     if (dir:Length() < 0.1) then
         -- local data = self:GetPlayerTempData(player, false);
         -- dir = (data and data.Direction) or Vector(0, 1);
-        dir = Consts.GetDirectionVector(player:GetMovementDirection());
+        dir = Consts.DirectionVectors[player:GetMovementDirection()];
         if (dir:Length() < 0.1) then
             return Vector(0, 1);
         end
@@ -43,7 +44,7 @@ function SpiritCannon:ShootLaser(player)
     if (aimDir:Length() > 0.1) then
         dir = aimDir:GetAngleDegrees();
     else
-        local moveDir = Consts.GetDirectionVector(player:GetMovementDirection());
+        local moveDir = Consts.DirectionVectors[player:GetMovementDirection()];
         if (moveDir:Length() > 0.1) then
             dir = moveDir:GetAngleDegrees();
         end
@@ -165,7 +166,7 @@ SpiritCannon:AddCallback(ModCallbacks.MC_USE_ITEM, SpiritCannon.PostUseItem, Spi
 -- SpiritCannon:AddCallback(ModCallbacks.MC_INPUT_ACTION, SpiritCannon.InputAction);
 
 function SpiritCannon:PostNewRoom()
-    for p, player in Detection.PlayerPairs(true, true) do
+    for p, player in Players.PlayerPairs(true, true) do
         local data = self:GetPlayerTempData(player, false);
         if (data) then
             data.Timeout = 0;

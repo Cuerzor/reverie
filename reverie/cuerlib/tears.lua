@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Tears = Lib:NewClass();
 
 Tears.Animation = {
@@ -116,7 +116,7 @@ function Tears:RegisterModTearFlag(key)
 end
 
 local function GetTearData(tear, create)
-    local data = Lib:GetLibData(tear, true);
+    local data = Lib:GetEntityLibData(tear, true);
     if (create) then
         data._TEARS = data._TEARS or {
             TearFlags = {}
@@ -126,7 +126,7 @@ local function GetTearData(tear, create)
 end
 
 function Tears.GetModTearFlags(tear, create, modId)
-    modId = modId or Lib.ModInfo.DataName;
+    modId = modId or Lib.DataName;
     local tearData = GetTearData(tear, create);
     if (tearData) then
         if (create) then

@@ -7,13 +7,13 @@
 ---@field ReviveFrame integer @Frame number which the revive animation should stops at.
 ---@field Callback ReviveCallback @Function called after revive. 
 
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 
 local Revive = Lib:NewClass();
 Revive.Infos = {}
 
 local function GetPlayerData(player)
-    local data = Lib:GetLibData(player);
+    local data = Lib:GetEntityLibData(player);
     data._REVIVE = data._REVIVE or {
         IsDead = false,
         ReviveTime = 0,
@@ -369,10 +369,10 @@ do -- Events.
 
     local function PrePlayerCollision(mod, player, other, low)
         if (Revive.IsReviving(player)) then
-            return false;
+            return true;
         end
     end
-    Revive:AddCustomCallback(Lib.CLCallbacks.CLC_PRE_PLAYER_COLLISION, PrePlayerCollision);
+    Revive:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, PrePlayerCollision);
 
     local function PreOtherCollision(mod, _, other, low)
         if (other.Type == EntityType.ENTITY_PLAYER) then

@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Callbacks = Lib.Callbacks;
 local Greed = Lib:NewClass();
 
@@ -10,7 +10,7 @@ local GreedState = {
 }
 Greed.GreedState = GreedState;
 local function GetGlobalData(init)
-    local data = Lib:GetModGlobalData();
+    local data = Lib:GetGlobalModData();
     if (init) then
         data._GREED = data._GREED or {
             Cleared = false,

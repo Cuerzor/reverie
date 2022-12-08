@@ -1,4 +1,4 @@
-local Math = _TEMP_CUERLIB:NewClass();
+local Math = LIB:NewClass();
 
 function Math.GetDirectionByAngle(angle)
     angle = angle % 360;

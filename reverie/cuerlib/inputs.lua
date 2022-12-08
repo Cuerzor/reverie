@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Inputs = Lib:NewClass();
 
 function Inputs.DisabledInput(hook)

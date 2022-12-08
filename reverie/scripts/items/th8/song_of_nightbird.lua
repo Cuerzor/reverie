@@ -1,5 +1,5 @@
 local Callbacks = CuerLib.Callbacks;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local SongOfNightbird = ModItem("Song of Nightbird", "SongOfNightbird");
 SongOfNightbird.ConfusionRadius = 160
@@ -34,7 +34,7 @@ function SongOfNightbird:EvaluateCurse(curses)
     local game = THI.Game;
     local hasSong = false;
     local hasBlackCandle = false;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (player:HasCollectible(SongOfNightbird.Item)) then
             hasSong = true;
         end
@@ -61,7 +61,7 @@ function SongOfNightbird:onTakeDamage(tookDamage, amount, flags, source, countdo
         if (flags & DamageFlag.DAMAGE_CLONES <= 0) then
             local allPlayersFarAway = true;
             local hasSong = false;
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 
                 if (player:HasCollectible(SongOfNightbird.Item)) then
                     hasSong = true;

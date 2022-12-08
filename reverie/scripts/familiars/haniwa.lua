@@ -314,7 +314,7 @@ local function FindTarget(haniwa)
         local nearestNodes = nil;
         for dir = Direction.LEFT, Direction.DOWN do
             local spare;
-            local dirVec = Consts.GetDirectionVector(dir);
+            local dirVec = Consts.DirectionVectors[dir];
             local pos = target.Position + dirVec * distance + (target.Size * target.SizeMulti * dirVec);
             spare, pos = room:CheckLine(target.Position, pos, 4)
             local distance = pos:Distance(haniwa.Position);

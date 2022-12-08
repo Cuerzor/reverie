@@ -1,6 +1,6 @@
 local Screen = CuerLib.Screen;
 local Collectibles = CuerLib.Collectibles;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Keeper = ModEntity("Door Keeper","DOOR_KEEPER");
 
 Keeper.States = {
@@ -25,7 +25,7 @@ function Keeper:CachePlayerItems()
     local game = Game();
     local results = {};
     local count = 0;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local collectibles = Collectibles.GetPlayerCollectibles(player);
         for id, num in pairs(collectibles) do
             

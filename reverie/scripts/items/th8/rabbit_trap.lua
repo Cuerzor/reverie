@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Collectibles = CuerLib.Collectibles;
 
 local RabbitTrap = ModItem("Rabbit Trap", "RabbitTrap");
@@ -87,7 +87,7 @@ function RabbitTrap:postNewRoom()
     local room = THI.Game:GetRoom();
     local spawner = nil;
     if (room:GetAliveEnemiesCount() > 0) then
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             local count = player:GetCollectibleNum(RabbitTrap.Item);
             if (count > 0) then
                 SpawnTraps(room, count, player);

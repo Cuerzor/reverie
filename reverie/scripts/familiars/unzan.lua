@@ -79,7 +79,7 @@ local function PostUnzanUpdate(mod, familiar)
     if (fireDir:Length() < 0.1) then
         local moveDir = player:GetMovementDirection();
         if (moveDir ~= Direction.NO_DIRECTION) then
-            fireDir = Consts.GetDirectionVector(moveDir);
+            fireDir = Consts.DirectionVectors[moveDir];
         else
             fireDir = Vector(0, 1);
         end

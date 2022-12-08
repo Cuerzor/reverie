@@ -30,7 +30,7 @@ end
 
 local function PostUpdate(mod)
     local seeingQuad = 0;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local playerData = GetPlayerData(player, false);
         if (playerData and playerData.LuckUp > 0) then
             if (player:IsFrame(7, 0)) then
@@ -122,7 +122,7 @@ end
 Pipe:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, EvaluateCache);
 
 local function PostNewLevel(mod)
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local playerData = GetPlayerData(player, false);
         if (playerData) then
             playerData.JudasDamageUp = 0;

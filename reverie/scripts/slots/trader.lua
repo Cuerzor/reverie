@@ -1,6 +1,6 @@
 local Screen = CuerLib.Screen;
 local Collectibles = CuerLib.Collectibles;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Trader = ModEntity("Trader (Normal)","EXC_TRADER");
 
 local config = Isaac.GetItemConfig();
@@ -46,7 +46,7 @@ function Trader.CheckAllPlayerCollectibles()
     local game = THI.Game;
     local results = {};
     local count = 0;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local collectibles = Collectibles.GetPlayerCollectibles(player);
         for id, num in pairs(collectibles) do
             

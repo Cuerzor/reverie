@@ -88,7 +88,16 @@ ModCallbacks = {
 	MC_POST_ENTITY_KILL = 68, -- (Entity Ent)
 	MC_PRE_NPC_UPDATE = 69, -- (EntityNPC NPC), returns true if the internal ai should be ignored, false or nil/nothing otherwise
 	MC_PRE_SPAWN_CLEAN_AWARD = 70, -- (RNG& Rng, Vector SpawnPos), returns true if the spawn routine should be ignored, false or nil/nothing otherwise
-	MC_PRE_ROOM_ENTITY_SPAWN = 71 -- (EntityType Type, integer Variant, integer SubType, integer GridIndex, integer Seed) - This is called when entering a new room, before spawning entities which are part its layout. Grid entities will also trigger this callback and their type will the same as the type used by the gridspawn command. Because of this, effects are assigned the type 999 instead of 1000 in this callback. Optional return: an array table with new values { Type, Variant, Subtype }. Returning a table will override any replacements that might naturally occur i.e. enemy variants.
+	MC_PRE_ROOM_ENTITY_SPAWN = 71, -- (EntityType Type, integer Variant, integer SubType, integer GridIndex, integer Seed) - This is called when entering a new room, before spawning entities which are part its layout. Grid entities will also trigger this callback and their type will the same as the type used by the gridspawn command. Because of this, effects are assigned the type 999 instead of 1000 in this callback. Optional return: an array table with new values { Type, Variant, Subtype }. Returning a table will override any replacements that might naturally occur i.e. enemy variants.
+	MC_PRE_ENTITY_DEVOLVE = 72, -- (Entity Ent) - returns true if the internal devolving behavior should be ignored - When returning true, this callback is responsible for spawning the devolved entity and removing the original one.
+	MC_PRE_MOD_UNLOAD = 73, -- (table Mod) - This is called right before any mod is unloaded (when disabling a mod or reloading it using luamod), the mod's table is passed as an argument
+}
+
+CallbackPriority = {
+   IMPORTANT = -200,
+   EARLY = -100,
+   DEFAULT = 0,
+   LATE = 100,
 }
 
 EntityType = {
@@ -717,6 +726,7 @@ PickupVariant = {
 	PICKUP_PILL = 70,
 	PICKUP_LIL_BATTERY = 90,
 	PICKUP_COLLECTIBLE = 100,
+	PICKUP_BROKEN_SHOVEL = 110,
 	PICKUP_SHOPITEM = 150,
 	PICKUP_TAROTCARD = 300,
 	PICKUP_BIGCHEST = 340,
@@ -798,6 +808,10 @@ PickupPrice = {
 	PRICE_ONE_HEART_AND_TWO_SOULHEARTS = -4,
 	PRICE_SPIKES = -5,
 	PRICE_SOUL = -6,
+	PRICE_ONE_SOUL_HEART = -7,
+	PRICE_TWO_SOUL_HEARTS = -8,
+	PRICE_ONE_HEART_AND_ONE_SOUL_HEART = -9,
+	
 	PRICE_FREE = -1000,
 }
 
@@ -881,6 +895,25 @@ BombVariant = {
 	BOMB_GOLDENTROLL = 18,
 	BOMB_ROCKET = 19,
 	BOMB_ROCKET_GIGA = 20,
+}
+
+LaserVariant = {
+	LASER_NULL = 0,
+	THICK_RED = 1,
+	THIN_RED = 2,
+	SHOOP = 3,
+	PRIDE = 4,
+	LIGHT_BEAM = 5,
+	GIANT_RED = 6,
+	TRACTOR_BEAM = 7,
+	LIGHT_RING = 8,
+	BRIM_TECH = 9,
+	ELECTRIC = 10,
+	THICKER_RED = 11,
+	THICK_BROWN = 12,
+	BEAST = 13,
+	THICKER_BRIM_TECH = 14,
+	GIANT_BRIM_TECH = 15
 }
 
 CacheFlag = {
@@ -2610,7 +2643,25 @@ SoundEffect = {
 	SOUND_BEAST_GROWL = 815,
 	SOUND_BEAST_GRUMBLE = 816,
 	
-	NUM_SOUND_EFFECTS = 817
+	SOUND_FAMINE_GRUNT = 817,
+
+	SOUND_GFUEL_1 = 818,
+	SOUND_GFUEL_2 = 819,
+	SOUND_GFUEL_3 = 820,
+	SOUND_GFUEL_4 = 821,
+	SOUND_GFUEL_EXPLOSION = 822,
+	SOUND_GFUEL_EXPLOSION_BIG = 823,
+	SOUND_GFUEL_GUNSHOT = 824,
+	SOUND_GFUEL_GUNSHOT_SMALL = 825,
+	SOUND_GFUEL_GUNSHOT_LARGE = 826,
+	SOUND_GFUEL_GUNSHOT_SPREAD = 827,
+	SOUND_GFUEL_AIR_HORN = 828,
+	SOUND_GFUEL_ITEM_APPEAR = 829,
+	SOUND_GFUEL_GUNSHOT_MINI = 830,
+	SOUND_GFUEL_RICOCHET = 831,
+	SOUND_GFUEL_ROCKETLAUNCHER = 832,
+	
+	NUM_SOUND_EFFECTS = 833
 }
 
 DoorState = {
@@ -3911,6 +3962,7 @@ TearVariant = {
 	SWORD_BEAM = 47,
 	SPORE = 48,
 	TECH_SWORD_BEAM = 49,
+	FETUS = 50,
 }
 
 local function TEARFLAG(x)
@@ -3977,7 +4029,6 @@ TearFlags = {
 	TEAR_JACOBS = TEARFLAG(55),						-- Jacobs ladder tears
 	TEAR_HORN = TEARFLAG(56),						-- Little Horn tears
 	TEAR_LASER = TEARFLAG(57),						-- Technology Zero
-	TEAR_LASER = TEARFLAG(57),						-- Technology Zero
 	TEAR_POP = TEARFLAG(58),						-- Pop!
 	TEAR_ABSORB = TEARFLAG(59),						-- Hungry Tears
 	TEAR_LASERSHOT = TEARFLAG(60),					-- Trisagion, generates a laser on top of the tear
@@ -4002,10 +4053,24 @@ TearFlags = {
 	TEAR_CARD_DROP_DEATH = TEARFLAG(79),			-- Killed enemies will drop a random tarot card
 	TEAR_RUNE_DROP_DEATH = TEARFLAG(80),			-- Killed enemies will drop a random rune
 	TEAR_TELEPORT = TEARFLAG(81),					-- Hit enemies will teleport to a different part of the room
+	TEAR_DECELERATE = TEARFLAG(82),					-- Decelerate over time
+	TEAR_ACCELERATE = TEARFLAG(83),					-- Accelerate over time
 	
-	TEAR_EFFECT_COUNT = 82,
+	TEAR_EFFECT_COUNT = 84,
 	
 	-- Reserved flags - cannot be randomly picked
+	TEAR_BOUNCE_WALLSONLY = TEARFLAG(104),			-- Similar to TEAR_BOUNCE but only bounces off walls, not enemies
+	TEAR_NO_GRID_DAMAGE = TEARFLAG(105),			-- Cannot deal damage to grid entities (used by Saturnus to prevent unfair damage in some rooms)
+	TEAR_BACKSTAB = TEARFLAG(106),					-- Deals extra damage from behind and inflicts bleeding
+	TEAR_FETUS_SWORD = TEARFLAG(107),				-- Fetuses whack their target with a sword and perform spin attacks
+	TEAR_FETUS_BONE = TEARFLAG(108),				-- Fetuses whack their target with a bone club instead of ramming into them
+	TEAR_FETUS_KNIFE = TEARFLAG(109),				-- Fetuses carry a knife
+	TEAR_FETUS_TECHX = TEARFLAG(110),				-- Fetuses have a Tech X ring around them
+	TEAR_FETUS_TECH = TEARFLAG(111),				-- Fetuses keep their distance and occasionally shoot tech lasers at their target
+	TEAR_FETUS_BRIMSTONE = TEARFLAG(112),			-- Fetuses shoot a brimstone beam at the first enemy they hit
+	TEAR_FETUS_BOMBER = TEARFLAG(113),				-- Fetuses drop a bomb on their first impact with an enemy
+	TEAR_FETUS = TEARFLAG(114),						-- Base flag for C Section fetuses
+
 	TEAR_REROLL_ROCK_WISP = TEARFLAG(115),			
 	TEAR_MOM_STOMP_WISP = TEARFLAG(116),			
 	TEAR_ENEMY_TO_WISP = TEARFLAG(117),				
@@ -4267,7 +4332,8 @@ SeedEffect = {
 	SEED_AXIS_ALIGNED_CONTROLS = 76,
 	SEED_SUPER_HOT = 77,
 	SEED_RETRO_VISION = 78,
-	NUM_SEEDS = 79
+	SEED_G_FUEL = 79,
+	NUM_SEEDS = 80
 }
 
 GridRooms = {

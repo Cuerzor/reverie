@@ -1,7 +1,7 @@
 local Dream = GensouDream;
 local Dialog = Dream.Dialog;
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local Outro = Dialog();
 Outro.__index = Outro;
@@ -361,7 +361,7 @@ function Outro:GetTextPosition()
 end
 
 local function DisableControls()
-    for i, player in Detection.PlayerPairs(true, true) do
+    for i, player in Players.PlayerPairs(true, true) do
         player.ControlsEnabled = false;
     end
 end
@@ -372,7 +372,7 @@ function Outro:Start()
     local center = room:GetCenterPos();
 
     -- Clear Collectibles.
-    for i, player in Detection.PlayerPairs() do
+    for i, player in Players.PlayerPairs() do
         for c = 1, MaxCollectible do
             local num = player:GetCollectibleNum(c);
             for n = 1, num do
@@ -418,7 +418,7 @@ end
 function Outro:Run()
     DisableControls();
     
-    for i, player in Detection.PlayerPairs() do
+    for i, player in Players.PlayerPairs() do
         player.Color = Color(1,1,1,0)
     end
     Dialog.Run(self);

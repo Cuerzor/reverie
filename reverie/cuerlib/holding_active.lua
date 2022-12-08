@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 
 local HoldingActive = Lib:NewClass();
 
@@ -26,7 +26,7 @@ function HoldingActive:GetPlayerData(player, init)
     if (init == nil) then
         init = true;
     end
-    local playerData = Lib:GetLibData(player, true);
+    local playerData = Lib:GetEntityLibData(player, true);
     if (init) then
         playerData.HoldingActive = playerData.HoldingActive or {
             HoldFrame = 0,
@@ -171,25 +171,6 @@ local function PostPlayerEffect(mod, player)
                     EndHolding(player);
                 end
             end
-
-        --     -- Prevent player end holding instantly after get hit and use item, causing animation stuck.
-        --     if (player.FrameCount > playerData.HoldFrame + 1) then
-        --         -- If player has no animation or this animation is not Holding animation.
-        --         if (player:IsExtraAnimationFinished() or not IsHoldingAnimation(anim)) then
-        --             EndHolding(player);
-        --             return;
-        --         end
-        --     end
-        --     if (overlayAnim == "") then
-        --         playerData.Lifting = true;
-        --     end
-        --     if (playerData.Lifting and overlayAnim ~= "") then
-        --         EndHolding(player);
-        --         playerData.Lifting = false;
-        --         return;
-        --     end
-        -- else
-        --     playerData.Lifting = false;
         end
         playerData.Hit = false;
         playerData.PreMimicCheck = false;
@@ -209,22 +190,22 @@ end
 HoldingActive:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage)
 
 
-local function PostUseItem(mod, item, rng, player, flags, slot, data)
-    if (flags & UseFlag.USE_NOANIM <= 0) then
-        local holdingItem = HoldingActive:GetHoldingItem(player);
-        if (holdingItem > 0 and item ~= holdingItem) then
-            local spr = player:GetSprite();
-            local anim = spr:GetAnimation();
-            local overlayanim = spr:GetOverlayAnimation();
-            if (spr:GetOverlayFrame() == -1 and string.find(anim, "PickupWalk")) then
-                EndHolding(player);
-            elseif (spr:GetOverlayFrame() == 0 and string.find(anim, "Walk") and string.find(overlayanim, "Head")) then
-                EndHolding(player);
-            end
-        end
-    end
-end
-HoldingActive:AddCallback(ModCallbacks.MC_USE_ITEM, PostUseItem)
+-- local function PostUseItem(mod, item, rng, player, flags, slot, data)
+--     if (flags & UseFlag.USE_NOANIM <= 0) then
+--         local holdingItem = HoldingActive:GetHoldingItem(player);
+--         if (holdingItem > 0 and item ~= holdingItem) then
+            -- local spr = player:GetSprite();
+            -- local anim = spr:GetAnimation();
+            -- local overlayanim = spr:GetOverlayAnimation();
+            -- if (spr:GetOverlayFrame() == -1 and string.find(anim, "PickupWalk")) then
+            --     EndHolding(player);
+            -- elseif (spr:GetOverlayFrame() == 0 and string.find(anim, "Walk") and string.find(overlayanim, "Head")) then
+            --     EndHolding(player);
+            -- end
+--         end
+--     end
+-- end
+-- HoldingActive:AddCallback(ModCallbacks.MC_USE_ITEM, PostUseItem)
 
 
 local function PostUseCard(mod, card, player, flags)
@@ -241,8 +222,7 @@ HoldingActive:AddCallback(ModCallbacks.MC_USE_CARD, PostUseCard)
 
 
 local function PostNewRoom(mod)
-    local Detection = Lib.Detection;
-    for p, player in Detection.PlayerPairs(true) do
+    for p, player in Lib.Players.PlayerPairs(true) do
         if (HoldingActive:GetHoldingItem(player) > 0) then
             EndHolding(player);
         end

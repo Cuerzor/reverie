@@ -2,6 +2,7 @@ local Math = CuerLib.Math;
 local Consts = CuerLib.Consts;
 local Detection = CuerLib.Detection;
 local CompareEntity = Detection.CompareEntity;
+local Players = CuerLib.Players;
 local ItemPools = CuerLib.ItemPools;
 local Note = ModEntity("Reverie", "REVERIE_NOTE");
 Note.Room = {
@@ -1673,7 +1674,7 @@ do --战斗。
 
         
         --更新玩家的射程。
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             player:AddCacheFlags(CacheFlag.CACHE_RANGE);
             player:EvaluateItems();
         end
@@ -1703,7 +1704,7 @@ do --战斗。
             end
             
             if (not BossFight:IsBossFightStarted()) then
-                for p, player in Detection.PlayerPairs(true, true) do
+                for p, player in Players.PlayerPairs(true, true) do
                     player:PlayExtraAnimation("Appear");
                 end
             end
@@ -2102,7 +2103,7 @@ local function PostNewRoom(mod)
     end
 
     if (evaluateRange) then
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             player:AddCacheFlags(CacheFlag.CACHE_RANGE);
             player:EvaluateItems();
         end

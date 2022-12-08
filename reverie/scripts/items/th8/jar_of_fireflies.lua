@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local JarOfFireflies = ModItem("Jar of Fireflies", "JarOfFireflies");
 
@@ -23,7 +23,7 @@ end
 JarOfFireflies:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, JarOfFireflies.PostChangeJar, JarOfFireflies.Item);
 
 function JarOfFireflies:EvaluateCurse(curses)
-    for i, player in Detection.PlayerPairs(true, true) do
+    for i, player in Players.PlayerPairs(true, true) do
         local effects = player:GetEffects();
         if (player:HasCollectible(JarOfFireflies.Item)) then
             return curses & ~LevelCurse.CURSE_OF_DARKNESS;    

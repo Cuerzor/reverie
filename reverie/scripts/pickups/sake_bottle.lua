@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Bottle = ModEntity("Sake Bottle", "SAKE_BOTTLE");
 Bottle.SubType = 0;
 
@@ -57,7 +57,7 @@ end
 
 local function PostNewRoom(mod)
     if (Bottle:IsForgottingStage()) then
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             local effect = player:GetEffects()
             if (not effect:HasNullEffect(NullItemID.ID_LOST_CURSE)) then
                 effect:AddNullEffect(NullItemID.ID_LOST_CURSE);
@@ -65,7 +65,7 @@ local function PostNewRoom(mod)
         end
     else
         if (Bottle:GetForgottingStage()) then
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 local effect = player:GetEffects()
                 if (effect:HasNullEffect(NullItemID.ID_LOST_CURSE)) then
                     effect:RemoveNullEffect(NullItemID.ID_LOST_CURSE);
@@ -190,7 +190,7 @@ local function PrePlayerCollision(mod, player, other, low)
         return true;
     end
 end
-Bottle:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_PLAYER_COLLISION, PrePlayerCollision)
+Bottle:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, PrePlayerCollision)
 
 -- local function PostPickupUpdate(mod, pickup)
 --     if (pickup.SubType == Bottle.SubType) then

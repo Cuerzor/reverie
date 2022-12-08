@@ -2,7 +2,6 @@ local Screen = CuerLib.Screen;
 local Collectibles = CuerLib.Collectibles
 local Revive = CuerLib.Revive;
 local Callbacks = CuerLib.Callbacks;
-local Detection = CuerLib.Detection;
 local Players = CuerLib.Players;
 
 local FanOfTheDead = ModItem("Fan of the Dead", "FanOfTheDead");
@@ -187,7 +186,7 @@ end
 function FanOfTheDead:onRender()   
     local controllers = {};
     local playerIndex = 0;
-    for i, player in Detection.PlayerPairs() do
+    for i, player in Players.PlayerPairs() do
         -- If is not a coop baby.
         if (player.Variant == 0 and controllers[player.ControllerIndex] ~= true) then
             local type = player:GetPlayerType();

@@ -2,7 +2,7 @@ local Screen = CuerLib.Screen;
 local Consts = CuerLib.Consts;
 local Math = CuerLib.Math;
 local Familiars = CuerLib.Familiars
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Head = ModItem("Sekibanki's Head", "SEKIBANKIS_HEAD")
 
 local HeadSprite = Sprite();
@@ -148,7 +148,7 @@ do
                     data.FireDelay = 10;
                     data.ShootDirection = maxCountDir;
                     data.HeadFrameDelay = 5;
-                    Familiar.FireLasers(body, maxCountDir, Consts.GetDirectionVector(maxCountDir), BodyHeadOffset);
+                    Familiar.FireLasers(body, maxCountDir, Consts.DirectionVectors[maxCountDir], BodyHeadOffset);
                 end
             else
                 data.FireDelay = Familiars.RunFireDelay(body, data.FireDelay)
@@ -218,7 +218,7 @@ do
     Head:AddCallback(ModCallbacks.MC_USE_ITEM, PostUseScissors, CollectibleType.COLLECTIBLE_SCISSORS);
 
     local function PostNewRoom(mod)
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             local playerData = Head.GetPlayerData(player, false);
             if (playerData) then
                 playerData.ScissorHeads = 0;

@@ -1,5 +1,5 @@
 local Inputs = CuerLib.Inputs;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local JeweledBranch = ModItem("Jeweled Branch", "JeweledBranch");
 JeweledBranch.RemoveMode = true;
 JeweledBranch.rng = RNG();
@@ -116,7 +116,7 @@ JeweledBranch:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, JeweledBranch.Post
 
 function JeweledBranch:PostNewRoom()
     local game = THI.Game;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local data = JeweledBranch.GetPlayerData(player, false);
         if (data) then
             data.Fired = false;

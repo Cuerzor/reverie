@@ -43,10 +43,10 @@ end
 function ChenBaby:Collided(familiar)
     local room = THI.Game:GetRoom();
     local radius = familiar.Size / 2;
-    for i=0,4 do 
+    for i=0,3 do 
         local position = familiar.Position + Consts.DirectionVectors[i] * radius;
         local collision = room:GetGridCollisionAtPos(position);
-        if (collision == GridCollisionClass.COLLISION_WALL) then
+        if (collision == GridCollisionClass.COLLISION_WALL or collision == GridCollisionClass.COLLISION_WALL_EXCEPT_PLAYER) then
             return true;
         end
     end

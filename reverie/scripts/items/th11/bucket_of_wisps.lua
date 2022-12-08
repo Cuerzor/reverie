@@ -40,7 +40,7 @@ end
 
 local function PostNPCUpdate(mod, npc)
     if (npc:IsActiveEnemy(true) and npc.CanShutDoors and npc:IsDead()) then
-        for _, player in Detection.PlayerPairs() do
+        for _, player in Players.PlayerPairs() do
             if (player:HasCollectible(Bucket.Item))  then
                 local subType = Bucket.Soul.SubTypes.BLUE;
                 if (Players.HasJudasBook(player)) then

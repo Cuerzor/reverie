@@ -535,10 +535,6 @@ function Cellphone.GetOfferData(itemInfo, seed, secret, devil)
     if (variant == PickupVariant.PICKUP_COLLECTIBLE) then
 
         local poolType = itemInfo.ItemPool;
-        if (poolType == nil or poolType == ItemPoolType.POOL_NULL) then
-            local room = THI.Game:GetRoom();
-            poolType = ItemPools:GetRoomPool(seed);
-        end
     
         if (poolType == ItemPoolType.NUM_ITEMPOOLS) then
             poolType = seed % (ItemPoolType.NUM_ITEMPOOLS - 1) + 1;
@@ -550,7 +546,12 @@ function Cellphone.GetOfferData(itemInfo, seed, secret, devil)
 
         local config = itemConfig:GetCollectible(subType);
         if (not config) then
-            subType = itemPools:GetCollectible (poolType, false, seed, CollectibleType.COLLECTIBLE_BREAKFAST);
+            if (poolType == nil or poolType == ItemPoolType.POOL_NULL) then
+                local room = Game():GetRoom();
+                subType = room:GetSeededCollectible(seed, true);
+            else
+                subType = itemPools:GetCollectible (poolType, false, seed, CollectibleType.COLLECTIBLE_BREAKFAST);
+            end
             itemPools:AddRoomBlacklist(subType);
             config = itemConfig:GetCollectible(subType);
         end
@@ -807,7 +808,7 @@ Cellphone:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, Cellphone.PostNewRoom);
 function Cellphone:PostRender()
     local game = THI.Game;
     local contents = Cellphone.GetAyazunContent(false);
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local playerData = Cellphone.GetPlayerTempData(player, false);
         if (playerData and IsPurchasing(player)) then
             local pos = Screen.GetEntityRenderPosition(player, Vector(0, -80));

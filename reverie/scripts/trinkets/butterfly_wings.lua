@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Wings = ModTrinket("Butterfly Wings", "BUTTERFLY_WINGS");
 
 Wings.CostumeId = Isaac.GetCostumeIdByPath ("gfx/reverie/characters/costume_butterfly_wings.anm2" );
@@ -52,7 +52,7 @@ function Wings:UpdateFlying(player)
 end
 
 function Wings:SwapAllPlayers()
-    for i, player in Detection.PlayerPairs() do
+    for i, player in Players.PlayerPairs() do
         if (player:HasTrinket(self.Trinket)) then
             self:SetHasWings(player, not self:HasWings(player));
             self:UpdateFlying(player);
@@ -87,7 +87,7 @@ do
     Wings:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_NEW_GREED_WAVE, PostNewGreedWave)
 
     local function PostNewRoom(mod)
-        for i, player in Detection.PlayerPairs() do
+        for i, player in Players.PlayerPairs() do
             if (Wings:IsKeepWings(player)) then
                 local hasWings = Wings:ShouldHasWing(player);
                 if (not hasWings) then

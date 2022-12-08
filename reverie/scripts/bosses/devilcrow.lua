@@ -369,7 +369,7 @@ local function DevilcrowUpdate(devilcrow)
         if (not devilcrow:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and spr:IsPlaying("Idle")) then
             data.LightColor.A = math.min(0.5, data.LightColor.A + 0.03);
             if (data.LightColor.A >= 0.49) then
-                for p, player in Detection.PlayerPairs() do
+                for p, player in Players.PlayerPairs() do
                     local Rebecha = THI.Monsters.Rebecha;
                     local defended = Rebecha and Rebecha:GetPlayerMecha(player) ~= nil;
                     if (not player:IsCoopGhost ( ) and not Players:IsDead(player) and isInRange(devilcrow, player) and not defended) then
@@ -953,7 +953,7 @@ local function TryTransferPlayers()
     end
     if (hasDevilcrow) then
         local center = Game():GetRoom():GetCenterPos();
-        for p, player in Detection.PlayerPairs(true, true) do
+        for p, player in Players.PlayerPairs(true, true) do
             local pos = center + Vector(0, 160);
             for _, ent in ipairs(Isaac.FindByType(3)) do
                 if (ent.Position:Distance(player.Position) < 40) then

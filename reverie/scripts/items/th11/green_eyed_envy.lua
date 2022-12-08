@@ -1,5 +1,7 @@
 local Collectibles = CuerLib.Collectibles;
 local Detection = CuerLib.Detection;
+local CompareEntity = Detection.CompareEntity;
+local Players = CuerLib.Players;
 local Envy = ModItem("Green Eyed Envy", "EnvyCurse");
 
 Envy.Blacklist = {
@@ -8,7 +10,6 @@ Envy.Blacklist = {
     {Type = EntityType.ENTITY_LARRYJR, Variant = 3 }
 }
 
-local CompareEntity = Detection.CompareEntity;
 local divideNPCs = {};
 
 local function IsBlacklisted(ent)
@@ -55,7 +56,7 @@ function Envy:PostNPCDeath(npc)
     if (canDivide) then
         local Seija = THI.Players.Seija;
         local seijaPlayer;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (not seijaPlayer and Seija:WillPlayerBuff(player)) then
                 seijaPlayer = player;
             end

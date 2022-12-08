@@ -71,19 +71,16 @@ function Starseeker.InitBallItem(ball)
     local room = THI.Game:GetRoom();
     local roomType = room:GetType();
     local itemId = ball.SubType;
-    local item = itemConfig:GetCollectible(itemId);
+    local config = itemConfig:GetCollectible(itemId);
 
-    local poolType = 0;
-    if (item == nil) then
+    if (config == nil) then
         local seed = GetSeekerNextSeed();
-
-        local poolType = ItemPools:GetRoomPool(seed);
         local tries = 0;
-        while (item == nil and tries < 4) do
+        while (config == nil and tries < 4) do
             isGetingBallItem = true;
-            itemId = itemPool:GetCollectible(poolType, true, seed, CollectibleType.COLLECTIBLE_BREAKFAST)
+            itemId = room:GetSeededCollectible(seed)
             isGetingBallItem = false;
-            item = itemConfig:GetCollectible(itemId);
+            config = itemConfig:GetCollectible(itemId);
 
             tries = tries + 1;
         end
@@ -95,7 +92,7 @@ function Starseeker.InitBallItem(ball)
         
     end
 
-    local gfxName = item.GfxFileName;
+    local gfxName = config.GfxFileName;
     local ballSprite = ball:GetSprite();
     ballSprite:ReplaceSpritesheet(1, gfxName);
     ballSprite:LoadGraphics();

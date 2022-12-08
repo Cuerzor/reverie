@@ -3,6 +3,7 @@ local Consts = CuerLib.Consts;
 local Math = CuerLib.Math;
 local Detection = CuerLib.Detection;
 local CompareEntity = Detection.CompareEntity;
+local Players = CuerLib.Players;
 local Fairies = CuerLib.ModComponents.ModPart:New("Light Fairies", "LIGHT_FAIRIES");
 Fairies.FairyInfos = {}
 Fairies.ComboFairies = {}
@@ -224,7 +225,7 @@ local function PostFairyUpdate(mod, familiar)
                         familiar.ShootDirection = Direction.NO_DIRECTION;
                     end
                     
-                    Familiars:AnimationUpdate(familiar, Consts.DirectionVectors[familiar.ShootDirection + 1]);
+                    Familiars:AnimationUpdate(familiar, Consts.DirectionVectors[familiar.ShootDirection]);
                 end
             end
         end
@@ -289,7 +290,7 @@ local function PostNewLevel(mod)
     
     for variant, info in pairs(Fairies.FairyInfos) do
 
-        for p, player in Detection.PlayerPairs(true, true) do
+        for p, player in Players.PlayerPairs(true, true) do
             Fairies:ClearAwakedFairyNum(player, variant)
         end
 

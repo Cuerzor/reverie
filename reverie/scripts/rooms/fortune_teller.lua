@@ -9,9 +9,8 @@ function Teller:IsFortuneTeller(roomDesc)
 end
 
 function Teller:SpawnItem(pos, seed)
-    local itemPool = Game():GetItemPool();
-    local poolType = ItemPools:GetRoomPool(seed);
-    local id = itemPool:GetCollectible(poolType, true, seed);
+    local room = Game():GetRoom();
+    local id = room:GetSeededCollectible(seed);
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE,id, pos, Vector.Zero, nil);
 end
 

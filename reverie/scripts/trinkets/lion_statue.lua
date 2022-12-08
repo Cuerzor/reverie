@@ -1,5 +1,5 @@
 local Stats = CuerLib.Stats;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local LionStatue = ModTrinket("Lion Statue", "LionStatue");
 
 function LionStatue:PostNewRoom()
@@ -7,7 +7,7 @@ function LionStatue:PostNewRoom()
     local room = game:GetRoom();
     if (room:IsFirstVisit()) then
         local multiplier = 0;
-        for i, player in Detection.PlayerPairs() do
+        for i, player in Players.PlayerPairs() do
             multiplier = multiplier + player:GetTrinketMultiplier(LionStatue.Trinket);
         end
 

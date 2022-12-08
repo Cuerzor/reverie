@@ -1,5 +1,5 @@
 local Stats = CuerLib.Stats;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local DaggerOfServants = ModItem("Dagger of Servants", "DAGGER_OF_SERVANTS");
 
 function DaggerOfServants:GetPlayerData(player, create)
@@ -159,7 +159,7 @@ end
 
 function DaggerOfServants:PostNewRoom()
     
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (player:HasCollectible(DaggerOfServants.Item)) then
             local playerType = player:GetPlayerType();
             local isLost = playerType == PlayerType.PLAYER_THELOST or playerType == PlayerType.PLAYER_THELOST_B or playerType == PlayerType.PLAYER_JACOB2_B or player:GetEffects():HasNullEffect(NullItemID.ID_LOST_CURSE);

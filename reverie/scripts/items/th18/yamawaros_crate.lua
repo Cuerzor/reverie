@@ -1,5 +1,4 @@
 local HoldingActive = CuerLib.HoldingActive;
-local Detection = CuerLib.Detection;
 local Screen = CuerLib.Screen;
 local Players = CuerLib.Players;
 local Inputs = CuerLib.Inputs;
@@ -1368,7 +1367,7 @@ do
 
     
     local function PostNewLevel(mod)
-        for p ,player in Detection.PlayerPairs() do
+        for p ,player in Players.PlayerPairs() do
             Crate.ClearIdentifiedRooms(player);
         end
     end
@@ -1387,7 +1386,7 @@ do
     Crate:AddCallback(ModCallbacks.MC_INPUT_ACTION, InputAction);
 
     local function PostRender(mod)
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (Crate.IsOpening(player)) then
                 RenderCrate(player);
             end

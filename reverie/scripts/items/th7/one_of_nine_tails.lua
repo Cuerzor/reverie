@@ -3,7 +3,7 @@ local SaveAndLoad = CuerLib.SaveAndLoad;
 local Stages = CuerLib.Stages;
 local Callbacks = CuerLib.Callbacks;
 local Stats = CuerLib.Stats;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 
 local OneOfNineTails = ModItem("One of Nine Tails", "OneOfNineTails");
@@ -90,7 +90,7 @@ OneOfNineTails:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, OneOfNineTails.o
 
 function OneOfNineTails:onNewStage()
     if (THI.Game:GetFrameCount() > 1) then
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
 
             local canSpawn = true;
             if (THI.IsLunatic()) then

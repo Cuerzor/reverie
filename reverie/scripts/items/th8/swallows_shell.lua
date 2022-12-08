@@ -1,6 +1,6 @@
 local Callbacks = CuerLib.Callbacks;
 local Damages = CuerLib.Damages;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local SwallowsShell = ModItem("Swallow's Shell", "SwallowsShell");
 SwallowsShell.rng = RNG();
@@ -90,7 +90,7 @@ end
 function SwallowsShell:PostNewStage()
     local game = THI.Game;
     if (game:GetFrameCount() > 1) then
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             local spawnBonus = false;
             if (RemoveMode) then
                 spawnBonus = player:HasCollectible(SwallowsShell.Item);

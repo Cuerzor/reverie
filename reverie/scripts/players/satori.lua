@@ -1,5 +1,5 @@
 local Stats = CuerLib.Stats;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Satori = ModPlayer("Satori", false, "Satori");
 Satori.Costume = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_satori.anm2");
 Satori.CostumeHair = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_satori_hair.anm2");
@@ -89,7 +89,7 @@ end
 Satori:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Satori.PostPlayerEffect)
 
 -- function Satori:PostNewRoom()
---     for p, player in Detection.PlayerPairs() do
+--     for p, player in Players.PlayerPairs() do
 --         if (player:GetPlayerType() == Satori.Type and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
 --             -- Charm 3 enemies.
 --             local entities = Isaac.GetRoomEntities();

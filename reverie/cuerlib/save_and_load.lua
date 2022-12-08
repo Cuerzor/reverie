@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 
 local json = require("json")
 local SaveAndLoad = Lib:NewClass();
@@ -29,15 +29,13 @@ local function GetModData(mod)
 end
 
 function SaveAndLoad.ReadPersistentData()
-    local info = Lib.ModInfo;
-    local mod = info.Mod;
+    local mod = Lib.Mod;
     local data = GetModData(mod);
     return data.Persistent;
 end
 
 function SaveAndLoad.WritePersistentData(data)
-    local info = Lib.ModInfo;
-    local mod = info.Mod;
+    local mod = Lib.Mod;
     local modData = GetModData(mod);
     modData.Persistent = data;
 
@@ -46,14 +44,13 @@ function SaveAndLoad.WritePersistentData(data)
 end
 
 function SaveAndLoad.ReadGameStateData()
-    local info = Lib.ModInfo;
-    local mod = info.Mod;
+    local mod = Lib.Mod;
     local data = GetModData(mod);
     return data.GameState;
 end
 
 function SaveAndLoad.WriteGameStateData(data)
-    local mod = Lib.ModInfo.Mod;
+    local mod = Lib.Mod;
     local modData = GetModData(mod);
     modData.GameState = data;
     
@@ -69,9 +66,9 @@ end
 
 local function Save()
     local state = {};
-    state.Global = Lib:GetModGlobalData();
+    state.Global = Lib:GetGlobalModData();
     state.Players = {};
-    for index, player in Lib.Detection.PlayerPairs(true, true) do
+    for index, player in Lib.Players.PlayerPairs(true, true) do
         state.Players[tostring(index)] = Lib:GetEntityModData(player);
     end
 
@@ -84,8 +81,7 @@ end
 
 local function RestartGame()
 
-    local info = Lib.ModInfo;
-    SaveAndLoad.RemoveGameState(info.Mod);
+    SaveAndLoad.RemoveGameState();
     
     for index, funcData in pairs(Lib.Callbacks.Functions.PostRestart) do
         funcData.Func(funcData.Mod);
@@ -119,16 +115,15 @@ SaveAndLoad:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, SaveAndLoad.onNewLevel)
 
 function SaveAndLoad:onGameStarted(isContinued)
     --Loading Moddata--
-    local info = Lib.ModInfo;
-    local mod = info.Mod;
+    local mod = Lib.Mod;
     if (mod:HasData()) then
         if (isContinued) then
             local state = SaveAndLoad.ReadGameStateData();
             
             if (state) then
-                Lib:SetModGlobalData(state.Global);
+                Lib:SetGlobalModData(state.Global);
                 local game = THI.Game;
-                for i, player in Lib.Detection.PlayerPairs(true, true) do
+                for i, player in Lib.Players.PlayerPairs(true, true) do
                     for k, v in pairs(state.Players) do
                         local index = tonumber(k);
                         if (i == index) then
@@ -141,7 +136,7 @@ function SaveAndLoad:onGameStarted(isContinued)
                 end
             end
         else
-            SaveAndLoad.RemoveGameState(mod);
+            SaveAndLoad.RemoveGameState();
         end
     end
 end

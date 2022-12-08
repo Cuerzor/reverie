@@ -1,8 +1,8 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 
-local Detection = Lib:NewClass();
+local Entities = Lib:NewClass();
 
-function Detection.IsValidEnemy(entity, includeNoTarget)
+function Entities.IsValidEnemy(entity, includeNoTarget)
     local valid =  entity:IsVulnerableEnemy() and not entity:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)
     if (not includeNoTarget) then
         valid = valid and not entity:HasEntityFlags(EntityFlag.FLAG_NO_TARGET);
@@ -11,18 +11,18 @@ function Detection.IsValidEnemy(entity, includeNoTarget)
 end
 
 
-function Detection.CompareEntity(a, b)
+function Entities.CompareEntity(a, b)
     if (a and b) then
         return GetPtrHash(a) == GetPtrHash(b);
     end
     return false;
 end
 
-function Detection.EntityExists(ent)
+function Entities.EntityExists(ent)
     return ent and ent:Exists();
 end
 
-function Detection.IsFinalBoss(ent)
+function Entities.IsFinalBoss(ent)
     return ent.Type == EntityType.ENTITY_MOM or 
     ent.Type == EntityType.ENTITY_MOMS_HEART or 
     ent.Type == EntityType.ENTITY_ISAAC or
@@ -40,7 +40,7 @@ function Detection.IsFinalBoss(ent)
     
 end
 
-function Detection.IsActivePlayer(player)
+function Entities.IsActivePlayer(player)
     if (player:IsCoopGhost ( )) then
         return false;
     end
@@ -51,7 +51,7 @@ function Detection.IsActivePlayer(player)
     return true;
 end
 
-function Detection.PlayerPairs(includePlayer, includeBaby)
+function Entities.PlayerPairs(includePlayer, includeBaby)
     if (includePlayer == nil) then
         includePlayer = true;
     end
@@ -163,11 +163,11 @@ do
         end
         return start, lineEnd, axe, radius, vertical;
     end
-    function Detection.CheckCollision(ent1, ent2)
-        return Detection.CheckCollisionInfo(ent1.Position, ent1.Size, ent1.SizeMulti, ent2.Position, ent2.Size, ent2.SizeMulti);
+    function Entities.CheckCollision(ent1, ent2)
+        return Entities.CheckCollisionInfo(ent1.Position, ent1.Size, ent1.SizeMulti, ent2.Position, ent2.Size, ent2.SizeMulti);
     end
 
-    function Detection.CheckCollisionInfo(pos1, size1, sizeMulti1, pos2, size2, sizeMulti2)
+    function Entities.CheckCollisionInfo(pos1, size1, sizeMulti1, pos2, size2, sizeMulti2)
         if (pos1:Distance(pos2) > size1 + size2) then
             return false;
         end
@@ -182,23 +182,4 @@ do
     end
 end
 
--- PrePlayerCollision is broken, alternate method.
-local function ExecutePrePlayerCollision(mod, player, collider, low)
-    local Callbacks = Lib.Callbacks;
-    for i, info in pairs(Callbacks.Functions.PrePlayerCollision) do
-        if (info.OptionalArg == nil or info.OptionalArg == player.Variant) then
-            local result = info.Func(mod, player, collider, low);
-            if (result ~= nil) then
-                return not not result;
-            end
-        end
-    end
-
-    for i, info in pairs(Callbacks.Functions.PostPlayerCollision) do
-        info.Func(mod, player, collider, low);
-    end
-end
-Detection:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, ExecutePrePlayerCollision);
-
-
-return Detection;
+return Entities;

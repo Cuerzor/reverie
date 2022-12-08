@@ -53,9 +53,11 @@ function Mallet:PostUseMallet(item, rng, player, flags, slot, varData)
     for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)) do
         if (ent.SubType > 0 and ent.SubType ~= CollectibleType.COLLECTIBLE_DADS_NOTE) then
             local seed = rng:Next();
-            local pool = ItemPools:GetRoomPool(seed);
 
-            local item = itemPool:GetCollectible(pool, true, seed, CollectibleType.COLLECTIBLE_BRIMSTONE);
+            local item = room:GetSeededCollectible(seed);
+            if (item == CollectibleType.COLLECTIBLE_BREAKFAST) then
+                item = CollectibleType.COLLECTIBLE_BRIMSTONE;
+            end
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, ent.Position, Vector.Zero, nil);
             local pickup = ent:ToPickup();
             pickup:Morph(ent.Type, ent.Variant, item, true, false, true);

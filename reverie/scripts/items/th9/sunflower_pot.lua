@@ -2,6 +2,7 @@ local Damages = CuerLib.Damages;
 local Detection = CuerLib.Detection;
 local CompareEntity = Detection.CompareEntity;
 local EntityExists = Detection.EntityExists;
+local Players = CuerLib.Players;
 local Sunflower = ModItem("Sunflower Pot", "Sunflower");
 
 local Familiar = ModEntity("Sunflower Pot", "Sunflower");
@@ -189,7 +190,7 @@ Sunflower:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, Sunflower.PreSpawnC
 
 function Sunflower:PostNewLevel()
     local game =THI.Game;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local playerData = Sunflower.GetPlayerData(player, false);
         if (playerData) then
             if (playerData.FlowerState ~= 0) then

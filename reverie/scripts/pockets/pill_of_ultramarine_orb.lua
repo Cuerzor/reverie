@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Players = CuerLib.Players;
 local Pill = ModPill("Pill of Ultramarine Orb", "ULTRAMARINE_ORB_PILL");
 
@@ -78,7 +78,7 @@ end
 Pill:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostTakeDamage, EntityType.ENTITY_PLAYER);
 
 local function PostNewRoom(mod)
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local data = GetPlayerTempData(player, false);
         if (data) then
             if (data.Rewinded) then

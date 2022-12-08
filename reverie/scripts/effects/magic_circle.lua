@@ -1,5 +1,5 @@
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Circle = ModEntity("Summoning Magic Circle", "MAGIC_CIRCLE")
 
 Circle.SubTypes = {
@@ -244,7 +244,7 @@ do
                             end
                         end
                     else
-                        for _, ent in Detection.PlayerPairs(true, false) do
+                        for _, ent in Players.PlayerPairs(true, false) do
                             table.insert(targets, ent);
                         end
                     end

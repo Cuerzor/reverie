@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Players = CuerLib.Players;
 
 local Hairpin = ModItem("Warping Hairpin", "WarpHairpin");
@@ -126,7 +126,7 @@ function Hairpin:PostNewRoom()
         -- end
         playerPos = room:GetClampedPosition( playerPos, 0);
 
-        for p, player in Detection.PlayerPairs(true, true) do
+        for p, player in Players.PlayerPairs(true, true) do
             player.Position = playerPos;
         end
 

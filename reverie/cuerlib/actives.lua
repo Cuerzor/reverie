@@ -1,15 +1,15 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Screen = Lib.Screen;
 local Inputs = Lib.Inputs;
 local Callbacks = Lib.Callbacks;
 
-local Actives = _TEMP_CUERLIB:NewClass();
+local Actives = LIB:NewClass();
 Actives.FontSprite = Sprite();
 
 local itemConfig = Isaac.GetItemConfig();
 
 local function GetPlayerData(player, create)
-    local entData = Actives.Lib:GetLibData(player, true);
+    local entData = Actives.Lib:GetEntityLibData(player, true);
     if (create) then
         entData._ACTIVES = entData._ACTIVES or {
             UsedCharges = {}
@@ -45,7 +45,7 @@ end
 Actives.FontSprite:Load("gfx/reverie/ui/active_count.anm2", true);
 
 -- function Actives.GetPlayerData(player)
---     local data = Lib:GetLibData(player);
+--     local data = Lib:GetEntityLibData(player);
 --     data._ACTIVE_DATA = data._ACTIVE_DATA or {
 --         Pressing = {},
 --         Pressed = {}
@@ -320,7 +320,7 @@ end
 
 function Actives.RenderOnActive(item, func)
     if (Game():GetHUD():IsVisible()) then
-        local Detection = Lib.Detection;
+        local Players = Lib.Players;
         local controllers = {};
 
 
@@ -335,7 +335,7 @@ function Actives.RenderOnActive(item, func)
         end
 
         local playerIndex = 0;
-        for i, player in Detection.PlayerPairs() do
+        for i, player in Players.PlayerPairs() do
             -- If is not a coop baby.
             if (not controllers[player.ControllerIndex]) then
                 local type = player:GetPlayerType();

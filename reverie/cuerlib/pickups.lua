@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Callbacks = Lib.Callbacks;
 
 local Pickups = Lib:NewClass();
@@ -115,7 +115,7 @@ function Pickups.TryCollect(player, pickup)
 end
 
 -- local function GetPlayerTempData(player, create)
---     local data = Lib:GetLibData(player, true);
+--     local data = Lib:GetEntityLibData(player, true);
 --     if (create) then
 --         data._PICKUP = data._PICKUP or {
 --             PickingCard = nil
@@ -125,7 +125,7 @@ end
 -- end
 
 function Pickups:GetPickupData(pickup) 
-    local data = Lib:GetLibData(pickup);
+    local data = Lib:GetEntityLibData(pickup);
     data._PICKUP = data._PICKUP or {
         FakeCollected = false,
         Moved = false,
@@ -232,7 +232,7 @@ local function PostUpdate(mod)
             local pickup = PickingCard;
             PickingCard = nil;
             if (not pickup:Exists() or pickup:IsDead()) then
-                for p, player in Lib.Detection.PlayerPairs() do
+                for p, player in Lib.Players.PlayerPairs() do
                     for slot = 0, 3 do
                         local card = player:GetCard(slot);
                         if (card == pickup.SubType) then

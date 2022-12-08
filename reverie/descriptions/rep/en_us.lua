@@ -918,7 +918,8 @@ EIDInfo.Collectibles = {
         Name = "Eye of Chimera",
         Description = "Reroll all pedestal items in the room upon use"..
         "#Has {{CurseBlind}}Curse of Blind while holding"..
-        "#You can see unknown item's qualities, charges and tags"
+        "#You can see unknown item's qualities, charges and tags",
+        BookOfVirtues = "Fires poison tears"
     },
 }
 local EmptyBook= Collectibles.EmptyBook;

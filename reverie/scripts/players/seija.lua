@@ -4,6 +4,7 @@ local Stats = CuerLib.Stats;
 local Detection = CuerLib.Detection;
 local Inputs = CuerLib.Inputs;
 local CompareEntity = Detection.CompareEntity;
+local Players = CuerLib.Players;
 local ItemPools = CuerLib.ItemPools;
 local Collectibles = CuerLib.Collectibles;
 local Math = CuerLib.Math;
@@ -670,15 +671,14 @@ do -- Events
                 return false;
             end
         end
-        
     end
-    Seija:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_PLAYER_COLLISION, PrePlayerCollision)
+    Seija:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, PrePlayerCollision)
 
 
     local function PostNewRoom(mod)
         local betrayalPlayer;
         local shadePlayer;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (Seija:WillPlayerBuff(player)) then
                 local effects = player:GetEffects();
                 -- Best Bud.
@@ -732,7 +732,7 @@ do -- Events
 
     local function PostNewLevel(mod)
         local cainsOtherEyePlayer;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (Seija:WillPlayerBuff(player)) then
                 -- Missing No.
                 if (player:HasCollectible(CollectibleType.COLLECTIBLE_MISSING_NO)) then
@@ -1069,7 +1069,7 @@ do -- Events
 
     local function PreGetCollectible(mod, pool, decrease, seed, loopCount)
         local glitchedCrownPlayer;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (Seija:WillPlayerNerf(player)) then
                 if (not glitchedCrownPlayer and player:HasCollectible(CollectibleType.COLLECTIBLE_GLITCHED_CROWN)) then
                     glitchedCrownPlayer = player;
@@ -1087,7 +1087,7 @@ do -- Events
     local function PostGetCollectible(mod, item, pool, decrease, seed)
         if (item == CollectibleType.COLLECTIBLE_TMTRAINER) then
             local seijaPlayer;
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 if (Seija:WillPlayerBuff(player)) then
                     if (not seijaPlayer) then
                         seijaPlayer = player;
@@ -1107,7 +1107,7 @@ do -- Events
             return config.Quality < 4;
         end
         local missingNoPlayer;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (Seija:WillPlayerBuff(player)) then
                 if (not missingNoPlayer and player:HasCollectible(CollectibleType.COLLECTIBLE_MISSING_NO)) then
                     missingNoPlayer = player;
@@ -1203,7 +1203,7 @@ do -- Events
     --     end
         -- Battery Pack.
         if (type == 5 and variant == PickupVariant.PICKUP_LIL_BATTERY and subtype == BatterySubType.BATTERY_MICRO) then
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 if (Seija:WillPlayerBuff(player)) then
                     if (player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY_PACK)) then
                         return {type, variant, BatterySubType.BATTERY_NORMAL, seed};
@@ -1253,7 +1253,7 @@ do -- Events
                 end
                 if (canHeal) then
                     local pyromaniacPlayer;
-                    for p, player in Detection.PlayerPairs() do
+                    for p, player in Players.PlayerPairs() do
                         if (Seija:WillPlayerNerf(player)) then
                             if (not pyromaniacPlayer and player:HasCollectible(CollectibleType.COLLECTIBLE_PYROMANIAC)) then
                                 pyromaniacPlayer = player;
@@ -1370,7 +1370,7 @@ do -- Events
             local blackBeanPlayer;
             local myShadowPlayer;
             local infestationIIPlayer;
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 if (Seija:WillPlayerBuff(player)) then
                     if (not skatolePlayer and player:HasCollectible(CollectibleType.COLLECTIBLE_SKATOLE)) then
                         skatolePlayer = player;
@@ -1769,7 +1769,7 @@ do -- Events
         local jarPlayer;
         local batteryPackPlayer;
         local luck = 0;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (player.Variant == 0) then
                 luck = luck + player.Luck;
             end
@@ -1816,7 +1816,7 @@ do -- Events
 
     local function PostPickupSelection(mod, pickup, variant, subtype)
         local batteryPackPlayer;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (Seija:WillPlayerBuff(player)) then
                 if (not batteryPackPlayer and player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY_PACK)) then
                     batteryPackPlayer = player;
@@ -1845,7 +1845,7 @@ do -- Events
         if (Game():GetRoom():GetFrameCount() >= 1) then
             if (pickup.Variant == PickupVariant.PICKUP_COIN and pickup.SubType == 1) then
                 local pageantPlayer;
-                for p, player in Detection.PlayerPairs() do
+                for p, player in Players.PlayerPairs() do
                     if (Seija:WillPlayerBuff(player)) then
                         if (player:HasCollectible(CollectibleType.COLLECTIBLE_PAGEANT_BOY)) then
                             pageantPlayer = pageantPlayer or player;
@@ -1876,7 +1876,7 @@ do -- Events
 
         -- Little Baggy.
         if (pickup.Type == 5 and pickup.Variant == PickupVariant.PICKUP_PILL and pickup.SubType & PillColor.PILL_COLOR_MASK > 0 and pickup.SubType & PillColor.PILL_GIANT_FLAG <= 0) then
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 if (Seija:WillPlayerBuff(player)) then
                     if (player:HasCollectible(CollectibleType.COLLECTIBLE_LITTLE_BAGGY)) then
                         pickup:Morph(pickup.Type, pickup.Variant, pickup.SubType | PillColor.PILL_GIANT_FLAG, true, true, true)

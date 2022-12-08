@@ -96,7 +96,7 @@ end
 function RuneSword:GetFirstPlayerWithRune(rune)
     local game = THI.Game;
     local player = Isaac.GetPlayer(0);
-    for i, ply in Detection.PlayerPairs() do
+    for i, ply in Players.PlayerPairs() do
         if (RuneSword:HasInsertedRune(ply, rune)) then
             return ply;
         end
@@ -178,7 +178,7 @@ end
 function RuneSword:GetGlobalRuneCount(rune)
     local game = THI.Game;
     local count = 0;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         count = count + RuneSword:GetInsertedRuneNum(player, rune);
     end
     return count;
@@ -186,7 +186,7 @@ end
 
 function RuneSword:HasGlobalRune(rune)
     local game = THI.Game;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (RuneSword:HasInsertedRune(player, rune)) then
             return true;
         end
@@ -390,7 +390,7 @@ local function ClearLevel()
         end
     end
     -- Soul of Lilith
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (RuneSword:HasInsertedRune(player, Card.CARD_SOUL_LILITH)) then
             local flags = UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC | UseFlag.USE_NOCOSTUME;
             player:UseCard(Card.CARD_SOUL_LILITH, flags);
@@ -428,7 +428,7 @@ local function PostNewWave()
     end
 
     -- Berkano
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local berkanoCount = RuneSword:GetInsertedRuneNum(player, Card.RUNE_BERKANO);
         if (berkanoCount > 0) then
             player:AddBlueFlies (berkanoCount * 3, player.Position, nil);
@@ -474,7 +474,7 @@ local function PostRoomStart()
     local room = game:GetRoom();
             
     local flags = UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_MIMIC | UseFlag.USE_NOCOSTUME;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (room:GetAliveEnemiesCount() > 0) then
             -- Soul of Magdalene
             if (RuneSword:HasInsertedRune(player, Card.CARD_SOUL_MAGDALENE)) then
@@ -593,7 +593,7 @@ function RuneSword:PostNewRoom()
         RuneSword.UpdateVisibleRooms();
     end
 
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local judasCount = RuneSword:GetInsertedRuneNum(player, Card.CARD_SOUL_JUDAS);
         if (judasCount > 0 and room:GetAliveEnemiesCount() > 0) then
             local data = RuneSword:GetPlayerData(player, true);
@@ -816,7 +816,7 @@ RuneSword:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, RuneSw
 --         if (Variant == PickupVariant.PICKUP_TAROTCARD and SubType == 0) then
 --             local game = THI.Game;
 --             local hasSword = false;
---             for p, player in Detection.PlayerPairs() do
+--             for p, player in Players.PlayerPairs() do
 --                 if (RuneSword:HasSword(player)) then
 --                     hasSword = true;
 --                     break;
@@ -868,9 +868,7 @@ function RuneSword:PostBombRemoved(entity)
                             else
                                 local game = THI.Game;
                                 local room = game:GetRoom();
-                                local itemPool = game:GetItemPool();
-                                local pool = ItemPools:GetRoomPool(seed);
-                                local item = itemPool:GetCollectible(pool, true, seed);
+                                local item = room:GetSeededCollectible(seed);
                                 pickup:Morph(pick.Type, pick.Variant, item, true, false, false);
                                 pickup.Touched = false;
                             end 

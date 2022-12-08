@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Callbacks = Lib.Callbacks;
 
 local Collectibles = Lib:NewClass()
@@ -62,7 +62,7 @@ local ChangedItems = {
 
 
 local function GetPickupData(pickup, init) 
-    local data = Lib:GetLibData(pickup, true);
+    local data = Lib:GetEntityLibData(pickup, true);
     if (data) then
         data._COLLECTIBLES = data._COLLECTIBLES or {
             LastID = -1
@@ -71,7 +71,7 @@ local function GetPickupData(pickup, init)
     return data._COLLECTIBLES;
 end
 local function GetPlayerData(player, init)
-    local entData = Lib:GetLibData(player, true);
+    local entData = Lib:GetEntityLibData(player, true);
     if (init) then
         entData._COLLECTIBLES = entData._COLLECTIBLES or {
             Items = {},
@@ -113,7 +113,7 @@ function Collectibles.IsAnyHasCollectible(item, onlyTrue)
     if (onlyTrue == nil) then
         onlyTrue = false;
     end
-    for index, player in Lib.Detection.PlayerPairs() do
+    for index, player in Lib.Players.PlayerPairs() do
         if (player:HasCollectible(item, onlyTrue)) then
             return true;
         end
@@ -264,7 +264,7 @@ Collectibles:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Collectibles.onPlay
 
 function Collectibles:onGameStarted(isContinued)
     if (isContinued) then
-        for p, player in Lib.Detection.PlayerPairs()  do
+        for p, player in Lib.Players.PlayerPairs()  do
 
             -- Re-record player's collectibles at the start of game
             -- To prevent event retrigger.

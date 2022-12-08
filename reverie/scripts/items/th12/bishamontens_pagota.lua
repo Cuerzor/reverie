@@ -158,7 +158,7 @@ function Pagota:UsePagota(item, rng, player, flags, slot, varData)
     data.Golden = true;
     if (Players.HasJudasBook(player)) then
         data.GoldenBelial = true;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
             player:EvaluateItems();
         end
@@ -330,7 +330,7 @@ function Pagota:NewLevel()
         data.Golden = false;
         if (data.GoldenBelial) then
             data.GoldenBelial = false;
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
                 player:EvaluateItems();
             end

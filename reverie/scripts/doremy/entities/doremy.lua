@@ -2,6 +2,7 @@ local Dream = GensouDream;
 local Screen = CuerLib.Screen;
 local Math = CuerLib.Math;
 local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Actives = CuerLib.Actives;
 
 -- Doremy
@@ -107,7 +108,7 @@ local function SpawnSupplies(doremy)
     local hasLost = false;
     local hasKeeper = false;
     local hasOther = false;
-    for p, player in Detection.PlayerPairs(true) do
+    for p, player in Players.PlayerPairs(true) do
         local playerType = player:GetPlayerType();
         if (playerType == PlayerType.PLAYER_THELOST or playerType == PlayerType.PLAYER_THELOST_B) then
             hasLost = true;
@@ -144,7 +145,7 @@ local function SpawnSupplies(doremy)
 end
 
 local function ChargeActives()
-    for p, player in Detection.PlayerPairs(true) do
+    for p, player in Players.PlayerPairs(true) do
         Actives.ChargeAll(player, 2, true, true);
     end
 end

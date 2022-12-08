@@ -145,7 +145,7 @@ Ticket:AddCallback(ModCallbacks.MC_USE_ITEM, Ticket.PostUseTicket, Ticket.Item);
 
 function Ticket:PostRender()
     local game = Game();
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (Ticket:IsExchange()) then
             local pos = Screen.GetEntityRenderPosition(player, Vector(6, 32))
             EmeraldSprite:Render(pos);

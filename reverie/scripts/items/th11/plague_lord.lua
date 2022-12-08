@@ -1,11 +1,11 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local PlagueLord = ModItem("Plague Lord", "PLAGUE_LORD");
 
 PlagueLord.HasItemPlayer = nil;
 do
     local function PostUpdate(mod)
         PlagueLord.HasItemPlayer = nil;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (player:HasCollectible(PlagueLord.Item)) then
                 PlagueLord.HasItemPlayer = player;
                 break;

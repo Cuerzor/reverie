@@ -1,5 +1,5 @@
-local Math = _TEMP_CUERLIB.Math;
-local Lib = _TEMP_CUERLIB;
+local Math = LIB.Math;
+local Lib = LIB;
 
 local Explosion = Lib:NewClass();
 Explosion.ExplosionParams = {};

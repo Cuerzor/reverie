@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Tears = CuerLib.Tears;
 local Zombie = ModItem("Zombie Infestation", "Z_INFEST");
 
@@ -32,7 +32,7 @@ end
 do
     local function PostUpdate(mod)
         Zombie.ItemPlayer = nil;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (player:HasCollectible(Zombie.Item)) then
                 Zombie.ItemPlayer = player;
                 if (player:IsFrame(2, 0)) then

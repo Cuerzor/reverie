@@ -1,6 +1,5 @@
 
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
 local Players = CuerLib.Players;
 local MomsIOU = ModItem("Mom's IOU", "MomsIOU");
 
@@ -118,7 +117,7 @@ function MomsIOU:PostNewStage()
         return;
     end
 
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local data = MomsIOU.GetPlayerData(player, false);
         if (data and data.Debt > 0) then
             local coins = player:GetNumCoins();

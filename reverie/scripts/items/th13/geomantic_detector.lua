@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Rooms = CuerLib.Rooms;
 local Detector = ModItem("Geomantic Detector", "GEOMANTIC_DETECTOR");
 
@@ -74,7 +74,7 @@ function Detector:GetRoomLuck()
 end
 
 function Detector:EvaluateAllPlayersLuck()
-    for p, player in Detection.PlayerPairs(true, true) do
+    for p, player in Players.PlayerPairs(true, true) do
         if (player:HasCollectible(Detector.Item)) then
             player:AddCacheFlags(CacheFlag.CACHE_LUCK);
             player:EvaluateItems();

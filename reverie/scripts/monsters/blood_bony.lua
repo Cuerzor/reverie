@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local BloodBony = ModEntity("Blood Bony", "BloodBony");
 
 BloodBony.SubTypes = {
@@ -99,7 +99,7 @@ end
 
 function BloodBony:FindOwner()
     local EikaB = THI.Players.EikaB;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (player:GetPlayerType() == EikaB.Type) then
             return player;
         end
@@ -368,7 +368,7 @@ local function PostEntityKill(mod, entity)
         
             -- local maxDamage = 0;
             -- local maxDamagePlayer = nil
-            -- for p, player in Detection.PlayerPairs() do
+            -- for p, player in Players.PlayerPairs() do
             --     if (player:GetPlayerType() == EikaB.Type and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
             --         if (player.Damage > maxDamage) then
             --             maxDamage = player.Damage;
@@ -384,7 +384,7 @@ local function PostEntityKill(mod, entity)
             -- end
 
             local birthrightPlayer = false;
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 if (player:GetPlayerType() == EikaB.Type and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
                     birthrightPlayer = player;
                     break;

@@ -48,11 +48,7 @@ function Rods:SpawnReward(pos, seed)
             vel = Vector.FromAngle(rng:RandomFloat() * 360);
         end
     elseif (value < 100) then
-        
-        local pool = game:GetItemPool();
-        local roomType = room:GetType();
-        local poolType = ItemPools:GetRoomPool(seed);
-        local id = pool:GetCollectible(poolType, true, seed);
+        local id = room:GetSeededCollectible(seed);
         award = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero, nil);
     end
 end

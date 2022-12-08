@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Consts = Lib.Consts; 
 local Math = Lib.Math;
 local Synergies = Lib.Synergies;

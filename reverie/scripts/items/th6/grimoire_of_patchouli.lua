@@ -3,7 +3,7 @@ local Stages = CuerLib.Stages;
 local Callbacks = CuerLib.Callbacks;
 local Synergies = CuerLib.Synergies;
 local Math = CuerLib.Math;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Actives = CuerLib.Actives;
 local Tears = CuerLib.Tears;
 
@@ -86,7 +86,7 @@ function Grimoire:GetElementCount(player)
 end
 
 function Grimoire:onNewLevel()
-    for p, player in Detection.PlayerPairs(true, true) do
+    for p, player in Players.PlayerPairs(true, true) do
         Grimoire:ClearEffects(player)
     end
 end

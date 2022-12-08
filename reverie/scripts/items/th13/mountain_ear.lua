@@ -1,6 +1,6 @@
 local Synergies = CuerLib.Synergies;
 local Tears = CuerLib.Tears;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Stats = CuerLib.Stats;
 local Ear = ModItem("Mountain Ear", "MOUNTAIN_EAR");
 Ear.EchoVariant = Isaac.GetEntityVariantByName("Echo Tear");
@@ -134,7 +134,7 @@ do
             local tearData = GetTearData(tear, true);
             if (tearData.OutOfSpawner) then
                 if (tear:IsFrame(2, 0) and not tear:IsDead()) then
-                    for p, player in Detection.PlayerPairs() do
+                    for p, player in Players.PlayerPairs() do
                         if (tear.Position:Distance(player.Position) <= player.Size + tear.Size) then
                             tear:Die();
                             player:SetColor(HitColor, 20, 1, true, false);

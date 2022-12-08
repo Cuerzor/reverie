@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Stages = CuerLib.Stages;
 local Telescope = ModItem("Daitengu Telescope", "MegumuTelescope");
 
@@ -148,7 +148,7 @@ function Telescope.GetMeteorChance()
     local treasureCount = Telescope.GetSkippedTreasureRoomCount();
     chance = chance + treasureCount * 20;
     
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         chance = chance + Telescope.GetPlayerMeteorChance(player);
     end
 
@@ -304,7 +304,7 @@ function Telescope:PostNewStage()
     local stage = level:GetStage();
     local stageType = level:GetStageType();
     local hasTelescope = false;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (player:HasCollectible(Telescope.Item)) then
             hasTelescope = true;
             break;

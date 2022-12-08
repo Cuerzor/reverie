@@ -1,6 +1,6 @@
 
 local Bosses = CuerLib.Bosses;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Grids = CuerLib.Grids;
 local Necrospyder = ModEntity("Necrospyder", "NECROSPYDER");
 
@@ -23,16 +23,17 @@ do
         hole.SpriteRotation = hole.SubType * 90;
         hole:GetSprite():SetFrame(hole.InitSeed % 3);
         hole:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
-        hole:AddEntityFlags(EntityFlag.FLAG_RENDER_WALL | EntityFlag.FLAG_NO_REMOVE_ON_TEX_RENDER);
+        hole.SortingLayer = SortingLayer.SORTING_DOOR;
+        --hole:AddEntityFlags(EntityFlag.FLAG_RENDER_WALL | EntityFlag.FLAG_NO_REMOVE_ON_TEX_RENDER);
     end
     NecrospyderHole:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, PostHoleInit, NecrospyderHole.Variant);
 
-    local function PostHoleRender(mod, hole)
-        if (hole.FrameCount == 1) then
-            hole:SetColor(Color(1,1,1,0,0,0,0), -1, 9999);
-        end
-    end
-    NecrospyderHole:AddCallback(ModCallbacks.MC_POST_EFFECT_RENDER, PostHoleRender, NecrospyderHole.Variant);
+    -- local function PostHoleRender(mod, hole)
+    --     if (hole.FrameCount == 1) then
+    --         hole:SetColor(Color(1,1,1,0,0,0,0), -1, 9999);
+    --     end
+    -- end
+    -- NecrospyderHole:AddCallback(ModCallbacks.MC_POST_EFFECT_RENDER, PostHoleRender, NecrospyderHole.Variant);
 end
 
 -- Add Boss Room.
@@ -217,7 +218,7 @@ do
                 local angle = ent.SpriteRotation;
                 local holeDir = Vector.FromAngle(angle + 90);
                 local holeNormal = Vector.FromAngle(angle);
-                for p, player in Detection.PlayerPairs(true, true) do
+                for p, player in Players.PlayerPairs(true, true) do
                     local holeToPlayer = player.Position - ent.Position;
                     if (math.abs(holeNormal:Dot(holeToPlayer)) <= 20 and math.abs(holeDir:Dot(holeToPlayer)) <= 80) then
                         playerNearHole = ent;

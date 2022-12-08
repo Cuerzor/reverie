@@ -1,5 +1,5 @@
 local Dream = GensouDream;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local MothersShadow = {
     Type = Isaac.GetEntityTypeByName("Nightmare Mother's Shadow"),
     Variant = Isaac.GetEntityVariantByName("Nightmare Mother's Shadow"),
@@ -39,7 +39,7 @@ function MothersShadow:FindTarget(entity)
     else
         local nearest = nil;
         local nearestDis = 0;
-        for p, player in Detection.PlayerPairs(true) do
+        for p, player in Players.PlayerPairs(true) do
             if (not player:IsInvincible()) then
                 local dis = player.Position:Distance(entity.Position);
                 if (not nearest or dis < nearestDis) then

@@ -125,7 +125,7 @@ function LastWills:PostGameStarted(isContinued)
                 if (persistentData.LastWills.DamageUp) then
                     local data = GetGlobalData(true);
                     data.DamageUp = true;
-                    for p, player in Detection.PlayerPairs() do
+                    for p, player in Players.PlayerPairs() do
                         player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
                         player:EvaluateItems();
                     end

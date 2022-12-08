@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Stats = Lib:NewClass();
 
 function Stats.GetAddFireRate(firedelay, addition)
@@ -6,7 +6,7 @@ function Stats.GetAddFireRate(firedelay, addition)
 end
 
 local function GetPlayerData(player, init)
-    local data = Lib:GetLibData(player, true);
+    local data = Lib:GetEntityLibData(player, true);
     if (init) then
         data.Stats = data.Stats or {
             Damage = {
@@ -829,8 +829,8 @@ function Stats:EvaluateCache(player, cache)
     end
 end
 
-function Stats:LateRegister()
-    Lib.ModInfo.Mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Stats.EvaluateCache);
+function Stats:Register()
+    Lib.Mod:AddPriorityCallback(ModCallbacks.MC_EVALUATE_CACHE, CallbackPriority.LATE, Stats.EvaluateCache);
 end
 
 return Stats;

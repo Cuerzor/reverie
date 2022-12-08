@@ -1,4 +1,4 @@
-local Bosses = _TEMP_CUERLIB:NewClass();
+local Bosses = LIB:NewClass();
 Bosses.ForceCustomBoss = false;
 
 Bosses.BossConfigs = {}

@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Math = Lib.Math;
 local Grids = Lib:NewClass();
 

@@ -1,5 +1,3 @@
-local Detection = CuerLib.Detection;
-local Players = CuerLib.Players;
 local SeijaSoul = ModCard("SoulOfSeija", "SOUL_SEIJA");
 SeijaSoul.ReversedID = Isaac.GetCardIdByName("SoulOfSeijaReversed");
 
@@ -15,17 +13,6 @@ local function PostUseCard(mod, card, player, flags)
 end
 SeijaSoul:AddCallback(ModCallbacks.MC_USE_CARD, PostUseCard);
 
-
--- local function PostNewRoom(mod)
---     for p, player in Detection.PlayerPairs() do
---         for slot = 3, 0, -1 do
---             if (player:GetCard(slot) == SeijaSoul.ReversedID) then
---                 Players:RemoveCardPill(player, slot)
---             end
---         end
---     end
--- end
--- SeijaSoul:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom);
 
 
 -- Avoid Reversed SeijaSoul from spawning.

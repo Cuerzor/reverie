@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Rooms = Lib.Rooms;
 
 local Bosses = Lib:NewClass();
@@ -140,7 +140,7 @@ end
 -- }
 
 local function GetGlobalData(init)
-    local data = Lib:GetModGlobalData();
+    local data = Lib:GetGlobalModData();
     if (init) then
         if (not data._BOSSES) then
             data._BOSSES = {

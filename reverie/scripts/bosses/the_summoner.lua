@@ -2,6 +2,7 @@ local Detection = CuerLib.Detection;
 local Maths = CuerLib.Math;
 local Bosses = CuerLib.Bosses;
 local Grids = CuerLib.Grids;
+local Players = CuerLib.Players;
 local Summoner = ModEntity("The Summoner", "SUMMONER");
 
 -- Add Boss Room.
@@ -201,7 +202,7 @@ do
             if (Random() % 100 < fearChance) then
 
                 local canFear = true;
-                for i, player in Detection.PlayerPairs(true) do
+                for i, player in Players.PlayerPairs(true) do
                     if (player:HasEntityFlags(EntityFlag.FLAG_FEAR)) then
                         canFear = false;
                         break;
@@ -251,7 +252,7 @@ do
             local farestDis = 0;
             local playerCount = 0;
             local playerPositionSum = Vector.Zero;
-            for i, player in Detection.PlayerPairs(true) do
+            for i, player in Players.PlayerPairs(true) do
                 local dis = player.Position:Distance(summoner.Position);
                 if (not nearestPlayer or dis < nearestDis) then
                     nearestPlayer = player;

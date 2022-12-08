@@ -1,5 +1,4 @@
 local Actives = CuerLib.Actives;
-local Detection = CuerLib.Detection;
 local Players = CuerLib.Players;
 local RodOfRemorse = ModItem("Rod of Remorse", "RodOfRemorse");
 
@@ -252,7 +251,7 @@ RodOfRemorse:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, RodOfRemorse.GetShad
 
 function RodOfRemorse:onNewLevel()
     local game = THI.Game;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local playerData = RodOfRemorse.GetPlayerData(player, false);
         if (playerData) then
             playerData.SacrificeCount = 0;

@@ -1,6 +1,6 @@
 local Stats = CuerLib.Stats;
 local Actives = CuerLib.Actives;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local PeerlessElixir = ModItem("Peerless Elixir", "PeerlessElixir");
 
@@ -71,7 +71,7 @@ PeerlessElixir:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, PeerlessElixir.onEval
 
 function PeerlessElixir:onNewLevel()
     local game = THI.Game;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local playerData = PeerlessElixir.GetPlayerData(player);
         if (playerData) then
             playerData.UsedTime = 0;

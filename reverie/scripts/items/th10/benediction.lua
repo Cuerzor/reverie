@@ -192,7 +192,7 @@ do
 
 
     local function PostNewLevel(mod)
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             Benediction:ClearGainedItems(player);
         end
     end
@@ -213,9 +213,9 @@ do
 
                     local sprite = itemList[charges].Sprite;
                     sprite.Scale = scale;
-                    for i = 4, 0, -1 do
+                    for i = 3, -1, -1 do
                         local offset = Consts.DirectionVectors[i] * 0.5 * scale;
-                        if (i > 0) then
+                        if (i > -1) then
                             sprite.Color = WhiteColor;
                         else
                             sprite.Color = Color.Default;

@@ -185,7 +185,7 @@ do -- Pause.
     function DragonBadge:UnfreezeGame()
         local data = self:GetBadgeGlobalData(true);
         local pausing = false;
-        for p, player in Detection.PlayerPairs(true, true) do
+        for p, player in Players.PlayerPairs(true, true) do
             local state = self:GetBelialState(player);
             if (state > 0 and state < 3) then
                 pausing = true;
@@ -220,7 +220,7 @@ do -- Pause.
         end
 
         local striking = false;
-        for p, player in Detection.PlayerPairs(true, true) do
+        for p, player in Players.PlayerPairs(true, true) do
             local playerData = DragonBadge:GetPlayerData(player, false);
             if (playerData and playerData.BelialState > 0 and playerData.BelialState < 3) then
                 striking = true;

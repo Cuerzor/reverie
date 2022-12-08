@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Asthma = ModItem("Asthma", "ASTHMA");
 
 
@@ -6,7 +6,7 @@ function Asthma:PreEntitySpawn(type, variant, subtype, pos, vel, spawner, seed)
     if (type == EntityType.ENTITY_PICKUP and variant == PickupVariant.PICKUP_HEART and (not spawner or spawner.Type ~= EntityType.ENTITY_PLAYER)) then
         
         local asthmaPlayer = nil;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (player:HasCollectible(Asthma.Item)) then
                 asthmaPlayer = player;
                 break;

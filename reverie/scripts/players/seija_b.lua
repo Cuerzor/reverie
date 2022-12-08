@@ -1,5 +1,5 @@
 
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local ItemPools = CuerLib.ItemPools;
 local Collectibles = CuerLib.Collectibles;
 local SeijaB = ModPlayer("Tainted Seija", true, "SEIJA_B");
@@ -96,7 +96,7 @@ do -- Events
         if (not seijaBCached) then
             seijaBPlayer = nil;
             -- seijaBHasBirthright = nil;
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 if (player:GetPlayerType() == SeijaB.Type) then
                     seijaBPlayer = player;
                     -- if (player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then

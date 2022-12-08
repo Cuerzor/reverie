@@ -62,7 +62,7 @@ function Tech666.GetShootingVector(player)
     if (raw:Length() > 0.1) then
         local headDirection = player:GetHeadDirection ( );
     
-        return Consts.DirectionVectors[headDirection + 1];
+        return Consts.DirectionVectors[headDirection];
     end
     return Vector.Zero;
 end
@@ -88,7 +88,7 @@ function Tech666:PostPlayerEffect(player)
             local shooting = Tech666.GetShootingVector(player);
             if (data.FireDelay <= 0) then
                 local headDirection = player:GetHeadDirection ( );
-                local headVector = Consts.DirectionVectors[headDirection + 1];
+                local headVector = Consts.DirectionVectors[headDirection];
                 if (shooting:Length() > 0.1) then
                     local laser = Tech666.FireLaser(player, shooting);
                     laser.PositionOffset = Vector(headVector.X * 24 * player.SpriteScale.X, -40 * player.SpriteScale.Y);

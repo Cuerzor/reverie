@@ -286,18 +286,6 @@ function Roukanken:onUseItem(item, rng, player, flags, slot, data)
 end
 Roukanken:AddCallback(ModCallbacks.MC_USE_ITEM, Roukanken.onUseItem, Roukanken.Item);
 
-
--- function Roukanken:onGameStarted(isContinued)
---     for p, player in Detection.PlayerPairs() do
---         local playerData = Roukanken:GetPlayerData(player, false);
---         if (playerData and playerData.IsYoumu) then
-            
---             Weapons.BanishWeapon(player, true);
---         end
---     end
--- end
--- Roukanken:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, Roukanken.onGameStarted);
-
 function Roukanken:onPlayerUpdate(player)
     local playerData = Roukanken:GetPlayerData(player, false);
     if (playerData) then
@@ -349,7 +337,7 @@ function Roukanken:onPlayerUpdate(player)
 
                     local headDirection = player:GetHeadDirection();
 
-                    swordPosOffset = Consts.DirectionVectors[headDirection + 1];
+                    swordPosOffset = Consts.DirectionVectors[headDirection];
                     
                     local swinging1 = swordSprite:IsPlaying("Swing") and not swordSprite:IsFinished("Swing");
                     local swinging2 = swordSprite:IsPlaying("Swing2") and not swordSprite:IsFinished("Swing2");

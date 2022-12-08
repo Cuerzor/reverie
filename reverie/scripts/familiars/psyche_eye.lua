@@ -215,7 +215,7 @@ function PsycheEye:PostFamiliarUpdate(familiar)
     familiar.PositionOffset = Vector(0, -3);
     
     local headDirection = player:GetHeadDirection();
-    local facingVector = Consts.DirectionVectors[headDirection + 1];
+    local facingVector = Consts.DirectionVectors[headDirection];
     local controllerIndex = player.ControllerIndex;
     local holdingDrop = Input.IsActionPressed(ButtonAction.ACTION_DROP, controllerIndex);
     local shooting = player:GetShootingJoystick():Length() > 0.1 or player:AreOpposingShootDirectionsPressed ( );

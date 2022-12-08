@@ -252,7 +252,7 @@ TenguCamera:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, TenguCamera.PostPla
 
 function TenguCamera:PostRender()
     local game = Game();
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local pos = Screen.GetEntityRenderPosition(player);
         
         local data = TenguCamera:GetPlayerData(player, false);

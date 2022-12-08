@@ -1,6 +1,7 @@
 local Detection = CuerLib.Detection;
 local Collectibles = CuerLib.Collectibles;
 local ItemPools = CuerLib.ItemPools;
+local Players = CuerLib.Players;
 local Arm = ModItem("Ethereal Arm", "ETHEREAL_ARM");
 
 Arm.Hands = {
@@ -272,7 +273,7 @@ do
     Arm:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, PrePickupCollision);
 
     local function PostNewLevel(mod)
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             Arm:ResetHandUseTimes(player);
         end
     end

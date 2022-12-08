@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Chopper = ModItem("Yamanba's Chopper", "YAMANBAS_CHOPPER");
 
 Chopper.GfxFileName = Isaac.GetItemConfig():GetCollectible(Chopper.Item).GfxFileName;
@@ -32,7 +32,7 @@ do
 
     local function PostEntityKill(mod, entity)
         if (entity:IsActiveEnemy(true)) then
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 if (player:HasCollectible(Chopper.Item)) then
                     local chance = math.min(0.2, 1 / math.max(5, 18 - player.Luck));
                     local value = Random() % 100 / 100;

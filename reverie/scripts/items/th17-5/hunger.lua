@@ -1,6 +1,6 @@
 local Stats = CuerLib.Stats;
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local Hunger = ModItem("Hunger", "Hunger");
 
@@ -419,7 +419,7 @@ function Hunger:PostNPCDeath(npc)
 
     local game = THI.Game;
     local hasHunger = false;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (player:HasCollectible(Hunger.Item)) then
             hasHunger = true;
             break;

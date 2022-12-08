@@ -1,7 +1,7 @@
 local Dream = GensouDream;
 local Dialog = Dream.Dialog;
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Intro = Dialog();
 Intro.__index = Intro;
 function Intro:New()
@@ -258,7 +258,7 @@ function Intro:GetTextPosition()
 end
 
 local function DisableControls()
-    for i, player in Detection.PlayerPairs(true, true) do 
+    for i, player in Players.PlayerPairs(true, true) do 
         player.ControlsEnabled = false;
         player.Velocity = Vector.Zero;
     end
@@ -269,7 +269,7 @@ function Intro:Start()
     local room = THI.Game:GetRoom();
     local center = room:GetCenterPos();
 
-    for i, player in Detection.PlayerPairs(true, true) do 
+    for i, player in Players.PlayerPairs(true, true) do 
         local pos = center;
         if (i > 0) then
             local index = (i % 16) % 10 + 1;
@@ -303,7 +303,7 @@ function Intro:End()
     
     local room = THI.Game:GetRoom();
     local position = room:GetGridPosition(room:GetGridSize() - math.ceil(room:GetGridWidth() * 1.5));
-    for i, player in Detection.PlayerPairs(true, true) do 
+    for i, player in Players.PlayerPairs(true, true) do 
         player.ControlsEnabled = true;
         player.Position = position;
         player:StopExtraAnimation();

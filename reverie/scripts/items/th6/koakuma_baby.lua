@@ -79,7 +79,7 @@ function Koakuma:onKoakumaUpdate(familiar)
         familiar.ShootDirection = Direction.NO_DIRECTION;
     end
     
-    Familiars:AnimationUpdate(familiar, Consts.DirectionVectors[direction + 1]);
+    Familiars:AnimationUpdate(familiar, Consts.DirectionVectors[direction]);
     
     familiar:FollowParent();
 end

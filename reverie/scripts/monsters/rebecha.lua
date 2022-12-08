@@ -355,7 +355,7 @@ local function PostPlayerUpdate(mod, player)
                         if (player:IsFrame(2,0)) then
                             local pos = player.Position;
                             local fireDirection = Rebecha:GetMechaHeadDirection(mecha);
-                            local offset = Consts.GetDirectionVector(fireDirection):Rotated(45) * Vector(48, 6)
+                            local offset = Consts.DirectionVectors[fireDirection]:Rotated(45) * Vector(48, 6)
 
                             pos = pos + offset;
                             local vel = shooting * 12;
@@ -406,7 +406,7 @@ local function PostPlayerUpdate(mod, player)
                                 if (dir == Direction.NO_DIRECTION) then
                                     dir = Direction.DOWN
                                 end
-                                local offset = Consts.GetDirectionVector(dir):Rotated(-45) * Vector(48, 6)
+                                local offset = Consts.DirectionVectors[dir]:Rotated(-45) * Vector(48, 6)
     
                                 pos = pos + offset;
 

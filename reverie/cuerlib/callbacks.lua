@@ -1,5 +1,4 @@
-local Lib = _TEMP_CUERLIB;
-local Callbacks = Lib:NewClass();
+local Callbacks = LIB:NewClass();
 Callbacks.Functions = {
     CanCollect = {},
     PreRevive = {},
@@ -11,7 +10,6 @@ Callbacks.Functions = {
     PostLoseCollectible = {},
     PostChangeCollectibles = {},
     NewStage = {},
-    PrePlayerCollision = {},
     PostPlayerCollision = {},
     PreEntityTakeDamage = {},
     PostEntityTakeDamage = {},
@@ -31,7 +29,7 @@ Callbacks.Functions = {
     EvaluatePoolBlacklist = {},
 }
 
-Lib.CLCallbacks = {
+LIB.CLCallbacks = {
     CLC_CAN_COLLECT = "CanCollect",
     --Check if the player `player` can revives from death.
     --Return a ReviveInfo table for revive the player.
@@ -54,7 +52,6 @@ Lib.CLCallbacks = {
     CLC_POST_NEW_GREED_WAVE = "PostNewGreedWave",
     CLC_POST_GREED_WAVE_END = "PostGreedWaveEnd",
     CLC_NEW_STAGE = "NewStage",
-    CLC_PRE_PLAYER_COLLISION = "PrePlayerCollision",
     CLC_POST_PLAYER_COLLISION = "PostPlayerCollision",
     CLC_PRE_ENTITY_TAKE_DMG = "PreEntityTakeDamage",
     CLC_POST_ENTITY_TAKE_DMG = "PostEntityTakeDamage",
@@ -82,7 +79,7 @@ Lib.CLCallbacks = {
 
 function Callbacks:AddCallback(callbackId, func, opt, priority)
     priority = priority or 0;
-    local info = { Mod = self.Lib.ModInfo.Mod, Func = func, OptionalArg = opt, Priority = priority};
+    local info = { Mod = self.Lib.Mod, Func = func, OptionalArg = opt, Priority = priority};
     local tbl = self.Functions[callbackId];
     table.insert(tbl, info);
     table.sort(tbl, function (a, b) return a.Priority > b.Priority end);
@@ -90,7 +87,7 @@ end
 
 function Callbacks:RemoveCallback(callbackId, func)
     for i, info in pairs(self.Functions[callbackId]) do
-        if (info.Mod == self.Lib.ModInfo.Mod and info.Func == func) then
+        if (info.Mod == self.Lib.Mod and info.Func == func) then
             table.remove(self.Functions[callbackId], i);
             return;
         end

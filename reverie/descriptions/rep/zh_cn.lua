@@ -1001,7 +1001,8 @@ EIDInfo.Collectibles = {
         Name = "嵌体怪之眼",
         Description = "使用后重置本房间内的所有道具"..
         "#持有时永久具有{{CurseBlind}}致盲诅咒"..
-        "#你可以看到未知道具的品质、充能、标签"
+        "#你可以看到未知道具的品质、充能、标签",
+        BookOfVirtues = "发射毒眼泪"
     },
 }
 

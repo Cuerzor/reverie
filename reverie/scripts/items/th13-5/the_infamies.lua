@@ -2,7 +2,7 @@ local Stats = CuerLib.Stats;
 local SaveAndLoad = CuerLib.SaveAndLoad;
 local Stats = CuerLib.Stats;
 local Callbacks = CuerLib.Callbacks;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local TheInfamies = ModItem("The Infamies", "TheInfamies");
 local rootPath = "gfx/reverie/characters/";
@@ -42,7 +42,7 @@ end
 
 local function HasItem()
     local game = THI.Game;
-    for p, player in Detection.PlayerPairs(true, true) do
+    for p, player in Players.PlayerPairs(true, true) do
         if (player:HasCollectible(TheInfamies.Item)) then
             return true, player;
         end
@@ -189,7 +189,7 @@ function TheInfamies:PreSpawnCleanAward(rng, position)
     local spawner = nil;
     local maxLuck = 0;
     local form = 1;
-    for p, player in Detection.PlayerPairs(true, true) do
+    for p, player in Players.PlayerPairs(true, true) do
         if (player:HasCollectible(TheInfamies.Item)) then
             if (not spawnPoker) then
                 local playerData = TheInfamies.GetPlayerData(player, true);
@@ -250,19 +250,6 @@ function TheInfamies:PostEvaluateItems(player, cache)
     end
 end
 TheInfamies:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, TheInfamies.PostEvaluateItems); 
-
--- function TheInfamies:PostGameStart()
-    
---     local game = THI.Game;
---     for p, player in Detection.PlayerPairs(true, true) do
---         if (player:HasCollectible(TheInfamies.Item)) then
-            
---             player:AddCacheFlags(CacheFlag.CACHE_SPEED | CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_LUCK);
---             player:EvaluateItems();
---         end
---     end
--- end
--- TheInfamies:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, TheInfamies.PostGameStart); 
 
 function TheInfamies:PostChangeCollectibles(player, item, diff)
     player:AddCacheFlags(CacheFlag.CACHE_SPEED);

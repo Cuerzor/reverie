@@ -1,12 +1,15 @@
 local Consts = CuerLib.Consts;
 local Detection = CuerLib.Detection;
+local CompareEntity = Detection.CompareEntity;
+local EntityExists = Detection.EntityExists;
+local Players = CuerLib.Players;
 local Familiars = CuerLib.Familiars;
 local Screen = CuerLib.Screen;
 local Math = CuerLib.Math;
 local Tears = CuerLib.Tears;
+
+
 local PsycheEye = ModEntity("Psyche Eye Familiar", "PsycheEye");
-local CompareEntity = Detection.CompareEntity;
-local EntityExists = Detection.EntityExists;
 
 PsycheEye.FriendlyLimit = 5;
 PsycheEye.TearColor = Color(1, 0, 1, 1, 0, 0, 0);
@@ -110,7 +113,7 @@ function PsycheEye:PostFamiliarUpdate(familiar)
     familiar.PositionOffset = Vector(0, -3);
     
     local headDirection = player:GetHeadDirection();
-    local facingVector = Consts.DirectionVectors[headDirection + 1];
+    local facingVector = Consts.DirectionVectors[headDirection];
     local controllerIndex = player.ControllerIndex;
     local holdingDrop = Input.IsActionPressed(ButtonAction.ACTION_DROP, controllerIndex);
     local shooting = player:GetShootingInput():Length() > 0.1;
@@ -339,7 +342,7 @@ PsycheEye:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, PostEntityRemove)
 function PsycheEye:PostNewRoom()
 
     local game = THI.Game;
-    for i, player in Detection.PlayerPairs(true, true) do
+    for i, player in Players.PlayerPairs(true, true) do
         local playerData = PsycheEye.GetPlayerData(player, false);
         if (playerData) then
             playerData.ControlledCount = 0;

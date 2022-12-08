@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Callbacks = Lib.Callbacks;
 local ItemPools = Lib:NewClass();
 ItemPools.RoomBlacklist = {};

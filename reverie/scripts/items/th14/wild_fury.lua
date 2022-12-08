@@ -1,5 +1,5 @@
 local Stats = CuerLib.Stats;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local WildFury = ModItem("Wild Fury", "WILD_FURY")
 
 WildFury.Multiplier = 1.5;
@@ -94,7 +94,7 @@ WildFury:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE , PostPlayerUpdate);
 
 local function PostEntityKill(mod, entity)
     if (entity:IsActiveEnemy(true)) then
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             
             local timeout = WildFury:GetEffectTimeout(player);
             if (timeout >= 0) then
@@ -121,19 +121,6 @@ local function PostEntityKill(mod, entity)
     end
 end
 WildFury:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL , PostEntityKill);
-
--- local function PostNewRoom(mod)
---     for p, player in Detection.PlayerPairs() do
-        
---         local timeout = WildFury:GetEffectTimeout(player);
---         if (timeout >= 0) then
---             WildFury:SetEffectTimeout(player, -1);
---             player:AddCacheFlags(CacheFlag.CACHE_SPEED | CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_RANGE | CacheFlag.CACHE_FIREDELAY);
---             player:EvaluateItems();
---         end
---     end
--- end
--- WildFury:AddCallback(ModCallbacks.MC_POST_NEW_ROOM , PostNewRoom);
 
 local function EvaluateCache(mod, player, flag)
     local timeout = WildFury:GetEffectTimeout(player);

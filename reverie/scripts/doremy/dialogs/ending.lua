@@ -2,7 +2,7 @@ local Dream = GensouDream;
 local Dialog = Dream.Dialog;
 local Screen = CuerLib.Screen;
 local Math = CuerLib.Math;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 
 local Ending = Dialog();
 Ending.__index = Ending;
@@ -450,7 +450,7 @@ function Ending:GetTextPosition()
 end
 
 local function DisableControls()
-    for i, player in Detection.PlayerPairs(true, true) do 
+    for i, player in Players.PlayerPairs(true, true) do 
         player.ControlsEnabled = false;
     end
 end

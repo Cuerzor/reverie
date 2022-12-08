@@ -1,5 +1,6 @@
 local Detection = CuerLib.Detection;
 local EntityExists = Detection.EntityExists;
+local Players = CuerLib.Players;
 local FortuneCatPaw = ModTrinket("Fortune Cat Paw", "FortuneCatPaw");
 
 local NormalChance = 25;
@@ -20,7 +21,7 @@ function FortuneCatPaw:PostEntityKill(entity)
         if (not npc:HasEntityFlags(EntityFlag.FLAG_NO_REWARD) and npc.DropSeed % 100 < chance) then
             local multiplier = 0;
             local game = THI.Game;
-            for p, player in Detection.PlayerPairs() do
+            for p, player in Players.PlayerPairs() do
                 multiplier = multiplier + player:GetTrinketMultiplier(FortuneCatPaw.Trinket);
             end
 

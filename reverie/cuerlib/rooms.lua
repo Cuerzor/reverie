@@ -1,4 +1,4 @@
-local Rooms = _TEMP_CUERLIB.NewClass();
+local Rooms = LIB.NewClass();
 Rooms.Cells = {
     CELL_TOP_LEFT = 1,
     CELL_TOP_RIGHT = 2,

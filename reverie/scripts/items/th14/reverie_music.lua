@@ -1,5 +1,5 @@
 local Collectibles = CuerLib.Collectibles;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Screen = CuerLib.Screen;
 local Pickups = CuerLib.Pickups;
 
@@ -50,7 +50,7 @@ end
 
 local function PostUpdate(mod)
     ReverieMusic.PlayerHasItem = nil;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (player:HasCollectible(ReverieMusic.Item, true)) then
             ReverieMusic.PlayerHasItem = player;
             break;

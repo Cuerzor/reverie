@@ -1,5 +1,5 @@
 local Damages = CuerLib.Damages;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local DadsShares = ModItem("Dad's Shares", "DadsShares");
 
 function DadsShares:PostTakeDamage(tookDamage, amount, flags, source, countdown)
@@ -32,7 +32,7 @@ DadsShares:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, DadsS
 function DadsShares:PreSpawnCleanAward(rng, position)
     local game = THI.Game;
     local sharesCount = 0;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         local num = player:GetCollectibleNum(DadsShares.Item);
         sharesCount = sharesCount + num;
     end

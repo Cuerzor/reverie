@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Stats = CuerLib.Stats;
 local Horn = ModItem("Oni Horn", "ONI_HORN");
 
@@ -77,7 +77,7 @@ end
 Horn:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostPlayerTakeDamage, EntityType.ENTITY_PLAYER)
 
 local function PostNewRoom()
-    for p, player in Detection.PlayerPairs(true, true) do
+    for p, player in Players.PlayerPairs(true, true) do
         Horn:ClearDamagedCount(player)
     end
 end

@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Players = Lib:NewClass();
 
 Players.FullRedHeartPlayers = {
@@ -19,27 +19,27 @@ Players.FullSoulHeartPlayers = {
 }
 
 function Players:SetFullRedHeartPlayer(playerType, value)
-    Players.FullRedHeartPlayers[playerType] = value;
+    self.FullRedHeartPlayers[playerType] = value;
 end
 
 function Players:IsFullRedHeartPlayer(playerType)
-    return Players.FullRedHeartPlayers[playerType] ~= nil;
+    return self.FullRedHeartPlayers[playerType] ~= nil;
 end
 
 function Players:SetFullSoulHeartPlayer(playerType, value)
-    Players.FullSoulHeartPlayers[playerType] = value;
+    self.FullSoulHeartPlayers[playerType] = value;
 end
 
 function Players:IsFullSoulHeartPlayer(playerType)
-    return Players.FullSoulHeartPlayers[playerType] ~= nil;
+    return self.FullSoulHeartPlayers[playerType] ~= nil;
 end
 
 function Players:SetFullBoneHeartPlayer(playerType, value)
-    Players.FullBoneHeartPlayers[playerType] = value;
+    self.FullBoneHeartPlayers[playerType] = value;
 end
 
 function Players:IsFullBoneHeartPlayer(playerType)
-    return Players.FullBoneHeartPlayers[playerType] ~= nil;
+    return self.FullBoneHeartPlayers[playerType] ~= nil;
 end
 
 function Players:AddRawSoulHearts(player, value)
@@ -95,7 +95,34 @@ function Players:AddRawBlackHearts(player, value)
     end
 end
 
+function Players:PlayerPairs(includePlayer, includeBaby)
+    if (includePlayer == nil) then
+        includePlayer = true;
+    end
+    
+    if (includeBaby == nil) then
+        includeBaby = false;
+    end
 
+    local game = Game();
+    local num = game:GetNumPlayers();
+    local p = 0;
+    local indexList = {};
+    local function iter()
+        while (p < num) do
+            local player = game:GetPlayer(p);
+            p = p + 1;
+            local variant = player.Variant;
+            if ((includePlayer and variant == 0) or (includeBaby and variant == 1)) then
+                local curIndex = indexList[variant] or 0;
+                indexList[variant] = curIndex + 1;
+                return curIndex + variant * 16, player;
+            end
+        end
+        return nil;
+    end
+    return iter, nil, nil;
+end
 
 function Players:IsDead(player)
     return player:IsDead() or Lib.Revive.IsReviving(player);
@@ -127,7 +154,7 @@ function Players.IsTIsaacExcluded(id)
     return false;
 end
 
-local function GetExceptedItems()
+local function GetTIsaacExceptedItems()
     local results = {};
     local size = config:GetCollectibles().Size
     for i = 1, size do
@@ -138,7 +165,7 @@ local function GetExceptedItems()
 
     return results;
 end
-local TIsaacExcepted = GetExceptedItems();
+local TIsaacExcepted = GetTIsaacExceptedItems();
 
 
 

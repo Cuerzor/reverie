@@ -8,7 +8,7 @@ local function EvaluateBoneies()
     local game = THI.Game;
     local BloodBony = THI.Monsters.BloodBony;
     local players = 0;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (player:HasCollectible(FetusBlood.Item)) then
             players = players + 1;
         end

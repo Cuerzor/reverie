@@ -1,6 +1,6 @@
-local Callbacks = _TEMP_CUERLIB.Callbacks;
+local Callbacks = LIB.Callbacks;
 
-local Stages = _TEMP_CUERLIB:NewClass();
+local Stages = LIB:NewClass();
 
 local stageMetatable = {
     __eq = function(tbl, level) 

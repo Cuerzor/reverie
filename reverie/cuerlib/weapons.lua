@@ -1,8 +1,8 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 
 local Weapons = Lib:NewClass();
 local function GetPlayerData(player)
-    local data = Lib:GetLibData(player);
+    local data = Lib:GetEntityLibData(player);
     data._WEAPONS = data._WEAPONS or {
         noWeapon = false,
         pickaxeBanned = false,
@@ -13,7 +13,7 @@ local function GetPlayerData(player)
 end
 local function GetTempPlayerData(player, create)
     
-    local data = Lib:GetLibData(player, true);
+    local data = Lib:GetEntityLibData(player, true);
     if (create) then
         data._WEAPONS = data._WEAPONS or {
             Blindfolded = false
@@ -23,7 +23,7 @@ local function GetTempPlayerData(player, create)
 end
 
 local function GetWeaponData(weapon, create)
-    local data = Lib:GetLibData(weapon);
+    local data = Lib:GetEntityLibData(weapon);
     if (create) then
         data._WEAPONS = data._WEAPONS or {
             effected = false;

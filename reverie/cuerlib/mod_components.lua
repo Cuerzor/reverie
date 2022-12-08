@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 local Callbacks = Lib.Callbacks;
 
 local ModComponents = Lib:NewClass();
@@ -85,7 +85,7 @@ do
     end
 
     function ModPart:GetMod()
-        return Lib.ModInfo.Mod;
+        return Lib.Mod;
     end
 
     local function GetGlobalData(self, temp, create, defaultGetter)
@@ -97,7 +97,7 @@ do
             error("DataName of "..className.." \""..name.."\" is not set.");
         end
 
-        local globalData = Lib:GetModGlobalData(temp);
+        local globalData = Lib:GetGlobalModData(temp);
         if (create) then
             local default;
             if (type(defaultGetter) == "function") then
@@ -121,7 +121,7 @@ do
             error("DataName of "..className.." \""..name.."\" is not set.");
         end
 
-        local globalData = Lib:GetModGlobalData(temp);
+        local globalData = Lib:GetGlobalModData(temp);
         globalData[dataName] = value;
     end
 

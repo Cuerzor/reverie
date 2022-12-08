@@ -1,4 +1,4 @@
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local Collectibles = CuerLib.Collectibles;
 local ItemPools = CuerLib.ItemPools;
 local Fox = ModItem("Fox in Tube", "FOX_IN_TUBE");
@@ -132,7 +132,7 @@ function Fox.GetBossHP(base)
     local stage = level:GetStage();
 
     local totalFps = 0;
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         totalFps = totalFps + 30 / (player.MaxFireDelay + 1) * player.Damage; 
     end
     totalFps = math.max(1, totalFps);
@@ -161,7 +161,7 @@ function Fox.HelpFor(key)
 
         local hasSafetyScissors = false;
 
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (player:HasTrinket(TrinketType.TRINKET_SAFETY_SCISSORS)) then
                 hasSafetyScissors = true;
                 break
@@ -203,7 +203,7 @@ function Fox.HelpFor(key)
     elseif (key == "SacrificeRoom") then
         -- Sacrifice Room.
         local valid = false;
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             local playerType = player:GetPlayerType();
             if (playerType ~= PlayerType.PLAYER_THELOST and playerType ~= PlayerType.PLAYER_THELOST_B and playerType ~=
                 PlayerType.PLAYER_KEEPER and playerType ~= PlayerType.PLAYER_KEEPER_B) then
@@ -295,7 +295,7 @@ function Fox.PayFor(key, num, tryEscape)
         -- Challenge Room.
         local hasSafetyScissors = false;
 
-        for p, player in Detection.PlayerPairs() do
+        for p, player in Players.PlayerPairs() do
             if (player:HasTrinket(TrinketType.TRINKET_SAFETY_SCISSORS)) then
                 hasSafetyScissors = true;
                 break;
@@ -409,10 +409,7 @@ function Fox.PayFor(key, num, tryEscape)
 
 
             local seed = room:GetSpawnSeed();
-            local pool = game:GetItemPool();
-            local roomType = room:GetType();
-            local poolType = ItemPools:GetRoomPool(seed);
-            local id = pool:GetCollectible(poolType, true, seed);
+            local id = room:GetSeededSCollectible( seed);
             local col = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero,
                 nil):ToPickup();
             col.Timeout = 30;

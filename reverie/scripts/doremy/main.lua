@@ -2,6 +2,7 @@ local ModPart = CuerLib.ModComponents.ModPart;
 local Detection = CuerLib.Detection;
 local Pickups = CuerLib.Pickups;
 local Screen = CuerLib.Screen;
+local Players = CuerLib.Players;
 local Math = CuerLib.Math;
 local Dream = ModPart:New("Gensou Dream", "GENSOU_DREAM");
 GensouDream = Dream;
@@ -340,7 +341,7 @@ function Dream:onNewRoom()
     tempData = Dream:GetTempData();
     if (dreamWorld ~= inDreamBefore) then
         tempData.IsInDream = dreamWorld;
-        for p, player in Detection.PlayerPairs(true, true) do
+        for p, player in Players.PlayerPairs(true, true) do
             player:AddCacheFlags(CacheFlag.CACHE_RANGE);
             player:EvaluateItems();
         end
@@ -350,7 +351,7 @@ function Dream:onNewRoom()
     if (THI.IsBossEnabled("Doremy")) then
         local ascent = level:IsAscent();
         local hasDreamSoul = false;
-        for i, player in Detection.PlayerPairs() do 
+        for i, player in Players.PlayerPairs() do 
             if (player:HasCollectible(DreamSoul.Id)) then
                 hasDreamSoul = true;
             end
@@ -510,7 +511,7 @@ function Dream:postUpdate()
                 if (not globalData.DreamTriggered) then
                     local isInFrontOfDoor = false;
                     local hasDreamSoul = false;
-                    for i, player in Detection.PlayerPairs() do
+                    for i, player in Players.PlayerPairs() do
                         if (player.Position.Y <= 270) then
                             isInFrontOfDoor = true;
                         end
@@ -534,7 +535,7 @@ function Dream:postUpdate()
                 if (globalData.DreamTriggered and not tempData.GoingDream) then
 
                     if (room:GetFrameCount() > 60) then
-                        for i, player in Detection.PlayerPairs() do
+                        for i, player in Players.PlayerPairs() do
                             if ((player.Position - Vector(320, 280)):Length() <= 40) then
                                 player:PlayExtraAnimation("DeathTeleport");
                                 tempData.GoingDream = true;
@@ -548,7 +549,7 @@ function Dream:postUpdate()
                 end
 
                 if (tempData.GoingDream) then
-                    for i, player in Detection.PlayerPairs() do
+                    for i, player in Players.PlayerPairs() do
                         player.ControlsEnabled = false;
                         if (tempData.GoingDreamTime >= 15) then
                             local spr = player:GetSprite();
@@ -567,7 +568,7 @@ function Dream:postUpdate()
                         THI.GotoRoom("s.planetarium."..DreamWorldRoomVariant)
                         tempData.BlackScreenAlpha = 1;
                         tempData.GoingDream = false;
-                        for i, player in Detection.PlayerPairs() do
+                        for i, player in Players.PlayerPairs() do
                             local spr = player:GetSprite();
                             if (spr:GetAnimation() == "DeathTeleport") then
                                 spr.PlaybackSpeed = 1;

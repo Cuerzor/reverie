@@ -299,7 +299,7 @@ do
             return true;
         end
     end
-    Horseshoe:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_PLAYER_COLLISION, PrePlayerCollision)
+    Horseshoe:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, PrePlayerCollision)
 
     local function PreNPCCollision(mod, npc, other, low)
         if (not npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then

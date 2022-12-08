@@ -1,7 +1,7 @@
 local Actives = CuerLib.Actives;
 local Inputs = CuerLib.Inputs;
 local Screen = CuerLib.Screen;
-local Detection = CuerLib.Detection;
+local Players = CuerLib.Players;
 local HoldingActive = CuerLib.HoldingActive;
 local Dice = ModItem("D2147483647", "DLimit");
 local config = Isaac.GetItemConfig();
@@ -418,7 +418,7 @@ local function RenderSelecting(player)
 end
 
 function Dice:PostRender()
-    for p, player in Detection.PlayerPairs() do
+    for p, player in Players.PlayerPairs() do
         if (IsSelecting(player)) then
             RenderSelecting(player);
         end

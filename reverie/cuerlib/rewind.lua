@@ -1,4 +1,4 @@
-local Lib = _TEMP_CUERLIB;
+local Lib = LIB;
 
 local Rewind = Lib:NewClass();
 Rewind.Rewinding = false;
@@ -23,15 +23,15 @@ local function Clone(origin)
 end
 
 local function GetRewindData()
-    local dataName = Lib.ModInfo.DataName;
+    local dataName = Lib.DataName;
     if (not dataName) then
         error("Trying to get data from entity while no mod is registered.");
     end
 
     local data = {};
-    data.Global = Lib:GetModGlobalData();
+    data.Global = Lib:GetGlobalModData();
     data.Players = {};
-    for i, player in Lib.Detection.PlayerPairs(true, false) do 
+    for i, player in Lib.Players.PlayerPairs(true, false) do 
         local playerData = {};
         playerData[dataName] = Lib:GetEntityModData(player);
         data.Players[tostring(i)] = playerData;
@@ -39,7 +39,7 @@ local function GetRewindData()
 
     
     data.Ghosts = {};
-    for i, player in Lib.Detection.PlayerPairs(false, true) do 
+    for i, player in Lib.Players.PlayerPairs(false, true) do 
         local playerData = {};
         playerData[dataName] = Lib:GetEntityModData(player);
         data.Ghosts[tostring(i)] = playerData;
@@ -49,13 +49,13 @@ end
 
 local function SetPlayersData(data)
     
-    local dataName = Lib.ModInfo.DataName;
+    local dataName = Lib.DataName;
     if (not dataName) then
         error("Trying to get data from entity while no mod is registered.");
     end
 
     local playersData = data;
-    for i, player in Lib.Detection.PlayerPairs() do 
+    for i, player in Lib.Players.PlayerPairs() do 
         for index, playerData in pairs(playersData) do
             if (index == tostring(i)) then
                 Lib:SetEntityModData(player, playerData[dataName]);
@@ -66,13 +66,13 @@ end
 
 local function SetGhostsData(data)
     
-    local dataName = Lib.ModInfo.DataName;
+    local dataName = Lib.DataName;
     if (not dataName) then
         error("Trying to get data from entity while no mod is registered.");
     end
 
     local playersData = data;
-    for i, player in Lib.Detection.PlayerPairs(false, true) do 
+    for i, player in Lib.Players.PlayerPairs(false, true) do 
         for index, playerData in pairs(playersData) do
             if (index == tostring(i)) then
                 Lib:SetEntityModData(player, playerData[dataName]);
@@ -85,12 +85,12 @@ end
 
 local function SetRewindData(data, includePlayers, includeGhosts)
 
-    local dataName = Lib.ModInfo.DataName;
+    local dataName = Lib.DataName;
     if (not dataName) then
         error("Trying to get data from entity while no mod is registered.");
     end
 
-    Lib:SetModGlobalData(data.Global);
+    Lib:SetGlobalModData(data.Global);
 end
 
 local function useHourglass(mod, item, rng, player, flags, slot, data)
