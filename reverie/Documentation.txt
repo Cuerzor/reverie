@@ -934,8 +934,8 @@ Reference: Keine Kamishirasawa
 Type: Active Item
 Charges: 6
 Quality: 4
+Tags: Offensive, Bookworm, No Cantrip
 Item Pools: Secret Room, Library, Greed Secret Room
-Tags: Offensive, Bookworm
 * Remove a random passive collectible item with the lowest quality, spawn a random collectible.
 * If player has the Book of Virtues, spawn grey wisps, they spawns Missing Page 2 collectibles after being put out. 
 * If player is Judas and has Birthright, has 50% chance to get collectible from devil room pool.
@@ -1053,8 +1053,8 @@ Reference: Aya Shameimaru
 Type: Active Item
 Charges: 10 Seconds
 Quality: 3
+Tags: Offensive, No Greed Mode, No Cantrip
 Item Pools: Treasure Room, Shop, Crane Game
-Tags: Offensive, No Greed Mode
 * Displays a fanshaped area when held. After use, Freeze all enemies in the area and deals 5 damage to them, destroy all projectiles in the area.
     * Gains scores based on the number of projectiles and enemies affected, then generate bonuses.
         *10：1 penny
@@ -1393,7 +1393,7 @@ Reference: Kisume
 Type: Active Item
 Charges: 0
 Quality: 2
-Tags: Offensive
+Tags: Offensive, No Cantrip
 Item Pools: Treasure Room, Greed Treasure Room, Wooden Chest
 * Gains souls when each enemy is killed, up to a maxinium of 64.  
 * Can be used with 8 souls, cost them to produce a wisp.
@@ -1418,7 +1418,7 @@ Description: I'm Envious!
 Reference: Parsee Mizuhashi
 Type: Passive Item 
 Quality: 0
-Tags: No Greed Mode
+Tags: No Greed Mode, No Cantrip
 Item Pools: Curse Room, Red Chest
 * After entering a room, health of all non-final-boss enemies in the room get reduced to 40%.
 * After these enemies die, summon two small copies of them with 20% health.
@@ -1483,7 +1483,7 @@ Reference: Koishi Komeiji
 Type: Active Item
 Charges: 5 seconds
 Quality: 2
-Tags: offensive, No Cantripped
+Tags: offensive, No Cantrip
 Item Pools: Devil Room, Greed Devil Room (1 Hearr)
 * After use, execute a surrounding enemy.
 * Execution will directly kill the monster, and deal (10% maximum HP + 5 * player damage) damage that ignores armor to bosses. player gains 1 second invincible time and shakes away the enemies around him.
@@ -1613,6 +1613,7 @@ Item Pools: Treasure Room, Greed Treasure Room, Curse Room, Greed Curse Room, Se
 * Upon use, reroll all pedestal items in the room.
 * Has Curse of Blind while holding.
 * You can see unknown items's quality, charges and tags.
+* If player has Book of Virtues, spawn eyeball wisp which fires poison tears.
 
 Tengu Cellphone
 Description: Search for goods!
@@ -1620,7 +1621,7 @@ Reference: Hatate Himekaidou
 Type: Active Item
 Charges: 2
 Quality: 2
-Tags: Offensive
+Tags: Offensive, No Cantrip
 Item Pools: Shop, Treasure Room, Greed Shop, Greed Treasure Room, Crane Game
 * Open the online store interface, where 3 collectibles or pickups will be sold.
     * The content depends on the current room type, and each room is different.
@@ -1816,8 +1817,8 @@ Reference: Seija Kijin
 Type: Active Item
 Charges: 6
 Quality: 4
+Tags: Offensive, No Cantrip
 Item Pools: Treasure Room, Secret Room, Crane Game, Greed Shop, Greed Treasure Room, Greed Secret Room
-Tags: offensive
 * Reroll collectibles to another corresponding collectible.
     * The corresponding collectible is determined by the seed and is always one-on-one.
     * The game always tries to set the quality sum of the paired 2 collectibles to 4.
@@ -1976,7 +1977,7 @@ Description: Shot speed up+I see the future
 Reference: Sumireko Usami
 Type: Passive Item
 Quality: 1
-Tags: Offsenive
+Tags: Offsenive, No Cantrip
 Item Pools: Boss Room, Shop, Greed Shop, Greed White Treasure Room, Crane Game
 * +0.16 Shot Speed.
 * Drop 3 random runes.
@@ -1997,7 +1998,7 @@ Description: I wish you were stabbed to death
 Reference: Sagume Kishin
 Type: Passive Item
 Quality: 0
-Tags: No Lost Birthright
+Tags: No Lost Birthright, No Cantrip
 Item Pools: Curse Room, Greed Curse Room, Red Chest
 * Gain Damocles, then deal 1 heart of damage to player.
 * Double Damocles' update rate.
@@ -2113,8 +2114,8 @@ Reference: Eika Ebisu
 Type: Active Item
 Charges: 8 seconds
 Quality: 3
+Tags: Offensive, No Cantrip
 Item Pools: Treasure Room, Curse Room, Red Chest, Devil Room, Ultra Secret, Demon Beggar, Greed Treasure Room, Greed Devil Room, Greed Curse Room (1 Heart)
-Tags: Offensive
 * Upon use, spawn a friendly Blood Bony.
     * Throw bones to enemies like normal bonies. But bones' damage is 80% player damage.
     * Can take at most 10 hits.
@@ -2233,7 +2234,7 @@ Character: Sannyo Komakusa
 Type: Active Item
 Charges: 2
 Quality: 3
-Tags: Offensive
+Tags: Offensive, No Cantrip
 Item Pools: Treasure Room, Secret Room, Crane Game, Greed Shop, Greed Treasure Room, Greed Secret Room
 * Choose greater or less ID, then reroll all pedestal items in the room.
 * If you failed to guess that the rerolled item's ID is greater or less than the original, the rerolled item disappears.
@@ -2246,7 +2247,7 @@ Reference: Takane Yamashiro
 Type: Active Item
 Charges: None
 Quality: 2
-Tags: Offensive
+Tags: Offensive, No Cantrip
 Item Pools: Shop, Greed Shop, Wooden Chest
 * Open the 8-slot backpack, you can put your collectibles and trinkets into it (has no effects), or take them out.
 * Can reduce collectibles or trinkets into pickups.
@@ -2293,7 +2294,7 @@ Description: How could I lie to you?
 Reference: Tsukasa Kudamaki
 Type: Passive Item
 Quality: 2
-Tags: Offensive
+Tags: Offensive, No Cantrip
 Item Pools: Curse Room, Devil Room, Greed Curse Room, Greed Devil Room (1 Heart), Red Chest
 * Provides helps in some situations, and show a fortune text.
 * If you accepts her helps, you will pay for this at sometime.
@@ -2304,7 +2305,7 @@ Description: Stars are falling...
 Reference: Megumu Iizunamaru
 Type: Passive Item
 Quality: 2
-Tags: Offensive, Star, No Greed Mode
+Tags: Offensive, Star, No Greed Mode, No Cantrip
 Item Pools: Shop, Secret Room, Crane Game
 * After entering a new floor, have a chance to drop a meteor in a random room and generate a random item from planetarium in the room.
     * This room can only be normal room or boss room, and cannot be narrow room.
@@ -2321,7 +2322,7 @@ Type: Active Item
 Charges: 6
 Quality: 3
 Tags: Offensive
-Item Pools: Shop, Greed Shop
+Item Pools: Shop, Greed Shop, No Cantrip
 * Teleport players to the exchange, including several traders.
     * After entering again, the content will be refreshed without any remained pickups.
 * There are 4 kinds of traders:
@@ -2337,8 +2338,8 @@ Description: MMMMuuuullllttttiiiipppplllleeee
 Reference: Momoyo Himemushi
 Type: Passive Item
 Quality: 4
+Tags: Offsenive, No Cantrip
 Item Pools: Devil Rooms, Greed Devil Room (2 Hearts), Ultra Secret Room
-Tags: Offsenive
 * Turns into Mutant Spider, Belly Button, Polydactyly, Schoolbag and Lucky foot.
 * If player is Tainted Isaac, drop items that cannot hold.
 
@@ -2366,8 +2367,8 @@ Reference: Seija Kijin
 Type: Active Item
 Charges: 3
 Quality: 3
+Tags: Offensive, No Cantrip
 Item Pools: Treasure Room, Secret Room, Crane Game, Greed Shop, Greed Treasure Room, Greed Secret Room
-Tags: offensive
 * Reroll all pedestal items in the room to *-1* quality items.
 * This dice gets *+1* counter for each rerolled item.
 * Reverse the numbers when its counter reaches 4.

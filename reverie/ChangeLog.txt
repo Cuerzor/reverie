@@ -2508,4 +2508,14 @@ Greed Shop: Added D Flip
 
 12.3.4-2022.12.7
 -Eye of Chimera now will show whether the item is a mod item.
--嵌体怪之眼现在会显示道具是否是MDO道具。
+-嵌体怪之眼现在会显示道具是否是MOD道具。
+-The following items now have No Cantrip tag:
+*Book of Years, Tengu Camera, Bucket of Wisp, Green Eyed Envy, Psycho Knife
+*Tengu Cellphone, D Flip, Rune Cape, Vicious Curse, Fetus Blood
+*Gambling D6, Yamawaro's Crate, Fox in Tube, Daitengu Telescope, Exchange Ticket
+*Curse of Centipede, D Siphon
+-以下道具获得了非大量过牌标签：
+*岁月史书、天狗相机、鬼火桶、绿眼的嫉妒、疯人刀
+*天狗手机、镜像骰子、符文披风、恶毒的诅咒、胎儿之血
+*赌博六面骰、山童的木箱、管中狐、大天狗望远镜、交易所门票
+*百足的诅咒、虹吸骰子

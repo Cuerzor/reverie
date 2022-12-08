@@ -32,7 +32,7 @@
     <!-- TH8-->
     <active id="41" name="Jar of Fireflies" description="Fire fire fireflies!" gfx="jar_of_fireflies.png" maxcharges="1" quality="2" tags="fly offensive" shopprice="10"/>
     <passive id="42" name="Song of Nightbird" description="Deaf to all but the songs" gfx="song_of_nightbird.png" quality="2" tags="summonable offensive"/>
-    <active id="43" name="Book of Years" description="Time changes" gfx="book_of_years.png" maxcharges="6" quality="4" tags="book offensive"/>
+    <active id="43" name="Book of Years" description="Time changes" gfx="book_of_years.png" maxcharges="6" quality="4" tags="book nocantrip offensive"/>
     <passive id="44" name="Rabbit Trap" description="Watch your step!" gfx="rabbit_trap.png" cache="luck" quality="2" tags="summonable offensive nocantrip nogreed"/>
     <familiar id="45" name="Illusion" description="What are you hiding?!" gfx="illusion.png" cache="familiars" quality="2" tags="summonable offensive"/>
     <active id="46" name="Peerless Elixir" description="Caution: Overdose wil" gfx="peerless_elixir.png" maxcharges="4" quality="3" tags="offensive"/>
@@ -44,7 +44,7 @@
     <passive id="52" name="Ash of Phoenix" description="Nirvana" gfx="ash_of_phoenix.png" quality="2"/>
 
     <!-- TH9-->
-    <active id="61" name="Tengu Camera" description="Cheese!" gfx="tengu_camera.png" chargetype="timed" maxcharges="300" quality="2" tags="offensive nogreed" shopprice="10"/>
+    <active id="61" name="Tengu Camera" description="Cheese!" gfx="tengu_camera.png" chargetype="timed" maxcharges="300" quality="2" tags="offensive nogreed nocantrip" shopprice="10"/>
     <passive id="62" name="Sunflower Pot" description="Don't get it hurt!" gfx="sunflower_pot.png" quality="2" cache="familiars" tags="offensive nogreed"/>
     <passive id="63" name="Continue?" description="Insert Coin" gfx="continue_arcade.png" coins="3" quality="1" tags=""/>
     <active id="64" name="Rod of Remorse" description="Repent, then sacrifice" gfx="rod_of_remorse.png" quality="3" maxcharges="0" tags="nolostbr nogreed nocantrip"/>
@@ -71,14 +71,14 @@
     <passive id="93" name="Angel's Raiment" description="Revenge from the sky" gfx="angels_raiment.png" quality="3" cache="flying" tags="nolostbr summonable angel" />
     
     <!-- TH11-->
-    <active id="101" name="Bucket of Wisps" description="Wisp Forge" gfx="bucket_of_wisps.png" quality="2" tags="offensive"/>
+    <active id="101" name="Bucket of Wisps" description="Wisp Forge" gfx="bucket_of_wisps.png" quality="2" tags="offensive nocantrip"/>
     <passive id="102" name="Plague Lord" description="Toxic Infection" gfx="plague_lord.png" quality="2" tags="offensive summonable"/>
-    <passive id="103" name="Green Eyed Envy" description="I'm envious!" gfx="green_eyed_envy.png" quality="0" tags="nogreed"/>
+    <passive id="103" name="Green Eyed Envy" description="I'm envious!" gfx="green_eyed_envy.png" quality="0" tags="nogreed nocantrip"/>
     <passive id="104" name="Oni Horn" description="Knock out in three steps" gfx="oni_horn.png" quality="3" cache="damage" tags="nolostbr summonable"/>
     <familiar id="105" name="Psyche Eye" description="Be one of Satori" gfx="psyche_eye.png" quality="3" cache="familiars" tags="summonable offensive"/>
     <passive id="106" name="Guppy's Corpse Cart" description="CRUSSSSS YOU!" gfx="guppys_corpse_cart.png" quality="3" cache="flying speed" devilprice="2" tags="nolostbr summonable guppy"/>
     <passive id="107" name="Technology 666" description="Made in Hell" gfx="technology_666.png" quality="3" devilprice="2" tags="offensive summonable tech"/>
-    <active id="108" name="Psycho Knife" description="Watch     Your     Back" gfx="psycho_knife.png" maxcharges="150" chargetype="timed" quality="2" tags="offensive"/>
+    <active id="108" name="Psycho Knife" description="Watch     Your     Back" gfx="psycho_knife.png" maxcharges="150" chargetype="timed" quality="2" tags="offensive nocantrip"/>
 
     <!-- TH12-->
     <passive id="121" name="Dowsing Rods" description="More Treasures" gfx="dowsing_rods.png" quality="2" tags="offensive nocantrip"/>
@@ -87,7 +87,7 @@
     <active id="125" name="Bishamonten's Pagota" description="Oh shiny!" gfx="bishamontens_pagota.png" initcharge="0" maxcharges="12" chargetype="special" quality="3" tags="offensive nogreed"/>
     <active id="126" name="Sorcerer's Scroll" description="Strengthen your body" gfx="sorcerers_scroll.png" maxcharges="4" quality="2" tags="nolostbr"/>
     <active id="127" name="Saucer Remote" description="Incoming!" gfx="saucer_remote.png" maxcharges="6" quality="3" tags="offensive nogreed"/>
-    <active id="128" name="Tengu Cellphone" description="Search for goods!" gfx="tengu_cellphone.png" maxcharges="2" quality="2" tags="offensive" shopprice="10"/>
+    <active id="128" name="Tengu Cellphone" description="Search for goods!" gfx="tengu_cellphone.png" maxcharges="2" quality="2" tags="offensive nocantrip" shopprice="10"/>
     <passive id="129" name="Ethereal Arm" description="Give up for asking more" gfx="ethereal_arm.png" quality="3" devilprice="2" tags="offensive nocantrip"/>
     
     <!-- TH13-->
@@ -108,19 +108,19 @@
     <familiar id="162" name="Sekibanki's Head" description="Isn't she cute?" gfx="sekibankis_head.png" quality="2" cache="familiars" tags="summonable offensive monstermanual" />
     <active id="163" name="Wild Fury" description="Bloody Growth" gfx="wild_fury.png" quality="4" maxcharges="6" tags="offensive" />
     <passive id="164" name="Reverie Music" description="What is this...?" gfx="reverie_music.png" quality="0" tags="offensive noeden lazarussharedglobal quest" />
-    <active id="166" name="D Flip" description="umop-ap!sdn" gfx="d_flip.png" quality="4" maxcharges="6" tags="offensive" />
+    <active id="166" name="D Flip" description="umop-ap!sdn" gfx="d_flip.png" quality="4" maxcharges="6" tags="offensive nocantrip" />
     <active id="167" name="Miracle Mallet" description="Tell me your wish" gfx="miracle_mallet.png" quality="3" maxcharges="0" tags="offensive nocantrip" />
     <familiar id="168" name="Thunder Drum" description="Beat the celestial drum" gfx="thunder_drum.png" quality="2" cache="familiars" tags="offensive summonable" />
     <!-- TH14.3-->
     <active id="169" name="Nimble Fabric" description="Reusable dodge" gfx="nimble_fabric.png" quality="1" maxcharges="3" tags="offensive" shopprice="10"/>
     <active id="170" name="Miracle Mallet Replica" description="Okay, Done!" gfx="miracle_mallet_replica.png" quality="2" maxcharges="1" tags="offensive" shopprice="10"/>
     <!-- TH14.5-->
-    <passive id="171" name="Rune Cape" description="Shot speed up + I see the future" gfx="rune_cape.png" quality="1" cache="shotspeed" tags="offensive" />
+    <passive id="171" name="Rune Cape" description="Shot speed up + I see the future" gfx="rune_cape.png" quality="1" cache="shotspeed" tags="offensive nocantrip" />
 
     <!-- TH15-->
     <passive id="181" name="Lunatic Gun" description="Help from other dimensions" gfx="lunatic_gun.png" quality="2" tags="offensive summonable"/>
     <passive id="183" name="Dream Soul" description="Wake up" gfx="doremy/dream_soul.png" quality="0" tags="offensive noeden lazarussharedglobal quest"/>
-    <passive id="184" name="Vicious Curse" description="I wish you were stabbed to death" gfx="vicious_curse.png" quality="0" tags="nolostbr"/>
+    <passive id="184" name="Vicious Curse" description="I wish you were stabbed to death" gfx="vicious_curse.png" quality="0" tags="nolostbr nocantrip"/>
     <passive id="185" name="Carnival Hat" description="Lunatic Feast" gfx="carnival_hat.png" quality="1" cache="speed firedelay damage range shotspeed luck" tags="nolostbr"/>
     <passive id="186" name="Pure Fury" description="DMG up" gfx="pure_fury.png" quality="4" cache="damage" tags="summonable offensive"/>
     <familiar id="187" name="Hekate" description="Planet Dominion" gfx="hekate.png" quality="3" cache="familiars" tags="summonable stars"/>
@@ -131,10 +131,10 @@
     <passive id="202" name="Yamanba's Chopper" description="Both good and evil" gfx="yamanbas_chopper.png" quality="1" tags="nolostbr summonable"/>
     <familiar id="204" name="Golem of Isaac" description="My imitator" gfx="golem_of_isaac.png" quality="2" cache="familiars" tags="summonable offensive"/>
     <familiar id="205" name="Dancer Servants" description="Dance! Dance! Dance!" gfx="dancer_servants.png" quality="1" cache="familiars" tags="summonable offensive monstermanual baby"/>
-    <passive id="206" name="Back Door" description="Bullet Cosumer" gfx="back_door.png" quality="2" cache="familiars" tags="summonable"/>   
+    <passive id="206" name="Back Door" description="Bullet Consumer" gfx="back_door.png" quality="2" cache="familiars" tags="summonable"/>   
 
     <!-- TH17-->
-    <active id="221" name="Fetus Blood" description="Rebone" gfx="fetus_blood.png" maxcharges="240" chargetype="timed" quality="3" tags="offensive"/>
+    <active id="221" name="Fetus Blood" description="Rebone" gfx="fetus_blood.png" maxcharges="240" chargetype="timed" quality="3" tags="offensive nocantrip"/>
     <passive id="223" name="Cockcrow Wings" description="Round the clock" gfx="cockcrow_wings.png" quality="3" tags="offensive" cache="flying damage firedelay" />
     <passive id="224" name="Kiketsu Family's Blackmail" description="Obey or Die" gfx="kiketsu_familys_blackmail.png" quality="2" tags="offensive summonable"/>
     <passive id="226" name="Carving Tools" description="Haniwa Army" gfx="carving_tools.png" quality="3" tags="offensive summonable"/>
@@ -143,19 +143,19 @@
     <passive id="229" name="Sake of Forgotten" description="I forgor..." gfx="sake_of_forgotten.png" quality="2" tags="offensive nocantrip nogreed"/>
         
     <!-- TH18-->
-    <active id="241" name="Gambling D6" description="Greater or Less" gfx="gambling_d6.png" maxcharges="2" quality="3" tags="offensive"/>
-    <active id="242" name="Yamawaro's Crate" description="Item storage" gfx="yamawaros_crate.png" maxcharges="0" quality="2" tags="offensive" shopprice="10"/>
+    <active id="241" name="Gambling D6" description="Greater or Less" gfx="gambling_d6.png" maxcharges="2" quality="3" tags="offensive nocantrip"/>
+    <active id="242" name="Yamawaro's Crate" description="Item storage" gfx="yamawaros_crate.png" maxcharges="0" quality="2" tags="offensive nocantrip" shopprice="10"/>
     <active id="243" name="Delusion Pipe" description="Drowning in delight" gfx="delusion_pipe.png" maxcharges="30" chargetype="timed" quality="1" tags="offensive"/>
     <active id="244" name="Soul Magatama" description="Life Swapper" gfx="soul_magatama.png" maxcharges="2" quality="2" tags="offensive"/>
-    <passive id="245" name="Fox in Tube" description="How could I lie to you?" gfx="fox_in_tube.png" quality="2" tags="offensive"/>
-    <passive id="246" name="Daitengu Telescope" description="Stars are falling..." gfx="daitengu_telescope.png" quality="2" tags="offensive stars nogreed"/>
-    <active id="247" name="Exchange Ticket" description="Each takes what he needs" gfx="exchange_ticket.png" maxcharges="6" quality="3" tags="offensive"/>
-    <passive id="248" name="Curse of Centipede" description="MMMMuuuullllttttiiiipppplllleeee" gfx="curse_of_centipede.png" devilprice="2" quality="4" tags="offensive"/>
+    <passive id="245" name="Fox in Tube" description="How could I lie to you?" gfx="fox_in_tube.png" quality="2" tags="offensive nocantrip"/>
+    <passive id="246" name="Daitengu Telescope" description="Stars are falling..." gfx="daitengu_telescope.png" quality="2" tags="offensive nocantrip stars nogreed"/>
+    <active id="247" name="Exchange Ticket" description="Each takes what he needs" gfx="exchange_ticket.png" maxcharges="6" quality="3" tags="offensive nocantrip"/>
+    <passive id="248" name="Curse of Centipede" description="MMMMuuuullllttttiiiipppplllleeee" gfx="curse_of_centipede.png" devilprice="2" quality="4" tags="offensive nocantrip"/>
 
     <active id="249" name="Rebel Mecha Caller" description="Start your engine!" gfx="rebel_mecha_caller.png" maxcharges="12" devilprice="2" quality="3" tags="offensive"/>
     
     <!-- <active id="250" name="Dual Division" description="Cleave the fate" gfx="dual_division.png" maxcharges="6" hidden="true" quality="4" tags="offensive" /> -->
-    <active id="251" name="D Siphon" description="Disempower" gfx="d_siphon.png" maxcharges="3" quality="3" tags="offensive" />
+    <active id="251" name="D Siphon" description="Disempower" gfx="d_siphon.png" maxcharges="3" quality="3" tags="offensive nocantrip" />
     <passive id="252" name="THTRAINER" description="th14.exe catastrophic failure" gfx="thtrainer.png" quality="0" tags="offensive nocantrip" hidden="true" />
     
 
