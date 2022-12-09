@@ -163,8 +163,10 @@ end
 
 function Telescope.TriggerMeteor()
     local meteorData = Telescope.GetTelescopeData(true).Meteor;
-    local seeds = THI.Game:GetSeeds();
-    local level = THI.Game:GetLevel();
+    local game = Game();
+    local seeds = game:GetSeeds();
+    local level = game:GetLevel();
+    local room = game:GetRoom();
     local roomIndex = Telescope.GetMeteorRoomIndex(seeds:GetStageSeed (level:GetStage()));
 
     if (roomIndex >= 0) then
@@ -174,7 +176,16 @@ function Telescope.TriggerMeteor()
 
         meteorData.RoomIndex = roomIndex;
         THI.SFXManager:Play(SoundEffect.SOUND_EXPLOSION_STRONG);
-        THI.Game:ShakeScreen(60);
+        game:ShakeScreen(60);
+        local wavePos = room:GetCenterPos();
+        local currentRoomIndex = level:GetCurrentRoomIndex();
+        local currentRoomPos = Vector(currentRoomIndex % 13, math.floor(currentRoomIndex / 13));
+
+        local meteorRoomPos = Vector(roomIndex % 13, math.floor(roomIndex / 13));
+        local direction = (meteorRoomPos - currentRoomPos):Normalized();
+        wavePos = wavePos + direction * 320;
+
+        game:MakeShockwave(wavePos, 0.5, 0.05, 20);
     end
 end
 

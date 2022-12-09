@@ -72,8 +72,10 @@ end
 function Destruction:MeteorBurst(effect)
     local data = Destruction:GetMeteorData(effect);
     Isaac.Explode (data.Position, effect, Destruction.Meteor.Damage)
-    THI.Game:ShakeScreen(30);
-    THI.SFXManager:Play(SoundEffect.SOUND_EXPLOSION_STRONG);
+    local game = Game();
+    game:ShakeScreen(30);
+    game:MakeShockwave(data.Position, 0.1, 0.02, 20);
+    SFXManager():Play(SoundEffect.SOUND_EXPLOSION_STRONG);
     
     for i=0,9 do
         local rad = Destruction.rng:RandomFloat() * 2 * math.pi;

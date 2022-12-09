@@ -39,19 +39,22 @@ local function PostPlayerTakeDamage(mod, tookDamage, amount, flags, source, coun
     local player = tookDamage:ToPlayer();
     if (player and player:HasCollectible(Horn.Item) and source.Type ~= EntityType.ENTITY_SLOT) then
         local damagedCount = Horn:GetDamagedCount(player);
+        local game = Game();
         if (damagedCount == 0) then
             local wave = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SHOCKWAVE, 0, player.Position, Vector.Zero, player):ToEffect();
             wave:SetRadii(40,40);
             wave.Parent = player;
             wave.Timeout = 1;
+            game:MakeShockwave(player.Position, 0.035, 0.01, 5);
         elseif (damagedCount == 1) then
             local wave = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SHOCKWAVE, 0, player.Position, Vector.Zero, player):ToEffect();
             wave:SetRadii(40,120);
             wave.Parent = player;
             wave.Timeout = 10;
-            Game():BombExplosionEffects (player.Position, 100, TearFlags.TEAR_NORMAL, Color.Default, player, 1, true, false, DamageFlag.DAMAGE_EXPLOSION );
+            game:MakeShockwave(player.Position, 0.05, 0.02, 10);
+            game:BombExplosionEffects (player.Position, 100, TearFlags.TEAR_NORMAL, Color.Default, player, 1, true, false, DamageFlag.DAMAGE_EXPLOSION );
         elseif (damagedCount == 2) then
-            local room = Game():GetRoom();
+            local room = game:GetRoom();
             local width = room:GetGridWidth();
             local height = room:GetGridHeight();
             for x = 1, width - 1 do

@@ -87,6 +87,7 @@ function Horseshoe:StartDash(player, direction)
     -- Clear Hit Enemies.
     data.HitEnemies = nil;
     player:AddVelocity(15 * direction);
+    Game():MakeShockwave(player.Position, 0.05, 0.01, 10);
     
 end
 
@@ -138,10 +139,12 @@ do
                 end
                 if (collidesGrid) then
                     data.DashTimeout = math.min(data.DashTimeout, 1);
-                    Game():ShakeScreen(15);
+                    local game = Game();
+                    game:ShakeScreen(15);
+                    game:MakeShockwave(player.Position, 0.1, 0.05, 10);
                     THI.SFXManager:Play(SoundEffect.SOUND_ROCK_CRUMBLE);
                     local damage = 120 + strength * 240
-                    Game():BombExplosionEffects (player.Position, damage, TearFlags.TEAR_NORMAL, Color.Default, player, 1 + strength * 1.5, true, false, DamageFlag.DAMAGE_EXPLOSION );
+                    game:BombExplosionEffects (player.Position, damage, TearFlags.TEAR_NORMAL, Color.Default, player, 1 + strength * 1.5, true, false, DamageFlag.DAMAGE_EXPLOSION );
                     for i = 1, 4 do
                         local crack = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKWAVE, 0, player.Position, Vector.Zero, player):ToEffect();
                         crack.Parent = player;

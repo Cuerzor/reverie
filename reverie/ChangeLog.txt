@@ -2519,3 +2519,6 @@ Greed Shop: Added D Flip
 *天狗手机、镜像骰子、符文披风、恶毒的诅咒、胎儿之血
 *赌博六面骰、山童的木箱、管中狐、大天狗望远镜、交易所门票
 *百足的诅咒、虹吸骰子
+
+-Added shockwave effects for Destruction meteor, Daitengu Telescope, Wild Fury, Oni Horn and Brutal Horseshoe.
+-为毁灭的陨石，大天狗望远镜，野性狂暴，鬼之角，残暴马蹄铁添加了震荡波效果。

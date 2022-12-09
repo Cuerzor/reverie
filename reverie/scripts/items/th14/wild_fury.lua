@@ -209,7 +209,9 @@ local function PostUseFury(mod, item, rng, player, flags, source, varData)
 
     WildFury:AddEffectTimeout(player, 600);
 
-    Game():ShakeScreen(30);
+    local game = Game();
+    game:ShakeScreen(30);
+    game:MakeShockwave(player.Position, 0.035, 0.02, 50);
     SFXManager():Play(THI.Sounds.SOUND_WILD_ROAR, 2);
 
     
