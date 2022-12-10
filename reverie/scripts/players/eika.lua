@@ -17,15 +17,6 @@ local MaxFireCooldown = 2;
 local LudovicoFlag = Maths.GetTearFlag(127);
 
 
-local FetusFlags = {
-    TEAR_SWORD_FETUS = BitSet128(0, 1 << 43),
-    TEAR_BONE_FETUS = BitSet128(0, 1 << 44),
-    TEAR_KNIFE_FETUS = BitSet128(0, 1 << 45),
-    TEAR_TECH_X_FETUS = BitSet128(0, 1 << 46),
-    TEAR_TECH_FETUS = BitSet128(0, 1 << 47),
-    TEAR_DR_FETUS = BitSet128(0, 1 << 49),
-    TEAR_FETUS = BitSet128(0, 1 << 50),
-}
 local Effects = {
     PlaceHolder = Isaac.GetEntityVariantByName("Eika Placeholder")
 }
@@ -158,27 +149,28 @@ end
 
 -- Get player's temporary Data for this run.
 function Eika:GetPlayerTempData(player, init)
-    local data = self:GetTempData(player);
-    if (init) then
-        data._EIKA = data._EIKA or {
-            CursedEyeTeleport = false,
-            FireDelay = 0,
-            Stacking = false,
-            StackedRocks = {},
-            ThrowCooldown = 0,
-            LastShootVector = Vector(0, 0),
-            RecentShootVector = Vector(0, 0),
-            Firing = false,
-            LudoRock = nil,
-            FiringKnifeCount = 0,
-            FiringKnifeDirection = Vector(0, 0),
-            MarkedTarget = nil,
-            Anim = {
-                Name = nil,
-                Frame = 0
+    local data = self:GetTempData(player, init, function ()
+        return {
+            _EIKA = {
+                CursedEyeTeleport = false,
+                FireDelay = 0,
+                Stacking = false,
+                StackedRocks = {},
+                ThrowCooldown = 0,
+                LastShootVector = Vector(0, 0),
+                RecentShootVector = Vector(0, 0),
+                Firing = false,
+                LudoRock = nil,
+                FiringKnifeCount = 0,
+                FiringKnifeDirection = Vector(0, 0),
+                MarkedTarget = nil,
+                Anim = {
+                    Name = nil,
+                    Frame = 0
+                }
             }
         }
-    end
+    end);
     return data._EIKA;
 end
 
@@ -889,29 +881,25 @@ function Eika:SetRockFlags(player, rock)
     local isSpiritSword = player:HasCollectible(CollectibleType.COLLECTIBLE_SPIRIT_SWORD);
     if (isCSection) then
         local tear = rock:ToTear();
-        -- TODO TearVariant.Fetus;
-        tear:ChangeVariant(50);
-        -- TODO TearFlags.TEAR_FETUS;
-        tear:AddTearFlags(FetusFlags.TEAR_FETUS | TearFlags.TEAR_SPECTRAL);
+        tear:ChangeVariant(TearVariant.FETUS);
+        tear:AddTearFlags(TearFlags.TEAR_FETUS | TearFlags.TEAR_SPECTRAL);
         local spr = tear:GetSprite();
         spr:ReplaceSpritesheet(0, "gfx/reverie/characters/costumes_eika/fetus_tears.png");
         spr:LoadGraphics();
         if (isSpiritSword) then
-            tear:AddTearFlags(FetusFlags.TEAR_SWORD_FETUS);
+            tear:AddTearFlags(TearFlags.TEAR_FETUS_SWORD);
         end
         if (player:HasCollectible(CollectibleType.COLLECTIBLE_MOMS_KNIFE)) then
-            -- TODO TearFlags.TEAR_KNIFE_FETUS;
-            tear:AddTearFlags(FetusFlags.TEAR_KNIFE_FETUS);
+            tear:AddTearFlags(TearFlags.TEAR_FETUS_KNIFE);
         end
         if (isTechX) then
-            tear:AddTearFlags(FetusFlags.TEAR_TECH_X_FETUS);
+            tear:AddTearFlags(TearFlags.TEAR_FETUS_TECHX);
         end
         if (isTech) then
-            tear:AddTearFlags(FetusFlags.TEAR_TECH_FETUS);
+            tear:AddTearFlags(TearFlags.TEAR_FETUS_TECH);
         end
         if (player:HasCollectible(CollectibleType.COLLECTIBLE_DR_FETUS)) then
-            -- TODO TearFlags.TEAR_DR_FETUS;
-            tear:AddTearFlags(FetusFlags.TEAR_DR_FETUS);
+            tear:AddTearFlags(TearFlags.TEAR_FETUS_BOMBER);
         end
     else
         -- Technology
@@ -1877,7 +1865,7 @@ function Eika:PreTearCollision(tear, other, low)
         end
     end
 end
-Eika:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, Eika.PreTearCollision);
+Eika:AddPriorityCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, CallbackPriority.LATE, Eika.PreTearCollision);
 
 
 function Eika:PostKnifeInit(knife)

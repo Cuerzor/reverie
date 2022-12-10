@@ -1718,7 +1718,6 @@ do -- Events
     end
     Seija:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, PostFamiliarUpdate)
 
-    --TODO PostCollision
     local function PostFamiliarCollision(mod, familiar, other, low)
         local player = familiar.Player;
         if (player) then
@@ -1762,7 +1761,7 @@ do -- Events
             end
         end
     end
-    Seija:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, PostFamiliarCollision)
+    Seija:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, PostFamiliarCollision)
     -- Pickups.
 
     local function PreSpawnCleanAward(mod, rng, position)
@@ -2182,7 +2181,7 @@ do -- Events
         end
         
     end
-    Seija:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, PreTearCollision)
+    Seija:AddPriorityCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, CallbackPriority.LATE, PreTearCollision)
 
     local function PostTearRemove(mod, ent)
         local tear = ent:ToTear();

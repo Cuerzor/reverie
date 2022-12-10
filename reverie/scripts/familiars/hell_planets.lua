@@ -108,7 +108,6 @@ local function PostNewRoom(mod)
 end
 Planet:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom)
 
---TODO Post Collision
 local function PostFamiliarCollision(mod, familiar, other, low)
     if (other.Type == EntityType.ENTITY_PROJECTILE) then
         local proj = other:ToProjectile();
@@ -117,6 +116,6 @@ local function PostFamiliarCollision(mod, familiar, other, low)
         end
     end
 end
-Planet:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, PostFamiliarCollision, Planet.Variant)
+Planet:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, PostFamiliarCollision, Planet.Variant)
 
 return Planet;

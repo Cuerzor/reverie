@@ -68,7 +68,7 @@ function ChenBaby:FindEnemy(familiar)
     end
     return target;
 end
-function ChenBaby:preChenCollision(familiar, collider, low)
+function ChenBaby:postChenCollision(familiar, collider, low)
     local data = ChenBaby:GetChenData(familiar);
     if (data.IsCharging) then
         if (Entities.IsValidEnemy(collider)) then
@@ -154,7 +154,7 @@ function ChenBaby:onChenUpdate(familiar)
         familiar:FollowParent();
     end
 end
-ChenBaby:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, ChenBaby.preChenCollision, ChenBaby.Baby.Variant);
+ChenBaby:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, ChenBaby.postChenCollision, ChenBaby.Baby.Variant);
 ChenBaby:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, ChenBaby.onChenUpdate, ChenBaby.Baby.Variant);
 ChenBaby:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, ChenBaby.onEvaluateCache);
 return ChenBaby;

@@ -252,46 +252,6 @@ function Pagota:PostPickupCollected(player, pickup)
 end
 Pagota:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_PICKUP_COLLECTED, Pagota.PostPickupCollected, PickupVariant.PICKUP_COIN);
 
--- function Pagota:PrePickupCollision(pickup, other, low)
-    
---     if (other.Type == EntityType.ENTITY_PLAYER) then
---         local player = other:ToPlayer();
---         if (Pickups.CanCollect(player, pickup)) then
---             local originValue = pickup:GetCoinValue ( );
---             local value = originValue;
---             for slot = 0, 3 do
---                 if (player:GetActiveItem(slot) == Pagota.Item) then
---                     local charges = player:GetActiveCharge(slot);
---                     if (charges < maxCharges) then
---                         local chargeValue = math.min(value, maxCharges - charges);
---                         local newCharges = charges + chargeValue;
---                         player:SetActiveCharge (newCharges, slot)
---                         THI.Game:GetHUD():FlashChargeBar (player, slot);
---                         local sfx = THI.SFXManager
---                         sfx:Play(SoundEffect.SOUND_BEEP);
---                         if (newCharges >= maxCharges) then
---                             sfx:Play(SoundEffect.SOUND_ITEMRECHARGE);
---                         end
---                         value = value - chargeValue;
---                     end
---                 end
-
---                 if (value <= 0) then
---                     break;
---                 end
---             end
-
---             if (value < originValue) then
---                 pickup:PlayPickupSound();
---                 Pickups.AddCoinsOrCoinHearts(player, value);
---                 Pickups.SetCollected(pickup, true);
---                 return true;
---             end
---         end
---     end
--- end
--- Pagota:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_PICKUP_COLLISION, Pagota.PrePickupCollision, PickupVariant.PICKUP_COIN);
-
 local turnGoldInUpdate = false;
 function Pagota:NewRoom()
     local data = Pagota:GetPagotaData(false);

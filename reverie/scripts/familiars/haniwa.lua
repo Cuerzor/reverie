@@ -427,7 +427,6 @@ local function PostFamiliarInit(mod, familiar)
 end
 Haniwa:AddCallback(ModCallbacks.MC_FAMILIAR_INIT, PostFamiliarInit, Haniwa.Variant)
 
--- TODO Post Collision
 local function PreFamiliarCollision(mod, familiar, other, low)
     if (familiar.SubType == Haniwa.SubTypes.HANIWA_BRASS) then
         if (other:IsVulnerableEnemy() and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
@@ -441,9 +440,8 @@ local function PreFamiliarCollision(mod, familiar, other, low)
         end
     end
 end
-Haniwa:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, PreFamiliarCollision, Haniwa.Variant)
+Haniwa:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, PreFamiliarCollision, Haniwa.Variant)
 
--- TODO Post Collision
 local function PreNPCCollision(mod, npc, other, low)
     if (npc.CollisionDamage > 0 and other.Type == Haniwa.Type and other.Variant == Haniwa.Variant) then
         if (npc:IsEnemy() and not npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
@@ -452,10 +450,8 @@ local function PreNPCCollision(mod, npc, other, low)
         end
     end
 end
-Haniwa:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PreNPCCollision)
+Haniwa:AddPriorityCallback(ModCallbacks.MC_PRE_NPC_COLLISION, CallbackPriority.LATE, PreNPCCollision)
 
-
--- TODO Post Collision
 local function PreProjectileCollision(mod, proj, other, low)
     if (proj.CollisionDamage > 0 and other.Type == Haniwa.Type and other.Variant == Haniwa.Variant) then
         if (not proj:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER)) then
@@ -466,7 +462,7 @@ local function PreProjectileCollision(mod, proj, other, low)
         end
     end
 end
-Haniwa:AddCallback(ModCallbacks.MC_PRE_PROJECTILE_COLLISION, PreProjectileCollision)
+Haniwa:AddPriorityCallback(ModCallbacks.MC_PRE_PROJECTILE_COLLISION, CallbackPriority.LATE, PreProjectileCollision)
 
 local damageLock = false;
 local function PreTakeDamage(mod, tookDamage, amount, flags, source, countdown)

@@ -56,6 +56,6 @@ local function PrePickupCollision(mod, pickup, other, low)
         end
     end
 end
-RebechaIdle:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, PrePickupCollision, RebechaIdle.Variant);
+RebechaIdle:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, PrePickupCollision, RebechaIdle.Variant);
 
 return RebechaIdle;

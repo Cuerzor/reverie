@@ -587,8 +587,8 @@ RuneSword:AddCallback(ModCallbacks.MC_POST_UPDATE, RuneSword.PostUpdate);
 
 
 function RuneSword:PostNewRoom()
-    local game = THI.Game;
-    local room = THI.Game:GetRoom();
+    local game = Game();
+    local room = game:GetRoom();
     if (RuneSword:HasGlobalRune(Card.RUNE_ANSUZ)) then
         RuneSword.UpdateVisibleRooms();
     end
@@ -621,7 +621,7 @@ function RuneSword:PreProjectileCollision(proj, other, low)
         end
     end
 end
-RuneSword:AddCallback(ModCallbacks.MC_PRE_PROJECTILE_COLLISION, RuneSword.PreProjectileCollision);
+RuneSword:AddPriorityCallback(ModCallbacks.MC_PRE_PROJECTILE_COLLISION, CallbackPriority.LATE, RuneSword.PreProjectileCollision);
 
 function RuneSword:PreNPCCollision(npc, other, low)
     if (not npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and npc.CollisionDamage > 0) then
@@ -642,7 +642,7 @@ function RuneSword:PreNPCCollision(npc, other, low)
         end
     end
 end
-RuneSword:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, RuneSword.PreNPCCollision);
+RuneSword:AddPriorityCallback(ModCallbacks.MC_PRE_NPC_COLLISION, CallbackPriority.LATE, RuneSword.PreNPCCollision);
 
 function RuneSword:PostFamiliarKill(entity)
     if (entity.Variant == FamiliarVariant.WISP and entity.SubType == RuneSword.Item) then

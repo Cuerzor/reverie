@@ -60,7 +60,7 @@ function FoodPickup:PrePickupCollision(pickup, other, low)
         end
     end
 end
-FoodPickup:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, FoodPickup.PrePickupCollision, FoodPickup.Variant);
+FoodPickup:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, FoodPickup.PrePickupCollision, FoodPickup.Variant);
 
 
 return FoodPickup;

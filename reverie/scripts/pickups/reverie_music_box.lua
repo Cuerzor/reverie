@@ -112,7 +112,7 @@ local function PrePickupCollision(mod, pickup, other, low)
         end
     end
 end
-Box:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, PrePickupCollision, Box.Variant)
+Box:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, PrePickupCollision, Box.Variant)
 
 
 return Box;

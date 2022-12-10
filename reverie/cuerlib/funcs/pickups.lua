@@ -200,21 +200,17 @@ function Pickups:PostPickupUpdate(pickup)
 end
 Pickups:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, Pickups.PostPickupUpdate);
 
-function Pickups:onPickupCollision(pickup, collider, low)
-
-    for i, info in pairs(Callbacks.Functions.PrePickupCollision) do
-        if (info.OptionalArg == nil or info.OptionalArg < 0 or info.OptionalArg == pickup.Variant) then
-            local result = info.Func(info.Mod, pickup, collider, low);
-            if (result ~= nil) then
-                return result;
-            end
-        end
-    end
+function Pickups:prePickupCollision(pickup, collider, low)
     local pickupData = Pickups:GetPickupData(pickup);
     if (pickupData.FakeCollected) then
         return true;
-    else
+    end
+end
+Pickups:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, Pickups.prePickupCollision);
 
+function Pickups:postPickupCollision(pickup, collider, low)
+    local pickupData = Pickups:GetPickupData(pickup);
+    if (not pickupData.FakeCollected) then
         local player = collider:ToPlayer();
         if (player) then
             if (Pickups.CanCollect(player, pickup)) then
@@ -223,7 +219,8 @@ function Pickups:onPickupCollision(pickup, collider, low)
         end
     end
 end
-Pickups:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, Pickups.onPickupCollision);
+Pickups:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, Pickups.postPickupCollision);
+
 
 local function PostUpdate(mod)
     -- local data = GetPlayerTempData(player, false);

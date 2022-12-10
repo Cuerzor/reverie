@@ -51,7 +51,7 @@ function LeafShieldRing:PreRingCollision(familiar, other, low)
         end
     end
 end
-LeafShieldRing:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, LeafShieldRing.PreRingCollision, LeafShieldRing.Variant);
+LeafShieldRing:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, LeafShieldRing.PreRingCollision, LeafShieldRing.Variant);
 
 function LeafShieldRing:PostNewRoom()
     for i, ent in pairs(Isaac.FindByType(LeafShieldRing.Type, LeafShieldRing.Variant)) do

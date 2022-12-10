@@ -104,7 +104,7 @@ do -- Tears.
     local MagatamaColor = Color(0,1,0,1,0,0,0);
     local DarkMagatamaColor = Color(0.2, 0, 0, 1, 0, 0, 0);
 
-    local function PreTearCollision(mod, tear, other, low)
+    local function PostTearCollision(mod, tear, other, low)
         local spawner = tear.SpawnerEntity;
         if (spawner) then
             if (other:IsActiveEnemy() and other:IsVulnerableEnemy() and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
@@ -147,7 +147,7 @@ do -- Tears.
             end
         end
     end
-    MagatamaTear:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, PreTearCollision, MagatamaTear.Variant);
+    MagatamaTear:AddPriorityCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, CallbackPriority.LATE, PostTearCollision, MagatamaTear.Variant);
 
     local function PostTearUpdate(mod, tear)
         tear.SpriteRotation = tear.Velocity:GetAngleDegrees();

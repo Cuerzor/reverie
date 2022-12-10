@@ -270,7 +270,6 @@ do
     end
     Horseshoe:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, PostPlayerRender)
 
-    --#TODO POST_COLLISION
     local function PrePlayerCollision(mod, player, other, low)
         if (Horseshoe:IsDashing(player)) then
             local npc = other:ToNPC();
@@ -300,7 +299,7 @@ do
             return true;
         end
     end
-    Horseshoe:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, PrePlayerCollision)
+    Horseshoe:AddPriorityCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, CallbackPriority.LATE, PrePlayerCollision)
 
     local function PreNPCCollision(mod, npc, other, low)
         if (not npc:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
@@ -341,7 +340,6 @@ do
     end
     Horseshoe:AddCallback(ModCallbacks.MC_NPC_UPDATE, PostNPCUpdate)
 
-    -- TODO Post Collision.
     local function PostNPCCollision(mod, npc, other, low)
         local npcData = GetNPCTempData(npc, false);
         if (npcData and npcData.Pinned) then
@@ -353,7 +351,7 @@ do
             end
         end
     end
-    Horseshoe:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PostNPCCollision)
+    Horseshoe:AddPriorityCallback(ModCallbacks.MC_PRE_NPC_COLLISION, CallbackPriority.LATE, PostNPCCollision)
 end
 
 return Horseshoe;

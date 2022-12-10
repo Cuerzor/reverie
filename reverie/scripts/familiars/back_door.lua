@@ -54,13 +54,12 @@ local function PostDoorUpdate(mod, familiar)
 end
 Door:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, PostDoorUpdate, Door.Variant)
 
--- TODO Post Collision
 local function PostDoorCollision(mod, familiar, other, low)
     local proj = other:ToProjectile();
     if (proj and not proj:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER)) then
         proj:Remove();
     end
 end
-Door:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, PostDoorCollision, Door.Variant)
+Door:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, PostDoorCollision, Door.Variant)
 
 return Door;

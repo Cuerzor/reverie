@@ -56,6 +56,6 @@ local function PreNPCCollision(mod, npc, other, low)
         end
     end
 end
-CorpseCart:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PreNPCCollision)
+CorpseCart:AddPriorityCallback(ModCallbacks.MC_PRE_NPC_COLLISION, CallbackPriority.LATE, PreNPCCollision)
 
 return CorpseCart;

@@ -310,6 +310,6 @@ function Starseeker:onBallCollision(ball, collider, low)
     end
 end
     
-Starseeker:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, Starseeker.onBallCollision, Starseeker.Ball.Variant);
+Starseeker:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, Starseeker.onBallCollision, Starseeker.Ball.Variant);
 
 return Starseeker;

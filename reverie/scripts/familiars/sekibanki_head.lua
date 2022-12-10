@@ -219,7 +219,7 @@ do
             end
         end
     end
-    Head:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, PostHeadCollision, Head.Variant);
+    Head:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, PostHeadCollision, Head.Variant);
 end
 
 return Head;

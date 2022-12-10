@@ -1,11 +1,11 @@
 local Lib = {
     Mod = nil,
     DataName = nil,
-    GlobalDataGetter = nil,
-    GlobalDataSetter = nil,
     Loaded = {},
     Version = {1,0,0}
 }
+Lib.Version = 0;
+
 function Lib.Require(filename)
     if (not Lib.Loaded[filename]) then
         local file = include(filename);
@@ -48,11 +48,10 @@ do --Classes
         Rewind = "cuerlib/funcs/rewind",
         Stages = "cuerlib/funcs/stages",
         Weapons = "cuerlib/funcs/weapons",
+        Bosses = "cuerlib/funcs/bosses"
     }
     if (StageAPI) then
         Lib.ClassPaths.Bosses="cuerlib/funcs/bosses_stageapi";
-    else
-        Lib.ClassPaths.Bosses="cuerlib/funcs/bosses";
     end
     
     local LibMetatable = {
@@ -75,13 +74,14 @@ do --Classes
     function Lib:NewClass()
         local class = {};
         setmetatable(class, classMetatable);
-        class.Callbacks = {};
-        class.CustomCallbacks = {};
         function class:AddCallback(callback, func, optionalArg)
-            table.insert(self.Callbacks, {Callback = callback, Func = func, OptionalArg = optionalArg});
+            Lib.Mod:AddCallback(callback, func, optionalArg);
+        end
+        function class:AddPriorityCallback(callback, priority, func, optionalArg)
+            Lib.Mod:AddPriorityCallback(callback, priority, func, optionalArg);
         end
         function class:AddCustomCallback(callback, func, optionalArg, priority)
-            table.insert(self.CustomCallbacks, {Callback = callback, Func = func, OptionalArg = optionalArg, Priority = priority});
+            Lib.Callbacks:AddCallback(callback, func, optionalArg, priority);
         end
         function class:Register(mod)
             for _, callback in pairs(self.Callbacks) do
@@ -202,8 +202,6 @@ function Lib:Init(mod, dataName, getGlobalData, setGlobalData)
     LIB = Lib;
     self.Mod = mod;
     self.DataName = dataName;
-    self.GlobalDataGetter = getGlobalData;
-    self.GlobalDataSetter = setGlobalData;
 
     Lib.Callbacks = Require("cuerlib/callbacks");
 

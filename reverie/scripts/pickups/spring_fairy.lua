@@ -50,7 +50,7 @@ local function PreFairyCollision(mod, pickup, collider)
         end
     end
 end
-Fairy:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, PreFairyCollision, Fairy.Variant)
+Fairy:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, PreFairyCollision, Fairy.Variant)
 
 local function CanCollect(mod, player, pickup)
     if (pickup.Type == Fairy.Type and pickup.Variant == Fairy.Variant) then

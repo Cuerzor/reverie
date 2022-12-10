@@ -405,7 +405,7 @@ function PsycheEye:PreTearCollision(tear, other, low)
         end
     end
 end
-PsycheEye:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, PsycheEye.PreTearCollision)
+PsycheEye:AddPriorityCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, CallbackPriority.LATE, PsycheEye.PreTearCollision)
 
 
 return PsycheEye;

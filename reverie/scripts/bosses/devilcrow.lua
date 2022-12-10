@@ -967,9 +967,11 @@ local function TryTransferPlayers()
 end
 
 local function PreNPCCollision(mod, npc, other, low)
-    -- 防止BOSS立刻击杀迷失游魂跟班。
-    if (Game():GetRoom():GetFrameCount() < 1) then
-        return true;
+    if (npc.Type == Devilcrow.Type and npc.Variant == Devilcrow.Variant) then
+        -- 防止BOSS立刻击杀迷失游魂跟班。
+        if (Game():GetRoom():GetFrameCount() < 1) then
+            return true;
+        end
     end
 end
 Devilcrow:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PreNPCCollision);

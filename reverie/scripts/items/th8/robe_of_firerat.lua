@@ -99,7 +99,7 @@ function RobeOfFirerat:PreTearCollision(tear, other, low)
         end
     end
 end
-RobeOfFirerat:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, RobeOfFirerat.PreTearCollision);
+RobeOfFirerat:AddPriorityCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, CallbackPriority.LATE, RobeOfFirerat.PreTearCollision);
 
 function RobeOfFirerat:PrePlayerTakeDamage(entity, amount, flags, source, countdown)
     local player = entity:ToPlayer();

@@ -21,7 +21,6 @@ function Sword:AddBlacklistFamiliar(variant, subtype)
 end
 
 do
-    -- TODO Post Collision
     local function PostFamiliarCollision(mod, familiar, other, low)
         if (familiar:IsFrame(7, 0)) then
             if (Entities.IsValidEnemy(other)) then
@@ -47,7 +46,7 @@ do
             end
         end
     end
-    Sword:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, PostFamiliarCollision)
+    Sword:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, PostFamiliarCollision)
 end
 
 return Sword;

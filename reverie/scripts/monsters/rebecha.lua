@@ -716,18 +716,6 @@ local function PreBombCollision(mod, bomb, other, low)
 end
 Rebecha:AddCallback(ModCallbacks.MC_PRE_BOMB_COLLISION, PreBombCollision);
 
-
--- local function PreProjectileCollision(mod, projectile, other, low)
---     -- Avoids that some friendly projectile hit the mecha.
---     print(projectile.ProjectileFlags)
---     if (projectile:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER)) then
---         if (other.Type == Rebecha.Type and other.Variant == Rebecha.Variant) then
---             return true;
---         end
---     end
--- end
--- Rebecha:AddCallback(ModCallbacks.MC_PRE_PROJECTILE_COLLISION, PreProjectileCollision);
-
 local function PreTakeDamage(mod, tookDamage, amount, flags, source, countdown)
     if (tookDamage.Type == EntityType.ENTITY_PLAYER) then
         if (amount > 0) then

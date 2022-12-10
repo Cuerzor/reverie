@@ -274,7 +274,6 @@ function WheelChair:Crush(npc, damage, source)
     WheelChair:PostCrushNPC(source, npc, damage);
 end
 
--- TODO Post Collision
 function WheelChair:PostHitboxCollision(hitbox, other, low)
     if (hitbox.Variant == WheelChair.HitboxVariant and hitbox.SubType == WheelChair.HitboxSubType) then
         local spawner = hitbox.SpawnerEntity;
@@ -383,7 +382,7 @@ function WheelChair:Register(mod)
     --mod:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, self.PreNPCCollision);
     mod:AddCallback(ModCallbacks.MC_POST_KNIFE_UPDATE, self.PostHitboxUpdate);
     --mod:AddCallback(ModCallbacks.MC_PRE_PROJECTILE_COLLISION, self.PreProjectileCollision);
-    mod:AddCallback(ModCallbacks.MC_PRE_KNIFE_COLLISION, self.PostHitboxCollision);
+    mod:AddPriorityCallback(ModCallbacks.MC_PRE_KNIFE_COLLISION, CallbackPriority.LATE, self.PostHitboxCollision);
     mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage);
     mod:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, self.PostMeterUpdate, self.MeterVariant);
     mod:AddCallback(ModCallbacks.MC_POST_EFFECT_RENDER, self.PostMeterRender, self.MeterVariant);

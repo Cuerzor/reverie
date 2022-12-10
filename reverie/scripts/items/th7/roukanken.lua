@@ -428,7 +428,7 @@ function Roukanken:onPlayerEffect(player)
                 -- Swing Sword
                 if (playerData.IsYoumu) then
                     if (player:GetAimDirection():Length() > 0.1) then
-                        if (player.FireDelay <= 0) then
+                        if (player.FireDelay <= -1) then
                             player.FireDelay = player.MaxFireDelay;
                             Roukanken:SwingSword(player);
                         end

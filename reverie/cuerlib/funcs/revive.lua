@@ -379,10 +379,9 @@ do -- Events.
             local player = other:ToPlayer();
             local data = GetPlayerData(player);
             if (Revive.IsReviving(player)) then
-                return false;
+                return true;
             end
         end
-        return nil;
     end
     Revive:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PreOtherCollision);
     Revive:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, PreOtherCollision);

@@ -84,7 +84,7 @@ do
             end
         end
     end
-    Spirit:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PreSpiritCollision, Spirit.Type)
+    Spirit:AddPriorityCallback(ModCallbacks.MC_PRE_NPC_COLLISION, CallbackPriority.LATE, PreSpiritCollision, Spirit.Type)
 
     
     local function InvalidateCollision(mod, this, other, low)

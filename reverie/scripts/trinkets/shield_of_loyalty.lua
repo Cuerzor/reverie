@@ -29,7 +29,6 @@ function Shield:AddBlacklistFamiliar(variant, subtype)
 end
 
 do
-    -- TODO Post Collision
     local function PostFamiliarCollision(mod, familiar, other, low)
         if (other.Type == EntityType.ENTITY_PROJECTILE) then
             local proj = other:ToProjectile();
@@ -57,7 +56,7 @@ do
             end
         end
     end
-    Shield:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, PostFamiliarCollision)
+    Shield:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, PostFamiliarCollision)
 end
 
 return Shield;

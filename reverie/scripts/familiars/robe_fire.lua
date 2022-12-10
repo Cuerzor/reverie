@@ -42,5 +42,5 @@ function RobeFire:PreRobeFireCollision(fire, other, low)
         other:TakeDamage(10, DamageFlag.DAMAGE_FIRE, EntityRef(fire), 0);
     end
 end
-RobeFire:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, RobeFire.PreRobeFireCollision, RobeFire.Variant);
+RobeFire:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, RobeFire.PreRobeFireCollision, RobeFire.Variant);
 return RobeFire;

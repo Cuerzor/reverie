@@ -123,6 +123,6 @@ function Bottle:PreBottleCollision(pickup, other, low)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
     end
 end
-Bottle:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, Bottle.PreBottleCollision, Bottle.Variant);
+Bottle:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, Bottle.PreBottleCollision, Bottle.Variant);
 
 return Bottle;

@@ -109,7 +109,7 @@ function ShanghaiDoll:onDollUpdate(familiar)
     familiar.Velocity = (targetPosition - familiar.Position) * 0.3;
 end
 
-ShanghaiDoll:AddCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, ShanghaiDoll.PostDollCollision, ShanghaiDoll.Doll.Variant);
+ShanghaiDoll:AddPriorityCallback(ModCallbacks.MC_PRE_FAMILIAR_COLLISION, CallbackPriority.LATE, ShanghaiDoll.PostDollCollision, ShanghaiDoll.Doll.Variant);
 ShanghaiDoll:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, ShanghaiDoll.onDollUpdate, ShanghaiDoll.Doll.Variant);
 ShanghaiDoll:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, ShanghaiDoll.onEvaluateCache);
 

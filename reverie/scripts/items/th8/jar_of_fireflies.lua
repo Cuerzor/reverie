@@ -57,7 +57,6 @@ function JarOfFireflies:onFireflyUpdate(firefly)
 end
 JarOfFireflies:AddCallback(ModCallbacks.MC_NPC_UPDATE, JarOfFireflies.onFireflyUpdate, OnfireFly.Type);
 
--- TODO Post Collision
 function JarOfFireflies:postFireflyCollision(firefly, collider, low)
     if (firefly.Variant == OnfireFly.Variant) then
         local canExplode = false;
@@ -75,7 +74,7 @@ function JarOfFireflies:postFireflyCollision(firefly, collider, low)
         end
     end
 end
-JarOfFireflies:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, JarOfFireflies.postFireflyCollision, OnfireFly.Type);
+JarOfFireflies:AddPriorityCallback(ModCallbacks.MC_PRE_NPC_COLLISION, CallbackPriority.LATE, JarOfFireflies.postFireflyCollision, OnfireFly.Type);
 
 function JarOfFireflies:onFireflyKill(firefly)
     if (firefly.Variant == OnfireFly.Variant) then

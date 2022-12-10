@@ -644,6 +644,7 @@ end
 Bosses:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, PostPlayerRender);
 
 local function ExecuteCMD(mod, cmd, params)
+    print(cmd);
     if (cmd == "forcethboss" or cmd=="fthb") then
         Bosses.ForceCustomBoss = not Bosses.ForceCustomBoss;
         print( "Force Touhou Bosses has been set to "..tostring(Bosses.ForceCustomBoss)..".");

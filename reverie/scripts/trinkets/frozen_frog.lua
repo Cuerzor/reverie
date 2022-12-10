@@ -15,5 +15,5 @@ function FrozenFrog:preNPCCollision(npc, collider)
     end
 end
 
-FrozenFrog:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, FrozenFrog.preNPCCollision);
+FrozenFrog:AddPriorityCallback(ModCallbacks.MC_PRE_NPC_COLLISION, CallbackPriority.LATE, FrozenFrog.preNPCCollision);
 return FrozenFrog;

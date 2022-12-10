@@ -279,7 +279,6 @@ do -- Pause.
     -- DragonBadge:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, DragonBadge.GetShaderParams)
 end
 
--- TODO Post Collision
 function DragonBadge:postPlayerCollision(player, collider)
     local playerData = DragonBadge:GetPlayerData(player, false);
     if (playerData and playerData.dashing) then

@@ -77,7 +77,6 @@ local function PostTearUpdate(mod, tear)
 end
 Thunder:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, PostTearUpdate);
 
---TODO Post Collision
 local function PostTearCollision(mod, tear, other, low)
     if (Thunder:TearHasThunder(tear) and other:IsActiveEnemy(true) and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
         local hash = GetPtrHash(other);
@@ -89,7 +88,7 @@ local function PostTearCollision(mod, tear, other, low)
         end
     end
 end
-Thunder:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, PostTearCollision);
+Thunder:AddPriorityCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, CallbackPriority.LATE, PostTearCollision);
 
 
 Thunder.BlacklistDamageFlags = DamageFlag.DAMAGE_CRUSH | DamageFlag.DAMAGE_COUNTDOWN;

@@ -114,7 +114,6 @@ do
     end
     Immortal:AddCallback(ModCallbacks.MC_POST_PROJECTILE_UPDATE, PostProjectileUpdate);
 
-    -- TODO Post Collision,
     local function PostImmortalCollision(mod, npc, other, low)
         if (npc.Variant == Immortal.Variant) then
             local canCollide = other.Type == EntityType.ENTITY_PLAYER;
@@ -138,7 +137,7 @@ do
             end
         end
     end
-    Immortal:AddCallback(ModCallbacks.MC_PRE_NPC_COLLISION, PostImmortalCollision, Immortal.Type)
+    Immortal:AddPriorityCallback(ModCallbacks.MC_PRE_NPC_COLLISION, CallbackPriority.LATE, PostImmortalCollision, Immortal.Type)
 
     
     local function PostImmortalRender(mod, npc, offset)

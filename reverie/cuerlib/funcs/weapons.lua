@@ -11,16 +11,16 @@ local function GetPlayerData(player)
     }
     return data._WEAPONS;
 end
-local function GetTempPlayerData(player, create)
+-- local function GetTempPlayerData(player, create)
     
-    local data = Lib:GetEntityLibData(player, true);
-    if (create) then
-        data._WEAPONS = data._WEAPONS or {
-            Blindfolded = false
-        }
-    end
-    return data._WEAPONS;
-end
+--     local data = Lib:GetEntityLibData(player, true);
+--     if (create) then
+--         data._WEAPONS = data._WEAPONS or {
+--             Blindfolded = false
+--         }
+--     end
+--     return data._WEAPONS;
+-- end
 
 local function GetWeaponData(weapon, create)
     local data = Lib:GetEntityLibData(weapon);
@@ -118,16 +118,13 @@ end
 ------ Events ----------
 local function PostPlayerUpdate(mod, player)
     local playerData = GetPlayerData(player);
-    local tempData = GetTempPlayerData(player, false);
-    local blindfolded = tempData and tempData.Blindfolded;
+    local blindfolded = not player:CanShoot();
     local game = Game();
     if (playerData.noWeapon) then
         if (not blindfolded) then
             local OldChallenge=game.Challenge
             game.Challenge=6
             player:UpdateCanShoot()
-            tempData = GetTempPlayerData(player, true);
-            tempData.Blindfolded = true;
             game.Challenge=OldChallenge
         end
         StopOrHideWeapons(player);
@@ -136,15 +133,10 @@ local function PostPlayerUpdate(mod, player)
             local OldChallenge=game.Challenge
             game.Challenge=0
             player:UpdateCanShoot()
-            tempData = GetTempPlayerData(player, true);
-            tempData.Blindfolded = false;
             game.Challenge=OldChallenge
         end
     end
 end
-
-function Weapons:Register(mod)
-    mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate);
-end
+Weapons:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate);
 
 return Weapons;
