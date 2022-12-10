@@ -85,6 +85,6 @@ local function EvaluateBlacklist(mod, id, config)
         return config.Quality < 4;
     end
 end
-Mallet:AddCallback(CuerLib.CLCallbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluateBlacklist);
+Mallet:AddCallback(CuerLib.Callbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluateBlacklist);
 
 return Mallet;

@@ -14,8 +14,6 @@ local Eika = ModPlayer("Eika", false, "Eika");
 local Costume = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_eika.anm2");
 
 local MaxFireCooldown = 2;
-local LudovicoFlag = Maths.GetTearFlag(127);
-
 
 local Effects = {
     PlaceHolder = Isaac.GetEntityVariantByName("Eika Placeholder")
@@ -828,7 +826,8 @@ function Eika:ApplyRockEffect(player, ent, data)
     while (data.FireCooldown <= 0) do
         if (isTear) then
             local tear = ent:ToTear();
-            if (tear:HasTearFlags(LudovicoFlag)) then
+            
+            if (tear:HasTearFlags(TearFlags.TEAR_LUDOVICO)) then
                 -- Ludovico.
 
                 AddThrowIndex(player, (tear.Position - player.Position):Normalized());
@@ -1100,7 +1099,7 @@ local function LudovicoUpdate(player)
             rock = RockEffects:SpawnBladeRock(player);
         else
             rock = player:FireTear(player.Position, Vector.Zero);
-            rock.TearFlags = rock.TearFlags | LudovicoFlag;
+            rock.TearFlags = rock.TearFlags | TearFlags.TEAR_LUDOVICO;
         end
         tempData.LudoRock = rock;
         --rock:GetSprite():Load("gfx/002.042_rock tear.anm2", true);
@@ -1186,7 +1185,7 @@ local function LudovicoUpdate(player)
                 local child;
                 if (not isKnife) then
                     child = player:FireTear(rock.Position, Vector.Zero);
-                    child.TearFlags = child.TearFlags | LudovicoFlag;
+                    child.TearFlags = child.TearFlags | TearFlags.TEAR_LUDOVICO;
                     child.Parent = rock;
                     local childData = Eika:GetRockData(child, true);
                     
@@ -1753,7 +1752,7 @@ function Eika:PostTearUpdate(tear)
         end
 
         -- Change the variant of Ludovico tear
-        if (tear:HasTearFlags(LudovicoFlag)) then
+        if (tear:HasTearFlags(TearFlags.TEAR_LUDOVICO)) then
             if (player:GetPlayerType() == Eika.Type) then
                 Eika:SetRockFlags(player, tear);
                 if (Tears:CanOverrideVariant(TearVariant.ROCK, tear.Variant)) then

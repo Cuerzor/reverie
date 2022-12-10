@@ -28,6 +28,6 @@ local function PreGetCollectible(mod, pool, decrease, seed, loopCount)
         end
     end
 end
-Book:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, -20, PreGetCollectible);
+Book:AddPriorityCallback(CuerLib.Callbacks.CLC_PRE_GET_COLLECTIBLE, -20, PreGetCollectible);
 
 return Book;

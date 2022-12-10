@@ -109,7 +109,7 @@ function OneOfNineTails:onNewStage()
         end
     end
 end
-OneOfNineTails:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_STAGE, OneOfNineTails.onNewStage)
+OneOfNineTails:AddCallback(CuerLib.Callbacks.CLC_POST_NEW_STAGE, OneOfNineTails.onNewStage)
 
 function OneOfNineTails:postPickCollectible(player, item, count, touched)
     if (not touched) then
@@ -121,7 +121,7 @@ function OneOfNineTails:postPickCollectible(player, item, count, touched)
         end
     end
 end
-OneOfNineTails:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, OneOfNineTails.postPickCollectible, OneOfNineTails.Item);
+OneOfNineTails:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, OneOfNineTails.postPickCollectible, OneOfNineTails.Item);
 
 function OneOfNineTails:onEvaluateCache(player, flag)
     if (flag == CacheFlag.CACHE_DAMAGE) then

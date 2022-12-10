@@ -1065,7 +1065,7 @@ do -- Events
             end
         end
     end
-    Seija:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, PostChangeCollectible)
+    Seija:AddCallback(CuerLib.Callbacks.CLC_POST_CHANGE_COLLECTIBLES, PostChangeCollectible)
 
     local function PreGetCollectible(mod, pool, decrease, seed, loopCount)
         local glitchedCrownPlayer;
@@ -1082,7 +1082,7 @@ do -- Events
             end
         end
     end
-    Seija:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, CallbackPriority.EARLY, PreGetCollectible)
+    Seija:AddPriorityCallback(CuerLib.Callbacks.CLC_PRE_GET_COLLECTIBLE, CallbackPriority.EARLY, PreGetCollectible)
 
     local function PostGetCollectible(mod, item, pool, decrease, seed)
         if (item == CollectibleType.COLLECTIBLE_TMTRAINER) then
@@ -1131,7 +1131,7 @@ do -- Events
         end
        
     end
-    Seija:AddCallback(CuerLib.CLCallbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluatePoolBlacklist)
+    Seija:AddCallback(CuerLib.Callbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluatePoolBlacklist)
 
     local function PostGainCollectible(mod, player, item, count, touched, queued)
         if (player.Variant == 0 and not player:IsCoopGhost()) then
@@ -1183,7 +1183,7 @@ do -- Events
             end
         end
     end
-    Seija:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainCollectible)
+    Seija:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainCollectible)
 
 
     local function PreEntitySpawn(mod, type, variant, subtype, position, velocity, spawner, seed)

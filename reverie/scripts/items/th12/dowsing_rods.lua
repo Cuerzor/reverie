@@ -87,7 +87,7 @@ function Rods:PostGridUpdate(index, prevData, newData)
         end
     end
 end
-Rods:AddCallback(CuerLib.CLCallbacks.CLC_POST_GRID_UPDATE, Rods.PostGridUpdate)
+Rods:AddCallback(CuerLib.Callbacks.CLC_POST_GRID_UPDATE, Rods.PostGridUpdate)
 
 
 function Rods:PostPlayerEffect(player)

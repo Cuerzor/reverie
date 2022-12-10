@@ -19,7 +19,7 @@ function ViciousCurse:PostGainCurse(player, item, count, touched)
         end
     end
 end
-ViciousCurse:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, ViciousCurse.PostGainCurse, ViciousCurse.Item);
+ViciousCurse:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, ViciousCurse.PostGainCurse, ViciousCurse.Item);
 
 function ViciousCurse:PostPlayerEffect(player)
     local Seija = THI.Players.Seija;

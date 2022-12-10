@@ -33,6 +33,6 @@ local function PreRevive(mod, player)
     end
 end
 
-AromaticFlower:AddCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, PreRevive);
+AromaticFlower:AddCallback(CuerLib.Callbacks.CLC_PRE_REVIVE, PreRevive);
 
 return AromaticFlower;

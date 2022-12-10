@@ -192,7 +192,7 @@ function Starseeker:preGetCollectible(pool, decrease, seed, loopCount)
     end
 end
     
-Starseeker:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, 50, Starseeker.preGetCollectible);
+Starseeker:AddPriorityCallback(CuerLib.Callbacks.CLC_PRE_GET_COLLECTIBLE, 50, Starseeker.preGetCollectible);
 
 
 --local ballsDataBuffer = {};

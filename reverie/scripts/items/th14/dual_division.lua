@@ -150,7 +150,7 @@ local function EvaluateBlacklist(mod, id, config)
         return not DualDivision.PoolCondition(id, config);
     end
 end
-DualDivision:AddCallback(CuerLib.CLCallbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluateBlacklist);
+DualDivision:AddCallback(CuerLib.Callbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluateBlacklist);
 
 
 local function PreGetCollectible(mod, pool, decrease, seed, loopCount)
@@ -165,7 +165,7 @@ local function PreGetCollectible(mod, pool, decrease, seed, loopCount)
         end
     end
 end
-DualDivision:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, 1, PreGetCollectible)
+DualDivision:AddPriorityCallback(CuerLib.Callbacks.CLC_PRE_GET_COLLECTIBLE, 1, PreGetCollectible)
 
 local function UseDivision(mod, item, rng, player, flags, slot, vardata)
     if (flags & UseFlag.USE_CARBATTERY > 0) then

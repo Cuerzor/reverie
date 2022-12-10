@@ -52,33 +52,6 @@ function THI.GetData(entity)
     return entityData._TOUHOU_DATA;
 end
 
-
-
-function THI.GetSaveGlobalData(data)
-    local touhouData = data._TOUHOU_DATA or {
-        Players = {},
-        Global = {}
-    };
-    touhouData.Global = touhouData.Global or {};
-    return touhouData.Global;
-end
-
-
----- Save and Load -------------
-function THI:GetGlobalData(temp) 
-    if (temp) then
-        return self.TempData;
-    end
-    return self.Data; 
-end
-function THI:SetGlobalData(data, temp) 
-    if (temp) then
-        self.TempData = data;
-    else
-        self.Data = data; 
-    end
-end
-
 ------------------------
 -- Stage
 ------------------------
@@ -90,9 +63,7 @@ THI.Lib = Lib;
 THI.Require = Lib.Require;
 local Require = THI.Require;
 
-local getter = function(temp) return THI:GetGlobalData(temp) end;
-local setter = function(data, temp) THI:SetGlobalData(data, temp) end
-Lib:Init(THI, "_TOUHOU_DATA", getter, setter);
+Lib:Init(THI, "_TOUHOU_DATA");
 
 local Shared = {};
 THI.Instruments = Require("scripts/shared/instruments");
@@ -873,7 +844,7 @@ do
             end
         end
     end
-    THI:AddCallback(Lib.CLCallbacks.CLC_POST_PICK_UP_COLLECTIBLE, PostPickupItem);
+    THI:AddCallback(Lib.Callbacks.CLC_POST_PICK_UP_COLLECTIBLE, PostPickupItem);
 
     
     local function PostPickupTrinket(mod, player, item, golden, touched)
@@ -893,7 +864,7 @@ do
             end
         end
     end
-    THI:AddCallback(Lib.CLCallbacks.CLC_POST_PICK_UP_TRINKET, PostPickupTrinket);
+    THI:AddCallback(Lib.Callbacks.CLC_POST_PICK_UP_TRINKET, PostPickupTrinket);
 
     
     local function PostPickUpCard(mod, player, card)
@@ -911,7 +882,7 @@ do
             end
         end
     end
-    THI:AddCallback(Lib.CLCallbacks.CLC_POST_PICK_UP_CARD, PostPickUpCard);
+    THI:AddCallback(Lib.Callbacks.CLC_POST_PICK_UP_CARD, PostPickUpCard);
 
     
     local function PostUsePill(mod, pilleffect, player, flags)
@@ -946,7 +917,7 @@ do -- Clear Datas when exited.
             THI.TempData[k] = nil
         end
     end
-    THI:AddCallback(Lib.CLCallbacks.CLC_POST_EXIT, PostExit);
+    THI:AddCallback(Lib.Callbacks.CLC_POST_EXIT, PostExit);
 end
 
 if (EID) then

@@ -200,7 +200,7 @@ do -- Events.
             Wings:ResetTime();
         end
     end
-    Wings:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, PostWingsChanged, Wings.Item)
+    Wings:AddCallback(CuerLib.Callbacks.CLC_POST_CHANGE_COLLECTIBLES, PostWingsChanged, Wings.Item)
 
     local function EvaluateCurse(mod, curses)
         local time = Wings:GetTime()
@@ -217,7 +217,7 @@ do -- Events.
         end
         return curses;
     end
-    Wings:AddCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, EvaluateCurse)
+    Wings:AddCallback(CuerLib.Callbacks.CLC_EVALUATE_CURSE, EvaluateCurse)
 end
 
 return Wings;

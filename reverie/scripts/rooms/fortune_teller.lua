@@ -49,5 +49,5 @@ local function GridUpdate(mod, index, prevGrid, newGrid)
         end
     end
 end
-THI:AddCallback(CuerLib.CLCallbacks.CLC_POST_GRID_UPDATE, GridUpdate, 97)
+THI:AddCallback(CuerLib.Callbacks.CLC_POST_GRID_UPDATE, GridUpdate, 97)
 return Teller;

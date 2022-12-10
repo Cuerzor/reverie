@@ -254,7 +254,7 @@ function TheInfamies:PostChangeCollectibles(player, item, diff)
     player:AddCacheFlags(CacheFlag.CACHE_SPEED);
     player:EvaluateItems();
 end
-TheInfamies:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, TheInfamies.PostChangeCollectibles, CollectibleType.COLLECTIBLE_INFAMY); 
+TheInfamies:AddCallback(CuerLib.Callbacks.CLC_POST_CHANGE_COLLECTIBLES, TheInfamies.PostChangeCollectibles, CollectibleType.COLLECTIBLE_INFAMY); 
 
 
 return TheInfamies;

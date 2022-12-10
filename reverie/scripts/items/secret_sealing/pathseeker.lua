@@ -56,6 +56,6 @@ function Pathseeker:onNewStage()
         GapFloor.GenerateMaps(index);
     end
 end
-Pathseeker:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_STAGE, Pathseeker.onNewStage);
+Pathseeker:AddCallback(CuerLib.Callbacks.CLC_POST_NEW_STAGE, Pathseeker.onNewStage);
 
 return Pathseeker;

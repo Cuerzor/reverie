@@ -56,6 +56,6 @@ Fairy:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority
 local function CanCollect(mod, player, pickup)
     return Fairy:CanCollect(player, pickup);
 end
-Fairy:AddCallback(CuerLib.CLCallbacks.CLC_CAN_PICKUP_COLLECT, CanCollect, Fairy.Variant);
+Fairy:AddCallback(CuerLib.Callbacks.CLC_CAN_PICKUP_COLLECT, CanCollect, Fairy.Variant);
 
 return Fairy;

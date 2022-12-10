@@ -81,7 +81,7 @@ local function PostGridDestroyed(mod, gridData)
         end
     end
 end
-THI:AddCallback(CuerLib.CLCallbacks.CLC_POST_GRID_DESTROYED, PostGridDestroyed)
+THI:AddCallback(CuerLib.Callbacks.CLC_POST_GRID_DESTROYED, PostGridDestroyed)
 
 -- local function PostUpdate(mod)
 --     if (Collectibles.IsAnyHasCollectible(Tools.Item)) then

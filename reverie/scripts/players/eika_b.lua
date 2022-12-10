@@ -223,7 +223,7 @@ local function PostGainItem(mod, player, item, count, touched)
         end
     end
 end
-EikaB:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainItem)
+EikaB:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainItem)
 
 
 local function PostUseCard(mod, card, player, flags)

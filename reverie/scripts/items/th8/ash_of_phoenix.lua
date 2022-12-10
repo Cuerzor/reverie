@@ -361,7 +361,7 @@ local function PreRevive(mod, player)
         end
     end
 end
-AshOfPhoenix:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, -100, PreRevive)
+AshOfPhoenix:AddPriorityCallback(CuerLib.Callbacks.CLC_PRE_REVIVE, -100, PreRevive)
 
 local function PostRevive(mod, player, info)
     -- 以其他形式复活后清除状态。
@@ -369,7 +369,7 @@ local function PostRevive(mod, player, info)
         AshOfPhoenix:EndAsh(player);
     end
 end
-AshOfPhoenix:AddCallback(CuerLib.CLCallbacks.CLC_POST_REVIVE, PostRevive)
+AshOfPhoenix:AddCallback(CuerLib.Callbacks.CLC_POST_REVIVE, PostRevive)
 
 
 

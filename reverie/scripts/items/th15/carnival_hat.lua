@@ -84,6 +84,6 @@ local function PostGainHat(mod, player, item, count, touched)
         end
     end
 end
-Hat:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainHat, Hat.Item)
+Hat:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainHat, Hat.Item)
 
 return Hat;

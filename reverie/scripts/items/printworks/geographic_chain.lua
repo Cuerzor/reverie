@@ -169,6 +169,6 @@ local function PostGainChain(mod, player, item, count ,touched)
     player:AddCacheFlags(CacheFlag.CACHE_LUCK);
     player:EvaluateItems();
 end
-Chain:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainChain, Chain.Item);
+Chain:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainChain, Chain.Item);
 
 return Chain;

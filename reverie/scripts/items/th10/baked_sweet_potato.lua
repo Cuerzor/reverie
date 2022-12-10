@@ -54,6 +54,6 @@ function SweetPotato:PostGainPotato(player, item, count, touched)
         player:EvaluateItems();
     end
 end
-SweetPotato:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, SweetPotato.PostGainPotato, SweetPotato.Item);
+SweetPotato:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, SweetPotato.PostGainPotato, SweetPotato.Item);
 
 return SweetPotato;

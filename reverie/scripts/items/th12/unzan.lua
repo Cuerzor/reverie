@@ -38,6 +38,6 @@ local function PostNewGreedWave(mod, wave)
         end
     end
 end
-Unzan:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_GREED_WAVE, PostNewGreedWave);
+Unzan:AddCallback(CuerLib.Callbacks.CLC_POST_NEW_GREED_WAVE, PostNewGreedWave);
 
 return Unzan;

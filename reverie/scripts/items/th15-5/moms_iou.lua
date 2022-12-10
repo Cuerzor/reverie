@@ -93,7 +93,7 @@ function MomsIOU:PostGainCollectible(player, item, count, touched)
         data.Debt = data.Debt + math.ceil(added * 1.2);
     end
 end
-MomsIOU:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, MomsIOU.PostGainCollectible, MomsIOU.Item);
+MomsIOU:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, MomsIOU.PostGainCollectible, MomsIOU.Item);
 
 
 function MomsIOU:PostPlayerEffect(player)
@@ -186,7 +186,7 @@ function MomsIOU:PostNewStage()
         end
     end
 end
-MomsIOU:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_STAGE, MomsIOU.PostNewStage);
+MomsIOU:AddCallback(CuerLib.Callbacks.CLC_POST_NEW_STAGE, MomsIOU.PostNewStage);
 
 function MomsIOU:PostPlayerRender(player, offset)
     if (not Screen.IsReflection()) then

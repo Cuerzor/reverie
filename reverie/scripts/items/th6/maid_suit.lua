@@ -72,7 +72,7 @@ function MaidSuit:postGainCollectible(player, item, count, touched)
         end
     end
 end
-MaidSuit:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, MaidSuit.postGainCollectible, MaidSuit.Item);
+MaidSuit:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, MaidSuit.postGainCollectible, MaidSuit.Item);
 
 function MaidSuit:onUpdate()
 

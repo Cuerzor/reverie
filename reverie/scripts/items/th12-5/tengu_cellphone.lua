@@ -879,7 +879,7 @@ function Cellphone:PostNewStage()
         end
     end
 end
-Cellphone:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_STAGE, Cellphone.PostNewStage);
+Cellphone:AddCallback(CuerLib.Callbacks.CLC_POST_NEW_STAGE, Cellphone.PostNewStage);
 
 
 return Cellphone;

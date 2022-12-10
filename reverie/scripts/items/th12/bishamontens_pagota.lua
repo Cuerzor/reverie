@@ -248,7 +248,7 @@ function Pagota:PostPickupCollected(player, pickup)
         data.AddedCoins = data.AddedCoins + originValue;
     end
 end
-Pagota:AddCallback(CuerLib.CLCallbacks.CLC_POST_PICKUP_COLLECTED, Pagota.PostPickupCollected, PickupVariant.PICKUP_COIN);
+Pagota:AddCallback(CuerLib.Callbacks.CLC_POST_PICKUP_COLLECTED, Pagota.PostPickupCollected, PickupVariant.PICKUP_COIN);
 
 local turnGoldInUpdate = false;
 function Pagota:NewRoom()

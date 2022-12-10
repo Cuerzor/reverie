@@ -4,7 +4,7 @@ local CompareEntity = Entities.CompareEntity;
 local EntityExists = Entities.EntityExists;
 local Bosses = CuerLib.Bosses;
 local Grids = CuerLib.Grids;
-local CLCallbacks = CuerLib.CLCallbacks;
+local Callbacks = CuerLib.Callbacks;
 local Pyroplume = ModEntity("Pyroplume", "PYROPLUME");
 
 Pyroplume.Variants = {

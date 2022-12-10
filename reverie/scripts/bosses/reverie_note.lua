@@ -1690,7 +1690,7 @@ do --战斗。
             return item
         end
     end
-    Note:AddCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, PreGetCollectible);
+    Note:AddCallback(CuerLib.Callbacks.CLC_PRE_GET_COLLECTIBLE, PreGetCollectible);
 
     local function PostNewRoom()
         if (BossFight:IsBossRoom()) then

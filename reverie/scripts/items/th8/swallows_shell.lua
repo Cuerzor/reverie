@@ -113,6 +113,6 @@ function SwallowsShell:PostNewStage()
         end
     end
 end
-SwallowsShell:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_STAGE, SwallowsShell.PostNewStage);
+SwallowsShell:AddCallback(CuerLib.Callbacks.CLC_POST_NEW_STAGE, SwallowsShell.PostNewStage);
 
 return SwallowsShell;

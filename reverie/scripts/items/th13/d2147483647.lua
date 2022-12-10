@@ -281,7 +281,7 @@ local function TryUseDice(mod, item, player, slot)
     local charges = player:GetActiveCharge (slot);
     return charges >= Dice.GetTransformCost();
 end
-Dice:AddCallback(CuerLib.CLCallbacks.CLC_TRY_USE_ITEM, TryUseDice, Dice.Item);
+Dice:AddCallback(CuerLib.Callbacks.CLC_TRY_USE_ITEM, TryUseDice, Dice.Item);
 
 
 function Dice:UseItem(item, rng, player, flags, slot, varData)

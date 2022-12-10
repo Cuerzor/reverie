@@ -124,7 +124,7 @@ do
             player:AddRottenHearts(redHearts);
         end
     end
-    Zombie:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainZombie, Zombie.Item);
+    Zombie:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainZombie, Zombie.Item);
 end
 
 return Zombie;

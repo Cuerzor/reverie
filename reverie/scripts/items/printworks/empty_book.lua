@@ -396,7 +396,7 @@ function EmptyBook:EvaluateCurse(curses)
         end
     end
 end
-EmptyBook:AddPriorityCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, CallbackPriority.LATE, EmptyBook.EvaluateCurse);
+EmptyBook:AddPriorityCallback(CuerLib.Callbacks.CLC_EVALUATE_CURSE, CallbackPriority.LATE, EmptyBook.EvaluateCurse);
 
 function EmptyBook:OnEvaluateCache(player, cache)
     if (cache == CacheFlag.CACHE_SPEED) then
@@ -652,7 +652,7 @@ function EmptyBook:PostChangeCollecitble(player, item, diff)
         end
     end
 end
-EmptyBook:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, EmptyBook.PostChangeCollecitble);
+EmptyBook:AddCallback(CuerLib.Callbacks.CLC_POST_CHANGE_COLLECTIBLES, EmptyBook.PostChangeCollecitble);
 
 function EmptyBook:PostPickupCollectible(player, item, touched)
     for i ,id in pairs(FinishedBooks) do
@@ -672,7 +672,7 @@ function EmptyBook:PostPickupCollectible(player, item, touched)
         end
     end
 end
-EmptyBook:AddCallback(CuerLib.CLCallbacks.CLC_POST_PICK_UP_COLLECTIBLE, EmptyBook.PostPickupCollectible);
+EmptyBook:AddCallback(CuerLib.Callbacks.CLC_POST_PICK_UP_COLLECTIBLE, EmptyBook.PostPickupCollectible);
 
 local renderOffset = Vector(0, -60);
 local leftOffset = Vector(-40, 0);

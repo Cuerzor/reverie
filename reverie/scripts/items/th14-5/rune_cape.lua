@@ -22,7 +22,7 @@ do
             end
         end
     end
-    Cape:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainCape, Cape.Item)
+    Cape:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainCape, Cape.Item)
 end
 
 return Cape;

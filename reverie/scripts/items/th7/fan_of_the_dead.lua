@@ -139,7 +139,7 @@ function FanOfTheDead:postPickCollectible(player, item, count, touched)
 
     AvoidDeath(player);
 end
-FanOfTheDead:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, FanOfTheDead.postPickCollectible, FanOfTheDead.Item);
+FanOfTheDead:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, FanOfTheDead.postPickCollectible, FanOfTheDead.Item);
 
 
 local function RenderPlayer(player, playerIndex)
@@ -238,7 +238,7 @@ local function PreRevive(mod, player)
         }
     end
 end
-FanOfTheDead:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, -90, PreRevive)
+FanOfTheDead:AddPriorityCallback(CuerLib.Callbacks.CLC_PRE_REVIVE, -90, PreRevive)
 
 
 

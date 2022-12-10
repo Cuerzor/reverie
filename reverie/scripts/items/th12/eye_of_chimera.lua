@@ -105,13 +105,13 @@ function EyeOfChimera:EvaluateCurse(curses)
         return curses | LevelCurse.CURSE_OF_BLIND;
     end
 end
-EyeOfChimera:AddCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, EyeOfChimera.EvaluateCurse);
+EyeOfChimera:AddCallback(CuerLib.Callbacks.CLC_EVALUATE_CURSE, EyeOfChimera.EvaluateCurse);
 
 function EyeOfChimera:postChange(player, item, diff)
     THI:EvaluateCurses();
 end
-EyeOfChimera:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, EyeOfChimera.postChange, EyeOfChimera.Item);
-EyeOfChimera:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, EyeOfChimera.postChange, CollectibleType.COLLECTIBLE_BLACK_CANDLE);
+EyeOfChimera:AddCallback(CuerLib.Callbacks.CLC_POST_CHANGE_COLLECTIBLES, EyeOfChimera.postChange, EyeOfChimera.Item);
+EyeOfChimera:AddCallback(CuerLib.Callbacks.CLC_POST_CHANGE_COLLECTIBLES, EyeOfChimera.postChange, CollectibleType.COLLECTIBLE_BLACK_CANDLE);
 
 
 

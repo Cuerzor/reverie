@@ -10,7 +10,7 @@ function FriedTofu:onBingeEaterChange(player, item, diff)
         player:EvaluateItems();
     end
 end
-FriedTofu:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, FriedTofu.onBingeEaterChange, CollectibleType.COLLECTIBLE_BINGE_EATER);
+FriedTofu:AddCallback(CuerLib.Callbacks.CLC_POST_CHANGE_COLLECTIBLES, FriedTofu.onBingeEaterChange, CollectibleType.COLLECTIBLE_BINGE_EATER);
 
 function FriedTofu:onEvaluateCache(player, flag) 
     if (player:HasCollectible(CollectibleType.COLLECTIBLE_BINGE_EATER)) then

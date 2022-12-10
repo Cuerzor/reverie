@@ -95,7 +95,7 @@ local function PreRevive(mod, player)
         end
     end
 end
-ContinueArcade:AddCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, PreRevive);
+ContinueArcade:AddCallback(CuerLib.Callbacks.CLC_PRE_REVIVE, PreRevive);
 
 
 return ContinueArcade;

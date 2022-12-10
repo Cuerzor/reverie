@@ -285,7 +285,7 @@ function RuneSword:PostGainRuneSword(player, item, count, touched)
         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, rune, player.Position, Vector.Zero, player);
     end
 end
-RuneSword:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, RuneSword.PostGainRuneSword, RuneSword.Item);
+RuneSword:AddCallback(CuerLib.Callbacks.CLC_POST_GAIN_COLLECTIBLE, RuneSword.PostGainRuneSword, RuneSword.Item);
 
 function RuneSword:UseSword(item, rng, player, flags, slot, varData)
     local slot = 0;
@@ -513,14 +513,14 @@ function RuneSword:PostNewGreedWave(wave)
     PostNewWave();
     PostRoomStart();
 end
-RuneSword:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_GREED_WAVE, RuneSword.PostNewGreedWave);
+RuneSword:AddCallback(CuerLib.Callbacks.CLC_POST_NEW_GREED_WAVE, RuneSword.PostNewGreedWave);
 
 function RuneSword:PostGreedWaveEnd(state)
     if (state == Greed.GreedState.GREED_BOSS_CLEARED) then
         ClearLevel();
     end
 end
-RuneSword:AddCallback(CuerLib.CLCallbacks.CLC_POST_GREED_WAVE_END, RuneSword.PostGreedWaveEnd);
+RuneSword:AddCallback(CuerLib.Callbacks.CLC_POST_GREED_WAVE_END, RuneSword.PostGreedWaveEnd);
 
 local function CanDuplicate(pickup)
     if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or Pickups.IsSpecialPickup(pickup.Variant)) then
@@ -716,7 +716,7 @@ function RuneSword:EvaluateCurse(curses)
         return 0;
     end
 end
-RuneSword:AddPriorityCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, CallbackPriority.LATE, RuneSword.EvaluateCurse);
+RuneSword:AddPriorityCallback(CuerLib.Callbacks.CLC_EVALUATE_CURSE, CallbackPriority.LATE, RuneSword.EvaluateCurse);
 
 function RuneSword:EvaluateCache(player, cache)
     local blackRuneCount = RuneSword:GetInsertedRuneNum(player, Card.RUNE_BLACK);
@@ -982,7 +982,7 @@ do
             }
         end
     end
-    RuneSword:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, 10, PreRevive)
+    RuneSword:AddPriorityCallback(CuerLib.Callbacks.CLC_PRE_REVIVE, 10, PreRevive)
 end
 
 return RuneSword;

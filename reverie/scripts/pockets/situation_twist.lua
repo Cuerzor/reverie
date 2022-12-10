@@ -57,7 +57,7 @@ local function PreGetCollectible(mod, pool, decrease, seed, loopCount)
     end
 end
     
-Twist:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, -51, PreGetCollectible);
+Twist:AddPriorityCallback(CuerLib.Callbacks.CLC_PRE_GET_COLLECTIBLE, -51, PreGetCollectible);
 
 
 THI:AddAnnouncer(Twist.ID, THI.Sounds.SOUND_SITUATION_TWIST, 15)
