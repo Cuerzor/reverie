@@ -475,7 +475,7 @@ function BonusUFO:PreUFOTakeDamage(entity, amount, flags, source, countdown)
         return false;
     end
 end
-BonusUFO:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, BonusUFO.PreUFOTakeDamage, BonusUFO.Type);
+BonusUFO:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, BonusUFO.PreUFOTakeDamage, BonusUFO.Type);
 
 local greyColor = KColor(0.5, 0.5, 0.5, 1);
 function BonusUFO:RenderUFO(ufo, offset)

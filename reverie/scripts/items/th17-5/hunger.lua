@@ -408,7 +408,7 @@ function Hunger:PostGainCollectible(player, item, count, touched)
         end
     end
 end
-Hunger:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, Hunger.PostGainCollectible);
+Hunger:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, Hunger.PostGainCollectible);
 
 function Hunger:PostNPCDeath(npc)
     

@@ -74,7 +74,7 @@ local function PostPlayerTakeDamage(mod, tookDamage, amount, flags, source, coun
         Horn:SetDamagedCount(player, (damagedCount + 1) % 3);
     end
 end
-Horn:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostPlayerTakeDamage, EntityType.ENTITY_PLAYER)
+Horn:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostPlayerTakeDamage, EntityType.ENTITY_PLAYER)
 
 local function PostNewRoom()
     for p, player in Players.PlayerPairs(true, true) do

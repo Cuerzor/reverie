@@ -74,18 +74,14 @@ local function Save()
 
     SaveAndLoad.WriteGameStateData(state);
     
-    for index, funcData in pairs(Lib.Callbacks.Functions.PostSave) do
-        funcData.Func(funcData.Mod);
-    end
+    Isaac.RunCallback(Lib.CLCallbacks.CLC_POST_SAVE);
 end
 
 local function RestartGame()
 
     SaveAndLoad.RemoveGameState();
     
-    for index, funcData in pairs(Lib.Callbacks.Functions.PostRestart) do
-        funcData.Func(funcData.Mod);
-    end
+    Isaac.RunCallback(Lib.CLCallbacks.CLC_POST_RESTART);
 end
 
 ----------------
@@ -98,9 +94,7 @@ function SaveAndLoad:preGameExit(ShouldSave)
     else
         RestartGame();
     end
-    for index, funcData in pairs(Lib.Callbacks.Functions.PostExit) do
-        funcData.Func(funcData.Mod);
-    end
+    Isaac.RunCallback(Lib.CLCallbacks.CLC_POST_EXIT, ShouldSave);
 end
 SaveAndLoad:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, SaveAndLoad.preGameExit)
 
@@ -131,9 +125,7 @@ function SaveAndLoad:onGameStarted(isContinued)
                         end
                     end
                 end
-                for index, funcData in pairs(Lib.Callbacks.Functions.PostLoad) do
-                    funcData.Func(funcData.Mod);
-                end
+                Isaac.RunCallback(Lib.CLCallbacks.CLC_POST_LOAD);
             end
         else
             SaveAndLoad.RemoveGameState();

@@ -75,7 +75,7 @@ function ExtendingArm:FireArm(player, item, direction)
     tempData.FireCooldown = 2;
     tempData.TargetDir = direction;
 end
-ExtendingArm:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_RELEASE_HOLDING_ACTIVE, ExtendingArm.FireArm, ExtendingArm.Item)
+ExtendingArm:AddPriorityCallback(CuerLib.CLCallbacks.CLC_RELEASE_HOLDING_ACTIVE, CallbackPriority.LATE, ExtendingArm.FireArm, ExtendingArm.Item)
 
 function ExtendingArm:PostWispUpdate(familiar)
     if (familiar.SubType == ExtendingArm.Item) then

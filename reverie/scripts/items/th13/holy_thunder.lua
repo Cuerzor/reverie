@@ -149,6 +149,6 @@ local function PostTakeDamage(mod, tookDamage, amount, flags, source, countdown)
 
     end
 end
-Thunder:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostTakeDamage);
+Thunder:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostTakeDamage);
 
 return Thunder;

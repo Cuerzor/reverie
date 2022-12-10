@@ -589,7 +589,7 @@ local function PostPlayerDamage(mod, tookDamage, amount, flags, source, countdow
         end
     end
 end
-Centi:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostPlayerDamage, EntityType.ENTITY_PLAYER)
+Centi:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostPlayerDamage, EntityType.ENTITY_PLAYER)
 
 
 local function PostCentipedeKill(mod, npc)

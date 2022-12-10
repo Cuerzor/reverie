@@ -480,7 +480,7 @@ local function PreTakeDamage(mod, tookDamage, amount, flags, source, countdown)
         end
     end
 end
-Haniwa:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, PreTakeDamage)
+Haniwa:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage)
 
 
 local function PostEntityKill(mod ,entity)

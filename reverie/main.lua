@@ -45,11 +45,6 @@ end
 
 THI.Game = Game();
 THI.SFXManager = SFXManager();
---THI.HUD = THI.Game:GetHUD();
---THI.Room = THI.Game:GetRoom();
---THI.Level = THI.Game:GetLevel();
---THI.ItemPool = THI.Game:GetItemPool();
---THI.Seeds = THI.Game:GetSeeds();
 
 function THI.GetData(entity)
     local entityData = entity:GetData();
@@ -878,7 +873,7 @@ do
             end
         end
     end
-    Lib.Callbacks:AddCallback(Lib.CLCallbacks.CLC_POST_PICKUP_COLLECTIBLE, PostPickupItem);
+    THI:AddCallback(Lib.CLCallbacks.CLC_POST_PICK_UP_COLLECTIBLE, PostPickupItem);
 
     
     local function PostPickupTrinket(mod, player, item, golden, touched)
@@ -898,7 +893,7 @@ do
             end
         end
     end
-    Lib.Callbacks:AddCallback(Lib.CLCallbacks.CLC_POST_PICKUP_TRINKET, PostPickupTrinket);
+    THI:AddCallback(Lib.CLCallbacks.CLC_POST_PICK_UP_TRINKET, PostPickupTrinket);
 
     
     local function PostPickUpCard(mod, player, card)
@@ -916,7 +911,7 @@ do
             end
         end
     end
-    Lib.Callbacks:AddCallback(Lib.CLCallbacks.CLC_POST_PICK_UP_CARD, PostPickUpCard);
+    THI:AddCallback(Lib.CLCallbacks.CLC_POST_PICK_UP_CARD, PostPickUpCard);
 
     
     local function PostUsePill(mod, pilleffect, player, flags)
@@ -951,7 +946,7 @@ do -- Clear Datas when exited.
             THI.TempData[k] = nil
         end
     end
-    Lib.Callbacks:AddCallback(Lib.CLCallbacks.CLC_POST_EXIT, PostExit);
+    THI:AddCallback(Lib.CLCallbacks.CLC_POST_EXIT, PostExit);
 end
 
 if (EID) then
@@ -1042,40 +1037,9 @@ THI:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, THI.PostGameStartEvaluate);
 
 -- Curses.
 do
-    local function EvaluateCurse(curses)
-        curses = curses or Game():GetLevel():GetCurses();
-        for i, info in pairs(Lib.Callbacks.Functions.EvaluateCurse) do
-            local result = info.Func(info.Mod, curses);
-            if (result ~= nil) then
-                if (type(result) == "number") then
-                    curses = result;
-                else
-                    error("Trying to return a value which is not a number or nil in EVALUATE_CURSE.");
-                end
-            end
-        end
-        return curses;
-    end
     function THI:EvaluateCurses()
-        local level = Game():GetLevel();
-        local beforeCurses = level:GetCurses();
-        local curses = EvaluateCurse();
-
-        local removedCurses = ~curses & beforeCurses;
-        local addedCurses = ~beforeCurses & curses;
-
-        -- Avoid remove Curse of Labyrinth.
-        removedCurses = removedCurses & ~LevelCurse.CURSE_OF_LABYRINTH;
-        addedCurses = addedCurses & ~LevelCurse.CURSE_OF_LABYRINTH;
-        level:RemoveCurses(removedCurses);
-        level:AddCurse(addedCurses);
+        Lib.Curses:EvaluateCurses();
     end
-
-    local function OnCurseEvaluate(mod, curses)
-        local newCurses = EvaluateCurse(curses);
-        return newCurses;
-    end
-    THI:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, OnCurseEvaluate);
 end
 
 do -- Queued Item.

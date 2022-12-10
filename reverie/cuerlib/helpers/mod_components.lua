@@ -1,5 +1,4 @@
 local Lib = LIB;
-local Callbacks = Lib.Callbacks;
 
 local ModComponents = Lib:NewClass();
 ----------------
@@ -151,12 +150,6 @@ do
             return func(self, ...);
         end
         self.Mod:AddPriorityCallback(callback, priority, fncall, optional);
-    end
-    function ModPart:AddCustomCallback(callback, func, optional, priority)
-        local function fncall(mod, ...)
-            return func(self, ...);
-        end
-        Callbacks:AddCallback(callback, fncall, optional, priority);
     end
 end
 

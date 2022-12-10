@@ -818,7 +818,7 @@ function Dream:playerTakeDamage(tookDamage, amount, flags, source, countdown)
         return false;
     end
 end
-Dream:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, Dream.playerTakeDamage, EntityType.ENTITY_PLAYER);
+Dream:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, Dream.playerTakeDamage, EntityType.ENTITY_PLAYER);
 
 local function EvaluateCache(mod, player, flag)
     if (flag == CacheFlag.CACHE_RANGE) then

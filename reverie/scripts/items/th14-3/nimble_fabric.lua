@@ -52,7 +52,7 @@ local function TryUseFabric(mod, item, player, slot)
     local result = Actives:GetTotalCharges(player, slot) > 0;
     return result;
 end
-Fabric:AddCustomCallback(CuerLib.CLCallbacks.CLC_TRY_USE_ITEM, TryUseFabric, Fabric.Item);
+Fabric:AddCallback(CuerLib.CLCallbacks.CLC_TRY_USE_ITEM, TryUseFabric, Fabric.Item);
 
 local function PreUseFabric(mod, item, rng, player, flags, slot)
     local tempData = GetTempPlayerData(player, false);

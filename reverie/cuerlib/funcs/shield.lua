@@ -1,5 +1,4 @@
 local Lib = LIB;
-local Callbacks = Lib.Callbacks;
 local Screen = Lib.Screen;
 local Shields = Lib:NewClass();
 

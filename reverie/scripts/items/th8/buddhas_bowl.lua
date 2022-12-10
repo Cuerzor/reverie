@@ -99,7 +99,7 @@ function BuddhasBowl:PrePlayerTakeDamage(entity, amount, flags, source, countdow
         end
     end
 end
-BuddhasBowl:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, BuddhasBowl.PrePlayerTakeDamage, EntityType.ENTITY_PLAYER, 16);
+BuddhasBowl:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, BuddhasBowl.PrePlayerTakeDamage, EntityType.ENTITY_PLAYER, 16);
 
 function BuddhasBowl:PostPlayerEffect(player)
     if (not player:HasCollectible(BuddhasBowl.Item)) then

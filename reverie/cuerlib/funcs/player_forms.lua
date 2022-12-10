@@ -1,5 +1,4 @@
 local Lib = LIB;
-local Callbacks = Lib.Callbacks;
 local Entities = Lib.Entities;
 
 local PlayerForms = Lib:NewClass();
@@ -104,7 +103,7 @@ function PlayerForms:onPickCollectible(player, item, count, touched)
         end
     end
 end
-PlayerForms:AddCustomCallback(Lib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PlayerForms.onPickCollectible)
+PlayerForms:AddCallback(Lib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PlayerForms.onPickCollectible)
 
 function PlayerForms:onLoseCollectible(player, item, count)
     local collectible = config:GetCollectible(item);
@@ -127,7 +126,7 @@ function PlayerForms:onLoseCollectible(player, item, count)
         end
     end
 end
-PlayerForms:AddCustomCallback(Lib.CLCallbacks.CLC_POST_LOSE_COLLECTIBLE, PlayerForms.onLoseCollectible)
+PlayerForms:AddCallback(Lib.CLCallbacks.CLC_POST_LOSE_COLLECTIBLE, PlayerForms.onLoseCollectible)
 
 
 return PlayerForms;

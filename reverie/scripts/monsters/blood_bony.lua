@@ -430,6 +430,6 @@ function BloodBony:PreEntityTakeDamage(tookDamage, amount, flags, source, countd
         end
     end
 end
-BloodBony:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, BloodBony.PreEntityTakeDamage);
+BloodBony:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, BloodBony.PreEntityTakeDamage);
 
 return BloodBony;

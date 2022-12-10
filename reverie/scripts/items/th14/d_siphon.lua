@@ -153,7 +153,7 @@ local function EvaluateBlacklist(mod, id, config)
         return not DSiphon.PoolCondition(id, config);
     end
 end
-DSiphon:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluateBlacklist);
+DSiphon:AddCallback(CuerLib.CLCallbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluateBlacklist);
 
 local function PostPlayerUpdate(mod, player)
     local tempData = GetPlayerTempData(player, true)

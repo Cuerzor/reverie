@@ -1,17 +1,8 @@
 local SaveAndLoad = CuerLib.SaveAndLoad
 local Collectibles = CuerLib.Collectibles
-local Callbacks = CuerLib.Callbacks;
 local Stats = CuerLib.Stats;
 
 local VampireTooth = ModItem("Tooth of Vampire", "VampireTooth");
-
-function VampireTooth:postChangeCollectibles(player, item, diff)
-    player:AddCacheFlags(CacheFlag.CACHE_FLYING)
-    player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-    player:AddCacheFlags(CacheFlag.CACHE_LUCK)
-    player:EvaluateItems()
-end
-VampireTooth:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, VampireTooth.postChangeCollectibles, VampireTooth.Item);
 
 function VampireTooth:onUseSun(card, player, flags)
     if (player:HasCollectible(VampireTooth.Item)) then

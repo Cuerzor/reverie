@@ -33,7 +33,7 @@ local function PostGainCollectible(mod, player, item, count, touched)
         end
     end
 end
-DYSSpring:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainCollectible, DYSSpring.Item);
+DYSSpring:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainCollectible, DYSSpring.Item);
 
 local function PreEntitySpawn(mod, id, variant, subtype, position, velocity, spawner, seed)
     if (id == EntityType.ENTITY_PICKUP and variant == PickupVariant.PICKUP_HEART) then

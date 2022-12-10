@@ -1,5 +1,4 @@
 local Collectibles = CuerLib.Collectibles;
-local Callbacks = CuerLib.Callbacks;
 local Stats = CuerLib.Stats;
 
 local FriedTofu = ModItem("Fried Tofu", "FriedTofu");
@@ -11,15 +10,7 @@ function FriedTofu:onBingeEaterChange(player, item, diff)
         player:EvaluateItems();
     end
 end
-FriedTofu:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, FriedTofu.onBingeEaterChange, CollectibleType.COLLECTIBLE_BINGE_EATER);
-
-function FriedTofu:postChangeCollectibles(player, item, diff)
-    if (player:HasCollectible(CollectibleType.COLLECTIBLE_BINGE_EATER)) then
-        player:AddCacheFlags(CacheFlag.CACHE_SPEED | CacheFlag.CACHE_RANGE | CacheFlag.CACHE_LUCK);
-        player:EvaluateItems();
-    end
-end
-FriedTofu:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, FriedTofu.postChangeCollectibles, FriedTofu.Item);
+FriedTofu:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, FriedTofu.onBingeEaterChange, CollectibleType.COLLECTIBLE_BINGE_EATER);
 
 function FriedTofu:onEvaluateCache(player, flag) 
     if (player:HasCollectible(CollectibleType.COLLECTIBLE_BINGE_EATER)) then

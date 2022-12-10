@@ -62,7 +62,7 @@ end
 Rods:AddCallback(ModCallbacks.MC_POST_UPDATE, Rods.PostUpdate)
 
 
-function Rods.PostGridUpdate(index, prevData, newData)
+function Rods:PostGridUpdate(index, prevData, newData)
     if (prevData.Type == GridEntityType.GRID_ROCK and prevData.State == 1) then
         if (newData.Type ~= GridEntityType.GRID_ROCK or newData.State ~= 1) then
             local globalData = Rods.GetRodsData(false);
@@ -87,7 +87,7 @@ function Rods.PostGridUpdate(index, prevData, newData)
         end
     end
 end
-THI:OnGridUpdate(Rods.PostGridUpdate)
+Rods:AddCallback(CuerLib.CLCallbacks.CLC_POST_GRID_UPDATE, Rods.PostGridUpdate)
 
 
 function Rods:PostPlayerEffect(player)

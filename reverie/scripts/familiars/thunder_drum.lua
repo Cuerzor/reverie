@@ -137,7 +137,7 @@ do
             --end
         end
     end
-    Drum:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostTakeDamage);
+    Drum:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostTakeDamage);
 
     local function PostFamiliarCollision(mod, familiar, other, low)
         if (familiar.Type == Drum.Type and familiar.Variant == Drum.Variant) then

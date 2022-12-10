@@ -10,7 +10,6 @@
 local Lib = LIB;
 
 local Revive = Lib:NewClass();
-Revive.Infos = {}
 
 local function GetPlayerData(player)
     local data = Lib:GetEntityLibData(player);
@@ -25,26 +24,14 @@ local function GetPlayerData(player)
     return data._REVIVE;
 end
 
-function Revive.GetPlayerData(player)
-    return GetPlayerData(player);
-end
-
-
 function Revive.IsReviving(player)
-    local playerType = player:GetPlayerType();
     local data = GetPlayerData(player);
-    -- if (IsForgottenB(player)) then
-    --     local twin = player:GetOtherTwin()
-    --     local twinData = GetPlayerData(twin);
-    --     return data.IsDead or twinData.IsDead;
-    -- else
-        return data.IsDead;
-    --end
+    return data.IsDead;
 end
 
 ---@param player EntityPlayer 
 ---@return string ReviveAnimation
-function Revive:GetPlayerReviveAnimation(player)
+function Revive:GetVanillaReviveAnimation(player)
     local playerType = player:GetPlayerType();
     if (playerType == PlayerType.PLAYER_THELOST 
     or playerType == PlayerType.PLAYER_THELOST_B 
@@ -60,54 +47,14 @@ function Revive:GetPlayerReviveAnimation(player)
     return "Death";
 end
 
-
 ---@param player EntityPlayer 
 ---@return integer ReviveFrame
 function Revive:GetPlayerReviveFrame(player)
-    local playerType = player:GetPlayerType();
-    if (playerType == PlayerType.PLAYER_THELOST 
-    or playerType == PlayerType.PLAYER_THELOST_B 
-    or playerType == PlayerType.PLAYER_THESOUL
-    or playerType == PlayerType.PLAYER_THESOUL_B) then
-        return 37;
-    end
-
-    if (player:GetEffects():HasNullEffect(NullItemID.ID_LOST_CURSE)) then
+    if (self:GetVanillaReviveAnimation(player) == "LostDeath") then
         return 37;
     end
 
     return 56;
-end
-
-function Revive.AddReviveInfo(beforeVanilla, reviveTime, animation, reviveCondition, reviveCallback, canBorrowLife, priority)
-    reviveCondition = reviveCondition or nil;
-    reviveTime = reviveTime or 112;
-    animation = animation or "Death";
-    reviveCallback = reviveCallback or nil;
-    if (canBorrowLife == nil) then
-        canBorrowLife = true;
-    end
-    priority = priority or 0;
-
-    if (reviveCondition == nil) then
-        reviveCondition = function(player) return true; end
-    end
-    local info = { 
-        BeforeVanilla = beforeVanilla, 
-        Animation = animation, 
-        ReviveCondition = reviveCondition, 
-        ReviveTime = reviveTime,
-        Callback = reviveCallback,
-        CanBorrowLife = canBorrowLife,
-        Priority = priority,
-    }
-
-    table.insert(Revive.Infos, info);
-end
-
-local function IsForgottenB(player)
-    local playerType = player:GetPlayerType();
-    return playerType == PlayerType.PLAYER_THEFORGOTTEN_B or playerType == PlayerType.PLAYER_THESOUL_B;
 end
 
 do -- Check.
@@ -129,16 +76,16 @@ do -- Check.
         end
         return false, nil;
     end
-
     function Revive:CanPlayerRevive(player)
         local canRevive = false;
         ---@type ReviveInfo
         local info = nil;
         local resultReviver = nil;
 
-        for _, i in pairs(Lib.Callbacks.Functions.PreRevive) do
-            local result = i.Func(i.Mod, player);
-            if (result) then
+        local callbacks = Isaac.GetCallbacks(Lib.CLCallbacks.CLC_PRE_REVIVE);
+        for _, callback in pairs(callbacks) do
+            local result = callback.Function(callback.Mod, player);
+            if (result and type(result) == "table") then
                 if (result.CanBorrowLife == nil) then result.CanBorrowLife = true; end
                 if (result.BeforeVanilla == nil) then result.BeforeVanilla = false; end
                 local can, reviver = CanResultRevive(player, result);
@@ -152,7 +99,6 @@ do -- Check.
         end
         return { CanRevive = canRevive, Info = info, Reviver = resultReviver};
     end
-
 end
 
 
@@ -170,7 +116,7 @@ local function RevivePlayer(player)
     end
 
     -- Keeper and Bethany will has at lease one heart container.
-    if (Lib.Players:IsFullRedHeartPlayer(playerType)) then
+    if (Lib.Players:IsOnlyRedHeartPlayer(playerType)) then
         if (maxHearts <= 0) then
             player:AddMaxHearts(2 - maxHearts);
         end
@@ -178,7 +124,7 @@ local function RevivePlayer(player)
             player:AddHearts(1);
         end
     -- The forgotten will has at lease one bone heart.
-    elseif (Lib.Players:IsFullBoneHeartPlayer(playerType)) then
+    elseif (Lib.Players:IsOnlyBoneHeartPlayer(playerType)) then
         local boneHearts = player:GetBoneHearts();
         if (boneHearts <= 0) then
             player:AddBoneHearts(1);
@@ -205,11 +151,8 @@ local function RevivePlayer(player)
     if (callback) then
         callback(player, data.Reviver);
     end
-
     
-    for _, i in pairs(Lib.Callbacks.Functions.PostRevive) do
-        i.Func(i.Mod, player, info);
-    end
+    Isaac.RunCallback(Lib.CLCallbacks.CLC_POST_REVIVE, player, info);
 end
 
 local function ReviveUpdate(player) 
@@ -245,7 +188,7 @@ do -- Events.
     local function PostPlayerKilled(mod, entity)
         local player = entity:ToPlayer();
 
-        if (entity.Variant == 1) then
+        if (entity.Variant ~= 0) then
             return;
         end
         local playerType = player:GetPlayerType();
@@ -262,13 +205,13 @@ do -- Events.
         local info = reviveInfoData.Info;
         local reviver = reviveInfoData.Reviver;
 
+        -- If Can Revive.
         if (canRevive) then
-            -- If Can Revive.
             local shouldHasHeart = player:GetBoneHearts() + player:GetSoulHearts() + player:GetHearts() > 0;
             local addedHeartContainers = 0;
 
-            local onlyRedHearts = Lib.Players:IsFullRedHeartPlayer(playerType);
-            local onlyBoneHearts = Lib.Players:IsFullBoneHeartPlayer(playerType);
+            local onlyRedHearts = Lib.Players:IsOnlyRedHeartPlayer(playerType);
+            local onlyBoneHearts = Lib.Players:IsOnlyBoneHeartPlayer(playerType);
             
             if (not shouldHasHeart) then
                 -- Add hearts for no soul heart characters, avoiding revive() create a soul heart.
@@ -299,7 +242,7 @@ do -- Events.
 
 
             -- Set Data Info.
-            info.Animation = info.Animation or Revive:GetPlayerReviveAnimation(player);
+            info.Animation = info.Animation or Revive:GetVanillaReviveAnimation(player);
             info.ReviveFrame = info.ReviveFrame or Revive:GetPlayerReviveFrame(player);
 
 

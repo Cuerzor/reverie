@@ -22,7 +22,7 @@ function Purist:PreGetCollectible(pool, decrease, seed, loopCount)
         return THI.Collectibles.PureFury.Item;
     end
 end
-Purist:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, Purist.PreGetCollectible, nil, 100);
+Purist:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, CallbackPriority.EARLY, Purist.PreGetCollectible);
 
 function Purist:PreGameExit(ShouldSave)
     ModifyPoolCooldown = 2;

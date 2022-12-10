@@ -22,8 +22,8 @@
     <active id="26" name="Illusionary Keyboard" description="Maneuverable Totem" gfx="illusionary_keyboard.png" maxcharges="210" chargetype="timed" quality="1" tags="offensive"/>
     <active id="27" name="Roukanken" description="Roukan no ken wo ku ra e!" gfx="roukanken.png" quality="3" devilprice="2" tags="offensive" maxcharges="6"/>
     <passive id="28" name="Fan of the Dead" description="Live to Death" gfx="fan_of_the_dead.png" quality="4" devilprice="2" tags="nolostbr nocantrip" cache="flying tearflag"/>
-    <passive id="29" name="Fried Tofu" description="Foxes' Favourite!" gfx="fried_tofu.png" maxhearts="2" hearts="4" quality="1" tags="nolostbr nocantrip food"/>
-    <passive id="30" name="One of Nine Tails" description="Power of Familiars" gfx="one_of_nine_tails.png" quality="3" tags="offensive nocantrip"/>
+    <passive id="29" name="Fried Tofu" description="Foxes' Favourite!" gfx="fried_tofu.png" maxhearts="2" hearts="4" quality="1" tags="nolostbr nocantrip food" cache="speed range luck"/>
+    <passive id="30" name="One of Nine Tails" description="Power of Familiars" gfx="one_of_nine_tails.png" quality="3" tags="offensive nocantrip" cache="damage" />
     <active id="31" name="The Gap" description="Border of space" gfx="the_gap.png" maxcharges="4" quality="3" tags="offensive nocantrip nogreed"/>
     <passive id="32" name="Starseeker" description="Far see the future" gfx="starseeker.png" quality="3" tags="offensive nocantrip stars"/>
     <passive id="33" name="Pathseeker" description="Wide see the world" gfx="pathseeker.png" quality="2" tags="offensive nocantrip nogreed"/>

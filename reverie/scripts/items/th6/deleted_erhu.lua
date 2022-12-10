@@ -1,5 +1,4 @@
 local SaveAndLoad = CuerLib.SaveAndLoad
-local Callbacks = CuerLib.Callbacks;
 local EntityTags = THI.Shared.EntityTags;
 local Players = CuerLib.Players;
 local Stats = CuerLib.Stats;

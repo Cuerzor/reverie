@@ -66,7 +66,7 @@ local function PreTakeDamage(mod, tookDamage, amount, flags, source, countdown)
         end
     end
 end
-Knife:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, PreTakeDamage)
+Knife:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage)
 
 local function PostTakeDamage(mod, tookDamage, amount, flags, source, countdown)
     local sourceEnt = source.Entity;
@@ -77,6 +77,6 @@ local function PostTakeDamage(mod, tookDamage, amount, flags, source, countdown)
         end
     end
 end
-Knife:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostTakeDamage)
+Knife:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostTakeDamage)
 
 return Knife;

@@ -1,7 +1,6 @@
 
 local SaveAndLoad = CuerLib.SaveAndLoad
 local Collectibles = CuerLib.Collectibles
-local Callbacks = CuerLib.Callbacks;
 local Stages = CuerLib.Stages;
 local ItemPools = CuerLib.ItemPools;
 
@@ -193,7 +192,7 @@ function Starseeker:preGetCollectible(pool, decrease, seed, loopCount)
     end
 end
     
-Starseeker:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, Starseeker.preGetCollectible, nil, 50);
+Starseeker:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, 50, Starseeker.preGetCollectible);
 
 
 --local ballsDataBuffer = {};

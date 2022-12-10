@@ -187,6 +187,6 @@ function Tech666:PostTakeDamage(tookDamage, amount, flags, source, countdown)
         end
     end
 end
-Tech666:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Tech666.PostTakeDamage);
+Tech666:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, Tech666.PostTakeDamage);
 
 return Tech666;

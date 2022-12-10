@@ -25,7 +25,7 @@ end
 THI:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, Bar.PostEntityRemove)
 
 
-local function GridUpdate(index, prevGrid, newGrid)
+local function GridUpdate(mod, index, prevGrid, newGrid)
     if (prevGrid.Type == GridEntityType.GRID_WALL and prevGrid.Variant == 0 and
     (newGrid.Type == 0 and newGrid.Variant == 0)) then
         local game = Game();
@@ -38,6 +38,6 @@ local function GridUpdate(index, prevGrid, newGrid)
         end
     end
 end
-THI:OnGridUpdate(GridUpdate, 208)
+THI:AddCallback(CuerLib.CLCallbacks.CLC_POST_GRID_UPDATE, GridUpdate, 208);
 
 return Bar;

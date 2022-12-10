@@ -1,9 +1,8 @@
 local Lib = LIB;
 local Screen = Lib.Screen;
 local Inputs = Lib.Inputs;
-local Callbacks = Lib.Callbacks;
 
-local Actives = LIB:NewClass();
+local Actives = Lib:NewClass();
 Actives.FontSprite = Sprite();
 Actives.FontSprite:Load("gfx/reverie/ui/active_count.anm2", true);
 
@@ -470,9 +469,10 @@ do -- Try Use Active.
                             if (totalCharges < maxCharges) then
 
                                 local canUse = false;
-                                for i, info in ipairs(Callbacks.Functions.TryUseItem) do
-                                    if (not info.OptionalArg or info.OptionalArg <=0 or info.OptionalArg == item) then
-                                        local result = info.Func(info.Mod, item, player, slot);
+                                local callbacks = Isaac.GetCallbacks(Lib.CLCallbacks.CLC_TRY_USE_ITEM);
+                                for _, callback in ipairs(callbacks) do
+                                    if (not callback.Param or callback.Param <=0 or callback.Param == item) then
+                                        local result = callback.Function(callback.Mod, item, player, slot);
                                         canUse = result;
                                     end
                                 end

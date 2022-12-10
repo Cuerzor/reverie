@@ -196,7 +196,7 @@ function Keeper:PostPlayerCollision(player, other, low)
         end
     end
 end
-Keeper:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_PLAYER_COLLISION, Keeper.PostPlayerCollision, 0);
+Keeper:AddPriorityCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, CallbackPriority.LATE, Keeper.PostPlayerCollision);
 
 
 -- function Trader:PostTraderKill(trader)

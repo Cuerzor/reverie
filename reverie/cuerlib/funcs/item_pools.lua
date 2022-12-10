@@ -1,5 +1,4 @@
 local Lib = LIB;
-local Callbacks = Lib.Callbacks;
 local ItemPools = Lib:NewClass();
 ItemPools.RoomBlacklist = {};
 
@@ -38,13 +37,12 @@ function ItemPools:EvaluateRoomBlacklist()
 
     local itemConfig = Isaac.GetItemConfig();
     local collectibles = itemConfig:GetCollectibles();
-    local affectedFunctions = {};
     for i = 1, collectibles.Size do
         local config = itemConfig:GetCollectible(i);
         if (config) then
-            for index, info in ipairs(Callbacks.Functions.EvaluatePoolBlacklist) do
-                if (info.Func(info.Mod, i, config)) then
-                    affectedFunctions[index] = true;
+            local callbacks = Isaac.GetCallbacks(Lib.CLCallbacks.CLC_EVALUATE_POOL_BLACKLIST);
+            for _, callback in ipairs(callbacks) do
+                if (callback.Function(callback.Mod, i, config)) then
                     itemPool:AddRoomBlacklist(i);
                     break;
                 end
@@ -60,6 +58,23 @@ local function PostGetCollectible(mod, id, pool, decrease, seed)
 end
 ItemPools:AddCallback(ModCallbacks.MC_POST_GET_COLLECTIBLE, PostGetCollectible)
 
+-- Callback.
+local loopCount = 0;
+local function PreGetCollectible(mod, pool, decrease, seed)
+    loopCount = loopCount + 1;
+    local callbacks = Isaac.GetCallbacks(Lib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE);
+    for _, callback in pairs(callbacks) do
+        local result = callback.Function(mod, pool, decrease, seed, loopCount);
+        if (result) then
+            loopCount = loopCount - 1;
+            return result;
+        end
+    end
+    loopCount = loopCount - 1;
+end
+ItemPools:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, PreGetCollectible)
+
+-- Evaluate Room Blacklist.
 local blacklistCleared = false;
 local function PreGetCollectible(mod, pool, decrease, seed)
     if (not blacklistCleared and Game():GetRoom():GetFrameCount() <= 0) then

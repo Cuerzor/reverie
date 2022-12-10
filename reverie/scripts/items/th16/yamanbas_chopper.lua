@@ -28,7 +28,7 @@ do
             end
         end
     end
-    Chopper:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostPlayerTakeDamage, EntityType.ENTITY_PLAYER);
+    Chopper:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostPlayerTakeDamage, EntityType.ENTITY_PLAYER);
 
     local function PostEntityKill(mod, entity)
         if (entity:IsActiveEnemy(true)) then

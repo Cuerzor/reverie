@@ -420,7 +420,7 @@ function Roukanken:onPlayerEffect(player)
         end
 
         if (playerData.Slashing) then
-            if (Stages.IsInMinesEscape()) then
+            if (player:HasCurseMistEffect()) then
                 Roukanken:QuitSwordPhase(player);
             end
 
@@ -781,7 +781,7 @@ do
             end
         end
     end
-    Roukanken:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, PreEntityDamage);
+    Roukanken:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreEntityDamage);
 end
 
 

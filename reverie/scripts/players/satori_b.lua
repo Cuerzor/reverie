@@ -134,7 +134,7 @@ function SatoriB:PreTakeDamage(tookDamage, amount, flags, source, countdown)
         end
     end
 end
-SatoriB:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, SatoriB.PreTakeDamage);
+SatoriB:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, SatoriB.PreTakeDamage);
 
 
 function SatoriB:PostCrushEnemy(source, crushed, damage)

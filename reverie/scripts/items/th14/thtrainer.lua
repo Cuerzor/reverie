@@ -60,7 +60,7 @@ local function PostNewStage(mod)
         end
     end
 end
-THTRAINER:AddCustomCallback(CuerLib.CLCallbacks.CLC_NEW_STAGE, PostNewStage)
+THTRAINER:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_STAGE, PostNewStage)
 
 local function PostNewLevel(mod)
     if (Collectibles.IsAnyHasCollectible(THTRAINER.Item)) then

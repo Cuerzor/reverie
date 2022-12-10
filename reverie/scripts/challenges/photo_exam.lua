@@ -83,6 +83,6 @@ local function PreTakeDamage(mod, tookDamage, amount, flags, source, countdown)
         end
     end
 end
-Exam:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, PreTakeDamage, EntityType.ENTITY_HUSH);
+Exam:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage, EntityType.ENTITY_HUSH);
 
 return Exam;

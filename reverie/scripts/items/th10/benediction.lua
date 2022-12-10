@@ -134,7 +134,7 @@ do
     local function TryUseBenediction(mod, item, player, slot)
         return Actives:GetTotalCharges(player, slot) > 0
     end
-    Benediction:AddCustomCallback(CuerLib.CLCallbacks.CLC_TRY_USE_ITEM, TryUseBenediction, Benediction.Item);
+    Benediction:AddCallback(CuerLib.CLCallbacks.CLC_TRY_USE_ITEM, TryUseBenediction, Benediction.Item);
 
     local function PostUseBenediction(mod, item, rng, player, flags, slot, varData)
         local data = GetPlayerData(player, true);

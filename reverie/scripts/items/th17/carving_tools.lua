@@ -1,3 +1,4 @@
+local Grids = CuerLib.Grids;
 local Collectibles = CuerLib.Collectibles;
 local Tools = ModItem("Carving Tools", "CARVING_TOOLS")
 
@@ -71,16 +72,16 @@ function Tools:GetHaniwaSubType(gridType)
     return Haniwa.SubTypes.HANIWA_SOLDIER;
 end
 
-local function PostGridDestroyed(gridData)
+local function PostGridDestroyed(mod, gridData)
     local prevType = gridData.Type;
-    local prevRock = THI:IsGridTypeRock(prevType);
+    local prevRock = Grids:IsRock(prevType);
     if (prevRock) then
         if (Collectibles.IsAnyHasCollectible(Tools.Item)) then
             Tools:SpawnHaniwa(gridData.Position, Tools:GetHaniwaSubType(prevType))
         end
     end
 end
-THI:OnGridDestroyed(PostGridDestroyed)
+THI:AddCallback(CuerLib.CLCallbacks.CLC_POST_GRID_DESTROYED, PostGridDestroyed)
 
 -- local function PostUpdate(mod)
 --     if (Collectibles.IsAnyHasCollectible(Tools.Item)) then

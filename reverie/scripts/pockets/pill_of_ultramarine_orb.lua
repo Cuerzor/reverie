@@ -75,7 +75,7 @@ local function PostTakeDamage(mod, ent, amount, flags, source, countdown)
         Pill:Trigger(player)
     end
 end
-Pill:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostTakeDamage, EntityType.ENTITY_PLAYER);
+Pill:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostTakeDamage, EntityType.ENTITY_PLAYER);
 
 local function PostNewRoom(mod)
     for p, player in Players.PlayerPairs() do

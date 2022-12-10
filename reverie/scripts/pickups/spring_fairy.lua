@@ -1,7 +1,16 @@
+local Players = CuerLib.Players;
 local Fairy = ModEntity("Spring Fairy", "SPRING_FAIRY");
 
 
-function Fairy:CanCollect(player)
+function Fairy:CanCollect(player, pickup)
+    if (pickup:IsShopItem()) then
+        if (player:GetNumCoins() < pickup.Price) then
+            return false;
+        end
+    end
+    if (pickup:GetSprite():IsPlaying("Appear")) then
+        return false;
+    end
     return player:CanPickRedHearts() or player:CanPickSoulHearts()
 end
 
@@ -20,31 +29,23 @@ Fairy:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostFairyUpdate, Fairy.Var
 local function PreFairyCollision(mod, pickup, collider)
     local player = collider:ToPlayer();
     if (player) then
-        if (Fairy:CanCollect(player)) then
-            local canPick = true;
+        if (Fairy:CanCollect(player, pickup)) then
             if (pickup:IsShopItem()) then
-                if (player:GetNumCoins() < pickup.Price) then
-                    canPick = false;
-                else
-                    player:AddCoins(-pickup.Price);
-                end
+                Players:Buy(player, pickup.Price);
             end
-            
-            if (canPick) then
-                if (THI.IsLunatic()) then
-                    player:AddHearts(2);
-                else
-                    player:AddHearts(player:GetMaxHearts());
-                end
-                player:AddSoulHearts(2);
-                -- Remove self and create a fairy Effect.
-                local Effect = THI.Effects.FairyEffect;
-                local fairyEffect = Isaac.Spawn(Effect.Type, Effect.Variant, 0, pickup.Position, Vector(0, 0), player):ToEffect()
-                fairyEffect:AddEntityFlags(EntityFlag.FLAG_PERSISTENT);
-                pickup:Remove();
-                --THI.SFXManager:Play(SoundEffect.SOUND_BOSS2_BUBBLES);
-                THI.SFXManager:Play(THI.Sounds.SOUND_FAIRY_HEAL);
+            if (THI.IsLunatic()) then
+                player:AddHearts(2);
+            else
+                player:AddHearts(player:GetMaxHearts());
             end
+            player:AddSoulHearts(2);
+            -- Remove self and create a fairy Effect.
+            local Effect = THI.Effects.FairyEffect;
+            local fairyEffect = Isaac.Spawn(Effect.Type, Effect.Variant, 0, pickup.Position, Vector(0, 0), player):ToEffect()
+            fairyEffect:AddEntityFlags(EntityFlag.FLAG_PERSISTENT);
+            pickup:Remove();
+            --THI.SFXManager:Play(SoundEffect.SOUND_BOSS2_BUBBLES);
+            SFXManager():Play(THI.Sounds.SOUND_FAIRY_HEAL);
         else
             return true;
         end
@@ -53,10 +54,8 @@ end
 Fairy:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, PreFairyCollision, Fairy.Variant)
 
 local function CanCollect(mod, player, pickup)
-    if (pickup.Type == Fairy.Type and pickup.Variant == Fairy.Variant) then
-        return Fairy:CanCollect(player);
-    end
+    return Fairy:CanCollect(player, pickup);
 end
-Fairy:AddCustomCallback(CuerLib.CLCallbacks.CLC_CAN_COLLECT, CanCollect);
+Fairy:AddCallback(CuerLib.CLCallbacks.CLC_CAN_PICKUP_COLLECT, CanCollect, Fairy.Variant);
 
 return Fairy;

@@ -501,7 +501,7 @@ function Trader:PostPlayerCollision(player, other, low)
         end
     end
 end
-Trader:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_PLAYER_COLLISION, Trader.PostPlayerCollision, 0);
+Trader:AddPriorityCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, CallbackPriority.LATE, Trader.PostPlayerCollision, 0);
 
 
 -- function Trader:PostTraderKill(trader)

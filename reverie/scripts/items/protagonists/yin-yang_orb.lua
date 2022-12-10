@@ -34,7 +34,7 @@ function YinYangOrb:FireOrb(player, item, direction)
     tear.CollisionDamage = YinYangOrb.Config.Damage;
     tear.TearFlags = TearFlags.TEAR_BOUNCE;
 end
-YinYangOrb:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_RELEASE_HOLDING_ACTIVE, YinYangOrb.FireOrb, YinYangOrb.Item);
+YinYangOrb:AddPriorityCallback(CuerLib.CLCallbacks.CLC_RELEASE_HOLDING_ACTIVE, CallbackPriority.LATE, YinYangOrb.FireOrb, YinYangOrb.Item);
 
 function YinYangOrb:PostTearUpdate(tear)
     -- Bounce Orb

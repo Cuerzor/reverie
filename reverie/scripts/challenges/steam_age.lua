@@ -30,7 +30,7 @@ function SteamAge:PreGetCollectible(pool, decrease, seed, loopCount)
         end
     end
 end
-SteamAge:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, SteamAge.PreGetCollectible, nil, 100);
+SteamAge:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, CallbackPriority.EARLY, SteamAge.PreGetCollectible);
 
 function SteamAge:PreGameExit(ShouldSave)
     ModifyPoolCooldown = 2;

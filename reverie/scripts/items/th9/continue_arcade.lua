@@ -95,15 +95,7 @@ local function PreRevive(mod, player)
         end
     end
 end
-ContinueArcade:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, PreRevive);
+ContinueArcade:AddCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, PreRevive);
 
---Revive.AddReviveInfo(false, nil, nil, CanRevive, PostRevive)
-
--- function ContinueArcade:PostGainContinue(player, item, count, touched)
---     if (not touched) then
---         player:AddCoins(3);
---     end
--- end
--- ContinueArcade:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, ContinueArcade.PostGainContinue, ContinueArcade.Item);
 
 return ContinueArcade;

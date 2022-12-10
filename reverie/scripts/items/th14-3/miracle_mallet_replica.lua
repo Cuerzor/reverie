@@ -16,7 +16,8 @@ function Mallet:Hammer(player, direction)
     local mallet = Isaac.Spawn(Effect.Type, Effect.Variant, subType, pos, Vector.Zero, player);
     mallet.Parent = player;
 end
-Mallet:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_RELEASE_HOLDING_ACTIVE, function(mod, player, item, direction)
+Mallet:AddPriorityCallback(CuerLib.CLCallbacks.CLC_RELEASE_HOLDING_ACTIVE, CallbackPriority.LATE, 
+function(mod, player, item, direction)
     Mallet:Hammer(player, direction)
 end, Mallet.Item)
 

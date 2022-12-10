@@ -1,5 +1,4 @@
 local Lib = LIB;
-local Callbacks = Lib.Callbacks;
 
 local Pickups = Lib:NewClass();
 
@@ -18,12 +17,36 @@ local ChestVariants = {
     PickupVariant.PICKUP_MOMSCHEST
 }
 
+local PickingCard = nil;
+local function PostCollectPickup(player, pickup)
+    
+    local pickupData = Pickups:GetPickupData(pickup);
+    if (pickupData.Moved) then
+        pickup.Position = pickupData.OriginPosition;
+        pickupData.Move = false;
+    end
+
+    if (pickup.Variant == PickupVariant.PICKUP_TAROTCARD) then
+        PickingCard = pickup;
+    end
+
+    Isaac.RunCallbackWithParam(Lib.CLCallbacks.CLC_POST_PICKUP_COLLECTED, pickup.Variant, player, pickup);
+end
+
+function Pickups:GetPickupData(pickup) 
+    local data = Lib:GetEntityLibData(pickup);
+    data._PICKUP = data._PICKUP or {
+        Moved = false,
+        OriginPosition = pickup.Position
+    }
+    return data._PICKUP;
+end
+
 function Pickups.SpawnFixedCollectible(id, pos, vel, spawner)
     local col = Isaac.Spawn(5, 100, 1, pos, vel, spawner):ToPickup();
     col:Morph(5, 100, id, false, false, true);
     return col;
 end
-
 function Pickups.IsChest(variant)
     for _, var in pairs(ChestVariants) do
         if (var == variant) then
@@ -37,7 +60,6 @@ function Pickups.IsSpecialPickup(variant)
     variant == PickupVariant.PICKUP_BIGCHEST or
     variant == PickupVariant.PICKUP_BED;
 end
-
 function Pickups.CanCollect(player, pickup)
     local variant = pickup.Variant;
     local subType = pickup.SubType;
@@ -98,157 +120,108 @@ function Pickups.CanCollect(player, pickup)
         return true;
     end
 
-    for i, func in pairs(Callbacks.Functions.CanCollect) do
-        local result = func.Func(func.Mod, player, pickup);
-        if (result ~= nil) then
-            return result;
-        end
-    end
-
-    return false;
+    
+    return Isaac.RunCallbackWithParam(Lib.CLCallbacks.CLC_CAN_PICKUP_COLLECT, pickup.Variant, player, pickup);
 end
-
-function Pickups.TryCollect(player, pickup)
-    if (Pickups.CanCollect(player, pickup)) then
-        Pickups.Collect(player, pickup)
-    end
-end
-
--- local function GetPlayerTempData(player, create)
---     local data = Lib:GetEntityLibData(player, true);
---     if (create) then
---         data._PICKUP = data._PICKUP or {
---             PickingCard = nil
---         }
---     end
---     return data._PICKUP;
--- end
-
-function Pickups:GetPickupData(pickup) 
-    local data = Lib:GetEntityLibData(pickup);
-    data._PICKUP = data._PICKUP or {
-        FakeCollected = false,
-        Moved = false,
-        OriginPosition = pickup.Position
-    }
-    return data._PICKUP;
-end
-
 function Pickups.Collect(player, pickup)
     if (Pickups.IsChest(pickup.Variant)) then
         pickup:TryOpenChest(player);
     else
         local beforePos = pickup.Position;
         pickup.Position = player.Position;
-        local pickupData = Pickups:GetPickupData(pickup) ;
+
+        local pickupData = Pickups:GetPickupData(pickup);
         pickupData.Moved = true;
         pickupData.OriginPosition = beforePos;
     end
 end
-
-local PickingCard = nil;
-local function PostCollectPickup(player, pickup)
-    
-    local pickupData = Pickups:GetPickupData(pickup) ;
-    if (pickupData.Moved) then
-        pickup.Position = pickupData.OriginPosition;
+function Pickups.TryCollect(player, pickup)
+    if (Pickups.CanCollect(player, pickup)) then
+        Pickups.Collect(player, pickup)
+        return true;
     end
+    return false;
+end
+-- From Fiend Folio.
+function Pickups.GetBoneSwingPickupPlayer(pickup)
+	--try to get a player from bone club swings
+	if pickup:IsShopItem() then return nil end
 
-    if (pickup.Variant == PickupVariant.PICKUP_TAROTCARD) then
-        PickingCard = pickup;
-    end
+	for _, knife in pairs(Isaac.FindByType(EntityType.ENTITY_KNIFE, -1, 4, false, false)) do
+		if knife.FrameCount > 0 and knife.Parent then
+			local parent = knife.Parent
+			if parent:ToPlayer() then
+				local player = parent:ToPlayer()
 
-    for i, info in pairs(Callbacks.Functions.PostPickupCollected) do
-        if (info.OptionalArg == nil or info.OptionalArg < 0 or info.OptionalArg == pickup.Variant) then
-            info.Func(info.Mod, player, pickup);
-        end
-    end
-    --pickupData.FakeCollected = true;
+				--find the center of the swing object
+				knife = knife:ToKnife()
+				local position = knife.Position
+				local scale = 30
+                -- Bone Scythe or Spirit Sword.
+				if knife.Variant == 2 or knife.Variant == 10 then 
+					scale = 42
+				end
+				scale = scale * knife.SpriteScale.X
+				local offset = Vector(scale,0)
+				offset = offset:Rotated(knife.Rotation)
+				position = position + offset
+
+				--do player checks
+				if (position - pickup.Position):Length() < pickup.Size + scale and (not pickup:GetSprite():IsPlaying("Collect")) then --check if the player is touching it
+					return player
+				end
+			end
+		end
+	end
+
+	return nil
 end
 
-function Pickups.SetCollected(pickup, value)
 
-    if (value) then
-        pickup:GetSprite():Play("Collect");
-        PostCollectPickup(pickup);
-    end
-end
 
-function Pickups.AddCoinsOrCoinHearts(player, value)
-
-    if (player:GetPlayerType() == PlayerType.PLAYER_KEEPER or 
-    player:GetPlayerType() == PlayerType.PLAYER_KEEPER_B) then
-        local maxHearts = player:GetMaxHearts();
-        local hearts = player:GetHearts();
-        local empty = math.ceil((maxHearts - hearts) / 2);
-
-        local costCoins = math.min(value, empty);
-        player:AddHearts(costCoins * 2);
-        value = value - costCoins;
-    end
-
-    player:AddCoins(value);
-end
-
+-- Events.
 function Pickups:PostPickupUpdate(pickup)
-    local pickupData = Pickups:GetPickupData(pickup);
-    if (pickupData.FakeCollected) then
-        if (pickup:GetSprite():IsFinished("Collect")) then
-            pickup:Remove();
-        end
+    local data = Pickups:GetPickupData(pickup);
+    if (data.Moved) then
+        pickup.Position = data.OriginPosition;
+        data.Moved = false;
+    end
+    
+    local player = Pickups.GetBoneSwingPickupPlayer(pickup);
+    if (player) then
+        Pickups.TryCollect(player, pickup);
     end
 end
 Pickups:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, Pickups.PostPickupUpdate);
 
-function Pickups:prePickupCollision(pickup, collider, low)
-    local pickupData = Pickups:GetPickupData(pickup);
-    if (pickupData.FakeCollected) then
-        return true;
-    end
-end
-Pickups:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, Pickups.prePickupCollision);
-
-function Pickups:postPickupCollision(pickup, collider, low)
-    local pickupData = Pickups:GetPickupData(pickup);
-    if (not pickupData.FakeCollected) then
-        local player = collider:ToPlayer();
-        if (player) then
-            if (Pickups.CanCollect(player, pickup)) then
-                PostCollectPickup(player, pickup);
-            end
+function Pickups:PostPickupCollision(pickup, collider, low)
+    local player = collider:ToPlayer();
+    if (player) then
+        if (Pickups.CanCollect(player, pickup)) then
+            PostCollectPickup(player, pickup)
         end
     end
 end
-Pickups:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, Pickups.postPickupCollision);
+Pickups:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, Pickups.PostPickupCollision);
 
-
-local function PostUpdate(mod)
-    -- local data = GetPlayerTempData(player, false);
-    -- if (data) then
-        if (PickingCard) then
-            local pickup = PickingCard;
-            PickingCard = nil;
-            if (not pickup:Exists() or pickup:IsDead()) then
-                for p, player in Lib.Players.PlayerPairs() do
-                    for slot = 0, 3 do
-                        local card = player:GetCard(slot);
-                        if (card == pickup.SubType) then
-                            -- Execute Callbacks.
-                            for i, info in pairs(Callbacks.Functions.PostPickUpCard) do
-                                if (info.OptionalArg == nil or info.OptionalArg <= 0 or info.OptionalArg == pickup.Variant) then
-                                    info.Func(info.Mod, player, card);
-                                end
-                            end 
-    
-                            return;
-                        end
+function Pickups:PostUpdate()
+    if (PickingCard) then
+        local pickup = PickingCard;
+        PickingCard = nil;
+        if (not pickup:Exists() or pickup:IsDead()) then
+            for p, player in Lib.Players.PlayerPairs() do
+                for slot = 0, 3 do
+                    local card = player:GetCard(slot);
+                    if (card == pickup.SubType) then
+                        Isaac.RunCallbackWithParam(Lib.CLCallbacks.CLC_POST_PICK_UP_CARD, card, player, card);
+                        return;
                     end
                 end
             end
         end
-    --end
+    end
 end
-Pickups:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
+Pickups:AddCallback(ModCallbacks.MC_POST_UPDATE, Pickups.PostUpdate);
 
 
 return Pickups;

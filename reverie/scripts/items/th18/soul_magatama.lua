@@ -302,7 +302,7 @@ do -- Active Item.
         local position = player.Position;
         Magatama:FireMagatama(player, position, velocity);
     end
-    Magatama:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_RELEASE_HOLDING_ACTIVE, PostReleaseMagatama, Magatama.Item);
+    Magatama:AddPriorityCallback(CuerLib.CLCallbacks.CLC_RELEASE_HOLDING_ACTIVE, CallbackPriority.LATE, PostReleaseMagatama, Magatama.Item);
 end
 
 do -- Wisp.
@@ -336,7 +336,7 @@ do -- Wisp.
             end
         end
     end
-    Magatama:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostTakeDamage);
+    Magatama:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostTakeDamage);
 end
 
 return Magatama;

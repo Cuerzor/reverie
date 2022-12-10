@@ -100,7 +100,7 @@ local function onPlayerTakeDamage(mod, tookDamage, amount, source, flags, countd
         end
     end
 end
-GourdShroom:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, onPlayerTakeDamage, EntityType.ENTITY_PLAYER);
+GourdShroom:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, onPlayerTakeDamage, EntityType.ENTITY_PLAYER);
 
 local function onEvaluateCache(mod, player, flag)
     if (player:HasCollectible(GourdShroom.Item)) then

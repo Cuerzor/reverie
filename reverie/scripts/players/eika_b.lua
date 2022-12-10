@@ -223,7 +223,7 @@ local function PostGainItem(mod, player, item, count, touched)
         end
     end
 end
-EikaB:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainItem)
+EikaB:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainItem)
 
 
 local function PostUseCard(mod, card, player, flags)
@@ -257,7 +257,7 @@ local function PostUseItem(mod, item, rng, player, flags, slot, varData)
 end
 EikaB:AddCallback(ModCallbacks.MC_USE_ITEM, PostUseItem)
 
-Players:SetFullRedHeartPlayer(EikaB.Type, true);
+Players:SetOnlyRedHeartPlayer(EikaB.Type, true);
 
 
 return EikaB;

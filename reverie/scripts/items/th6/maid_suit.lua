@@ -2,7 +2,6 @@ local Entities = CuerLib.Entities;
 local SaveAndLoad = CuerLib.SaveAndLoad
 local Collectibles = CuerLib.Collectibles
 local Stages = CuerLib.Stages;
-local Callbacks = CuerLib.Callbacks;
 
 local MaidSuit = ModItem("Maid Suit", "MaidSuit");
 MaidSuit.MaidKnife = Isaac.GetEntityTypeByName("Maid Knife");
@@ -73,7 +72,7 @@ function MaidSuit:postGainCollectible(player, item, count, touched)
         end
     end
 end
-MaidSuit:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, MaidSuit.postGainCollectible, MaidSuit.Item);
+MaidSuit:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, MaidSuit.postGainCollectible, MaidSuit.Item);
 
 function MaidSuit:onUpdate()
 

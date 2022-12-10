@@ -83,8 +83,7 @@ do
     local function PostNewGreedWave(mod, wave)
         Wings:SwapAllPlayers();
     end
-
-    Wings:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_NEW_GREED_WAVE, PostNewGreedWave)
+    Wings:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_GREED_WAVE, PostNewGreedWave)
 
     local function PostNewRoom(mod)
         for i, player in Players.PlayerPairs() do

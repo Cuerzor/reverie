@@ -35,6 +35,6 @@ function Glasses:PostChangeCollectibles(player, item, diff)
         player:EvaluateItems();
     end
 end
-Glasses:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, Glasses.PostChangeCollectibles);
+Glasses:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, Glasses.PostChangeCollectibles);
 
 return Glasses;

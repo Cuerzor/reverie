@@ -134,7 +134,7 @@ local function PostNPCTakeDamage(mod, tookDamage, amount, flags, source, countdo
         end
     end
 end
-Dancer:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostNPCTakeDamage);
+Dancer:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostNPCTakeDamage);
 
 local function PostNPCUpdate(mod, npc)
     local data = GetNPCData(npc, false)

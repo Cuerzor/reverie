@@ -20,7 +20,7 @@ end
 function JarOfFireflies:PostChangeJar(player, item, diff)
     THI:EvaluateCurses();
 end
-JarOfFireflies:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, JarOfFireflies.PostChangeJar, JarOfFireflies.Item);
+JarOfFireflies:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, JarOfFireflies.PostChangeJar, JarOfFireflies.Item);
 
 function JarOfFireflies:EvaluateCurse(curses)
     for i, player in Players.PlayerPairs(true, true) do
@@ -30,7 +30,7 @@ function JarOfFireflies:EvaluateCurse(curses)
         end
     end
 end
-JarOfFireflies:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, JarOfFireflies.EvaluateCurse, 0, -100);
+JarOfFireflies:AddPriorityCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, CallbackPriority.LATE, JarOfFireflies.EvaluateCurse);
 
 function JarOfFireflies:onUseJar(item,rng,player,flags,slot,data)	
     for i = 1, 8 do

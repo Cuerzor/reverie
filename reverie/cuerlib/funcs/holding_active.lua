@@ -88,24 +88,14 @@ function HoldingActive:Cancel(player)
 end
 
 function HoldingActive:ReleaseActive(player, item, ...)
-    -- Pre Release Active.
-    local callbacks = Lib.Callbacks;
-    for i, info in pairs(callbacks.Functions.PreReleaseHoldingActive) do
-        if (not info.OptionalArg or info.OptionalArg == item) then
-            local returned = info.Func(info.Mod, player, item, ...);
-
-            if (returned == false) then
-                return false;
-            end
-        end
-    end
-
-    -- Post Release Active Item.
+    -- Release Active Item.
     local discharge = true;
     local remove = false;
-    for i, info in pairs(callbacks.Functions.PostReleaseHoldingActive) do
-        if (not info.OptionalArg or info.OptionalArg == item) then
-            local returned = info.Func(info.Mod, player, item, ...);
+
+    local callbacks = Isaac.GetCallbacks(Lib.CLCallbacks.CLC_RELEASE_HOLDING_ACTIVE);
+    for _, callback in pairs(callbacks) do
+        if (callback.Param < 0 or callback.Param == item) then
+            local returned = callback.Function(callback.Mod, player, item, ...);
 
             if (returned) then
                 if (returned.Discharge == false) then

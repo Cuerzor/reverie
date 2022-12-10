@@ -19,7 +19,7 @@ function ViciousCurse:PostGainCurse(player, item, count, touched)
         end
     end
 end
-ViciousCurse:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, ViciousCurse.PostGainCurse, ViciousCurse.Item);
+ViciousCurse:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, ViciousCurse.PostGainCurse, ViciousCurse.Item);
 
 function ViciousCurse:PostPlayerEffect(player)
     local Seija = THI.Players.Seija;
@@ -72,7 +72,7 @@ local function PreTakeDamage(mod, tookDamage, amount, flags, source, countdown)
         end
     end
 end
-ViciousCurse:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, PreTakeDamage, EntityType.ENTITY_PLAYER);
+ViciousCurse:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage, EntityType.ENTITY_PLAYER);
 
 -- local function PostPlayerKill(mod, ent)
 --     ent:ToPlayer():Revive();

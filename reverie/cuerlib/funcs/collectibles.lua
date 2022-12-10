@@ -1,52 +1,31 @@
 local Lib = LIB;
-local Callbacks = Lib.Callbacks;
 
 local Collectibles = Lib:NewClass()
 
 local function PostPickupCollectible(player, item, touched)
     touched = touched or false;
-    for i, func in pairs(Callbacks.Functions.PostPickupCollectible) do
-        if (func.OptionalArg == nil or item == func.OptionalArg) then
-            func.Func(func.Mod, player, item, touched);
-        end
-    end
+    Isaac.RunCallbackWithParam(Lib.CLCallbacks.CLC_POST_PICK_UP_COLLECTIBLE, item, player, item, touched);
 end
 
-local function PostPickupTrinket(player, item, golden, touched)
+local function PostPickupTrinket(player, trinket, golden, touched)
     touched = touched or false;
-    for i, func in pairs(Callbacks.Functions.PostPickupTrinket) do
-        if (func.OptionalArg == nil or item == func.OptionalArg) then
-            func.Func(func.Mod, player, item, golden, touched);
-        end
-    end
+    Isaac.RunCallbackWithParam(Lib.CLCallbacks.CLC_POST_PICK_UP_TRINKET, trinket, player, trinket, golden, touched);
 end
 
-local function PostGainCollectible(player, item, count, touched, queued)
+local function PostGainCollectible(player, item, count, touched, holding)
     count = count or 1;
     touched = touched or false;
-    queued = queued or false;
-    for i, func in pairs(Callbacks.Functions.PostGainCollectible) do
-        if (func.OptionalArg == nil or item == func.OptionalArg) then
-            func.Func(func.Mod, player, item, count, touched, queued);
-        end
-    end
+    holding = holding or false;
+    Isaac.RunCallbackWithParam(Lib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, item, player, item, count, touched, holding);
 end
 
 local function PostLoseCollectible(player, item, count)
     count = count or 1;
-    for i, func in pairs(Callbacks.Functions.PostLoseCollectible) do
-        if (func.OptionalArg == nil or item == func.OptionalArg) then
-            func.Func(func.Mod, player, item, count);
-        end
-    end
+    Isaac.RunCallbackWithParam(Lib.CLCallbacks.CLC_POST_LOSE_COLLECTIBLE, item, player, item, count);
 end
 
 local function PostChangeCollectibles(player, item, diff)
-    for i, func in pairs(Callbacks.Functions.PostChangeCollectibles) do
-        if (func.OptionalArg == nil or item == func.OptionalArg) then
-            func.Func(func.Mod, player, item, diff);
-        end
-    end
+    Isaac.RunCallbackWithParam(Lib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, item, player, item, diff);
 end
 
 -- Config.
@@ -190,6 +169,7 @@ local function UpdateCollectibles(player)
 end
 
 
+-- Events.
 function Collectibles:onPlayerUpdate(player)
     if (Game():GetFrameCount() > 0) then
         if (not player:IsItemQueueEmpty()) then -- If player is queueing items
@@ -315,35 +295,5 @@ local function PostUpdate(mod)
 end
 Collectibles:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 
--- local function PrePickupCollision(mod, pickup, other, low)
---     local isTrinket = pickup.Variant == PickupVariant.PICKUP_TRINKET;
---     if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or isTrinket) then
---         if (other.Type == EntityType.ENTITY_PLAYER) then
---             local player = other:ToPlayer();
---             local data = GetPlayerData(player, true);
---             if (player:IsExtraAnimationFinished() and pickup.Wait <= 0) then
---                 data.TouchedItem = {
---                     ID = pickup.SubType,
---                     IsTrinket = isTrinket
---                 };
---             end
---         end
---     end
--- end
-
-
-local loopCount = 0;
-local function PreGetCollectible(mod, pool, decrease, seed)
-    loopCount = loopCount + 1;
-    for i, info in pairs(Callbacks.Functions.PreGetCollectible) do
-        local result = info.Func(mod, pool, decrease, seed, loopCount);
-        if (result) then
-            loopCount = loopCount - 1;
-            return result;
-        end
-    end
-    loopCount = loopCount - 1;
-end
-Collectibles:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, PreGetCollectible);
 
 return Collectibles;

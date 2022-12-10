@@ -305,7 +305,7 @@ function EmptyBook:UseEmptyBook(item, rng, player, flags, slot, varData)
                 player:RemoveCollectible(item, true, slot, true);
                 local size = GetBookSize(globalData.Effect);
                 local newBook = FinishedBooks[size + 1];
-                player:AddCollectible(newBook, 12, true, slot);
+                player:AddCollectible(newBook, -1, true, slot);
                 player:AnimateCollectible(newBook, "Pickup");
                 EmptyBook.ShowBookItemText(globalData.Effect, size);
             end
@@ -396,7 +396,7 @@ function EmptyBook:EvaluateCurse(curses)
         end
     end
 end
-EmptyBook:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, EmptyBook.EvaluateCurse, 0, -100);
+EmptyBook:AddPriorityCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, CallbackPriority.LATE, EmptyBook.EvaluateCurse);
 
 function EmptyBook:OnEvaluateCache(player, cache)
     if (cache == CacheFlag.CACHE_SPEED) then
@@ -437,7 +437,7 @@ function EmptyBook:PostEntityTakeDamage(tookDamage, amount, flags, source, count
         end
     end
 end
-EmptyBook:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, EmptyBook.PostEntityTakeDamage);
+EmptyBook:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, EmptyBook.PostEntityTakeDamage);
 
 -- Active Effects.
 local function DamageBoost(player, size, rng)
@@ -652,7 +652,7 @@ function EmptyBook:PostChangeCollecitble(player, item, diff)
         end
     end
 end
-EmptyBook:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, EmptyBook.PostChangeCollecitble);
+EmptyBook:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, EmptyBook.PostChangeCollecitble);
 
 function EmptyBook:PostPickupCollectible(player, item, touched)
     for i ,id in pairs(FinishedBooks) do
@@ -670,10 +670,9 @@ function EmptyBook:PostPickupCollectible(player, item, touched)
                 EmptyBook.ShowBookItemText(globalData.Effect, i - 1);
             end
         end
-        
     end
 end
-EmptyBook:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_PICKUP_COLLECTIBLE, EmptyBook.PostPickupCollectible);
+EmptyBook:AddCallback(CuerLib.CLCallbacks.CLC_POST_PICK_UP_COLLECTIBLE, EmptyBook.PostPickupCollectible);
 
 local renderOffset = Vector(0, -60);
 local leftOffset = Vector(-40, 0);

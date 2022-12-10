@@ -1,7 +1,6 @@
 local Screen = CuerLib.Screen;
 local Collectibles = CuerLib.Collectibles
 local Revive = CuerLib.Revive;
-local Callbacks = CuerLib.Callbacks;
 local Players = CuerLib.Players;
 
 local FanOfTheDead = ModItem("Fan of the Dead", "FanOfTheDead");
@@ -49,7 +48,7 @@ local function AvoidDeath(player)
             player:AddBoneHearts(1);
         end
     -- Keeper and Bethany creates heart containers.
-    elseif (Players:IsFullRedHeartPlayer(playerType)) then
+    elseif (Players:IsOnlyRedHeartPlayer(playerType)) then
         local maxHearts = player:GetMaxHearts();
         local hearts = player:GetMaxHearts();
         if (maxHearts <= 0) then
@@ -76,7 +75,7 @@ local function TransformHearts(player, data)
     local transformed = false;
     
     -- Keeper and Bethany will leave a heart container.
-    if (Players:IsFullRedHeartPlayer(player:GetPlayerType())) then
+    if (Players:IsOnlyRedHeartPlayer(player:GetPlayerType())) then
         maxHearts = maxHearts - 2;
     end
     if (maxHearts > 0) then
@@ -140,7 +139,7 @@ function FanOfTheDead:postPickCollectible(player, item, count, touched)
 
     AvoidDeath(player);
 end
-FanOfTheDead:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, FanOfTheDead.postPickCollectible, FanOfTheDead.Item);
+FanOfTheDead:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, FanOfTheDead.postPickCollectible, FanOfTheDead.Item);
 
 
 local function RenderPlayer(player, playerIndex)
@@ -239,13 +238,11 @@ local function PreRevive(mod, player)
         }
     end
 end
-FanOfTheDead:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, PreRevive, nil, 900)
+FanOfTheDead:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, -90, PreRevive)
 
---Revive.AddReviveInfo(true, 60, "LostDeath", CanRevive, PostRevive);
 
 
 FanOfTheDead:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, FanOfTheDead.onPlayerEffect);
---FanOfTheDead:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, FanOfTheDead.onPlayerUpdate);
 FanOfTheDead:AddCallback(ModCallbacks.MC_POST_RENDER, FanOfTheDead.onRender);
 FanOfTheDead:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, FanOfTheDead.onEvaluateCache);
 

@@ -389,7 +389,7 @@ Dream:AddCallback(ModCallbacks.MC_NPC_UPDATE, doremyUpdate, Doremy.Type);
 --         end
 --     end
 -- end
--- Dream:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, doremyTakeDamage, Doremy.Type);
+-- Dream:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, doremyTakeDamage, Doremy.Type);
 
 local function doremyTakeDamage(mod, tookDamage, amount, flags, source, countdown)
     if (tookDamage.Variant == Doremy.Variant) then
@@ -403,7 +403,7 @@ local function doremyTakeDamage(mod, tookDamage, amount, flags, source, countdow
         end
     end
 end
-Dream:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, doremyTakeDamage, Doremy.Type);
+Dream:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, doremyTakeDamage, Doremy.Type);
 
 local function doremyKill(mod, entity)
     if (entity.Variant == Doremy.Variant) then

@@ -1,16 +1,16 @@
 local Lib = LIB;
 local Players = Lib:NewClass();
 
-Players.FullRedHeartPlayers = {
+Players.OnlyRedHeartPlayers = {
     [PlayerType.PLAYER_KEEPER] = true,
     [PlayerType.PLAYER_BETHANY] = true,
     [PlayerType.PLAYER_KEEPER_B] = true,
 }
-Players.FullBoneHeartPlayers = {
+Players.OnlyBoneHeartPlayers = {
     [PlayerType.PLAYER_THEFORGOTTEN] = true
 }
 
-Players.FullSoulHeartPlayers = {
+Players.OnlySoulHeartPlayers = {
     [PlayerType.PLAYER_BETHANY_B] = true,
     [PlayerType.PLAYER_BLACKJUDAS] = true,
     [PlayerType.PLAYER_BLUEBABY] = true,
@@ -18,28 +18,28 @@ Players.FullSoulHeartPlayers = {
     [PlayerType.PLAYER_THEFORGOTTEN_B] = true,
 }
 
-function Players:SetFullRedHeartPlayer(playerType, value)
-    self.FullRedHeartPlayers[playerType] = value;
+function Players:SetOnlyRedHeartPlayer(playerType, value)
+    self.OnlyRedHeartPlayers[playerType] = value;
 end
 
-function Players:IsFullRedHeartPlayer(playerType)
-    return self.FullRedHeartPlayers[playerType] ~= nil;
+function Players:IsOnlyRedHeartPlayer(playerType)
+    return self.OnlyRedHeartPlayers[playerType] ~= nil;
 end
 
-function Players:SetFullSoulHeartPlayer(playerType, value)
-    self.FullSoulHeartPlayers[playerType] = value;
+function Players:SetOnlySoulHeartPlayer(playerType, value)
+    self.OnlySoulHeartPlayers[playerType] = value;
 end
 
-function Players:IsFullSoulHeartPlayer(playerType)
-    return self.FullSoulHeartPlayers[playerType] ~= nil;
+function Players:IsOnlySoulHeartPlayer(playerType)
+    return self.OnlySoulHeartPlayers[playerType] ~= nil;
 end
 
-function Players:SetFullBoneHeartPlayer(playerType, value)
-    self.FullBoneHeartPlayers[playerType] = value;
+function Players:SetOnlyBoneHeartPlayer(playerType, value)
+    self.OnlyBoneHeartPlayers[playerType] = value;
 end
 
-function Players:IsFullBoneHeartPlayer(playerType)
-    return self.FullBoneHeartPlayers[playerType] ~= nil;
+function Players:IsOnlyBoneHeartPlayer(playerType)
+    return self.OnlyBoneHeartPlayers[playerType] ~= nil;
 end
 
 function Players:AddRawSoulHearts(player, value)

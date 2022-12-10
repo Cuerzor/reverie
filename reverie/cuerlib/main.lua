@@ -28,7 +28,6 @@ do --Classes
         Screen = "cuerlib/helpers/screen",
         Damages = "cuerlib/helpers/damages",
         Rooms = "cuerlib/helpers/rooms",
-        Grids = "cuerlib/helpers/grids",
         Players = "cuerlib/helpers/players",
         Familiars = "cuerlib/helpers/familiars",
         ModComponents = "cuerlib/helpers/mod_components",
@@ -48,7 +47,9 @@ do --Classes
         Rewind = "cuerlib/funcs/rewind",
         Stages = "cuerlib/funcs/stages",
         Weapons = "cuerlib/funcs/weapons",
-        Bosses = "cuerlib/funcs/bosses"
+        Bosses = "cuerlib/funcs/bosses",
+        Curses = "cuerlib/funcs/curses",
+        Grids = "cuerlib/funcs/grids"
     }
     if (StageAPI) then
         Lib.ClassPaths.Bosses="cuerlib/funcs/bosses_stageapi";
@@ -74,29 +75,22 @@ do --Classes
     function Lib:NewClass()
         local class = {};
         setmetatable(class, classMetatable);
-        function class:AddCallback(callback, func, optionalArg)
-            Lib.Mod:AddCallback(callback, func, optionalArg);
+        class.Callbacks = {};
+        function class:AddCallback(callback, func, param)
+            self:AddPriorityCallback(callback, CallbackPriority.DEFAULT, func, param)
         end
-        function class:AddPriorityCallback(callback, priority, func, optionalArg)
-            Lib.Mod:AddPriorityCallback(callback, priority, func, optionalArg);
+        function class:AddPriorityCallback(callback, priority, func, param)
+            --Lib.Mod:AddPriorityCallback(callback, priority, func, optionalArg);
+            table.insert(self.Callbacks, {Mod = Lib.Mod, Callback = callback, Priority = priority, Function = func, Param = param})
         end
-        function class:AddCustomCallback(callback, func, optionalArg, priority)
-            Lib.Callbacks:AddCallback(callback, func, optionalArg, priority);
-        end
-        function class:Register(mod)
+        function class:Register()
             for _, callback in pairs(self.Callbacks) do
-                mod:AddCallback(callback.Callback, callback.Func, callback.OptionalArg);
-            end
-            for _, callback in pairs(self.CustomCallbacks) do
-                self.Lib.Callbacks:AddCallback(callback.Callback, callback.Func, callback.OptionalArg, callback.Priority);
+                callback.Mod:AddPriorityCallback(callback.Callback, callback.Priority, callback.Function, callback.Param);
             end
         end
-        function class:Unregister(mod)
+        function class:Unregister()
             for _, callback in pairs(self.Callbacks) do
-                mod:RemoveCallback(callback.Callback, callback.Func);
-            end
-            for _, callback in pairs(self.CustomCallbacks) do
-                self.Lib.Callbacks:RemoveCallback(callback.Callback, callback.Func);
+                callback.Mod:RemoveCallback(callback.Callback, callback.Func);
             end
         end
         return class;
@@ -208,6 +202,7 @@ function Lib:Init(mod, dataName, getGlobalData, setGlobalData)
     for k,v in pairs(self.ClassPaths) do
         local class = Require(v);
         Lib[k] = class;
+        class:Register();
     end
     LIB = nil
 end

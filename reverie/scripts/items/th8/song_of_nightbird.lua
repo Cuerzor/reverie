@@ -1,4 +1,3 @@
-local Callbacks = CuerLib.Callbacks;
 local Players = CuerLib.Players;
 
 local SongOfNightbird = ModItem("Song of Nightbird", "SongOfNightbird");
@@ -51,7 +50,7 @@ function SongOfNightbird:EvaluateCurse(curses)
         return curses | LevelCurse.CURSE_OF_DARKNESS;
     end
 end
-SongOfNightbird:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, SongOfNightbird.EvaluateCurse, 0, 0);
+SongOfNightbird:AddCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, SongOfNightbird.EvaluateCurse);
 
 local damageLock = false;
 function SongOfNightbird:onTakeDamage(tookDamage, amount, flags, source, countdown)
@@ -84,12 +83,14 @@ function SongOfNightbird:onTakeDamage(tookDamage, amount, flags, source, countdo
         end
     end
 end
-SongOfNightbird:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, SongOfNightbird.onTakeDamage);
+SongOfNightbird:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, SongOfNightbird.onTakeDamage);
 
 
 function SongOfNightbird:postChange(player, item, diff)
     THI:EvaluateCurses();
 end
-SongOfNightbird:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, SongOfNightbird.postChange);
+SongOfNightbird:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, SongOfNightbird.postChange, SongOfNightbird.Item);
+SongOfNightbird:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, SongOfNightbird.postChange, CollectibleType.COLLECTIBLE_BLACK_CANDLE);
+SongOfNightbird:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, SongOfNightbird.postChange, CollectibleType.COLLECTIBLE_NIGHT_LIGHT);
 
 return SongOfNightbird;

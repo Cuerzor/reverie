@@ -141,15 +141,13 @@ function Pagota:GetPagotaData(init)
 end
 
 function Pagota:GetPlayerTempData(player, init)
-    local data = self:GetTempData(player);
-    if (init) then
-        data._PAGOTA_TEMP = data._PAGOTA_TEMP or {
+    return self:GetTempData(player, init, function ()
+        return {
             LastCoins = 0,
             AddedCoins = 0,
             LastCoinHearts = 0,
-        }
-    end
-    return data._PAGOTA_TEMP;
+        };
+    end);
 end
 
 function Pagota:UsePagota(item, rng, player, flags, slot, varData)
@@ -250,7 +248,7 @@ function Pagota:PostPickupCollected(player, pickup)
         data.AddedCoins = data.AddedCoins + originValue;
     end
 end
-Pagota:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_PICKUP_COLLECTED, Pagota.PostPickupCollected, PickupVariant.PICKUP_COIN);
+Pagota:AddCallback(CuerLib.CLCallbacks.CLC_POST_PICKUP_COLLECTED, Pagota.PostPickupCollected, PickupVariant.PICKUP_COIN);
 
 local turnGoldInUpdate = false;
 function Pagota:NewRoom()

@@ -1690,7 +1690,7 @@ do --战斗。
             return item
         end
     end
-    Note:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, PreGetCollectible, nil, 0);
+    Note:AddCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, PreGetCollectible);
 
     local function PostNewRoom()
         if (BossFight:IsBossRoom()) then
@@ -2118,7 +2118,7 @@ local function PreTakeDamage(mod, ent, amount, flags, source, countdown)
         end
     end
 end
-Note:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, PreTakeDamage, Note.Type)
+Note:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage, Note.Type)
 
 local function PostEntityKill(mod, ent)
     if (ent.Type == Note.Type and ent.Variant == Note.Variant) then
@@ -2179,6 +2179,6 @@ local function PreTakeDamage(mod, tookDamage, amount, flags, source, countdown)
         end
     end
 end
-Note:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, PreTakeDamage, Note.Type)
+Note:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage, Note.Type)
 
 return Note;

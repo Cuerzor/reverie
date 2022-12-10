@@ -36,7 +36,7 @@ end
 THI:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom)
 
 
-local function GridUpdate(index, prevGrid, newGrid)
+local function GridUpdate(mod, index, prevGrid, newGrid)
     local plate = GridEntityType.GRID_PRESSURE_PLATE;
     local var = 10;
     if (prevGrid.Type == plate and prevGrid.Variant == var and prevGrid.State == 0 and
@@ -49,5 +49,5 @@ local function GridUpdate(index, prevGrid, newGrid)
         end
     end
 end
-THI:OnGridUpdate(GridUpdate, 97)
+THI:AddCallback(CuerLib.CLCallbacks.CLC_POST_GRID_UPDATE, GridUpdate, 97)
 return Teller;

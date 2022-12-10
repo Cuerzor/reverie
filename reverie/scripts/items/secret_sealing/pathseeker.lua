@@ -1,6 +1,5 @@
 local SaveAndLoad = CuerLib.SaveAndLoad;
 local Collectibles = CuerLib.Collectibles;
-local Callbacks = CuerLib.Callbacks;
 
 local GapFloor = THI.GapFloor;
 
@@ -57,6 +56,6 @@ function Pathseeker:onNewStage()
         GapFloor.GenerateMaps(index);
     end
 end
-Pathseeker:AddCustomCallback(CuerLib.CLCallbacks.CLC_NEW_STAGE, Pathseeker.onNewStage);
+Pathseeker:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_STAGE, Pathseeker.onNewStage);
 
 return Pathseeker;

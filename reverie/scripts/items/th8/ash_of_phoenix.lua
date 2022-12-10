@@ -213,7 +213,7 @@ function AshOfPhoenix:PostPlayerTakeDamage(entity, amount, flags, source, countd
         data.AshTime = 1;
     end
 end
-AshOfPhoenix:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, AshOfPhoenix.PostPlayerTakeDamage, EntityType.ENTITY_PLAYER, 32);
+AshOfPhoenix:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, AshOfPhoenix.PostPlayerTakeDamage, EntityType.ENTITY_PLAYER, 32);
 
 local function PostPlayerKill(mod, entity)
     local data = AshOfPhoenix:GetPlayerData(entity, false);
@@ -353,7 +353,7 @@ local function PreRevive(mod, player)
             end
 
             return {
-                Flag = "AshOfPhoenix",
+                Name = "AshOfPhoenix",
                 BeforeVanilla = true,
                 ReviveFrame = 1,
                 Callback = PostRevive
@@ -361,18 +361,16 @@ local function PreRevive(mod, player)
         end
     end
 end
-AshOfPhoenix:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, PreRevive, nil, 1000)
+AshOfPhoenix:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_REVIVE, -100, PreRevive)
 
 local function PostRevive(mod, player, info)
     -- 以其他形式复活后清除状态。
-    if (info.Flag ~= "AshOfPhoenix") then
+    if (info.Name ~= "AshOfPhoenix") then
         AshOfPhoenix:EndAsh(player);
     end
 end
-AshOfPhoenix:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_REVIVE, PostRevive)
+AshOfPhoenix:AddCallback(CuerLib.CLCallbacks.CLC_POST_REVIVE, PostRevive)
 
 
-
---Revive.AddReviveInfo(true, 1, nil, CanRevive, PostRevive, false);
 
 return AshOfPhoenix;

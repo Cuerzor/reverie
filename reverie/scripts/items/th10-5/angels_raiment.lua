@@ -6,7 +6,7 @@ local function PostPlayerTakeDamage(mod, tookDamage, amount, flags, source, coun
         player:UseActiveItem(CollectibleType.COLLECTIBLE_CRACK_THE_SKY, 0, -1);
     end
 end
-Raiment:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostPlayerTakeDamage, EntityType.ENTITY_PLAYER)
+Raiment:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostPlayerTakeDamage, EntityType.ENTITY_PLAYER)
 
 
 local function EvaluateCache(mod, player, flag)

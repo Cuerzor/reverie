@@ -1,4 +1,3 @@
-local Callbacks = CuerLib.Callbacks;
 local Entities = CuerLib.Entities;
 local Screen = CuerLib.Screen;
 local EntityExists = Entities.EntityExists;
@@ -106,12 +105,13 @@ function EyeOfChimera:EvaluateCurse(curses)
         return curses | LevelCurse.CURSE_OF_BLIND;
     end
 end
-EyeOfChimera:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, EyeOfChimera.EvaluateCurse, 0, 0);
+EyeOfChimera:AddCallback(CuerLib.CLCallbacks.CLC_EVALUATE_CURSE, EyeOfChimera.EvaluateCurse);
 
 function EyeOfChimera:postChange(player, item, diff)
     THI:EvaluateCurses();
 end
-EyeOfChimera:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, EyeOfChimera.postChange);
+EyeOfChimera:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, EyeOfChimera.postChange, EyeOfChimera.Item);
+EyeOfChimera:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, EyeOfChimera.postChange, CollectibleType.COLLECTIBLE_BLACK_CANDLE);
 
 
 

@@ -117,7 +117,7 @@ do -- Events
             end
         end
     end
-    SeijaB:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, PreGetCollectible, nil, -100)
+    SeijaB:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, CallbackPriority.LATE, PreGetCollectible)
     
     local function EvaluateRoomBlacklist(mod, id, config)
         local DSiphon = THI.Collectibles.DSiphon;
@@ -132,7 +132,7 @@ do -- Events
             end
         end
     end
-    SeijaB:AddCustomCallback(CuerLib.CLCallbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluateRoomBlacklist)
+    SeijaB:AddCallback(CuerLib.CLCallbacks.CLC_EVALUATE_POOL_BLACKLIST, EvaluateRoomBlacklist)
 
     
 

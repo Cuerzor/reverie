@@ -335,7 +335,7 @@ function Telescope:PostNewStage()
     Telescope.AddSkippedTreasureRoom(stage, stageType, treasureRoomCount);
     --print ("Skipped Treasure Rooms Now: "..Telescope.GetSkippedTreasureRoomCount());
 end
-Telescope:AddCustomCallback(CuerLib.CLCallbacks.CLC_NEW_STAGE, Telescope.PostNewStage)
+Telescope:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_STAGE, Telescope.PostNewStage)
 
 -- function Telescope:PostRender()
 --     Isaac.RenderText(Telescope.GetMeteorChance(), 160, 80, 1,1,1,1);

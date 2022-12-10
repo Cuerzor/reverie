@@ -1,6 +1,5 @@
 local SaveAndLoad = CuerLib.SaveAndLoad
 local Stages = CuerLib.Stages;
-local Callbacks = CuerLib.Callbacks;
 local Synergies = CuerLib.Synergies;
 local Math = CuerLib.Math;
 local Players = CuerLib.Players;

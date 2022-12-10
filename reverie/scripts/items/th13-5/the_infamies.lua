@@ -1,7 +1,6 @@
 local Stats = CuerLib.Stats;
 local SaveAndLoad = CuerLib.SaveAndLoad;
 local Stats = CuerLib.Stats;
-local Callbacks = CuerLib.Callbacks;
 local Players = CuerLib.Players;
 
 local TheInfamies = ModItem("The Infamies", "TheInfamies");
@@ -99,7 +98,7 @@ function TheInfamies:PrePlayerTakeDamage(tookDamage, amount ,flags, source, coun
         end
     end
 end
-TheInfamies:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, TheInfamies.PrePlayerTakeDamage, EntityType.ENTITY_PLAYER); 
+TheInfamies:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, TheInfamies.PrePlayerTakeDamage, EntityType.ENTITY_PLAYER); 
 
 function TheInfamies:PreProjectileCollision(projectile, other, low)
     -- Ignore Projectile Collision and destroy the projectile.
@@ -255,7 +254,7 @@ function TheInfamies:PostChangeCollectibles(player, item, diff)
     player:AddCacheFlags(CacheFlag.CACHE_SPEED);
     player:EvaluateItems();
 end
-TheInfamies:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, TheInfamies.PostChangeCollectibles, CollectibleType.COLLECTIBLE_INFAMY); 
+TheInfamies:AddCallback(CuerLib.CLCallbacks.CLC_POST_CHANGE_COLLECTIBLES, TheInfamies.PostChangeCollectibles, CollectibleType.COLLECTIBLE_INFAMY); 
 
 
 return TheInfamies;

@@ -769,7 +769,7 @@ local function PreTakeDamage(mod, tookDamage, amount, flags, source, countdown)
         return false;
     end
 end
-Rebecha:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, PreTakeDamage);
+Rebecha:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage);
 
 local function PostRebechaKill(mod, entity)
     if (entity.Variant == Rebecha.Variant) then

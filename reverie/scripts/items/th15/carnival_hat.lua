@@ -52,7 +52,7 @@ local function PostPlayerTakeDamage(mod, tookDamage, amount, flags, source, coun
         end
     end
 end
-Hat:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostPlayerTakeDamage, EntityType.ENTITY_PLAYER);
+Hat:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostPlayerTakeDamage, EntityType.ENTITY_PLAYER);
 
 
 local function EvaluateCache(mod, player, flag)
@@ -84,6 +84,6 @@ local function PostGainHat(mod, player, item, count, touched)
         end
     end
 end
-Hat:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainHat, Hat.Item)
+Hat:AddCallback(CuerLib.CLCallbacks.CLC_POST_GAIN_COLLECTIBLE, PostGainHat, Hat.Item)
 
 return Hat;

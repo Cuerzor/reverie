@@ -1,5 +1,4 @@
 local Lib = LIB;
-local Callbacks = Lib.Callbacks;
 local Greed = Lib:NewClass();
 
 local GreedState = {
@@ -27,9 +26,7 @@ local function PostUpdate(mod)
         local level = game:GetLevel();
         local wave = level.GreedModeWave;
         if (wave > data.LastGreedWave) then
-            for i, func in pairs(Callbacks.Functions.PostNewGreedWave) do
-                func.Func(func.Mod, wave);
-            end
+            Isaac.RunCallback(Lib.CLCallbacks.CLC_POST_NEW_GREED_WAVE, wave);
         end
 
         local clear = room:IsClear();
@@ -37,17 +34,15 @@ local function PostUpdate(mod)
             local bossWave = game:GetGreedBossWaveNum () - 1;
             local totalWave = game:GetGreedWavesNum() - 1;
             if (wave == bossWave or wave == totalWave) then
-                for i, func in pairs(Callbacks.Functions.PostGreedWaveEnd) do
-                    local state = GreedState.GREED_NOT_CLEARED;
-                    if (wave == bossWave) then
-                        state = GreedState.GREED_MONSTER_CLEARED;
-                    elseif (wave == totalWave) then
-                        state = GreedState.GREED_BOSS_CLEARED;
-                    elseif (wave == totalWave + 1) then
-                        state = GreedState.GREED_DEAL_CLEARED;
-                    end
-                    func.Func(func.Mod, state);
+                local state = GreedState.GREED_NOT_CLEARED;
+                if (wave == bossWave) then
+                    state = GreedState.GREED_MONSTER_CLEARED;
+                elseif (wave == totalWave) then
+                    state = GreedState.GREED_BOSS_CLEARED;
+                elseif (wave == totalWave + 1) then
+                    state = GreedState.GREED_DEAL_CLEARED;
                 end
+                Isaac.RunCallback(Lib.CLCallbacks.CLC_POST_GREED_WAVE_END, state);
             end
         end
 

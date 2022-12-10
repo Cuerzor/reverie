@@ -315,7 +315,7 @@ function DragonBadge:postPlayerCollision(player, collider)
         end
     end
 end
-DragonBadge:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_PLAYER_COLLISION, DragonBadge.postPlayerCollision)
+DragonBadge:AddPriorityCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, CallbackPriority.LATE, DragonBadge.postPlayerCollision)
 
 
 function DragonBadge:onNPCUpdate(npc)

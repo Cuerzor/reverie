@@ -109,7 +109,7 @@ function RobeOfFirerat:PrePlayerTakeDamage(entity, amount, flags, source, countd
         end
     end
 end
-RobeOfFirerat:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, RobeOfFirerat.PrePlayerTakeDamage, EntityType.ENTITY_PLAYER, 255);
+RobeOfFirerat:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, RobeOfFirerat.PrePlayerTakeDamage, EntityType.ENTITY_PLAYER, 255);
 
 function RobeOfFirerat:PreFireplaceCollision(fireplace, other, low)
     if (fireplace.Variant ~= 4) then

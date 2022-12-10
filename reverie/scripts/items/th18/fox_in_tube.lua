@@ -577,7 +577,7 @@ function Fox:PreGetCollectible(pool, decrease, seed, loopCount)
         return CollectibleType.COLLECTIBLE_POOP;
     end
 end
-Fox:AddCustomCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, Fox.PreGetCollectible, nil, 200)
+Fox:AddPriorityCallback(CuerLib.CLCallbacks.CLC_PRE_GET_COLLECTIBLE, -200, Fox.PreGetCollectible)
 
 function Fox:PostPickupRemove(pickup)
     local data = Fox.GetCollectibleData(pickup, false);
@@ -610,6 +610,6 @@ function Fox:PostNewLevel()
         data.NewLevel = true;
     end
 end
-Fox:AddCustomCallback(CuerLib.CLCallbacks.CLC_NEW_STAGE, Fox.PostNewLevel);
+Fox:AddCallback(CuerLib.CLCallbacks.CLC_POST_NEW_STAGE, Fox.PostNewLevel);
 
 return Fox;

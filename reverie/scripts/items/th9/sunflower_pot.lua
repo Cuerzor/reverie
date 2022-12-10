@@ -124,7 +124,7 @@ function Sunflower:PostTakeDamage(tookDamage, amount, flags, source, countdown)
         end
     end
 end
-Sunflower:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Sunflower.PostTakeDamage);
+Sunflower:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, Sunflower.PostTakeDamage);
 
 function Sunflower:PostPlayerUpdate(player)
     local playerData = Sunflower.GetPlayerData(player, false);

@@ -664,7 +664,7 @@ local function PostKogasaDamage(mod, tookDamage, amount, flags, source, countdow
         data.GhostAlpha = 1;
     end
 end
-Kogasa:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostKogasaDamage, Kogasa.Type);
+Kogasa:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostKogasaDamage, Kogasa.Type);
 
 
 

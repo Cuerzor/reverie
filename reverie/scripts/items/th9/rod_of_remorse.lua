@@ -237,7 +237,7 @@ function RodOfRemorse:PostTakeDamage(tookDamage, amount, flags, source, countdow
         end
     end
 end
-RodOfRemorse:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, RodOfRemorse.PostTakeDamage);
+RodOfRemorse:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, RodOfRemorse.PostTakeDamage);
 
 function RodOfRemorse:GetShaderParams(name)
     if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then

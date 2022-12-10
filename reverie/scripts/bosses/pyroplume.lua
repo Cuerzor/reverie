@@ -599,7 +599,7 @@ do
             end
         end
     end
-    Pyroplume:AddCustomCallback(CLCallbacks.CLC_PRE_ENTITY_TAKE_DMG, PrePyroplumeTakeDamage, Pyroplume.Type);
+    Pyroplume:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PrePyroplumeTakeDamage, Pyroplume.Type);
 end
 
 return Pyroplume;

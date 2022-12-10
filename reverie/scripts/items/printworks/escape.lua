@@ -37,7 +37,7 @@ local function PostPlayerDamage(mod, tookDamage, amount, flags, source, countdow
         Escape:TriggerEffect(player);
     end
 end
-Escape:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, PostPlayerDamage, EntityType.ENTITY_PLAYER);
+Escape:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostPlayerDamage, EntityType.ENTITY_PLAYER);
 
 local function PostPlayerUpdate(mod, player)
     if (player:HasCollectible(Escape.Item)) then

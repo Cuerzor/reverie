@@ -1480,7 +1480,7 @@ function Eika:PostPlayerTakeDamage(entity, amount, flags, source, countdown)
         end
     end
 end
-Eika:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Eika.PostPlayerTakeDamage, EntityType.ENTITY_PLAYER);
+Eika:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, Eika.PostPlayerTakeDamage, EntityType.ENTITY_PLAYER);
 
 
 function Eika:PostPlayerEffect(player)
@@ -1831,7 +1831,7 @@ Eika:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, Eika.PostTearUpdate)
 --         --end
 --     end
 -- end
--- Eika:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Eika.PostEntityTakeDamage);
+-- Eika:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, Eika.PostEntityTakeDamage);
 
 function Eika:PreTearCollision(tear, other, low)
     --if (tear:HasTearFlags(TearFlags.TEAR_PIERCING)) then
@@ -2125,7 +2125,7 @@ function Eika:DamageFromKnife(tookDamage, amount, flags, source, countdown)
         tookDamage:AddVelocity(dir:Normalized() * length);
     end
 end
-Eika:AddCustomCallback(CuerLib.CLCallbacks.CLC_POST_ENTITY_TAKE_DMG, Eika.DamageFromKnife);
+Eika:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, Eika.DamageFromKnife);
 
 function Eika:PostBombUpdate(bomb)
     local data = Eika:GetRockData(bomb, false);
