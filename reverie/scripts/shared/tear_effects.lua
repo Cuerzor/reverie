@@ -1,4 +1,4 @@
-local Effects = CuerLib.ModComponents.ModPart:New("TearEffects", "TEAR_EFFECTS");
+local Effects = ModPart("TearEffects", "TEAR_EFFECTS");
 
 local function GetTearData(tear, create)
     return Effects:GetData(tear, create, function() return {

@@ -4,7 +4,7 @@ local Math = CuerLib.Math;
 local Entities = CuerLib.Entities;
 local CompareEntity = Entities.CompareEntity;
 local Players = CuerLib.Players;
-local Fairies = CuerLib.ModComponents.ModPart:New("Light Fairies", "LIGHT_FAIRIES");
+local Fairies = ModPart("Light Fairies", "LIGHT_FAIRIES");
 Fairies.FairyInfos = {}
 Fairies.ComboFairies = {}
 Fairies.SubTypes = {
@@ -237,7 +237,7 @@ local function PostPlayerEffect(mod, player)
     local room = Game():GetRoom();
     if (room:GetFrameCount() == 10 or Game():GetFrameCount() % 30 == 0) then
         local fairyCollectiblesNum = {}
-        local minCollectibleCount = 32768; 
+        local minCollectibleCount = 0; 
         for item, variant in pairs(Fairies.ComboFairies) do
             local num = player:GetCollectibleNum(item, true);
             fairyCollectiblesNum[item] = num;

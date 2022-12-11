@@ -1,4 +1,4 @@
-local Fix = {}
+local Fix = ModPart("Softlock Fix", "_SOFTLOCK_FIX")
 
 Fix.ModGotoRooms = {}
 
@@ -7,12 +7,11 @@ function Fix:AddModGotoRoom(type, variant)
 end
 
 local function GetGlobalData(create)
-    if (create) then
-        THI.Data._SOFTLOCK_FIX = THI.Data._SOFTLOCK_FIX or {
+    return Fix:GetGlobalData(create, function()
+        return {
             LastRoomIndex = nil;
         }
-    end
-    return THI.Data._SOFTLOCK_FIX
+    end)
 end
 
 local function IsModGotoRoom(type, variant)
@@ -35,6 +34,7 @@ local function PostNewRoom(mod)
         data.LastRoomIndex = roomIndex;
     end
     -- Set door indexs.
+    print(data and data.LastRoomIndex);
     if (data and data.LastRoomIndex) then
         local doorIndex = data.LastRoomIndex;
         local doorType = RoomType.ROOM_NULL;
@@ -43,6 +43,7 @@ local function PostNewRoom(mod)
             doorType = targetDesc.Data.Type;
         end
 
+        print(data.LastRoomIndex)
         for slot = DoorSlot.LEFT0, DoorSlot.NUM_DOOR_SLOTS - 1 do
             local door = room:GetDoor(slot);
             if (door and door.TargetRoomIndex == -3) then
@@ -54,6 +55,7 @@ local function PostNewRoom(mod)
                 else
                     isDangerRoom = true;
                 end
+                print("Danger", isDangerRoom);
 
                 if (isDangerRoom) then
                     door.TargetRoomIndex = doorIndex;
@@ -72,26 +74,5 @@ local function PostNewLevel(mod)
     end
 end
 THI:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, PostNewLevel);
-
-
--- local function PreGameExit(mod, shouldSave)
---     local game = Game();
---     local level = game:GetLevel();
---     local roomDesc = level:GetCurrentRoomDesc();
-
---     if (roomDesc and roomDesc.Data) then
---         local roomData = roomDesc.Data
---         if (IsModGotoRoom(roomData.Type, roomData.Variant)) then
---             local returnIndex = level:GetStartingRoomIndex();
---             local data = GetGlobalData(false);
---             if (data) then
---                 returnIndex = data.LastRoomIndex;
---             end
---             level:ChangeRoom(returnIndex);
---             game:ChangeRoom(returnIndex);
---         end
---     end
--- end
--- THI:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, PreGameExit);
 
 return Fix;

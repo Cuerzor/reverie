@@ -1,4 +1,3 @@
-local SaveAndLoad = CuerLib.SaveAndLoad
 local EntityTags = THI.Shared.EntityTags;
 local Players = CuerLib.Players;
 local Stats = CuerLib.Stats;

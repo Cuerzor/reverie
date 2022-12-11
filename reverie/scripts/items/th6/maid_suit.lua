@@ -1,5 +1,4 @@
 local Entities = CuerLib.Entities;
-local SaveAndLoad = CuerLib.SaveAndLoad
 local Collectibles = CuerLib.Collectibles
 local Stages = CuerLib.Stages;
 

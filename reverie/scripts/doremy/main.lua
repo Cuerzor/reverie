@@ -1,10 +1,9 @@
-local ModPart = CuerLib.ModComponents.ModPart;
 local Entities = CuerLib.Entities;
 local Pickups = CuerLib.Pickups;
 local Screen = CuerLib.Screen;
 local Players = CuerLib.Players;
 local Math = CuerLib.Math;
-local Dream = ModPart:New("Gensou Dream", "GENSOU_DREAM");
+local Dream = ModPart("Gensou Dream", "GENSOU_DREAM");
 GensouDream = Dream;
 
 Dream.States = {
@@ -105,7 +104,7 @@ THI.Shared.SoftlockFix:AddModGotoRoom(DreamWorldRoomType, DreamWorldRoomVariant)
 
 local musicID = Isaac.GetMusicIdByName("Doremy");
 
-local Require = CuerLib.Require;
+local Require = THI.Require;
 
 Dream.SpellCard = Require("scripts/doremy/spell_card");
 

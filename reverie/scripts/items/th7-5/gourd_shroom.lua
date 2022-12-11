@@ -1,4 +1,3 @@
-local SaveAndLoad = CuerLib.SaveAndLoad;
 local Grids = CuerLib.Grids;
 local Stats = CuerLib.Stats;
 

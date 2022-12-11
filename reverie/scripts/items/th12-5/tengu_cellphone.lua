@@ -1,6 +1,5 @@
 local Screen = CuerLib.Screen;
 local Inputs = CuerLib.Inputs;
-local SaveAndLoad = CuerLib.SaveAndLoad;
 local Entities = CuerLib.Entities;
 local HoldingActive = CuerLib.HoldingActive;
 local ItemPools = CuerLib.ItemPools;

@@ -1,5 +1,5 @@
 local Lib = CuerLib;
-local SaveAndLoad = Lib.SaveAndLoad;
+local SaveAndLoad = THI.CuerlibAddon.SaveAndLoad;
 local Bosses = {}
 Bosses.Blacklist = {}
 

@@ -1,4 +1,3 @@
-local SaveAndLoad = CuerLib.SaveAndLoad;
 local Collectibles = CuerLib.Collectibles;
 
 local GapFloor = THI.GapFloor;

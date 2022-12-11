@@ -1,5 +1,3 @@
-
-local SaveAndLoad = CuerLib.SaveAndLoad
 local Collectibles = CuerLib.Collectibles
 local Stages = CuerLib.Stages;
 local ItemPools = CuerLib.ItemPools;

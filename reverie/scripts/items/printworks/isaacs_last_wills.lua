@@ -1,4 +1,4 @@
-local SaveAndLoad = CuerLib.SaveAndLoad;
+local SaveAndLoad = THI.CuerlibAddon.SaveAndLoad;
 local Actives = CuerLib.Actives;
 local Players = CuerLib.Players;
 local Stats = CuerLib.Stats;

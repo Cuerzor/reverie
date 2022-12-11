@@ -1,4 +1,3 @@
-local SaveAndLoad = CuerLib.SaveAndLoad
 local Stages = CuerLib.Stages;
 local Synergies = CuerLib.Synergies;
 local Math = CuerLib.Math;

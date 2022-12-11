@@ -1,12 +1,6 @@
-local oldData;
-local oldTempData;
-local tempConfig;
-if (THI) then
-    oldData = THI.Data;
-    oldTempData = THI.TempData;
-    tempConfig = THI.Config;
-end
-THI = RegisterMod("Reverie", 1);
+local Lib = CuerLib or include("cuerlib/main");
+print(Lib);
+THI = Lib:RegisterMod("Reverie", 1);
 THI.Version = {
     12,3,4
 }
@@ -22,9 +16,6 @@ function THI:GetVersionString()
     return versionString;
 end
 
-THI.Data = oldData or {};
-THI.TempData = oldTempData or {};
-THI.Config = tempConfig or {};
 
 -- Avoid Shader Crash.
 THI:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function()
@@ -56,36 +47,11 @@ end
 -- Stage
 ------------------------
 
-local Lib = include("cuerlib/main");
-CuerLib = Lib;
 
 THI.Lib = Lib;
-THI.Require = Lib.Require;
+local SaveAndLoad = THI.CuerlibAddon.SaveAndLoad;
+THI.Require = function(path) return Lib:Require(path) end;
 local Require = THI.Require;
-
-Lib:Init(THI, "_TOUHOU_DATA");
-
-local Shared = {};
-THI.Instruments = Require("scripts/shared/instruments");
-THI.GapFloor = Require("scripts/shared/gap_floor");
-THI.TemporaryDamage = include("scripts/temporary_damage");
-THI.GridDetection = include("scripts/grid_detection");
-THI.Machines = include("scripts/machines");
-include("scripts/question_items");
-
-Shared.Wheelchair = include("scripts/shared/wheelchair");
-Shared.Wheelchair:Register(THI);
-Shared.LightFairies = include("scripts/shared/light_fairies");
-Shared.TearEffects = include("scripts/shared/tear_effects");
-Shared.EntityTags = include("scripts/shared/entity_tags");
-Shared.PathFinding = include("scripts/shared/path_finding")
-Shared.SoftlockFix = include("scripts/shared/softlock_fix")
-Shared.Database = include("scripts/shared/database")
-Shared.Options = include("scripts/shared/options");
-THI.Halos = Require("scripts/shared/halos");
-
-
-THI.Shared = Shared;
 
 -- Room Generation.
 do
@@ -116,8 +82,6 @@ function THI.RandomFloat(min, max)
     return Random() % ((max - min) * 1000) / 1000 + min;
 end 
 
-
-
 do -- Announcers.
     local Announcer = {}
     local Announcers = {};
@@ -127,7 +91,7 @@ do -- Announcers.
     local AnnouncerEnabled = true;
 
     function Announcer.UpdateAnnouncer()
-        local persistent = Lib.SaveAndLoad.ReadPersistentData();
+        local persistent = SaveAndLoad.ReadPersistentData();
         if (persistent.AnnouncerEnabled == false) then
             AnnouncerEnabled = false;
         end
@@ -209,10 +173,10 @@ do -- Announcers.
     end
 
     function THI.DisableBoss(value)
-        local persistent = Lib.SaveAndLoad.ReadPersistentData();
+        local persistent = SaveAndLoad.ReadPersistentData();
         persistent.AnnouncerEnabled = value;
         AnnouncerEnabled = value;
-        Lib.SaveAndLoad.WritePersistentData(persistent);
+        SaveAndLoad.WritePersistentData(persistent);
     end
 
 
@@ -237,37 +201,63 @@ end
 
 THI.BossBlacklist = Require("scripts/boss_blacklist");
 
+local Comps = THI.CuerlibAddon.ModComponents;
 function ModEntity(name, dataName) 
-    return Lib.ModComponents.ModEntity:New(name, dataName);
+    return Comps.ModEntity:New(name, dataName);
 end
 
-
 function ModItem(name, dataName) 
-    return Lib.ModComponents.ModItem:New(name, dataName);
+    return Comps.ModItem:New(name, dataName);
 end
 
 ---- Trinkets
 function ModTrinket(name, dataName) 
-    return Lib.ModComponents.ModTrinket:New(name, dataName);
+    return Comps.ModTrinket:New(name, dataName);
 end
 
 ---- Player
 function ModPlayer(name, tainted, dataName) 
-    return Lib.ModComponents.ModPlayer:New(name, tainted, dataName);
+    return Comps.ModPlayer:New(name, tainted, dataName);
 end
 
 function ModCard(name, dataName) 
-    return Lib.ModComponents.ModCard:New(name, dataName);
+    return Comps.ModCard:New(name, dataName);
 end
 function ModPill(name, dataName) 
-    return Lib.ModComponents.ModPill:New(name, dataName);
+    return Comps.ModPill:New(name, dataName);
 end
 
 function ModChallenge(name, dataName)
-    return Lib.ModComponents.ModChallenge:New(name, dataName);
+    return Comps.ModChallenge:New(name, dataName);
+end
+
+function ModPart(name, dataName)
+    return Comps.ModPart:New(name, dataName);
 end
 
 
+
+local Shared = {};
+THI.Instruments = Require("scripts/shared/instruments");
+THI.GapFloor = Require("scripts/shared/gap_floor");
+THI.TemporaryDamage = include("scripts/temporary_damage");
+THI.GridDetection = include("scripts/grid_detection");
+THI.Machines = include("scripts/machines");
+include("scripts/question_items");
+
+Shared.Wheelchair = include("scripts/shared/wheelchair");
+Shared.Wheelchair:Register(THI);
+Shared.LightFairies = include("scripts/shared/light_fairies");
+Shared.TearEffects = include("scripts/shared/tear_effects");
+Shared.EntityTags = include("scripts/shared/entity_tags");
+Shared.PathFinding = include("scripts/shared/path_finding")
+Shared.SoftlockFix = include("scripts/shared/softlock_fix")
+Shared.Database = include("scripts/shared/database")
+Shared.Options = include("scripts/shared/options");
+THI.Halos = Require("scripts/shared/halos");
+
+
+THI.Shared = Shared;
 
 
 
@@ -746,6 +736,7 @@ ModItem = nil;
 ModChallenge = nil;
 ModCard = nil;
 ModTrinket = nil;
+ModPart = nil;
 
 -- Translations
 do
@@ -907,19 +898,6 @@ do
     THI:AddCallback(ModCallbacks.MC_USE_PILL, PostUsePill);
 end
 
-do -- Clear Datas when exited.
-    local function PostExit(mod)
-        for k, _ in pairs(THI.Data) do
-            THI.Data[k] = nil
-        end
-    
-        for k, _ in pairs(THI.TempData) do
-            THI.TempData[k] = nil
-        end
-    end
-    THI:AddCallback(Lib.Callbacks.CLC_POST_EXIT, PostExit);
-end
-
 if (EID) then
     Require("descriptions/rep/main")
 end
@@ -935,7 +913,7 @@ do
     local IsLunatic = false;
 
     function Lunatic.UpdateLunatic()
-        local persistent = Lib.SaveAndLoad.ReadPersistentData();
+        local persistent = SaveAndLoad.ReadPersistentData();
         if (persistent.Lunatic) then
             IsLunatic = true;
         end
@@ -947,10 +925,10 @@ do
     end
 
     function THI.SetLunatic(value)
-        local persistent = Lib.SaveAndLoad.ReadPersistentData();
+        local persistent = SaveAndLoad.ReadPersistentData();
         persistent.Lunatic = value;
         IsLunatic = value;
-        Lib.SaveAndLoad.WritePersistentData(persistent);
+        SaveAndLoad.WritePersistentData(persistent);
     end
 
     function Lunatic:PostExecuteCommand(cmd, parameters)
@@ -1067,7 +1045,6 @@ end
 if (ModConfigMenu) then
     require("compatilities/mod_config_menu");
 end
-CuerLib = nil;
 print("[Reverie] Reverie "..THI:GetVersionString().." Loaded.")
 
 function SpawnPlanets()
