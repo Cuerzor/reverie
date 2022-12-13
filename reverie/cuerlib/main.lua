@@ -16,9 +16,7 @@ end
 
 function Lib:Require(filename)
     if (not Lib.Loaded[filename]) then
-        local file = include(filename);
-        Lib.Loaded[filename] = file;
-        return file;
+        Lib.Loaded[filename] = include(filename);
     end
     return Lib.Loaded[filename];
 end
@@ -49,6 +47,6 @@ for key, path in pairs(Lib.ClassPaths) do
 end
 LIB = nil;
 
-CuerLib.RegisterMod = include("cuerlib/mod_addon/main");
+CuerLib.InitMod = include("cuerlib/mod_addon/main");
 
 return Lib;

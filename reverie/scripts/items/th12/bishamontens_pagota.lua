@@ -194,25 +194,15 @@ function Pagota:PostBombUpdate(bomb)
 end
 Pagota:AddCallback(ModCallbacks.MC_POST_BOMB_UPDATE, Pagota.PostBombUpdate);
 
-function Pagota:PostPlayerRender(player)
+function Pagota:AddPickupNum(player, variant, addingNum)
     if (player:HasCollectible(Pagota.Item, true)) then
-        local data = Pagota:GetPlayerTempData(player, true);
-
-        local playerType = player:GetPlayerType();
-        local isKeeper = playerType == PlayerType.PLAYER_KEEPER or playerType == PlayerType.PLAYER_KEEPER_B;
-
-        local added = data.AddedCoins;
-        if (isKeeper) then
-            local costHeartCoins = math.max( 0, math.ceil((player:GetHearts() - data.LastCoinHearts) / 2));
-            added = added - costHeartCoins;
-        end
         -- Charge.
-        if (added > 0) then
+        if (addingNum > 0) then
             for slot = 0, 3 do
                 if (player:GetActiveItem(slot) == Pagota.Item) then
                     local charges = player:GetActiveCharge(slot);
                     if (charges < maxCharges) then
-                        local chargeValue = math.min(added, maxCharges - charges);
+                        local chargeValue = math.min(addingNum, maxCharges - charges);
                         local newCharges = charges + chargeValue;
                         player:SetActiveCharge (newCharges, slot)
                         THI.Game:GetHUD():FlashChargeBar (player, slot);
@@ -222,33 +212,15 @@ function Pagota:PostPlayerRender(player)
                         if (newCharges >= maxCharges) then
                             sfx:Play(SoundEffect.SOUND_ITEMRECHARGE);
                         end
-                        added = added - chargeValue;
+                        addingNum = addingNum - chargeValue;
                     end
                 end
             end
-
-            local needAdd = data.LastCoins + added - player:GetNumCoins();
-            player:AddCoins(needAdd);
-        end
-
-        data.AddedCoins = 0;
-        data.LastCoins = player:GetNumCoins();
-
-        if (isKeeper) then
-            data.LastCoinHearts = player:GetHearts();
+            return addingNum;
         end
     end
 end
-Pagota:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Pagota.PostPlayerRender);
-
-function Pagota:PostPickupCollected(player, pickup)
-    if (player:HasCollectible(Pagota.Item, true)) then
-        local originValue = pickup:GetCoinValue ( );
-        local data = Pagota:GetPlayerTempData(player, true);
-        data.AddedCoins = data.AddedCoins + originValue;
-    end
-end
-Pagota:AddCallback(CuerLib.Callbacks.CLC_POST_PICKUP_COLLECTED, Pagota.PostPickupCollected, PickupVariant.PICKUP_COIN);
+Pagota:AddCallback(CuerLib.Callbacks.CLC_ADD_PICKUP_NUM, Pagota.AddPickupNum, PickupVariant.PICKUP_COIN);
 
 local turnGoldInUpdate = false;
 function Pagota:NewRoom()

@@ -3,13 +3,11 @@ local Lib = LIB;
 local HoldingActive = Lib:NewClass();
 
 local function EndHolding(player)
-    local playerData = HoldingActive:GetPlayerData(player, true);
+    local playerData = GetPlayerData(player, true);
     playerData.Item = nil;
     playerData.Slot = nil;
     playerData.Mimic = false;
 end
-
-
 local function IsHoldingAnimation(anim)
     return anim == "PickupWalkDown" or 
             anim == "PickupWalkUp" or 
@@ -21,8 +19,7 @@ local function IsHoldingAnimation(anim)
             anim == "WalkLeft" or
             anim == "HideItem"
 end
-
-function HoldingActive:GetPlayerData(player, init)
+local function GetPlayerData(player, init)
     if (init == nil) then
         init = true;
     end
@@ -37,12 +34,12 @@ function HoldingActive:GetPlayerData(player, init)
     return playerData.HoldingActive;
 end
 
+-- Get current holding active item.
 function HoldingActive:GetHoldingItem(player)
     local playerData = self:GetPlayerData(player, false);
     return (playerData and playerData.Item) or -1;
 end
-
-
+-- Should this use discharges the active item?
 function HoldingActive:ShouldDischarge(player)
     local playerData = self:GetPlayerData(player, false);
     if (playerData) then
@@ -50,12 +47,12 @@ function HoldingActive:ShouldDischarge(player)
     end
     return true;
 end
-
+-- Get current holding active item's slot.
 function HoldingActive:GetHoldingSlot(player)
     local playerData = self:GetPlayerData(player, false);
     return (playerData and playerData.Slot) or -1;
 end
-
+-- Switch the holding state of an active item.
 function HoldingActive:SwitchHolding(id, player, slot, flags)
     local playerData = self:GetPlayerData(player, false);
     local holding = HoldingActive:GetHoldingItem(player);
@@ -66,7 +63,7 @@ function HoldingActive:SwitchHolding(id, player, slot, flags)
     end
     return { Discharge = false }
 end
-
+-- Hold an active item.
 function HoldingActive:Hold(id, player, slot, flags)
     local playerData = self:GetPlayerData(player, true);
     playerData.Item = id;
@@ -80,14 +77,15 @@ function HoldingActive:Hold(id, player, slot, flags)
         playerData.PreMimicCheck = true;
     end
 end
-
+-- Cancels holding an active item.
 function HoldingActive:Cancel(player)
     local playerData = self:GetPlayerData(player, true);
     EndHolding(player);
     player:PlayExtraAnimation("HideItem");
 end
-
-function HoldingActive:ReleaseActive(player, item, ...)
+-- Release holding item and discharge it. 
+-- Will Call CLC_RELEASE_HOLDING_ACTIVE.
+function HoldingActive:ReleaseActive(player, item, direction)
     -- Release Active Item.
     local discharge = true;
     local remove = false;
@@ -95,7 +93,7 @@ function HoldingActive:ReleaseActive(player, item, ...)
     local callbacks = Isaac.GetCallbacks(Lib.Callbacks.CLC_RELEASE_HOLDING_ACTIVE);
     for _, callback in pairs(callbacks) do
         if (callback.Param < 0 or callback.Param == item) then
-            local returned = callback.Function(callback.Mod, player, item, ...);
+            local returned = callback.Function(callback.Mod, player, item, direction);
 
             if (returned) then
                 if (returned.Discharge == false) then
@@ -109,7 +107,7 @@ function HoldingActive:ReleaseActive(player, item, ...)
     end
 
     -- Discharge Active.
-    local playerData = HoldingActive:GetPlayerData(player, true);
+    local playerData = GetPlayerData(player, true);
     for i = 1, 2 do
         local slot = playerData.Slot;
         if (i == 2) then
@@ -131,7 +129,8 @@ function HoldingActive:ReleaseActive(player, item, ...)
     player:PlayExtraAnimation("HideItem");
     return true;
 end
-
+-- Release the active item while holding shoot buttons.
+-- Call this in MC_POST_PEFFECT_UPDATE or MC_POST_PLAYER_UPDATE per frame.
 function HoldingActive:ReleaseOnShoot(player, item)
     if (HoldingActive:GetHoldingItem(player) == item) then
         local shooting = Lib.Inputs.GetRawShootingVector(player);
@@ -143,8 +142,9 @@ function HoldingActive:ReleaseOnShoot(player, item)
 end
 
 -- Events.
+
 local function PostPlayerEffect(mod, player)
-    local playerData = HoldingActive:GetPlayerData(player, false);
+    local playerData = GetPlayerData(player, false);
 
     if (playerData) then
         local spr = player:GetSprite();
@@ -172,7 +172,7 @@ local function PreTakeDamage(mod, tookDamage, amount, flags, source, countdown)
     if (tookDamage.Type == EntityType.ENTITY_PLAYER) then
         local player = tookDamage:ToPlayer();
         if (HoldingActive:GetHoldingItem(player) > 0) then
-            local playerData = HoldingActive:GetPlayerData(player, true);
+            local playerData = GetPlayerData(player, true);
             playerData.Hit = true;
         end
     end
@@ -200,7 +200,7 @@ HoldingActive:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, PreTakeDamage)
 
 local function PostUseCard(mod, card, player, flags)
     if (card == Card.CARD_QUESTIONMARK or card == Card.CARD_WILD) then
-        local playerData = HoldingActive:GetPlayerData(player, false);
+        local playerData = GetPlayerData(player, false);
         if (playerData and playerData.PreMimicCheck) then
             playerData.Mimic = true;
             playerData.PreMimicCheck = false;

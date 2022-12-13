@@ -1,10 +1,10 @@
 local Lib = CuerLib or include("cuerlib/main");
-print(Lib);
-THI = Lib:RegisterMod("Reverie", 1);
+THI = RegisterMod("Reverie", 1);
+Lib:InitMod(THI, "REVERIE");
+
 THI.Version = {
     12,3,4
 }
-
 function THI:GetVersionString()
     local versionString = "";
     for i, version in pairs(self.Version) do
@@ -49,8 +49,15 @@ end
 
 
 THI.Lib = Lib;
-local SaveAndLoad = THI.CuerlibAddon.SaveAndLoad;
-THI.Require = function(path) return Lib:Require(path) end;
+local SaveAndLoad = THI.CuerLibAddon.SaveAndLoad;
+
+local loaded = {};
+function THI.Require(path) 
+    if (not loaded[path]) then
+        loaded[path] = include(path);
+    end
+    return loaded[path];
+end;
 local Require = THI.Require;
 
 -- Room Generation.
@@ -201,7 +208,7 @@ end
 
 THI.BossBlacklist = Require("scripts/boss_blacklist");
 
-local Comps = THI.CuerlibAddon.ModComponents;
+local Comps = THI.CuerLibAddon.ModComponents;
 function ModEntity(name, dataName) 
     return Comps.ModEntity:New(name, dataName);
 end

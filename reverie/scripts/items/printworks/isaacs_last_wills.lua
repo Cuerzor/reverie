@@ -1,4 +1,4 @@
-local SaveAndLoad = THI.CuerlibAddon.SaveAndLoad;
+local SaveAndLoad = THI.CuerLibAddon.SaveAndLoad;
 local Actives = CuerLib.Actives;
 local Players = CuerLib.Players;
 local Stats = CuerLib.Stats;
@@ -54,7 +54,7 @@ function LastWills:UseLastWills(item, rng, player, flags, slow, varData)
 
 
         local canLegacy = validCount > 0;
-        local canWisps = Actives.CanSpawnWisp(player, flags)
+        local canWisps = Actives:CanSpawnWisp(player, flags)
         if (canLegacy or canWisps) then
             local persistentData = SaveAndLoad.ReadPersistentData();
             -- Init Data.

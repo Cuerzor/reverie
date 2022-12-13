@@ -16,11 +16,50 @@ local ChestVariants = {
     PickupVariant.PICKUP_REDCHEST,
     PickupVariant.PICKUP_MOMSCHEST
 }
+local CoinValues = {
+}
+local KeyValues = {
+    {Variant = PickupVariant.PICKUP_KEY, SubType = KeySubType.KEY_NORMAL, Value = 1},
+    {Variant = PickupVariant.PICKUP_KEY, SubType = KeySubType.KEY_DOUBLEPACK, Value = 2},
+    {Variant = PickupVariant.PICKUP_KEY, SubType = KeySubType.KEY_CHARGED, Value = 1},
+}
+local BombValues = {
+    {Variant = PickupVariant.PICKUP_BOMB, SubType = BombSubType.BOMB_NORMAL, Value = 1},
+    {Variant = PickupVariant.PICKUP_BOMB, SubType = BombSubType.BOMB_DOUBLEPACK, Value = 2},
+    {Variant = PickupVariant.PICKUP_BOMB, SubType = BombSubType.BOMB_GIGA, Value = 1},
+}
+
 
 local PickingCard = nil;
+
+local function GetPlayerTempData(pickup, init) 
+    local data = Lib:GetEntityLibData(pickup);
+    if (init and not data._PICKUP) then
+        data._PICKUP = {
+            LastCoins = 0,
+            LastBombs = 0,
+            LastKeys = 0,
+            LastCoinHearts = 0,
+            PickedCoins = 0,
+            PickedBombs = 0,
+            PickedKeys = 0,
+        }
+    end
+    return data._PICKUP;
+end
+
+local function GetPickupData(pickup) 
+    local data = Lib:GetEntityLibData(pickup);
+    data._PICKUP = data._PICKUP or {
+        Moved = false,
+        OriginPosition = pickup.Position
+    }
+    return data._PICKUP;
+end
+
 local function PostCollectPickup(player, pickup)
     
-    local pickupData = Pickups:GetPickupData(pickup);
+    local pickupData = GetPickupData(pickup);
     if (pickupData.Moved) then
         pickup.Position = pickupData.OriginPosition;
         pickupData.Move = false;
@@ -31,15 +70,6 @@ local function PostCollectPickup(player, pickup)
     end
 
     Isaac.RunCallbackWithParam(Lib.Callbacks.CLC_POST_PICKUP_COLLECTED, pickup.Variant, player, pickup);
-end
-
-function Pickups:GetPickupData(pickup) 
-    local data = Lib:GetEntityLibData(pickup);
-    data._PICKUP = data._PICKUP or {
-        Moved = false,
-        OriginPosition = pickup.Position
-    }
-    return data._PICKUP;
 end
 
 function Pickups.SpawnFixedCollectible(id, pos, vel, spawner)
@@ -55,11 +85,49 @@ function Pickups.IsChest(variant)
     end
     return false;
 end
+
+
+function Pickups.GetCoinValue(pickup)
+    for _, var in pairs(CoinValues) do
+        if (var.Variant == pickup.Variant and var.SubType == pickup.SubType) then
+            return var.Value;
+        end
+    end
+    return pickup:GetCoinValue();
+end
+function Pickups.GetKeyValue(pickup)
+    for _, var in pairs(KeyValues) do
+        if (var.Variant == pickup.Variant and var.SubType == pickup.SubType) then
+            return var.Value;
+        end
+    end
+    return 0;
+end
+function Pickups.GetBombValue(pickup)
+    for _, var in pairs(BombValues) do
+        if (var.Variant == pickup.Variant and var.SubType == pickup.SubType) then
+            return var.Value;
+        end
+    end
+    return 0;
+end
+
+function Pickups.AddCoinValue(variant, subtype, value)
+    table.insert(CoinValues, {Variant = variant, SubType = subtype, Value = value});
+end
+function Pickups.AddKeyValue(variant, subtype, value)
+    table.insert(KeyValues, {Variant = variant, SubType = subtype, Value = value});
+end
+function Pickups.AddBombValue(variant, subtype, value)
+    table.insert(BombValues, {Variant = variant, SubType = subtype, Value = value});
+end
+
 function Pickups.IsSpecialPickup(variant)
     return variant == PickupVariant.PICKUP_TROPHY or
     variant == PickupVariant.PICKUP_BIGCHEST or
     variant == PickupVariant.PICKUP_BED;
 end
+
 function Pickups.CanCollect(player, pickup)
     local variant = pickup.Variant;
     local subType = pickup.SubType;
@@ -120,9 +188,9 @@ function Pickups.CanCollect(player, pickup)
         return true;
     end
 
-    
     return Isaac.RunCallbackWithParam(Lib.Callbacks.CLC_CAN_PICKUP_COLLECT, pickup.Variant, player, pickup);
 end
+
 function Pickups.Collect(player, pickup)
     if (Pickups.IsChest(pickup.Variant)) then
         pickup:TryOpenChest(player);
@@ -130,11 +198,12 @@ function Pickups.Collect(player, pickup)
         local beforePos = pickup.Position;
         pickup.Position = player.Position;
 
-        local pickupData = Pickups:GetPickupData(pickup);
+        local pickupData = GetPickupData(pickup);
         pickupData.Moved = true;
         pickupData.OriginPosition = beforePos;
     end
 end
+
 function Pickups.TryCollect(player, pickup)
     if (Pickups.CanCollect(player, pickup)) then
         Pickups.Collect(player, pickup)
@@ -180,8 +249,8 @@ end
 
 
 -- Events.
-function Pickups:PostPickupUpdate(pickup)
-    local data = Pickups:GetPickupData(pickup);
+local function PostPickupUpdate(mod, pickup)
+    local data = GetPickupData(pickup);
     if (data.Moved) then
         pickup.Position = data.OriginPosition;
         data.Moved = false;
@@ -192,9 +261,9 @@ function Pickups:PostPickupUpdate(pickup)
         Pickups.TryCollect(player, pickup);
     end
 end
-Pickups:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, Pickups.PostPickupUpdate);
+Pickups:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate);
 
-function Pickups:PostPickupCollision(pickup, collider, low)
+local function PostPickupCollision(mod, pickup, collider, low)
     local player = collider:ToPlayer();
     if (player) then
         if (Pickups.CanCollect(player, pickup)) then
@@ -202,9 +271,9 @@ function Pickups:PostPickupCollision(pickup, collider, low)
         end
     end
 end
-Pickups:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, Pickups.PostPickupCollision);
+Pickups:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, PostPickupCollision);
 
-function Pickups:PostUpdate()
+local function PostUpdate(mod)
     if (PickingCard) then
         local pickup = PickingCard;
         PickingCard = nil;
@@ -221,7 +290,89 @@ function Pickups:PostUpdate()
         end
     end
 end
-Pickups:AddCallback(ModCallbacks.MC_POST_UPDATE, Pickups.PostUpdate);
+Pickups:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate);
 
+
+
+local function PostPlayerRender(mod, player)
+    local data = GetPlayerTempData(player, true);
+
+    local playerType = player:GetPlayerType();
+    local isKeeper = playerType == PlayerType.PLAYER_KEEPER or playerType == PlayerType.PLAYER_KEEPER_B;
+
+    local pickedCoins = data.PickedCoins;
+    local pickedBombs = data.PickedBombs;
+    local pickedKeys = data.PickedKeys;
+    local callbacks = Isaac.GetCallbacks(CuerLib.Callbacks.CLC_ADD_PICKUP_NUM);
+    if (pickedCoins > 0) then
+        if (isKeeper) then
+            local costHeartCoins = math.max( 0, math.ceil((player:GetHearts() - data.LastCoinHearts) / 2));
+            pickedCoins = pickedCoins - costHeartCoins;
+        end
+
+        local shouldAddCoins = pickedCoins;
+        if (shouldAddCoins > 0) then
+            for _, callback in pairs(callbacks) do
+                if (not callback.Param or callback.Param <= 0 or callback.Param == PickupVariant.PICKUP_COIN) then
+                    shouldAddCoins = callback.Function(callback.Mod, player, PickupVariant.PICKUP_COIN, shouldAddCoins) or shouldAddCoins;
+                end
+            end
+            if (shouldAddCoins ~= pickedCoins) then
+                player:AddCoins(data.LastCoins + shouldAddCoins - player:GetNumCoins());
+            end
+        end
+
+        data.PickedCoins = 0;
+    end
+
+    if (pickedBombs > 0) then
+        local shouldAddBombs = pickedBombs;
+        if (shouldAddBombs > 0) then
+            for _, callback in pairs(callbacks) do
+                if (not callback.Param or callback.Param <= 0 or callback.Param == PickupVariant.PICKUP_BOMB) then
+                    shouldAddBombs = callback.Function(callback.Mod, player, PickupVariant.PICKUP_BOMB, shouldAddBombs) or shouldAddBombs;
+                end
+            end
+            if (shouldAddBombs ~= pickedBombs) then
+                player:AddBombs(data.LastBombs + shouldAddBombs - player:GetNumBombs());
+            end
+        end
+        data.PickedBombs = 0;
+    end
+
+    if (pickedKeys > 0) then
+        local shouldAddKeys = pickedKeys;
+        if (shouldAddKeys > 0) then
+            for _, callback in pairs(callbacks) do
+                if (not callback.Param or callback.Param <= 0 or callback.Param == PickupVariant.PICKUP_KEY) then
+                    shouldAddKeys = callback.Function(callback.Mod, player, PickupVariant.PICKUP_KEY, shouldAddKeys) or shouldAddKeys;
+                end
+            end
+            if (shouldAddKeys ~= pickedKeys) then
+                player:AddKeys(data.LastKeys + shouldAddKeys - player:GetNumKeys());
+            end
+        end
+        data.PickedKeys = 0;
+    end
+
+    data.LastCoins = player:GetNumCoins();
+    data.LastBombs = player:GetNumBombs();
+    data.LastKeys = player:GetNumKeys();
+    if (isKeeper) then
+        data.LastCoinHearts = player:GetHearts();
+    end
+end
+Pickups:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, PostPlayerRender);
+
+local function PostPickupCollected(mod, player, pickup)
+    local data = GetPlayerTempData(player, true);
+    local coinValue = Pickups.GetCoinValue(pickup);
+    local bombValue = Pickups.GetBombValue(pickup);
+    local keyValue = Pickups.GetKeyValue(pickup);
+    data.PickedCoins = data.PickedCoins + coinValue;
+    data.PickedBombs = data.PickedBombs + bombValue;
+    data.PickedKeys = data.PickedKeys + keyValue;
+end
+Pickups:AddCallback(CuerLib.Callbacks.CLC_POST_PICKUP_COLLECTED, PostPickupCollected);
 
 return Pickups;

@@ -34,7 +34,6 @@ local function PostNewRoom(mod)
         data.LastRoomIndex = roomIndex;
     end
     -- Set door indexs.
-    print(data and data.LastRoomIndex);
     if (data and data.LastRoomIndex) then
         local doorIndex = data.LastRoomIndex;
         local doorType = RoomType.ROOM_NULL;
@@ -43,7 +42,6 @@ local function PostNewRoom(mod)
             doorType = targetDesc.Data.Type;
         end
 
-        print(data.LastRoomIndex)
         for slot = DoorSlot.LEFT0, DoorSlot.NUM_DOOR_SLOTS - 1 do
             local door = room:GetDoor(slot);
             if (door and door.TargetRoomIndex == -3) then
@@ -55,7 +53,6 @@ local function PostNewRoom(mod)
                 else
                     isDangerRoom = true;
                 end
-                print("Danger", isDangerRoom);
 
                 if (isDangerRoom) then
                     door.TargetRoomIndex = doorIndex;

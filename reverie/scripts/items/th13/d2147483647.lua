@@ -15,7 +15,7 @@ local FontColor =KColor(1,1,1,1);
 
 
 local ActiveDifficulty = 0;
-local ActiveList = Actives.GetActiveList();
+local ActiveList = Actives:GetActiveList();
 
 local HUDWidth = 5;
 local HUDHeight = 5;
@@ -33,7 +33,7 @@ function Dice.UpdateActiveList(player)
     end
 
     if (diff ~= ActiveDifficulty) then
-        ActiveList = Actives.GetActiveList();
+        ActiveList = Actives:GetActiveList();
         if (diff == 1) then
             for i = #ActiveList, 1, -1 do
                 local active = ActiveList[i];

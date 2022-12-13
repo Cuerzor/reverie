@@ -3,10 +3,7 @@ local Screen = Lib.Screen;
 local Inputs = Lib.Inputs;
 
 local Actives = Lib:NewClass();
-Actives.FontSprite = Sprite();
-Actives.FontSprite:Load("gfx/reverie/ui/active_count.anm2", true);
 
-local itemConfig = Isaac.GetItemConfig();
 
 local function GetPlayerData(player, create)
     local entData = Lib:GetEntityLibData(player, true);
@@ -18,7 +15,11 @@ local function GetPlayerData(player, create)
     return entData._ACTIVES;
 end
 
-function Actives.GetActiveList()
+
+local itemConfig = Isaac.GetItemConfig();
+-- Get all active collectible items in the game.
+-- This takes time, so please cache it.
+function Actives:GetActiveList()
     local results = {};
     local size = itemConfig:GetCollectibles().Size
     for i = 1, size do
@@ -30,372 +31,367 @@ function Actives.GetActiveList()
     return results;
 end
 
-function Actives:GetTotalCharges(player, slot)
-    if (slot < 0) then
-        return 0;
-    end
-    local charges = player:GetActiveCharge (slot);
-    local batteryCharges = player:GetBatteryCharge (slot);
-    local soulCharges = player:GetEffectiveSoulCharge();
-    local bloodCharges = player:GetEffectiveBloodCharge();
-    return charges + batteryCharges + soulCharges + bloodCharges;
-end
-
-
-
-local function IsActiveInput(player, slot, check)
-    local playerType = player:GetPlayerType();
-
-    if (playerType == PlayerType.PLAYER_JACOB or playerType == PlayerType.PLAYER_ESAU) then
-        -- Jacob and Esau.
-        local action = ButtonAction.ACTION_ITEM;
-        if (playerType == PlayerType.PLAYER_ESAU) then
-            action = ButtonAction.ACTION_PILLCARD;
-        end
-
-        local ctrlHold = Input.IsActionPressed(ButtonAction.ACTION_DROP, player.ControllerIndex);
-        
-        if (slot == ActiveSlot.SLOT_POCKET or slot == ActiveSlot.SLOT_POCKET2) then
-            return check(ButtonAction.ACTION_PILLCARD, player.ControllerIndex);
-        elseif (slot == ActiveSlot.SLOT_PRIMARY) then
-            return not ctrlHold and check(action, player.ControllerIndex);
-        end
-    else
-        -- Normal.
-        if (slot == ActiveSlot.SLOT_PRIMARY) then
-            return check(ButtonAction.ACTION_ITEM, player.ControllerIndex);
-        elseif (slot == ActiveSlot.SLOT_POCKET or slot == ActiveSlot.SLOT_POCKET2) then
-            return check(ButtonAction.ACTION_PILLCARD, player.ControllerIndex);
-        end
-    end
-    return false;
-end
-
-function Actives.IsActiveButtonTriggered(player, slot)
-    return IsActiveInput(player, slot, Input.IsActionTriggered);
-end
-
-function Actives.IsActiveItemTriggered(player, item)
-    for i=0,3 do
-        if (player:GetActiveItem(i) == item) then
-            if (Actives.IsActiveButtonTriggered(player, i)) then
-                return true, i;
-            end 
-        end
-    end
-    return false, -1;
-end
-
-
-function Actives.IsActivePressed(player, slot)
-    return IsActiveInput(player, slot, Input.IsActionPressed);
-end
-function Actives.IsActiveItemPressed(player, item)
-    for i=0,3 do
-        if (player:GetActiveItem(i) == item) then
-            if (Actives.IsActivePressed(player, i)) then
-                return true, i;
-            end
-        end
-    end
-    return false, -1;
-    
-end
-
-
-function Actives.ChargeByOrder(player, amount)
-    local hud = Game():GetHUD();
-    for i=1,amount do
-        for slot = 0,2 do
-            if (player:NeedsCharge(slot)) then
-                local item = player:GetActiveItem(slot);
-                local chargeType = itemConfig:GetCollectible(item).ChargeType;
-                
-                if (chargeType == 0) then
-                    player:SetActiveCharge(player:GetActiveCharge(slot) + player:GetBatteryCharge(slot) + 1, slot);
-                elseif (chargeType == 1) then
-                    player:FullCharge(slot);
-                end
-                hud:FlashChargeBar(player, slot);
-            end
-        end
-    end
-end
-
-function Actives.ChargeAll(player, amount, flash, playSound)
-    local hud = Game():GetHUD();
-    local sfx = SFXManager();
-    for slot = 0,3 do
-        local item = player:GetActiveItem(slot);
-        local config = itemConfig:GetCollectible(item);
-        if (config) then
-            local maxCharges = config.MaxCharges;
-            local chargeType = config.ChargeType;
-            local charged = false;
-            if (chargeType == 0) then
-                for i = 1, amount do
-                    if (player:NeedsCharge(slot)) then
-                        local charge = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot) + 1;
-                        player:SetActiveCharge(charge, slot);
-                        charged = true;
-                    end
-                end
-            elseif (chargeType == 1) then
-                if (player:NeedsCharge(slot)) then
-                    player:FullCharge(slot);
-                    charged = true;
-                end
-            end
-            
-            if (charged) then
-                if (flash) then
-                    hud:FlashChargeBar(player, slot);
-                end
-                if (playSound) then
-                    local charge = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot);
-                    sfx:Play(SoundEffect.SOUND_BEEP);
-                    if (charge >= maxCharges) then
-                        sfx:Play(SoundEffect.SOUND_BATTERYCHARGE);
-                    end
-                end
-            end
-        end
-    end
-end
-
-----------------
--- Render Counts
-----------------
-
-local countNums = {};
-function Actives:DrawMultiplier(pos, color)
-    color = color or Color.Default;
-    self.FontSprite.Color = color;
-    self.FontSprite:SetFrame("Characters", 12);
-    self.FontSprite:Render(pos, Vector.Zero, Vector.Zero);
-end
-function Actives:DrawMinus(pos, color)
-    color = color or Color.Default;
-    self.FontSprite.Color = color;
-    self.FontSprite:SetFrame("Characters", 11);
-    self.FontSprite:Render(pos, Vector.Zero, Vector.Zero);
-end
-function Actives:DrawSingleNumber(num, pos, color)
-    color = color or Color.Default;
-    self.FontSprite.Color = color;
-    self.FontSprite:SetFrame("Characters", num);
-    self.FontSprite:Render(pos, Vector.Zero, Vector.Zero);
-end
-
-local CharWidths = {
-    [0] = 4,
-    [1] = 3,
-    [2] = 4,
-    [3] = 4,
-    [4] = 4,
-    [5] = 4,
-    [6] = 4,
-    [7] = 4,
-    [8] = 4,
-    [9] = 4,
-}
-local function GetCharWidth(char)
-    return CharWidths[char];
-end
-
-function Actives.DrawActiveCount(pos, count, pivot, color)
-    pivot = pivot or Vector.Zero;
-    local exp = 1;
-    for i = #countNums, 1, -1 do
-        table.remove(countNums, i);
-    end
-
-    local negative = false;
-    if (count == 0) then
-        countNums[1] = 0;
-    else
-        if (count < 0) then
-            count = -count;
-            negative = true;
-        end
-
-        while (exp <= count) do
-            local num = math.floor(count % (exp * 10) / exp)
-            table.insert(countNums, num);
-            exp = exp * 10;
-        end
-    end
-
-    local posOffset = Vector(4, 0);
-    pos = pos + Vector(-pivot.X * (1 + #countNums) * 4, -8 * pivot.Y);
-    Actives:DrawMultiplier(pos, color);
-    pos = pos + posOffset;
-    local charNum = #countNums;
-    if (charNum > 1 ) then
-        pos = pos + Vector(-1, 0);
-    end
-
-    if (negative) then
-        Actives:DrawMinus(pos + Vector(1,0), color);
-        pos = pos + posOffset;
-    end
-
-    for i = charNum, 1, -1 do
-        local char = countNums[i];
-        Actives:DrawSingleNumber(char, pos, color);
-        posOffset.X = GetCharWidth(char);
-        pos = pos + posOffset;
-    end
-    return true;
-end
-
-function Actives.GetPlayerActiveUIPos(player, slot, playerIndex)
-    local type = player:GetPlayerType();
-    local hudOffset = Options.HUDOffset;
-    local x, y;
-    local screenSize = Screen.GetScreenSize();
-    x = 19 + 20 * hudOffset;
-    y = 20 + 12 * hudOffset;
-    if (playerIndex == 1) then
-        x = screenSize.X - 140 - 24 * hudOffset;
-        y = 20 + 12 * hudOffset;
-        
-    elseif (playerIndex == 2) then
-        x = 29 + 22 * hudOffset;
-        y = screenSize.Y - 19 - 6 * hudOffset;
-    elseif (playerIndex == 3) then
-        x = screenSize.X - 148 - 16 * hudOffset;
-        y = screenSize.Y - 19 - 6 * hudOffset;
-    end
-    if (type == PlayerType.PLAYER_ESAU) then
-        if (playerIndex == 0) then
-            x = screenSize.X - 21 - 16 * hudOffset;
-            y = screenSize.Y - 19 - 6 * hudOffset;
-        end
-    end
-    
-    if (slot == ActiveSlot.SLOT_POCKET) then
-        if (playerIndex > 0) then
-            x = x - 19;
-            y = y + 22;
-        else
-            if (type == PlayerType.PLAYER_ESAU) then
-                x = screenSize.X - 16 - 16 * hudOffset;
-                y = screenSize.Y - 42 - 6 * hudOffset;
-            else
-                x = screenSize.X - 21 - 16 * hudOffset;
-                y = screenSize.Y - 10 - 6 * hudOffset;
-            end
-        end
-    end
-    return Vector(x, y);
-end
-
-local HalfVector = Vector(0.5, 0.5);
-function Actives.GetPlayerActiveUIScale(player, slot, playerIndex)
-    
-    if (slot == ActiveSlot.SLOT_POCKET) then
-        if (playerIndex > 0) then
-            return HalfVector;
-        end
-    end
-    return Vector.One;
-end
-local countOffset = Vector(-16, -16);
-local function GetPlayerActiveCountPos(player, slot, playerIndex)
-    return Actives.GetPlayerActiveUIPos(player ,slot, playerIndex) + countOffset;
-end
-
-
-
-function Actives.RenderOnActive(item, func)
-    if (Game():GetHUD():IsVisible()) then
-        local Players = Lib.Players;
-        local controllers = {};
-
-
-        local function RenderActive(player, playerIndex)
-            for slot = ActiveSlot.SLOT_PRIMARY , ActiveSlot.SLOT_POCKET2, 2 do
-                if (player:GetActiveItem(slot) == item and (slot < ActiveSlot.SLOT_POCKET or player:GetCard(0) + player:GetPill(0) <= 0)) then
-                    local pos = Actives.GetPlayerActiveUIPos(player, slot, playerIndex)
-                    local scale = Actives.GetPlayerActiveUIScale(player, slot, playerIndex);
-                    func(player, playerIndex, slot, pos, scale);
-                end
-            end
-        end
-
-        local playerIndex = 0;
-        for i, player in Players.PlayerPairs() do
-            -- If is not a coop baby.
-            if (not controllers[player.ControllerIndex]) then
-                local type = player:GetPlayerType();
-                if (type ~= PlayerType.PLAYER_ESAU) then
-                    RenderActive(player, playerIndex);
-                    if (type == PlayerType.PLAYER_JACOB) then
-                        local other = player:GetOtherTwin();
-                        RenderActive(other, playerIndex);
-                    end
-                end
-                controllers[player.ControllerIndex] = true;
-                playerIndex = playerIndex + 1;
-            end
-        end
-    end
-end
-
-function Actives.RenderActivesCount(item, infoGetter)
-    local function func(player, playerIndex, slot, pos, scale)
-        local pivot = Vector(0.5, 0.5);
-        local pos = GetPlayerActiveCountPos(player, slot, playerIndex);
-        local count = 0;
-        local color = Color.Default;
-        if (type(infoGetter) == "function") then
-            count, color = infoGetter(player);
-        else
-            count = infoGetter;
-        end
-        Actives.DrawActiveCount(pos, count, pivot, color);
-    end
-    Actives.RenderOnActive(item, func);
-end
-
-
+-- Will this use spawn wisps?
 function Actives.CanSpawnWisp(player, flags)
     return player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) and (flags & UseFlag.USE_NOANIM <= 0 or flags & UseFlag.USE_ALLOWWISPSPAWN > 0);
 end
 
-------- Events ---------
--- function Actives:onPlayerUpdate(player)
---     local playerData = Actives.GetPlayerData(player);
---     for i=0,3 do
---         local pressing = Actives.IsActivePressed(player, i);
---         if (playerData.Pressing[i] ~= pressing) then
---             playerData.Pressing[i] = pressing;
---             if (pressing) then
---                 playerData.Pressed[i] = true;
---             end
---         else
---             playerData.Pressed[i] = false;
---         end
---     end
--- end
+do -- Inputs.
+    local function IsActiveInput(player, slot, check)
+        local playerType = player:GetPlayerType();
 
+        if (playerType == PlayerType.PLAYER_JACOB or playerType == PlayerType.PLAYER_ESAU) then
+            -- Jacob and Esau.
+            local action = ButtonAction.ACTION_ITEM;
+            if (playerType == PlayerType.PLAYER_ESAU) then
+                action = ButtonAction.ACTION_PILLCARD;
+            end
 
-do -- Try Use Active.
-    
+            local ctrlHold = Input.IsActionPressed(ButtonAction.ACTION_DROP, player.ControllerIndex);
+            
+            if (slot == ActiveSlot.SLOT_POCKET or slot == ActiveSlot.SLOT_POCKET2) then
+                return check(ButtonAction.ACTION_PILLCARD, player.ControllerIndex);
+            elseif (slot == ActiveSlot.SLOT_PRIMARY) then
+                return not ctrlHold and check(action, player.ControllerIndex);
+            end
+        else
+            -- Normal.
+            if (slot == ActiveSlot.SLOT_PRIMARY) then
+                return check(ButtonAction.ACTION_ITEM, player.ControllerIndex);
+            elseif (slot == ActiveSlot.SLOT_POCKET or slot == ActiveSlot.SLOT_POCKET2) then
+                return check(ButtonAction.ACTION_PILLCARD, player.ControllerIndex);
+            end
+        end
+        return false;
+    end
 
+    -- Checks if player triggeres an active item slot's button.
+    -- Please run this in MC_POST_PLAYER_UPDATE every frame.
+    function Actives:IsActiveButtonTriggered(player, slot)
+        return IsActiveInput(player, slot, Input.IsActionTriggered);
+    end
+    -- Checks if player triggeres a specific active item's button.
+    -- Please run this in MC_POST_PLAYER_UPDATE every frame.
+    function Actives:IsActiveItemTriggered(player, item)
+        for i=0,3 do
+            if (player:GetActiveItem(i) == item) then
+                if (Actives:IsActiveButtonTriggered(player, i)) then
+                    return true, i;
+                end 
+            end
+        end
+        return false, -1;
+    end
+
+    -- Checks if player pressing an active item slot's button.
+    function Actives:IsActiveButtonPressed(player, slot)
+        return IsActiveInput(player, slot, Input.IsActionPressed);
+    end
+    -- Checks if player pressing a specific active item's button.
+    function Actives:IsActiveItemPressed(player, item)
+        for i=0,3 do
+            if (player:GetActiveItem(i) == item) then
+                if (Actives:IsActiveButtonPressed(player, i)) then
+                    return true, i;
+                end
+            end
+        end
+        return false, -1;
+        
+    end
+end
+
+do -- Charges.
+    -- Get the total charges of an active item of player.
+    -- This includes normal charges + The Battery charges + soul charges + blood charges.
+    function Actives:GetTotalCharges(player, slot)
+        if (slot < 0) then
+            return 0;
+        end
+        local charges = player:GetActiveCharge (slot);
+        local batteryCharges = player:GetBatteryCharge (slot);
+        local soulCharges = player:GetEffectiveSoulCharge();
+        local bloodCharges = player:GetEffectiveBloodCharge();
+        return charges + batteryCharges + soulCharges + bloodCharges;
+    end
+    -- Is player's active item has been fully charged?
+    -- This counts soul charges and blood charges.
     function Actives:IsChargeFull(player, slot)
         local item = player:GetActiveItem(slot);
         if (item > 0) then
             local maxCharges = itemConfig:GetCollectible(item).MaxCharges;
-            local charges = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot);
-            local soulCharges = player:GetEffectiveSoulCharge();
-            local bloodCharges = player:GetEffectiveBloodCharge();
-            local totalCharges = charges + soulCharges + bloodCharges;
-            return totalCharges >= maxCharges;
+            return Actives:GetTotalCharges(player, slot) >= maxCharges;
         end
         return false;
     end
+
+    -- Charge player's active items by order.
+    function Actives:ChargeByOrder(player, amount)
+        local hud = Game():GetHUD();
+        for i=1,amount do
+            for slot = 0,2 do
+                if (player:NeedsCharge(slot)) then
+                    local item = player:GetActiveItem(slot);
+                    local chargeType = itemConfig:GetCollectible(item).ChargeType;
+                    
+                    if (chargeType == 0) then
+                        player:SetActiveCharge(player:GetActiveCharge(slot) + player:GetBatteryCharge(slot) + 1, slot);
+                    elseif (chargeType == 1) then
+                        player:FullCharge(slot);
+                    end
+                    hud:FlashChargeBar(player, slot);
+                end
+            end
+        end
+    end
+    
+    -- Charge all player's active items.
+    function Actives:ChargeAll(player, amount, flash, playSound)
+        local hud = Game():GetHUD();
+        local sfx = SFXManager();
+        for slot = 0,3 do
+            local item = player:GetActiveItem(slot);
+            local config = itemConfig:GetCollectible(item);
+            if (config) then
+                local maxCharges = config.MaxCharges;
+                local chargeType = config.ChargeType;
+                local charged = false;
+                if (chargeType == 0) then
+                    for i = 1, amount do
+                        if (player:NeedsCharge(slot)) then
+                            local charge = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot) + 1;
+                            player:SetActiveCharge(charge, slot);
+                            charged = true;
+                        end
+                    end
+                elseif (chargeType == 1) then
+                    if (player:NeedsCharge(slot)) then
+                        player:FullCharge(slot);
+                        charged = true;
+                    end
+                end
+                
+                if (charged) then
+                    if (flash) then
+                        hud:FlashChargeBar(player, slot);
+                    end
+                    if (playSound) then
+                        local charge = player:GetActiveCharge(slot) + player:GetBatteryCharge(slot);
+                        sfx:Play(SoundEffect.SOUND_BEEP);
+                        if (charge >= maxCharges) then
+                            sfx:Play(SoundEffect.SOUND_BATTERYCHARGE);
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+end
+
+do -- Rendering.
+    Actives.FontSprite = Sprite();
+    Actives.FontSprite:Load("gfx/reverie/ui/active_count.anm2", true);
+    local HalfVector = Vector(0.5, 0.5);
+    local countOffset = Vector(-16, -16);
+    local countNums = {};
+    local CharWidths = {
+        [0] = 4,
+        [1] = 3,
+        [2] = 4,
+        [3] = 4,
+        [4] = 4,
+        [5] = 4,
+        [6] = 4,
+        [7] = 4,
+        [8] = 4,
+        [9] = 4,
+    }
+    local function GetCharWidth(char)
+        return CharWidths[char];
+    end
+    local function GetPlayerActiveCountPos(player, slot, playerIndex)
+        return Actives:GetPlayerActiveUIPos(player ,slot, playerIndex) + countOffset;
+    end
+    
+    -- Draw a multiplier sign.
+    function Actives:DrawMultiplier(pos, color)
+        color = color or Color.Default;
+        self.FontSprite.Color = color;
+        self.FontSprite:SetFrame("Characters", 12);
+        self.FontSprite:Render(pos, Vector.Zero, Vector.Zero);
+    end
+    -- Draw a minus sign.
+    function Actives:DrawMinus(pos, color)
+        color = color or Color.Default;
+        self.FontSprite.Color = color;
+        self.FontSprite:SetFrame("Characters", 11);
+        self.FontSprite:Render(pos, Vector.Zero, Vector.Zero);
+    end
+    -- Draw a single number.
+    function Actives:DrawSingleNumber(num, pos, color)
+        color = color or Color.Default;
+        self.FontSprite.Color = color;
+        self.FontSprite:SetFrame("Characters", num);
+        self.FontSprite:Render(pos, Vector.Zero, Vector.Zero);
+    end
+    -- Draw active count at specific position and pivot.
+    function Actives:DrawActiveCount(pos, count, pivot, color)
+        pivot = pivot or Vector.Zero;
+        local exp = 1;
+        for i = #countNums, 1, -1 do
+            table.remove(countNums, i);
+        end
+    
+        local negative = false;
+        if (count == 0) then
+            countNums[1] = 0;
+        else
+            if (count < 0) then
+                count = -count;
+                negative = true;
+            end
+    
+            while (exp <= count) do
+                local num = math.floor(count % (exp * 10) / exp)
+                table.insert(countNums, num);
+                exp = exp * 10;
+            end
+        end
+    
+        local posOffset = Vector(4, 0);
+        pos = pos + Vector(-pivot.X * (1 + #countNums) * 4, -8 * pivot.Y);
+        Actives:DrawMultiplier(pos, color);
+        pos = pos + posOffset;
+        local charNum = #countNums;
+        if (charNum > 1 ) then
+            pos = pos + Vector(-1, 0);
+        end
+    
+        if (negative) then
+            Actives:DrawMinus(pos + Vector(1,0), color);
+            pos = pos + posOffset;
+        end
+    
+        for i = charNum, 1, -1 do
+            local char = countNums[i];
+            Actives:DrawSingleNumber(char, pos, color);
+            posOffset.X = GetCharWidth(char);
+            pos = pos + posOffset;
+        end
+        return true;
+    end
+    -- Get player's active HUD's screen position.
+    function Actives:GetPlayerActiveUIPos(player, slot, playerIndex)
+        local type = player:GetPlayerType();
+        local hudOffset = Options.HUDOffset;
+        local x, y;
+        local screenSize = Screen.GetScreenSize();
+        x = 19 + 20 * hudOffset;
+        y = 20 + 12 * hudOffset;
+        if (playerIndex == 1) then
+            x = screenSize.X - 140 - 24 * hudOffset;
+            y = 20 + 12 * hudOffset;
+            
+        elseif (playerIndex == 2) then
+            x = 29 + 22 * hudOffset;
+            y = screenSize.Y - 19 - 6 * hudOffset;
+        elseif (playerIndex == 3) then
+            x = screenSize.X - 148 - 16 * hudOffset;
+            y = screenSize.Y - 19 - 6 * hudOffset;
+        end
+        if (type == PlayerType.PLAYER_ESAU) then
+            if (playerIndex == 0) then
+                x = screenSize.X - 21 - 16 * hudOffset;
+                y = screenSize.Y - 19 - 6 * hudOffset;
+            end
+        end
+        
+        if (slot == ActiveSlot.SLOT_POCKET) then
+            if (playerIndex > 0) then
+                x = x - 19;
+                y = y + 22;
+            else
+                if (type == PlayerType.PLAYER_ESAU) then
+                    x = screenSize.X - 16 - 16 * hudOffset;
+                    y = screenSize.Y - 42 - 6 * hudOffset;
+                else
+                    x = screenSize.X - 21 - 16 * hudOffset;
+                    y = screenSize.Y - 10 - 6 * hudOffset;
+                end
+            end
+        end
+        return Vector(x, y);
+    end
+    -- Get player's active HUD's screen scale.
+    function Actives:GetPlayerActiveUIScale(player, slot, playerIndex)
+        
+        if (slot == ActiveSlot.SLOT_POCKET) then
+            if (playerIndex > 0) then
+                return HalfVector;
+            end
+        end
+        return Vector.One;
+    end
+    -- Render something on an active item.
+    -- Callback: (player, playerIndex, slot, pos, scale)
+    -- Please call this at MC_GET_SHADER_PARAMS, and create a new hack shader for render this above the HUD.
+    function Actives:RenderOnActive(item, func)
+        if (Game():GetHUD():IsVisible()) then
+            local Players = Lib.Players;
+            local controllers = {};
+    
+    
+            local function RenderActive(player, playerIndex)
+                for slot = ActiveSlot.SLOT_PRIMARY , ActiveSlot.SLOT_POCKET2, 2 do
+                    if (player:GetActiveItem(slot) == item and (slot < ActiveSlot.SLOT_POCKET or player:GetCard(0) + player:GetPill(0) <= 0)) then
+                        local pos = Actives:GetPlayerActiveUIPos(player, slot, playerIndex)
+                        local scale = Actives:GetPlayerActiveUIScale(player, slot, playerIndex);
+                        func(player, playerIndex, slot, pos, scale);
+                    end
+                end
+            end
+    
+            local playerIndex = 0;
+            for i, player in Players.PlayerPairs() do
+                -- If is not a coop baby.
+                if (not controllers[player.ControllerIndex]) then
+                    local type = player:GetPlayerType();
+                    if (type ~= PlayerType.PLAYER_ESAU) then
+                        RenderActive(player, playerIndex);
+                        if (type == PlayerType.PLAYER_JACOB) then
+                            local other = player:GetOtherTwin();
+                            RenderActive(other, playerIndex);
+                        end
+                    end
+                    controllers[player.ControllerIndex] = true;
+                    playerIndex = playerIndex + 1;
+                end
+            end
+        end
+    end
+    -- Render active count on an active item.
+    -- infoGetter is an integer or function(player) that returns an integer.
+    -- Please call this at MC_GET_SHADER_PARAMS, and create a new hack shader for render this above the HUD.
+    function Actives:RenderActivesCount(item, infoGetter)
+        local function func(player, playerIndex, slot, pos, scale)
+            local pivot = Vector(0.5, 0.5);
+            local pos = GetPlayerActiveCountPos(player, slot, playerIndex);
+            local count = 0;
+            local color = Color.Default;
+            if (type(infoGetter) == "function") then
+                count, color = infoGetter(player);
+            else
+                count = infoGetter;
+            end
+            Actives:DrawActiveCount(pos, count, pivot, color);
+        end
+        Actives:RenderOnActive(item, func);
+    end    
+end
+
+do -- Try Use Active.
+    
 
     --- Get the charges of the active item which player trying to use.
     --- If the active item is not being tried to use, return -1.
@@ -424,6 +420,13 @@ do -- Try Use Active.
     function Actives:EndUseTry(player, slot)
         self:SetUseTryCharges(player, slot, nil);
     end
+
+    --- Cost charges after finished an active item use try.
+    --- Note this will cost player's soul charges and blood charges.
+    ---@param player EntityPlayer
+    ---@param item integer
+    ---@param slot integer
+    ---@param cost integer 
     function Actives:CostUseTryCharges(player, item, slot, cost)
         local maxCharges = Isaac.GetItemConfig():GetCollectible(item).MaxCharges;
         local charges = Actives:GetUseTryCharges(player, slot);

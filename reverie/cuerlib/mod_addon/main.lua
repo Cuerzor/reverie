@@ -22,17 +22,12 @@ for k,v in pairs(ClassPaths) do
     classFunctions[k] = func;
 end
 
-return function(self, name, apiversion, dataName)
+return function(self, mod, dataName)
     local Addon = {
-        Mod = nil,
-        DataName = nil,
+        Mod = mod,
+        DataName = dataName or mod.Name
     }
-    
-    
-    local mod = RegisterMod(name, apiversion);
-    mod.CuerlibAddon = Addon;
-    Addon.Mod = mod;
-    Addon.DataName = dataName or mod.Name;
+    mod.CuerLibAddon = Addon;
     Addon.ClassPaths = ClassPaths;
 
     local LibMetatable = {
@@ -60,5 +55,5 @@ return function(self, name, apiversion, dataName)
         Addon[k] = v(Addon);
     end
 
-    return mod;
+    return Addon;
 end

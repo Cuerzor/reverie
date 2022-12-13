@@ -28,7 +28,14 @@ CuerLib.Callbacks = {
 
     CLC_POST_NEW_STAGE = "CUERLIB_POST_NEW_STAGE",
     
+    ---Called after player release a holding active item.
+    ---Return { Discharge = (boolean), Remove = (boolean) } to not discharge or remove the active item. 
+    ---@param player EntityPlayer
+    ---@param item integer
+    ---@param direction Vector
+    ---@return table
     CLC_RELEASE_HOLDING_ACTIVE = "CUERLIB_RELEASE_HOLDING_ACTIVE",
+
     --Params: (curses)
     CLC_EVALUATE_CURSE = "CUERLIB_EVALUATE_CURSE",
     --Params: (pool, decrease, seed, loopCount)
@@ -50,5 +57,14 @@ CuerLib.Callbacks = {
     CLC_POST_GRID_DESTROYED = "CUERLIB_POST_GRID_DESTROYED",
 
     CLC_GET_REWIND_DATA = "CUERLIB_GET_REWIND_DATA",
-    CLC_SET_REWIND_DATA = "CUERLIB_SET_REWIND_DATA"
+    CLC_SET_REWIND_DATA = "CUERLIB_SET_REWIND_DATA",
+
+    -- Called when player getting coins, keys or bombs from pickups.
+    -- The optional arg is pickupVariant.
+    -- Return a new value to change how many pickups should be added.
+    ---@param player EntityPlayer
+    ---@param pickup PickupVariant
+    ---@param addingNum integer 
+    ---@return integer
+    CLC_ADD_PICKUP_NUM = "CUERLIB_ADD_PICKUP_NUM"
 }

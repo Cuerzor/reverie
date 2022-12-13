@@ -147,7 +147,7 @@ local function RenderPlayer(player, playerIndex)
         local type = player:GetPlayerType();
         local data = GetPlayerData(player);
         local hudOffset = Options.HUDOffset;
-        local x = 35+ 20 * hudOffset;;
+        local x = 35+ 20 * hudOffset;
         local y = 64 + 12 * hudOffset;
         local screenSize = Screen.GetScreenSize();
         local screenShake = THI.Game.ScreenShakeOffset;
