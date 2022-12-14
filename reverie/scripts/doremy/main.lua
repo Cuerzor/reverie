@@ -364,7 +364,7 @@ function Dream:onNewRoom()
                 local dreamSoulSpawned = globalData and globalData.DreamSoulSpawned;
                 if (not dreamSoulExists and not dreamSoulSpawned) then
                     local pos = room:FindFreePickupSpawnPosition(Vector(320, 280), 0, true);
-                    local collectible = Pickups.SpawnFixedCollectible(DreamSoul.Id, pos, Vector.Zero, nil);
+                    local collectible = Pickups:SpawnFixedCollectible(DreamSoul.Id, pos, Vector.Zero, nil);
                     collectible:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
                     globalData = Dream:GetDreamData(true);
                     globalData.DreamSoulSpawned = true;

@@ -777,7 +777,7 @@ local function DropItem(player, item)
     local pos = room:FindFreePickupSpawnPosition(player.Position, 0, true);
     local pickup;
     if (source.Type == Crate.ItemType.COLLECTIBLE) then
-        pickup = Pickups.SpawnFixedCollectible(source.ID, pos, Vector.Zero, player):ToPickup();
+        pickup = Pickups:SpawnFixedCollectible(source.ID, pos, Vector.Zero, player):ToPickup();
         pickup:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
     elseif (source.Type == Crate.ItemType.TRINKET) then
         local trinketID = source.ID;

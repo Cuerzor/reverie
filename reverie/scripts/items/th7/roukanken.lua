@@ -615,8 +615,8 @@ do
             local pickup = ent:ToPickup();
             local hitPickups = self:GetHitboxData(hitbox, true).HitPickups;
             if (pickup ~= nil and hitPickups[pickup.InitSeed] == nil) then
-                if (Pickups.CanCollect(player, pickup)) then
-                    Pickups.Collect(player, pickup)
+                if (Pickups:CanCollect(player, pickup)) then
+                    Pickups:Collect(player, pickup)
                 end
                 pickup:AddVelocity(((position - player.Position):Normalized() + swingVector:Normalized()) * 5 )
                 hitPickups[pickup.InitSeed] = true;

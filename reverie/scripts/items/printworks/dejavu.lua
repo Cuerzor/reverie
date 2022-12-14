@@ -1,13 +1,16 @@
 local SaveAndLoad = THI.CuerLibAddon.SaveAndLoad;
+local Pickups = CuerLib.Pickups;
 local Actives = CuerLib.Actives;
 local Players = CuerLib.Players;
 local Stats = CuerLib.Stats;
 local Entities = CuerLib.Entities;
-local Dejavu = ModItem("Dejavu", "DEJAVU");
+local Collectibles = CuerLib.Collectibles;
+local Dejavu = ModItem("Deja vu", "DEJA_VU");
 
+local itemConfig = Isaac.GetItemConfig();
 local function GetGlobalData(create)
     return Dejavu:GetGlobalData(create, function () return {
-        SpawnedLootCount = 0,
+        SpawnedLoots = {},
     }end)
 end
 
@@ -16,17 +19,50 @@ function Dejavu:SpawnCorpse(data)
     local game = Game();
     local room = game:GetRoom();
     local Corpse = THI.Effects.DejavuCorpse;
-    Isaac.Spawn(Corpse.Type, Corpse.Variant, 0, Vector(data.X, data.Y), Vector.Zero, nil);
+    return Isaac.Spawn(Corpse.Type, Corpse.Variant, 0, Vector(data.X, data.Y), Vector.Zero, nil);
+end
+function Dejavu:SpawnCorpseLoots(data, corpse, index)
+    local game = Game();
+    local room = game:GetRoom();
+    local pos = Vector(data.X, data.Y);
+    local globalData = GetGlobalData(true);
+    globalData.SpawnedLoots = globalData.SpawnedLoots or {};
+
+    local uniqueOptionsIndex = Pickups:GetUniqueOptionsIndex();
+
+    for i = 1, 3 do
+        local id = data.Items[i]
+        if (id > 0 and itemConfig:GetCollectible(id)) then
+            local item = Pickups:SpawnFixedCollectible(id, room:FindFreePickupSpawnPosition(pos), Vector.Zero, corpse):ToPickup();
+            item:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
+            item.OptionsPickupIndex = uniqueOptionsIndex;
+            table.insert(globalData.SpawnedLoots, index);
+        end
+    end
+end
+function Dejavu:ShouldCorpseSpawnItems(index)
+    local globalData = GetGlobalData(false);
+    if (globalData) then
+        if (#globalData.SpawnedLoots >= 3) then
+            return false;
+        else
+            for _, i in ipairs(globalData.SpawnedLoots) do
+                if (i == index) then
+                    return false;
+                end
+            end
+        end
+    end
+    return true;
 end
 
-local itemConfig = Isaac.GetItemConfig();
 function Dejavu:GetRandomPlayerCollectibles(player, seed, count)
     local collectibleList = {};
     local collectibleCount = 0;
     for i = 1, THI.MaxCollectibleID do
         local config = itemConfig:GetCollectible(i);
         if (config) then
-            if (not config:HasTags(ItemConfig.TAG_QUEST)) then
+            if (not config:HasTags(ItemConfig.TAG_QUEST) and not config.Hidden) then
                 local collectibleNum = player:GetCollectibleNum(i, true);
                 if (collectibleNum > 0) then
                     collectibleList[i] = collectibleNum;
@@ -97,7 +133,7 @@ Dejavu.CharMap = {
     [33] = 'g', [34] = 'h', [35] = 'i', [36] = 'j', [37] = 'k', [38] = 'l', [39] = 'm', [40] = 'n',
     [41] = 'o', [42] = 'p', [43] = 'q', [44] = 'r', [45] = 's', [46] = 't', [47] = 'u', [48] = 'v',
     [49] = 'w', [50] = 'x', [51] = 'y', [52] = 'z', [53] = '0', [54] = '1', [55] = '2', [56] = '3',
-    [57] = '4', [58] = '5', [59] = '6', [60] = '7', [61] = '8', [62] = '9', [63] = '/', [64] = '=',
+    [57] = '4', [58] = '5', [59] = '6', [60] = '7', [61] = '8', [62] = '9', [63] = '+', [64] = '=',
 }
 Dejavu.RevCharMap = {};
 for k,v in pairs(Dejavu.CharMap) do
@@ -212,7 +248,7 @@ Dejavu:AddCallback(ModCallbacks.MC_POST_GAME_END, Dejavu.PostGameEnd)
 local corpseDatas = nil;
 
 function Dejavu:SpawnRoomCorpses()
-    if (corpseDatas) then
+    if (corpseDatas and Collectibles.IsAnyHasCollectible(self.Item)) then
         local game = Game();
         local level = game:GetLevel();
         local roomDesc = level:GetCurrentRoomDesc();
@@ -221,10 +257,12 @@ function Dejavu:SpawnRoomCorpses()
             roomType = 0;
         end
         local roomVariant = roomDesc.Data.Variant; 
-        for _, data in ipairs(corpseDatas) do
-            print(data.Stage, data.StageType, data.RoomType, data.RoomVariant)
+        for i, data in ipairs(corpseDatas) do
             if (data.Stage == level:GetStage() and data.StageType == level:GetStageType() and data.RoomType == roomType and data.RoomVariant == roomVariant) then
-                self:SpawnCorpse(data);
+                local corpse = self:SpawnCorpse(data);
+                if (self:ShouldCorpseSpawnItems(i)) then
+                    Dejavu:SpawnCorpseLoots(data, corpse, i);
+                end
             end
         end
     end
@@ -242,6 +280,11 @@ function Dejavu:PostGameStarted(isContinued)
     self:SpawnRoomCorpses();
 end
 Dejavu:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, Dejavu.PostGameStarted)
+
+function Dejavu:PreGameExit(shouldSave)
+    corpseDatas = nil;
+end
+Dejavu:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, Dejavu.PreGameExit)
 
 function Dejavu:PostNewRoom()
     self:SpawnRoomCorpses();

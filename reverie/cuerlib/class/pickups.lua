@@ -72,12 +72,30 @@ local function PostCollectPickup(player, pickup)
     Isaac.RunCallbackWithParam(Lib.Callbacks.CLC_POST_PICKUP_COLLECTED, pickup.Variant, player, pickup);
 end
 
-function Pickups.SpawnFixedCollectible(id, pos, vel, spawner)
+function Pickups:SpawnFixedCollectible(id, pos, vel, spawner)
     local col = Isaac.Spawn(5, 100, 1, pos, vel, spawner):ToPickup();
     col:Morph(5, 100, id, false, false, true);
     return col;
 end
-function Pickups.IsChest(variant)
+function Pickups:GetUniqueOptionsIndex()
+    local uniqueOptionsIndex = 1;
+    local pickups = Isaac.FindByType(5);
+    local unique = false;
+    while(not unique) do
+        unique = true;
+        for _, ent in ipairs(pickups) do
+            local pickup = ent:ToPickup();
+            if (pickup.OptionsPickupIndex == uniqueOptionsIndex) then
+                uniqueOptionsIndex = uniqueOptionsIndex + 1;
+                unique = false;
+                break;
+            end
+        end
+    end
+    return uniqueOptionsIndex;
+end
+
+function Pickups:IsChest(variant)
     for _, var in pairs(ChestVariants) do
         if (var == variant) then
             return true;
@@ -87,7 +105,7 @@ function Pickups.IsChest(variant)
 end
 
 
-function Pickups.GetCoinValue(pickup)
+function Pickups:GetCoinValue(pickup)
     for _, var in pairs(CoinValues) do
         if (var.Variant == pickup.Variant and var.SubType == pickup.SubType) then
             return var.Value;
@@ -95,7 +113,7 @@ function Pickups.GetCoinValue(pickup)
     end
     return pickup:GetCoinValue();
 end
-function Pickups.GetKeyValue(pickup)
+function Pickups:GetKeyValue(pickup)
     for _, var in pairs(KeyValues) do
         if (var.Variant == pickup.Variant and var.SubType == pickup.SubType) then
             return var.Value;
@@ -103,7 +121,7 @@ function Pickups.GetKeyValue(pickup)
     end
     return 0;
 end
-function Pickups.GetBombValue(pickup)
+function Pickups:GetBombValue(pickup)
     for _, var in pairs(BombValues) do
         if (var.Variant == pickup.Variant and var.SubType == pickup.SubType) then
             return var.Value;
@@ -112,23 +130,23 @@ function Pickups.GetBombValue(pickup)
     return 0;
 end
 
-function Pickups.AddCoinValue(variant, subtype, value)
+function Pickups:AddCoinValue(variant, subtype, value)
     table.insert(CoinValues, {Variant = variant, SubType = subtype, Value = value});
 end
-function Pickups.AddKeyValue(variant, subtype, value)
+function Pickups:AddKeyValue(variant, subtype, value)
     table.insert(KeyValues, {Variant = variant, SubType = subtype, Value = value});
 end
-function Pickups.AddBombValue(variant, subtype, value)
+function Pickups:AddBombValue(variant, subtype, value)
     table.insert(BombValues, {Variant = variant, SubType = subtype, Value = value});
 end
 
-function Pickups.IsSpecialPickup(variant)
+function Pickups:IsSpecialPickup(variant)
     return variant == PickupVariant.PICKUP_TROPHY or
     variant == PickupVariant.PICKUP_BIGCHEST or
     variant == PickupVariant.PICKUP_BED;
 end
 
-function Pickups.CanCollect(player, pickup)
+function Pickups:CanCollect(player, pickup)
     local variant = pickup.Variant;
     local subType = pickup.SubType;
 
@@ -184,15 +202,15 @@ function Pickups.CanCollect(player, pickup)
         return true;
     elseif (variant ~= PickupVariant.PICKUP_HAUNTEDCHEST and 
     variant ~= PickupVariant.PICKUP_MOMSCHEST and 
-    Pickups.IsChest(variant)) then
+    Pickups:IsChest(variant)) then
         return true;
     end
 
     return Isaac.RunCallbackWithParam(Lib.Callbacks.CLC_CAN_PICKUP_COLLECT, pickup.Variant, player, pickup);
 end
 
-function Pickups.Collect(player, pickup)
-    if (Pickups.IsChest(pickup.Variant)) then
+function Pickups:Collect(player, pickup)
+    if (Pickups:IsChest(pickup.Variant)) then
         pickup:TryOpenChest(player);
     else
         local beforePos = pickup.Position;
@@ -204,15 +222,15 @@ function Pickups.Collect(player, pickup)
     end
 end
 
-function Pickups.TryCollect(player, pickup)
-    if (Pickups.CanCollect(player, pickup)) then
-        Pickups.Collect(player, pickup)
+function Pickups:TryCollect(player, pickup)
+    if (Pickups:CanCollect(player, pickup)) then
+        Pickups:Collect(player, pickup)
         return true;
     end
     return false;
 end
 -- From Fiend Folio.
-function Pickups.GetBoneSwingPickupPlayer(pickup)
+function Pickups:GetBoneSwingPickupPlayer(pickup)
 	--try to get a player from bone club swings
 	if pickup:IsShopItem() then return nil end
 
@@ -256,9 +274,9 @@ local function PostPickupUpdate(mod, pickup)
         data.Moved = false;
     end
     
-    local player = Pickups.GetBoneSwingPickupPlayer(pickup);
+    local player = Pickups:GetBoneSwingPickupPlayer(pickup);
     if (player) then
-        Pickups.TryCollect(player, pickup);
+        Pickups:TryCollect(player, pickup);
     end
 end
 Pickups:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate);
@@ -266,7 +284,7 @@ Pickups:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate);
 local function PostPickupCollision(mod, pickup, collider, low)
     local player = collider:ToPlayer();
     if (player) then
-        if (Pickups.CanCollect(player, pickup)) then
+        if (Pickups:CanCollect(player, pickup)) then
             PostCollectPickup(player, pickup)
         end
     end
@@ -366,9 +384,9 @@ Pickups:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, PostPlayerRender);
 
 local function PostPickupCollected(mod, player, pickup)
     local data = GetPlayerTempData(player, true);
-    local coinValue = Pickups.GetCoinValue(pickup);
-    local bombValue = Pickups.GetBombValue(pickup);
-    local keyValue = Pickups.GetKeyValue(pickup);
+    local coinValue = Pickups:GetCoinValue(pickup);
+    local bombValue = Pickups:GetBombValue(pickup);
+    local keyValue = Pickups:GetKeyValue(pickup);
     data.PickedCoins = data.PickedCoins + coinValue;
     data.PickedBombs = data.PickedBombs + bombValue;
     data.PickedKeys = data.PickedKeys + keyValue;

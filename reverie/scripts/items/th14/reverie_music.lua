@@ -139,7 +139,7 @@ local function PostNewRoom(mod)
         if (game.Challenge == 0 and data.MusicNum >= 5 and not data.MusicSpawned and stage1
         and room:GetType() == RoomType.ROOM_TREASURE and not level:IsAscent ( ) and not game:IsGreedMode()) then
             local pos = room:FindFreePickupSpawnPosition(room:GetCenterPos() + Vector(0, 80));
-            local col = Pickups.SpawnFixedCollectible(ReverieMusic.Item, pos, Vector.Zero, nil);
+            local col = Pickups:SpawnFixedCollectible(ReverieMusic.Item, pos, Vector.Zero, nil);
             col:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
             data.MusicSpawned = true;
         end

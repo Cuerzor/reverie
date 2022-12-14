@@ -165,7 +165,7 @@
 	<passive id="508" name="Dagger of Servants" description="Offer Your Heart" gfx="dagger_of_servants.png" quality="3" tags="nolostbr nocantrip nogreed" />
 	
     <!-- Akyuu -->
-    <passive id="566" name="Dejavu" description="Have I been there before?" gfx="dejavu.png" quality="2" tags="offensive nocantrip nogreed nochallenge nodaily"/>
+    <passive id="566" name="Deja vu" description="Have I been there before?" gfx="dejavu.png" quality="2" tags="offensive nocantrip nogreed nochallenge nodaily"/>
    
     <active id="627" name="Eye of Chimera" description="Explore your unknown destiny" gfx="eye_of_chimera.png" maxcharges="4" quality="3" tags="offensive nocantrip dead" />
     <!-- Trinkets-->

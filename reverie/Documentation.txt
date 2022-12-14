@@ -1126,6 +1126,17 @@ Item Pools: Secret Room, Old Chest, Greed Secret Room
 * Has no effects in runs that disable achievements.
 * Will not receive items when disabling this mod. The legacies will not be received until next run with this mod.
 
+Deja vu
+Description: Have I been there before?
+Reference: Hieda no Akyuu
+Type: Passive Item
+Quality: 2
+Tags: Offensive, No Cantrip, No Greed, Summonable, No Challenge, No Daily
+Item Pools: Secret Room
+* While this mod enabled, record all dead runs.
+* Holding this item will make you can see your past corpses, each spawns 3 random items from the corpse, and can only take one.
+* Can only spawn up to 9 items in a run by this way.
+
 Sunny Fairy
 Description: I'm Sunny!
 Reference: Sunny Milk

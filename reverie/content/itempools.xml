@@ -180,6 +180,8 @@
 		<Item Name="Sake of Forgotten" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Daitengu Telescope-->
 		<Item Name="Daitengu Telescope" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Deja vu-->
+		<Item Name="Deja vu" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Eye of Chimera-->
 		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>

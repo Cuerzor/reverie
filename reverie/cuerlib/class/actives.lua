@@ -38,6 +38,9 @@ end
 
 do -- Inputs.
     local function IsActiveInput(player, slot, check)
+        if (not player:AreControlsEnabled()) then
+            return false;
+        end
         local playerType = player:GetPlayerType();
 
         if (playerType == PlayerType.PLAYER_JACOB or playerType == PlayerType.PLAYER_ESAU) then

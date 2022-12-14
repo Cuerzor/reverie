@@ -914,6 +914,12 @@ EIDInfo.Collectibles = {
         "#20% to change it into lucky penny"..
         "#!!! Hearts spawned by cards/items will not be changed"
     },
+    [Collectibles.Dejavu.Item] = {
+        Name = "Deja vu",
+        Description = "This mod will record all dead runs"..
+        "#While holding this item, you can see your failed corpses in the same room with 3 held items"..
+        "#!!! You can only take 1 of the 3 items, and can only spawn up to 9 items per run"
+    },
     [Collectibles.EyeOfChimera.Item] = {
         Name = "Eye of Chimera",
         Description = "Reroll all pedestal items in the room upon use"..

@@ -997,6 +997,12 @@ EIDInfo.Collectibles = {
         "#20%的概率变为幸运币"..
         "#!!! 由角色通过卡牌/道具生成的心不会被替换"
     },
+    [Collectibles.Dejavu.Item] = {
+        Name = "似曾相识",
+        Description = "该MOD会记录所有以死亡告终的局"..
+        "#持有该道具时，可以在死亡的同种房间内，看到之前的尸体伴随着3个身上的道具生成"..
+        "#!!! 3个道具之中只能拿走一个，且一局最多生成9个道具"
+    },
     [Collectibles.EyeOfChimera.Item] = {
         Name = "嵌体怪之眼",
         Description = "使用后重置本房间内的所有道具"..

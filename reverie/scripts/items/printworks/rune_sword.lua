@@ -523,11 +523,11 @@ end
 RuneSword:AddCallback(CuerLib.Callbacks.CLC_POST_GREED_WAVE_END, RuneSword.PostGreedWaveEnd);
 
 local function CanDuplicate(pickup)
-    if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or Pickups.IsSpecialPickup(pickup.Variant)) then
+    if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or Pickups:IsSpecialPickup(pickup.Variant)) then
         return false;
     end
 
-    if (Pickups.IsChest(pickup.Variant) and Pickups.SubType == ChestSubType.CHEST_OPENED) then
+    if (Pickups:IsChest(pickup.Variant) and pickup.SubType == ChestSubType.CHEST_OPENED) then
         return false;
     end
     return true;
