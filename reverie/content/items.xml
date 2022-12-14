@@ -163,8 +163,11 @@
 	<active id="505" name="Spirit Cannon" description="Shin-Kikouhooooooooou!!!" gfx="spirit_cannon.png" maxcharges="3" quality="3" tags="offensive" />
 	<passive id="507" name="Asthma" description="Mana up, Regeneration Down" gfx="asthma.png" quality="2" tags="offensive summonable nocantrip" />
 	<passive id="508" name="Dagger of Servants" description="Offer Your Heart" gfx="dagger_of_servants.png" quality="3" tags="nolostbr nocantrip nogreed" />
-	<active id="627" name="Eye of Chimera" description="Explore your unknown destiny" gfx="eye_of_chimera.png" maxcharges="4" quality="3" tags="offensive nocantrip dead" />
-
+	
+    <!-- Akyuu -->
+    <passive id="566" name="Dejavu" description="Have I been there before?" gfx="dejavu.png" quality="2" tags="offensive nocantrip nogreed nochallenge nodaily"/>
+   
+    <active id="627" name="Eye of Chimera" description="Explore your unknown destiny" gfx="eye_of_chimera.png" maxcharges="4" quality="3" tags="offensive nocantrip dead" />
     <!-- Trinkets-->
 	<trinket id="1" name="Frozen Frog" description="Ice Touch" gfx="frozen_frog.png" />
 	<trinket id="21" name="Aromatic Flower" description="Spring Die Twice" gfx="aromatic_flower.png" />

@@ -421,7 +421,8 @@ THI.Effects = {
     SpiderbabyWeb = Require("scripts/effects/spiderbaby_web"),
     AcidRaindrop = Require("scripts/effects/acid_raindrop"),
     DaggerWarning = Require("scripts/effects/dagger_warning"),
-    EyeOfChimeraDisplayer = Require("scripts/effects/eye_of_chimera_displayer")
+    EyeOfChimeraDisplayer = Require("scripts/effects/eye_of_chimera_displayer"),
+    DejavuCorpse = Require("scripts/effects/dejavu_corpse")
 }
 THI.Familiars = {
     Illusion = Require("scripts/familiars/illusion"),
@@ -645,6 +646,9 @@ Collectibles.Escape = Require("scripts/items/printworks/escape");
 Collectibles.EtherealArm = Require("scripts/items/printworks/ethereal_arm");
 Collectibles.SakeOfForgotten = Require("scripts/items/printworks/sake_of_forgotten");
 Collectibles.RebelMechaCaller = Require("scripts/items/printworks/rebel_mecha_caller");
+
+-- Printworks ALT.
+Collectibles.Dejavu = Require("scripts/items/printworks/dejavu");
 
 
 
