@@ -1,5 +1,62 @@
+local hasCuerLib = not not CuerLib;
 local Lib = CuerLib or include("cuerlib/main");
 THI = RegisterMod("Reverie", 1);
+
+-- Load Fonts.
+local teammeat10 = Font();
+teammeat10:Load("font/teammeatfont10.fnt");
+local teammeatExtended10 = Font();
+teammeatExtended10:Load("font/teammeatfontextended10.fnt");
+local lanapixel = Font();
+lanapixel:Load("font/cjk/lanapixel.fnt");
+local terminus8 = Font();
+terminus8:Load("font/terminus8.fnt");
+local pftempesta7 = Font();
+pftempesta7:Load("font/pftempestasevencondensed.fnt");
+local mplus_12b = Font();
+mplus_12b:Load("font/mplus_12b.fnt");
+THI.Fonts = {
+    Teammeat10 = teammeat10,
+    TeammeatExtended10 = teammeatExtended10,
+    Lanapixel = lanapixel,
+    Terminus8 = terminus8,
+    PFTempesta7 = pftempesta7,
+    MPlus12b = mplus_12b
+}
+-- CuerLib check.
+if (not hasCuerLib) then
+	local langFonts = {
+		en = THI.Fonts.PFTempesta7,
+		zh = THI.Fonts.Lanapixel
+	}
+	local langTexts = {
+		en = {
+			"This mod will require mod \"CuerLib\" to work properly in the future!",
+			"Install it and prepare for the later version's changes."
+		},
+		zh = {
+			"该MOD在之后将需要前置MOD\"CuerLib\"来运行！",
+			"请下载该MOD并为之后的更新作准备。"
+		}
+	}
+	local font = langFonts[Options.Language] or langFonts.en;
+	local texts = langTexts[Options.Language] or langTexts.en;
+	local color = KColor(1,1,0,1);
+
+    local timeout = 600;
+	local function PostRender(mod)
+		local posX = Isaac.GetScreenWidth() / 2;
+        if (timeout <= 100) then
+            color.Alpha = timeout / 100;
+        end
+		for i, text in ipairs(texts) do
+			font:DrawStringUTF8 (text, posX - 200, 0 + i * 20, color, 400, true )
+		end
+        timeout = timeout - 1;
+	end
+	THI:AddCallback(ModCallbacks.MC_POST_RENDER, PostRender);
+end
+
 Lib:InitMod(THI, "REVERIE");
 
 THI.Version = {
@@ -268,26 +325,6 @@ THI.Shared = Shared;
 
 
 
-local teammeat10 = Font();
-teammeat10:Load("font/teammeatfont10.fnt");
-local teammeatExtended10 = Font();
-teammeatExtended10:Load("font/teammeatfontextended10.fnt");
-local lanapixel = Font();
-lanapixel:Load("font/cjk/lanapixel.fnt");
-local terminus8 = Font();
-terminus8:Load("font/terminus8.fnt");
-local pftempesta7 = Font();
-pftempesta7:Load("font/pftempestasevencondensed.fnt");
-local mplus_12b = Font();
-mplus_12b:Load("font/mplus_12b.fnt");
-THI.Fonts = {
-    Teammeat10 = teammeat10,
-    TeammeatExtended10 = teammeatExtended10,
-    Lanapixel = lanapixel,
-    Terminus8 = terminus8,
-    PFTempesta7 = pftempesta7,
-    MPlus12b = mplus_12b
-}
 THI.Music = {
     UFO = Isaac.GetMusicIdByName("UFO"),
     REVERIE = Isaac.GetMusicIdByName("Reverie"),

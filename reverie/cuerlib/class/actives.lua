@@ -32,7 +32,7 @@ function Actives:GetActiveList()
 end
 
 -- Will this use spawn wisps?
-function Actives.CanSpawnWisp(player, flags)
+function Actives:CanSpawnWisp(player, flags)
     return player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) and (flags & UseFlag.USE_NOANIM <= 0 or flags & UseFlag.USE_ALLOWWISPSPAWN > 0);
 end
 
@@ -461,7 +461,7 @@ do -- Try Use Active.
                 local itemConfig = Isaac.GetItemConfig();
                 for slot = ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_POCKET, 2 do
                     local item = player:GetActiveItem(slot);
-                    if (item > 0 and Actives.IsActiveButtonTriggered(player, slot)) then
+                    if (item > 0 and Actives:IsActiveButtonTriggered(player, slot)) then
                         local data = GetPlayerData(player, false);
                         if (not data or not data.UsedCharges[slot] ) then
                             local maxCharges = itemConfig:GetCollectible(item).MaxCharges;

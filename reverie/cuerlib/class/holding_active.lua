@@ -36,12 +36,12 @@ end
 
 -- Get current holding active item.
 function HoldingActive:GetHoldingItem(player)
-    local playerData = self:GetPlayerData(player, false);
+    local playerData = GetPlayerData(player, false);
     return (playerData and playerData.Item) or -1;
 end
 -- Should this use discharges the active item?
 function HoldingActive:ShouldDischarge(player)
-    local playerData = self:GetPlayerData(player, false);
+    local playerData = GetPlayerData(player, false);
     if (playerData) then
         return not playerData.Mimic;
     end
@@ -49,12 +49,12 @@ function HoldingActive:ShouldDischarge(player)
 end
 -- Get current holding active item's slot.
 function HoldingActive:GetHoldingSlot(player)
-    local playerData = self:GetPlayerData(player, false);
+    local playerData = GetPlayerData(player, false);
     return (playerData and playerData.Slot) or -1;
 end
 -- Switch the holding state of an active item.
 function HoldingActive:SwitchHolding(id, player, slot, flags)
-    local playerData = self:GetPlayerData(player, false);
+    local playerData = GetPlayerData(player, false);
     local holding = HoldingActive:GetHoldingItem(player);
     if (holding <= 0) then
         HoldingActive:Hold(id, player, slot, flags);
@@ -65,7 +65,7 @@ function HoldingActive:SwitchHolding(id, player, slot, flags)
 end
 -- Hold an active item.
 function HoldingActive:Hold(id, player, slot, flags)
-    local playerData = self:GetPlayerData(player, true);
+    local playerData = GetPlayerData(player, true);
     playerData.Item = id;
     playerData.Slot = slot;
     player:AnimateCollectible(id, "LiftItem");
@@ -79,7 +79,7 @@ function HoldingActive:Hold(id, player, slot, flags)
 end
 -- Cancels holding an active item.
 function HoldingActive:Cancel(player)
-    local playerData = self:GetPlayerData(player, true);
+    local playerData = GetPlayerData(player, true);
     EndHolding(player);
     player:PlayExtraAnimation("HideItem");
 end
