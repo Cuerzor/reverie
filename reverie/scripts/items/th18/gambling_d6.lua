@@ -83,7 +83,7 @@ function GamblingD6:Use(player, slot)
                             break;
                         end
                     end
-                elseif (Actives.CanSpawnWisp(player, flags)) then
+                elseif (Actives:CanSpawnWisp(player, flags)) then
                     player:AddWisp(GamblingD6.Item, ent.Position);
                 end
 
@@ -191,7 +191,7 @@ local function PostPlayerUpdate(mod, player)
             player:AnimateCollectible(GamblingD6.Item, "HideItem");
         end
 
-        local triggered, slot = Actives.IsActiveItemTriggered(player, GamblingD6.Item);
+        local triggered, slot = Actives:IsActiveItemTriggered(player, GamblingD6.Item);
         if (triggered) then
             if (not Actives:IsChargeFull(player, slot)) then
                 if (GamblingD6:Use(player, slot)) then

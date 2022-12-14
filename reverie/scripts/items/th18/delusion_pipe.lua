@@ -62,7 +62,7 @@ local function PostUsePipe(mod, item, rng, player, flags, slot, varData)
 
     THI.SFXManager:Play(SoundEffect.SOUND_VAMP_GULP);
 
-    -- if (Actives.CanSpawnWisp(player, flags)) then
+    -- if (Actives:CanSpawnWisp(player, flags)) then
     --     local hasWisp = false;
     --     for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, FamiliarVariant.WISP, Pipe.Item)) do
     --         if (CompareEntity(ent:ToFamiliar().Player, player)) then

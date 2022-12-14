@@ -19,17 +19,17 @@ function THI.IsBossEnabled(name)
     return Bosses.Blacklist[name] ~= true;
 end
 function THI.SetBossEnabled(name, enabled)
-    local persistent = SaveAndLoad.ReadPersistentData();
+    local persistent = SaveAndLoad:ReadPersistentData();
     persistent.BossBlacklist = persistent.BossBlacklist or {};
     persistent.BossBlacklist[name] = not enabled;
     Bosses.Blacklist[name] = not enabled;
-    Lib.SaveAndLoad.WritePersistentData(persistent);
+    Lib.SaveAndLoad:WritePersistentData(persistent);
 
     Lib.Bosses:UpdateBosses()
 end
 
 function Bosses.UpdateBlacklist()
-    local persistent = SaveAndLoad.ReadPersistentData();
+    local persistent = SaveAndLoad:ReadPersistentData();
     if (persistent.BossBlacklist) then
         Bosses.Blacklist = {}
         for name, value in pairs(persistent.BossBlacklist) do

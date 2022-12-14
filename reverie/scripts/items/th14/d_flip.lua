@@ -412,7 +412,7 @@ local function UseDFlip(mod, item, rng, player, flags, slot, vardata)
             end
         end
     end
-    if (Actives.CanSpawnWisp(player, flags)) then
+    if (Actives:CanSpawnWisp(player, flags)) then
         local spawn = true;
         for i, ent in pairs(Isaac.FindByType(EntityType.ENTITY_FAMILIAR, FamiliarVariant.WISP, DFlip.Item)) do
             if (CompareEntity(ent:ToFamiliar().Player, player)) then

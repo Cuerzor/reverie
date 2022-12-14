@@ -40,7 +40,7 @@ do
             local data = Scroll.GetPlayerData(player, true);
             data.UseTime = data.UseTime + soulCount;
             THI.SFXManager:Play(SoundEffect.SOUND_DEVILROOM_DEAL);
-            if (Actives.CanSpawnWisp(player, flags)) then
+            if (Actives:CanSpawnWisp(player, flags)) then
                 player:AddWisp(Scroll.Item, player.Position);
             end
             player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_RANGE | CacheFlag.CACHE_SPEED);

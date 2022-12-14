@@ -100,7 +100,7 @@ function SaucerRemote:UseRemote(item, rng, player, flags, slot, varData)
     end
     
 
-    if (discharge and Actives.CanSpawnWisp(player, flags)) then
+    if (discharge and Actives:CanSpawnWisp(player, flags)) then
         -- These wisps are attached to passive items.
         local wispType = i;
         if (i == 3) then

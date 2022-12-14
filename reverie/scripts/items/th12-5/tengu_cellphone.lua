@@ -789,7 +789,7 @@ function Cellphone:PostPlayerUpdate(player)
         end
 
         
-        local triggered, slot = Actives.IsActiveItemTriggered(player, Cellphone.Item);
+        local triggered, slot = Actives:IsActiveItemTriggered(player, Cellphone.Item);
         if (triggered) then
             if (not Actives:IsChargeFull(player, slot)) then
                 Cellphone:Use(player);

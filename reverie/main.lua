@@ -98,7 +98,7 @@ do -- Announcers.
     local AnnouncerEnabled = true;
 
     function Announcer.UpdateAnnouncer()
-        local persistent = SaveAndLoad.ReadPersistentData();
+        local persistent = SaveAndLoad:ReadPersistentData();
         if (persistent.AnnouncerEnabled == false) then
             AnnouncerEnabled = false;
         end
@@ -180,10 +180,10 @@ do -- Announcers.
     end
 
     function THI.DisableBoss(value)
-        local persistent = SaveAndLoad.ReadPersistentData();
+        local persistent = SaveAndLoad:ReadPersistentData();
         persistent.AnnouncerEnabled = value;
         AnnouncerEnabled = value;
-        SaveAndLoad.WritePersistentData(persistent);
+        SaveAndLoad:WritePersistentData(persistent);
     end
 
 
@@ -920,7 +920,7 @@ do
     local IsLunatic = false;
 
     function Lunatic.UpdateLunatic()
-        local persistent = SaveAndLoad.ReadPersistentData();
+        local persistent = SaveAndLoad:ReadPersistentData();
         if (persistent.Lunatic) then
             IsLunatic = true;
         end
@@ -932,10 +932,10 @@ do
     end
 
     function THI.SetLunatic(value)
-        local persistent = SaveAndLoad.ReadPersistentData();
+        local persistent = SaveAndLoad:ReadPersistentData();
         persistent.Lunatic = value;
         IsLunatic = value;
-        SaveAndLoad.WritePersistentData(persistent);
+        SaveAndLoad:WritePersistentData(persistent);
     end
 
     function Lunatic:PostExecuteCommand(cmd, parameters)

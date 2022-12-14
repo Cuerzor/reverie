@@ -95,7 +95,7 @@ PeerlessElixir:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, PeerlessElixir.onFa
 
 function PeerlessElixir:GetShaderParams(name)
     if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
-        Actives.RenderActivesCount(PeerlessElixir.Item, function(player) 
+        Actives:RenderActivesCount(PeerlessElixir.Item, function(player) 
             local data = PeerlessElixir.GetPlayerData(player);
             return (data and data.UsedTime) or 0;
         end);

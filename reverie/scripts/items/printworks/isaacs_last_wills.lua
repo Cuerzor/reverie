@@ -13,7 +13,7 @@ local function GetGlobalData(create)
 end
 
 function LastWills:HasLegacies()
-    local persistentData = SaveAndLoad.ReadPersistentData();
+    local persistentData = SaveAndLoad:ReadPersistentData();
     local willsData = persistentData.LastWills;
     if (willsData) then
         return true;
@@ -56,7 +56,7 @@ function LastWills:UseLastWills(item, rng, player, flags, slow, varData)
         local canLegacy = validCount > 0;
         local canWisps = Actives:CanSpawnWisp(player, flags)
         if (canLegacy or canWisps) then
-            local persistentData = SaveAndLoad.ReadPersistentData();
+            local persistentData = SaveAndLoad:ReadPersistentData();
             -- Init Data.
             if (not persistentData.LastWills) then
                 persistentData.LastWills = {
@@ -92,7 +92,7 @@ function LastWills:UseLastWills(item, rng, player, flags, slow, varData)
                 willsData.DamageUp = true;
             end
 
-            SaveAndLoad.WritePersistentData(persistentData);
+            SaveAndLoad:WritePersistentData(persistentData);
         end
     end
 
@@ -107,9 +107,9 @@ function LastWills:PostGameStarted(isContinued)
     if (not seeds:IsCustomRun()) then
         if (not isContinued) then
             if (LastWills:HasLegacies()) then
-                local persistentData = SaveAndLoad.ReadPersistentData();
+                local persistentData = SaveAndLoad:ReadPersistentData();
                 if (not game:IsGreedMode() ) then
-                    SpawnLegacies(SaveAndLoad.ReadPersistentData().LastWills)
+                    SpawnLegacies(SaveAndLoad:ReadPersistentData().LastWills)
                 else
                     -- Greed Mode
                     local globalData = GetGlobalData(true);
@@ -132,7 +132,7 @@ function LastWills:PostGameStarted(isContinued)
                 end
                 -- Remove Legacies.
                 persistentData.LastWills = nil;
-                SaveAndLoad.WritePersistentData(persistentData);
+                SaveAndLoad:WritePersistentData(persistentData);
             end
         end
     end

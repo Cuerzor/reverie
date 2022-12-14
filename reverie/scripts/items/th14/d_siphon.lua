@@ -123,7 +123,7 @@ local function UseSiphon(mod, item, rng, player, flags, slot, vardata)
             pickup:SetColor(color, 30, 0, true);
 
             -- Wisp.
-            if (Actives.CanSpawnWisp(player, flags)) then
+            if (Actives:CanSpawnWisp(player, flags)) then
                 player:AddWisp(DSiphon.Item, pickup.Position);
             end
             if (not reduced) then
@@ -184,7 +184,7 @@ DSiphon:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate);
 local function GetShaderParams(mod, name)
     if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
         
-        Actives.RenderActivesCount(DSiphon.Item, function(player) 
+        Actives:RenderActivesCount(DSiphon.Item, function(player) 
             local data = GetPlayerData(player, false);
             local color = Color.Default;
             if (DSiphon:WillRelease(player)) then

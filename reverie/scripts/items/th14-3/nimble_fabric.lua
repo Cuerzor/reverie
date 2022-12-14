@@ -80,7 +80,7 @@ local function PostUseFabric(mod, item, rng, player, flags, slot, varData)
 
     
     if (flags & UseFlag.USE_OWNED > 0) then
-        if (Actives.CanSpawnWisp(player, flags)) then
+        if (Actives:CanSpawnWisp(player, flags)) then
             local wisp = player:AddWisp(Fabric.Item, player.Position);
         end
         Actives:CostUseTryCharges(player, item, slot, 1)
@@ -119,7 +119,7 @@ do -- Effect.
                 local player = parent:ToPlayer();
 
                 local canceled = true;
-                if (player and Actives.IsActiveItemPressed(player, Fabric.Item)) then
+                if (player and Actives:IsActiveItemPressed(player, Fabric.Item)) then
                     canceled = false;
                 end
 

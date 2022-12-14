@@ -146,7 +146,7 @@ end
 
 local function ChargeActives()
     for p, player in Players.PlayerPairs(true) do
-        Actives.ChargeAll(player, 2, true, true);
+        Actives:ChargeAll(player, 2, true, true);
     end
 end
 

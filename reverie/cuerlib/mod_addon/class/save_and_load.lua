@@ -7,7 +7,6 @@ return function(Addon)
     -- Callbacks
     ----------------
 
-
     local function GetModData(mod)
         if (mod:HasData()) then
             local jsonData = mod:LoadData();
@@ -26,13 +25,15 @@ return function(Addon)
         };
     end
 
-    function SaveAndLoad.ReadPersistentData()
+    --- Read the persistent data from savedata.
+    function SaveAndLoad:ReadPersistentData()
         local mod = Addon.Mod;
         local data = GetModData(mod);
         return data.Persistent;
     end
 
-    function SaveAndLoad.WritePersistentData(data)
+    --- Write the persistent data to savedata.
+    function SaveAndLoad:WritePersistentData(data)
         local mod = Addon.Mod;
         local modData = GetModData(mod);
         modData.Persistent = data;
@@ -41,13 +42,15 @@ return function(Addon)
         mod:SaveData(jsonText);
     end
 
-    function SaveAndLoad.ReadGameStateData()
+    --- Read the game state data from savedata.
+    function SaveAndLoad:ReadGameStateData()
         local mod = Addon.Mod;
         local data = GetModData(mod);
         return data.GameState;
     end
 
-    function SaveAndLoad.WriteGameStateData(data)
+    --- Write the game state data to savedata.
+    function SaveAndLoad:WriteGameStateData(data)
         local mod = Addon.Mod;
         local modData = GetModData(mod);
         modData.GameState = data;
@@ -56,8 +59,9 @@ return function(Addon)
         mod:SaveData(jsonText);
     end
 
-    function SaveAndLoad.RemoveGameState()
-        SaveAndLoad.WriteGameStateData(nil);
+    -- Remove game state data.
+    function SaveAndLoad:RemoveGameState()
+        SaveAndLoad:WriteGameStateData(nil);
     end
 
 
@@ -70,14 +74,14 @@ return function(Addon)
             state.Players[tostring(index)] = Addon:GetEntityModData(player);
         end
 
-        SaveAndLoad.WriteGameStateData(state);
+        SaveAndLoad:WriteGameStateData(state);
         
         Isaac.RunCallback(Addon.Callbacks.CLC_POST_SAVE);
     end
 
     local function RestartGame()
 
-        SaveAndLoad.RemoveGameState();
+        SaveAndLoad:RemoveGameState();
         
         Isaac.RunCallback(Lib.Callbacks.CLC_POST_RESTART);
     end
@@ -86,7 +90,7 @@ return function(Addon)
     -- Events
     ----------------
 
-    function SaveAndLoad:preGameExit(ShouldSave)
+    local function preGameExit(mod, ShouldSave)
         if (ShouldSave) then
             Save();
         else
@@ -94,23 +98,23 @@ return function(Addon)
         end
         Isaac.RunCallback(Lib.Callbacks.CLC_POST_EXIT, ShouldSave);
     end
-    SaveAndLoad:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, SaveAndLoad.preGameExit)
+    SaveAndLoad:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, preGameExit)
 
 
-    function SaveAndLoad:onNewLevel()
+    local function onNewLevel(mod)
         if (Game():GetLevel():GetStage() > 1) then
             Save();
         end
     end
-    SaveAndLoad:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, SaveAndLoad.onNewLevel)
+    SaveAndLoad:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, onNewLevel)
 
 
-    function SaveAndLoad:onGameStarted(isContinued)
+    local function onGameStarted(mod, isContinued)
         --Loading Moddata--
         local mod = Addon.Mod;
         if (mod:HasData()) then
             if (isContinued) then
-                local state = SaveAndLoad.ReadGameStateData();
+                local state = SaveAndLoad:ReadGameStateData();
                 
                 if (state) then
                     Addon:SetGlobalModData(state.Global);
@@ -126,11 +130,11 @@ return function(Addon)
                     Isaac.RunCallback(Addon.Callbacks.CLC_POST_LOAD);
                 end
             else
-                SaveAndLoad.RemoveGameState();
+                SaveAndLoad:RemoveGameState();
             end
         end
     end
-    SaveAndLoad:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, SaveAndLoad.onGameStarted)
+    SaveAndLoad:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, onGameStarted)
 
     
     local function PostExit(mod)

@@ -43,7 +43,7 @@ function Gap:onPlayerUpdate(player)
                 effectData.Effect = gapEffect;
                 standingGap = true;
             end
-            if (Actives.IsActiveItemTriggered(player, Gap.Item)) then
+            if (Actives:IsActiveItemTriggered(player, Gap.Item)) then
                 player.Position = pos;
                 player:AnimateTrapdoor ( )
                 local index = map.State;

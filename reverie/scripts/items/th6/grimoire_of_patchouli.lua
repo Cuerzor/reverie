@@ -143,7 +143,7 @@ function Grimoire:useGrimoire(t, RNG, player, flags, slot)
                 end
             end
             if (allSelected) then
-                if (Actives.CanSpawnWisp(player, flags)) then
+                if (Actives:CanSpawnWisp(player, flags)) then
                     player:AddWisp(CollectibleType.COLLECTIBLE_UNDEFINED, player.Position);
                 end
                 THI.Game:StartRoomTransition(-2, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT, player)
@@ -170,7 +170,7 @@ function Grimoire:useGrimoire(t, RNG, player, flags, slot)
 
 
     THI.SFXManager:Play(SoundEffect.SOUND_DEVILROOM_DEAL);
-    if (Actives.CanSpawnWisp(player, flags)) then
+    if (Actives:CanSpawnWisp(player, flags)) then
         player:AddWisp(Grimoire.WispItems[index], player.Position);
     end
     
@@ -264,7 +264,7 @@ Grimoire:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Grimoire.onEvaluateCache);
 
 local function GetShaderParams(mod, name)
     if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
-        Actives.RenderActivesCount(Grimoire.Item, function(player) return Grimoire:GetElementCount(player) end)
+        Actives:RenderActivesCount(Grimoire.Item, function(player) return Grimoire:GetElementCount(player) end)
     end
 end
 Grimoire:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, GetShaderParams);

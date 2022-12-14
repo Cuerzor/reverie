@@ -174,7 +174,7 @@ do
 
 
             if (flags & UseFlag.USE_OWNED > 0) then
-                if (Actives.CanSpawnWisp(player, flags)) then
+                if (Actives:CanSpawnWisp(player, flags)) then
                     local wisp = player:AddWisp(Benediction.Item, player.Position);
                     if (wisp) then
                         wisp.HitPoints = totalCharges * 2;
@@ -224,7 +224,7 @@ do
                     end
                 end
             end
-            Actives.RenderOnActive(Benediction.Item, func)
+            Actives:RenderOnActive(Benediction.Item, func)
         end
     end
     Benediction:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, GetShaderParams);

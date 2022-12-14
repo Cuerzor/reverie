@@ -308,7 +308,7 @@ function RuneSword:UseSword(item, rng, player, flags, slot, varData)
         local rune = itemPool:GetCard(rng:Next(), false, true, true);
         player:AddCard (rune);
     end
-    if (Actives.CanSpawnWisp(player, flags)) then
+    if (Actives:CanSpawnWisp(player, flags)) then
         player:AddWisp(RuneSword.Item, player.Position);
     end
     return {ShowAnim = showAnim};
@@ -346,7 +346,7 @@ RuneSword:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, RuneSword.PostFireTear);
 
 function RuneSword:GetShaderParams(name)
     if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
-        Actives.RenderActivesCount(RuneSword.Item, function(player) 
+        Actives:RenderActivesCount(RuneSword.Item, function(player) 
             local count = RuneSword:GetRuneCount(player);
             local color = nil;
             if (THI.IsLunatic()) then

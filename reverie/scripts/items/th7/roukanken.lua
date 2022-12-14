@@ -351,7 +351,7 @@ function Roukanken:onPlayerUpdate(player)
                     swordSprite.Rotation = (swordSprite.Rotation + (targetRotation - swordSprite.Rotation) * 0.3);
                     sword.Position = player.Position + swordPosOffset * 10;
 
-                    if (player.ControlsEnabled and player.ControlsCooldown <= 0 and playerData.Dash.Cooldown <= 0 and Actives.IsActiveItemTriggered(player, Roukanken.Item)) then
+                    if (player.ControlsEnabled and player.ControlsCooldown <= 0 and playerData.Dash.Cooldown <= 0 and Actives:IsActiveItemTriggered(player, Roukanken.Item)) then
                         if (player:GetMovementInput():Length() > 0.1) then
                             Roukanken:Dash(player);
                         end
@@ -811,7 +811,7 @@ Roukanken:AddCallback(ModCallbacks.MC_NPC_UPDATE, Roukanken.onNPCUpdate);
 function Roukanken:onEntityKill(entity)
     local npcData = Roukanken:GetNPCData(entity, false);
     if (npcData and npcData.DeathCharge) then
-        Actives.ChargeByOrder(npcData.DeathCharge.Target, npcData.DeathCharge.Amount);
+        Actives:ChargeByOrder(npcData.DeathCharge.Target, npcData.DeathCharge.Amount);
         THI.SFXManager:Play(SoundEffect.SOUND_BEEP);
     end
 end

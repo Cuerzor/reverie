@@ -431,7 +431,7 @@ function EmptyBook:PostEntityTakeDamage(tookDamage, amount, flags, source, count
         local globalData = EmptyBook:GetGlobalBookData(false);
         if (globalData) then
             if (HasFinishedBook(player) and GetBookPassive(globalData.Effect) == PassiveEffects.SELFLESS) then
-                Actives.ChargeByOrder(player, 1);
+                Actives:ChargeByOrder(player, 1);
                 THI.SFXManager:Play(SoundEffect.SOUND_BEEP);
             end
         end

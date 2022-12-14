@@ -241,7 +241,7 @@ RodOfRemorse:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriori
 
 function RodOfRemorse:GetShaderParams(name)
     if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
-        Actives.RenderActivesCount(RodOfRemorse.Item, function(player) 
+        Actives:RenderActivesCount(RodOfRemorse.Item, function(player) 
             local data = RodOfRemorse.GetPlayerData(player, false);
             return (data and data.SacrificeCount) or 0;
         end);
