@@ -43,8 +43,8 @@ local function PostUnzanUpdate(mod, familiar)
     local player = familiar.Player;
     local dir = player:GetFireDirection();
     
-    local fireDir = Familiars:GetFireVector(familiar, dir)
-    Familiars:DoFireCooldown(familiar);
+    local fireDir = Familiars.GetFireVector(familiar, dir)
+    Familiars.DoFireCooldown(familiar);
 
     local maxFireCooldown = 2;
 
@@ -52,7 +52,7 @@ local function PostUnzanUpdate(mod, familiar)
         local tearOffset = fireDir:Rotated(90):Resized(24);
         tearOffset = tearOffset * Vector(familiar.SpriteScale.X, familiar.SpriteScale.Y * 0.5);
         local index = math.ceil(familiar:GetSprite():GetFrame() % 4 / 2)
-        while (Familiars:canFire(familiar)) do
+        while (Familiars.CanFire(familiar)) do
             familiar.HeadFrameDelay = 2;
             familiar.FireCooldown = familiar.FireCooldown + maxFireCooldown;
             local tearPosition = familiar.Position;
@@ -72,7 +72,7 @@ local function PostUnzanUpdate(mod, familiar)
         end
     end
 
-    if (Familiars:canFire(familiar)) then
+    if (Familiars.CanFire(familiar)) then
         familiar.ShootDirection = Direction.NO_DIRECTION;
     end
     
@@ -84,7 +84,7 @@ local function PostUnzanUpdate(mod, familiar)
             fireDir = Vector(0, 1);
         end
     end
-    Familiars:AnimationUpdate(familiar, fireDir, "Float", "Shoot")
+    Familiars.AnimationUpdate(familiar, fireDir, "Float", "Shoot")
     
     -- Motion.
     local targetPos = player.Position + Vector(0, 3) - fireDir * 40;

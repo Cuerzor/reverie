@@ -207,7 +207,7 @@ function AshOfPhoenix:PostPlayerTakeDamage(entity, amount, flags, source, countd
     end
     
     local data = AshOfPhoenix:GetPlayerData(player, false);
-    if (data and data.Ashed and not Players:IsDead(player)) then
+    if (data and data.Ashed and not Players.IsDead(player)) then
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, player.Position, Vector.Zero, player);
         player:Kill();
         data.AshTime = 1;
@@ -234,7 +234,7 @@ AshOfPhoenix:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, PostPlayerKill, Entit
 function AshOfPhoenix:PostPlayerUpdate(player)
     local data = AshOfPhoenix:GetPlayerData(player, false);
     if (data and data.Ashed) then
-        if (not Players:IsDead(player)) then
+        if (not Players.IsDead(player)) then
             data.NoTrigger = false;
         end
         player.Velocity = Vector.Zero;
@@ -270,7 +270,7 @@ function AshOfPhoenix:PostPlayerUpdate(player)
             effects:RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_BOOK_OF_SHADOWS, -1);
         end
         
-        if (not Players:IsDead(player) and data.AshTime > 0) then
+        if (not Players.IsDead(player) and data.AshTime > 0) then
             data.AshTime = data.AshTime - 1;
             if (data.AshTime <= 0) then
                 AshOfPhoenix:EndAsh(player)
@@ -295,7 +295,7 @@ AshOfPhoenix:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, AshOfPhoenix.PostPl
 
 -- function AshOfPhoenix:PostPlayerRender(player, offset)
 --     local data = AshOfPhoenix:GetPlayerData(player, false);
---     if (data and data.Ashed and not Players:IsDead(player)) then
+--     if (data and data.Ashed and not Players.IsDead(player)) then
 --         RenderPlayerAsh(player, offset);
 
         

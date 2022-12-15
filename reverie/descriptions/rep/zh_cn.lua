@@ -972,7 +972,8 @@ EIDInfo.Collectibles = {
     -- TH6 ALT
     [Collectibles.FairyDust.Item] = {
         Name = "妖精尘",
-        Description = "拥有3个妖精尘时飞行"..
+        Description = "↑ {{Luck}}+1运气"..
+        "#拥有3个妖精尘时飞行"..
         "#怪物有几率掉落妖精尘"..
         "#{{Luck}} 10运气：10%"..
         "#!!! 所有玩家都拥有3个妖精尘时不再掉落"
@@ -999,9 +1000,9 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.Dejavu.Item] = {
         Name = "似曾相识",
-        Description = "该MOD会记录所有以死亡告终的局"..
-        "#持有该道具时，可以在死亡的同种房间内，看到之前的尸体伴随着3个身上的道具生成"..
-        "#!!! 3个道具之中只能拿走一个，且一局最多生成9个道具"
+        Description = "可以在同种房间内看到之前死亡的角色尸体，伴随着3个身上的道具生成"..
+        "#!!! 3个道具之中只能拿走一个，且一局最多生成3组道具"..
+        "#!!! MOD开启时才会记录死亡"
     },
     [Collectibles.EyeOfChimera.Item] = {
         Name = "嵌体怪之眼",

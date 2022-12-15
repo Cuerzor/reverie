@@ -212,20 +212,20 @@ local function PostFairyUpdate(mod, familiar)
                     end
                 else -- Awaked.
                     local dir = player:GetFireDirection();
-                    local fireDir = Familiars:GetFireVector(familiar, dir)
-                    Familiars:DoFireCooldown(familiar);
-                    if (dir ~= Direction.NO_DIRECTION and Familiars:canFire(familiar) and (player == nil or player:IsExtraAnimationFinished())) then
+                    local fireDir = Familiars.GetFireVector(familiar, dir)
+                    Familiars.DoFireCooldown(familiar);
+                    if (dir ~= Direction.NO_DIRECTION and Familiars.CanFire(familiar) and (player == nil or player:IsExtraAnimationFinished())) then
                         familiar.HeadFrameDelay = 7;
                         familiar.FireCooldown = 9;
                         fireTearFunc(familiar, fireDir)
                         familiar.ShootDirection = Math.GetDirectionByAngle(fireDir:GetAngleDegrees());
                     end
 
-                    if (Familiars:canFire(familiar)) then
+                    if (Familiars.CanFire(familiar)) then
                         familiar.ShootDirection = Direction.NO_DIRECTION;
                     end
                     
-                    Familiars:AnimationUpdate(familiar, Consts.DirectionVectors[familiar.ShootDirection]);
+                    Familiars.AnimationUpdate(familiar, Consts.DirectionVectors[familiar.ShootDirection]);
                 end
             end
         end

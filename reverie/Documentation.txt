@@ -579,6 +579,7 @@ Type: Passive Item
 Quality: 2
 Tags: No Lost Birthright, No Cantripped
 Item Pools: Treasure Room, Greed Treasure Room, Angel Room, Greed Angel Room
+* +1 Luck up.
 * Flight while holding 3 Fairy Dusts.
 * Enemies have chance to drop Fairy Dust pedstal item.
     * Chance = (Luck)%, down to 1%, up to 10%.

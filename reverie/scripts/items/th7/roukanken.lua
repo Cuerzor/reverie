@@ -86,7 +86,7 @@ function Roukanken:ReturnFromYoumu(player)
     local playerData = self:GetPlayerData(player, true);
 
     playerData.IsYoumu = false;
-    Weapons.UnbanWeapon(player);
+    UnbanWeapon(player);
 
     player:TryRemoveNullCostume(self.YoumuSpiritCostume)
     player:SetColor(Color(1,1,1,1,1,1,1), 10, 0, true, false)
@@ -412,9 +412,9 @@ function Roukanken:onPlayerEffect(player)
             local weaponBanned = Weapons:IsWeaponsBanned(player);
             if (shouldBan ~= weaponBanned) then
                 if (shouldBan) then
-                    Weapons.BanishWeapon(player, true, false);
+                    BanishWeapon(player, true, false);
                 else
-                    Weapons.UnbanWeapon(player);
+                    UnbanWeapon(player);
                 end
             end
         end

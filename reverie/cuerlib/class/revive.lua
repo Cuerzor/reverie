@@ -24,7 +24,7 @@ local function GetPlayerData(player)
     return data._REVIVE;
 end
 
-function Revive.IsReviving(player)
+function Revive:IsReviving(player)
     local data = GetPlayerData(player);
     return data.IsDead;
 end
@@ -116,7 +116,7 @@ local function RevivePlayer(player)
     end
 
     -- Keeper and Bethany will has at lease one heart container.
-    if (Lib.Players:IsOnlyRedHeartPlayer(playerType)) then
+    if (Lib.Players.IsOnlyRedHeartPlayer(playerType)) then
         if (maxHearts <= 0) then
             player:AddMaxHearts(2 - maxHearts);
         end
@@ -124,7 +124,7 @@ local function RevivePlayer(player)
             player:AddHearts(1);
         end
     -- The forgotten will has at lease one bone heart.
-    elseif (Lib.Players:IsOnlyBoneHeartPlayer(playerType)) then
+    elseif (Lib.Players.IsOnlyBoneHeartPlayer(playerType)) then
         local boneHearts = player:GetBoneHearts();
         if (boneHearts <= 0) then
             player:AddBoneHearts(1);
@@ -138,7 +138,7 @@ local function RevivePlayer(player)
         else
             -- If don't have heart containers, and has no soul hearts, add 1 soul heart.
             if (player:GetSoulHearts() <= 0) then
-                Lib.Players:AddRawSoulHearts(player, 1);
+                Lib.Players.AddRawSoulHearts(player, 1);
             end
         end
     end
@@ -210,8 +210,8 @@ do -- Events.
             local shouldHasHeart = player:GetBoneHearts() + player:GetSoulHearts() + player:GetHearts() > 0;
             local addedHeartContainers = 0;
 
-            local onlyRedHearts = Lib.Players:IsOnlyRedHeartPlayer(playerType);
-            local onlyBoneHearts = Lib.Players:IsOnlyBoneHeartPlayer(playerType);
+            local onlyRedHearts = Lib.Players.IsOnlyRedHeartPlayer(playerType);
+            local onlyBoneHearts = Lib.Players.IsOnlyBoneHeartPlayer(playerType);
             
             if (not shouldHasHeart) then
                 -- Add hearts for no soul heart characters, avoiding revive() create a soul heart.
@@ -268,7 +268,7 @@ do -- Events.
 
                 local soulHearts = player:GetSoulHearts();
                 if (soulHearts > 0) then
-                    Lib.Players:AddRawSoulHearts(player, -soulHearts)
+                    Lib.Players.AddRawSoulHearts(player, -soulHearts)
                 end
             end
         end
@@ -288,7 +288,7 @@ do -- Events.
                 data.AnimationCountdown = data.AnimationCountdown - 1;
             end
         end
-        if (Revive.IsReviving(player)) then
+        if (Revive:IsReviving(player)) then
             player:SetMinDamageCooldown(120);
             player:AddEntityFlags(EntityFlag.FLAG_NO_DAMAGE_BLINK);
             if (player:GetSprite():IsEventTriggered("DeathSound")) then
@@ -302,7 +302,7 @@ do -- Events.
     Revive:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate);
 
     local function PostPlayerEffect(mod, player)
-        if (Revive.IsReviving(player)) then
+        if (Revive:IsReviving(player)) then
             local data = GetPlayerData(player);
             data.ReviveTime = data.ReviveTime + 1;
         end
@@ -311,7 +311,7 @@ do -- Events.
     
 
     local function PrePlayerCollision(mod, player, other, low)
-        if (Revive.IsReviving(player)) then
+        if (Revive:IsReviving(player)) then
             return true;
         end
     end
@@ -321,7 +321,7 @@ do -- Events.
         if (other.Type == EntityType.ENTITY_PLAYER) then
             local player = other:ToPlayer();
             local data = GetPlayerData(player);
-            if (Revive.IsReviving(player)) then
+            if (Revive:IsReviving(player)) then
                 return true;
             end
         end

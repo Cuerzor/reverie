@@ -889,7 +889,8 @@ EIDInfo.Collectibles = {
 
     --TH6 ALT
     [Collectibles.FairyDust.Item] = {
-        Description = "Flight while holding 3 Fairy Dusts"..
+        Description = "↑ {{Luck}} +1 Luck up"..
+        "#Flight while holding 3 Fairy Dusts"..
         "#Enemies have chance to drop fairy dusts"..
         "#10% at 10 {{Luck}}Luck"..
         "#!!! No longer drops when all players have 3 Fairy Dusts"
@@ -916,9 +917,9 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.Dejavu.Item] = {
         Name = "Deja vu",
-        Description = "This mod will record all dead runs"..
-        "#While holding this item, you can see your failed corpses in the same room with 3 held items"..
-        "#!!! You can only take 1 of the 3 items, and can only spawn up to 9 items per run"
+        Description = "You can see your past game over corpses in the same room with 3 held items"..
+        "#!!! You can only take 1 of the item group, and can only spawn up to 3 groups per run"..
+        "#!!! Only record deaths while this mod enabled"
     },
     [Collectibles.EyeOfChimera.Item] = {
         Name = "Eye of Chimera",

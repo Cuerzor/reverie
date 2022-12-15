@@ -372,7 +372,7 @@ local function DevilcrowUpdate(devilcrow)
                 for p, player in Players.PlayerPairs() do
                     local Rebecha = THI.Monsters.Rebecha;
                     local defended = Rebecha and Rebecha:GetPlayerMecha(player) ~= nil;
-                    if (not player:IsCoopGhost ( ) and not Players:IsDead(player) and isInRange(devilcrow, player) and not defended) then
+                    if (not player:IsCoopGhost ( ) and not Players.IsDead(player) and isInRange(devilcrow, player) and not defended) then
                         local playerData = Devilcrow.GetPlayerData(player, true);
                         playerData.Radiated = true;
                     end
@@ -710,7 +710,7 @@ function Devilcrow:PostPlayerEffect(player)
     if (playerData) then
         local radiation = playerData.NuclearRadiation;
         local radiated = playerData.Radiated;
-        local alive = not Players:IsDead(player);
+        local alive = not Players.IsDead(player);
         if (radiated) then
             if (alive)then
                 radiation = math.min(maxRadiation, radiation + 1);

@@ -23,17 +23,17 @@ function BrokenAmulet:GetTearData(tear, init)
 end
 
 function BrokenAmulet:IsDevilHead(tear)
-    local flags = Tears.GetModTearFlags(tear);
+    local flags = Tears:GetModTearFlags(tear);
     return flags and flags:Has(TearFlag)
 end
 
 function BrokenAmulet:AddDevilHead(tear)
-    local flags = Tears.GetModTearFlags(tear, true);
+    local flags = Tears:GetModTearFlags(tear, true);
     flags:Add(TearFlag)
 end
 
 function BrokenAmulet:RemoveDevilHead(tear)
-    local flags = Tears.GetModTearFlags(tear, true);
+    local flags = Tears:GetModTearFlags(tear, true);
     flags:Remove(TearFlag)
 end
 

@@ -233,7 +233,7 @@ function DreamCatcher:PostUpdate(doremy)
     local data = self:GetData(doremy);
 
     -- Fire bouncing projectiles.
-    if (not Collectibles.IsAnyHasCollectible(CollectibleType.COLLECTIBLE_DREAM_CATCHER)) then
+    if (not Collectibles:IsAnyHasCollectible(CollectibleType.COLLECTIBLE_DREAM_CATCHER)) then
         if (data.Index > 0) then
             data.Time = data.Time - 1;
             if (data.Time <= 0) then
@@ -296,7 +296,7 @@ function DreamCatcher:OnCast(doremy)
     THI.Game:ShakeScreen(10);
 
     
-    if (not Collectibles.IsAnyHasCollectible(CollectibleType.COLLECTIBLE_DREAM_CATCHER)) then
+    if (not Collectibles:IsAnyHasCollectible(CollectibleType.COLLECTIBLE_DREAM_CATCHER)) then
 
         local room = Game():GetRoom();
 

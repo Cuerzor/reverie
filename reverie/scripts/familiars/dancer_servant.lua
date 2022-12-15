@@ -79,22 +79,22 @@ local function PostDancerUpdate(mod, familiar)
     familiar.OrbitSpeed = 0.2;
     familiar.OrbitDistance = EntityFamiliar.GetOrbitDistance (1);
     
-    local fireDir = -Familiars:GetFireVector(familiar, dir)
-    Familiars:DoFireCooldown(familiar);
+    local fireDir = -Familiars.GetFireVector(familiar, dir)
+    Familiars.DoFireCooldown(familiar);
 
     local maxFireCooldown = 15;
     if (familiar.SubType == Dancer.SubTypes.SANATO) then
         maxFireCooldown = 10;
     end
 
-    if (dir ~= Direction.NO_DIRECTION and Familiars:canFire(familiar)) then
+    if (dir ~= Direction.NO_DIRECTION and Familiars.CanFire(familiar)) then
         familiar.HeadFrameDelay = 7;
         familiar.FireCooldown = maxFireCooldown;
         Dancer:FireTear(familiar, familiar.Position, fireDir * 10);
         familiar.ShootDirection = Math.GetDirectionByAngle(fireDir:GetAngleDegrees());
     end
 
-    if (Familiars:canFire(familiar)) then
+    if (Familiars.CanFire(familiar)) then
         familiar.ShootDirection = Direction.NO_DIRECTION;
     end
     

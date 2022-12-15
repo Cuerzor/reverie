@@ -65,7 +65,7 @@ local function PostRevive(player, reviver)
     playerType == PlayerType.PLAYER_BETHANY_B or playerType == PlayerType.PLAYER_THEFORGOTTEN_B or 
     playerType == PlayerType.PLAYER_THESOUL) then
         local currentHeart = player:GetSoulHearts();
-        Players:AddRawSoulHearts(player, 6 - currentHeart);
+        Players.AddRawSoulHearts(player, 6 - currentHeart);
     elseif (playerType == PlayerType.PLAYER_JUDAS_B or playerType == PlayerType.PLAYER_BLACKJUDAS) then
         local currentHeart = player:GetSoulHearts();
         player:AddBlackHearts(4 - currentHeart);

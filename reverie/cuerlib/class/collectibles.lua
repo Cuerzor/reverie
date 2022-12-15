@@ -61,7 +61,8 @@ local function GetPlayerData(player, init)
     return entData._COLLECTIBLES;
 end
 
-function Collectibles.FindCollectibles(condition)
+-- Find collectible configs with specific condition.
+function Collectibles:FindCollectibles(condition)
     local results = {};
     local collectibleCount = itemConfig:GetCollectibles().Size;
     for i = 1, collectibleCount do
@@ -73,22 +74,31 @@ function Collectibles.FindCollectibles(condition)
     return results;
 end
 
-function Collectibles.GetPlayerCollectibles(player)
+-- Get a player's collectibles and total counts with filter.
+-- filter is function(id, config, num), returns num for changing the result.
+function Collectibles:GetPlayerCollectibles(player, filter)
     local results = {}
+    local total = 0;
     local collectibleCount = itemConfig:GetCollectibles().Size;
     for i = 1, collectibleCount do
         local config = itemConfig:GetCollectible(i);
         if (config) then
             local key = i;
             local num = player:GetCollectibleNum(i, true);
-            results[key] = num;
+            if (filter) then
+                num = filter(i, config, num) or num;
+            end
+            if (num > 0) then
+                results[key] = num;
+                total = total + num;
+            end
         end
     end
-    return results;
+    return results, total;
 end
 
-
-function Collectibles.IsAnyHasCollectible(item, onlyTrue)
+-- Returns if any player has a collectible.
+function Collectibles:IsAnyHasCollectible(item, onlyTrue)
     if (onlyTrue == nil) then
         onlyTrue = false;
     end
@@ -170,7 +180,7 @@ end
 
 
 -- Events.
-function Collectibles:onPlayerUpdate(player)
+local function onPlayerUpdate(mod, player)
     if (Game():GetFrameCount() > 0) then
         if (not player:IsItemQueueEmpty()) then -- If player is queueing items
             local data = GetPlayerData(player, true);
@@ -208,10 +218,10 @@ function Collectibles:onPlayerUpdate(player)
         end
     end
 end
-Collectibles:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, Collectibles.onPlayerUpdate);
+Collectibles:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, onPlayerUpdate);
 
 
-function Collectibles:onPlayerRender(player, offset, variant)
+local function onPlayerRender(mod, player, offset, variant)
     if (Game():GetFrameCount() > 0) then -- Avoid triggering events while loading game.
         local data = GetPlayerData(player, true);
         local function NeedsUpdate()
@@ -240,9 +250,9 @@ function Collectibles:onPlayerRender(player, offset, variant)
         end
     end
 end
-Collectibles:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Collectibles.onPlayerRender);
+Collectibles:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, onPlayerRender);
 
-function Collectibles:onGameStarted(isContinued)
+local function onGameStarted(mod, isContinued)
     if (isContinued) then
         for p, player in Lib.Players.PlayerPairs()  do
 
@@ -267,7 +277,7 @@ function Collectibles:onGameStarted(isContinued)
         end
     end
 end
-Collectibles:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, Collectibles.onGameStarted);
+Collectibles:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, onGameStarted);
 
 local function PostPickupUpdate(mod, pickup)
     if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE) then

@@ -47,22 +47,22 @@ function Trader.CheckAllPlayerCollectibles()
     local results = {};
     local count = 0;
     for p, player in Players.PlayerPairs() do
-        local collectibles = Collectibles.GetPlayerCollectibles(player);
-        for id, num in pairs(collectibles) do
-            
+        local filter = function(id, config, num)
             if (player:GetActiveItem(ActiveSlot.SLOT_POCKET) == id) then
                 num = num - 1;
             end
             if (player:GetActiveItem(ActiveSlot.SLOT_POCKET2) == id) then
                 num = num - 1;
             end
-            if (num > 0) then
-            local col = config:GetCollectible(id);
-                if (col and not col:HasTags(ItemConfig.TAG_QUEST)) then
-                    results[id] = (results[id] or 0) + num;
-                    count = count + num;
-                end
+            if (config:HasTags(ItemConfig.TAG_QUEST)) then
+                num = 0;
             end
+            return num;
+        end
+        local collectibles = Collectibles:GetPlayerCollectibles(player, filter);
+        for id, num in pairs(collectibles) do
+            results[id] = (results[id] or 0) + num;
+            count = count + num;
         end
     end
     PlayerCollectibles.List = results;

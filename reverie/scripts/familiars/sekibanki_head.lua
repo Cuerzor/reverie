@@ -119,9 +119,9 @@ do
         local orbitalTargetPos = player.Position + player.Velocity+ familiar:GetOrbitPosition(Vector.Zero);
         
         local dir = player:GetFireDirection();
-        local fireDir = Familiars:GetFireVector(familiar, dir, false, 1000);
-        Familiars:DoFireCooldown(familiar);
-        if (dir ~= Direction.NO_DIRECTION and Familiars:canFire(familiar) and (player == nil or player:IsExtraAnimationFinished())) then
+        local fireDir = Familiars.GetFireVector(familiar, dir, false, 1000);
+        Familiars.DoFireCooldown(familiar);
+        if (dir ~= Direction.NO_DIRECTION and Familiars.CanFire(familiar) and (player == nil or player:IsExtraAnimationFinished())) then
             
             familiar.HeadFrameDelay = 5;
             familiar.FireCooldown = 10;
@@ -130,12 +130,12 @@ do
             familiar.ShootDirection = Math.GetDirectionByAngle(fireDir:GetAngleDegrees());
         end
     
-        if (Familiars:canFire(familiar)) then
+        if (Familiars.CanFire(familiar)) then
             familiar.ShootDirection = player:GetHeadDirection();
         end
         local direction = familiar.ShootDirection;
         
-        Familiars:AnimationUpdate(familiar, Consts.DirectionVectors[direction], "Idle", "Shoot");
+        Familiars.AnimationUpdate(familiar, Consts.DirectionVectors[direction], "Idle", "Shoot");
     
         -- Motion.
         if (data.Mode == Head.Mode.ORBITAL) then

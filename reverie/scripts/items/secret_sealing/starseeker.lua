@@ -202,9 +202,9 @@ function Starseeker:onUpdate()
     if (room:GetFrameCount() == 1) then
         local canTrigger = false;
         if (room:IsFirstVisit()) then
-            if (Collectibles.IsAnyHasCollectible(Starseeker.Item)) then
+            if (Collectibles:IsAnyHasCollectible(Starseeker.Item)) then
                 local roomDesc = level:GetCurrentRoomDesc();
-                local dimension = Stages.GetDimension(roomDesc);
+                local dimension = Stages:GetDimension(roomDesc);
                 if (dimension ~= 2) then -- No Death Certificate
                     if (roomDesc.Data.Type ~= RoomType.ROOM_DUNGEON) then
                         canTrigger = true;

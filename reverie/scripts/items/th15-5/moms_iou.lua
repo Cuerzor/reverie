@@ -142,7 +142,7 @@ function MomsIOU:PostNewStage()
                 local remainRepay = repayHalfHearts;
                 -- Soul Hearts.
                 local repayingHalfHearts = math.min(player:GetSoulHearts(), remainRepay);
-                Players:AddRawSoulHearts(player, -repayingHalfHearts);
+                Players.AddRawSoulHearts(player, -repayingHalfHearts);
                 remainRepay = remainRepay - repayingHalfHearts;
 
                 -- Eternal Hearts.

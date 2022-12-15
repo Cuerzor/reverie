@@ -48,7 +48,7 @@ local function AvoidDeath(player)
             player:AddBoneHearts(1);
         end
     -- Keeper and Bethany creates heart containers.
-    elseif (Players:IsOnlyRedHeartPlayer(playerType)) then
+    elseif (Players.IsOnlyRedHeartPlayer(playerType)) then
         local maxHearts = player:GetMaxHearts();
         local hearts = player:GetMaxHearts();
         if (maxHearts <= 0) then
@@ -61,7 +61,7 @@ local function AvoidDeath(player)
     else
         local soulHearts = player:GetSoulHearts();
         if (soulHearts <= 0) then
-            Players:AddRawSoulHearts(player, 1);
+            Players.AddRawSoulHearts(player, 1);
         end
     end
 
@@ -75,7 +75,7 @@ local function TransformHearts(player, data)
     local transformed = false;
     
     -- Keeper and Bethany will leave a heart container.
-    if (Players:IsOnlyRedHeartPlayer(player:GetPlayerType())) then
+    if (Players.IsOnlyRedHeartPlayer(player:GetPlayerType())) then
         maxHearts = maxHearts - 2;
     end
     if (maxHearts > 0) then
@@ -89,7 +89,7 @@ local function TransformHearts(player, data)
         local soulHearts = player:GetSoulHearts() - 1;
         if (soulHearts > 0) then
             data.Lives = data.Lives + soulHearts;
-            Players:AddRawSoulHearts(player, -soulHearts);
+            Players.AddRawSoulHearts(player, -soulHearts);
             transformed = true;
         end
     end

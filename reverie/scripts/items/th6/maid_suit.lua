@@ -213,7 +213,7 @@ end
 
 function MaidSuit:onNewRoom()
     MaidSuit:EndTimeStop();
-    if (Collectibles.IsAnyHasCollectible(MaidSuit.Item) and (Isaac.CountEnemies() > 0 or Isaac.CountBosses() > 0)) then
+    if (Collectibles:IsAnyHasCollectible(MaidSuit.Item) and (Isaac.CountEnemies() > 0 or Isaac.CountBosses() > 0)) then
         -- Set Timestop Countdown.
         local data = GetTempGlobalData(true);
         data.Countdown = 15;
@@ -222,7 +222,7 @@ end
 
 function MaidSuit:onNewLevel()
     if (Game():GetFrameCount() > 0) then
-        if (Collectibles.IsAnyHasCollectible(MaidSuit.Item)) then
+        if (Collectibles:IsAnyHasCollectible(MaidSuit.Item)) then
             local data = GetGlobalData(true);
             data.Chance = MaidSuit.Config.StartingChance;
             data.WorldSpawned = false;
@@ -270,7 +270,7 @@ function MaidSuit:onKnifeSpawnerUpdate(effect)
 end
 
 function MaidSuit:preSpawnCleanAward(rng, Position)
-    if (Collectibles.IsAnyHasCollectible(MaidSuit.Item)) then
+    if (Collectibles:IsAnyHasCollectible(MaidSuit.Item)) then
         local data = GetGlobalData(true);
         if (not data.WorldSpawned) then
             if (not THI.IsLunatic()) then

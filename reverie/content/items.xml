@@ -159,7 +159,7 @@
     <passive id="252" name="THTRAINER" description="th14.exe catastrophic failure" gfx="thtrainer.png" quality="0" tags="offensive nocantrip" hidden="true" />
     
 
-	<passive id="504" name="Fairy Dust" description="Flying Wish" gfx="fairy_dust.png" quality="2" cache="flying" tags="nolostbr nocantrip" />
+	<passive id="504" name="Fairy Dust" description="Flying Wish" gfx="fairy_dust.png" quality="2" cache="flying luck" tags="nolostbr nocantrip" />
 	<active id="505" name="Spirit Cannon" description="Shin-Kikouhooooooooou!!!" gfx="spirit_cannon.png" maxcharges="3" quality="3" tags="offensive" />
 	<passive id="507" name="Asthma" description="Mana up, Regeneration Down" gfx="asthma.png" quality="2" tags="offensive summonable nocantrip" />
 	<passive id="508" name="Dagger of Servants" description="Offer Your Heart" gfx="dagger_of_servants.png" quality="3" tags="nolostbr nocantrip nogreed" />

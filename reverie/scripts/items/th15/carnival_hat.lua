@@ -35,7 +35,7 @@ end
 
 local function PostEntityKill(mod, entity)
     if (entity:IsActiveEnemy(true) and not entity:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)) then
-        if (Collectibles.IsAnyHasCollectible(Hat.Item)) then
+        if (Collectibles:IsAnyHasCollectible(Hat.Item)) then
             Isaac.Spawn(EntityType.ENTITY_BOMBDROP, BombVariant.BOMB_TROLL, 0, entity.Position, Vector.Zero, entity);
         end
     end

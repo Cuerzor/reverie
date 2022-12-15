@@ -64,7 +64,7 @@ local function PostPlayerUpdate(mod, player)
         end
         if (blackHearts > 0) then
             BloodBony:ConvertBlackHearts(player.Position, blackHearts, player);
-            Players:AddRawBlackHearts (player, -blackHearts);
+            Players.AddRawBlackHearts (player, -blackHearts);
             THI.SFXManager:Play(SoundEffect.SOUND_MONSTER_ROAR_0);
         end
 
@@ -72,10 +72,10 @@ local function PostPlayerUpdate(mod, player)
         if (soulHearts > 0) then
             
             BloodBony:ConvertSoulHearts(player.Position, soulHearts, player);
-            Players:AddRawSoulHearts (player, -soulHearts);
+            Players.AddRawSoulHearts (player, -soulHearts);
             -- local Soul = BloodBony.Variants.SOUL;
             -- for h = soulHearts, 1, -2 do 
-            --     Players:AddRawSoulHearts (player, -math.min(h, 2));
+            --     Players.AddRawSoulHearts (player, -math.min(h, 2));
             --     local bony = BloodBony:SpawnBony(Soul.Type, Soul.Variant, Soul.SubType, player.Position, player);
             --     if (h == 1) then
             --         bony.HitPoints = bony.MaxHitPoints / 2;
@@ -257,7 +257,7 @@ local function PostUseItem(mod, item, rng, player, flags, slot, varData)
 end
 EikaB:AddCallback(ModCallbacks.MC_USE_ITEM, PostUseItem)
 
-Players:SetOnlyRedHeartPlayer(EikaB.Type, true);
+Players.SetOnlyRedHeartPlayer(EikaB.Type, true);
 
 
 return EikaB;

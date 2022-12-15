@@ -64,11 +64,13 @@ end
 FairyDust:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, FairyDust.PostPlayerUpdate);
 
 function FairyDust:EvaluateCache(player, flag)
+    local dustCount = player:GetCollectibleNum(FairyDust.Item);
     if (flag == CacheFlag.CACHE_FLYING) then
-        local dustCount = player:GetCollectibleNum(FairyDust.Item);
         if (dustCount >= 3) then
             player.CanFly = true;
         end
+    elseif (flag == CacheFlag.CACHE_LUCK) then
+        player.Luck = player.Luck + dustCount;
     end
 end
 FairyDust:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, FairyDust.EvaluateCache);

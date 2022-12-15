@@ -107,7 +107,7 @@ function Telescope.GetMeteorRoomIndex(seed)
     -- Get valid rooms.
     for i = 1, rooms.Size do
         local room = rooms:Get(i);
-        if (room and room.GridIndex >= 0 and Stages.GetDimension(room) == 0) then
+        if (room and room.GridIndex >= 0 and Stages:GetDimension(room) == 0) then
             local roomData = room.Data;
             local shape = roomData.Shape;
             local typeOk = roomData.Type == RoomType.ROOM_DEFAULT or roomData.Type == RoomType.ROOM_BOSS;
@@ -281,7 +281,7 @@ function Telescope:PostNewRoom()
         end
 
         -- Spawn Meteor.
-        if (Stages.GetDimension(roomDesc) == 0) then -- Only spawn in main dimension.
+        if (Stages:GetDimension(roomDesc) == 0) then -- Only spawn in main dimension.
             local meteorData = globalData.Meteor;
             if (meteorData.Triggered) then
                 if (roomDesc.SafeGridIndex == meteorData.RoomIndex and firstVisit) then

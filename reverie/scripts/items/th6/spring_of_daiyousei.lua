@@ -7,7 +7,7 @@ DYSSpring.Config = {
 };
 
 function DYSSpring:CanTransformHeart(seed)
-    if (Collectibles.IsAnyHasCollectible(DYSSpring.Item)) then
+    if (Collectibles:IsAnyHasCollectible(DYSSpring.Item)) then
         local transform = false;
         local value = seed % 100;
         return value < DYSSpring.Config.TransformationChance;

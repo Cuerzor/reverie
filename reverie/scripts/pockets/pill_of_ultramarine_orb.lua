@@ -89,7 +89,7 @@ local function PostNewRoom(mod)
                         if (pillColor & PillColor.PILL_GIANT_FLAG <= 0) then
                             local pillEffect = itemPool:GetPillEffect(pillColor, player);
                             if (pillEffect == Pill.ID) then
-                                Players:RemoveCardPill(player, slot)
+                                Players.RemoveCardPill(player, slot)
                                 break;
                             end
                         end

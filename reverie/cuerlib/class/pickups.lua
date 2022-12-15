@@ -235,7 +235,7 @@ function Pickups:GetBoneSwingPickupPlayer(pickup)
 	if pickup:IsShopItem() then return nil end
 
 	for _, knife in pairs(Isaac.FindByType(EntityType.ENTITY_KNIFE, -1, 4, false, false)) do
-		if knife.FrameCount > 0 and knife.Parent then
+		if knife.FrameCount > 0 and knife.Parent and knife.Variant ~= 4 then-- not Bag of Crafting.
 			local parent = knife.Parent
 			if parent:ToPlayer() then
 				local player = parent:ToPlayer()

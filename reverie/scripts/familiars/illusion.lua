@@ -13,7 +13,7 @@ function Illusion.GetIllusionData(illusion, init)
 end
 
 function Illusion.TryFireTears(illusion, shootingInput)
-    if (Familiars:canFire(illusion)) then
+    if (Familiars.CanFire(illusion)) then
         local tear = Isaac.Spawn(2, 1, 0, illusion.Position, shootingInput:Normalized() * 12 + illusion.Velocity / 3, illusion):ToTear();
         
         local damage = 3.5;
@@ -97,7 +97,7 @@ function Illusion:postIllusionUpdate(illusion)
         end
         illusion:GetSprite():SetAnimation(anim, false);
 
-        Familiars:DoFireCooldown(illusion);
+        Familiars.DoFireCooldown(illusion);
         local damage =  player.Damage * 0.6;
         illusion.CollisionDamage = damage;
     end

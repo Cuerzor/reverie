@@ -15,7 +15,7 @@ local function GetTearTempData(tear, create)
 end
 
 function Thunder:TearHasThunder(tear)
-    local flags = Tears.GetModTearFlags(tear, false)
+    local flags = Tears:GetModTearFlags(tear, false)
     if (flags) then
         return flags:Has(HolyThunderFlag);
     end
@@ -23,7 +23,7 @@ function Thunder:TearHasThunder(tear)
 end
 
 function Thunder:SetTearThunder(tear, value)
-    local flags = Tears.GetModTearFlags(tear, true)
+    local flags = Tears:GetModTearFlags(tear, true)
     return flags:Add(HolyThunderFlag);
 end
 

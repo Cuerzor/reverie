@@ -87,7 +87,9 @@ local function StopOrHideWeapons(player)
 end
 
 ------ Public Functions -------------
-function Weapons.BanishWeapon(player, pickaxe, urn)
+
+
+function Weapons:BanishWeapon(player, pickaxe, urn)
     pickaxe = pickaxe or false;
     local playerData = GetPlayerData(player);
     playerData.noWeapon = true;
@@ -95,7 +97,7 @@ function Weapons.BanishWeapon(player, pickaxe, urn)
     playerData.urnBanned = urn;
 end
 
-function Weapons.UnbanWeapon(player)
+function Weapons:UnbanWeapon(player)
     local playerData = GetPlayerData(player);
     playerData.noWeapon = false;
     playerData.pickaxeBanned = false;
@@ -107,6 +109,7 @@ function Weapons.UnbanWeapon(player)
             ent:Remove();
         end
     end
+    player:UpdateCanShoot()
 end
 
 
@@ -128,13 +131,6 @@ local function PostPlayerUpdate(mod, player)
             game.Challenge=OldChallenge
         end
         StopOrHideWeapons(player);
-    else
-        if (blindfolded) then
-            local OldChallenge=game.Challenge
-            game.Challenge=0
-            player:UpdateCanShoot()
-            game.Challenge=OldChallenge
-        end
     end
 end
 Weapons:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate);

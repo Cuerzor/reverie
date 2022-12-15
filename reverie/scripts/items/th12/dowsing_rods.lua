@@ -57,7 +57,7 @@ end
 
 local HasRods = false;
 function Rods:PostUpdate()
-    HasRods = Collectbiles.IsAnyHasCollectible(Rods.Item);
+    HasRods = Collectbiles:IsAnyHasCollectible(Rods.Item);
 end
 Rods:AddCallback(ModCallbacks.MC_POST_UPDATE, Rods.PostUpdate)
 

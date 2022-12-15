@@ -51,12 +51,9 @@ function Bosses:SetBossConfig(name, config, roomConfigs)
 
     UpdateStageAPI();
 end
-
-
 function Bosses:UpdateBosses()
     UpdateStageAPI();
 end
-
 function Bosses:IsForceCustomBosses()
     return self.ForceCustomBoss;
 end

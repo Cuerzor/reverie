@@ -98,7 +98,7 @@ do
     
     local function PostPickupUpdate(mod, pickup)
         if (pickup.FrameCount == 1) then
-            local hasArm = Collectibles.IsAnyHasCollectible(Arm.Item);
+            local hasArm = Collectibles:IsAnyHasCollectible(Arm.Item);
             if (hasArm) then
                 local isFool = pickup.Variant == PickupVariant.PICKUP_TAROTCARD and pickup.SubType == Card.CARD_FOOL;
                 local isCrackedKey = pickup.Variant == PickupVariant.PICKUP_TAROTCARD and pickup.SubType == Card.CARD_CRACKED_KEY;

@@ -63,7 +63,7 @@ end
 THTRAINER:AddCallback(CuerLib.Callbacks.CLC_POST_NEW_STAGE, PostNewStage)
 
 local function PostNewLevel(mod)
-    if (Collectibles.IsAnyHasCollectible(THTRAINER.Item)) then
+    if (Collectibles:IsAnyHasCollectible(THTRAINER.Item)) then
 
         local game = Game();
         local seeds = game:GetSeeds();

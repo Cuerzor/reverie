@@ -32,7 +32,7 @@ Tears:RegisterModTearFlag("ReverieEcho");
 local EchoTearFlag = Tears.TearFlags.ReverieEcho;
 
 function Ear.TearHasEcho(tear)
-    local flags = Tears.GetModTearFlags(tear, false)
+    local flags = Tears:GetModTearFlags(tear, false)
     if (flags) then
         return flags:Has(EchoTearFlag);
     end
@@ -46,7 +46,7 @@ end
 function Ear.SetTearEcho(tear, value)
     -- local data = GetTearData(tear, true);
     -- data.Echo = value;
-    local flags = Tears.GetModTearFlags(tear, true)
+    local flags = Tears:GetModTearFlags(tear, true)
     return flags:Add(EchoTearFlag);
 end
 
@@ -159,7 +159,7 @@ do
             if (isBlood) then
                 animPrefix = "BloodTear";
             end
-            local anim = animPrefix ..Tears.GetTearAnimationIndexByScale(tear.Scale);
+            local anim = animPrefix ..Tears:GetTearAnimationIndexByScale(tear.Scale);
             tear:GetSprite():Play(anim)
             tear.SpriteRotation = tear.Velocity:GetAngleDegrees();
 

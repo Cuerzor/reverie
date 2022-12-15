@@ -76,7 +76,7 @@ local function PostGridDestroyed(mod, gridData)
     local prevType = gridData.Type;
     local prevRock = Grids:IsRock(prevType);
     if (prevRock) then
-        if (Collectibles.IsAnyHasCollectible(Tools.Item)) then
+        if (Collectibles:IsAnyHasCollectible(Tools.Item)) then
             Tools:SpawnHaniwa(gridData.Position, Tools:GetHaniwaSubType(prevType))
         end
     end
@@ -84,7 +84,7 @@ end
 THI:AddCallback(CuerLib.Callbacks.CLC_POST_GRID_DESTROYED, PostGridDestroyed)
 
 -- local function PostUpdate(mod)
---     if (Collectibles.IsAnyHasCollectible(Tools.Item)) then
+--     if (Collectibles:IsAnyHasCollectible(Tools.Item)) then
 --         local game = Game();
 --         local room = game:GetRoom();
 --         local level = game:GetLevel();

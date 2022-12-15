@@ -682,7 +682,7 @@ function Cellphone.GetUpdatedPrice(player, index)
         if (Players.HasJudasBook(player)) then
             if (index == 1) then
                 local devilprice = offer.DevilPrice or 1;
-                price = Players:GetItemPrice(player, devilprice, offer.Variant, true)
+                price = Players.GetItemPrice(player, devilprice, offer.Variant, true)
             end
         end
         return price;
@@ -699,7 +699,7 @@ function Cellphone:Use(player)
         -- Selecting an offering.
         local itemInfo = contents[playerData.Selection];
         local price = Cellphone.GetUpdatedPrice(player, playerData.Selection);
-        local dealResult = Players:Buy(player, price);
+        local dealResult = Players.Buy(player, price);
         if (dealResult > 0) then
             HoldingActive:Cancel(player);
             player:AnimateCollectible(CollectibleType.COLLECTIBLE_MOVING_BOX, "Pickup");

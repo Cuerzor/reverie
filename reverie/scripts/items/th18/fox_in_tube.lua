@@ -440,7 +440,7 @@ function Fox:PostUpdate()
         return;
     end
 
-    if (Collectibles.IsAnyHasCollectible(Fox.Item)) then
+    if (Collectibles:IsAnyHasCollectible(Fox.Item)) then
         local level = game:GetLevel();
         local roomType = room:GetType();
         local firstVisit = room:IsFirstVisit();
@@ -605,7 +605,7 @@ end
 Fox:AddCallback(ModCallbacks.MC_NPC_UPDATE, Fox.PostNPCUpdate)
 
 function Fox:PostNewLevel()
-    if (Collectibles.IsAnyHasCollectible(Fox.Item)) then
+    if (Collectibles:IsAnyHasCollectible(Fox.Item)) then
         local data = Fox.GetPayData(true);
         data.NewLevel = true;
     end

@@ -83,7 +83,7 @@ end
 local function PostUpdate(mod)
     WolfEye.IndicatorSprite:Update();
     WolfEye.IndicatorLightSprite:Update();
-    WolfEye.HasItem = Collectibles.IsAnyHasCollectible(WolfEye.Item);
+    WolfEye.HasItem = Collectibles:IsAnyHasCollectible(WolfEye.Item);
 end
 WolfEye:AddCallback(ModCallbacks.MC_POST_UPDATE, PostUpdate)
 
@@ -108,7 +108,7 @@ end
 WolfEye:AddCallback(ModCallbacks.MC_POST_RENDER, PostRender)
 
 local function PostNewLevel()
-    if (Collectibles.IsAnyHasCollectible(WolfEye.Item)) then
+    if (Collectibles:IsAnyHasCollectible(WolfEye.Item)) then
         UpdateVisibleRooms();
     end
 end

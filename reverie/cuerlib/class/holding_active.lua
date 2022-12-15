@@ -2,12 +2,6 @@ local Lib = LIB;
 
 local HoldingActive = Lib:NewClass();
 
-local function EndHolding(player)
-    local playerData = GetPlayerData(player, true);
-    playerData.Item = nil;
-    playerData.Slot = nil;
-    playerData.Mimic = false;
-end
 local function IsHoldingAnimation(anim)
     return anim == "PickupWalkDown" or 
             anim == "PickupWalkUp" or 
@@ -32,6 +26,12 @@ local function GetPlayerData(player, init)
         }
     end
     return playerData.HoldingActive;
+end
+local function EndHolding(player)
+    local playerData = GetPlayerData(player, true);
+    playerData.Item = nil;
+    playerData.Slot = nil;
+    playerData.Mimic = false;
 end
 
 -- Get current holding active item.

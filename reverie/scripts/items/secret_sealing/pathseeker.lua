@@ -9,7 +9,7 @@ local Pathseeker = ModItem("Pathseeker", "Pathseeker");
 ---------------------------------
 
 function Pathseeker:onNewStage()
-    if (Collectibles.IsAnyHasCollectible(Pathseeker.Item)) then
+    if (Collectibles:IsAnyHasCollectible(Pathseeker.Item)) then
     
         local levelLength = 13;
         local roomSize = levelLength * levelLength;

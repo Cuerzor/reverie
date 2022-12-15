@@ -30,7 +30,7 @@ local TearAnimationIndexs = {
     }
 }
 
-function Tears.GetTearAnimationIndexByScale(scale, tearAnimation)
+function Tears:GetTearAnimationIndexByScale(scale, tearAnimation)
     tearAnimation = tearAnimation or Tears.Animation.REGULAR;
     local animations = TearAnimationIndexs[tearAnimation];
     if (animations) then
@@ -125,7 +125,7 @@ local function GetTearData(tear, create)
     return data._TEARS;
 end
 
-function Tears.GetModTearFlags(tear, create)
+function Tears:GetModTearFlags(tear, create)
     local tearData = GetTearData(tear, create);
     return tearData and tearData.TearFlags;
 end
@@ -220,11 +220,11 @@ local function PostUpdate(mod)
         if (tear.FrameCount <= 0) then
             local otherFlags = firstTearFlags[initSeed];
             if (otherFlags) then
-                Tears.GetModTearFlags(tear, true):Union(otherFlags);
+                Tears:GetModTearFlags(tear, true):Union(otherFlags);
             end
         else
             if (not firstTears[initSeed]) then
-                local flags = Tears.GetModTearFlags(tear, false);
+                local flags = Tears:GetModTearFlags(tear, false);
                 if (flags) then
                     firstTears[initSeed] = tear;
                     firstTearFlags[initSeed]= flags;

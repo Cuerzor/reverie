@@ -27,7 +27,7 @@ end
 
 function Envy:PostNewRoom()
     divideNPCs = {};
-    if (Collectibles.IsAnyHasCollectible(Envy.Item, false)) then
+    if (Collectibles:IsAnyHasCollectible(Envy.Item, false)) then
         for i, ent in pairs(Isaac.GetRoomEntities()) do
 
             if (not Entities.IsFinalBoss(ent) and ent:IsActiveEnemy() 

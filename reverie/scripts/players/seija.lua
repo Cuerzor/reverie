@@ -55,7 +55,7 @@ local ufoParams = ProjectileParams();
 ufoParams.Variant = ProjectileVariant.PROJECTILE_HUSH;
 ufoParams.BulletFlags = ProjectileFlags.NO_WALL_COLLIDE;
 
-local FoodItems = Collectibles.FindCollectibles(function(id, config) 
+local FoodItems = Collectibles:FindCollectibles(function(id, config) 
     return config:HasTags(ItemConfig.TAG_FOOD) 
 end)
 
@@ -1956,12 +1956,12 @@ do -- Events
                         tear:ChangeVariant(Seija.ShurikenVariant);
                     end
                     -- Add shuriken tear flag. (Obsoleted)
-                    -- Tears.GetModTearFlags(tear, true):Add(Tears.TearFlags.SHURIKEN)
+                    -- Tears:GetModTearFlags(tear, true):Add(Tears.TearFlags.SHURIKEN)
                 end
 
                 -- Strange Attractor.
                 if (player:HasCollectible(CollectibleType.COLLECTIBLE_STRANGE_ATTRACTOR)) then
-                    Tears.GetModTearFlags(tear, true):Add(Tears.TearFlags.SHOCKS_ENEMY)
+                    Tears:GetModTearFlags(tear, true):Add(Tears.TearFlags.SHOCKS_ENEMY)
                 end
 
                 -- Glaucoma.
@@ -1987,7 +1987,7 @@ do -- Events
                     local thresold = 1 / math.max(2, 10 - player.Luck);
                     if (value < thresold) then
                         --tear:AddTearFlags(TearFlags.TEAR_EGG);
-                        Tears.GetModTearFlags(tear, true):Add(Tears.TearFlags.ReverieSpiderWeb);
+                        Tears:GetModTearFlags(tear, true):Add(Tears.TearFlags.ReverieSpiderWeb);
                         if (Tears:CanOverrideVariant(TearVariant.EGG, tear.Variant)) then
                             tear:ChangeVariant(TearVariant.EGG);
                         end
@@ -2042,13 +2042,13 @@ do -- Events
         -- Shuriken Update.
         if (tear.Variant == Seija.ShurikenVariant) then
             local sprite = tear:GetSprite();
-            sprite:Play("Rotate" .. Tears.GetTearAnimationIndexByScale(tear.Scale, Tears.Animation.ROTATE));
+            sprite:Play("Rotate" .. Tears:GetTearAnimationIndexByScale(tear.Scale, Tears.Animation.ROTATE));
         end
 
 
         
         -- Strange Attractor.
-        local flags = Tears.GetModTearFlags(tear, false)
+        local flags = Tears:GetModTearFlags(tear, false)
         if (flags) then
             if (flags:Has(Tears.TearFlags.SHOCKS_ENEMY)) then
                 if (tear:IsFrame(5, 0)) then
@@ -2085,7 +2085,7 @@ do -- Events
     Seija:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, PostTearUpdate)
 
     local function PreTearCollision(mod, tear, other, low)
-        local flags = Tears.GetModTearFlags(tear, false)
+        local flags = Tears:GetModTearFlags(tear, false)
         local enemyActive = other:IsActiveEnemy() and not other:HasEntityFlags(EntityFlag.FLAG_FRIENDLY);
         if (flags) then
             if (flags:Has(Tears.TearFlags.SHURIKEN)) then

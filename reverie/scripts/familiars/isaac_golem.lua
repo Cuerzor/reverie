@@ -388,7 +388,7 @@ local function FireCheck(golem)
             fireDir = Vector(-1, 0);
             headAnim = "ShootLeft";
         end
-        if (Familiars:canFire(golem)) then
+        if (Familiars.CanFire(golem)) then
             local tear = Isaac.Spawn(2, 0, 0, golem.Position, fireDir * 12 + golem.Velocity / 3, golem):ToTear();
             local stage = THI.Game:GetLevel():GetStage();
             
@@ -641,7 +641,7 @@ function IsaacGolem:postGolemUpdate(golem)
     end
 
 
-    Familiars:DoFireCooldown(golem);
+    Familiars.DoFireCooldown(golem);
 
     data.PathFindData.Cooldown = data.PathFindData.Cooldown - 1;
 

@@ -170,7 +170,7 @@ do -- Events.
         local frameCount = Game().TimeCounter
         if (frameCount % 900 == 1) then
             -- Do a time update.
-            if (Collectibles.IsAnyHasCollectible(Wings.Item)) then
+            if (Collectibles:IsAnyHasCollectible(Wings.Item)) then
                 Wings:SetTime(Wings:GetTimeByFrame(frameCount))
             else
                 Wings:ResetTime();
@@ -194,7 +194,7 @@ do -- Events.
 
     local function PostWingsChanged(mod, player, item, diff)
         local frameCount = Game().TimeCounter
-        if (Collectibles.IsAnyHasCollectible(Wings.Item)) then
+        if (Collectibles:IsAnyHasCollectible(Wings.Item)) then
             Wings:SetTime(Wings:GetTimeByFrame(frameCount))
         else
             Wings:ResetTime();

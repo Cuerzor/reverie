@@ -391,7 +391,7 @@ local function AIRun(haniwa)
     if (targetEnt) then
         -- Attack Target.
         if (targetEnt:IsVulnerableEnemy()) then
-            if (Familiars:canFire(haniwa)) then
+            if (Familiars.CanFire(haniwa)) then
                 if (info.Attack) then
                     info.Attack(haniwa, targetEnt);
                 end
@@ -399,7 +399,7 @@ local function AIRun(haniwa)
         end
     end
 
-    Familiars:DoFireCooldown(haniwa)
+    Familiars.DoFireCooldown(haniwa)
 
 
 

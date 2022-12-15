@@ -66,12 +66,12 @@ PsycheEye.GetFamiliarTempData = GetFamiliarTempData;
 -- Mind Control Tear.
 Tears:RegisterModTearFlag("Mind Control");
 function PsycheEye:AddMindControlTear(tear)
-    local flags = Tears.GetModTearFlags(tear, true);
+    local flags = Tears:GetModTearFlags(tear, true);
     flags:Add(Tears.TearFlags["Mind Control"]);
 end
 
 function PsycheEye:IsMindControlTear(tear)
-    local flags = Tears.GetModTearFlags(tear, false);
+    local flags = Tears:GetModTearFlags(tear, false);
     return flags and flags:Has(Tears.TearFlags["Mind Control"]);
 end
 
@@ -330,10 +330,10 @@ function PsycheEye:PostFamiliarUpdate(familiar)
 
     -- Animation.
     if (holdingDrop or shooting or familiar.State == 1) then 
-        Familiars:PlayShootAnimation(familiar, headDirection);
+        Familiars.PlayShootAnimation(familiar, headDirection);
     else
         
-        Familiars:PlayNormalAnimation(familiar, headDirection);
+        Familiars.PlayNormalAnimation(familiar, headDirection);
     end
 
     -- Position Update.

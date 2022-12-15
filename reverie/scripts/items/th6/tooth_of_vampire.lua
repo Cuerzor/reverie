@@ -26,7 +26,7 @@ function VampireTooth:onUseMoon(card, player, flags)
 end
 
 function VampireTooth:onEntityDeath(npc)
-    if (Collectibles.IsAnyHasCollectible(VampireTooth.Item)) then
+    if (Collectibles:IsAnyHasCollectible(VampireTooth.Item)) then
         local rng = npc:GetDropRNG();
         local value = rng:RandomInt(1000);
         local chance = 50;

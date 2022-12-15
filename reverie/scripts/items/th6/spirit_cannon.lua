@@ -144,11 +144,14 @@ function SpiritCannon:PostUseItem(item, rng, player, flags, vardata)
         data.Laser = self:ShootLaser(player);
     end
     data.Timeout = (data.Timeout or 0) + 300;
+    SFXManager():Play(SoundEffect.SOUND_MEGA_BLAST_START);
+    local playerType = player:GetPlayerType();
     local isLost = playerType == PlayerType.PLAYER_THELOST or playerType == PlayerType.PLAYER_THELOST_B;
     if (not isLost) then
         player:AddBrokenHearts(1);
+    else
+        return {Remove = true}
     end
-    SFXManager():Play(SoundEffect.SOUND_MEGA_BLAST_START);
 end
 SpiritCannon:AddCallback(ModCallbacks.MC_USE_ITEM, SpiritCannon.PostUseItem, SpiritCannon.Item);
 

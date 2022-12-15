@@ -55,10 +55,10 @@ function Koakuma:onKoakumaUpdate(familiar)
         data.IsFollowing = true;
     end
     
-    local fireDir = Familiars:GetFireVector(familiar, dir)
+    local fireDir = Familiars.GetFireVector(familiar, dir)
     local direction = familiar.ShootDirection;
-    Familiars:DoFireCooldown(familiar);
-    if (dir ~= Direction.NO_DIRECTION and Familiars:canFire(familiar) and (player == nil or player:IsExtraAnimationFinished())) then
+    Familiars.DoFireCooldown(familiar);
+    if (dir ~= Direction.NO_DIRECTION and Familiars.CanFire(familiar) and (player == nil or player:IsExtraAnimationFinished())) then
         
         familiar.HeadFrameDelay = 7;
         familiar.FireCooldown = 10;
@@ -75,11 +75,11 @@ function Koakuma:onKoakumaUpdate(familiar)
         direction = familiar.ShootDirection;
     end
 
-    if (Familiars:canFire(familiar)) then
+    if (Familiars.CanFire(familiar)) then
         familiar.ShootDirection = Direction.NO_DIRECTION;
     end
     
-    Familiars:AnimationUpdate(familiar, Consts.DirectionVectors[direction]);
+    Familiars.AnimationUpdate(familiar, Consts.DirectionVectors[direction]);
     
     familiar:FollowParent();
 end

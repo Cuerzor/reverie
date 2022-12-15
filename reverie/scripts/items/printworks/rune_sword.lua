@@ -300,7 +300,7 @@ function RuneSword:UseSword(item, rng, player, flags, slot, varData)
         THI.SFXManager:Play(SoundEffect.SOUND_POWERUP1);
         player:AnimateCollectible(RuneSword.Item, "Pickup");
         --if (player:GetCard(slot) == rune) then
-            Players:RemoveCardPill(player, slot)
+            Players.RemoveCardPill(player, slot)
         --end
         showAnim = false;
     else

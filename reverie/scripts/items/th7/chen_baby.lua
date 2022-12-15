@@ -36,7 +36,7 @@ function ChenBaby:Charge(familiar, dir)
     local data = ChenBaby:GetChenData(familiar);
     data.IsCharging = true;
     familiar:RemoveFromFollowers();
-    local velocity = Familiars:GetFireVector(familiar, dir, false, 1000) * ChenBaby.Speed;
+    local velocity = Familiars.GetFireVector(familiar, dir, false, 1000) * ChenBaby.Speed;
     familiar.Velocity = velocity;
 end
 
@@ -101,10 +101,10 @@ function ChenBaby:UpdateAnimation(familiar)
         local velocity = familiar.Velocity;
         if (velocity.X ~= 0 or velocity.Y ~= 0) then
             local dir = MathTool.GetDirectionByAngle(velocity:GetAngleDegrees());
-            Familiars:PlayShootAnimation(familiar, dir);
+            Familiars.PlayShootAnimation(familiar, dir);
         end
     else
-        Familiars:PlayNormalAnimation(familiar, Direction.DOWN);
+        Familiars.PlayNormalAnimation(familiar, Direction.DOWN);
     end
 end
 

@@ -53,12 +53,12 @@ end
 
 Tears:RegisterModTearFlag("Mind Control");
 function PsycheEye:AddMindControlTear(tear)
-    local flags = Tears.GetModTearFlags(tear, true);
+    local flags = Tears:GetModTearFlags(tear, true);
     flags:Add(Tears.TearFlags["Mind Control"]);
 end
 
 function PsycheEye:IsMindControlTear(tear)
-    local flags = Tears.GetModTearFlags(tear, false);
+    local flags = Tears:GetModTearFlags(tear, false);
     return flags and flags:Has(Tears.TearFlags["Mind Control"]);
 end
 
@@ -171,12 +171,12 @@ function PsycheEye:PostFamiliarUpdate(familiar)
                 end
             end
         end
-        Familiars:PlayShootAnimation(familiar, headDirection);
+        Familiars.PlayShootAnimation(familiar, headDirection);
     else
         -- Fire.
-        local fireDir = Familiars:GetFireVector(familiar, dir)
-        Familiars:DoFireCooldown(familiar);
-        if (dir ~= Direction.NO_DIRECTION and Familiars:canFire(familiar) and (player == nil or player:IsExtraAnimationFinished())) then
+        local fireDir = Familiars.GetFireVector(familiar, dir)
+        Familiars.DoFireCooldown(familiar);
+        if (dir ~= Direction.NO_DIRECTION and Familiars.CanFire(familiar) and (player == nil or player:IsExtraAnimationFinished())) then
             
             familiar.HeadFrameDelay = 15;
             familiar.FireCooldown = 30;
@@ -185,7 +185,7 @@ function PsycheEye:PostFamiliarUpdate(familiar)
             tear:SetColor(PsycheEye.TearColor, -1, 0, false, false);
         end
         
-        Familiars:AnimationUpdate(familiar, facingVector);
+        Familiars.AnimationUpdate(familiar, facingVector);
     end
     
     local player = familiar.Player;

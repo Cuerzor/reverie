@@ -18,31 +18,31 @@ Players.OnlySoulHeartPlayers = {
     [PlayerType.PLAYER_THEFORGOTTEN_B] = true,
 }
 
-function Players:SetOnlyRedHeartPlayer(playerType, value)
-    self.OnlyRedHeartPlayers[playerType] = value;
+function Players.SetOnlyRedHeartPlayer(playerType, value)
+    Players.OnlyRedHeartPlayers[playerType] = value;
 end
 
-function Players:IsOnlyRedHeartPlayer(playerType)
-    return self.OnlyRedHeartPlayers[playerType] ~= nil;
+function Players.IsOnlyRedHeartPlayer(playerType)
+    return Players.OnlyRedHeartPlayers[playerType] ~= nil;
 end
 
-function Players:SetOnlySoulHeartPlayer(playerType, value)
-    self.OnlySoulHeartPlayers[playerType] = value;
+function Players.SetOnlySoulHeartPlayer(playerType, value)
+    Players.OnlySoulHeartPlayers[playerType] = value;
 end
 
-function Players:IsOnlySoulHeartPlayer(playerType)
-    return self.OnlySoulHeartPlayers[playerType] ~= nil;
+function Players.IsOnlySoulHeartPlayer(playerType)
+    return Players.OnlySoulHeartPlayers[playerType] ~= nil;
 end
 
-function Players:SetOnlyBoneHeartPlayer(playerType, value)
-    self.OnlyBoneHeartPlayers[playerType] = value;
+function Players.SetOnlyBoneHeartPlayer(playerType, value)
+    Players.OnlyBoneHeartPlayers[playerType] = value;
 end
 
-function Players:IsOnlyBoneHeartPlayer(playerType)
-    return self.OnlyBoneHeartPlayers[playerType] ~= nil;
+function Players.IsOnlyBoneHeartPlayer(playerType)
+    return Players.OnlyBoneHeartPlayers[playerType] ~= nil;
 end
 
-function Players:AddRawSoulHearts(player, value)
+function Players.AddRawSoulHearts(player, value)
     if (player:HasCollectible(CollectibleType.COLLECTIBLE_ALABASTER_BOX, true)) then
         local alabasterCharges = {};
         for slot = ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_POCKET do   
@@ -69,7 +69,7 @@ function Players:AddRawSoulHearts(player, value)
 end
 
 
-function Players:AddRawBlackHearts(player, value)
+function Players.AddRawBlackHearts(player, value)
     if (player:HasCollectible(CollectibleType.COLLECTIBLE_ALABASTER_BOX, true)) then
         local alabasterCharges = {};
         for slot = ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_POCKET do   
@@ -124,8 +124,8 @@ function Players.PlayerPairs(includePlayer, includeBaby)
     return iter, nil, nil;
 end
 
-function Players:IsDead(player)
-    return player:IsDead() or Lib.Revive.IsReviving(player);
+function Players.IsDead(player)
+    return player:IsDead() or Lib.Revive:IsReviving(player);
 end
 
 function Players.TeleportToPosition(player, pos)
@@ -191,7 +191,7 @@ function Players.GetTIsaacRemainSpaces(player)
     return nil;
 end
 
-function Players:SwapPillCards(player)
+function Players.SwapPillCards(player)
     local thisCard = player:GetCard(0);
     local thisPill = player:GetPill(0);
     local otherCard = player:GetCard(1);
@@ -220,7 +220,7 @@ function Players:SwapPillCards(player)
 
 end
 
-function Players:RemoveCardPill(player, slot)
+function Players.RemoveCardPill(player, slot)
     local card = player:GetCard(slot);
     local pill = player:GetPill(slot);
     local pos = Vector(-5800, -5800);
@@ -248,7 +248,7 @@ do -- Devil deal.
     }
 
 
-    function Players:GetItemPrice(player, devilprice, variant, ignorePoundOfFlesh)
+    function Players.GetItemPrice(player, devilprice, variant, ignorePoundOfFlesh)
         variant = variant or 100;
         if (ignorePoundOfFlesh or not player:HasCollectible(CollectibleType.COLLECTIBLE_POUND_OF_FLESH)) then
             if (variant == PickupVariant.PICKUP_COLLECTIBLE) then -- Collectible.
@@ -292,9 +292,9 @@ do -- Devil deal.
         end
     end
 
-    function Players:CostCoins(player, price)
+    function Players.CostCoins(player, price)
         local coins = player:GetNumCoins();
-        local results = self.DealResults;
+        local results = Players.DealResults;
         if (price == PickupPrice.PRICE_FREE) then
             player:TryRemoveTrinket(TrinketType.TRINKET_STORE_CREDIT);
             return results.DEALT;
@@ -310,9 +310,9 @@ do -- Devil deal.
 
     -- Cost hearts for deal.
     -- Returns -1 for invalid price, 0 for not dealt, 1 for hearts, 2 for lost to take,.
-    function Players:DealHearts(player, price)
+    function Players.DealHearts(player, price)
         
-        local results = self.DealResults;
+        local results = Players.DealResults;
         local playerType = player:GetPlayerType()
         -- Free for lost.
         if (playerType == PlayerType.PLAYER_THELOST or playerType == PlayerType.PLAYER_THELOST_B or playerType == PlayerType.PLAYER_JACOB2_B) then
@@ -394,12 +394,12 @@ do -- Devil deal.
         return results.INVALID;
     end
 
-    function Players:Buy(player, price)
-        local coinResult = self:CostCoins(player, price);
+    function Players.Buy(player, price)
+        local coinResult = Players:CostCoins(player, price);
         if (coinResult > -1) then
             return coinResult;
         else
-            return self:DealHearts(player, price);
+            return Players:DealHearts(player, price);
         end
     end
 end

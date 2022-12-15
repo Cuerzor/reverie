@@ -339,7 +339,7 @@ local function PostPlayerUpdate(mod, player)
                     player.Velocity = Vector.Zero;
                 end
                 -- Get out of Mecha
-                if ((mecha:IsDead() and Rebecha:IsLeaveButtonTriggered(player)) or Players:IsDead(player)) then
+                if ((mecha:IsDead() and Rebecha:IsLeaveButtonTriggered(player)) or Players.IsDead(player)) then
                     Rebecha:ExitMecha(player);
                     player:PlayExtraAnimation("JumpOut");
                 end

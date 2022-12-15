@@ -33,7 +33,7 @@ do
             if (redHearts <= 0 and boneHearts <= 0 or playerType == PlayerType.PLAYER_THESOUL) then
                 soulCount = soulCount - 1;
             end
-            Players:AddRawSoulHearts (player,-soulCount);
+            Players.AddRawSoulHearts (player,-soulCount);
         end
         if (soulCount > 0) then
             

@@ -31,7 +31,7 @@ local function PreFairyCollision(mod, pickup, collider)
     if (player) then
         if (Fairy:CanCollect(player, pickup)) then
             if (pickup:IsShopItem()) then
-                Players:Buy(player, pickup.Price);
+                Players.Buy(player, pickup.Price);
             end
             if (THI.IsLunatic()) then
                 player:AddHearts(2);

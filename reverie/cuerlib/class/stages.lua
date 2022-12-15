@@ -17,7 +17,7 @@ function Stages:onNewLevel()
 end
 Stages:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, Stages.onNewLevel);
 
-function Stages.GetDimension(roomDesc) -- By DeadInfinity.
+function Stages:GetDimension(roomDesc) -- By DeadInfinity.
     for dimension = 0, 2 do
         if Stages.IsInDimension(dimension) then
             return dimension
@@ -26,7 +26,7 @@ function Stages.GetDimension(roomDesc) -- By DeadInfinity.
     return -1;
 end
 
-function Stages.IsInDimension(num)
+function Stages:IsInDimension(num)
     local level = Game():GetLevel()
     local desc = roomDesc or level:GetCurrentRoomDesc()
 

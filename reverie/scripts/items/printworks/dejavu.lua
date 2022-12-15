@@ -36,9 +36,9 @@ function Dejavu:SpawnCorpseLoots(data, corpse, index)
             local item = Pickups:SpawnFixedCollectible(id, room:FindFreePickupSpawnPosition(pos), Vector.Zero, corpse):ToPickup();
             item:ClearEntityFlags(EntityFlag.FLAG_ITEM_SHOULD_DUPLICATE);
             item.OptionsPickupIndex = uniqueOptionsIndex;
-            table.insert(globalData.SpawnedLoots, index);
         end
     end
+    table.insert(globalData.SpawnedLoots, index);
 end
 function Dejavu:ShouldCorpseSpawnItems(index)
     local globalData = GetGlobalData(false);
@@ -57,20 +57,13 @@ function Dejavu:ShouldCorpseSpawnItems(index)
 end
 
 function Dejavu:GetRandomPlayerCollectibles(player, seed, count)
-    local collectibleList = {};
-    local collectibleCount = 0;
-    for i = 1, THI.MaxCollectibleID do
-        local config = itemConfig:GetCollectible(i);
-        if (config) then
-            if (not config:HasTags(ItemConfig.TAG_QUEST) and not config.Hidden) then
-                local collectibleNum = player:GetCollectibleNum(i, true);
-                if (collectibleNum > 0) then
-                    collectibleList[i] = collectibleNum;
-                    collectibleCount = collectibleCount + collectibleNum;
-                end
-            end
+    local function filter(id, config, num)
+        if (config:HasTags(ItemConfig.TAG_QUEST) or config.Hidden) then
+            return 0;
         end
+        return num;
     end
+    local collectibleList, collectibleCount = Collectibles:GetPlayerCollectibles(player, filter);
 
     local rng = RNG();
     rng:SetSeed(seed, Dejavu.Item);
@@ -248,7 +241,7 @@ Dejavu:AddCallback(ModCallbacks.MC_POST_GAME_END, Dejavu.PostGameEnd)
 local corpseDatas = nil;
 
 function Dejavu:SpawnRoomCorpses()
-    if (corpseDatas and Collectibles.IsAnyHasCollectible(self.Item)) then
+    if (corpseDatas and Collectibles:IsAnyHasCollectible(self.Item)) then
         local game = Game();
         local level = game:GetLevel();
         local roomDesc = level:GetCurrentRoomDesc();
@@ -258,7 +251,12 @@ function Dejavu:SpawnRoomCorpses()
         end
         local roomVariant = roomDesc.Data.Variant; 
         for i, data in ipairs(corpseDatas) do
-            if (data.Stage == level:GetStage() and data.StageType == level:GetStageType() and data.RoomType == roomType and data.RoomVariant == roomVariant) then
+            local roomFits = data.RoomType == roomType and data.RoomVariant == roomVariant
+            local stageFits = true
+            if (roomType <= 1) then
+                stageFits = data.Stage == level:GetStage() and data.StageType == level:GetStageType();
+            end
+            if (stageFits and roomFits) then
                 local corpse = self:SpawnCorpse(data);
                 if (self:ShouldCorpseSpawnItems(i)) then
                     Dejavu:SpawnCorpseLoots(data, corpse, i);

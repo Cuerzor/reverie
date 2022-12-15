@@ -205,7 +205,7 @@ end
 
 function Synergies.GetNextLungShotCount(player, count, isLessMode)
     if (isLessMode == nil) then
-        isLessMode = Synergies:IsLungLessMode(player);
+        isLessMode = Synergies.IsLungLessMode(player);
     end
     count = count or Synergies.GetNextShotCount(player);
     local lungNum = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_MONSTROS_LUNG);

@@ -14,7 +14,7 @@ Familiars.AnimationNames = {
 }
 
 
-function Familiars:GetFireVector(familiar, shootDirection, noModifiers, shootRange)
+function Familiars.GetFireVector(familiar, shootDirection, noModifiers, shootRange)
     shootRange = shootRange or 200;
     local player = familiar.Player;
     if (not noModifiers) then
@@ -76,16 +76,16 @@ function Familiars.RunFireDelay(familiar, timer)
     end
     return timer;
 end
-function Familiars:DoFireCooldown(familiar)
+function Familiars.DoFireCooldown(familiar)
     familiar.FireCooldown = Familiars.RunFireDelay(familiar, familiar.FireCooldown);
     familiar.HeadFrameDelay = familiar.HeadFrameDelay - 1;
 end
 
-function Familiars:canFire(familiar)
+function Familiars.CanFire(familiar)
     return familiar.FireCooldown < 0;
 end
 
-function Familiars:AnimationUpdate(familiar, vector, normalAnim, shootAnim)
+function Familiars.AnimationUpdate(familiar, vector, normalAnim, shootAnim)
 
     local angle = vector:GetAngleDegrees();
     if (vector:Length() <= 1e-08) then
@@ -94,13 +94,13 @@ function Familiars:AnimationUpdate(familiar, vector, normalAnim, shootAnim)
     local spriteDir = Math.GetDirectionByAngle(angle);
     
     if (familiar.HeadFrameDelay > 0) then
-        Familiars:PlayShootAnimation(familiar, spriteDir, shootAnim);
+        Familiars.PlayShootAnimation(familiar, spriteDir, shootAnim);
     else
-        Familiars:PlayNormalAnimation(familiar, spriteDir, normalAnim);
+        Familiars.PlayNormalAnimation(familiar, spriteDir, normalAnim);
     end
 end
 
-function Familiars:PlayShootAnimation(familiar, dir, shootAnim)
+function Familiars.PlayShootAnimation(familiar, dir, shootAnim)
     shootAnim = shootAnim or "FloatShoot";
     local sprite = familiar:GetSprite();
     if (dir ~= Direction.NO_DIRECTION) then
@@ -109,7 +109,7 @@ function Familiars:PlayShootAnimation(familiar, dir, shootAnim)
     end
 end
 
-function Familiars:PlayNormalAnimation(familiar, dir, normalAnim)
+function Familiars.PlayNormalAnimation(familiar, dir, normalAnim)
     normalAnim = normalAnim or "Float";
     local sprite = familiar:GetSprite();
     if (dir ~= Direction.NO_DIRECTION) then

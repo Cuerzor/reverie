@@ -1738,7 +1738,7 @@ Eika:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, Eika.PostPlayerRender)
 function Eika:PostTearUpdate(tear)
     if (tear.Variant == RockVariants.Probe) then
         local sprite = tear:GetSprite();
-        sprite:Play("Rotate" .. Tears.GetTearAnimationIndexByScale(tear.Scale, Tears.Animation.ROTATE));
+        sprite:Play("Rotate" .. Tears:GetTearAnimationIndexByScale(tear.Scale, Tears.Animation.ROTATE));
     end
 
     local player = GetSpawnerPlayer(tear);
@@ -1763,7 +1763,7 @@ function Eika:PostTearUpdate(tear)
                 if (tear.Variant == TearVariant.ROCK) then
                     sprite:SetFrame(tear.FrameCount % 16);
                 elseif (tear.Variant == RockVariants.Probe) then
-                    sprite:SetFrame("Rotate" .. Tears.GetTearAnimationIndexByScale(tear.Scale, Tears.Animation.Rotate), tear.FrameCount % 4);
+                    sprite:SetFrame("Rotate" .. Tears:GetTearAnimationIndexByScale(tear.Scale, Tears.Animation.Rotate), tear.FrameCount % 4);
                 end
                 local scale = 1;
                 if (data) then

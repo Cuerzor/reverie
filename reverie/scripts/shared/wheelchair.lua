@@ -283,7 +283,7 @@ function WheelChair:PostHitboxCollision(hitbox, other, low)
             local speed = vel:Length();
             if (Entities.IsValidEnemy(other)) then
                 local damage = speed;
-                if (player and not Players:IsDead(player)) then
+                if (player and not Players.IsDead(player)) then
                     local data = WheelChair.GetPlayerTempData(player, true);
                     -- if (data) then
                     --     multiplier = (data.SpeedUp - 0.5) * 2 * 3;
@@ -303,7 +303,7 @@ function WheelChair:PostHitboxCollision(hitbox, other, low)
             elseif(other.Type == EntityType.ENTITY_PROJECTILE) then
                 local proj = other:ToProjectile();
                 if (not proj:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER)) then
-                    if (player and not Players:IsDead(player)) then
+                    if (player and not Players.IsDead(player)) then
                         local data = WheelChair.GetPlayerTempData(player, true);
                         data.SpeedUp = data.SpeedUp - 0.2;
                         proj:Die();

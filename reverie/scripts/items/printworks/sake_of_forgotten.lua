@@ -78,7 +78,7 @@ local function PostUpdate(mod)
     local stage = Game():GetLevel():GetStage();
     if (room:GetType() == RoomType.ROOM_BOSS and room:IsClear() and room:GetFrameCount() > 1) then
         local Bottle = THI.Pickups.SakeBottle;
-        if (Collectibles.IsAnyHasCollectible(Sake.Item) and not Bottle:IsForgottingStage()) then
+        if (Collectibles:IsAnyHasCollectible(Sake.Item) and not Bottle:IsForgottingStage()) then
             if (not Sake:IsBottleSpawned()) then
                 if (Sake:CanStageSpawnBottle(stage) and Sake:HasClearObject()) then
                     Sake:SpawnBottle();

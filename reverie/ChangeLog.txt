@@ -2520,5 +2520,20 @@ Greed Shop: Added D Flip
 *赌博六面骰、山童的木箱、管中狐、大天狗望远镜、交易所门票
 *百足的诅咒、虹吸骰子
 
+12.4.0-2022.12.14
+-Added Deja vu.
+-添加了似曾相识。
 -Added shockwave effects for Destruction meteor, Daitengu Telescope, Wild Fury, Oni Horn and Brutal Horseshoe.
 -为毁灭的陨石，大天狗望远镜，野性狂暴，鬼之角，残暴马蹄铁添加了震荡波效果。
+
+12.4.1-2022.12.15
+-Spirit Cannon now is one-time usage for lost.
+-气功炮现在对游魂一次性使用。
+-Fairy Dust now +1 luck up.
+-妖精尘现在会+1运气。
+-Fixed an issue that Deja vu only spawn up to 3 collectibles in a run.
+-修复了似曾相识在一局中只会生成3个道具的BUG。
+
+12.4.2-2022.12.15
+-Supports CuerLib 1.2.0.
+-适配CuerLib1.2.0.

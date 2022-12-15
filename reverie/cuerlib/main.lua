@@ -1,6 +1,6 @@
 CuerLib = RegisterMod("CuerLib", 1);
 local Lib = CuerLib;
-Lib.Version = {1,0,0};
+Lib.Version = {1,2,1};
 Lib.Loaded = {};
 
 function Lib:GetVersionString()
@@ -48,5 +48,7 @@ end
 LIB = nil;
 
 CuerLib.InitMod = include("cuerlib/mod_addon/main");
+
+print("CuerLib "..CuerLib:GetVersionString().." Loaded.")
 
 return Lib;
