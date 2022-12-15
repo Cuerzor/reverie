@@ -96,6 +96,8 @@ return function(Addon)
         else
             RestartGame();
         end
+        Addon:SetGlobalModData({})
+        Addon:SetGlobalModData({}, true)
         Isaac.RunCallback(Lib.Callbacks.CLC_POST_EXIT, ShouldSave);
     end
     SaveAndLoad:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, preGameExit)
@@ -135,13 +137,6 @@ return function(Addon)
         end
     end
     SaveAndLoad:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, onGameStarted)
-
-    
-    local function PostExit(mod)
-        Addon:SetGlobalModData({})
-        Addon:SetGlobalModData({}, true)
-    end
-    SaveAndLoad:AddCallback(Lib.Callbacks.CLC_POST_EXIT, PostExit);
 
     return SaveAndLoad;
 end

@@ -46,7 +46,7 @@ function JeweledBranch:PostPlayerUpdate(player)
 
         if (data.Fired) then
             data.FireDelay = data.FireDelay - 1;
-            while (data.FireDelay <= 0) do
+            while (data.FireDelay <= -1) do
                 local isFull = true;
                 local tearCheckCount = 0;
                 
@@ -94,7 +94,7 @@ function JeweledBranch:PostPlayerUpdate(player)
                     newBullet:SetColor(JeweledBranch.Colors[data.Index], -1, 0, false, true);
                     data.Bullets[data.Index] = newBullet;
                 end
-                data.FireDelay = data.FireDelay + player.MaxFireDelay * 2;
+                data.FireDelay = data.FireDelay + math.max(0.25, player.MaxFireDelay + 1) * 2;
             end
 
             data.Angle = data.Angle + 3 * player.ShotSpeed;

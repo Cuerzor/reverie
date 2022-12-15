@@ -86,7 +86,7 @@ function Roukanken:ReturnFromYoumu(player)
     local playerData = self:GetPlayerData(player, true);
 
     playerData.IsYoumu = false;
-    UnbanWeapon(player);
+    Weapons:UnbanWeapon(player);
 
     player:TryRemoveNullCostume(self.YoumuSpiritCostume)
     player:SetColor(Color(1,1,1,1,1,1,1), 10, 0, true, false)
@@ -412,9 +412,9 @@ function Roukanken:onPlayerEffect(player)
             local weaponBanned = Weapons:IsWeaponsBanned(player);
             if (shouldBan ~= weaponBanned) then
                 if (shouldBan) then
-                    BanishWeapon(player, true, false);
+                    Weapons:BanishWeapon(player, true, false);
                 else
-                    UnbanWeapon(player);
+                    Weapons:UnbanWeapon(player);
                 end
             end
         end
@@ -428,8 +428,8 @@ function Roukanken:onPlayerEffect(player)
                 -- Swing Sword
                 if (playerData.IsYoumu) then
                     if (player:GetAimDirection():Length() > 0.1) then
-                        if (player.FireDelay <= -1) then
-                            player.FireDelay = player.MaxFireDelay;
+                        while (player.FireDelay <= -1) do
+                            player.FireDelay = player.FireDelay + math.max(0.25, player.MaxFireDelay + 1);
                             Roukanken:SwingSword(player);
                         end
                     end

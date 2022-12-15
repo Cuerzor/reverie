@@ -237,15 +237,17 @@ local function PostPlayerEffect(mod, player)
     local room = Game():GetRoom();
     if (room:GetFrameCount() == 10 or Game():GetFrameCount() % 30 == 0) then
         local fairyCollectiblesNum = {}
-        local minCollectibleCount = 0; 
+        local minCollectibleCount = nil; 
         for item, variant in pairs(Fairies.ComboFairies) do
             local num = player:GetCollectibleNum(item, true);
             fairyCollectiblesNum[item] = num;
-            minCollectibleCount = math.min(minCollectibleCount, num);
+            if (not minCollectibleCount or num < minCollectibleCount) then
+                minCollectibleCount = num;
+            end
         end
 
         -- If Collectible group's count is larger than 0.
-        if (minCollectibleCount > 0) then
+        if (minCollectibleCount and minCollectibleCount > 0) then
 
             local comboFairyCount = 0;
             -- Find valid (dormant) fairy groups.

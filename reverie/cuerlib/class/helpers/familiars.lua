@@ -104,7 +104,7 @@ function Familiars.PlayShootAnimation(familiar, dir, shootAnim)
     shootAnim = shootAnim or "FloatShoot";
     local sprite = familiar:GetSprite();
     if (dir ~= Direction.NO_DIRECTION) then
-        sprite:Play(shootAnim..self.AnimationNames[dir]);
+        sprite:Play(shootAnim..Familiars.AnimationNames[dir]);
         familiar.FlipX = dir == Direction.LEFT;
     end
 end
@@ -113,7 +113,7 @@ function Familiars.PlayNormalAnimation(familiar, dir, normalAnim)
     normalAnim = normalAnim or "Float";
     local sprite = familiar:GetSprite();
     if (dir ~= Direction.NO_DIRECTION) then
-        sprite:Play(normalAnim..self.AnimationNames[dir]);
+        sprite:Play(normalAnim..Familiars.AnimationNames[dir]);
         familiar.FlipX = dir == Direction.LEFT;
     end
 end
