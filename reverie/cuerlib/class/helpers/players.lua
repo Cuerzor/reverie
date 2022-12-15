@@ -395,11 +395,11 @@ do -- Devil deal.
     end
 
     function Players.Buy(player, price)
-        local coinResult = Players:CostCoins(player, price);
+        local coinResult = Players.CostCoins(player, price);
         if (coinResult > -1) then
             return coinResult;
         else
-            return Players:DealHearts(player, price);
+            return Players.DealHearts(player, price);
         end
     end
 end
