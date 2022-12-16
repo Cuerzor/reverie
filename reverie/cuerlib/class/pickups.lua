@@ -273,11 +273,6 @@ local function PostPickupUpdate(mod, pickup)
         pickup.Position = data.OriginPosition;
         data.Moved = false;
     end
-    
-    local player = Pickups:GetBoneSwingPickupPlayer(pickup);
-    if (player) then
-        Pickups:TryCollect(player, pickup);
-    end
 end
 Pickups:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate);
 

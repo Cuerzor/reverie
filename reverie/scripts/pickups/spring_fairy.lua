@@ -1,4 +1,5 @@
 local Players = CuerLib.Players;
+local Pickups = CuerLib.Pickups;
 local Fairy = ModEntity("Spring Fairy", "SPRING_FAIRY");
 
 
@@ -21,6 +22,10 @@ local function PostFairyUpdate(mod, pickup)
         pickup:AddVelocity(Vector(x, y))
     else
         pickup:GetSprite():Play("Land")
+    end
+    local player = Pickups:GetBoneSwingPickupPlayer(pickup);
+    if (player) then
+        Pickups:TryCollect(player, pickup);
     end
 end
 Fairy:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostFairyUpdate, Fairy.Variant)

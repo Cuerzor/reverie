@@ -1,3 +1,4 @@
+local Pickups = CuerLib.Pickups;
 local FoodPickup = ModEntity("Cheese Food", "Food");
 
 FoodPickup.SubTypes = {
@@ -22,6 +23,11 @@ function FoodPickup:GetFeedHunger(pickup)
 end
 
 local function PostPickupUpdate(mod, pickup)
+    
+    local player = Pickups:GetBoneSwingPickupPlayer(pickup);
+    if (player) then
+        Pickups:TryCollect(player, pickup);
+    end
     if (pickup.SubType == 0) then
         local chance = pickup.DropSeed % 6;
         local type = pickup.Type;
@@ -38,29 +44,29 @@ local function PostPickupUpdate(mod, pickup)
 end
 FoodPickup:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, PostPickupUpdate, FoodPickup.Variant);
 
-
-function FoodPickup:PrePickupCollision(pickup, other, low)
-    if (other.Type == EntityType.ENTITY_PLAYER) then
-        local player = other:ToPlayer();
-        local Hunger = THI.Collectibles.Hunger;
-        if (player:HasCollectible(Hunger.Item)) then
-            local feed = FoodPickup:GetFeedHunger(pickup);
-            Hunger:Feed(player, feed);
-
-
-            local pickupEffect = THI.Effects.PickupEffect;
-            local effect = Isaac.Spawn(pickupEffect.Type, pickupEffect.Variant, 0, pickup.Position, Vector.Zero, pickup);
-            local spr = effect:GetSprite();
-            spr:Load(pickup:GetSprite():GetFilename(), true)
-            spr:Play("Collect");
-
-            
-            pickup:Remove();
-            return true;
-        end
+local function CanCollect(mod, player, pickup)
+    local Hunger = THI.Collectibles.Hunger;
+    if (player:HasCollectible(Hunger.Item)) then
+        return true;
     end
 end
-FoodPickup:AddPriorityCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, CallbackPriority.LATE, FoodPickup.PrePickupCollision, FoodPickup.Variant);
+FoodPickup:AddCallback(CuerLib.Callbacks.CLC_CAN_PICKUP_COLLECT, CanCollect, FoodPickup.Variant);
+
+function FoodPickup:PostPickupCollected(player, pickup)
+    local Hunger = THI.Collectibles.Hunger;
+    local feed = FoodPickup:GetFeedHunger(pickup);
+    Hunger:Feed(player, feed);
+
+
+    local pickupEffect = THI.Effects.PickupEffect;
+    local effect = Isaac.Spawn(pickupEffect.Type, pickupEffect.Variant, 0, pickup.Position, Vector.Zero, pickup);
+    local spr = effect:GetSprite();
+    spr:Load(pickup:GetSprite():GetFilename(), true)
+    spr:Play("Collect");
+
+    pickup:Remove();
+end
+FoodPickup:AddCallback(CuerLib.Callbacks.CLC_POST_PICKUP_COLLECTED, FoodPickup.PostPickupCollected, FoodPickup.Variant);
 
 
 return FoodPickup;

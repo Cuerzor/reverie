@@ -2538,9 +2538,14 @@ Greed Shop: Added D Flip
 -Supports CuerLib 1.2.0.
 -适配CuerLib1.2.0.
 
-
-X楼观剑和隙间不再会在冲刺或使用时触发锋利插头。
-X似曾相识现在会自动生成一些随机生成的尸体。
+12.4.3-2022.12.16
+-Roukanken and The Gap no longer triggers Sharp Plug when dashes or teleports.
+-楼观剑和隙间不再会在冲刺或使用时触发锋利插头。
+-Deja vu no longer spawns corpses in netstart coop.
 -似曾相识不再会在网络联机中生成尸体。
--更新了似曾相识的编码方法，使得在开关MOD之后出现的道具结果依然正常。（需要测试和老记录的兼容）
+-Updated Deja vu's encode function, make it can spawn mod items correctly.
+-更新了似曾相识的编码方法，使得在开关MOD之后出现的道具结果依然正常。
+-Fixed an issue that Pill of Ultramarine Orb will not be consumed correctly.
 -修复了绀珠药丸不会正常消耗的BUG。
+-Fixed an issue that weapons like bone club can open locked chest.
+-修复了可以直接使用骨棒等武器打开上锁箱子的BUG。
