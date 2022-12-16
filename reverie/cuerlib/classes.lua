@@ -12,6 +12,7 @@ Lib.ClassPaths = {
     Rooms = "helpers/rooms",
     Players = "helpers/players",
     Familiars = "helpers/familiars",
+    Base64 = "helpers/base64",
 
     Stats = "stats",
     Shields = "shield",
@@ -30,6 +31,7 @@ Lib.ClassPaths = {
     Curses = "curses",
     Grids = "grids",
     Revive = "revive",
+    NetCoop = "netcoop",
 }
 if (StageAPI) then
     Lib.ClassPaths.Bosses="bosses_stageapi";

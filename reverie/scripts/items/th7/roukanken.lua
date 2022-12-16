@@ -274,12 +274,25 @@ end
 -- Events
 ----------------------
 
+function Roukanken:TryUseItem(item, player, slot)
+    local playerData = Roukanken:GetPlayerData(player, true);
+    if (playerData.Slashing) then
+        return true;
+    end
+end
+Roukanken:AddCallback(CuerLib.Callbacks.CLC_TRY_USE_ITEM, Roukanken.TryUseItem, Roukanken.Item);
+
 function Roukanken:onUseItem(item, rng, player, flags, slot, data)
     local playerData = Roukanken:GetPlayerData(player, true);
     if (not playerData.Slashing) then
         Roukanken:EnterSwordPhase(player);
         playerData.Dash.Cooldown = 5;
     else
+        if (player:AreControlsEnabled() and playerData.Dash.Cooldown <= 0) then
+            if (player:GetMovementInput():Length() > 0.1) then
+                Roukanken:Dash(player);
+            end
+        end
         return {Discharge = false};
     end
 
@@ -350,12 +363,6 @@ function Roukanken:onPlayerUpdate(player)
                     
                     swordSprite.Rotation = (swordSprite.Rotation + (targetRotation - swordSprite.Rotation) * 0.3);
                     sword.Position = player.Position + swordPosOffset * 10;
-
-                    if (player.ControlsEnabled and player.ControlsCooldown <= 0 and playerData.Dash.Cooldown <= 0 and Actives:IsActiveItemTriggered(player, Roukanken.Item)) then
-                        if (player:GetMovementInput():Length() > 0.1) then
-                            Roukanken:Dash(player);
-                        end
-                    end
                 end
             end
 

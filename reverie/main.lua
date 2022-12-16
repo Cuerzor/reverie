@@ -210,14 +210,12 @@ do -- Announcers.
 
 
                     local mega = false;
-                    if (flags & UseFlag.USE_MIMIC <= 0) then
-                        local itemPool = Game():GetItemPool();
-                        local pillColor = player:GetPill(0);
-                        local pillEffect = itemPool:GetPillEffect(pillColor, player);
-                        if (pillEffect == effect) then
-                            if (pillColor & PillColor.PILL_GIANT_FLAG > 0) then
-                                mega = true;
-                            end
+                    local itemPool = Game():GetItemPool();
+                    local pillColor = player:GetPill(0);
+                    local pillEffect = itemPool:GetPillEffect(pillColor, player);
+                    if (pillEffect == effect) then
+                        if (pillColor & PillColor.PILL_GIANT_FLAG > 0) then
+                            mega = true;
                         end
                     end
 

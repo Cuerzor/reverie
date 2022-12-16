@@ -27,13 +27,13 @@ local function GetPlayerData(player, init)
     end
     return playerData.HoldingActive;
 end
+
 local function EndHolding(player)
     local playerData = GetPlayerData(player, true);
     playerData.Item = nil;
     playerData.Slot = nil;
     playerData.Mimic = false;
 end
-
 -- Get current holding active item.
 function HoldingActive:GetHoldingItem(player)
     local playerData = GetPlayerData(player, false);

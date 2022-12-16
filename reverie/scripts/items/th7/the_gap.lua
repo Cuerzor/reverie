@@ -5,12 +5,36 @@ local Gap = ModItem("The Gap", "Gap");
 
 
 ----------- Events ----------------
+function Gap:TryUseItem(item, player, slot)
+    local map = GapFloor.IsStandingOnMap(player);
+    if (map) then
+        return true;
+    end
+end
+Gap:AddCallback(CuerLib.Callbacks.CLC_TRY_USE_ITEM, Gap.TryUseItem, Gap.Item);
+
 function Gap:onUseGap(item, rng, player, flags, slot, data)
     if (GapFloor.IsStandingOnMap(player) == nil) then
         local room = THI.Game:GetRoom();
         GapFloor.GenerateMaps(room:GetGridIndex(player.Position))
         return {ShowAnim = true};
     else 
+        local map = GapFloor.IsStandingOnMap(player);
+        if (map) then
+            local game = Game();
+            local level = game:GetLevel();
+            local room = game:GetRoom();
+            local playerGridIndex = room:GetGridIndex(player.Position);
+            local pos = room:GetGridPosition(playerGridIndex);
+            player.Position = pos;
+            player:AnimateTrapdoor ( )
+            local index = map.State;
+            if (not level:GetRoomByIdx(index).Data) then
+                index = -2;
+            end
+            game:StartRoomTransition (index, Direction.NO_DIRECTION, RoomTransitionAnim.FADE, player);
+            GapFloor.TeleportCooldown = 30;
+        end
         return {Discharge = false};
     end
 end
@@ -23,7 +47,7 @@ function Gap:onPlayerUpdate(player)
     if (GapFloor.TeleportCooldown <= 0) then
         local map = GapFloor.IsStandingOnMap(player);
         if (map) then
-            local room = THI.Game:GetRoom();
+            local room = Game():GetRoom();
             local playerGridIndex = room:GetGridIndex(player.Position);
             local pos = room:GetGridPosition(playerGridIndex);
             if (player:HasCollectible(Gap.Item)) then
@@ -42,17 +66,6 @@ function Gap:onPlayerUpdate(player)
                 end
                 effectData.Effect = gapEffect;
                 standingGap = true;
-            end
-            if (Actives:IsActiveItemTriggered(player, Gap.Item)) then
-                player.Position = pos;
-                player:AnimateTrapdoor ( )
-                local index = map.State;
-                local level = Game():GetLevel();
-                if (not level:GetRoomByIdx(index).Data) then
-                    index = -2;
-                end
-                THI.Game:StartRoomTransition (index, Direction.NO_DIRECTION, RoomTransitionAnim.FADE, player);
-                GapFloor.TeleportCooldown = 30;
             end
         end
     end
