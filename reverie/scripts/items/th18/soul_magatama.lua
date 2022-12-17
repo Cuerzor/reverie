@@ -85,9 +85,11 @@ function Magatama:SwapHP(ent1, ent2, extraDrain)
 
     local hp1 = GetHP(ent1);
     local hp2 = GetHP(ent2);
-    local drain = hp1 * extraDrain;
-    hp1 = hp1 - drain;
-    hp2 = hp2 + drain;
+    if (hp1 and hp2) then
+        local drain = hp1 * extraDrain;
+        hp1 = hp1 - drain;
+        hp2 = hp2 + drain;
+    end
     local changed1 = ApplyHP(ent1, hp2);
     local changed2 = ApplyHP(ent2, hp1);
     return changed1, changed2, ent1, ent2;
