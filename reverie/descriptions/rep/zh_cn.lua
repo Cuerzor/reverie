@@ -1000,9 +1000,9 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.Dejavu.Item] = {
         Name = "似曾相识",
-        Description = "可以在同种房间内看到之前死亡的角色尸体，伴随着3个身上的道具生成"..
+        Description = "进入房间时有几率生成一具尸体，伴随着3个随机道具生成"..
         "#!!! 3个道具之中只能拿走一个，且一局最多生成3组道具"..
-        "#!!! MOD开启时才会记录死亡"
+        "#!!! 玩家死亡并结束游戏时会被记录，也会在这些尸体中出现"
     },
     [Collectibles.EyeOfChimera.Item] = {
         Name = "嵌体怪之眼",

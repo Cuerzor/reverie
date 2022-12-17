@@ -60,7 +60,7 @@ end
 Lib:InitMod(THI, "REVERIE");
 
 THI.Version = {
-    12,4,3
+    12,4,4
 }
 function THI:GetVersionString()
     local versionString = "";

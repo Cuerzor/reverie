@@ -2549,3 +2549,9 @@ Greed Shop: Added D Flip
 -修复了绀珠药丸不会正常消耗的BUG。
 -Fixed an issue that weapons like bone club can open locked chest.
 -修复了可以直接使用骨棒等武器打开上锁箱子的BUG。
+
+12.4.4-2022.12.17
+-Deja vu now will spawns some random corpses.
+-似曾相识现在会自动生成一些随机生成的尸体。
+-Fixed an issue that soul magatama does not works on players without heart containers.
+-修复了灵魂勾玉对无血上限的角色不起效果的BUG。

@@ -1134,9 +1134,10 @@ Type: Passive Item
 Quality: 2
 Tags: Offensive, No Cantrip, No Greed, Summonable, No Challenge, No Daily
 Item Pools: Secret Room
-* While this mod enabled, record all dead runs.
-* Holding this item will make you can see your past corpses, each spawns 3 random items from the corpse, and can only take one.
-* Can only spawn up to 9 items in a run by this way.
+* Can see some random corpses with 3 random items.
+    * Can only take 1 item.
+    * Can only spawn up to 3 groups of item every run.
+* Player's dead runs before will be recorded, and added into these corpses.
 
 Sunny Fairy
 Description: I'm Sunny!

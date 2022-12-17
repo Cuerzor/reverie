@@ -917,9 +917,9 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.Dejavu.Item] = {
         Name = "Deja vu",
-        Description = "You can see your past game over corpses in the same room with 3 held items"..
+        Description = "Chance to spawn a corpse with 3 random items after entering room"..
         "#!!! You can only take 1 of the item group, and can only spawn up to 3 groups per run"..
-        "#!!! Only record deaths while this mod enabled"
+        "#!!! Player's recorded dead runs will also appear"
     },
     [Collectibles.EyeOfChimera.Item] = {
         Name = "Eye of Chimera",
