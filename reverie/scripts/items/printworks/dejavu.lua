@@ -534,8 +534,8 @@ do -- Encoding && Decoding.
         AddBytes(data.StageType, 1);
         AddBytes(data.RoomType, 2);
         AddBytes(data.PlayerType, 2);
-        AddBytes(string.len(data.PlayerName), 1);
-        charSet = charSet..data.PlayerName;
+        AddBytes(string.len(data.PlayerName or ""), 1);
+        charSet = charSet..(data.PlayerName or "");
 
         --房间变种（32位）
         AddBytes(data.RoomVariant, 4);

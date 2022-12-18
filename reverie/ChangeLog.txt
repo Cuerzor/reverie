@@ -2555,3 +2555,7 @@ Greed Shop: Added D Flip
 -似曾相识现在会自动生成一些随机生成的尸体。
 -Fixed an issue that soul magatama does not works on players without heart containers.
 -修复了灵魂勾玉对无血上限的角色不起效果的BUG。
+
+12.4.5-2022.12.18
+-Fixed an issue that Deja vu will not convert old data into newer data.
+-修复了似曾相识不会将老数据转为新数据的问题。
