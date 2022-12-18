@@ -133,7 +133,7 @@ end
 
 function RuneSword:InsertRune(player, rune)
     local data = self:GetPlayerData(player, true);
-    local key = rune;
+    local key = tostring(rune);
     data.InsertedRunes[key] = (data.InsertedRunes[key] or 0) + 1;
 
     self:EvaluateInsertedRunes(player);
@@ -145,7 +145,7 @@ function RuneSword:GetInsertedRuneNum(player, rune, raw)
     end
     local data = self:GetPlayerData(player, false);
     if (data) then
-        local key = rune;
+        local key = tostring(rune);
         return data.InsertedRunes[key] or 0;
     end
     return 0;
@@ -157,7 +157,7 @@ function RuneSword:HasInsertedRune(player, rune, raw)
     end
     local data = self:GetPlayerData(player, false);
     if (data) then
-        local key = rune;
+        local key = tostring(rune);
         return data.InsertedRunes[key] ~= nil;
     end
     return false;
@@ -195,7 +195,7 @@ end
 
 function RuneSword:RemoveRune(player, rune)
     local data = self:GetPlayerData(player, true);
-    local key = rune;
+    local key = tostring(rune);
     local runes = data.InsertedRunes[key] or 0;
     if (runes > 1) then
         data.InsertedRunes[key] = runes - 1;

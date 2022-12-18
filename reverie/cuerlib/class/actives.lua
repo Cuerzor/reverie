@@ -194,7 +194,7 @@ end
 
 do -- Rendering.
     Actives.FontSprite = Sprite();
-    Actives.FontSprite:Load("gfx/reverie/ui/active_count.anm2", true);
+    Actives.FontSprite:Load("gfx/ui/active_count.anm2", true);
     local HalfVector = Vector(0.5, 0.5);
     local countOffset = Vector(-16, -16);
     local countNums = {};
@@ -381,14 +381,15 @@ do -- Rendering.
         local function func(player, playerIndex, slot, pos, scale)
             if (not condition or condition(player, playerIndex, slot)) then
                 local pivot = Vector(0.5, 0.5);
-                local pos = GetPlayerActiveCountPos(player, slot, playerIndex);
+                pos = pos + countOffset;
                 local count = 0;
-                local color = Color.Default;
+                local color;
                 if (type(infoGetter) == "function") then
                     count, color = infoGetter(player);
                 else
                     count = infoGetter;
                 end
+                color = color or Color.Default;
                 Actives:DrawActiveCount(pos, count, pivot, color);
             end
         end

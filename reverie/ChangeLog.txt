@@ -2559,3 +2559,9 @@ Greed Shop: Added D Flip
 12.4.5-2022.12.18
 -Fixed an issue that Deja vu will not convert old data into newer data.
 -修复了似曾相识不会将老数据转为新数据的问题。
+
+12.4.7-2022.12.18
+-CuerLib 1.3.1 Support.
+-适配CuerLib 1.3.1。
+-Fixed an issue that Rune Sword's data will be missing after continue a run.
+-修复符文剑小退之后数据丢失的问题。
