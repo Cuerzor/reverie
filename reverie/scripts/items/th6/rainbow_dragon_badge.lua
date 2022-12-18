@@ -266,17 +266,6 @@ do -- Pause.
         end
     end
     DragonBadge:AddCallback(ModCallbacks.MC_POST_RENDER, DragonBadge.PostRender)
-    -- function DragonBadge:GetShaderParams(name)
-    --     local data = DragonBadge:GetBadgeGlobalData(false); 
-    --     if (name == "Reverie Belial RDB") then
-    --         local alpha = 0;
-    --         if (data and data.BlackScreen) then
-    --             alpha = data.BlackScreen;
-    --         end
-    --         return { Alpha = alpha};
-    --     end
-    -- end
-    -- DragonBadge:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, DragonBadge.GetShaderParams)
 end
 
 function DragonBadge:postPlayerCollision(player, collider)

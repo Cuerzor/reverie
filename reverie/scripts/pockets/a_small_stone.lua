@@ -27,7 +27,7 @@ end
 local function PostUseCard(mod, card, player, flags)
     local times = ASmallStone:GetUsedTimes();
     local vel = Vector(0, 10);
-    local shooting = Inputs:GetShootingVector(player);
+    local shooting = Inputs.GetShootingVector(player);
     if (shooting:Length() > 0.1) then
         vel = shooting:Resized(10);
     end

@@ -1,4 +1,5 @@
-local Screen = LIB:NewClass();
+local Lib = LIB
+local Screen = Lib:NewClass();
 
 function Screen.GetScreenSize() 
     return Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight());
@@ -43,5 +44,19 @@ function Screen.GetEntityRenderPosition(entity, positionOffset, noModifier)
     end
     return Isaac.WorldToScreen(entity.Position + entity.PositionOffset + positionOffset) + game.ScreenShakeOffset;
 end
+
+local function GetShaderParams(mod, name)
+    if (name == "CUERLIB HUD Hack") then
+        Isaac.RunCallback(Lib.Callbacks.CLC_RENDER_OVERLAY);
+    end
+end
+Screen:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, GetShaderParams);
+
+-- Avoid Shader Crash.
+Screen:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function()
+    if #Isaac.FindByType(EntityType.ENTITY_PLAYER) == 0 then
+        Isaac.ExecuteCommand("reloadshaders")
+    end
+end)
 
 return Screen;

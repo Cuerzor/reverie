@@ -181,19 +181,16 @@ local function PostPlayerUpdate(mod, player)
 end
 DSiphon:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, PostPlayerUpdate);
 
-local function GetShaderParams(mod, name)
-    if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
-        
-        Actives:RenderActivesCount(DSiphon.Item, function(player) 
-            local data = GetPlayerData(player, false);
-            local color = Color.Default;
-            if (DSiphon:WillRelease(player)) then
-                color = DSiphon.FullColor;
-            end
-            return (data and data.SiphonPoints) or 0, color;
-        end);
-    end
+local function RenderOverlay(mod, name)
+    Actives:RenderActivesCount(DSiphon.Item, function(player) 
+        local data = GetPlayerData(player, false);
+        local color = Color.Default;
+        if (DSiphon:WillRelease(player)) then
+            color = DSiphon.FullColor;
+        end
+        return (data and data.SiphonPoints) or 0, color;
+    end);
 end
-DSiphon:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, GetShaderParams);
+DSiphon:AddCallback(CuerLib.Callbacks.CLC_RENDER_OVERLAY, RenderOverlay);
 
 return DSiphon;

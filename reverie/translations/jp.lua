@@ -13,7 +13,7 @@ Translation.Fonts = {
     ["CRATE"] = THI.Fonts.Lanapixel,
 }
 
-Translation.Default = {
+Translation.Texts = {
 --もしかしたら英語の注釈よりも日本語での注釈を翻訳サイトにかけた方が意味わかりやすいかもしれないです。
 --english Annotation is bad?sorry... please japanise Annotation running translation site.
     ["#GRIMOIRE_SUN_NAME"] = "日",
@@ -200,9 +200,6 @@ Translation.Default = {
 
     ["#COLLECTED_MUSIC"] = "聞こえたメロディ: {{CURRENT}}/{{MAX}}",
 
-}
-
-Translation.Dialogs = {
 --アイザックのセリフはアイテム入手時よりも日記やメニューの紙に合わせ、なるべく漢字を控えました。#DOREMY_OUTRO_3が特に自信がありません。
 --ドレミーのセリフは紺珠伝3面への参照をなるべく汲んだつもりです。
 --霊夢に関しては適当ながらも面倒見はいいように書きました。

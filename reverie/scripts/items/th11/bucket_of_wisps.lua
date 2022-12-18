@@ -204,18 +204,16 @@ end
 Bucket:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, PostTearUpdate);
 
 
-local function GetShaderParams(mod, name)
-    if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
-        Actives:RenderActivesCount(Bucket.Item, function(player) 
-            local num = Bucket:GetSoulNum(player);
-            local color = Color.Default;
-            if (num >= 8) then
-                color = Consts.Colors.Green;
-            end
-            return num, color;
-        end);
-    end
+local function RenderOverlay(mod, name)
+    Actives:RenderActivesCount(Bucket.Item, function(player) 
+        local num = Bucket:GetSoulNum(player);
+        local color = Color.Default;
+        if (num >= 8) then
+            color = Consts.Colors.Green;
+        end
+        return num, color;
+    end);
 end
-Bucket:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, GetShaderParams);
+Bucket:AddCallback(CuerLib.Callbacks.CLC_RENDER_OVERLAY, RenderOverlay);
 
 return Bucket;

@@ -13,7 +13,7 @@ Translation.Fonts = {
     ["CRATE"] = THI.Fonts.Lanapixel,
 }
 
-Translation.Default = {
+Translation.Texts = {
 
     ["#GRIMOIRE_SUN_NAME"] = "Sun",
     ["#GRIMOIRE_MOON_NAME"] = "Moon",
@@ -191,10 +191,7 @@ Translation.Default = {
 
     ["#COLLECTED_MUSIC"] = "Music: {{CURRENT}}/{{MAX}}",
 
-}
 
-Translation.Dialogs = {
-    
     ["#DOREMY_INTRO_1"] = "Poor Isaac,{WAIT:10} let me see what you are dreaming...",
     ["#DOREMY_INTRO_2"] = "Where am I?{WAIT:20} Who are you?",
     ["#DOREMY_INTRO_3"] = "Welcome to the dream world.",

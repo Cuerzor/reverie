@@ -188,7 +188,7 @@
             }
         ]]></fragment>
     </shader>
-    <shader name="HUD Hack">
+    <shader name="CUERLIB HUD Hack">
         <vertex><![CDATA[
             attribute vec3 Position;
             attribute vec4 Color;

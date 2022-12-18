@@ -185,7 +185,7 @@ function SpiritCannon:PostFamiliarUpdate(familiar)
     if (familiar.SubType == self.Item) then
         local data = familiar:GetData();
         local player = familiar.Player;
-        if (player and Inputs:GetShootingVector(player, familiar.Position):Length() > 0) then
+        if (player and Inputs.GetShootingVector(player, familiar.Position):Length() > 0) then
             if (not EntityExists(data._REVERIE_SPIRIT_CANNON_WISP_LASER)) then
                 data._REVERIE_SPIRIT_CANNON_WISP_LASER = self:ShootWispLaser(familiar);
             end

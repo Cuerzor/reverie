@@ -159,7 +159,7 @@ local function PostRender(mod)
 
             local font = THI.GetFont("MUSICS");
 
-            local musicString = THI.GetText(THI.StringCategories.DEFAULT, "#COLLECTED_MUSIC");
+            local musicString = THI.GetText("#COLLECTED_MUSIC");
             local max = ReverieMusic.MaxNoteCount;
             musicString = string.gsub(musicString, "{{MAX}}", max);
             musicString = string.gsub(musicString, "{{CURRENT}}", math.min(max, data.MusicNum));

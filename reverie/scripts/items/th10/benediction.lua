@@ -199,35 +199,33 @@ do
     Benediction:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, PostNewLevel);
 
     local WhiteColor = Color(1,1,1,1,1,1,1);
-    local function GetShaderParams(mod, shaderName)
-        if (Game():GetHUD():IsVisible ( ) and shaderName == "HUD Hack") then
-            local function func(player, playerIndex, slot, pos, scale)
-                local charges = Actives:GetTotalCharges(player, slot);
-                charges = math.min(charges, MaxCharges);
-                if (charges > 0) then
-                    local itemList = Benediction.ItemList;
+    local function RenderOverlay(mod)
+        local function func(player, playerIndex, slot, pos, scale)
+            local charges = Actives:GetTotalCharges(player, slot);
+            charges = math.min(charges, MaxCharges);
+            if (charges > 0) then
+                local itemList = Benediction.ItemList;
 
-                    if (Players.HasJudasBook(player)) then
-                        itemList = Benediction.DevilItemList;
-                    end
+                if (Players.HasJudasBook(player)) then
+                    itemList = Benediction.DevilItemList;
+                end
 
-                    local sprite = itemList[charges].Sprite;
-                    sprite.Scale = scale;
-                    for i = 3, -1, -1 do
-                        local offset = Consts.DirectionVectors[i] * 0.5 * scale;
-                        if (i > -1) then
-                            sprite.Color = WhiteColor;
-                        else
-                            sprite.Color = Color.Default;
-                        end
-                        sprite:Render(pos + Vector(-9, -12) + offset, Vector.Zero, Vector.Zero);
+                local sprite = itemList[charges].Sprite;
+                sprite.Scale = scale;
+                for i = 3, -1, -1 do
+                    local offset = Consts.DirectionVectors[i] * 0.5 * scale;
+                    if (i > -1) then
+                        sprite.Color = WhiteColor;
+                    else
+                        sprite.Color = Color.Default;
                     end
+                    sprite:Render(pos + Vector(-9, -12) + offset, Vector.Zero, Vector.Zero);
                 end
             end
-            Actives:RenderOnActive(Benediction.Item, func)
         end
+        Actives:RenderOnActive(Benediction.Item, func)
     end
-    Benediction:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, GetShaderParams);
+    Benediction:AddCallback(CuerLib.Callbacks.CLC_RENDER_OVERLAY, RenderOverlay);
 end
 
 return Benediction;

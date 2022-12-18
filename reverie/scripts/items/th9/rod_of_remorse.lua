@@ -239,15 +239,13 @@ function RodOfRemorse:PostTakeDamage(tookDamage, amount, flags, source, countdow
 end
 RodOfRemorse:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, RodOfRemorse.PostTakeDamage);
 
-function RodOfRemorse:GetShaderParams(name)
-    if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
-        Actives:RenderActivesCount(RodOfRemorse.Item, function(player) 
-            local data = RodOfRemorse.GetPlayerData(player, false);
-            return (data and data.SacrificeCount) or 0;
-        end);
-    end
+function RodOfRemorse:RenderOverlay(name)
+    Actives:RenderActivesCount(RodOfRemorse.Item, function(player) 
+        local data = RodOfRemorse.GetPlayerData(player, false);
+        return (data and data.SacrificeCount) or 0;
+    end);
 end
-RodOfRemorse:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, RodOfRemorse.GetShaderParams);
+RodOfRemorse:AddCallback(CuerLib.Callbacks.CLC_RENDER_OVERLAY, RodOfRemorse.RenderOverlay);
 
 function RodOfRemorse:onNewLevel()
     local game = THI.Game;

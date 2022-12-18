@@ -394,7 +394,7 @@ local function RenderSelecting(player)
         local choice = playerData.Choice;
 
         local pagePos = renderPos + pageOffset;
-        local pageString = THI.GetText(THI.StringCategories.DEFAULT, "#PAGES");
+        local pageString = THI.GetText("#PAGES");
         local font = THI.GetFont("D2147483647_PAGE");
         font:DrawStringUTF8(pageString.." "..page.."/"..maxPage, pagePos.X, pagePos.Y, FontColor, 64, true)
 

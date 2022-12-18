@@ -174,9 +174,9 @@ local function GetBookName(active, size, language)
         classKey = strings.Classes[active + 1];
     end
 
-    local str = THI.GetText(THI.StringCategories.DEFAULT, strings.Template.Name, language);
-    local sizeName = THI.GetText(THI.StringCategories.DEFAULT, sizeKey, language);
-    local className = THI.GetText(THI.StringCategories.DEFAULT, classKey, language);
+    local str = THI.GetText(strings.Template.Name, language);
+    local sizeName = THI.GetText(sizeKey, language);
+    local className = THI.GetText(classKey, language);
     str = string.gsub(str, "{SIZE}", sizeName);
     str = string.gsub(str, "{CLASS}", className)
     return str;
@@ -191,8 +191,8 @@ local function GetBookDescription(effect)
         adjectiveKey = strings.Adjectives[passive + 1];
     end
 
-    local str = THI.GetText(THI.StringCategories.DEFAULT, strings.Template.Desc);
-    local adjectiveStr = THI.GetText(THI.StringCategories.DEFAULT, adjectiveKey);
+    local str = THI.GetText(strings.Template.Desc);
+    local adjectiveStr = THI.GetText(adjectiveKey);
     str = string.gsub(str, "{ADJECTIVE}", adjectiveStr);
     return str;
 end

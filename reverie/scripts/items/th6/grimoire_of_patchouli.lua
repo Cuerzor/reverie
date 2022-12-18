@@ -162,9 +162,8 @@ function Grimoire:useGrimoire(t, RNG, player, flags, slot)
     local strings = ElementStrings;
     key = strings.Names[index];
     descKey = strings.Descs[index];
-    local category = THI.StringCategories.DEFAULT;
-    local titleStr = THI.GetText(category, key);
-    local descStr = THI.GetText(category, descKey);
+    local titleStr = THI.GetText(key);
+    local descStr = THI.GetText(descKey);
     THI.Game:GetHUD():ShowItemText(titleStr, descStr, false)
 
 
@@ -262,11 +261,9 @@ function Grimoire:onEvaluateCache(player, flag)
 end
 Grimoire:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Grimoire.onEvaluateCache);
 
-local function GetShaderParams(mod, name)
-    if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
-        Actives:RenderActivesCount(Grimoire.Item, function(player) return Grimoire:GetElementCount(player) end)
-    end
+local function RenderOverlay(mod, name)
+    Actives:RenderActivesCount(Grimoire.Item, function(player) return Grimoire:GetElementCount(player) end)
 end
-Grimoire:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, GetShaderParams);
+Grimoire:AddCallback(CuerLib.Callbacks.CLC_RENDER_OVERLAY, RenderOverlay);
 
 return Grimoire;

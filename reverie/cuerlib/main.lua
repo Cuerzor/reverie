@@ -1,6 +1,6 @@
 CuerLib = RegisterMod("CuerLib", 1);
 local Lib = CuerLib;
-Lib.Version = {1,2,2};
+Lib.Version = {1,3,0};
 Lib.Loaded = {};
 
 function Lib:GetVersionString()

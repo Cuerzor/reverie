@@ -375,19 +375,22 @@ do -- Rendering.
     end
     -- Render active count on an active item.
     -- infoGetter is an integer or function(player) that returns an integer.
-    -- Please call this at MC_GET_SHADER_PARAMS, and create a new hack shader for render this above the HUD.
-    function Actives:RenderActivesCount(item, infoGetter)
+    -- condition is optional, and is function(player, playerIndex, slot) that returns boolean.
+    -- Please call this at MC_GET_SHADER_PARAMS or CLC_RENDER_OVERLAY, and create a new hack shader for render this above the HUD.
+    function Actives:RenderActivesCount(item, infoGetter, condition)
         local function func(player, playerIndex, slot, pos, scale)
-            local pivot = Vector(0.5, 0.5);
-            local pos = GetPlayerActiveCountPos(player, slot, playerIndex);
-            local count = 0;
-            local color = Color.Default;
-            if (type(infoGetter) == "function") then
-                count, color = infoGetter(player);
-            else
-                count = infoGetter;
+            if (not condition or condition(player, playerIndex, slot)) then
+                local pivot = Vector(0.5, 0.5);
+                local pos = GetPlayerActiveCountPos(player, slot, playerIndex);
+                local count = 0;
+                local color = Color.Default;
+                if (type(infoGetter) == "function") then
+                    count, color = infoGetter(player);
+                else
+                    count = infoGetter;
+                end
+                Actives:DrawActiveCount(pos, count, pivot, color);
             end
-            Actives:DrawActiveCount(pos, count, pivot, color);
         end
         Actives:RenderOnActive(item, func);
     end    

@@ -66,5 +66,7 @@ CuerLib.Callbacks = {
     ---@param pickup PickupVariant
     ---@param addingNum integer 
     ---@return integer
-    CLC_ADD_PICKUP_NUM = "CUERLIB_ADD_PICKUP_NUM"
+    CLC_ADD_PICKUP_NUM = "CUERLIB_ADD_PICKUP_NUM",
+
+    CLC_RENDER_OVERLAY = "CUERLIB_RENDER_OVERLAY"
 }

@@ -42,11 +42,10 @@ function Fox.ShowFortune(pay, key)
         if (pay) then
             subfix = "_PAY";
         end
-        local category = THI.StringCategories.DEFAULT;
         for i = 1, 5 do
             local key = strKey..subfix.."_"..i
-            if (THI.ContainsText(category, key)) then
-                textList[i] = THI.GetText(category, key);
+            if (THI.ContainsText(key)) then
+                textList[i] = THI.GetText(key);
             end
         end
     end
@@ -514,7 +513,7 @@ function Fox:PostUpdate()
             end
 
             if (continuedPaying) then
-                local escape = THI.GetText(THI.StringCategories.DEFAULT, EscapeTextKey);
+                local escape = THI.GetText(EscapeTextKey);
                 game:GetHUD():ShowFortuneText(escape);
             end
         end

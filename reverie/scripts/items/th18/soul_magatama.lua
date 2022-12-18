@@ -254,7 +254,7 @@ do -- Effects.
                 local value = LifeSwap:GetTextValue(effect);
                 local str;
                 if (value == nil) then
-                    str = THI.GetText(THI.StringCategories.DEFAULT, "#MAGATAMA_ERROR");
+                    str = THI.GetText("#MAGATAMA_ERROR");
                 else
                     if (value > 0) then
                         color = KColor(0,1,0,alpha);

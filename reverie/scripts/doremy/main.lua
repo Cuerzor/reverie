@@ -615,8 +615,7 @@ function Dream:postUpdate()
         if (spellcarding) then
             scName.Time = 0;
             local key = Doremy:GetUsingSpell(doremy).NameKey;
-            local category = THI.StringCategories.DEFAULT;
-            scName.Name = THI.GetText(category, key) or "404 Spell Card not found";
+            scName.Name = THI.GetText(key) or "404 Spell Card not found";
         end
     end
 

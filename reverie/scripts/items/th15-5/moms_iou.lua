@@ -203,7 +203,7 @@ function MomsIOU:PostPlayerRender(player, offset)
             else
                 key = repayStrings.Finished;
             end
-            local str = THI.GetText(THI.StringCategories.DEFAULT, key);
+            local str = THI.GetText(key);
             str = string.gsub(str, "{REPAYMENT}", tostring(tempData.Repayment));
             str = string.gsub(str, "{REMAINED}", tostring(data.Debt));
             local renderPos = Screen.GetEntityOffsetedRenderPosition(player, offset + Vector(0, -48));

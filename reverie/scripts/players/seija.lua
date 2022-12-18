@@ -1693,7 +1693,7 @@ do -- Events
                     local interval = math.ceil(6 * delayMulti);
                     if (familiar:IsFrame(interval, 0)) then
                         if (player:GetFireDirection() >= 0) then
-                            local oriVel = Inputs:GetShootingVector(player) * 20;
+                            local oriVel = Inputs.GetShootingVector(player) * 20;
                             for i = 1, 3 do
                                 local vel = oriVel:Rotated((i - 2) * 10)
                                 local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.MULTIDIMENSIONAL, 0, familiar.Position, vel, familiar):ToTear();

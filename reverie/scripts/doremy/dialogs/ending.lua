@@ -494,9 +494,8 @@ function Ending:Render()
     self.ShrineCameraSprite:Render(cameraPos, Vector(-1000, -1000), Vector(-1000, -1000));
 
     local strings = EndingStrings;
-    local category = THI.StringCategories.DEFAULT;
-    local titleString = THI.GetText(category, strings.Title) ;
-    local subtitleString = THI.GetText(category, strings.Subtitle) ;
+    local titleString = THI.GetText(strings.Title) ;
+    local subtitleString = THI.GetText(strings.Subtitle) ;
     local font = THI.GetFont("DOREMY_DIALOG");
     font:DrawStringScaledUTF8(titleString, 0, center.Y, 2, 2, KColor(1,1,1,self.Data.ThanksAlpha), math.floor(screenSize.X), true);
     font:DrawStringScaledUTF8(subtitleString, 0, center.Y + 40, 1, 1, KColor(1,1,1,self.Data.BlessingAlpha), math.floor(screenSize.X), true);

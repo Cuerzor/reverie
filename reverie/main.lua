@@ -1,6 +1,7 @@
 local hasCuerLib = not not CuerLib;
 local Lib = CuerLib or include("cuerlib/main");
 THI = RegisterMod("Reverie", 1);
+Reverie = THI;
 
 -- Load Fonts.
 local teammeat10 = Font();
@@ -73,23 +74,13 @@ function THI:GetVersionString()
     return versionString;
 end
 
-
--- Avoid Shader Crash.
-THI:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function()
-    if #Isaac.FindByType(EntityType.ENTITY_PLAYER) == 0 then
-        Isaac.ExecuteCommand("reloadshaders")
-    end
-end)
-
 if (StageAPI) then
     StageAPI.UnregisterCallbacks(THI.Name);
 end
 
-
 local function IsMainmenu()
     return Game():GetLevel():GetStage() <= 0;
 end
-
 
 THI.Game = Game();
 THI.SFXManager = SFXManager();
@@ -784,55 +775,57 @@ ModCard = nil;
 ModTrinket = nil;
 ModPart = nil;
 
--- Translations
 do
-    THI.ShowTranslationText = true;
+    local Translations = CuerLib.Translations;
     THI.Translations = {};
-    THI.IncludedLanguages = {
-        "en", "zh", "jp"
-    }
+    local language = Options.Language;
+    
     THI.Translations.en = Require("translations/en");
-    for _, language in pairs(THI.IncludedLanguages) do
+    for _, language in pairs(Translations.IncludedLanguages) do
         THI.Translations[language] = Require("translations/"..language);
     end
-    local language = Options.Language;
 
-    THI.StringCategories = {
-        DEFAULT = "Default",
-        DIALOGS = "Dialogs",
-
-    }
-
-    local function GetLanguageText(category, key, lang)
-        local Translations = THI.Translations;
-        local translation = Translations[lang];
-        if (translation) then
-            local categoryStrings = translation[category];
-            if (categoryStrings) then
-                local string = categoryStrings[key];
-                if (string) then
-                    return string;
+    for lang, translation in pairs(THI.Translations) do
+        if (translation and type(translation) == "table") then
+            if (translation.Collectibles) then
+                for id, info in pairs(translation.Collectibles) do
+                    Translations:SetCollectible(lang, id, info)
+                end
+            end
+            if (translation.Trinkets) then
+                for id, info in pairs(translation.Trinkets) do
+                    Translations:SetTrinket(lang, id, info)
+                end
+            end
+            if (translation.Players) then
+                for id, info in pairs(translation.Players) do
+                    Translations:SetPlayer(lang, id, info)
+                end
+            end
+            if (translation.Cards) then
+                for id, info in pairs(translation.Cards) do
+                    Translations:SetCard(lang, id, info)
+                end
+            end
+            if (translation.Pills) then
+                for id, info in pairs(translation.Pills) do
+                    Translations:SetPillEffect(lang, id, info)
+                end
+            end
+            if (translation.Texts) then
+                for key, text in pairs(translation.Texts) do
+                    Translations:SetText(THI, lang, key, text)
                 end
             end
         end
-        return nil;
     end
-    function THI.ContainsText(category, key, lang)
-        lang = lang or language;
-        local languageString = GetLanguageText(category, key, language);
-        if (languageString) then
-            return true;
-        end
-        return false;
+
+    function THI.ContainsText(key, lang)
+        return not not THI.GetText(key, lang);
     end
-    function THI.GetText(category, key, lang)
+    function THI.GetText(key, lang)
         local lang = lang or language;
-        local languageString = GetLanguageText(category, key, lang);
-        if (languageString) then
-            return languageString;
-        end
-        -- English Fallback.
-        return GetLanguageText(category, key, "en");
+        return Translations:GetText(THI, lang, key);
     end
     function THI.GetFont(key, lang)
         local lang = lang or language;
@@ -841,7 +834,7 @@ do
         if (translation) then
             return translation.Fonts[key];
         end
-
+    
         local en = Translations.en;
         if (en) then
             return en.Fonts[key];
@@ -849,99 +842,6 @@ do
         return THI.Fonts.Lanapixel;
     end
 
-    local BirthrightNames = {
-        en = "Birthright",
-        jp = "バースライト",
-        kr = "생득권",
-        zh = "长子名分",
-        ru = "Право Первородства",
-        de = "Geburtsrecht",
-        es = "Primogenitura",
-    }
-
-    local function PostPickupItem(mod, player, item, touched)
-        if (not THI.ShowTranslationText) then
-            return;
-        end
-        local language = Options.Language;
-        local Translations = THI.Translations;
-        local translation = Translations[language];
-        if (translation) then
-            if (item == CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
-                local playerType = player:GetPlayerType();
-                local info = translation.Players and translation.Players[playerType];
-                if (info) then
-                    THI.Game:GetHUD():ShowItemText(BirthrightNames[language] or BirthrightNames.en, info.Birthright or "");
-                end
-            else
-                local info = translation.Collectibles and translation.Collectibles[item];
-                if (info) then
-                    THI.Game:GetHUD():ShowItemText(info.Name or "", info.Description or "");
-                end
-            end
-        end
-    end
-    THI:AddCallback(Lib.Callbacks.CLC_POST_PICK_UP_COLLECTIBLE, PostPickupItem);
-
-    
-    local function PostPickupTrinket(mod, player, item, golden, touched)
-        if (not THI.ShowTranslationText) then
-            return;
-        end
-        if (item > 32768) then
-            item = item - 32768
-        end
-        local language = Options.Language;
-        local Translations = THI.Translations;
-        local translation = Translations[language];
-        if (translation) then
-            local info = translation.Trinkets and translation.Trinkets[item];
-            if (info) then
-                THI.Game:GetHUD():ShowItemText(info.Name or "", info.Description or "");
-            end
-        end
-    end
-    THI:AddCallback(Lib.Callbacks.CLC_POST_PICK_UP_TRINKET, PostPickupTrinket);
-
-    
-    local function PostPickUpCard(mod, player, card)
-        if (not THI.ShowTranslationText) then
-            return;
-        end
-
-        local language = Options.Language;
-        local Translations = THI.Translations;
-        local translation = Translations[language];
-        if (translation) then
-            local info = translation.Cards and translation.Cards[card];
-            if (info) then
-                THI.Game:GetHUD():ShowItemText(info.Name or "", info.Description or "");
-            end
-        end
-    end
-    THI:AddCallback(Lib.Callbacks.CLC_POST_PICK_UP_CARD, PostPickUpCard);
-
-    
-    local function PostUsePill(mod, pilleffect, player, flags)
-        if (not THI.ShowTranslationText) then
-            return;
-        end
-
-        if (flags & UseFlag.USE_NOHUD < 0) then
-            return;
-        end
-
-        local language = Options.Language;
-        local Translations = THI.Translations;
-        local translation = Translations[language];
-        if (translation) then
-            local info = translation.Pills and translation.Pills[pilleffect];
-            if (info) then
-                THI.Game:GetHUD():ShowItemText(info.Name or "", info.Description or "");
-            end
-        end
-    end
-    THI:AddCallback(ModCallbacks.MC_USE_PILL, PostUsePill);
 end
 
 if (EID) then

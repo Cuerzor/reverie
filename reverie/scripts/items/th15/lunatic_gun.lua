@@ -58,7 +58,7 @@ local function PostPlayerEffect(mod, player)
     
     local num = player:GetCollectibleNum(Gun.Item);
     if (num > 0) then
-        local shooting = Inputs:GetShootingVector(player);
+        local shooting = Inputs.GetShootingVector(player);
         local data = GetPlayerData(player, true);
         if (player:CanShoot() and shooting:Length() > 0.1) then
             data.ShootTime = data.ShootTime + 1;

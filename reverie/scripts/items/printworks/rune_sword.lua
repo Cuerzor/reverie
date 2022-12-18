@@ -112,9 +112,8 @@ function RuneSword:ShowRuneText(rune)
     local desc = "";
     local stringKey = texts[rune] or customTexts[rune];
     if (stringKey) then
-        local category = THI.StringCategories.DEFAULT;
-        title = THI.GetText(category, stringKey.."_NAME");
-        desc = THI.GetText(category, stringKey.."_DESCRIPTION");
+        title = THI.GetText(stringKey.."_NAME");
+        desc = THI.GetText(stringKey.."_DESCRIPTION");
     end
     THI.Game:GetHUD():ShowItemText(title, desc);
 
@@ -344,20 +343,18 @@ function RuneSword:PostFireTear(tear)
 end
 RuneSword:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, RuneSword.PostFireTear);
 
-function RuneSword:GetShaderParams(name)
-    if (Game():GetHUD():IsVisible ( ) and name == "HUD Hack") then
-        Actives:RenderActivesCount(RuneSword.Item, function(player) 
-            local count = RuneSword:GetRuneCount(player);
-            local color = nil;
-            if (THI.IsLunatic()) then
-                local comp = (RuneSword.MaxRuneSlot - count) / RuneSword.MaxRuneSlot;
-                color = Color(1,comp,comp,1,0,0,0);
-            end
-            return count, color
-        end)
-    end
+function RuneSword:RenderOverlay()
+    Actives:RenderActivesCount(RuneSword.Item, function(player) 
+        local count = RuneSword:GetRuneCount(player);
+        local color = nil;
+        if (THI.IsLunatic()) then
+            local comp = (RuneSword.MaxRuneSlot - count) / RuneSword.MaxRuneSlot;
+            color = Color(1,comp,comp,1,0,0,0);
+        end
+        return count, color
+    end)
 end
-RuneSword:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, RuneSword.GetShaderParams);
+RuneSword:AddCallback(CuerLib.Callbacks.CLC_RENDER_OVERLAY, RuneSword.RenderOverlay);
 
 local function ClearLevel()
     

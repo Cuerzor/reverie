@@ -8,7 +8,7 @@ local Musician = {
 
 PlayerForms.CustomForms.Musician = {
     NameGetter = function(language) 
-        return THI.GetText(THI.StringCategories.DEFAULT, "#TRANSFORMATION_MUSICIAN");
+        return THI.GetText("#TRANSFORMATION_MUSICIAN");
     end,
     CostumeId = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_musician.anm2"),
     Pool = {

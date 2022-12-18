@@ -636,7 +636,7 @@ local function RenderCrate(player)
                 end
             end
         end 
-        local string = THI.GetText(THI.StringCategories.DEFAULT, "#YAMAWARO_CRATE_TITLE");
+        local string = THI.GetText("#YAMAWARO_CRATE_TITLE");
         font:DrawStringUTF8(string, slotsPos.X, slotsPos.Y - 14, KColor.White);
     end
 
@@ -691,7 +691,7 @@ local function RenderCrate(player)
             end
             ::continue::
         end
-        local string = THI.GetText(THI.StringCategories.DEFAULT, "#YAMAWARO_CRATE_ITEMS");
+        local string = THI.GetText("#YAMAWARO_CRATE_ITEMS");
         font:DrawStringUTF8(string, itemsPos.X, itemsPos.Y - 14, KColor.White);
 
         -- Render Arrow and page displayer.
@@ -710,7 +710,7 @@ local function RenderCrate(player)
         end
 
 
-        local pageString = THI.GetText(THI.StringCategories.DEFAULT, "#YAMAWARO_CRATE_PAGE");
+        local pageString = THI.GetText("#YAMAWARO_CRATE_PAGE");
         pageString = string.gsub(pageString,"{CURRENT}",tempData.Page ); 
         pageString = string.gsub(pageString,"{ALL}",tempData.TotalPages ); 
         font:DrawStringUTF8(pageString, itemsPos.X + 4 + itemsWidth * 16, itemsPos.Y - 14 + itemsHeight * 16, KColor.White);

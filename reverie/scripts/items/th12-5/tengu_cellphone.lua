@@ -706,9 +706,8 @@ function Cellphone:Use(player)
             THI.SFXManager:Play(SoundEffect.SOUND_POWERUP3);
 
             local purchaseStrings = PurchaseStrings;
-            local category = THI.StringCategories.DEFAULT;
-            local titleString = THI.GetText(category, purchaseStrings.Title);
-            local descString = THI.GetText(category, purchaseStrings.Desc);
+            local titleString = THI.GetText(purchaseStrings.Title);
+            local descString = THI.GetText(purchaseStrings.Desc);
 
             THI.Game:GetHUD():ShowItemText (titleString, descString);
             Cellphone.PurchaseItem(itemInfo);

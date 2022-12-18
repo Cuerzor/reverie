@@ -347,7 +347,7 @@ local function PostPlayerUpdate(mod, player)
                 if (player:AreControlsEnabled()) then
                     -- Fire gatlin.
                     local moveDir = player:GetMovementJoystick():Normalized();
-                    local shooting = Inputs:GetShootingVector(player);
+                    local shooting = Inputs.GetShootingVector(player);
                     
 
                     if (shooting:Length() > 0.1) then

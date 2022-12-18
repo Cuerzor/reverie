@@ -103,7 +103,7 @@ function Dialog:SwitchKeyFrame(keyframe)
             local textConfig = keyframeConfig.Text;
             if (textConfig) then
                 local key = config.TextKey;
-                local text = THI.GetText(THI.StringCategories.DIALOGS, key.."_"..textConfig.Id);
+                local text = THI.GetText(key.."_"..textConfig.Id);
                 self.TextData.PureText, self.TextData.Metas = Dialog.GetTextMetas(text);
             end
         end

@@ -13,7 +13,7 @@ Translation.Fonts = {
     ["CRATE"] = THI.Fonts.Lanapixel,
 }
 
-Translation.Default = {
+Translation.Texts = {
     ["#GRIMOIRE_SUN_NAME"] = "日",
     ["#GRIMOIRE_MOON_NAME"] = "月",
     ["#GRIMOIRE_FIRE_NAME"] = "火",
@@ -183,11 +183,6 @@ Translation.Default = {
     ["#COLLECTED_MUSIC"] = "音乐：{{CURRENT}}/{{MAX}}",
 
     
-    
-}
-
-
-Translation.Dialogs = {
     ["#DOREMY_INTRO_1"] = "可怜的以撒，{WAIT:10}让我看看你做了什么梦……",
     ["#DOREMY_INTRO_2"] = "我在哪儿？{WAIT:20}你是谁？",
     ["#DOREMY_INTRO_3"] = "欢迎来到梦境世界。",
@@ -227,6 +222,7 @@ Translation.Dialogs = {
     ["#DOREMY_ENDING_13"] = "好了，{WAIT:20}去看看你的新家吧。",
     ["#DOREMY_ENDING_14"] = "欢迎来到幻想乡，{WAIT:20}以撒……",
     ["#DOREMY_ENDING_15"] = "梦里见……",
+    
 }
 
 local Collectibles = THI.Collectibles;
