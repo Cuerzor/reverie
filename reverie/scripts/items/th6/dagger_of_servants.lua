@@ -48,14 +48,11 @@ function DaggerOfServants:IsLethal(player)
 end
 
 function DaggerOfServants:RemoveRightmostHeart(player)
-    local damage = 0;
     local brokenHearts = player:GetBrokenHearts();
     if (brokenHearts > 0) then
         -- 碎心。
         player:AddBrokenHearts(-1);
     else
-        damage = 2;
-
         local hearts = player:GetHearts();
         local rottenHearts = player:GetRottenHearts();
         local eternalHearts = player:GetEternalHearts();
@@ -70,11 +67,12 @@ function DaggerOfServants:RemoveRightmostHeart(player)
                 -- 魂心。
                 if (hasHalfSoulHeart) then
                     -- 最外侧是半魂心。
-                    damage = 1;
+                    player:AddSoulHearts(-1);
                 elseif (boneHearts <= 0 and maxHearts <= 0 and eternalHearts > 0 and soulHearts <= 2) then
                     -- 最外侧是魂心+永恒之心。
                     player:AddEternalHearts(-1);
-                    damage = 0;
+                else
+                    player:AddSoulHearts(-2);
                 end
             else
                 --红心
@@ -82,17 +80,18 @@ function DaggerOfServants:RemoveRightmostHeart(player)
                     if (rottenHearts > 0) then
                         -- 最外侧是腐心+永恒之心。
                         player:AddEternalHearts(-1);
-                        damage = 0;
                     else
                         -- 最外侧是永恒之心。
-                        damage = 1;
+                        player:AddEternalHearts(-1);
                     end
                 elseif (rottenHearts > 0) then
                     --腐心
-                    damage = 1;
+                    player:AddRottenHearts(-2);
                 elseif (hearts % 2 == 1) then
                     --半红心。
-                    damage = 1;
+                    player:AddHearts(-1);
+                else
+                    player:AddHearts(-2);
                 end
             end
         else
@@ -100,28 +99,27 @@ function DaggerOfServants:RemoveRightmostHeart(player)
             local emptyBoneHeart = hearts + rottenHearts <= maxHearts + (boneHearts - 1) * 2;
             if (emptyBoneHeart) then
                 -- 空骨心。
-                damage = 1;
+                player:AddBoneHearts(-1);
             else 
                 --有内容物的骨心。
                 if (rottenHearts > 0) then
                     -- 骨心内腐心
                     player:AddRottenHearts(-2);
-                    damage = 0;
                 elseif (eternalHearts > 0) then
                     -- 骨心内永恒之心。
-                    damage = 1;
+                    player:AddEternalHearts(-1);
                 elseif (hearts % 2 == 1) then
                     -- 骨心内半红心。
-                    damage = 1;
+                    player:AddHearts(-1);
+                else
+                    player:AddHearts(-2);
                 end
             end
         end
     end
 
-    local flags = DamageFlag.DAMAGE_NO_MODIFIERS | DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_INVINCIBLE;
-    if (damage == 0) then
-        flags = flags | DamageFlag.DAMAGE_FAKE;
-    end
+    local flags = DamageFlag.DAMAGE_NO_MODIFIERS | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_FAKE;
+
     local game = Game();
     player:ResetDamageCooldown();
 
@@ -138,7 +136,7 @@ function DaggerOfServants:RemoveRightmostHeart(player)
     smoke:SetColor(Color(1, 1, 0.5, 0.8, 1, 0.2, 0), -1, 0);
 
 
-    player:TakeDamage(damage, flags, EntityRef(player), 120);
+    player:TakeDamage(0, flags, EntityRef(player), 120);
     player:SetMinDamageCooldown(120);
 end
 
@@ -187,15 +185,15 @@ function DaggerOfServants:PostPlayerEffect(player)
                 local data = self:GetPlayerData(player, true);
                 local lethal = self:IsLethal(player);
                 local ready = self:ReadyToStab(player);
+                if (not lethal or not ready) then
+                    data.Rooms = data.Rooms + 1;
+                end
                 if (ready) then
                     if (not lethal) then
                         data.Rooms = 0;
                         self:RemoveRightmostHeart(player);
                         self:AddDamageUp(player);
                     end
-                end
-                if (not lethal or not ready) then
-                    data.Rooms = data.Rooms + 1;
                 end
             end
         end

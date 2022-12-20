@@ -33,6 +33,7 @@ Lib.ClassPaths = {
     Revive = "revive",
     NetCoop = "netcoop",
     Translations = "translations",
+    GiantBook = "giantbook",
 }
 if (StageAPI) then
     Lib.ClassPaths.Bosses="bosses_stageapi";

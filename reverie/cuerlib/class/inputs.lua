@@ -55,7 +55,7 @@ end
 
 function Inputs.GetShootingVector(player, center)
     center = center or player.Position;
-    local shooting = self.GetRawShootingVector(player, center);
+    local shooting = Inputs.GetRawShootingVector(player, center);
     local target = Lib.Synergies.GetMarkedTarget(player);
     if (target) then
         shooting = target.Position - player.Position;
