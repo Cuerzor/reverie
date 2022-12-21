@@ -4,8 +4,11 @@ local Consts = CuerLib.Consts;
 local Players = CuerLib.Players;
 local Benediction = ModItem("Benediction", "BENEDICTION");
 
-local config = Isaac.GetItemConfig();
-local MaxCharges = config:GetCollectible(Benediction.Item).MaxCharges;
+local itemConfig = Isaac.GetItemConfig();
+local MaxCharges = itemConfig:GetCollectible(Benediction.Item).MaxCharges;
+Benediction.DefaultItem = {
+    Item = CollectibleType.COLLECTIBLE_DUALITY
+}
 Benediction.ItemList = {
     [1] = {
         Item = CollectibleType.COLLECTIBLE_HALLOWED_GROUND,
@@ -86,13 +89,15 @@ Benediction.DevilItemList = {
 local function GetItemSprite(ID)
     local spr = Sprite();
     spr:Load("gfx/reverie/ui/benediction_displayer.anm2", false);
-    local gfx = config:GetCollectible(ID).GfxFileName;
+    local gfx = itemConfig:GetCollectible(ID).GfxFileName;
     spr:ReplaceSpritesheet(0, gfx);
     spr:ReplaceSpritesheet(1, gfx);
     spr:LoadGraphics();
     spr:Play("UI");
     return spr;
 end
+
+Benediction.DefaultItem.Sprite = GetItemSprite(Benediction.DefaultItem.Item)
 for i, item in pairs(Benediction.ItemList) do
     item.Sprite = GetItemSprite(item.Item);
 end
@@ -111,10 +116,25 @@ local function GetPlayerData(player, create)
     end
     return Benediction:GetData(player, create, getter);
 end
+local function GetGainedEntry(player, charges)
+    local itemList = Benediction.ItemList;
+    local judasBook = Players.HasJudasBook(player);
+    if (judasBook) then
+        itemList = Benediction.DevilItemList;
+    end
+
+    local entry = itemList[charges];
+    local id = entry.Item
+    local config = itemConfig:GetCollectible(id);
+    if (not config:IsAvailable()) then
+        entry = Benediction.DefaultItem;
+    end
+    return entry;
+end
 
 function Benediction:GainItem(player, item)
     
-    player:QueueItem (config:GetCollectible(item), 0, true);
+    player:QueueItem (itemConfig:GetCollectible(item), 0, true);
 
     local data = GetPlayerData(player, true);
     table.insert(data.GotItems, item);
@@ -139,15 +159,10 @@ do
     local function PostUseBenediction(mod, item, rng, player, flags, slot, varData)
         local data = GetPlayerData(player, true);
 
-        local itemList = Benediction.ItemList;
-        local judasBook = Players.HasJudasBook(player);
-        if (judasBook) then
-            itemList = Benediction.DevilItemList;
-        end
 
         
         if (flags & UseFlag.USE_CARBATTERY > 0) then
-            local item = itemList[1].Item;
+            local item = GetGainedEntry(player, 1).Item;
             Benediction:GainItem(player, item);
         else
             local maxCharges = MaxCharges;
@@ -159,7 +174,7 @@ do
                 charges = Actives:GetTotalCharges(player, slot);
             end
             local totalCharges = math.max(1, math.min(maxCharges, charges + extraCharges));
-            local item = itemList[totalCharges].Item;
+            local item = GetGainedEntry(player, totalCharges).Item;
 
             Benediction:GainItem(player, item);
             local sfx = SFXManager();
@@ -169,7 +184,7 @@ do
             else
                 sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK);
             end
-            Game():GetHUD():ShowItemText(player, config:GetCollectible(item));
+            Game():GetHUD():ShowItemText(player, itemConfig:GetCollectible(item));
             player:AnimateCollectible(item);
 
 
@@ -204,13 +219,7 @@ do
             local charges = Actives:GetTotalCharges(player, slot);
             charges = math.min(charges, MaxCharges);
             if (charges > 0) then
-                local itemList = Benediction.ItemList;
-
-                if (Players.HasJudasBook(player)) then
-                    itemList = Benediction.DevilItemList;
-                end
-
-                local sprite = itemList[charges].Sprite;
+                local sprite = GetGainedEntry(player, charges).Sprite;
                 sprite.Scale = scale;
                 for i = 3, -1, -1 do
                     local offset = Consts.DirectionVectors[i] * 0.5 * scale;

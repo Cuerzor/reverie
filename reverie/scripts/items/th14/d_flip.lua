@@ -194,6 +194,9 @@ local function GetNotFixedCollectibles()
     end
     local greed = THI.Game:IsGreedMode();
     local function condition(conf)
+        if (not conf:IsAvailable()) then
+            return false;
+        end
         if (not conf or conf:HasTags(ItemConfig.TAG_QUEST) or conf.Hidden) then
             return false;
         end
@@ -334,16 +337,37 @@ if (THI.Game:GetFrameCount() > 0) then
     DFlip.Pairs = DFlip.GetPairs(seeds:GetStartSeed());
 end
 
-function DFlip:GetFixedAnother(type, variant, subtype)
+function DFlip:GetFixedAnother(type, variant, subtype, ignoreAvailable)
     
+    -- Unlocked or Tainted Lost banned.
     for _, pair in pairs(self.FixedPairs) do
         local item1 = pair[1];
         local item2 = pair[2];
+        local result;
+        local this;
         if (item1[1] == type and item1[2] == variant and item1[3] == subtype) then
-            return item2;
+            result = item2;
+            this = item1;
         end
         if (item2[1] == type and item2[2] == variant and item2[3] == subtype) then
-            return item1;
+            result = item1;
+            this = item2;
+        end
+        if (result) then
+            if (not ignoreAvailable) then
+                if (type == EntityType.ENTITY_PICKUP)  then
+                    local fixedConfig;
+                    if (variant == PickupVariant.PICKUP_COLLECTIBLE) then
+                        fixedConfig = itemConfig:GetCollectible(result[3]);
+                    elseif (variant == PickupVariant.PICKUP_TRINKET) then
+                        fixedConfig = itemConfig:GetTrinket(result[3]);
+                    end
+                    if (fixedConfig and not fixedConfig:IsAvailable()) then
+                        return this;
+                    end
+                end
+            end
+            return result;
         end
     end
     return nil;

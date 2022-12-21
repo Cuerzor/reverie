@@ -255,12 +255,12 @@ do -- Generation.
             local totalWeight = 0
 
             local function GetConfigWeight(config)
+                if (not config:IsAvailable()) then
+                    return 0;
+                end
                 local weight = 1;
                 if (playerType == PlayerType.PLAYER_THELOST_B) then
                     -- Tainted Lost has better items.
-                    if (not config:HasTags(ItemConfig.TAG_OFFENSIVE)) then
-                        return 0;
-                    end
                     if (config.Quality == 0) then
                         weight = 0.4;
                     elseif (config.Quality == 1) then

@@ -15,12 +15,12 @@ local FontColor =KColor(1,1,1,1);
 
 
 local ActiveDifficulty = 0;
-local ActiveList = Actives:GetActiveList();
+local ActiveList;
 
 local HUDWidth = 5;
 local HUDHeight = 5;
 local HUDSize = HUDWidth * HUDHeight;
-local maxPage = math.ceil(#ActiveList / (HUDSize - 1));
+local maxPage = 0;
 
 function Dice.UpdateActiveList(player)
     local diff = 0;
@@ -31,9 +31,11 @@ function Dice.UpdateActiveList(player)
     if (Seija:WillPlayerNerf(player)) then
         diff = 2;
     end
-
+    
+    ActiveList = Actives:GetActiveList(true);
+    print(#ActiveList)
+    maxPage = math.ceil(#ActiveList / (HUDSize - 1));
     if (diff ~= ActiveDifficulty) then
-        ActiveList = Actives:GetActiveList();
         if (diff == 1) then
             for i = #ActiveList, 1, -1 do
                 local active = ActiveList[i];

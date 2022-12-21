@@ -2566,7 +2566,14 @@ Greed Shop: Added D Flip
 -Fixed an issue that Rune Sword's data will be missing after continue a run.
 -修复符文剑小退之后数据丢失的问题。
 
+
+-Benediction, D2147483647, D Flip and Deja vu now cannot create locked items or items banned by Tainted Lost.
+-祈愿、2147483647面骰、镜像骰子和似曾相识现在无法创造出被锁定或被堕化游魂屏蔽的道具。
+-Sake Bottles now will disappear while ascent.
+-现在清酒瓶会在回溯线中消失。
 -Dagger of Servants now no longer triggers Holy Mantle.
 -从者之刃现在不再触发神圣屏障。
 -Dagger of Servants now will triggers very 4 rooms correctly, instead of 4 rooms at first, then 3 rooms.
 -从者之刃现在会正确的每4个房间触发一次，而不是第一次4个房间，之后3个房间。
+-Fixed an issue that Rune Sword + Soul of Satori doesn't work.
+-修复符文佩剑+觉的魂石不起作用的BUG。

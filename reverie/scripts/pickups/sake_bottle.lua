@@ -100,19 +100,12 @@ end
 Bottle:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, PostCurseEvaluate);
 
 
--- local function PostPickupInit(mod, pickup)
---     if (pickup.SubType == Bottle.SubType) then
---         pickup.DepthOffset = 24;
---         pickup:AddEntityFlags(EntityFlag.FLAG_APPLY_GRAVITY);
---         pickup.TargetPosition = pickup.Position;
---         pickup.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL;
---         local spr = pickup:GetSprite();
---         spr:Play("Idle");
---     end
--- end
--- Bottle:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, PostPickupInit, Bottle.Variant);
-
 local function UpdateBottle(bottle)
+
+    if (Game():GetLevel():IsAscent()) then
+        bottle:Remove();
+    end
+
     local data = GetBottleData(bottle, false);
     local spr = bottle:GetSprite();
     if (data) then

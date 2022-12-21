@@ -22,6 +22,11 @@ function Sake:ClearBottleSpawned()
 end
 
 function Sake:SpawnBottle()
+
+    if (Game():GetLevel():IsAscent()) then
+        return;
+    end
+
     local data = GetGlobalData(true);
     data.BottleSpawned = true;
 

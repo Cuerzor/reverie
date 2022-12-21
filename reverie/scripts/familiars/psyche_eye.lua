@@ -115,16 +115,25 @@ function PsycheEye:ControlEntity(target, source)
         local EntityTags = THI.Shared.EntityTags;
         local isFly = EntityTags:EntityFits(target, "ConvertToBlueFlies");
         local isSpider = EntityTags:EntityFits(target, "ConvertToBlueSpiders");
+        local player = source:ToPlayer();
         if (isFly) then
             target:Remove();
-            source:AddBlueFlies (1, target.Position, nil)
+            if (player) then
+                player:AddBlueFlies (1, target.Position, nil)
+            else
+                Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.BLUE_FLY, 0, target.Position, Vector.Zero, source);
+            end
         elseif (isSpider) then
             target:Remove();
-            source:AddBlueSpider(target.Position)
+            if (player) then
+                player:AddBlueSpider(target.Position)
+            else
+                Isaac.Spawn(EntityType.ENTITY_FAMILIAR, FamiliarVariant.BLUE_SPIDER, 0, target.Position, Vector.Zero, source);
+            end
         else
             target:AddCharmed( EntityRef(source), -1);
+            self:AddControlCount(source, 1);
         end
-        self:AddControlCount(source, 1);
 
         THI.SFXManager:Play(THI.Sounds.SOUND_MIND_CONTROL);
     end
@@ -150,8 +159,11 @@ end
 function PsycheEye:SetControlCount(player, count)
     local data = GetPlayerData(player, true)
     data.ControlledCount = count;
-    player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_RANGE)
-    player:EvaluateItems();
+    local p = player:ToPlayer();
+    if (p) then
+        p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_RANGE)
+        p:EvaluateItems();
+    end
 end
 function PsycheEye:GetControlCount(player)
     local data = GetPlayerData(player, false)
@@ -425,7 +437,10 @@ local function PreTearCollision(mod, tear, other, low)
     if (other:IsVulnerableEnemy()) then
         if (PsycheEye:IsMindControlTear(tear) and PsycheEye:CanControl(other)) then
             local spawner = tear.SpawnerEntity;
-            PsycheEye:ControllEntity(other, spawner);
+            PsycheEye:ControlEntity(other, spawner);
+            if (not tear:HasTearFlags(TearFlags.TEAR_PIERCING)) then
+                tear:Die();
+            end
         end
     end
 end

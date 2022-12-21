@@ -11,6 +11,10 @@ local Screen = Lib.Screen;
 local Weapons = Lib.Weapons;
 local Eika = ModPlayer("Eika", false, "Eika");
 
+Eika.WeaponType = "Reverie_Eika_Rocks";
+
+Weapons:AddWeaponType("REVERIE_EIKA_ROCKS", Eika.WeaponType);
+
 local Costume = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_eika.anm2");
 
 local MaxFireCooldown = 2;
@@ -1238,8 +1242,7 @@ local function ShootingUpdate(player)
     local tempData = Eika:GetPlayerTempData(player, true);
 
     -- Stack Rocks.
-    
-    if (not Weapons:IsWeaponsBanned(player)) then
+    if (Weapons:GetWeaponType(player) == Eika.WeaponType) then
         local stackedRocks = tempData.StackedRocks;
         while (tempData.FireDelay <= 0) do
             local rock = Eika:SpawnRock(player);
@@ -1686,6 +1689,10 @@ function Eika:OnEvaluateCache(player, cache)
 
         elseif (cache == CacheFlag.CACHE_LUCK) then
             player.Luck = player.Luck + 1;
+        elseif (cache == CacheFlag.CACHE_WEAPON) then
+            if (not Weapons:IsActiveItemWeapon(player)) then
+                Weapons:SetWeaponType(player, Eika.WeaponType);
+            end
         end
     end
 end

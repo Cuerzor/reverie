@@ -38,6 +38,9 @@ Roukanken.YoumuCostume = Isaac.GetCostumeIdByPath(rootPath.."character_youmu_hai
 Roukanken.YoumuSpiritCostume = Isaac.GetCostumeIdByPath(rootPath.."costume_youmu_spirit.anm2");
 Roukanken.SpiritSwordSpritePath = "gfx/reverie/effects/spirit_sword_roukanken.png";
 Roukanken.SpiritSwordBloodySpritePath = "gfx/reverie/effects/spirit_sword_roukanken_bloody.png";
+Roukanken.WeaponType = "Reverie_Roukanken";
+
+Weapons:AddWeaponType("REVERIE_ROUKANKEN", Roukanken.WeaponType);
 
 local function GetSpiritSwordData(sword, create)
     return Roukanken:GetData(sword, create, function() return {
@@ -73,6 +76,11 @@ function Roukanken:GetPlayerData(player, init)
     } end);
 end
 
+function Roukanken:IsSlashing(player)
+    local playerData = self:GetPlayerData(player, false);
+    return (playerData and playerData.Slashing) or false;
+end
+
 function Roukanken:ChangeToYoumu(player)
     local playerData = self:GetPlayerData(player, true);
 
@@ -86,7 +94,6 @@ function Roukanken:ReturnFromYoumu(player)
     local playerData = self:GetPlayerData(player, true);
 
     playerData.IsYoumu = false;
-    Weapons:UnbanWeapon(player);
 
     player:TryRemoveNullCostume(self.YoumuSpiritCostume)
     player:SetColor(Color(1,1,1,1,1,1,1), 10, 0, true, false)
@@ -102,7 +109,7 @@ function Roukanken:EnterSwordPhase(player)
     end
 
     playerData.Sword:GetSprite():Play("Unsheathe");
-    player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
+    player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_WEAPON);
     player:EvaluateItems();
 end
 
@@ -115,7 +122,7 @@ function Roukanken:QuitSwordPhase(player)
     end
 
     playerData.Sword:GetSprite():Play("Sheathe");
-    player:AddCacheFlags(CacheFlag.CACHE_DAMAGE);
+    player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_WEAPON);
     player:EvaluateItems();
 end
 
@@ -320,7 +327,7 @@ function Roukanken:onPlayerUpdate(player)
             end
         end
         -- Youmu form
-        if (playerData.Slashing) then
+        if (Roukanken:IsSlashing(player)) then
             if (not sword or not sword:Exists()) then
                 sword = Roukanken:SpawnSword(player);
                 swordSprite = sword:GetSprite();
@@ -414,24 +421,13 @@ function Roukanken:onPlayerEffect(player)
 
     if (playerData) then
         local hasSpiritSword = player:HasWeaponType(WeaponType.WEAPON_SPIRIT_SWORD);
-        if (playerData.Slashing) then
-            local shouldBan = playerData.Slashing and not hasSpiritSword;
-            local weaponBanned = Weapons:IsWeaponsBanned(player);
-            if (shouldBan ~= weaponBanned) then
-                if (shouldBan) then
-                    Weapons:BanishWeapon(player, true, false);
-                else
-                    Weapons:UnbanWeapon(player);
-                end
-            end
-        end
 
-        if (playerData.Slashing) then
+        if (Weapons:GetWeaponType(player) == Roukanken.WeaponType) then
             if (player:HasCurseMistEffect()) then
                 Roukanken:QuitSwordPhase(player);
             end
 
-            if (not hasSpiritSword) then
+            if (not (hasSpiritSword and player:CanShoot())) then
                 -- Swing Sword
                 if (playerData.IsYoumu) then
                     if (player:GetAimDirection():Length() > 0.1) then
@@ -471,8 +467,18 @@ function Roukanken:onPlayerEffect(player)
         end
     end
 end
-
 Roukanken:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Roukanken.onPlayerEffect);
+
+local function EvaluateCache(mod, player, flag)
+    if (flag == CacheFlag.CACHE_WEAPON) then
+        if (Roukanken:IsSlashing(player)) then
+            if (not (Weapons:GetWeaponType(player)== Weapons.Types.COMMON and player:HasWeaponType(WeaponType.WEAPON_SPIRIT_SWORD))) then
+                Weapons:SetWeaponType(player, Roukanken.WeaponType)
+            end
+        end
+    end
+end
+Roukanken:AddPriorityCallback(ModCallbacks.MC_EVALUATE_CACHE, 10, EvaluateCache);
 
 ------------------
 -- Sword
