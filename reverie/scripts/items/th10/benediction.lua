@@ -2,6 +2,7 @@ local Actives = CuerLib.Actives;
 local Entities = CuerLib.Entities;
 local Consts = CuerLib.Consts;
 local Players = CuerLib.Players;
+local ItemBlacklist = CuerLib.ItemBlacklist;
 local Benediction = ModItem("Benediction", "BENEDICTION");
 
 local itemConfig = Isaac.GetItemConfig();
@@ -125,8 +126,7 @@ local function GetGainedEntry(player, charges)
 
     local entry = itemList[charges];
     local id = entry.Item
-    local config = itemConfig:GetCollectible(id);
-    if (not config:IsAvailable()) then
+    if (ItemBlacklist:IsCollectibleBlacklisted(id)) then
         entry = Benediction.DefaultItem;
     end
     return entry;

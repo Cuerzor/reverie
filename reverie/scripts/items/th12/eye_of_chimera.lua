@@ -2,6 +2,7 @@ local Entities = CuerLib.Entities;
 local Screen = CuerLib.Screen;
 local EntityExists = Entities.EntityExists;
 local CompareEntity = Entities.CompareEntity;
+local UnknownItems = CuerLib.UnknownItems;
 local Players = CuerLib.Players;
 local EyeOfChimera = ModItem("Eye of Chimera", "EYE_OF_CHIMERA");
 EyeOfChimera.HasEye = nil;
@@ -23,7 +24,7 @@ function EyeOfChimera:GetNearestCollectible(player)
     local nearest = nil;
     local nearestDis = 0;
     for _, ent in ipairs(Isaac.FindInRadius(player.Position, 80, EntityPartition.PICKUP)) do
-        if (ent.Variant == PickupVariant.PICKUP_COLLECTIBLE and ent.SubType ~= 0 and THI:IsUnknownItem(ent)) then
+        if (ent.Variant == PickupVariant.PICKUP_COLLECTIBLE and ent.SubType ~= 0 and UnknownItems:IsUnknownItem(ent)) then
             local dis = player.Position:DistanceSquared(ent.Position);
             if (not nearest or dis < nearestDis) then
                 nearest = ent;

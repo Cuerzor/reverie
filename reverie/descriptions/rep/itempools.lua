@@ -764,5 +764,9 @@ local Pools = {
         Pedia.ItemPools.POOL_TREASURE,
         Pedia.ItemPools.POOL_GREED_TREASURE,
     },
+    [Collectibles.Dejavu.Item] = 
+    {
+        Pedia.ItemPools.POOL_SECRET
+    },
 }
 return Pools;

@@ -243,7 +243,7 @@ function Roukanken:Dash(player, velocity)
         local sfx = SFXManager();
 
         -- Urn of soul Synergy.
-        if (player:HasCollectible(CollectibleType.COLLECTIBLE_URN_OF_SOULS)) then
+        if (Weapons:GetActiveItemWeaponType(player) == Weapons.ActiveItemWeapons.URN_OF_SOULS) then
             local movedVector = target - lastPosition;
             local distance = movedVector:Length();
             local moveAngle = movedVector:GetAngleDegrees();
@@ -472,8 +472,11 @@ Roukanken:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, Roukanken.onPlayerEff
 local function EvaluateCache(mod, player, flag)
     if (flag == CacheFlag.CACHE_WEAPON) then
         if (Roukanken:IsSlashing(player)) then
-            if (not (Weapons:GetWeaponType(player)== Weapons.Types.COMMON and player:HasWeaponType(WeaponType.WEAPON_SPIRIT_SWORD))) then
+            if (not player:HasWeaponType(WeaponType.WEAPON_SPIRIT_SWORD) or not player:CanShoot()) then
                 Weapons:SetWeaponType(player, Roukanken.WeaponType)
+            end
+            if (Weapons:GetActiveItemWeaponType(player) ~= Weapons.ActiveItemWeapons.URN_OF_SOULS) then
+                Weapons:SetActiveItemWeaponType(player, nil)
             end
         end
     end
@@ -531,7 +534,7 @@ function Roukanken:SwingSword(player)
 
         local sfx = SFXManager();
         -- Urn of Soul Synergy.
-        if (player:HasCollectible(CollectibleType.COLLECTIBLE_URN_OF_SOULS)) then
+        if (Weapons:GetActiveItemWeaponType(player) == Weapons.ActiveItemWeapons.URN_OF_SOULS) then
             local rotation = player:GetAimDirection():GetAngleDegrees() - 45;
             local position = player.Position + player:GetAimDirection() * 50;
             for i = 1, 5 do 

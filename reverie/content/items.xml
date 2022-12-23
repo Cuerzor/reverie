@@ -159,7 +159,7 @@
     <passive id="252" name="THTRAINER" description="th14.exe catastrophic failure" gfx="thtrainer.png" quality="0" tags="offensive nocantrip" hidden="true" />
     
 
-	<passive id="504" name="Fairy Dust" description="Flying Wish" gfx="fairy_dust.png" quality="2" cache="flying luck" tags="nolostbr nocantrip" />
+	<passive id="504" name="Fairy Dust" description="Flying Wish" gfx="fairy_dust.png" quality="3" cache="flying luck" tags="nolostbr nocantrip" />
 	<active id="505" name="Spirit Cannon" description="Shin-Kikouhooooooooou!!!" gfx="spirit_cannon.png" maxcharges="3" quality="3" tags="offensive" />
 	<passive id="507" name="Asthma" description="Mana up, Regeneration Down" gfx="asthma.png" quality="2" tags="offensive summonable nocantrip" />
 	<passive id="508" name="Dagger of Servants" description="Offer Your Heart" gfx="dagger_of_servants.png" quality="3" tags="nolostbr nocantrip nogreed" />
@@ -185,5 +185,6 @@
 	<trinket id="241" name="Fortune Cat Paw" description="Business is booming" gfx="fortune_cat_paw.png" />
 	<trinket id="501" name="Snowflake" description="Unique and Perfect" gfx="snowflake.png" />
 	<trinket id="502" name="Heart Sticker" description="&lt;3" gfx="heart_sticker.png" />
+	<trinket id="726" name="Symmetry OCD" description="Madam, in Eden, I'm Adam" gfx="symmetry_ocd.png" />
 
 </items>

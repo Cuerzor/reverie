@@ -1200,6 +1200,10 @@ EIDInfo.Trinkets = {
         Description = "每当角色使用一张卡牌，生成1颗{{Heart}}红心",
         GoldenInfo = {t={1}}
     },
+    [Trinkets.SymmetryOCD.Trinket] = {
+        Name = "对称强迫症",
+        Description = "优先生成图标轮廓左右对称或近似对称的道具",
+    },
 };
 
 EIDInfo.RuneSword = {

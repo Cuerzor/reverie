@@ -576,7 +576,7 @@ Fairy Dust
 Description: Flying Wish
 Reference: Daiyousei
 Type: Passive Item
-Quality: 2
+Quality: 3
 Tags: No Lost Birthright, No Cantripped
 Item Pools: Treasure Room, Greed Treasure Room, Angel Room, Greed Angel Room
 * +1 Luck up.

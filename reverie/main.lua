@@ -25,43 +25,38 @@ THI.Fonts = {
     MPlus12b = mplus_12b
 }
 -- CuerLib check.
-if (not hasCuerLib) then
+if (not CuerLib) then
 	local langFonts = {
 		en = THI.Fonts.PFTempesta7,
 		zh = THI.Fonts.Lanapixel
 	}
 	local langTexts = {
 		en = {
-			"This mod will require mod \"CuerLib\" to work properly in the future!",
-			"Install it and prepare for the later version's changes."
+			"This mod requires the mod \"CuerLib\" to work properly!",
+			"Install and enable it before playing with this mod."
 		},
 		zh = {
-			"该MOD在之后将需要前置MOD\"CuerLib\"来运行！",
-			"请下载该MOD并为之后的更新作准备。"
+			"该MOD需要前置MOD\"CuerLib\"来运行！",
+			"请下载并开启该前置MOD。"
 		}
 	}
 	local font = langFonts[Options.Language] or langFonts.en;
 	local texts = langTexts[Options.Language] or langTexts.en;
-	local color = KColor(1,1,0,1);
+	local color = KColor(1,0,0,1);
 
-    local timeout = 600;
 	local function PostRender(mod)
 		local posX = Isaac.GetScreenWidth() / 2;
-        if (timeout <= 100) then
-            color.Alpha = timeout / 100;
-        end
 		for i, text in ipairs(texts) do
 			font:DrawStringUTF8 (text, posX - 200, 0 + i * 20, color, 400, true )
 		end
-        timeout = timeout - 1;
 	end
 	THI:AddCallback(ModCallbacks.MC_POST_RENDER, PostRender);
+	return;
 end
-
 Lib:InitMod(THI, "REVERIE");
 
 THI.Version = {
-    12,4,7
+    12,5,0
 }
 function THI:GetVersionString()
     local versionString = "";
@@ -731,7 +726,9 @@ THI.Trinkets = {
 
     -- TH6 ALT
     Snowflake = Require("scripts/trinkets/snowflake"),
-    HeartSticker = Require("scripts/trinkets/heart_sticker")
+    HeartSticker = Require("scripts/trinkets/heart_sticker"),
+
+    SymmetryOCD = Require("scripts/trinkets/symmetry_ocd")
 }
 
 

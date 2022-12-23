@@ -513,7 +513,7 @@ Translation.Trinkets ={
 
     [Trinkets.Snowflake.Trinket] = {Name="雪片" , Description="ユニークでパーフェクト"},
     [Trinkets.HeartSticker.Trinket] = {Name="ハート形シール" , Description="<3"},
-
+    [Trinkets.SymmetryOCD.Trinket] = {Name="対称OCD", Description="磨かぬ鏡"}
 }
 
 local Players = THI.Players;

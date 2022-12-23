@@ -1242,7 +1242,7 @@ local function ShootingUpdate(player)
     local tempData = Eika:GetPlayerTempData(player, true);
 
     -- Stack Rocks.
-    if (Weapons:GetWeaponType(player) == Eika.WeaponType) then
+    if (Weapons:GetWeaponType(player) == Eika.WeaponType and not Weapons:GetActiveItemWeaponType(player)) then
         local stackedRocks = tempData.StackedRocks;
         while (tempData.FireDelay <= 0) do
             local rock = Eika:SpawnRock(player);
@@ -1690,9 +1690,7 @@ function Eika:OnEvaluateCache(player, cache)
         elseif (cache == CacheFlag.CACHE_LUCK) then
             player.Luck = player.Luck + 1;
         elseif (cache == CacheFlag.CACHE_WEAPON) then
-            if (not Weapons:IsActiveItemWeapon(player)) then
-                Weapons:SetWeaponType(player, Eika.WeaponType);
-            end
+            Weapons:SetWeaponType(player, Eika.WeaponType);
         end
     end
 end

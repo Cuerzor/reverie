@@ -3,6 +3,7 @@ local Inputs = CuerLib.Inputs;
 local Screen = CuerLib.Screen;
 local Players = CuerLib.Players;
 local HoldingActive = CuerLib.HoldingActive;
+local ItemBlacklist = CuerLib.ItemBlacklist
 local Dice = ModItem("D2147483647", "DLimit");
 local config = Isaac.GetItemConfig();
 
@@ -14,7 +15,6 @@ FrameSprite.Scale = Vector(0.5, 0.5);
 local FontColor =KColor(1,1,1,1);
 
 
-local ActiveDifficulty = 0;
 local ActiveList;
 
 local HUDWidth = 5;
@@ -23,40 +23,23 @@ local HUDSize = HUDWidth * HUDHeight;
 local maxPage = 0;
 
 function Dice.UpdateActiveList(player)
-    local diff = 0;
-    if (THI.IsLunatic()) then
-        diff = 1;
-    end
     local Seija = THI.Players.Seija;
-    if (Seija:WillPlayerNerf(player)) then
-        diff = 2;
-    end
     
-    ActiveList = Actives:GetActiveList(true);
-    print(#ActiveList)
+    ActiveList = Actives:GetActiveList();
     maxPage = math.ceil(#ActiveList / (HUDSize - 1));
-    if (diff ~= ActiveDifficulty) then
-        if (diff == 1) then
-            for i = #ActiveList, 1, -1 do
-                local active = ActiveList[i];
-                if (active == CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE) then
-                    table.remove(ActiveList, i);
-                end
-            end
-        elseif (diff == 2) then
-            local itemConfig = Isaac.GetItemConfig();
-            for i = #ActiveList, 1, -1 do
-                local active = ActiveList[i];
-                local config = itemConfig:GetCollectible(active);
-                if (config and config.Quality > 1) then
-                    table.remove(ActiveList, i);
-                end
-            end
+    local itemConfig = Isaac.GetItemConfig();
+    for i = #ActiveList, 1, -1 do
+        local active = ActiveList[i];
+        local config = itemConfig:GetCollectible(active);
+        if (ItemBlacklist:IsCollectibleBlacklisted(active)) then
+            table.remove(ActiveList, i);
+        elseif (THI.IsLunatic() and active == CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE) then
+            table.remove(ActiveList, i);
+        elseif (Seija:WillPlayerNerf(player) and config and config.Quality > 1) then
+            table.remove(ActiveList, i);
         end
-        ActiveDifficulty = diff;
-        maxPage = math.ceil(#ActiveList / (HUDSize - 1));
     end
-
+    maxPage = math.ceil(#ActiveList / (HUDSize - 1));
 end
 
 
@@ -301,9 +284,19 @@ function Dice:UseItem(item, rng, player, flags, slot, varData)
             
             -- Normally Use.
             if (not IsSelecting(player)) then
-                HoldingActive:Hold(Dice.Item, player, slot, flags);
                 Dice.UpdateActiveList(player);
-                InitSprites(playerData);
+                if (playerData.Page < 1) then
+                    playerData.Page = 1;
+                end
+                if (playerData.Page > maxPage) then
+                    playerData.Page = maxPage;
+                end
+                if (maxPage > 0) then
+                    HoldingActive:Hold(Dice.Item, player, slot, flags);
+                    InitSprites(playerData);
+                else
+                    SFXManager():Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ)
+                end
             else
 
                 local item = GetChoiceItemId(playerData.Page, playerData.Choice);

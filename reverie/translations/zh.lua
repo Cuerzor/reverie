@@ -412,6 +412,7 @@ Translation.Trinkets ={
 
     [Trinkets.Snowflake.Trinket] = {Name="雪花" , Description="独特而完美"},
     [Trinkets.HeartSticker.Trinket] = {Name="红心贴纸" , Description="<3"},
+    [Trinkets.SymmetryOCD.Trinket] = {Name="对称强迫症", Description="僧游云隐寺 寺隐云游僧"},
 }
 
 local Players = THI.Players;

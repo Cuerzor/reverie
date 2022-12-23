@@ -1,4 +1,5 @@
 local Lib = CuerLib;
+local UnknownItems = Lib.UnknownItems;
 
 local ModName = THI.Name;
 local languages = {
@@ -463,7 +464,11 @@ end
 
 -- Rune Sword.
 do
-
+    local playerIndex = 0;
+    local function PostRender(mod)
+        playerIndex = 0;
+    end
+    THI:AddCallback(ModCallbacks.MC_POST_RENDER, PostRender)
     local function Condition(descObj)
         local RuneSword = THI.Collectibles.RuneSword;
         local game = Game();
@@ -490,18 +495,30 @@ do
                     local level = game:GetLevel();
                     local stage = level:GetStage();
                     local globalCount = RuneSword:GetGlobalRuneCount(subType) + 1;
-                    local nearestPlayer;
-                    local nearestDis;
-                    
-                    for i = 0, game:GetNumPlayers(0) - 1 do
-                        local player = game:GetPlayer(i);
-                        local dis = descObj.Entity.Position:Distance(player.Position);
-                        if (player:HasCollectible(RuneSword.Item) and not nearestPlayer or dis < nearestDis) then
-                            nearestPlayer = player;
-                            nearestDis = dis;
+                    local nextCount = 0;
+                    if (descObj.Entity) then
+                        local nearestPlayer;
+                        local nearestDis;
+                        for i = 0, game:GetNumPlayers() - 1 do
+                            local player = game:GetPlayer(i);
+                            local dis = descObj.Entity.Position:Distance(player.Position);
+                            if (player:HasCollectible(RuneSword.Item) and not nearestPlayer or dis < nearestDis) then
+                                nearestPlayer = player;
+                                nearestDis = dis;
+                            end
+                        end
+                        nextCount =  RuneSword:GetInsertedRuneNum(nearestPlayer, subType) + 1;
+                    else
+                        while (playerIndex < game:GetNumPlayers()) do
+                            local player = game:GetPlayer(playerIndex);
+                            playerIndex = playerIndex + 1;
+                            if (player:HasCollectible(RuneSword.Item) and player:GetCard(0) == subType) then
+                                nextCount = RuneSword:GetInsertedRuneNum(player, subType) + 1;
+                                break;
+                            end
                         end
                     end
-                    local nextCount =  RuneSword:GetInsertedRuneNum(nearestPlayer, subType) + 1;
+                    
                     for name, func in pairs(variables) do
                         local str = string.format("%.0f", func(nextCount, globalCount, stage));
                         str = "{{ColorYellow}}"..str.."{{CR}}"
@@ -678,7 +695,7 @@ do
                 local descObj = EID.previousDescs[1];
                 local ent = descObj and descObj.Entity;
                 if (ent and ent.Type == EntityType.ENTITY_PICKUP and ent.Variant == PickupVariant.PICKUP_COLLECTIBLE) then
-                    if (descObj.Description == "QuestionMark" and THI:IsUnknownItem(ent)) then
+                    if (descObj.Description == "QuestionMark" and UnknownItems:IsUnknownItem(ent)) then
                         local config = itemConfig:GetCollectible(ent.SubType);
 
                         if (config) then

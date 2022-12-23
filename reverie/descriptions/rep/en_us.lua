@@ -1109,6 +1109,10 @@ EIDInfo.Trinkets = {
         Description = "Whenever player uses a card, spawn 1 {{Heart}}red heart",
         GoldenInfo = {t={1}}
     },
+    [Trinkets.SymmetryOCD.Trinket] = {
+        Name = "Symmetry OCD",
+        Description = "Has priority to spawn collectibles which icon's outline is horizontal symmetrical or nearly symmetrical",
+    },
 }
 
 

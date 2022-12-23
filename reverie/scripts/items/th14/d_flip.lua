@@ -1,4 +1,4 @@
-local Collectibles = CuerLib.Collectibles;
+local ItemBlacklist = CuerLib.ItemBlacklist;
 local CompareEntity = CuerLib.Entities.CompareEntity;
 local Actives = CuerLib.Actives;
 local DFlip = ModItem("D Flip", "DFLIP");
@@ -194,7 +194,7 @@ local function GetNotFixedCollectibles()
     end
     local greed = THI.Game:IsGreedMode();
     local function condition(conf)
-        if (not conf:IsAvailable()) then
+        if (ItemBlacklist:IsCollectibleBlacklisted(conf.ID)) then
             return false;
         end
         if (not conf or conf:HasTags(ItemConfig.TAG_QUEST) or conf.Hidden) then
@@ -227,12 +227,9 @@ local function GetNotFixedCollectibles()
         end
     end
     return qualityGroups, itemCount;
-    --return Collectibles.FindCollectibles(condition);
 end
 function DFlip.GetPairs(seed)
     local pools, itemCount = GetNotFixedCollectibles();
-    
-
     local rng = RNG();
     rng:SetSeed(seed, 0);
     local result = {};
@@ -257,11 +254,15 @@ function DFlip.GetPairs(seed)
             end
         end
 
-        local index2 = rng:RandomInt(#qualityPool) + 1;
-        local item2 = qualityPool[index2];
-        table.remove(qualityPool, index2);
-        itemCount = itemCount - 1;
-        return item2;
+        if (qualityPool) then
+            local index2 = rng:RandomInt(#qualityPool) + 1;
+            local item2 = qualityPool[index2];
+            table.remove(qualityPool, index2);
+            itemCount = itemCount - 1;
+            return item2;
+        else
+            return CollectibleType.COLLECTIBLE_SAD_ONION;
+        end
     end
 
 
@@ -272,7 +273,7 @@ function DFlip.GetPairs(seed)
             q = upperQuality;
         end
         local qualityPool = pools[q];
-        if (#qualityPool <= 0) then
+        if (not qualityPool or #qualityPool <= 0) then
             if (isUpper) then
                 upperQuality = q - 1;
             else
@@ -356,13 +357,17 @@ function DFlip:GetFixedAnother(type, variant, subtype, ignoreAvailable)
         if (result) then
             if (not ignoreAvailable) then
                 if (type == EntityType.ENTITY_PICKUP)  then
-                    local fixedConfig;
+                    local blacklisted = false;
                     if (variant == PickupVariant.PICKUP_COLLECTIBLE) then
-                        fixedConfig = itemConfig:GetCollectible(result[3]);
+                        if (ItemBlacklist:IsCollectibleBlacklisted(result[3])) then
+                            blacklisted = true;
+                        end
                     elseif (variant == PickupVariant.PICKUP_TRINKET) then
-                        fixedConfig = itemConfig:GetTrinket(result[3]);
+                        if (ItemBlacklist:IsTrinketBlacklisted(result[3])) then
+                            blacklisted = true;
+                        end
                     end
-                    if (fixedConfig and not fixedConfig:IsAvailable()) then
+                    if (blacklisted) then
                         return this;
                     end
                 end

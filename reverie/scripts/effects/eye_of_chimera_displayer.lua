@@ -1,4 +1,5 @@
 local Screen = CuerLib.Screen;
+local UnknownItems = CuerLib.UnknownItems;
 local Displayer = ModEntity("Eye of Chimera Displayer", "CHIMERA_DISPLAYER");
 function Displayer:GetSprite()
     local spr = Sprite();
@@ -24,7 +25,7 @@ function Displayer:PostEffectUpdate(effect)
         effect.Velocity = (effect.TargetPosition - effect.Position) * 0.3
 
         effect.Timeout = 10;
-        if (not THI:IsUnknownItem(parent)) then
+        if (not UnknownItems:IsUnknownItem(parent)) then
             effect.Timeout = 5;
             effect.Parent = nil;
         end
