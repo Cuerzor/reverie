@@ -65,12 +65,12 @@ function DaggerOfServants:RemoveRightmostHeart(player)
         if (not player:IsBoneHeart(rightmostPosition)) then
             if (soulHearts > 0) then
                 -- 魂心。
-                if (hasHalfSoulHeart) then
-                    -- 最外侧是半魂心。
-                    player:AddSoulHearts(-1);
-                elseif (boneHearts <= 0 and maxHearts <= 0 and eternalHearts > 0 and soulHearts <= 2) then
+                if (boneHearts <= 0 and maxHearts <= 0 and eternalHearts > 0 and soulHearts <= 2) then
                     -- 最外侧是魂心+永恒之心。
                     player:AddEternalHearts(-1);
+                elseif (hasHalfSoulHeart) then
+                    -- 最外侧是半魂心。
+                    player:AddSoulHearts(-1);
                 else
                     player:AddSoulHearts(-2);
                 end
@@ -98,16 +98,21 @@ function DaggerOfServants:RemoveRightmostHeart(player)
             -- 骨心（及其内容物）。
             local emptyBoneHeart = hearts + rottenHearts <= maxHearts + (boneHearts - 1) * 2;
             if (emptyBoneHeart) then
-                -- 空骨心。
-                player:AddBoneHearts(-1);
+                if (boneHearts <= 1 and maxHearts <= 0 and eternalHearts > 0 and soulHearts <= 0) then
+                    -- 空骨心 + 永恒之心。
+                    player:AddEternalHearts(-1);
+                else
+                    -- 空骨心。
+                    player:AddBoneHearts(-1);
+                end
             else 
                 --有内容物的骨心。
-                if (rottenHearts > 0) then
-                    -- 骨心内腐心
-                    player:AddRottenHearts(-2);
-                elseif (eternalHearts > 0) then
+                if (eternalHearts > 0) then
                     -- 骨心内永恒之心。
                     player:AddEternalHearts(-1);
+                elseif (rottenHearts > 0) then
+                    -- 骨心内腐心
+                    player:AddRottenHearts(-2);
                 elseif (hearts % 2 == 1) then
                     -- 骨心内半红心。
                     player:AddHearts(-1);

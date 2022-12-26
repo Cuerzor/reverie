@@ -1436,6 +1436,18 @@ Item Pools: Curse Room, Red Chest
 * After entering a room, health of all non-final-boss enemies in the room get reduced to 40%.
 * After these enemies die, summon two small copies of them with 20% health.
 
+Jealousy
+Description: You can only be with me
+Reference: Parsee Mizuhashi
+Type: Passive Item
+Quality: 1
+Tags: Offensive
+Item Pools: Curse Room, Greed Curse Room, Red Chest
+* +1 damage up.
+* damage * 95%.
+* Whenever player takes damage, gain a new Jealousy.
+    * Self-damaging won't trigger this.
+
 Oni Horn
 Description: Knock Out In Three Steps
 Reference: Yuugi Hoshiguma

@@ -20,11 +20,13 @@ function FairyDust:PostEntityKill(entity)
 
             local hasDust = false;
             local luck = 0;
-            for p, player in Players.PlayerPairs() do
-                luck = luck + player.Luck;
-                local dustCount = player:GetCollectibleNum(FairyDust.Item);
-                if (dustCount > 0 and dustCount < 3) then
-                    hasDust = true;
+            if (#Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, FairyDust.Item) < 1) then
+                for p, player in Players.PlayerPairs() do
+                    luck = luck + player.Luck;
+                    local dustCount = player:GetCollectibleNum(FairyDust.Item);
+                    if (dustCount > 0 and dustCount < 3) then
+                        hasDust = true;
+                    end
                 end
             end
 

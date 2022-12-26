@@ -70,9 +70,9 @@ Collectibles.BackDoor.Item,
 Collectibles.FetusBlood.Item,
 Collectibles.CockcrowWings.Item,
 Collectibles.GamblingD6.Item,
-Collectibles.SoulMagatama.Item,
 Collectibles.RebelMechaCaller.Item,
 Collectibles.DSiphon.Item,
 Collectibles.FairyDust.Item,
 Collectibles.Asthma.Item,
-Collectibles.Dejavu.Item})
+Collectibles.Dejavu.Item,
+Collectibles.Jealousy.Item})

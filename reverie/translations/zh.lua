@@ -390,6 +390,10 @@ Translation.Collectibles ={
     [Collectibles.Asthma.Item] = {Name="哮喘" , Description="魔力上升，再生力下降"},
     
     [Collectibles.Dejavu.Item] = {Name="似曾相识" , Description="我之前曾来过这里吗？"},
+
+
+    [Collectibles.Jealousy.Item] = {Name="嫉恨" , Description="你只能和我在一起" },
+
     [Collectibles.EyeOfChimera.Item] = {Name="嵌体怪之眼" , Description="探索未知的命运"},
 }
 

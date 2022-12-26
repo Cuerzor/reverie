@@ -485,6 +485,8 @@ Translation.Collectibles ={
     
     [Collectibles.Dejavu.Item] = {Name="デジャ・ブ" , Description="以前もこの場所に来たことがあるような気がする…"},
 
+    [Collectibles.Jealousy.Item] = {Name="妬み" , Description="私と一緒にいるしかありません"},
+
     [Collectibles.EyeOfChimera.Item] = {Name="キメラの目" , Description="未知の運命を探る"},
     
 }

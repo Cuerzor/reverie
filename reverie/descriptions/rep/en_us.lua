@@ -921,6 +921,12 @@ EIDInfo.Collectibles = {
         "#!!! You can only take 1 of the item group, and can only spawn up to 3 groups per run"..
         "#!!! Player's recorded dead runs will also appear"
     },
+    [Collectibles.Jealousy.Item] = {
+        Name = "Jealousy",
+        Description = "↑  {{Damage}}+1 damage up"..
+        "#↓  {{Damage}} Damage * 95%"..
+        "#Whenever player takes penalty damage, gain a new {{Collectible"..Collectibles.Jealousy.Item.."}}Jealousy"
+    },
     [Collectibles.EyeOfChimera.Item] = {
         Name = "Eye of Chimera",
         Description = "Reroll all pedestal items in the room upon use"..

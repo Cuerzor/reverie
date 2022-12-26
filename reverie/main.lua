@@ -56,7 +56,7 @@ end
 Lib:InitMod(THI, "REVERIE");
 
 THI.Version = {
-    12,5,0
+    12,6,0
 }
 function THI:GetVersionString()
     local versionString = "";
@@ -646,6 +646,9 @@ Collectibles.FairyDust = Require("scripts/items/th6/fairy_dust");
 Collectibles.SpiritCannon = Require("scripts/items/th6/spirit_cannon");
 Collectibles.Asthma = Require("scripts/items/th6/asthma");
 Collectibles.DaggerOfServants = Require("scripts/items/th6/dagger_of_servants");
+
+-- TH11 ALT
+Collectibles.Jealousy = Require("scripts/items/th11/jealousy");
 
 -- TH12 ALT
 Collectibles.EyeOfChimera = Require("scripts/items/th12/eye_of_chimera");

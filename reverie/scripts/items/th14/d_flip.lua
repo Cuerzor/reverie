@@ -408,11 +408,17 @@ local function UseDFlip(mod, item, rng, player, flags, slot, vardata)
         local canRoll = false;
         if (variant == PickupVariant.PICKUP_TAROTCARD) then
             if (subType >= Card.CARD_FOOL and subType <= Card.CARD_WORLD) then
-                subType = subType + Card.CARD_REVERSE_FOOL - Card.CARD_FOOL ;
-                canRoll = true;
+                local targetCard = subType + (Card.CARD_REVERSE_FOOL - Card.CARD_FOOL);
+                if (not ItemBlacklist:IsCardBlacklisted(targetCard)) then
+                    subType = targetCard;
+                    canRoll = true;
+                end
             elseif (subType >= Card.CARD_REVERSE_FOOL and subType <= Card.CARD_REVERSE_WORLD) then
-                subType = subType - (Card.CARD_REVERSE_FOOL - Card.CARD_FOOL);
-                canRoll = true;
+                local targetCard = subType - (Card.CARD_REVERSE_FOOL - Card.CARD_FOOL);
+                if (not ItemBlacklist:IsCardBlacklisted(targetCard)) then
+                    subType = targetCard;
+                    canRoll = true;
+                end
             end
         end
         local another = DFlip:GetAnother(type, variant, subType);

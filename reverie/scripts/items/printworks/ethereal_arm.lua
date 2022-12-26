@@ -62,11 +62,14 @@ function Arm:AddHandUseTimes(player, value)
     data.HandTimes = (data.HandTimes or 0) + value;
 end
 function Arm:CanPickupPocket(player)
+    local hasArm = player:HasCollectible(Arm.Item);
     if (player:GetPlayerType() == PlayerType.PLAYER_THESOUL_B) then
-        return not player:GetOtherTwin():HasCollectible(Arm.Item)
-    else
-        return not player:HasCollectible(Arm.Item)
+        local twin = player:GetOtherTwin();
+        if (twin) then
+            hasArm = hasArm or twin:HasCollectible(Arm.Item)
+        end
     end
+    return not hasArm;
     -- or self:GetHandUseTimes(player) >= self:GetMaxHandTimes()
 end
 function Arm:ResetHandUseTimes(player)

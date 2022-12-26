@@ -758,7 +758,7 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.PureFury.Item] = {
         Name = "纯粹的愤怒",
-        Description = "↑ {{Damage}}伤害x1.5"
+        Description = "↑  {{Damage}}伤害x1.5"
     },
     [Collectibles.Hekate.Item] = {
         Name="权神星",
@@ -972,7 +972,7 @@ EIDInfo.Collectibles = {
     -- TH6 ALT
     [Collectibles.FairyDust.Item] = {
         Name = "妖精尘",
-        Description = "↑ {{Luck}}+1运气"..
+        Description = "↑  {{Luck}}+1运气"..
         "#拥有3个妖精尘时飞行"..
         "#怪物有几率掉落妖精尘"..
         "#{{Luck}} 10运气：10%"..
@@ -1003,6 +1003,12 @@ EIDInfo.Collectibles = {
         Description = "进入房间时有几率生成一具尸体，伴随着3个随机道具生成"..
         "#!!! 3个道具之中只能拿走一个，且一局最多生成3组道具"..
         "#!!! 玩家死亡并结束游戏时会被记录，也会在这些尸体中出现"
+    },
+    [Collectibles.Jealousy.Item] = {
+        Name = "嫉恨",
+        Description = "↑  {{Damage}}+1伤害"..
+        "#↓  {{Damage}}伤害*95%"..
+        "#每当角色受到非自伤伤害，额外获得一个{{Collectible"..Collectibles.Jealousy.Item.."}}嫉恨"
     },
     [Collectibles.EyeOfChimera.Item] = {
         Name = "嵌体怪之眼",

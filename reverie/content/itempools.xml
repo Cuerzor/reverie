@@ -344,6 +344,8 @@
 		<Item Name="Fox in Tube" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Dagger of Servants-->
 		<Item Name="Dagger of Servants" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Jealousy-->
+		<Item Name="Jealousy" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Eye of Chimera-->
 		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 	</Pool>
@@ -746,6 +748,8 @@
 		<Item Name="Fetus Blood" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Fox in Tube-->
 		<Item Name="Fox in Tube" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Jealousy-->
+		<Item Name="Jealousy" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Eye of Chimera-->
 		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 	</Pool>
@@ -822,6 +826,8 @@
 		<Item Name="Fox in Tube" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
 		<!--Dagger of Servants-->
 		<Item Name="Dagger of Servants" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
+		<!--Jealousy-->
+		<Item Name="Jealousy" Weight="1" DecreaseBy="0.4" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="rottenBeggar">
 		<!--Plague Lord-->

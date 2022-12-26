@@ -2587,3 +2587,11 @@ Greed Shop: Added D Flip
 -妖精尘从品质2变为品质3。
 -Fixed an issue that cannot see held rune's effect via EID while holding Rune Sword.
 -修复了持有符文佩剑时，无法使用EID看到身上持有的符文效果的BUG。
+
+12.6.0-2022.12.25
+-Added Jealousy.
+-加入了嫉恨。
+-Fairy Dust pedestal collectible can only exists on in a single room.
+-妖精尘道具现在每个房间最多只能存在一个。
+-Fixed an issue that Dagger of Servants will kill player when player only has half soul heart+eternal heart/1 bone heart+eternal heart.
+-修复从者之刃在角色只有半魂心+永恒之心/1骨心+永恒之心的情况下会杀死角色的BUG。

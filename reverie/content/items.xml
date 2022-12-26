@@ -158,14 +158,17 @@
     <active id="251" name="D Siphon" description="Disempower" gfx="d_siphon.png" maxcharges="3" quality="3" tags="offensive nocantrip" />
     <passive id="252" name="THTRAINER" description="th14.exe catastrophic failure" gfx="thtrainer.png" quality="0" tags="offensive nocantrip" hidden="true" />
     
-
+    <!-- TH6 ALT -->
 	<passive id="504" name="Fairy Dust" description="Flying Wish" gfx="fairy_dust.png" quality="3" cache="flying luck" tags="nolostbr nocantrip" />
 	<active id="505" name="Spirit Cannon" description="Shin-Kikouhooooooooou!!!" gfx="spirit_cannon.png" maxcharges="3" quality="3" tags="offensive" />
 	<passive id="507" name="Asthma" description="Mana up, Regeneration Down" gfx="asthma.png" quality="2" tags="offensive summonable nocantrip" />
 	<passive id="508" name="Dagger of Servants" description="Offer Your Heart" gfx="dagger_of_servants.png" quality="3" tags="nolostbr nocantrip nogreed" />
-	
+
     <!-- Akyuu -->
     <passive id="566" name="Deja vu" description="Have I been there before?" gfx="dejavu.png" quality="2" tags="offensive nocantrip nogreed nochallenge nodaily"/>
+    
+    <!-- TH11 ALT -->
+    <passive id="603" name="Jealousy" description="You can only be with me" gfx="jealousy.png" quality="1" tags="offensive nocantrip" cache="damage tearcolor"/>
 
     <active id="627" name="Eye of Chimera" description="Explore your unknown destiny" gfx="eye_of_chimera.png" maxcharges="4" quality="3" tags="offensive nocantrip dead" />
     <!-- Trinkets-->

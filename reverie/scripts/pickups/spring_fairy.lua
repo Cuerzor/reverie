@@ -41,7 +41,7 @@ local function PreFairyCollision(mod, pickup, collider)
             if (THI.IsLunatic()) then
                 player:AddHearts(2);
             else
-                player:AddHearts(player:GetMaxHearts());
+                player:SetFullHearts();
             end
             player:AddSoulHearts(2);
             -- Remove self and create a fairy Effect.

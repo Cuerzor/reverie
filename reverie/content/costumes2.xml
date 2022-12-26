@@ -56,6 +56,8 @@
 	<costume id="505" anm2path="costume_spirit_cannon.anm2" type="active" priority="100" hasSkinAlt="true" />
 	<costume id="507" anm2path="costume_asthma.anm2" type="passive" hasSkinAlt="true" />
 	<costume id="508" anm2path="costume_dagger_of_servants.anm2" type="passive" hasSkinAlt="true" />
+
+	<costume id="603" anm2path="costume_jealousy.anm2" type="passive" hasSkinAlt="true" />
 	
 
 	<costume id="5556" anm2path="costume_satori_hair.anm2" type="none" hasSkinAlt="true" priority="99"/>
