@@ -546,10 +546,25 @@ Description: Also try mushrooms!
 Reference: Marisa Kirisame
 Type: Passive Item
 Quality: 3
-Item Pools: Secret Room, Golden Chest, Wooden Chest, Greed Secret Room
 Tags: Summonable
+Item Pools: Secret Room, Golden Chest, Wooden Chest, Greed Secret Room
 * Gain flying ability.
-* Gain Damage + 1, Fire Rate + 0.5 and speed + 0.3 for each kind of mushroom items player has.
+* Gain Damage + 1, Fire Rate + 0.5 and speed + 0.3 for each mushroom item player has.
+
+Parasitic Mushroom
+Description: You feel very odd
+Reference: Marisa Kirisame
+Type: Passive Item
+Quality: 1
+Tags: Offensive, Mushroom, Tears up
+Item Pools: Secret Room, Curse Room, Greed Secret Room, Greed Curse Room
+* Heals 2 hearts.
+* -0.1 speed down.
+* +0.5 tears up.
+* +0.5 damage up.
+* +1.5 range up.
+* Collectibles from item pools has 1/(8-x) chance to become Parasitic Mushroom. (x is count of this item)
+* Lose 1 heart container after removed this item.
 
 Dark Ribbon
 Description: Consuming darkness

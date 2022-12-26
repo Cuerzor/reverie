@@ -180,6 +180,8 @@
 		<Item Name="Sake of Forgotten" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Daitengu Telescope-->
 		<Item Name="Daitengu Telescope" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Parasitic Mushroom-->
+		<Item Name="Parasitic Mushroom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Deja vu-->
 		<Item Name="Deja vu" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Eye of Chimera-->
@@ -342,6 +344,8 @@
 		<Item Name="Fetus Blood" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Fox in Tube-->
 		<Item Name="Fox in Tube" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Parasitic Mushroom-->
+		<Item Name="Parasitic Mushroom" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Dagger of Servants-->
 		<Item Name="Dagger of Servants" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Jealousy-->
@@ -748,6 +752,8 @@
 		<Item Name="Fetus Blood" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Fox in Tube-->
 		<Item Name="Fox in Tube" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
+		<!--Parasitic Mushroom-->
+		<Item Name="Parasitic Mushroom" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Jealousy-->
 		<Item Name="Jealousy" Weight="1" DecreaseBy="0.5" RemoveOn="0.1"/>
 		<!--Eye of Chimera-->
@@ -782,6 +788,8 @@
 		<Item Name="D Siphon" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Gambling D6-->
 		<Item Name="Gambling D6" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
+		<!--Parasitic Mushroom-->
+		<Item Name="Parasitic Mushroom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Eye of Chimera-->
 		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>

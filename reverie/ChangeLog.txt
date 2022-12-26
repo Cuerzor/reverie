@@ -2595,3 +2595,9 @@ Greed Shop: Added D Flip
 -妖精尘道具现在每个房间最多只能存在一个。
 -Fixed an issue that Dagger of Servants will kill player when player only has half soul heart+eternal heart/1 bone heart+eternal heart.
 -修复从者之刃在角色只有半魂心+永恒之心/1骨心+永恒之心的情况下会杀死角色的BUG。
+
+12.7.0-2022.12.26
+-Added Parasitic Mushroom.
+-加入了寄生蘑菇。
+-Marisa's Broom now will increase stats based on mushroom item counts instead of their kind's count.
+-魔理沙的扫把现在会根据角色身上的蘑菇道具数量提升属性，而不是根据种类数量。

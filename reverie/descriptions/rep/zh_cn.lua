@@ -34,7 +34,7 @@ EIDInfo.Collectibles = {
     [Collectibles.MarisasBroom.Item] = {
         Name = "魔理沙的扫帚",
         Description = "飞行"..
-        "#每有一种蘑菇道具："..
+        "#每有一个蘑菇道具："..
         "#↑  {{Speed}}+0.3移速"..
         "#↑  {{Tears}}+0.5射速"..
         "#↑  {{Damage}}+1伤害"
@@ -969,6 +969,16 @@ EIDInfo.Collectibles = {
         "#移除妈妈房间的门，然后在以撒的房间生成一个通往梦境世界的垫子"
     },
 
+    [Collectibles.ParasiticMushroom.Item] = {
+        Name = "寄生蘑菇",
+        Description = "↓ -0.1{{Speed}}移速"..
+        "#↑ +0.5{{Tears}}射速"..
+        "#↑ +0.1{{Damage}}伤害"..
+        "#↑ +1.5{{Range}}射程"..
+        "#治愈{{Heart}}{{Heart}}2红心"..
+        "#!!! 有概率将道具池中的道具替换为{{Collectible"..Collectibles.ParasiticMushroom.Item.."}}寄生蘑菇"..
+        "#!!! 移除该道具后，失去一颗{{Heart}}心之容器"
+    },
     -- TH6 ALT
     [Collectibles.FairyDust.Item] = {
         Name = "妖精尘",

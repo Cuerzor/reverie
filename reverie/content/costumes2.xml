@@ -51,7 +51,8 @@
 	<costume id="224" anm2path="costume_kiketsu_familys_blackmail.anm2" type="passive" />	
 	<costume id="227" anm2path="costume_brutal_horseshoe.anm2" type="passive" />	
 	
-
+	
+	<costume id="502" anm2path="costume_parasitic_mushroom.anm2" type="passive"/>
 	<costume id="504" anm2path="costume_fairy_dust.anm2" type="none" isFlying="true" hasSkinAlt="true"/>
 	<costume id="505" anm2path="costume_spirit_cannon.anm2" type="active" priority="100" hasSkinAlt="true" />
 	<costume id="507" anm2path="costume_asthma.anm2" type="passive" hasSkinAlt="true" />

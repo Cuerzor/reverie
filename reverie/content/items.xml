@@ -159,6 +159,7 @@
     <passive id="252" name="THTRAINER" description="th14.exe catastrophic failure" gfx="thtrainer.png" quality="0" tags="offensive nocantrip" hidden="true" />
     
     <!-- TH6 ALT -->
+    <passive id="502" name="Parasitic Mushroom" description="You feel very odd" gfx="parasitic_mushroom.png" quality="1" hearts="4" cache="speed firedelay damage range" tags="offensive mushroom tearsup" />
 	<passive id="504" name="Fairy Dust" description="Flying Wish" gfx="fairy_dust.png" quality="3" cache="flying luck" tags="nolostbr nocantrip" />
 	<active id="505" name="Spirit Cannon" description="Shin-Kikouhooooooooou!!!" gfx="spirit_cannon.png" maxcharges="3" quality="3" tags="offensive" />
 	<passive id="507" name="Asthma" description="Mana up, Regeneration Down" gfx="asthma.png" quality="2" tags="offensive summonable nocantrip" />

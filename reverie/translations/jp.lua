@@ -478,6 +478,7 @@ Translation.Collectibles ={
     -- {Name="我的史书" , Description="这是我写的！"},
     [Collectibles.DreamSoul.Item] = {Name="夢魂" , Description="目覚めよ"},
 
+    [Collectibles.ParasiticMushroom.Item] = {Name="寄生キノコ" , Description="奇妙な感覚がある" },
     [Collectibles.FairyDust.Item] = {Name="妖精の塵" , Description="飛び立つ願い"},
     [Collectibles.SpiritCannon.Item] = {Name="気功砲" , Description="新気功砲ぉぉぉぉぉぉぉ！！！"},
     [Collectibles.DaggerOfServants.Item] = {Name="従者の刃" , Description="あなたの心を犠牲にして"},

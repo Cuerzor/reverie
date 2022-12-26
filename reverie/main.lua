@@ -641,6 +641,7 @@ Collectibles.ExchangeTicket = Require("scripts/items/th18/exchange_ticket");
 Collectibles.CurseOfCentipede = Require("scripts/items/th18/curse_of_centipede");
 
 
+Collectibles.ParasiticMushroom = Require("scripts/items/protagonists/parasitic_mushroom");
 -- TH6 ALT
 Collectibles.FairyDust = Require("scripts/items/th6/fairy_dust");
 Collectibles.SpiritCannon = Require("scripts/items/th6/spirit_cannon");

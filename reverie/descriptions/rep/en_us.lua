@@ -32,7 +32,7 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.MarisasBroom.Item] = {
         Description = "Flight"..
-        "#For each kind of mushroom items player has:"..
+        "#For each mushroom item player has:"..
         "#↑  {{Speed}} +0.3 Speed up"..
         "#↑  {{Tears}} +0.5 Tears up"..
         "#↑  {{Damage}} +1 Damage up"
@@ -887,6 +887,17 @@ EIDInfo.Collectibles = {
         "#Remove the door of mom's room, then spawn a cushion to the dream world in Isaac's room."
     },
 
+    
+    [Collectibles.ParasiticMushroom.Item] = {
+        Name = "Parasitic Mushroom",
+        Description = "↓ -0.1 {{Speed}}speed down"..
+        "#↑ +0.5 {{Tears}}tears up"..
+        "#↑ +0.1 {{Damage}}damage up"..
+        "#↑ +1.5 {{Range}}range up"..
+        "#Heals {{Heart}}{{Heart}}2 hearts"..
+        "#!!! Chance to replace collectibles from item pools into {{Collectible"..Collectibles.ParasiticMushroom.Item.."}}Parasitic Mushroom"..
+        "#!!! Lose {{Heart}}1 heart container after remove this item"
+    },
     --TH6 ALT
     [Collectibles.FairyDust.Item] = {
         Description = "↑ {{Luck}} +1 Luck up"..

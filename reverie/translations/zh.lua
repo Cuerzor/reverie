@@ -384,6 +384,7 @@ Translation.Collectibles ={
     -- {Name="我的史书" , Description="这是我写的！"},
     [Collectibles.DreamSoul.Item] = {Name="梦魂" , Description="醒来吧"},
 
+    [Collectibles.ParasiticMushroom.Item] = {Name="寄生蘑菇" , Description="你觉得有点怪怪的" },
     [Collectibles.FairyDust.Item] = {Name="妖精尘" , Description="飞翔的愿望"},
     [Collectibles.SpiritCannon.Item] = {Name="气功炮" , Description="新气功炮！！！"},
     [Collectibles.DaggerOfServants.Item] = {Name="从者之刃" , Description="献出你的心脏"},
