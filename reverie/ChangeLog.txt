@@ -2621,3 +2621,7 @@ Greed Shop: Added D Flip
 12.7.3-2022.1.15
 -Fixed an issue that may cause game blackscreen.
 -修复黑屏的BUG。
+
+12.7.4-2022.1.15
+-Fixed an issue that Tengu Camera won't display score.
+-修复天狗相机不会显示得分的BUG。

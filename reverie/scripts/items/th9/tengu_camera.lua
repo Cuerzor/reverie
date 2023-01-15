@@ -259,7 +259,7 @@ function TenguCamera:PostRender()
         if (data and data.ScoreTime > 0) then
             local alpha = data.ScoreTime / 30;
             local fontColor = KColor(1,1,1,alpha);
-            local scoreStr = Mod.GetText(Mod.StringCategories.DEFAULT, "#SCORE");
+            local scoreStr = Mod.GetText("#SCORE");
             local enFont = Mod.GetFont("CAMERA_SCORE", "en");
             local font = Mod.GetFont("CAMERA_SCORE");
             local scoreWidth = font:GetStringWidthUTF8(scoreStr);
