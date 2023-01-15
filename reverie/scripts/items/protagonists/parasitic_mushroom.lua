@@ -12,7 +12,7 @@ function ParasiticMushroom:EvaluateCache(player, flag)
         elseif (flag == CacheFlag.CACHE_DAMAGE) then
             Stats:AddDamageUp(player, 0.5 * num);
         elseif (flag == CacheFlag.CACHE_RANGE) then
-            player.TearRange = player.TearRange + 100 * num;
+            player.TearRange = player.TearRange + 60 * num;
         end
     end
 end 

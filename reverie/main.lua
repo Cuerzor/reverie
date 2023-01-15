@@ -51,12 +51,31 @@ if (not CuerLib) then
 		end
 	end
 	THI:AddCallback(ModCallbacks.MC_POST_RENDER, PostRender);
+
+    
+	local function GetShaderParams(mod, name)
+        if (name == "Reverie White Screen") then
+            return {
+                Alpha = 0;
+            }
+        elseif (name == "Reverie Black Screen") then
+            return {
+                Alpha = 0;
+            }
+        elseif (name == "Reverie Delusion Pipe") then
+            return {
+                Offset = 0,
+                Alpha = 0,
+            }
+        end
+	end
+	THI:AddCallback(ModCallbacks.MC_GET_SHADER_PARAMS, GetShaderParams);
 	return;
 end
 Lib:InitMod(THI, "REVERIE");
 
 THI.Version = {
-    12,6,0
+    12,7,3
 }
 function THI:GetVersionString()
     local versionString = "";

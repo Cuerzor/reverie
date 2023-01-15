@@ -11,6 +11,7 @@ local function GetPlayerTempData(player, create)
 end
 
 local RewindData = {
+    Player = nil,
     Rewinded = false,
     ShouldRemovePill = false,
     ShouldDischargePlacebo = true,
@@ -21,6 +22,7 @@ function Pill:Trigger(player)
     local useFlags = 0;
     player:UseActiveItem(CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS, useFlags);
 
+    RewindData.Player = player;
     RewindData.Rewinded = true;
 end
 
@@ -78,46 +80,50 @@ end
 Pill:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.LATE, PostTakeDamage, EntityType.ENTITY_PLAYER);
 
 local function PostNewRoom(mod)
-    for p, player in Players.PlayerPairs() do
-        if (RewindData.Rewinded) then
-            local itemPool = Game():GetItemPool();
-            if (RewindData.ShouldRemovePill) then
-                for slot = 0, 1 do
-                    local pillColor = player:GetPill(slot);
-                    if (pillColor & PillColor.PILL_GIANT_FLAG <= 0) then
-                        local pillEffect = itemPool:GetPillEffect(pillColor, player);
-                        if (pillEffect == Pill.ID) then
-                            Players.RemoveCardPill(player, slot)
-                            break;
-                        end
+
+
+    if (RewindData.Rewinded) then
+        local player = RewindData.Player;
+        local itemPool = Game():GetItemPool();
+        if (RewindData.ShouldRemovePill) then
+            for slot = 0, 1 do
+                local pillColor = player:GetPill(slot);
+                if (pillColor & PillColor.PILL_GIANT_FLAG <= 0) then
+                    local pillEffect = itemPool:GetPillEffect(pillColor, player);
+                    if (pillEffect == Pill.ID) then
+                        Players.RemoveCardPill(player, slot)
+                        break;
                     end
                 end
-                RewindData.ShouldRemovePill = false;
             end
-
-            if (RewindData.ShouldDischargePlacebo) then
-                if (player:HasCollectible(CollectibleType.COLLECTIBLE_PLACEBO)) then
-                    player:RemoveCollectible(CollectibleType.COLLECTIBLE_PLACEBO, false, ActiveSlot.SLOT_PRIMARY);
-                    player:AddCollectible (CollectibleType.COLLECTIBLE_PLACEBO, RewindData.PlaceboCharges, false, ActiveSlot.SLOT_PRIMARY, 3)
-                end
-                RewindData.ShouldDischargePlacebo = false;
-            end
-
-            for color = 1, PillColor.NUM_STANDARD_PILLS - 1 do
-                local pillEffect = itemPool:GetPillEffect(color, player);
-                if (pillEffect == Pill.ID) then
-                    itemPool:IdentifyPill (color);
-                    break;
-                end
-            end
-            -- Reset Effects.
-            RewindData.Rewinded = false;
             RewindData.ShouldRemovePill = false;
-            RewindData.ShouldDischargePlacebo = true;
-            RewindData.PlaceboCharges = 0;
-            local data = GetPlayerTempData(player, true);
-            data.HasEffect = false;
         end
+
+        if (RewindData.ShouldDischargePlacebo) then
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_PLACEBO)) then
+                player:RemoveCollectible(CollectibleType.COLLECTIBLE_PLACEBO, false, ActiveSlot.SLOT_PRIMARY);
+                player:AddCollectible (CollectibleType.COLLECTIBLE_PLACEBO, RewindData.PlaceboCharges, false, ActiveSlot.SLOT_PRIMARY, 3)
+            end
+            RewindData.ShouldDischargePlacebo = false;
+        end
+
+        for color = 1, PillColor.NUM_STANDARD_PILLS - 1 do
+            local pillEffect = itemPool:GetPillEffect(color, player);
+            if (pillEffect == Pill.ID) then
+                itemPool:IdentifyPill (color);
+                break;
+            end
+        end
+        -- Reset Effects.
+        RewindData.Rewinded = false;
+        RewindData.ShouldRemovePill = false;
+        RewindData.ShouldDischargePlacebo = true;
+        RewindData.PlaceboCharges = 0;
+    end
+
+    for p, player in Players.PlayerPairs() do
+        local data = GetPlayerTempData(player, true);
+        data.HasEffect = false;
     end
 end
 Pill:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, PostNewRoom);

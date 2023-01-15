@@ -863,7 +863,7 @@ do -- Events
             local momsKnifeCount = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_MOMS_KNIFE); 
             if (momsKnifeCount > 0) then
                 if (flag == CacheFlag.CACHE_FIREDELAY) then
-                    Stats:AddTearsModifier(player, function(tears) return tears * 0.75 * momsKnifeCount end);
+                    Stats:AddTearsModifier(player, function(tears) return tears * 0.75 ^ momsKnifeCount end);
                 elseif (flag == CacheFlag.CACHE_DAMAGE) then
                     Stats:MultiplyDamage(player, 0.75 ^ momsKnifeCount);
                 elseif (flag == CacheFlag.CACHE_TEARFLAG) then

@@ -2601,3 +2601,23 @@ Greed Shop: Added D Flip
 -加入了寄生蘑菇。
 -Marisa's Broom now will increase stats based on mushroom item counts instead of their kind's count.
 -魔理沙的扫把现在会根据角色身上的蘑菇道具数量提升属性，而不是根据种类数量。
+
+12.7.1-2022.12.31
+-Fixed an issue that game's display will be broken without mod CuerLib.
+-修复了在没有前置MOD CuerLib时会花屏的BUG。
+-Fixed an issue that Parasitic Mushroom adds 2.5 range instead of 1.5 range.
+-修复了寄生蘑菇实际上增加2.5射程而不是1.5射程的BUG。
+-Fixed an issue that Seija + Mom's Knife will increase tears.
+-修复了正邪+妈妈的菜刀会提升射速的BUG。
+
+12.7.2-2022.1.14
+-Fixed an issue that T. Isaac + Yamawaro's Crate cannot take out item correctly.
+-修复了堕化以撒+山童的木箱无法正确取出道具的BUG。
+-Fixed an issue that Dowsing Rods will still warn even if the rock is removed.
+-修复了探宝棒会在石头被消除后仍发出声波的BUG。
+-Fixed an issue that Pill of Ultramarine Orb will not lose effect after new room.
+-修复了绀珠药丸离开房间后不会失效的BUG。
+
+12.7.3-2022.1.15
+-Fixed an issue that may cause game blackscreen.
+-修复黑屏的BUG。

@@ -137,10 +137,12 @@ function BookOfYears:onUseBook(item,rng,player,flags,slot,data)
             local gfx = Isaac.GetItemConfig():GetCollectible(id).GfxFileName;
             player:AnimateCollectible(id, "Pickup", "PlayerPickupSparkle");
             playerData.SpawningCountdown = 50;
+            return { Discharge = true }
         else
             return { ShowAnim = true }
         end
     end
+    return { Discharge = false }
 end
 BookOfYears:AddCallback(ModCallbacks.MC_USE_ITEM, BookOfYears.onUseBook, BookOfYears.Item);
 

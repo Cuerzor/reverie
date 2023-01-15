@@ -58,6 +58,20 @@ end
 local HasRods = false;
 function Rods:PostUpdate()
     HasRods = Collectbiles:IsAnyHasCollectible(Rods.Item);
+
+    local game = Game();
+    local room = game:GetRoom();
+    local level = game:GetLevel();
+    local roomDesc = level:GetCurrentRoomDesc();
+    local key = Rods.GetRoomKey(roomDesc);
+    local globalData = Rods.GetRodsData(false);
+    if (globalData and globalData.Rooms[key] and globalData.CurrentRoomIndex) then
+        local gridEnt = room:GetGridEntity(globalData.CurrentRoomIndex);
+        if (not gridEnt or gridEnt:GetType() ~= GridEntityType.GRID_ROCK or gridEnt.State ~= 1) then
+            globalData.CurrentRoomIndex = nil;
+            globalData.Rooms[key] = nil;
+        end
+    end
 end
 Rods:AddCallback(ModCallbacks.MC_POST_UPDATE, Rods.PostUpdate)
 
