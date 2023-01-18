@@ -892,7 +892,7 @@ EIDInfo.Collectibles = {
         Name = "Parasitic Mushroom",
         Description = "↓ -0.1 {{Speed}}speed down"..
         "#↑ +0.5 {{Tears}}tears up"..
-        "#↑ +0.1 {{Damage}}damage up"..
+        "#↑ +0.5 {{Damage}}damage up"..
         "#↑ +1.5 {{Range}}range up"..
         "#Heals {{Heart}}{{Heart}}2 hearts"..
         "#!!! Chance to replace collectibles from item pools into {{Collectible"..Collectibles.ParasiticMushroom.Item.."}}Parasitic Mushroom"..

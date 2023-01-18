@@ -973,7 +973,7 @@ EIDInfo.Collectibles = {
         Name = "寄生蘑菇",
         Description = "↓ -0.1{{Speed}}移速"..
         "#↑ +0.5{{Tears}}射速"..
-        "#↑ +0.1{{Damage}}伤害"..
+        "#↑ +0.5{{Damage}}伤害"..
         "#↑ +1.5{{Range}}射程"..
         "#治愈{{Heart}}{{Heart}}2红心"..
         "#!!! 有概率将道具池中的道具替换为{{Collectible"..Collectibles.ParasiticMushroom.Item.."}}寄生蘑菇"..

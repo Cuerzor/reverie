@@ -97,7 +97,7 @@ local function PostCurseEvaluate(mod, curse)
         return curse;
     end
 end
-Bottle:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, PostCurseEvaluate);
+Bottle:AddCallback(CuerLib.Callbacks.CLC_EVALUATE_CURSE, PostCurseEvaluate);
 
 
 local function UpdateBottle(bottle)

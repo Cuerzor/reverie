@@ -6,7 +6,6 @@ local ModName = THI.Name;
 local ClassName = string.lower( ModName );
 
 function Wiki:Register(eidInfo, itemPools)
-    Wiki.Characters = include("compatilities/encyclopedia/characters");
     Wiki.HiddenItems = include("compatilities/encyclopedia/hidden");
 
     for id, col in pairs(eidInfo.Collectibles) do

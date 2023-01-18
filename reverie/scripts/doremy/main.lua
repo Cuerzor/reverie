@@ -152,28 +152,33 @@ local function CreateDreamBack()
     local room = THI.Game:GetRoom();
     local center = room:GetCenterPos();
 
-    local pos = Vector(0, 80);
-    local plate = Isaac.Spawn(DreamBack.Type, DreamBack.Variant, DreamBack.PlateSubtype, pos, Vector.Zero, nil);
-    plate.SpriteOffset = Vector(0, -48);
-    plate:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
+    local pos;
+    pos = Vector(0, 1);
+    local blueMeridian = Isaac.Spawn(DreamBack.Type, DreamBack.Variant, DreamBack.BackgroundSubtype, pos, Vector.Zero, nil);
+    blueMeridian:GetSprite():Play("BlueScroll");
+    blueMeridian.SpriteOffset = (center - pos) * 0.6;
+    blueMeridian.SortingLayer = SortingLayer.SORTING_BACKGROUND;
+    blueMeridian:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
+
+    pos = Vector(0, 2);
+    local redMeridian = Isaac.Spawn(DreamBack.Type, DreamBack.Variant, DreamBack.BackgroundSubtype, pos, Vector.Zero, nil);
+    redMeridian:GetSprite():Play("RedScroll");
+    redMeridian.SpriteOffset = (center - pos) * 0.6;
+    redMeridian.SortingLayer = SortingLayer.SORTING_BACKGROUND;
+    redMeridian:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
 
     pos = Vector(0, 20);
     local spellCard = Isaac.Spawn(DreamBack.Type, DreamBack.Variant, DreamBack.SpellCardSubtype, pos, Vector.Zero, nil);
     spellCard:GetSprite().Color = Dream:GetTempData().SpellCardBG.Color;
     spellCard.SpriteOffset = (center - pos) * 0.6;
+    spellCard.SortingLayer = SortingLayer.SORTING_BACKGROUND;
     spellCard:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
 
-    pos = Vector(0, 2);
-    local redMeridian = Isaac.Spawn(DreamBack.Type, DreamBack.Variant, DreamBack.BackgroundSubtype, pos, Vector.Zero, nil);
-    redMeridian:GetSprite():Play("RedScroll");
-    spellCard.SpriteOffset = (center - pos) * 0.6;
-    redMeridian:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
-
-    pos = Vector(0, 1);
-    local blueMeridian = Isaac.Spawn(DreamBack.Type, DreamBack.Variant, DreamBack.BackgroundSubtype, pos, Vector.Zero, nil);
-    blueMeridian:GetSprite():Play("BlueScroll");
-    spellCard.SpriteOffset = (center - pos) * 0.6;
-    blueMeridian:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
+    pos = Vector(0, 80);
+    local plate = Isaac.Spawn(DreamBack.Type, DreamBack.Variant, DreamBack.PlateSubtype, pos, Vector.Zero, nil);
+    plate.SpriteOffset = Vector(0, -48);
+    plate.SortingLayer = SortingLayer.SORTING_BACKGROUND;
+    plate:AddEntityFlags(EntityFlag.FLAG_DONT_OVERWRITE)
 end
 
 -- Dialogs.

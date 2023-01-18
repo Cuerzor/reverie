@@ -2625,3 +2625,13 @@ Greed Shop: Added D Flip
 12.7.4-2022.1.15
 -Fixed an issue that Tengu Camera won't display score.
 -修复天狗相机不会显示得分的BUG。
+
+12.7.5-2022.1.18
+-Fixed an issue that ground entities like creep or blackhole portal cannot be seen during Doremy fight.
+-修复哆来咪的BOSS战中看不到液体、黑洞传送门等地面物体的BUG。
+-Fixed an issue that too much effect entities may make Doremy fight's background flashes.
+-修复哆来咪BOSS战中可能因为特效过多而导致屏幕闪烁的BUG。
+-Fixed an issue that EID of Parasitic Mushroom is incorrect.
+-修复寄生蘑菇的EID描述不正确的BUG。
+-Fixed an issue that Sake Bottle won't give curses.
+-修复清酒瓶不会给予诅咒的BUG。
