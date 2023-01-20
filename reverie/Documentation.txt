@@ -724,8 +724,8 @@ Reference: Rin Satsuki
 Type: Active Item
 Charges: None
 Quality: 2
-Item Pools: Secret Room, Greed Secret Room
 Tags: Offensive
+Item Pools: Secret Room, Greed Secret Room
 Transformation: Musician
 * Delete all enemies and obstacles in the current room upon use, and will not appear any more in current game.
     * This Item disappears.
@@ -735,6 +735,23 @@ Transformation: Musician
 * If player has the Book of Virtues, spawn a glitch wisp.
     * If glitch wisp was put out, delete all enemies in the current room.
 * If player is Judas and has Birthright, +0.2 damage up for each deleted enemy and obstacle.
+
+Byte String
+Description: 8D E1 8C 8E 20 97 D9
+Reference: Rin Satsuki
+Type: Passive Item
+Quality: 4
+Tags: Offensive, No Cantripped
+Item Pools: Secret Room, Greed Secret Room
+* Upon Picked up:
+* +999 Coins.
+* +999 Bombs.
+* +999 Keys.
+* +999 Charges.
+* +999 Soul charges.
+* +999 Blood charges.
+* +999 Fan of the Dead lives.
+* Time becomes 99：59：59.
 
 Frozen Sakura
 Description: Spring Snow

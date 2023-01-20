@@ -164,6 +164,7 @@
 	<active id="505" name="Spirit Cannon" description="Shin-Kikouhooooooooou!!!" gfx="spirit_cannon.png" maxcharges="3" quality="3" tags="offensive" />
 	<passive id="507" name="Asthma" description="Mana up, Regeneration Down" gfx="asthma.png" quality="2" tags="offensive summonable nocantrip" />
 	<passive id="508" name="Dagger of Servants" description="Offer Your Heart" gfx="dagger_of_servants.png" quality="3" tags="nolostbr nocantrip nogreed" />
+    <passive id="511" name="Byte String" description="8D E1 8C 8E 20 97 D9" gfx="byte_string.png" quality="4" tags="offensive nocantrip" coins="999" bombs="999" keys="999" />
 
     <!-- Akyuu -->
     <passive id="566" name="Deja vu" description="Have I been there before?" gfx="dejavu.png" quality="2" tags="offensive nocantrip nogreed nochallenge nodaily"/>

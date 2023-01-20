@@ -483,6 +483,7 @@ Translation.Collectibles ={
     [Collectibles.SpiritCannon.Item] = {Name="気功砲" , Description="新気功砲ぉぉぉぉぉぉぉ！！！"},
     [Collectibles.DaggerOfServants.Item] = {Name="従者の刃" , Description="あなたの心を犠牲にして"},
     [Collectibles.Asthma.Item] = {Name="ぜんそく" , Description="魔法アップ、再生ダウン"},
+    [Collectibles.ByteString.Item] = {Name="バイト列" , Description="8D E1 8C 8E 20 97 D9"},
     
     [Collectibles.Dejavu.Item] = {Name="デジャ・ブ" , Description="以前もこの場所に来たことがあるような気がする…"},
 

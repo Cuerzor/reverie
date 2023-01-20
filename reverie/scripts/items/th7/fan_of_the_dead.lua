@@ -125,6 +125,17 @@ local function TransformHearts(player, data)
 end
 
 
+function FanOfTheDead:AddLives(player, amount)
+    local reviverData = GetPlayerData(player);
+    reviverData.Lives = self:GetLives(player) + amount;
+end
+
+function FanOfTheDead:GetLives(player)
+    local reviverData = GetPlayerData(player);
+    return reviverData.Lives or 0;
+end
+
+
 function FanOfTheDead:onPlayerEffect(player)
     
     if (player:HasCollectible(FanOfTheDead.Item)) then

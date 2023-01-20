@@ -1008,6 +1008,18 @@ EIDInfo.Collectibles = {
         "#20%的概率变为幸运币"..
         "#!!! 由角色通过卡牌/道具生成的心不会被替换"
     },
+    [Collectibles.ByteString.Item] = {
+        Name = "一串字节",
+        Description = "拾取后："..
+        "#{{Coin}} +999硬币"..
+        "#{{Bomb}} +999炸弹"..
+        "#{{Key}} +999钥匙"..
+        "#{{Battery}} +999充能"..
+        "#{{SoulHeart}} +999魂心充能"..
+        "#{{Heart}} +999红心充能"..
+        "#{{Collectible"..Collectibles.FanOfTheDead.Item.."}} +999死者之扇命数"..
+        "#{{Timer}} 时间变为99:59:59"
+    },
     [Collectibles.Dejavu.Item] = {
         Name = "似曾相识",
         Description = "进入房间时有几率生成一具尸体，伴随着3个随机道具生成"..
@@ -1567,6 +1579,8 @@ EIDInfo.SeijaNerfs = {
         [Collectibles.WildFury.Item] = "↓ 击杀敌人改为属性下降",
         [Collectibles.PureFury.Item] = "↑ 改为{{Damage}}伤害x1.01",
         [Collectibles.CurseOfCentipede.Item] = "还会给予{{Collectible"..CollectibleType.COLLECTIBLE_SACRED_HEART.."}}圣心和{{Collectible"..CollectibleType.COLLECTIBLE_POLYPHEMUS.."}}巨人独眼",
+        [Collectibles.ByteString.Item] = "被以上效果影响的数字全部变为6",
+        
         [CollectibleType.COLLECTIBLE_MISSING_NO] = "不再遇到品质{{Quality4}}道具"
     },
     Modded = "↓ 全属性下降"

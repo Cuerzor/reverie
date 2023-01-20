@@ -926,6 +926,18 @@ EIDInfo.Collectibles = {
         "#20% to change it into lucky penny"..
         "#!!! Hearts spawned by cards/items will not be changed"
     },
+    [Collectibles.ByteString.Item] = {
+        Name = "Byte String",
+        Description = "Upon picked up: "..
+        "#{{Coin}} +999 Coins"..
+        "#{{Bomb}} +999 Bombs"..
+        "#{{Key}} +999 Keys"..
+        "#{{Battery}} +999 Charges"..
+        "#{{SoulHeart}} +999 Soul charges"..
+        "#{{Heart}} +999 Blood charges"..
+        "#{{Collectible"..Collectibles.FanOfTheDead.Item.."}} +999 Fan of the Dead lives"..
+        "#{{Timer}} Time becomes 99:59:59"
+    },
     [Collectibles.Dejavu.Item] = {
         Name = "Deja vu",
         Description = "Chance to spawn a corpse with 3 random items after entering room"..
@@ -1969,6 +1981,7 @@ EIDInfo.SeijaNerfs = {
         [Collectibles.WildFury.Item] = "↓ Stats down instead after kills enemy",
         [Collectibles.PureFury.Item] = "↑ {{Damage}}x1.01 Damage up instead",
         [Collectibles.CurseOfCentipede.Item] = "Also gives{{Collectible"..CollectibleType.COLLECTIBLE_SACRED_HEART.."}}Sacred Heart and {{Collectible"..CollectibleType.COLLECTIBLE_POLYPHEMUS.."}}Polyphemus",
+        [Collectibles.ByteString.Item] = "All numbers affected by the above effects become 6",
         [CollectibleType.COLLECTIBLE_MISSING_NO] = "Won't meet quality {{Quality4}} items",
     },
     Modded = "↓ All stats down"

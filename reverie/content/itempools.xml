@@ -182,6 +182,8 @@
 		<Item Name="Daitengu Telescope" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Parasitic Mushroom-->
 		<Item Name="Parasitic Mushroom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Byte String-->
+		<Item Name="Byte String" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Deja vu-->
 		<Item Name="Deja vu" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Eye of Chimera-->
@@ -790,6 +792,8 @@
 		<Item Name="Gambling D6" Weight="0.5" DecreaseBy="0.5" RemoveOn="0.05"/>
 		<!--Parasitic Mushroom-->
 		<Item Name="Parasitic Mushroom" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Byte String-->
+		<Item Name="Byte String" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Eye of Chimera-->
 		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>

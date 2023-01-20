@@ -737,6 +737,13 @@ local Pools = {
     [Collectibles.DreamSoul.Item] = 
     {
     },
+    [Collectibles.ParasiticMushroom.Item] = 
+    {
+        Pedia.ItemPools.POOL_SECRET,
+        Pedia.ItemPools.POOL_GREED_SECRET,
+        Pedia.ItemPools.POOL_CURSE,
+        Pedia.ItemPools.POOL_GREED_CURSE
+    },
     [Collectibles.FairyDust.Item] = 
     {
         Pedia.ItemPools.POOL_TREASURE,
@@ -764,9 +771,29 @@ local Pools = {
         Pedia.ItemPools.POOL_TREASURE,
         Pedia.ItemPools.POOL_GREED_TREASURE,
     },
+    [Collectibles.ByteString.Item] = 
+    {
+        Pedia.ItemPools.POOL_SECRET,
+        Pedia.ItemPools.POOL_GREED_SECRET,
+    },
     [Collectibles.Dejavu.Item] = 
     {
         Pedia.ItemPools.POOL_SECRET
+    },
+    [Collectibles.Jealousy.Item] = {
+        Pedia.ItemPools.POOL_CURSE,
+        Pedia.ItemPools.POOL_GREED_CURSE,
+        Pedia.ItemPools.POOL_RED_CHEST,
+    },
+    [Collectibles.EyeOfChimera.Item] = {
+        Pedia.ItemPools.POOL_TREASURE,
+        Pedia.ItemPools.POOL_SECRET,
+        Pedia.ItemPools.POOL_CURSE,
+        Pedia.ItemPools.POOL_CRANE_GAME,
+        Pedia.ItemPools.POOL_GREED_TREASURE,
+        Pedia.ItemPools.POOL_GREED_SECRET,
+        Pedia.ItemPools.POOL_GREED_CURSE,
+        Pedia.ItemPools.POOL_ROTTEN_BEGGAR,
     },
 }
 return Pools;
