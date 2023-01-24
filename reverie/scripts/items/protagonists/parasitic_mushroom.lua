@@ -27,7 +27,7 @@ function ParasiticMushroom:PreGetCollectible(pool, decrease, seed, loopCount)
         if (itemCount > 0) then
             local chance = 100 / (8 - math.min(7,itemCount));
             local rng = RNG();
-            rng:SetSeed(seed, ParasiticMushroom.Item);
+            rng:SetSeed(seed, 0);
             if (rng:RandomInt(100) < chance) then
                 return ParasiticMushroom.Item;
             end

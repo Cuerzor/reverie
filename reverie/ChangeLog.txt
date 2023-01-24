@@ -2639,3 +2639,7 @@ Greed Shop: Added D Flip
 12.8.0-2023.1.20
 -Added Byte String.
 -加入了一串字节。
+
+12.8.1-2023.1.24
+-Fixed an issue that game will crash after game over.
+-修复死亡时游戏闪退的BUG。

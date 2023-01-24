@@ -1740,6 +1740,8 @@ EIDInfo.Characters = {
                 {str = "x1.01 Damage up instead."},
                 {str = "Curse of Centipede", fsize = 2, halign = 0},
                 {str = "Also gives Sacred Heart and Polyphemus."},
+                {str = "Byte String", fsize = 2, halign = 0},
+                {str = "All numbers affected by the above effects become 6."},
             }
         }
     },

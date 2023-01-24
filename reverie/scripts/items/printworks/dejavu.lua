@@ -161,7 +161,7 @@ function Dejavu:GetRandomPlayerCollectibles(player, seed, count)
     local collectibleList, collectibleCount = Collectibles:GetPlayerCollectibles(player, filter);
 
     local rng = RNG();
-    rng:SetSeed(seed, Dejavu.Item);
+    rng:SetSeed(seed, 0);
     local results = {};
     for i = 1, count do
         local value = rng:RandomInt(collectibleCount) + 1;
@@ -242,7 +242,7 @@ do -- Generation.
             local game = Game();
             local rng = RNG();
             local maxCount = 3;
-            rng:SetSeed(seed, Dejavu.Item);
+            rng:SetSeed(seed, 0);
             local level = game:GetLevel();
             local active = PlayerActiveList[playerType] or 0;
             local activeConfig = itemConfig:GetCollectible(active)
@@ -768,7 +768,7 @@ function Dejavu:PostGameEnd(gameOver)
         local seeds = game:GetSeeds();
         if (not seeds:IsCustomRun() and not NetCoop.IsNetCoop()) then
             for p, player in Players.PlayerPairs() do
-                local corpseData = self:GetCorpseData(player, seeds:GetStartSeed());
+                local corpseData = Dejavu:GetCorpseData(player, seeds:GetStartSeed());
                 Dejavu:AddCorpse(corpseData)
             end
         end
@@ -806,7 +806,7 @@ function Dejavu:GenerateRoomCorpses()
         end
         if (chance) then
             local rng = RNG();
-            rng:SetSeed(room:GetSpawnSeed(), Dejavu.Item);
+            rng:SetSeed(room:GetSpawnSeed(), 0);
             if (rng:RandomInt(100) < chance) then
                 corpseDatas = corpseDatas or {};
                 local corpseData = Dejavu:GenerateCorpse(rng:Next());
