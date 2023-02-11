@@ -2643,3 +2643,7 @@ Greed Shop: Added D Flip
 12.8.1-2023.1.24
 -Fixed an issue that game will crash after game over.
 -修复死亡时游戏闪退的BUG。
+
+12.9.0-2023.2.11
+-Added Mimic Tear.
+-加入了仿身泪滴。

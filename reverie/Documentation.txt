@@ -1791,6 +1791,15 @@ Tags: Offensive, No Cantripped
 * Disappears after use one-time use items.
 * If transformed into D2147483647, teleport player to I AM ERROR Room after use D2147483647 again, and it disappears.
 
+Mimic Tear
+Description: It wants to mimic
+Reference: Mamizou Futatsuiwa
+Type: Passive item
+Quality: 4
+Item Pools: Secret Room, Greed Secret Room
+Tags: Offensive, No Cantripped, Summonable
+* Whenever the player picks up a collectible, gains an extra clone of it.
+
 The Infamies
 Description: Fragile, thy name is heart.
 Reference: Hata no Kokoro

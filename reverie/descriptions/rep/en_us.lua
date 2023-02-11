@@ -957,6 +957,10 @@ EIDInfo.Collectibles = {
         "#You can see unknown item's qualities, charges and tags",
         BookOfVirtues = "Fires poison tears"
     },
+    [Collectibles.MimicTear.Item] = {
+        Name = "Mimic Tear",
+        Description = "Whenever you picks up a collectible, gain an extra clone of it"
+    },
 }
 local EmptyBook= Collectibles.EmptyBook;
 EIDInfo.KosuzuDescriptions = {
@@ -1741,7 +1745,9 @@ EIDInfo.Characters = {
                 {str = "Curse of Centipede", fsize = 2, halign = 0},
                 {str = "Also gives Sacred Heart and Polyphemus."},
                 {str = "Byte String", fsize = 2, halign = 0},
-                {str = "All numbers affected by the above effects become 6."},
+                {str = "All numbers affected by this item become 6."},
+                {str = "Mimic Tear", fsize = 2, halign = 0},
+                {str = "50% chance to remove the item instead of duplicating it"},
             }
         }
     },
@@ -1984,6 +1990,7 @@ EIDInfo.SeijaNerfs = {
         [Collectibles.PureFury.Item] = "↑ {{Damage}}x1.01 Damage up instead",
         [Collectibles.CurseOfCentipede.Item] = "Also gives{{Collectible"..CollectibleType.COLLECTIBLE_SACRED_HEART.."}}Sacred Heart and {{Collectible"..CollectibleType.COLLECTIBLE_POLYPHEMUS.."}}Polyphemus",
         [Collectibles.ByteString.Item] = "All numbers affected by the above effects become 6",
+        [Collectibles.MimicTear.Item] = "50% chance to remove the item instead of duplicating it",
         [CollectibleType.COLLECTIBLE_MISSING_NO] = "Won't meet quality {{Quality4}} items",
     },
     Modded = "↓ All stats down"

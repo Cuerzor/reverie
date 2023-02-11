@@ -1039,6 +1039,10 @@ EIDInfo.Collectibles = {
         "#你可以看到未知道具的品质、充能、标签",
         BookOfVirtues = "发射毒眼泪"
     },
+    [Collectibles.MimicTear.Item] = {
+        Name = "仿身泪滴",
+        Description = "每当角色拿起一个其他被动道具，获得一份它的额外复制"
+    },
 }
 
 local EmptyBook= Collectibles.EmptyBook;
@@ -1580,7 +1584,8 @@ EIDInfo.SeijaNerfs = {
         [Collectibles.PureFury.Item] = "↑ 改为{{Damage}}伤害x1.01",
         [Collectibles.CurseOfCentipede.Item] = "还会给予{{Collectible"..CollectibleType.COLLECTIBLE_SACRED_HEART.."}}圣心和{{Collectible"..CollectibleType.COLLECTIBLE_POLYPHEMUS.."}}巨人独眼",
         [Collectibles.ByteString.Item] = "被以上效果影响的数字全部变为6",
-        
+        [Collectibles.MimicTear.Item] = "50%的几率不复制道具，并失去原本道具",
+
         [CollectibleType.COLLECTIBLE_MISSING_NO] = "不再遇到品质{{Quality4}}道具"
     },
     Modded = "↓ 全属性下降"

@@ -188,6 +188,8 @@
 		<Item Name="Deja vu" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Eye of Chimera-->
 		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Mimic Tear-->
+		<Item Name="Mimic Tear" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="goldenChest">
 		<!--Maid Suit-->
@@ -796,6 +798,8 @@
 		<Item Name="Byte String" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 		<!--Eye of Chimera-->
 		<Item Name="Eye of Chimera" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+		<!--Mimic Tear-->
+		<Item Name="Mimic Tear" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
 	</Pool>
 	<Pool Name="greedBoss">
 		<!--Fried Tofu-->

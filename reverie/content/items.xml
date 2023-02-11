@@ -171,8 +171,12 @@
     
     <!-- TH11 ALT -->
     <passive id="603" name="Jealousy" description="You can only be with me" gfx="jealousy.png" quality="1" tags="offensive nocantrip" cache="damage tearcolor"/>
-
+    
     <active id="627" name="Eye of Chimera" description="Explore your unknown destiny" gfx="eye_of_chimera.png" maxcharges="4" quality="3" tags="offensive nocantrip dead" />
+    
+    <!-- TH13 ALT -->
+    <passive id="647" name="Mimic Tear" description="It wants to mimic" gfx="mimic_tear.png" quality="4" tags="offensive nocantrip summonable"/>
+    
     <!-- Trinkets-->
 	<trinket id="1" name="Frozen Frog" description="Ice Touch" gfx="frozen_frog.png" />
 	<trinket id="21" name="Aromatic Flower" description="Spring Die Twice" gfx="aromatic_flower.png" />

@@ -397,6 +397,8 @@ Translation.Collectibles ={
     [Collectibles.Jealousy.Item] = {Name="嫉恨" , Description="你只能和我在一起" },
 
     [Collectibles.EyeOfChimera.Item] = {Name="嵌体怪之眼" , Description="探索未知的命运"},
+
+    [Collectibles.MimicTear.Item] = {Name="仿身泪滴" , Description="它渴望模仿"},
 }
 
 local Trinkets = THI.Trinkets;

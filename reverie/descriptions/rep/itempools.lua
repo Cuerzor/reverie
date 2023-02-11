@@ -795,5 +795,9 @@ local Pools = {
         Pedia.ItemPools.POOL_GREED_CURSE,
         Pedia.ItemPools.POOL_ROTTEN_BEGGAR,
     },
+    [Collectibles.MimicTear.Item] = {
+        Pedia.ItemPools.POOL_SECRET,
+        Pedia.ItemPools.POOL_GREED_SECRET
+    },
 }
 return Pools;
