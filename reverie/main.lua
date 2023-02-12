@@ -75,7 +75,7 @@ end
 Lib:InitMod(THI, "REVERIE");
 
 THI.Version = {
-    12,9,0
+    12,10,0
 }
 function THI:GetVersionString()
     local versionString = "";
@@ -676,6 +676,12 @@ Collectibles.EyeOfChimera = Require("scripts/items/th12/eye_of_chimera");
 
 -- TH13 ALT
 Collectibles.MimicTear = Require("scripts/items/th13/mimic_tear");
+
+-- TH17 ALT
+Collectibles.CursedBlood = Require("scripts/items/th17/cursed_blood");
+
+-- TH18 ALT
+Collectibles.RainbowCard = Require("scripts/items/th18/rainbow_card");
 
 -- Make resistance of player at the last.
 Collectibles.BuddhasBowl = Require("scripts/items/th8/buddhas_bowl");

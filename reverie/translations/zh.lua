@@ -399,6 +399,10 @@ Translation.Collectibles ={
     [Collectibles.EyeOfChimera.Item] = {Name="嵌体怪之眼" , Description="探索未知的命运"},
 
     [Collectibles.MimicTear.Item] = {Name="仿身泪滴" , Description="它渴望模仿"},
+
+    [Collectibles.CursedBlood.Item] = {Name="诅咒之血" , Description="那么，代价是什么呢？"},
+
+    [Collectibles.RainbowCard.Item] = {Name="彩虹卡牌" , Description="风险投资"},
 }
 
 local Trinkets = THI.Trinkets;

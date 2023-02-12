@@ -10,6 +10,8 @@ local Collectibles = CuerLib.Collectibles;
 local Math = CuerLib.Math;
 local Stages = CuerLib.Stages;
 local Seija = ModPlayer("Seija", false, "SEIJA");
+
+Seija.ExceptedModItems = {};
 Seija.CacheItems = {
     --[CollectibleType.COLLECTIBLE_OUIJA_BOARD] = CacheFlag.CACHE_FIREDELAY,
 
@@ -166,16 +168,11 @@ local function UpdatePlayerModItems(player)
     tempData.ModZeroCount = 0;
     tempData.ModFourCount = 0;
     local function Check(id)
-        local config = itemConfig:GetCollectible(id);
-        if (config) then
-            local num = player:GetCollectibleNum(id);
-            if (num > 0) then
-                if (config.Quality == 0) then
-                    tempData.ModZeroCount = tempData.ModZeroCount + num
-                elseif (config.Quality >= 4) then
-                    tempData.ModFourCount = tempData.ModFourCount + num
-                end
-            end
+        local num = player:GetCollectibleNum(id);
+        if (Seija:IsModQuality0(id)) then
+            tempData.ModZeroCount = tempData.ModZeroCount + num
+        elseif (Seija:IsModQuality4(id)) then
+            tempData.ModFourCount = tempData.ModFourCount + num
         end
     end
 
@@ -251,6 +248,8 @@ local function FallRaindrop()
     drop.SpriteRotation = 15;
 end
 
+-- 玩家是否会使用正邪的方案增强道具？
+-- Checks whether the player will buff items using Seija's scheme?
 function Seija:WillPlayerBuff(player)
     local playerType = player:GetPlayerType();
     local SeijaB = THI.Players.SeijaB;
@@ -266,6 +265,8 @@ function Seija:WillPlayerBuff(player)
     return false;
 end
 
+-- 玩家是否会使用正邪的方案削弱道具？
+-- Checks whether the player will nerf items using Seija's scheme?
 function Seija:WillPlayerNerf(player)
     local RuneSword = THI.Collectibles.RuneSword;
     local SoulOfSeija = THI.Cards.SoulOfSeija;
@@ -292,10 +293,36 @@ function Seija:WillPlayerNerf(player)
 
     return nerf;
 end
+-- 用于MOD兼容。
+-- 添加一个正邪除外的MOD道具，使得这个道具不使用正邪的默认削弱/增强效果。
+-- Used for Mod Compatibility.
+-- Add a excepted mod item for Seija, make this item not using the default Seija buff/nerf effect.
+function Seija:AddExceptedModItem(item)
+    self.ExceptedModItems[item] = true;
+end
+-- 用于MOD兼容。
+-- 获取一个道具是否是正邪除外的MOD道具。
+-- 如果这个道具不使用正邪的默认削弱/增强效果，返回true。
+-- Used for Mod Compatibility.
+-- Check whether a mod item is excepted for Seija.
+-- If this item is not using the default Seija buff/nerf effect, returns true.
+function Seija:IsExceptedModItem(item)
+    return self.ExceptedModItems[item] or false;
+end
+-- 用于MOD兼容。
+-- 移除一个正邪除外的MOD道具，使得这个道具使用正邪的默认削弱/增强效果。
+-- Used for Mod Compatibility.
+-- Remove a excepted mod item for Seija, make this item to use the default Seija buff/nerf effect.
+function Seija:RemoveExceptedModItem(item)
+    self.ExceptedModItems[item] = nil;
+end
 function Seija:IsModQuality0(item)
     if (item < CollectibleType.NUM_COLLECTIBLES or THI:ContainsCollectible(item)) then
         return false;
     end 
+    if (Seija:IsExceptedModItem(item)) then
+        return false;
+    end
     local itemConfig = Isaac.GetItemConfig();
     local config = itemConfig:GetCollectible(item);
     if (config and config.Quality == 0) then
@@ -308,6 +335,9 @@ function Seija:IsModQuality4(item)
     if (item < CollectibleType.NUM_COLLECTIBLES or THI:ContainsCollectible(item)) then
         return false;
     end 
+    if (Seija:IsExceptedModItem(item)) then
+        return false;
+    end
     local itemConfig = Isaac.GetItemConfig();
     local config = itemConfig:GetCollectible(item);
     if (config and config.Quality >= 4) then

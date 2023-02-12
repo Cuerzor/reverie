@@ -2647,3 +2647,13 @@ Greed Shop: Added D Flip
 12.9.0-2023.2.11
 -Added Mimic Tear.
 -加入了仿身泪滴。
+
+12.10.0-2023.2.11
+-Added Cursed Blood and Rainbow Card.
+-加入了诅咒之血和彩虹卡牌。
+-Exchange Ticket is now Quality 4 and will be nerfed by Seija.
+-交易所门票现在品质为4，并且会被正邪削弱。
+-Fixed an issue that Judas + Birthright + Isaac's Last Wills have no effect when there's no pickups for transferring and player has not Book of Virtues.
+-修复以撒的遗书在没有美德之书，或者可以转移的掉落物或道具时，犹大长子名分的增伤效果不生效的问题。
+-Now Seija's default buff/nerf scheme for other mod's items can be disabled to implement the compatibilities.
+-现在可以禁用正邪为某个MOD道具默认使用的增强/削弱方案，以实现MOD兼容。

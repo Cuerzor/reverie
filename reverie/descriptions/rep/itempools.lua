@@ -799,5 +799,13 @@ local Pools = {
         Pedia.ItemPools.POOL_SECRET,
         Pedia.ItemPools.POOL_GREED_SECRET
     },
+    [Collectibles.CursedBlood.Item] = {
+        Pedia.ItemPools.POOL_CURSE,
+        Pedia.ItemPools.POOL_SHOP,
+        Pedia.ItemPools.POOL_DEVIL
+    },
+    [Collectibles.RainbowCard.Item] = {
+        Pedia.ItemPools.POOL_SHOP
+    },
 }
 return Pools;

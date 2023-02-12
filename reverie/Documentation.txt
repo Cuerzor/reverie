@@ -1798,7 +1798,7 @@ Type: Passive item
 Quality: 4
 Item Pools: Secret Room, Greed Secret Room
 Tags: Offensive, No Cantripped, Summonable
-* Whenever the player picks up a collectible, gains an extra clone of it.
+* Whenever the player picks up an other passive collectible, gains an extra clone of it.
 
 The Infamies
 Description: Fragile, thy name is heart.
@@ -2269,6 +2269,16 @@ Item Pools: Treasure Room, Greed Treasure Room, Ultra Secret Room
 * Player will lose 1 Hunger per 40 seconds while moving.
 * Can show Hunger by pressing Drop/Switch Button.
 
+Cursed Blood
+Description: And what, must we give in return?
+Reference: Yuuma Toutetsu
+Type: Passive Item
+Quality: 0
+Tags: Offensive, No Cantripped, No Greed
+Item Pools: Curse Room, Shop, Devil Room (1 Heart)
+* Gains 3 coins after room cleared.
+* Instantly dies after taking fire or explosion damage.
+
 Item Hungers:
 -3: Ipecac
 1: Wafer, Ghost Pepper, Playdough Cookie, Bird's Eye, Rotten Tomato, Dead Onion
@@ -2386,9 +2396,9 @@ Description: Each takes what he needs
 Reference: Chimata Tenkyuu
 Type: Active Item
 Charges: 6
-Quality: 3
-Tags: Offensive
-Item Pools: Shop, Greed Shop, No Cantrip
+Quality: 4
+Tags: Offensive, No Cantrip
+Item Pools: Shop, Greed Shop
 * Teleport players to the exchange, including several traders.
     * After entering again, the content will be refreshed without any remained pickups.
 * There are 4 kinds of traders:
@@ -2398,6 +2408,22 @@ Item Pools: Shop, Greed Shop, No Cantrip
     * Upper right: Use the collectiblessold by the lower right traders to exchange for emeralds.
 * If the player has the book of virtues, spawn emerald wisps, which can be used as 1 emerald.
 * If player is Judas and has Birthright, spawns a devil deal inside the exchange.
+
+Rainbow Card
+Description: Venture capital
+Reference: Chimata Tenkyuu
+Type: Active Item
+Charges: 0
+Quality: 0
+Tags: Offensive, No Greed
+Shop Price: 10
+Item Pools: Shop
+* !ONE-TIME USAGE!
+* Upon use:
+    * Loses all collectibles.
+    * Shop items, devil deals and exchange trades next level are free.
+* If player has the Book of Virtues, spawn a wisp for each lost item.
+* If player is Judas and has Birthright, +0.3 damage up for each lost item.
 
 Curse of Centipede
 Description: MMMMuuuullllttttiiiipppplllleeee

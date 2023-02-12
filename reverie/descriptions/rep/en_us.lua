@@ -959,7 +959,21 @@ EIDInfo.Collectibles = {
     },
     [Collectibles.MimicTear.Item] = {
         Name = "Mimic Tear",
-        Description = "Whenever you picks up a collectible, gain an extra clone of it"
+        Description = "Whenever you picks up an other passive collectible, gain an extra clone of it"
+    },
+    [Collectibles.CursedBlood.Item] = {
+        Name = "Cursed Blood",
+        Description = "Gains 3{{Coin}}coins after room cleared"..
+        "#!!! Instantly dies after taking fire or explosion damage"
+    },
+    [Collectibles.RainbowCard.Item] = {
+        Name = "Rainbow Card",
+        Description = "!!! ONE-TIME USAGE!!!"..
+        "#Upon use: "..
+        "#!!! Lose all collectibles"..
+        "#{{Shop}}Shop items, {{DevilRoom}}devil deals and {{Collectible"..Collectibles.ExchangeTicket.Item.."}}exchange trades next level are free",
+        BookOfVirtues = "Spawn a wisp for each lost item",
+        BookOfBelial = " ↑ +0.3 {{Damage}}damage up for each lost item"
     },
 }
 local EmptyBook= Collectibles.EmptyBook;
@@ -1633,6 +1647,10 @@ EIDInfo.Characters = {
                 {str = "No longer damages player, +1 soul heart."},
                 {str = "Restore Damocles' update speed."},
                 {str = "Protects player when killing by Damocles."},
+                {str = "Cursed Blood", fsize = 2, halign = 0},
+                {str = "Explosion and fire damage will heal you half red heart instead."},
+                {str = "Rainbow Card", fsize = 2, halign = 0},
+                {str = "Won't lose items."},
                 {str = "Other mod's quality 0 items", fsize = 2, halign = 0},
                 {str = "All stats up."}
             },
@@ -1742,6 +1760,8 @@ EIDInfo.Characters = {
                 {str = "Decrease stats instead after kills enemy."},
                 {str = "Pure Fury", fsize = 2, halign = 0},
                 {str = "x1.01 Damage up instead."},
+                {str = "Exchange Tickets", fsize = 2, halign = 0},
+                {str = "50% traders in the exchange transforms into Greeds."},
                 {str = "Curse of Centipede", fsize = 2, halign = 0},
                 {str = "Also gives Sacred Heart and Polyphemus."},
                 {str = "Byte String", fsize = 2, halign = 0},
@@ -1931,7 +1951,9 @@ EIDInfo.SeijaBuffs = {
         [Collectibles.GreenEyedEnvy.Item] = "Enemy copies get charmed for 5 minutes",
         [Collectibles.ViciousCurse.Item] = "No longer damages player, +1 soul heart"..
         "#Restore {{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}Damocles' update speed"..
-        "#Protects player when killing by {{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}Damocles"
+        "#Protects player when killing by {{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}Damocles",
+        [Collectibles.CursedBlood.Item] = "Explosion and fire damage will heal you {{HalfHeart}}half red heart instead",
+        [Collectibles.RainbowCard.Item] = "Won't lose items",
     },
     Modded = "↑ All stats up"
 }
@@ -1988,6 +2010,7 @@ EIDInfo.SeijaNerfs = {
         [Collectibles.D2147483647.Item] = "Can only select quality {{Quality0}} or {{Quality1}} items",
         [Collectibles.WildFury.Item] = "↓ Stats down instead after kills enemy",
         [Collectibles.PureFury.Item] = "↑ {{Damage}}x1.01 Damage up instead",
+        [Collectibles.ExchangeTicket.Item] = "50% traders in the exchange transforms into Greeds",
         [Collectibles.CurseOfCentipede.Item] = "Also gives{{Collectible"..CollectibleType.COLLECTIBLE_SACRED_HEART.."}}Sacred Heart and {{Collectible"..CollectibleType.COLLECTIBLE_POLYPHEMUS.."}}Polyphemus",
         [Collectibles.ByteString.Item] = "All numbers affected by the above effects become 6",
         [Collectibles.MimicTear.Item] = "50% chance to remove the item instead of duplicating it",

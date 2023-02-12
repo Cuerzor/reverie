@@ -53,47 +53,47 @@ function LastWills:UseLastWills(item, rng, player, flags, slow, varData)
         end
 
 
-        local canLegacy = validCount > 0;
-        local canWisps = Actives:CanSpawnWisp(player, flags)
-        if (canLegacy or canWisps) then
-            local persistentData = SaveAndLoad:ReadPersistentData();
-            -- Init Data.
-            if (not persistentData.LastWills) then
-                persistentData.LastWills = {
-                    Pickups = {},
-                    Wisps = false,
-                    DamageUp = false
-                };
-            end
+        local dataModified = false;
+        local persistentData = SaveAndLoad:ReadPersistentData();
+        -- Init Data.
+        if (not persistentData.LastWills) then
+            persistentData.LastWills = {
+                Pickups = {},
+                Wisps = false,
+                DamageUp = false
+            };
+        end
 
-            -- Write Data.
-            local willsData = persistentData.LastWills;
-            if (canLegacy) then
-                for i, ent in pairs(pickups) do
-                    local pickup = ent:ToPickup();
-                    if (not pickup:IsShopItem() and LastWills:CanSend(pickup)) then
-                        local info = {
-                            Type = pickup.Type,
-                            Variant = pickup.Variant,
-                            SubType = pickup.SubType
-                        }
-                        table.insert(willsData.Pickups, info);
-                        pickup:Remove();
-                        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
-                    end
+        -- Write Data.
+        local willsData = persistentData.LastWills;
+        if (validCount > 0) then
+            for i, ent in pairs(pickups) do
+                local pickup = ent:ToPickup();
+                if (not pickup:IsShopItem() and LastWills:CanSend(pickup)) then
+                    local info = {
+                        Type = pickup.Type,
+                        Variant = pickup.Variant,
+                        SubType = pickup.SubType
+                    }
+                    table.insert(willsData.Pickups, info);
+                    pickup:Remove();
+                    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, Vector.Zero, nil);
+                    dataModified = true;
                 end
             end
-
-            if (canWisps) then
-                willsData.Wisps = true;
-            end
-            
-            if (Players.HasJudasBook(player)) then
-                willsData.DamageUp = true;
-            end
-
-            SaveAndLoad:WritePersistentData(persistentData);
         end
+
+        if (Actives:CanSpawnWisp(player, flags)) then
+            willsData.Wisps = true;
+            dataModified = true;
+        end
+        
+        if (Players.HasJudasBook(player)) then
+            willsData.DamageUp = true;
+            dataModified = true;
+        end
+
+        SaveAndLoad:WritePersistentData(persistentData);
     end
 
     return {ShowAnim = true, Remove = true}

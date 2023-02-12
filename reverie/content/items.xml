@@ -149,7 +149,7 @@
     <active id="244" name="Soul Magatama" description="Life Swapper" gfx="soul_magatama.png" maxcharges="2" quality="2" tags="offensive"/>
     <passive id="245" name="Fox in Tube" description="How could I lie to you?" gfx="fox_in_tube.png" quality="2" tags="offensive nocantrip"/>
     <passive id="246" name="Daitengu Telescope" description="Stars are falling..." gfx="daitengu_telescope.png" quality="2" tags="offensive nocantrip stars nogreed"/>
-    <active id="247" name="Exchange Ticket" description="Each takes what he needs" gfx="exchange_ticket.png" maxcharges="6" quality="3" tags="offensive nocantrip"/>
+    <active id="247" name="Exchange Ticket" description="Each takes what he needs" gfx="exchange_ticket.png" maxcharges="6" quality="4" tags="offensive nocantrip"/>
     <passive id="248" name="Curse of Centipede" description="MMMMuuuullllttttiiiipppplllleeee" gfx="curse_of_centipede.png" devilprice="2" quality="4" tags="offensive nocantrip"/>
 
     <active id="249" name="Rebel Mecha Caller" description="Start your engine!" gfx="rebel_mecha_caller.png" maxcharges="12" devilprice="2" quality="3" tags="offensive"/>
@@ -177,6 +177,14 @@
     <!-- TH13 ALT -->
     <passive id="647" name="Mimic Tear" description="It wants to mimic" gfx="mimic_tear.png" quality="4" tags="offensive nocantrip summonable"/>
     
+    <!-- TH17 ALT -->
+    <passive id="728" name="Cursed Blood" description="And what, must we give in return?" gfx="cursed_blood.png" quality="0" tags="offensive nocantrip nogreed"/>
+
+
+    <!-- TH18 ALT -->
+    <active id="747" name="Rainbow Card" description="Venture capital" gfx="rainbow_card.png" quality="0" shopprice="10" tags="offensive nogreed"/>
+
+
     <!-- Trinkets-->
 	<trinket id="1" name="Frozen Frog" description="Ice Touch" gfx="frozen_frog.png" />
 	<trinket id="21" name="Aromatic Flower" description="Spring Die Twice" gfx="aromatic_flower.png" />

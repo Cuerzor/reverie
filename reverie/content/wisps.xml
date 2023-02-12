@@ -291,6 +291,9 @@
 	<!-- Eye of Chimera -->
 	<wisp id="627" hp="2" damage="3" tearFlags="4" tearColor="tear_bob" flameColor="flame_bob" coreColor="core_bob" coreGfx="eye.png" />
 	
+	<!-- Rainbow Card -->
+	<wisp id="747" count="0" />
+	
 	<!-- My Manual -->
 	<wisp id="149" hp="2" layer="2" damage="2" flameColor="default" coreColor="default" coreGfx="core.png" />
 	<!-- My Guide -->

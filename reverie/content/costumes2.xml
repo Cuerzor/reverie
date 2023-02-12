@@ -59,6 +59,8 @@
 	<costume id="508" anm2path="costume_dagger_of_servants.anm2" type="passive" hasSkinAlt="true" />
 
 	<costume id="603" anm2path="costume_jealousy.anm2" type="passive" hasSkinAlt="true" />
+
+	<costume id="728" anm2path="costume_cursed_blood.anm2" type="passive" hasSkinAlt="true" />
 	
 
 	<costume id="5556" anm2path="costume_satori_hair.anm2" type="none" hasSkinAlt="true" priority="99"/>

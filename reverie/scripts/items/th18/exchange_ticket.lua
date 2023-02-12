@@ -18,7 +18,8 @@ EmeraldSprite:Play("Icon");
 
 function Ticket:GetExchangeData(init)
     return self:GetTempGlobalData(init, function() return {
-        Belial = false
+        Belial = false,
+        Seija = false
     } end)
 end
 
@@ -110,15 +111,31 @@ function Ticket.PostNewRoom()
 
         
         local data = Ticket:GetExchangeData(false);
-        if (data and data.Belial) then
-            local center = room:GetCenterPos();
-            local itemPool = game:GetItemPool();
-            local id = itemPool:GetCollectible(ItemPoolType.POOL_DEVIL, true, room:GetSpawnSeed());
-            local pos = room:FindFreePickupSpawnPosition(center);
-            local item = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero, nil):ToPickup();
-            item.ShopItemId = -2;
-            item.Price = -1;
-            data.Belial = false;
+        if (data) then
+            if (data.Belial) then
+                local center = room:GetCenterPos();
+                local itemPool = game:GetItemPool();
+                local id = itemPool:GetCollectible(ItemPoolType.POOL_DEVIL, true, room:GetSpawnSeed());
+                local pos = room:FindFreePickupSpawnPosition(center);
+                local item = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, id, pos, Vector.Zero, nil):ToPickup();
+                item.ShopItemId = -2;
+                item.Price = -1;
+                data.Belial = false;
+            end
+            if (data.Seija) then
+                local rng = Isaac.GetPlayer():GetCollectibleRNG(Ticket.Item);
+                local traders = Isaac.FindByType(Trader.Type, Trader.Variant);
+                for i = 1, #traders / 2 do
+                    table.remove(traders, rng:RandomInt(#traders) + 1);
+                end
+                for _, ent in ipairs(traders) do
+                    ent:Remove();
+                    local greed = Isaac.Spawn(EntityType.ENTITY_GREED, 0, 0, ent.Position, Vector.Zero, nil);
+                    greed.MaxHitPoints = greed.MaxHitPoints / 15;
+                    greed.HitPoints = greed.MaxHitPoints;
+                end
+                data.Seija = false;
+            end
         end
     end
 end
@@ -131,10 +148,12 @@ function Ticket:PostUseTicket(item, rng, player, flags, slot, varData)
     if (not beastExists) then
         THI.GotoRoom("s.chest."..Ticket.Exchange.Variant);
         Game():StartRoomTransition (-3, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT, player);
+        local data = Ticket:GetExchangeData(true);
         if (Players.HasJudasBook(player)) then
-            local data = Ticket:GetExchangeData(true);
             data.Belial = true;
         end
+        local Seija = Reverie.Players.Seija;
+        data.Seija = Seija:WillPlayerNerf(player);
     else
         local room = Game():GetRoom();
         local pos = room:GetRandomPosition(160);

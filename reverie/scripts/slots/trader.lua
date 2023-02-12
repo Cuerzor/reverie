@@ -272,6 +272,10 @@ function Trader.NewTradeData(service, seed)
         youSubType = Trader.GetCollectible(class, true, false, seed, quality, 3)
     end
     data.IReceive = Trader.GetOfferData(meType, meSubType);
+    local RainbowCard = Reverie.Collectibles.RainbowCard;
+    if (data.IReceive.Type == Trader.OfferType.OFFER_EMERALD and RainbowCard:HasEffect()) then
+        data.IReceive.SubType = 0;
+    end
     data.YouReceive = Trader.GetOfferData(youType, youSubType);
     data.Class = class;
     return data;

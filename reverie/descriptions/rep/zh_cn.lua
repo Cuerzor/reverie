@@ -1043,6 +1043,20 @@ EIDInfo.Collectibles = {
         Name = "仿身泪滴",
         Description = "每当角色拿起一个其他被动道具，获得一份它的额外复制"
     },
+    [Collectibles.CursedBlood.Item] = {
+        Name = "诅咒之血",
+        Description = "清理房间后获得3{{Coin}}硬币"..
+        "#!!! 受到火焰或爆炸伤害后立即死亡"
+    },
+    [Collectibles.RainbowCard.Item] = {
+        Name = "彩虹卡牌",
+        Description = "!!! 一次性使用!!!"..
+        "#使用后："..
+        "#!!! 失去所有道具"..
+        "#下一层的{{Shop}}商品、{{DevilRoom}}恶魔交易和{{Collectible"..Collectibles.ExchangeTicket.Item.."}}交易所交易免费",
+        BookOfVirtues = "每失去一个道具，生成一个灵火",
+        BookOfBelial = " ↑ 每移除一个道具，+0.3{{Damage}}伤害"
+    },
 }
 
 local EmptyBook= Collectibles.EmptyBook;
@@ -1525,7 +1539,9 @@ EIDInfo.SeijaBuffs = {
         [Collectibles.GreenEyedEnvy.Item] = "分裂出的怪物被魅惑5分钟",
         [Collectibles.ViciousCurse.Item] = "不再伤害角色，+1魂心"..
         "#复原{{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}达摩克里斯之剑的更新速度"..
-        "#即将被{{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}达摩克里斯之剑杀死时保护玩家"
+        "#即将被{{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}达摩克里斯之剑杀死时保护玩家",
+        [Collectibles.CursedBlood.Item] = "爆炸和火焰伤害改为恢复{{HalfHeart}}半颗红心",
+        [Collectibles.RainbowCard.Item] = "不失去道具",
     },
     Modded = "↑ 全属性上升"
 }
@@ -1582,6 +1598,7 @@ EIDInfo.SeijaNerfs = {
         [Collectibles.D2147483647.Item] = "只能选择品质{{Quality0}}和品质{{Quality1}}的主动道具",
         [Collectibles.WildFury.Item] = "↓ 击杀敌人改为属性下降",
         [Collectibles.PureFury.Item] = "↑ 改为{{Damage}}伤害x1.01",
+        [Collectibles.ExchangeTicket.Item] = "交易所中50%的交易者变为贪婪",
         [Collectibles.CurseOfCentipede.Item] = "还会给予{{Collectible"..CollectibleType.COLLECTIBLE_SACRED_HEART.."}}圣心和{{Collectible"..CollectibleType.COLLECTIBLE_POLYPHEMUS.."}}巨人独眼",
         [Collectibles.ByteString.Item] = "被以上效果影响的数字全部变为6",
         [Collectibles.MimicTear.Item] = "50%的几率不复制道具，并失去原本道具",
