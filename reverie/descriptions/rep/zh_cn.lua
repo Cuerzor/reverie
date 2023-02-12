@@ -1540,7 +1540,7 @@ EIDInfo.SeijaBuffs = {
         [Collectibles.ViciousCurse.Item] = "不再伤害角色，+1魂心"..
         "#复原{{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}达摩克里斯之剑的更新速度"..
         "#即将被{{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}达摩克里斯之剑杀死时保护玩家",
-        [Collectibles.CursedBlood.Item] = "爆炸和火焰伤害改为恢复{{HalfHeart}}半颗红心",
+        [Collectibles.CursedBlood.Item] = "免疫火焰伤害，爆炸伤害改为恢复{{HalfHeart}}半颗红心",
         [Collectibles.RainbowCard.Item] = "不失去道具",
     },
     Modded = "↑ 全属性上升"

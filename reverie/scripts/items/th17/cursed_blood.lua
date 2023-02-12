@@ -3,13 +3,17 @@ local Players = CuerLib.Players;
 local CursedBlood = ModItem("Cursed Blood", "CURSED_BLOOD");
 
 function CursedBlood:PreTakeDamage(tookDamage, amount, flags, source, countdown)
-    if (flags & (DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_FIRE) > 0) then
+    local explosion = flags & DamageFlag.DAMAGE_EXPLOSION > 0;
+    local fire = flags & DamageFlag.DAMAGE_FIRE > 0;
+    if (explosion or fire) then
         local player = tookDamage:ToPlayer();
         if (player.Variant == 0) then
             if (player:HasCollectible(CursedBlood.Item)) then
                 local Seija = Reverie.Players.Seija;
                 if (Seija:WillPlayerBuff(player)) then
-                    player:AddHearts(1);
+                    if (explosion) then
+                        player:AddHearts(1);
+                    end
                     return false;
                 end
             end

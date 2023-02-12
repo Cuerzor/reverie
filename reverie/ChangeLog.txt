@@ -2661,3 +2661,9 @@ Greed Shop: Added D Flip
 12.10.1-2023.2.12
 -Fixed an issue that Gambling D6 + Book of Virtues will cause error.
 -修复赌博骰子+美德之书会使游戏出错的问题。
+
+12.10.2-2023.2.12
+-Added small icon for Cursed Blood and Rainbow Card.
+-为诅咒之血和彩虹卡牌加入了小图标。
+-Seija + Cursed Blood no longer heals red hearts when taking fire damage.
+-正邪+诅咒之血在受到火焰伤害时不再治愈红心。

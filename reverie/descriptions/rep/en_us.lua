@@ -1648,7 +1648,8 @@ EIDInfo.Characters = {
                 {str = "Restore Damocles' update speed."},
                 {str = "Protects player when killing by Damocles."},
                 {str = "Cursed Blood", fsize = 2, halign = 0},
-                {str = "Explosion and fire damage will heal you half red heart instead."},
+                {str = "Immune to fire damages."},
+                {str = "Explosion damage will heal you half red heart instead."},
                 {str = "Rainbow Card", fsize = 2, halign = 0},
                 {str = "Won't lose items."},
                 {str = "Other mod's quality 0 items", fsize = 2, halign = 0},
@@ -1952,7 +1953,8 @@ EIDInfo.SeijaBuffs = {
         [Collectibles.ViciousCurse.Item] = "No longer damages player, +1 soul heart"..
         "#Restore {{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}Damocles' update speed"..
         "#Protects player when killing by {{Collectible"..CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE.."}}Damocles",
-        [Collectibles.CursedBlood.Item] = "Explosion and fire damage will heal you {{HalfHeart}}half red heart instead",
+        [Collectibles.CursedBlood.Item] = "Immune to fire damages"..
+        "Explosion damage will heal you {{HalfHeart}}half red heart instead",
         [Collectibles.RainbowCard.Item] = "Won't lose items",
     },
     Modded = "↑ All stats up"
