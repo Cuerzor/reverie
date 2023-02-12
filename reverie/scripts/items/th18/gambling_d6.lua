@@ -49,7 +49,7 @@ function GamblingD6:IsPickupDisappearing(pickup)
     return (data and data.Disappearing);
 end
 
-function GamblingD6:Use(player, slot)
+function GamblingD6:Use(player, slot, flags)
     local choice = GamblingD6:GetChoice(player);
     if (choice == 0) then
         HoldingActive:Cancel(player);
@@ -115,7 +115,7 @@ local function UseGamblingD6(mod, item, rng, player, flags, slot, vardata)
         HoldingActive:Hold(GamblingD6.Item, player, slot, flags);
     elseif (holdingItem == GamblingD6.Item) then
         local shouldDischarge = HoldingActive:ShouldDischarge(player);
-        local discharge = GamblingD6:Use(player, slot);
+        local discharge = GamblingD6:Use(player, slot, flags);
         return {ShowAnim = discharge, Discharge = shouldDischarge and discharge}
     end
     return {ShowAnim = false, Discharge = false;}

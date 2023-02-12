@@ -2648,7 +2648,7 @@ Greed Shop: Added D Flip
 -Added Mimic Tear.
 -加入了仿身泪滴。
 
-12.10.0-2023.2.11
+12.10.0-2023.2.12
 -Added Cursed Blood and Rainbow Card.
 -加入了诅咒之血和彩虹卡牌。
 -Exchange Ticket is now Quality 4 and will be nerfed by Seija.
@@ -2657,3 +2657,7 @@ Greed Shop: Added D Flip
 -修复以撒的遗书在没有美德之书，或者可以转移的掉落物或道具时，犹大长子名分的增伤效果不生效的问题。
 -Now Seija's default buff/nerf scheme for other mod's items can be disabled to implement the compatibilities.
 -现在可以禁用正邪为某个MOD道具默认使用的增强/削弱方案，以实现MOD兼容。
+
+12.10.1-2023.2.12
+-Fixed an issue that Gambling D6 + Book of Virtues will cause error.
+-修复赌博骰子+美德之书会使游戏出错的问题。
