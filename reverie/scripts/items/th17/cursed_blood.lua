@@ -26,7 +26,7 @@ function CursedBlood:PostTakeDamage(tookDamage, amount, flags, source, countdown
     if (flags & (DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_FIRE) > 0) then
         local player = tookDamage:ToPlayer();
         if (player.Variant == 0) then
-            if (player:HasCollectible(CursedBlood.Item)) then
+            if (player:HasCollectible(CursedBlood.Item) and not player:HasCollectible(CollectibleType.COLLECTIBLE_BLACK_CANDLE)) then
                 local Seija = Reverie.Players.Seija;
                 if (not Seija:WillPlayerBuff(player)) then
                     Game():BombExplosionEffects (player.Position, 500, TearFlags.TEAR_BURN, Color.Default, player, 2, true, false, DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_IGNORE_ARMOR )

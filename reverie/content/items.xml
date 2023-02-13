@@ -32,7 +32,7 @@
     <!-- TH8-->
     <active id="41" name="Jar of Fireflies" description="Fire fire fireflies!" gfx="jar_of_fireflies.png" maxcharges="1" quality="2" tags="fly offensive" shopprice="10"/>
     <passive id="42" name="Song of Nightbird" description="Deaf to all but the songs" gfx="song_of_nightbird.png" quality="2" tags="summonable offensive"/>
-    <active id="43" name="Book of Years" description="Time changes" gfx="book_of_years.png" maxcharges="6" quality="4" tags="book nocantrip offensive"/>
+    <active id="43" name="Book of Years" description="Time changes" gfx="book_of_years.png" maxcharges="6" quality="4" tags="book nocantrip offensive nochallenge"/>
     <passive id="44" name="Rabbit Trap" description="Watch your step!" gfx="rabbit_trap.png" cache="luck" quality="2" tags="summonable offensive nocantrip nogreed"/>
     <familiar id="45" name="Illusion" description="What are you hiding?!" gfx="illusion.png" cache="familiars" quality="2" tags="summonable offensive"/>
     <active id="46" name="Peerless Elixir" description="Caution: Overdose wil" gfx="peerless_elixir.png" maxcharges="4" quality="3" tags="offensive"/>
@@ -144,12 +144,12 @@
         
     <!-- TH18-->
     <active id="241" name="Gambling D6" description="Greater or Less" gfx="gambling_d6.png" maxcharges="2" quality="3" tags="offensive nocantrip"/>
-    <active id="242" name="Yamawaro's Crate" description="Item storage" gfx="yamawaros_crate.png" maxcharges="0" quality="2" tags="offensive nocantrip" shopprice="10"/>
+    <active id="242" name="Yamawaro's Crate" description="Item storage" gfx="yamawaros_crate.png" maxcharges="0" quality="2" tags="offensive nocantrip nochallenge" shopprice="10"/>
     <active id="243" name="Delusion Pipe" description="Drowning in delight" gfx="delusion_pipe.png" maxcharges="30" chargetype="timed" quality="1" tags="offensive"/>
     <active id="244" name="Soul Magatama" description="Life Swapper" gfx="soul_magatama.png" maxcharges="2" quality="2" tags="offensive"/>
     <passive id="245" name="Fox in Tube" description="How could I lie to you?" gfx="fox_in_tube.png" quality="2" tags="offensive nocantrip"/>
     <passive id="246" name="Daitengu Telescope" description="Stars are falling..." gfx="daitengu_telescope.png" quality="2" tags="offensive nocantrip stars nogreed"/>
-    <active id="247" name="Exchange Ticket" description="Each takes what he needs" gfx="exchange_ticket.png" maxcharges="6" quality="4" tags="offensive nocantrip"/>
+    <active id="247" name="Exchange Ticket" description="Each takes what he needs" gfx="exchange_ticket.png" maxcharges="6" quality="4" tags="offensive nocantrip nochallenge"/>
     <passive id="248" name="Curse of Centipede" description="MMMMuuuullllttttiiiipppplllleeee" gfx="curse_of_centipede.png" devilprice="2" quality="4" tags="offensive nocantrip"/>
 
     <active id="249" name="Rebel Mecha Caller" description="Start your engine!" gfx="rebel_mecha_caller.png" maxcharges="12" devilprice="2" quality="3" tags="offensive"/>

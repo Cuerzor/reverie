@@ -967,7 +967,7 @@ Reference: Keine Kamishirasawa
 Type: Active Item
 Charges: 6
 Quality: 4
-Tags: Offensive, Bookworm, No Cantrip
+Tags: Offensive, Bookworm, No Cantripped, No Challenge
 Item Pools: Secret Room, Library, Greed Secret Room
 * Remove a random passive collectible item with the lowest quality, spawn a random collectible.
 * If player has the Book of Virtues, spawn grey wisps, they spawns Missing Page 2 collectibles after being put out. 
@@ -1150,7 +1150,7 @@ Reference: Hieda no Akyuu
 Type: Active Item 
 Charges: 0 
 Quality: 3 
-Tags: Offensive, No Cantripped 
+Tags: Offensive, No Cantripped, No Challenge
 Item Pools: Secret Room, Old Chest, Greed Secret Room
 * One-time Use! 
 * Upon use, send all collectibles, trinkets and pickups in current room to the next run.
@@ -2278,6 +2278,7 @@ Tags: Offensive, No Cantripped, No Greed
 Item Pools: Curse Room, Shop, Devil Room (1 Heart)
 * Gains 3 coins after room cleared.
 * Instantly dies after taking fire or explosion damage.
+    * Black Candle will remove this effect.
 
 Item Hungers:
 -3: Ipecac
@@ -2323,7 +2324,7 @@ Reference: Takane Yamashiro
 Type: Active Item
 Charges: None
 Quality: 2
-Tags: Offensive, No Cantrip
+Tags: Offensive, No Cantripped, No Challenge
 Item Pools: Shop, Greed Shop, Wooden Chest
 * Open the 8-slot backpack, you can put your collectibles and trinkets into it (has no effects), or take them out.
 * Can reduce collectibles or trinkets into pickups.
@@ -2397,7 +2398,7 @@ Reference: Chimata Tenkyuu
 Type: Active Item
 Charges: 6
 Quality: 4
-Tags: Offensive, No Cantrip
+Tags: Offensive, No Cantripped, No Challenge
 Item Pools: Shop, Greed Shop
 * Teleport players to the exchange, including several traders.
     * After entering again, the content will be refreshed without any remained pickups.
@@ -2620,15 +2621,17 @@ Effect:
 Introduction to challenges:
 
 Heavy Debt
-Reference: Tainted Keeper
+Character: Tainted Keeper
 Starting Items: Deep Pockets, Moms' IOU
 Starting Trinkets: Silver Dollar (Swallowed)
 End: Mom's Heart/It lives!
 Room Filter: None
 Curse Filter: No Curse of Labyrinth
+Special:
+* 2 of Diamonds is replaced by Ace of Diamonds.
 
 Shadow Die Twice
-Reference: Tainted Judas
+Character: Tainted Judas
 Starting Items: Roukanken, 4.5 Volt, Judas' Shadow, The Battery
 Starting Trinkets: Aromatic Flower, Old Capacitor(Swallowed)
 Pocket Items: Psycho Knife
@@ -2636,16 +2639,51 @@ End: The Lamb
 Room Filter: No Treasure Rooms or Shops
 
 Steam Age
-Reference: Cain
-Staring Items: Deep Pockets
+Character: Cain
+Starting Items: Deep Pockets
 Pocket Items: Tengu Cellphone
-End: ？？？
+End: ???
 Curse Filter: No Curse of Blind
 Special:
 * All collectibles become A Quarter.
     * Except collectibles in Tengu Cellphone.
 * All items that require coins become batteries.
 
+Pure Purist
+Character: Isaac
+Starting Items: None
+End: Mom
+Curse Filter: No Curses
+Room Filter: No treasure room, shop, mini-boss room, secret room, super secret room, arcade, curse room, challenge room, library, sacrifice room, Isaac's bedroom, barren bedroom, chest room, dice room.
+Special:
+* All collectibles is replaced by Pure Fury.
+
+Photo Exam
+Character: Isaac
+Starting Items: None
+Pocket Items: Tengu Camera
+End: Hush
+Curse Filter: No Curses
+Special:
+* Player starts with 9 red hearts.
+* The starting level is blue womb with 4 death certificates.
+* Hush's 1st stage's HP is 0.01.
+* Hush's 2nd stage's HP is locked to 33%.
+* After player getting 100+ photo score using Tengu Camera, kills all enemies in the room.
+
+No Blood for Curse
+Character: Magdalane
+Starting Items: Cursed Blood, Carnival Hat, Curse of the Tower
+End: Satan
+Special:
+* Black Candle, Pyromaniac and Host Hat are banned.
+
+No Blood for Curse II
+Character: Isaac
+Starting Items: Cursed Blood, Carnival Hat
+End: Mother
+Special:
+* Black Candle, Pyromaniac and Host Hat are banned.
 
 Boss List:
 

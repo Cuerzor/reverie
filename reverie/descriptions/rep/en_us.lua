@@ -964,7 +964,8 @@ EIDInfo.Collectibles = {
     [Collectibles.CursedBlood.Item] = {
         Name = "Cursed Blood",
         Description = "Gains 3{{Coin}}coins after room cleared"..
-        "#!!! Instantly dies after taking fire or explosion damage"
+        "#!!! Instantly dies after taking fire or explosion damage"..
+        "#{{Collectible260}} Black Candle will remove the instantly death effect",
     },
     [Collectibles.RainbowCard.Item] = {
         Name = "Rainbow Card",

@@ -34,5 +34,6 @@
 	<challenge name="Steam Age" id="3" startingitems="416" playertype="2" endstage="11" cursefilter="64" altpath="true" />
 	<challenge name="Pure Purist" id="4" playertype="0" roomfilter="2,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22" cursefilter="255" endstage="6"/>
 	<challenge name="Photo Exam" id="5" playertype="0" cursefilter="255" endstage="9"/>
-	
+	<challenge name="No Blood for Curse" id="6" startingitems="371" playertype="1" endstage="10" altpath="false" />
+	<challenge name="No Blood for Curse II" id="7" playertype="0" endstage="8" secretpath="true" />
 </challenges>

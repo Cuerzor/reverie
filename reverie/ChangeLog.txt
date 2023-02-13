@@ -2667,3 +2667,15 @@ Greed Shop: Added D Flip
 -为诅咒之血和彩虹卡牌加入了小图标。
 -Seija + Cursed Blood no longer heals red hearts when taking fire damage.
 -正邪+诅咒之血在受到火焰伤害时不再治愈红心。
+
+12.10.3-2023.2.12
+-Added Challenge "No Blood for Curse".
+-加入了挑战“不为诅咒流血”。
+-Black Candle will now remove Cursed Blood's instantly death effect.
+-黑蜡烛现在会取消诅咒之血的致死效果。
+
+12.10.4-2023.2.13
+-Added Challenge "No Blood for Curse II".
+-加入了挑战“不为诅咒流血II”。
+-Book of Years, Yamawaro's Crate and Exchange Ticket now has tag "No Challenge".
+-岁月史书、山童的木箱和交易所门票现在有了标签“非挑战”。

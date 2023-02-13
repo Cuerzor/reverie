@@ -1046,7 +1046,8 @@ EIDInfo.Collectibles = {
     [Collectibles.CursedBlood.Item] = {
         Name = "诅咒之血",
         Description = "清理房间后获得3{{Coin}}硬币"..
-        "#!!! 受到火焰或爆炸伤害后立即死亡"
+        "#!!! 受到火焰或爆炸伤害后立即死亡"..
+        "#{{Collectible260}} 黑蜡烛会移除即死效果",
     },
     [Collectibles.RainbowCard.Item] = {
         Name = "彩虹卡牌",
