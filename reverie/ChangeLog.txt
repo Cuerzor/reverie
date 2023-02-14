@@ -2679,3 +2679,9 @@ Greed Shop: Added D Flip
 -加入了挑战“不为诅咒流血II”。
 -Book of Years, Yamawaro's Crate and Exchange Ticket now has tag "No Challenge".
 -岁月史书、山童的木箱和交易所门票现在有了标签“非挑战”。
+
+12.10.5-2023.2.14
+-Added Challenge "Who's that item?".
+-加入了挑战“我是谁？”。
+-Symmetry OCD now spawns asymmetrical collectibles from the item pool after the item pool is empty, instead of symmetrical items from treasure room pool.
+-对称强迫症现在会在道具池空之后生成该道具池的不对称道具，而非宝箱房的对称道具。

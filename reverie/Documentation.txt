@@ -2623,8 +2623,8 @@ Introduction to challenges:
 Heavy Debt
 Character: Tainted Keeper
 Starting Items: Deep Pockets, Moms' IOU
-Starting Trinkets: Silver Dollar (Swallowed)
-End: Mom's Heart/It lives!
+Starting Trinkets: Silver Dollar (Gulped)
+Target: Mom's Heart/It lives!
 Room Filter: None
 Curse Filter: No Curse of Labyrinth
 Special:
@@ -2633,16 +2633,16 @@ Special:
 Shadow Die Twice
 Character: Tainted Judas
 Starting Items: Roukanken, 4.5 Volt, Judas' Shadow, The Battery
-Starting Trinkets: Aromatic Flower, Old Capacitor(Swallowed)
+Starting Trinkets: Aromatic Flower, Old Capacitor (Gulped)
 Pocket Items: Psycho Knife
-End: The Lamb
+Target: The Lamb
 Room Filter: No Treasure Rooms or Shops
 
 Steam Age
 Character: Cain
 Starting Items: Deep Pockets
 Pocket Items: Tengu Cellphone
-End: ???
+Target: ???
 Curse Filter: No Curse of Blind
 Special:
 * All collectibles become A Quarter.
@@ -2652,7 +2652,7 @@ Special:
 Pure Purist
 Character: Isaac
 Starting Items: None
-End: Mom
+Target: Mom
 Curse Filter: No Curses
 Room Filter: No treasure room, shop, mini-boss room, secret room, super secret room, arcade, curse room, challenge room, library, sacrifice room, Isaac's bedroom, barren bedroom, chest room, dice room.
 Special:
@@ -2662,7 +2662,7 @@ Photo Exam
 Character: Isaac
 Starting Items: None
 Pocket Items: Tengu Camera
-End: Hush
+Target: Hush
 Curse Filter: No Curses
 Special:
 * Player starts with 9 red hearts.
@@ -2674,16 +2674,23 @@ Special:
 No Blood for Curse
 Character: Magdalane
 Starting Items: Cursed Blood, Carnival Hat, Curse of the Tower
-End: Satan
+Target: Satan
 Special:
 * Black Candle, Pyromaniac and Host Hat are banned.
 
 No Blood for Curse II
 Character: Isaac
 Starting Items: Cursed Blood, Carnival Hat
-End: Mother
+Target: Mother
 Special:
 * Black Candle, Pyromaniac and Host Hat are banned.
+
+Who's that item?
+Character: Isaac
+Starting Items: Eye of Chimera
+Starting Trinkets: Symmetry OCD, NO! (Gulped)
+Curses: Curse of Blind
+Target: The Lamb
 
 Boss List:
 

@@ -75,4 +75,5 @@ Collectibles.DSiphon.Item,
 Collectibles.FairyDust.Item,
 Collectibles.Asthma.Item,
 Collectibles.Dejavu.Item,
-Collectibles.Jealousy.Item})
+Collectibles.Jealousy.Item,
+Collectibles.RainbowCard.Item})

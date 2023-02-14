@@ -36,4 +36,5 @@
 	<challenge name="Photo Exam" id="5" playertype="0" cursefilter="255" endstage="9"/>
 	<challenge name="No Blood for Curse" id="6" startingitems="371" playertype="1" endstage="10" altpath="false" />
 	<challenge name="No Blood for Curse II" id="7" playertype="0" endstage="8" secretpath="true" />
+	<challenge name="Who's that item?" id="8" playertype="0" startingtrinkets="88" getcurse="64" endstage="11" altpath="false"/>
 </challenges>

@@ -190,7 +190,7 @@ local function PreGetCollectible(mod, pool, decrease, seed, loopCount)
     if (HasOCD and Game():GetFrameCount() > 0 and loopCount <= 1) then
         local itemPool = Game():GetItemPool();
         ItemPools:EvaluateRoomBlacklist();
-        local result = itemPool:GetCollectible(pool, decrease, seed);
+        local result = itemPool:GetCollectible(pool, decrease, seed, CollectibleType.COLLECTIBLE_BREAKFAST);
         DisableOCD = true;
         ItemPools:EvaluateRoomBlacklist();
         DisableOCD = false;

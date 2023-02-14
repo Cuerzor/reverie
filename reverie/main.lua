@@ -75,7 +75,7 @@ end
 Lib:InitMod(THI, "REVERIE");
 
 THI.Version = {
-    12,10,4
+    12,10,5
 }
 function THI:GetVersionString()
     local versionString = "";
@@ -734,7 +734,8 @@ THI.Challenges = {
     PurePurist = Require("scripts/challenges/pure_purist"),
     PhotoExam = Require("scripts/challenges/photo_exam"),
     NoBloodForCurse = Require("scripts/challenges/no_blood_for_curse"),
-    NoBloodForCurse2 = Require("scripts/challenges/no_blood_for_curse_2")
+    NoBloodForCurse2 = Require("scripts/challenges/no_blood_for_curse_2"),
+    WhosThatItem = Require("scripts/challenges/whos_that_item")
 }
 
 
