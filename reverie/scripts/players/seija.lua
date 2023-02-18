@@ -168,11 +168,13 @@ local function UpdatePlayerModItems(player)
     tempData.ModZeroCount = 0;
     tempData.ModFourCount = 0;
     local function Check(id)
-        local num = player:GetCollectibleNum(id);
-        if (Seija:IsModQuality0(id)) then
-            tempData.ModZeroCount = tempData.ModZeroCount + num
-        elseif (Seija:IsModQuality4(id)) then
-            tempData.ModFourCount = tempData.ModFourCount + num
+        if (itemConfig:GetCollectible(id)) then
+            local num = player:GetCollectibleNum(id);
+            if (Seija:IsModQuality0(id)) then
+                tempData.ModZeroCount = tempData.ModZeroCount + num
+            elseif (Seija:IsModQuality4(id)) then
+                tempData.ModFourCount = tempData.ModFourCount + num
+            end
         end
     end
 

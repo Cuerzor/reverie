@@ -2685,3 +2685,7 @@ Greed Shop: Added D Flip
 -加入了挑战“我是谁？”。
 -Symmetry OCD now spawns asymmetrical collectibles from the item pool after the item pool is empty, instead of symmetrical items from treasure room pool.
 -对称强迫症现在会在道具池空之后生成该道具池的不对称道具，而非宝箱房的对称道具。
+
+12.10.6-2023.2.18
+-Fixed an issue that the game will crash after Seija picked up Knife Piece 2 during Mine Escapes.
+-修复正邪在矿洞逃亡中拿起菜刀部件2时，游戏会崩溃的BUG。
