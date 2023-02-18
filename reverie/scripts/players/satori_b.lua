@@ -1,12 +1,26 @@
 local Stats = CuerLib.Stats;
+local Players = CuerLib.Players;
 local SatoriB = ModPlayer("Tainted Satori", true, "SatoriB");
 SatoriB.Costume = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_satori_b.anm2");
 SatoriB.CostumeHair = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_satori_b_hair.anm2");
 SatoriB.CostumeFlying = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_satori_b_flying.anm2");
 SatoriB.Sprite = "gfx/reverie/satori_b.anm2";
 SatoriB.SpriteFlying = "gfx/reverie/satori_b_flying.anm2";
+SatoriB.SpeedDownBase = 0.03;
+SatoriB.SpeedDownPerRoomPerStage = 0.006;
+SatoriB.SpeedUpPerPill = 0.3;
+SatoriB.MaxSpeedUp = 2;
+SatoriB.MinSpeedUp = -10000000;
 
 local Wheelchair = THI.Shared.Wheelchair;
+
+function SatoriB:GetPlayerData(player, init)
+    return SatoriB:GetData(player, init, function()
+        return {
+            SpeedUp = 0
+        }
+    end)
+end
 
 local function GetPlayerTempData(player, init)
     return SatoriB:GetTempData(player, init, function()
@@ -14,20 +28,6 @@ local function GetPlayerTempData(player, init)
             SpriteState = 0
         }
     end)
-end
-
-
-function SatoriB.GetPlayerData(player, init)
-    local data = player:GetData();
-    if (init) then
-        if (not data._SATORI_B) then
-            data._SATORI_B = {
-                SpeedUp = 0,
-                HasBirthright = false
-            }
-        end
-    end
-    return data._SATORI_B;
 end
 
 local function UpdatePlayerSprite(player)
@@ -51,6 +51,15 @@ local function UpdatePlayerSprite(player)
     end
 end
 
+function SatoriB:AddSpeedUp(player, value)
+    local data = SatoriB:GetPlayerData(player, true);
+    data.SpeedUp = data.SpeedUp + value;
+    data.SpeedUp = math.max(data.SpeedUp, SatoriB.MinSpeedUp);
+    local maxSpeedUp = SatoriB.MaxSpeedUp;
+    if (not (player:GetPlayerType() == SatoriB.Type and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT))) then
+        data.SpeedUp = math.min(data.SpeedUp, SatoriB.MaxSpeedUp);
+    end
+end
 
 function SatoriB:PostPlayerInit(player)
     local playerType = player:GetPlayerType();
@@ -60,7 +69,6 @@ function SatoriB:PostPlayerInit(player)
         local pillColor = itemPool:ForceAddPillEffect(PillEffect.PILLEFFECT_HEMATEMESIS);
         itemPool:IdentifyPill (pillColor);
         player:AddPill(pillColor);
-        local data = SatoriB.GetPlayerData(player, true);
     end
 end
 SatoriB:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, SatoriB.PostPlayerInit)
@@ -71,8 +79,6 @@ function SatoriB:PostPlayerUpdate(player)
     if (playerType == SatoriB.Type) then
         UpdatePlayerSprite(player);
         Wheelchair:PlayerUpdate(player);
-    else
-        
     end
 end
 SatoriB:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, SatoriB.PostPlayerUpdate)
@@ -81,32 +87,52 @@ function SatoriB:PostPlayerEffect(player)
     
     local playerType = player:GetPlayerType();
     if (playerType == SatoriB.Type) then
-        local data = SatoriB.GetPlayerData(player, true);
-        local br = player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT);
-        if (data.HasBirthright ~= br) then
-            player:AddCacheFlags(CacheFlag.CACHE_SPEED);
-            player:EvaluateItems();
-            data.HasBirthright = br;
-        end
         Wheelchair:PlayerEffect(player);
     end
 end
 
 SatoriB:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, SatoriB.PostPlayerEffect)
 
+
+function SatoriB:PreSpawnCleanAward(rng, spawnPos)
+    for p, player in Players.PlayerPairs() do
+        if (player:GetPlayerType() == SatoriB.Type) then
+            SatoriB:AddSpeedUp(player, -(SatoriB.SpeedDownBase + SatoriB.SpeedDownPerRoomPerStage * Game():GetLevel():GetStage()));
+            local speed = player.MoveSpeed;
+            player:AddCacheFlags(CacheFlag.CACHE_SPEED);
+            player:EvaluateItems();
+            if (player.MoveSpeed < speed) then
+                SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN);
+            end
+        end
+    end
+end
+SatoriB:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, SatoriB.PreSpawnCleanAward)
+
+
+function SatoriB:PostUsePill(effect, player, flags)
+    if (player:GetPlayerType() == SatoriB.Type) then
+        local data = SatoriB:GetPlayerData(player, true);
+        local multi = 1;
+        if (player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
+            multi = 2;
+        end
+        SatoriB:AddSpeedUp(player, SatoriB.SpeedUpPerPill * multi);
+        player:AddCacheFlags(CacheFlag.CACHE_SPEED);
+        player:EvaluateItems();
+        SFXManager():Play(SoundEffect.SOUND_POWERUP1);
+    end
+end
+SatoriB:AddCallback(ModCallbacks.MC_USE_PILL, SatoriB.PostUsePill);
+
+
 function SatoriB:OnEvaluateCache(player, cache)
     if (player:GetPlayerType() == SatoriB.Type) then
-        if (cache == CacheFlag.CACHE_SPEED) then
-            local limit = 1;
-            local multi = 0.5;
-            if (player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
-                limit = 1.25;
-                multi = 0.675;
-            end
-            player.MoveSpeed = player.MoveSpeed * multi;
-            Stats:SetSpeedLimit(player, limit);
-        elseif (cache == CacheFlag.CACHE_DAMAGE) then
+        if (cache == CacheFlag.CACHE_DAMAGE) then
             Stats:MultiplyDamage(player, 0.8);
+        elseif (cache == CacheFlag.CACHE_SPEED) then
+            local data = SatoriB:GetPlayerData(player, false);
+            player.MoveSpeed = player.MoveSpeed + ((data and data.SpeedUp) or 0);
         end
     end
 end
@@ -141,9 +167,7 @@ function SatoriB:PostCrushEnemy(source, crushed, damage)
     local player = source:ToPlayer();
     if (player and player:GetPlayerType() == SatoriB.Type) then
         if (player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
-            if (player.MoveSpeed >= 1) then
-                Isaac.Explode(player.Position, player, damage)
-            end
+			Game():BombExplosionEffects (crushed.Position, 100,player:GetBombFlags(), Color.Default, player, 1, true, false, DamageFlag.DAMAGE_EXPLOSION | DamageFlag.DAMAGE_IGNORE_ARMOR);
         end
 
         player:SetMinDamageCooldown(60);

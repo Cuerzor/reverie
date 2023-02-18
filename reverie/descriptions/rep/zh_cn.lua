@@ -1406,8 +1406,9 @@ EIDInfo.Birthrights = {
         PlayerName = "觉"
     },
     [Players.SatoriB.Type] = {
-        Description = "↑  {{Speed}}移速+最大移速提升"..
-        "#{{Speed}} 移速大于等于1时碾压会造成爆炸",
+        Description = "翻倍{{Pill}}药丸提供的{{Speed}}移速上升，并且没有上限"..
+        "#加速蓄力大于一半时，角色始终无敌"..
+        "#碾压会造成爆炸",
         PlayerName = "堕化觉"
     },
     [Players.Seija.Type] = {

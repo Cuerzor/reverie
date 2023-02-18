@@ -17,7 +17,6 @@ WheelChair.HitboxSubType = 555;
 WheelChair.SpeedUpSpeed = 0.005;
 WheelChair.SpeedDownSpeed = 0.08;
 WheelChair.MeterVariant = Isaac.GetEntityVariantByName("Komeiji Meter");
-
 local CrushedEnemies = {};
 
 local function LimitVelocity(vel, maxSpeed)
@@ -65,7 +64,7 @@ function WheelChair:GetMaxSpeed(player)
     
     local data = self.GetPlayerTempData(player, false);
     if (data) then
-        return player.MoveSpeed * 4.5 * data.SpeedUp;
+        return player.MoveSpeed * 2 * data.SpeedUp;
     end
     return 0;
 end
@@ -109,13 +108,17 @@ function WheelChair:PlayerEffect(player)
             newerPos = data.LastPositions[i];
         end
         local distance = pos:Distance(newerPos);
-        if (pos:Distance(newerPos) > movedDistance) then
+        if (distance > movedDistance) then
             movedDistance = distance;
         end
     end
 
     
-    local maxAdditionSpeed = math.min(4.5 * player.MoveSpeed, movedDistance, currentSpeed, (player.MoveSpeed * 9 - vel:Length()) * data.SpeedUp);
+    local normalMaxSpeed = (player.MoveSpeed + 3) * 0.9;
+    local maxAdditionSpeed = 0.5 * normalMaxSpeed;
+    maxAdditionSpeed = math.min(maxAdditionSpeed, movedDistance);
+    maxAdditionSpeed = math.min(maxAdditionSpeed, currentSpeed);
+    maxAdditionSpeed = math.min(maxAdditionSpeed, (normalMaxSpeed * 1.5 - vel:Length()) * data.SpeedUp);
     maxAdditionSpeed = math.max(0, maxAdditionSpeed);
     data.AdditionSpeed = LimitVelocity(data.AdditionSpeed, maxAdditionSpeed);
     data.AdditionSpeed = data.AdditionSpeed * (movement:Length() * 0.2 + 0.8)
@@ -125,13 +128,13 @@ function WheelChair:PlayerEffect(player)
     
     if (movement:Length() > 0 and movedDistance > 0.05) then
         if (data.SpeedUp < 1) then
-            data.SpeedUp = data.SpeedUp + self.SpeedUpSpeed;
+            data.SpeedUp = data.SpeedUp + self.SpeedUpSpeed * 10 / player.MaxFireDelay;
             data.SpeedUp = math.min(1, math.max(0, data.SpeedUp));
         end
         
 
         local addVel = data.AdditionSpeed;
-        local moveSpeed = player.MoveSpeed;
+        local moveSpeed = player.MoveSpeed / 2 + 1;
         data.AdditionSpeed = addVel + movement * moveSpeed;
 
     else
@@ -154,17 +157,25 @@ function WheelChair:PlayerEffect(player)
         hitBox:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
 
         -- Invincible.
-        local movingTowardsEnemy = false;
-        for _, ent in ipairs(Isaac.GetRoomEntities()) do
-            if (ent:IsEnemy() and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and MovingTowards(player, ent) and player.Position:Distance(ent.Position) < ent.Size + player.Size + 120) then
-                movingTowardsEnemy = true;
+        local invincible = false;
+        local SatoriB = Reverie.Players.SatoriB;
+        if (player:GetPlayerType() == SatoriB.Type and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
+            invincible = true;
+        else
+            for _, ent in ipairs(Isaac.GetRoomEntities()) do
+                if (ent:IsEnemy() and 
+                not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and 
+                --MovingTowards(player, ent) and 
+                player.Position:Distance(ent.Position) < ent.Size + player.Size + 40) then
+                    invincible = true;
+                end
             end
         end
-        if (movingTowardsEnemy) then
+        if (invincible) then
+            player:SetMinDamageCooldown(5);
             if (player.FrameCount % 6 <= 2) then
                 player:SetColor(Color(1,1,1,1,0.5, 0, 0.5), 3, 99, true, true);
             end
-            player:SetMinDamageCooldown(1);
         end
     else
         data.Charging = false;
@@ -288,7 +299,7 @@ function WheelChair:PostHitboxCollision(hitbox, other, low)
                     -- if (data) then
                     --     multiplier = (data.SpeedUp - 0.5) * 2 * 3;
                     -- end
-                    damage = 10 + 140 * (data.SpeedUp) * player.MoveSpeed * (player.Damage / 3.5) ^ 0.5;
+                    damage = data.SpeedUp * 40 * player.MoveSpeed ^ 2 * (player.Damage / 3.5);
 
                     WheelChair:Crush(other, damage, spawner)
                     if (other:HasMortalDamage()) then
@@ -296,19 +307,19 @@ function WheelChair:PostHitboxCollision(hitbox, other, low)
                     else
                         local player2Enemy = other.Position - spawner.Position;
                         data.SpeedUp = 0;
-                        spawner:AddVelocity(-player2Enemy  * player.MoveSpeed / 3);
-                        other:AddVelocity(player2Enemy * player.MoveSpeed);
+                        spawner:AddVelocity(-player2Enemy  * player.MoveSpeed / 6);
+                        other:AddVelocity(player2Enemy * player.MoveSpeed / 2);
                     end
                 end
-            elseif(other.Type == EntityType.ENTITY_PROJECTILE) then
-                local proj = other:ToProjectile();
-                if (not proj:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER)) then
-                    if (player and not Players.IsDead(player)) then
-                        local data = WheelChair.GetPlayerTempData(player, true);
-                        data.SpeedUp = data.SpeedUp - 0.2;
-                        proj:Die();
-                    end
-                end
+            -- elseif(other.Type == EntityType.ENTITY_PROJECTILE) then
+            --     local proj = other:ToProjectile();
+            --     if (not proj:HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER)) then
+            --         if (player and not Players.IsDead(player)) then
+            --             local data = WheelChair.GetPlayerTempData(player, true);
+            --             data.SpeedUp = data.SpeedUp / 2;
+            --             proj:Die();
+            --         end
+            --     end
             end
         end
     end

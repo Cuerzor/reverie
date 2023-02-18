@@ -143,7 +143,7 @@ Tainted Satori
 
 Stats: 
 Hearts: 2 Heart Containers with a half red heart
-Speed: 0.5 (50%, and max speed is reduced to 1.0)
+Speed: 1
 Firerate: 2.73
 Damage: 2.80 (80%)
 Range: 6.5
@@ -153,15 +153,17 @@ Luck: 0
 Starting Items: Placebo, Hematemesis, Candy Heart
 
 Features:
-Immune to spikes and creeps.
-Slowly increase speed boost up to 100% while player is moving.
-if player is moving with 50% speed boost, become invincible and can crush enemies.
-Crush Damage is 10 + 140 * Speed Boost Percent * Player Speed * (Player Damage / 3.5) ^ 0.5.
-Restore speed after being hit by projectiles or crushing enemy while invincible.
+* Immune to spikes and creeps.
+* Slowly increase speed boost up to 100% while player is moving.
+* if player is moving with 50% speed boost and close enough to the enemy, becomes invincible and crushes it.
+* Crush Damage is 40 * Speed Boost Percent * Player Speed ^ 2 * (Player Damage / 3.5).
+* Lose some speed boost after crushing enemy.
 
 Birthright:
 Description: Jesus Take the wheel
-Increase the max speed to 1.25, and explodes after crushing enemies while speed is larger than or equals to 1.0.
+* +0.4 Speed up.
+* Always invincible when the speed charge is more than half.
+* Crushes will cause explosions.
 
 --------------------------------
 Seija

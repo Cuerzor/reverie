@@ -1463,14 +1463,14 @@ EIDInfo.Characters = {
             { -- Traits
                 {str = "Traits", fsize = 2, clr = 3, halign = 0},
                 {str = "Tainted Satori sits on a wheel chair, that means she can safely walk on spikes or creeps."},
-                {str = "Tainted Satori has awful starting move speed, but she can slowly increase her velocity by keep moving. When her speed charge is more than 50%, she will become invincible and can crash any enemies in front of her, dealing a terrible number of damage."},
+                {str = "Tainted Satori can slowly increase her velocity by keep moving. When her speed charge is more than 50%, she can crash any enemies in front of her, dealing a terrible number of damage."},
                 {str = "-If target enemy's HP is lower than the damage, only the charge that just kills the enemy will be lost. Otherwise, all charges will be lost, and Tainted Satori will be bounced off."},
-                {str = "Tainted Satori's speed cap is 1.0."},
             },
             { -- Birthright
                 {str = "Birthright", fsize = 2, clr = 3, halign = 0},
-                {str = "Speed up, speed cap + 0.25."},
-                {str = "Crashing will cause explosion while speed is larger than or equal to 1.0." }
+                {str = "+0.4 speed up"},
+                {str = "Always invincible when the speed charge is more than half." },
+                {str = "Crushes will cause explosions." }
             },
         }
     },
@@ -1823,8 +1823,9 @@ EIDInfo.Birthrights = {
         PlayerName = "Satori"
     },
     [Players.SatoriB.Type] = {
-        Description = "↑  {{Speed}}Speed + Max speed up"..
-        "#{{Speed}} Crush will cause explosion while speed is larger than or equal to 1",
+        Description = "Doubles {{Pill}}pills' {{Speed}}speed ups, and remove these speed ups' limit"..
+        "#Always invincible when the speed charge is more than half"..
+        "#Crushes will cause explosions",
         PlayerName = "Tainted Satori"
     },
     [Players.Seija.Type] = {

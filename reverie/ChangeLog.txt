@@ -2690,5 +2690,18 @@ Greed Shop: Added D Flip
 -Fixed an issue that the game will crash after Seija picked up Knife Piece 2 during Mine Escapes.
 -修复正邪在矿洞逃亡中拿起菜刀部件2时，游戏会崩溃的BUG。
 
+
+-Tainted Satori's starting speed increased to 1 from 0.5, and removed the speed cap.
+-堕化觉的初始移速从0.5提升至1，并且移除了移速上限机制。
+-Tainted Satori's extra speed boost is greatly decreased.
+-堕化觉的额外移速加成现在被大幅削减。
+-Tainted Satori's crush damage has been to (40 * Speed Boost * Speed * player.Damage / 3.5), from (10 + 140 * Speed Boost * Speed ^ 2 * (player.Damage / 3.5)^0.5)
+-堕化觉的撞击伤害从（10+140*移速加成*移速*（玩家伤害/3.5）^0.5）变为（40*移速加成*移速^2*玩家伤害/3.5）。
+-Tainted Satori's invincible condition has been to "close enough to the enemy" from "rushing into the enemy", but the check radius has been reduced to 1 grid from 3 grids.
+-堕化觉的无敌条件从“向敌人冲刺”改为“靠近敌人”，但判断半径从3格减少到1格。
+-Tainted Satori's Birthright no longer increases speed cap, but +0.4 speed up, and makes player always invincible while speed boost is more than half.
+-堕化觉的长子名分不再提升移速上限，改为+0.4移速，并使角色在蓄力大于一半时始终无敌。
+-Tainted Satori's Birthright's Explosion now deals fixed 100 damage that ignores armor, instead of damage equals to the crush damage.
+-堕化觉的长子名分的爆炸现在固定造成100点伤害并且无视护甲，而非等同于撞击伤害。
 -Fixed an issue that Seija + Mimic Tears will remove quest items.
 -修复正邪+仿身泪滴会移除任务道具的BUG。
