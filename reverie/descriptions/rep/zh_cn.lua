@@ -535,7 +535,12 @@ EIDInfo.Collectibles = {
         BookOfVirtues = "黑色灵火",
         BookOfBelial = "↑ 击杀敌人后在10秒内{{Damage}}+1伤害"
     },
-
+    [Collectibles.FinalPlan.Item] = {
+        Name = "最终计划",
+        Description = "{{Player"..Players.SatoriB.Type.."}} 堕化觉会在清理房间后产生药瘾，↓{{Speed}}移速和{{Damage}}伤害下降"..
+        "#{{Pill}} 吃药可以缓解药瘾，并↑提升{{Speed}}移速和{{Damage}}伤害"..
+        "#!!! 使用该道具后，角色失去{{Heart}}{{Heart}}{{Heart}}3颗心(红心优先)，并缓解一定程度的药瘾",
+    },
 
     --TH12
     [Collectibles.DowsingRods.Item] = {

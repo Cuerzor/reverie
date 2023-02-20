@@ -483,6 +483,12 @@ EIDInfo.Collectibles = {
         BookOfVirtues = "Dark wisps",
         BookOfBelial = "↑{{Damage}}+1 Damage up in 10 seconds after kills by the execution"
     },
+    [Collectibles.FinalPlan.Item] = {
+        Name = "Final Plan",
+        Description = "{{Player"..Players.SatoriB.Type.."}} T. Satori will get drug addiction after room cleared, ↓ {{Speed}}speed and {{Damage}} damage down"..
+        "#{{Pill}} Take pills to relieve drug addiction, and ↑ increase {{Speed}}speed and {{Damage}} damage"..
+        "#!!! After use this item, player loses {{Heart}}{{Heart}}{{Heart}}3 hearts (red hearts first) and relieve drug addiction by an amount",
+    },
 
     
     --TH12

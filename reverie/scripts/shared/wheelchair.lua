@@ -1,6 +1,9 @@
 local Entities = CuerLib.Entities;
 local Players = CuerLib.Players;
+local Math = CuerLib.Math;
+local Grids = CuerLib.Grids;
 local CompareEntity = Entities.CompareEntity;
+local EntityExists = Entities.EntityExists;
 local WheelChair = {};
 
 local Functions = {
@@ -54,6 +57,18 @@ function WheelChair.GetPlayerTempData(player, init)
                 Charging = false,
                 Hitbox = nil,
                 Meter = nil
+            };
+        end
+    end
+    return data._SATORI_WHEELCHAIR;
+end
+
+function WheelChair:GetHitboxData(hitbox, init)
+    local data = hitbox:GetData();
+    if (init) then
+        if (not data._SATORI_WHEELCHAIR) then
+            data._SATORI_WHEELCHAIR =  {
+                Tech2Laser = nil
             };
         end
     end
@@ -128,7 +143,10 @@ function WheelChair:PlayerEffect(player)
     
     if (movement:Length() > 0 and movedDistance > 0.05) then
         if (data.SpeedUp < 1) then
-            data.SpeedUp = data.SpeedUp + self.SpeedUpSpeed * 10 / player.MaxFireDelay;
+            local speedUpSpeed = self.SpeedUpSpeed;
+            local tears = 30 / (math.max(player.MaxFireDelay, -0.75) + 1);
+            speedUpSpeed = speedUpSpeed * (0.0213 * tears ^ 2 + 0.851);
+            data.SpeedUp = data.SpeedUp + speedUpSpeed;
             data.SpeedUp = math.min(1, math.max(0, data.SpeedUp));
         end
         
@@ -144,7 +162,17 @@ function WheelChair:PlayerEffect(player)
         end
     end
 
-    if (self:IsOverHalfSpeed(player)) then
+    local playerEffects = player:GetEffects();
+    -- Mars, A Pony, White Pony.
+    if (playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_MARS) or
+    playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_PONY) or
+    playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_WHITE_PONY) or
+    Reverie.Collectibles.BrutalHorseshoe:IsDashing(player)) then
+        data.SpeedUp = 1;
+    end
+
+    local charging = self:IsOverHalfSpeed(player);
+    if (charging) then
         data.Charging = true;
         if (not data.Hitbox or not data.Hitbox:Exists()) then
             data.Hitbox = Isaac.Spawn(self.HitboxType, self.HitboxVariant, self.HitboxSubType, player.Position + player.Velocity, Vector.Zero, player);
@@ -155,6 +183,36 @@ function WheelChair:PlayerEffect(player)
         hitBox.Velocity = player.Velocity;
         hitBox.Parent = player;
         hitBox:ClearEntityFlags(EntityFlag.FLAG_APPEAR);
+        local hitBoxData = WheelChair:GetHitboxData(hitBox, true);
+
+        -- Technology Synergy.
+        if (player:HasCollectible(CollectibleType.COLLECTIBLE_TECHNOLOGY)) then
+            if (hitBox:IsFrame(7, 0)) then
+                
+                local pos = hitBox.Position + player.Velocity:Resized(40) * 2;
+                local angle = (player.Velocity):GetAngleDegrees();
+                local laser = EntityLaser.ShootAngle(2, hitBox.Position, angle, -1, Vector(0, -24), player);
+
+                laser:SetColor(player.LaserColor, -1, 0);
+                laser:AddTearFlags(hitBox:ToKnife().TearFlags);
+
+                laser.CollisionDamage = player.Damage;
+                --laser.SubType = LaserSubType.LASER_SUBTYPE_NO_IMPACT;
+                laser.Timeout = 10;
+                laser.PositionOffset = Vector.Zero;
+                laser.MaxDistance = 80;
+                laser.DisableFollowParent = true;
+                laser.Velocity = player.Velocity:Resized(40);
+                laser:Update();
+                SFXManager():Play(THI.Sounds.SOUND_SCIFI_LASER, 0.8, 0, false, 2);
+            end
+        end
+        -- Tech X Synergy.
+        if (player:HasCollectible(CollectibleType.COLLECTIBLE_TECH_X)) then
+            if (hitBox:IsFrame(10, 0)) then
+                local laser = player:FireTechXLaser (hitBox.Position, -player.Velocity:Resized(player.ShotSpeed * 10), 48, player, 0.5 )
+            end
+        end
 
         -- Invincible.
         local invincible = false;
@@ -181,6 +239,34 @@ function WheelChair:PlayerEffect(player)
         data.Charging = false;
     end
 
+    
+    -- Technology 2 Synergy.
+    if (charging and player:HasCollectible(CollectibleType.COLLECTIBLE_TECHNOLOGY_2)) then
+        local hitBox = data.Hitbox;
+        if (hitBox) then
+            
+            local hitBoxData = WheelChair:GetHitboxData(hitBox, true);
+            local angle = (player.Velocity):GetAngleDegrees();
+            if (not EntityExists(hitBoxData.Tech2Laser)) then
+                hitBoxData.Tech2Laser = EntityLaser.ShootAngle(2, hitBox.Position, angle, -1, Vector.Zero, player);
+            end
+            local tearParams = player:GetTearHitParams ( WeaponType.WEAPON_LASER, 0.13, 1, player);
+            hitBoxData.Tech2Laser:SetColor(player.LaserColor, -1, 0);
+            hitBoxData.Tech2Laser.TearFlags = tearParams.TearFlags;
+            hitBoxData.Tech2Laser:SetActiveRotation (0, angle, Math.GetAngleDiff(hitBoxData.Tech2Laser.AngleDegrees, angle), false);
+            hitBoxData.Tech2Laser.CollisionDamage = player.Damage * 0.13;
+        end
+    else
+        local hitBox = data.Hitbox;
+        if (hitBox) then
+            local hitBoxData = WheelChair:GetHitboxData(hitBox, false);
+            if (hitBoxData and hitBoxData.Tech2Laser) then
+                hitBoxData.Tech2Laser:Remove();
+                hitBoxData.Tech2Laser = nil
+            end
+        end
+    end
+
     -- Record LastPositions.
     local maxPositionRecords = 5;
     table.insert(data.LastPositions, 1, player.Position);
@@ -196,19 +282,50 @@ end
 function WheelChair:PostHitboxUpdate(hitbox)
     if (hitbox.Variant == WheelChair.HitboxVariant and hitbox.SubType == WheelChair.HitboxSubType) then
         local spawner = hitbox.SpawnerEntity;
+        local player;
         if (spawner and spawner:Exists()) then
             local vel = spawner.Velocity;
             local speed = vel:Length();
             hitbox.Size = 20
-            local player = spawner:ToPlayer();
+            player = spawner:ToPlayer();
             if (player) then
                 hitbox.TearFlags = player.TearFlags;
                 local data = WheelChair.GetPlayerTempData(player, false);
                 if (not WheelChair:IsOverHalfSpeed(player) or not CompareEntity(hitbox, data.Hitbox)) then
                     hitbox:Remove();
+                    return;
                 end
             else
                 hitbox:Remove();
+                return;
+            end
+        end
+
+        -- Terra Synergy.
+        if (hitbox.TearFlags & TearFlags.TEAR_ROCK > 0) then
+            local room = Game():GetRoom();
+            for i = 1, 12 do
+                local angle = i * 30;
+                local pos = hitbox.Position + Vector.FromAngle(angle) * hitbox.Size;
+                local index = room:GetGridIndex(pos);
+                room:DestroyGrid(index, false);
+                Grids:PushToBridge(hitbox.Position, index);
+            end
+        end
+        -- Fire Mind Synergy.
+        if (hitbox.TearFlags & TearFlags.TEAR_BURN > 0) then
+            if (hitbox:IsFrame(2,0)) then
+                local flame = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.RED_CANDLE_FLAME, 0, hitbox.Position - hitbox.Velocity, Vector.Zero, hitbox):ToEffect();
+                flame.CollisionDamage =22;
+                flame.Timeout = 30;
+            end
+        end
+        -- Uranus Synergy.
+        if (hitbox.TearFlags & TearFlags.TEAR_ICE > 0) then
+            if (hitbox:IsFrame(2,0)) then
+                local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_HOLYWATER_TRAIL, 0, hitbox.Position - hitbox.Velocity, Vector.Zero, hitbox):ToEffect();
+                creep.CollisionDamage = (player and player.Damage or 3.5) * 0.66;
+                creep.Timeout = 90;
             end
         end
     end
@@ -285,6 +402,21 @@ function WheelChair:Crush(npc, damage, source)
     WheelChair:PostCrushNPC(source, npc, damage);
 end
 
+function WheelChair:ApplyTearFlagsEffect(npc, hitbox, damage, tearFlags, player)
+    if (tearFlags & TearFlags.TEAR_EXPLOSIVE > 0) then
+        Game():BombExplosionEffects (hitbox.Position, damage, TearFlags.TEAR_POISON, hitbox:GetColor(), hitbox);
+    end
+    -- Brimstone Synergy.
+    if (player:HasCollectible(CollectibleType.COLLECTIBLE_BRIMSTONE)) then
+        local ball = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BRIMSTONE_BALL, 0, hitbox.Position, Vector.Zero, player):ToEffect();
+        ball.Parent = player;
+        ball.CollisionDamage = player.Damage;
+        ball:SetTimeout(20);
+        ball:SetColor(player.LaserColor, -1, 0)
+        SFXManager():Play(SoundEffect.SOUND_BLOOD_LASER)
+    end
+end
+
 function WheelChair:PostHitboxCollision(hitbox, other, low)
     if (hitbox.Variant == WheelChair.HitboxVariant and hitbox.SubType == WheelChair.HitboxSubType) then
         local spawner = hitbox.SpawnerEntity;
@@ -299,21 +431,65 @@ function WheelChair:PostHitboxCollision(hitbox, other, low)
                     -- if (data) then
                     --     multiplier = (data.SpeedUp - 0.5) * 2 * 3;
                     -- end
-                    damage = data.SpeedUp * 40 * player.MoveSpeed ^ 2 * (player.Damage / 3.5);
 
-                    WheelChair:Crush(other, damage, spawner)
-                    if (other:HasMortalDamage()) then
-                        data.SpeedUp = data.SpeedUp - other.HitPoints / damage;
-                    else
-                        local player2Enemy = other.Position - spawner.Position;
-                        data.SpeedUp = 0;
-                        spawner:AddVelocity(-player2Enemy * player.MoveSpeed / 6);
-                        local enemyKnockbackMulti = player.MoveSpeed / 2;
-                        if (player:HasCollectible(CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS)) then
-                            enemyKnockbackMulti = enemyKnockbackMulti * 2;
-                        end
-                        other:AddVelocity(player2Enemy * enemyKnockbackMulti);
+                    local damageScale = data.SpeedUp * 40 * player.MoveSpeed ^ 2 / 3.5;
+                    local tearParams = player:GetTearHitParams ( WeaponType.WEAPON_KNIFE, damageScale, 1, hitbox);
+                    hitbox:SetColor(tearParams.TearColor, -1, 0);
+                    hitbox.TearFlags = tearParams.TearFlags;
+                    damage = tearParams.TearDamage;
+                    local playerEffects = player:GetEffects();
+                    local willCrush = true;
+                    local applyKnockback = true;
+                    
+                    -- Mars, A Pony, White Pony.
+                    if (playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_MARS) or
+                    playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_PONY) or
+                    playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_WHITE_PONY) or
+                    Reverie.Collectibles.BrutalHorseshoe:IsDashing(player)) then
+                        applyKnockback = false;
                     end
+
+                    -- Proptosis Synergy.
+                    if (hitbox.TearFlags & TearFlags.TEAR_SHRINK > 0) then
+                        damage = damage * 3;
+                    end
+                    -- Aries Synergy.
+                    if (player:HasCollectible(CollectibleType.COLLECTIBLE_ARIES)) then
+                        damage = damage * 2;
+                    end
+                    -- Rainbow charges Synergy.
+                    if (playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_MY_LITTLE_UNICORN) or
+                    playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_UNICORN_STUMP) or
+                    playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_GAMEKID)) then
+                        if (not other:IsBoss()) then
+                            willCrush = false;
+                            player:AddHearts(1);
+                            SFXManager():Play(SoundEffect.SOUND_1UP);
+                            other:Remove();
+                        end
+                    end
+
+                    if (willCrush) then
+                        WheelChair:Crush(other, damage, spawner)
+
+                        WheelChair:ApplyTearFlagsEffect(other, hitbox, damage, hitbox.TearFlags, player);
+    
+                        if (other:HasMortalDamage()) then
+                            data.SpeedUp = data.SpeedUp - other.HitPoints / damage;
+                        else
+                            local player2Enemy = other.Position - spawner.Position;
+                            data.SpeedUp = 0;
+                            if (applyKnockback) then
+                                spawner:AddVelocity(-player2Enemy * player.MoveSpeed / 6);
+                                local enemyKnockbackMulti = player.MoveSpeed / 2;
+                                if (player:HasCollectible(CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS)) then
+                                    enemyKnockbackMulti = enemyKnockbackMulti * 2;
+                                end
+                                other:AddVelocity(player2Enemy * enemyKnockbackMulti);
+                            end
+                        end
+                    end
+                    
                 end
             -- elseif(other.Type == EntityType.ENTITY_PROJECTILE) then
             --     local proj = other:ToProjectile();

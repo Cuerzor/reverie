@@ -155,7 +155,7 @@ function SatoriB:ShowHappyText(addiction)
     end
     local randomIndex = TextRNG:RandomInt(#titleKeys) + 1;
     title = THI.GetText(titleKeys[randomIndex]);
-    hud:ShowItemText(title, desc);
+    --hud:ShowItemText(title, desc);
 end
 
 function SatoriB:ShowSadText(addiction)
@@ -180,7 +180,7 @@ function SatoriB:ShowSadText(addiction)
         titleIndex = titleIndex + 1;
     end
     title = THI.GetText(titleKeys[TextRNG:RandomInt(#titleKeys) + 1]);
-    hud:ShowItemText(title, desc);
+    --hud:ShowItemText(title, desc);
 end
 
 function SatoriB:GetPillEffectAddictionCure(effect)
