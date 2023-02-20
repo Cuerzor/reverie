@@ -2689,3 +2689,6 @@ Greed Shop: Added D Flip
 12.10.6-2023.2.18
 -Fixed an issue that the game will crash after Seija picked up Knife Piece 2 during Mine Escapes.
 -修复正邪在矿洞逃亡中拿起菜刀部件2时，游戏会崩溃的BUG。
+
+-Fixed an issue that Seija + Mimic Tears will remove quest items.
+-修复正邪+仿身泪滴会移除任务道具的BUG。

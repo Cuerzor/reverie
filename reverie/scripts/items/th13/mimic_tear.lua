@@ -13,9 +13,13 @@ function MimicTear:PostPlayerEffect(player)
             local tearCount = info.tearCount;
             local item = info.item;
             if (nerfed and rng:RandomInt(100) < 50) then
-                for j = 1, tearCount do
-                    player:RemoveCollectible(item, true);
-                    SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN);
+                local itemConfig = Isaac.GetItemConfig();
+                local config = itemConfig:GetCollectible(item)
+                if (config and not config:HasTags(ItemConfig.TAG_QUEST)) then
+                    for j = 1, tearCount do
+                        player:RemoveCollectible(item, true);
+                        SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN);
+                    end
                 end
             else
                 for j = 1, tearCount do
