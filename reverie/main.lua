@@ -588,6 +588,7 @@ Collectibles.PsycheEye = Require("scripts/items/th11/psyche_eye");
 Collectibles.GuppysCorpseCart = Require("scripts/items/th11/guppys_corpse_cart");
 Collectibles.Technology666 = Require("scripts/items/th11/technology_666");
 Collectibles.PsychoKnife = Require("scripts/items/th11/psycho_knife");
+Collectibles.FinalPlan = Require("scripts/items/th11/final_plan");
 -- TH12
 Collectibles.DowsingRods = Require("scripts/items/th12/dowsing_rods");
 Collectibles.ScaringUmbrella = Require("scripts/items/th12/scaring_umbrella");

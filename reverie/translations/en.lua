@@ -191,6 +191,21 @@ Translation.Texts = {
 
     ["#COLLECTED_MUSIC"] = "Music: {{CURRENT}}/{{MAX}}",
 
+    ["#SATORI_ADDICTION_HAPPY_1_TITLE_1"] = "Better now...",
+    ["#SATORI_ADDICTION_HAPPY_1_TITLE_2"] = "Better...",
+    ["#SATORI_ADDICTION_HAPPY_1_TITLE_3"] = "Nice...",
+    ["#SATORI_ADDICTION_HAPPY_2_TITLE_1"] = "Not enough...",
+    ["#SATORI_ADDICTION_HAPPY_2_TITLE_2"] = "More...",
+    ["#SATORI_ADDICTION_HAPPY_2_TITLE_3"] = "Tasty...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_1"] = "Strawberries...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_2"] = "Peaches...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_3"] = "Coffee...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_4"] = "Milk...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_5"] = "Wines...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_6"] = "Lemons...",
+    ["#SATORI_ADDICTION_SAD_2_TITLE_1"] = "I'm Dying...",
+    ["#SATORI_ADDICTION_SAD_2_TITLE_2"] = "Kill me...",
+    ["#SATORI_ADDICTION_SAD_2_TITLE_3"] = "Arghhhh...",
 
     ["#DOREMY_INTRO_1"] = "Poor Isaac,{WAIT:10} let me see what you are dreaming...",
     ["#DOREMY_INTRO_2"] = "Where am I?{WAIT:20} Who are you?",

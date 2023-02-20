@@ -307,8 +307,12 @@ function WheelChair:PostHitboxCollision(hitbox, other, low)
                     else
                         local player2Enemy = other.Position - spawner.Position;
                         data.SpeedUp = 0;
-                        spawner:AddVelocity(-player2Enemy  * player.MoveSpeed / 6);
-                        other:AddVelocity(player2Enemy * player.MoveSpeed / 2);
+                        spawner:AddVelocity(-player2Enemy * player.MoveSpeed / 6);
+                        local enemyKnockbackMulti = player.MoveSpeed / 2;
+                        if (player:HasCollectible(CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS)) then
+                            enemyKnockbackMulti = enemyKnockbackMulti * 2;
+                        end
+                        other:AddVelocity(player2Enemy * enemyKnockbackMulti);
                     end
                 end
             -- elseif(other.Type == EntityType.ENTITY_PROJECTILE) then

@@ -182,6 +182,21 @@ Translation.Texts = {
     
     ["#COLLECTED_MUSIC"] = "音乐：{{CURRENT}}/{{MAX}}",
 
+    ["#SATORI_ADDICTION_HAPPY_1_TITLE_1"] = "好点了...",
+    ["#SATORI_ADDICTION_HAPPY_1_TITLE_2"] = "舒服了...",
+    ["#SATORI_ADDICTION_HAPPY_1_TITLE_3"] = "太棒了...",
+    ["#SATORI_ADDICTION_HAPPY_2_TITLE_1"] = "还不够...",
+    ["#SATORI_ADDICTION_HAPPY_2_TITLE_2"] = "更多...",
+    ["#SATORI_ADDICTION_HAPPY_2_TITLE_3"] = "美味...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_1"] = "草莓...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_2"] = "桃子...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_3"] = "咖啡...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_4"] = "牛奶...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_5"] = "红酒...",
+    ["#SATORI_ADDICTION_SAD_1_TITLE_6"] = "柠檬...",
+    ["#SATORI_ADDICTION_SAD_2_TITLE_1"] = "我要死了...",
+    ["#SATORI_ADDICTION_SAD_2_TITLE_2"] = "杀了我...",
+    ["#SATORI_ADDICTION_SAD_2_TITLE_3"] = "呃啊啊...",
     
     ["#DOREMY_INTRO_1"] = "可怜的以撒，{WAIT:10}让我看看你做了什么梦……",
     ["#DOREMY_INTRO_2"] = "我在哪儿？{WAIT:20}你是谁？",
