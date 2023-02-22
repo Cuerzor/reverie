@@ -142,22 +142,34 @@ Stats up from Psyche Eye get doubled.
 Tainted Satori
 
 Stats: 
-Hearts: 2 Heart Containers with a half red heart
+Hearts: 2 Red Heart
 Speed: 1
 Firerate: 2.73
-Damage: 2.80 (80%)
+Damage: 3.5
 Range: 6.5
 Shot Speed: 1.0
 Luck: 0
 
-Starting Items: Placebo, Hematemesis, Candy Heart
+Starting Items: Placebo, Hematemesis, Final Plan (Pocket Slot)
 
 Features:
 * Immune to spikes and creeps.
 * Slowly increase speed boost up to 100% while player is moving.
 * if player is moving with 50% speed boost and close enough to the enemy, becomes invincible and crushes it.
-* Crush Damage is 40 * Speed Boost Percent * Player Speed ^ 2 * (Player Damage / 3.5).
-* Lose some speed boost after crushing enemy.
+    * Crush Damage is 40 * Speed Boost Percent * Player Speed ^ 2 * (Player Damage / 3.5).
+    * Lose some speed boost after crushing enemy.
+* After room cleared, Tainted Satori will get drug addiction, speed and damage down.
+    * Take pills can relieve the drug addiction, and can transform the speed and damage down into up.
+        * The stronger and negativer effect pill has, the more drug addiction relieves.
+
+Unique Collectible: 
+Final Plan
+Description: We have one last plan
+Type: Active Item
+Charges: 1
+Quality: 0
+Tags: No Eden
+* Upon use, take damage of 3 hearts (red hearts first), relieve the drug addiction by an amount.
 
 Birthright:
 Description: Jesus Take the wheel

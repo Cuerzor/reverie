@@ -237,6 +237,8 @@
     <entity name="Eye of Chimera Displayer" anm2path="reverie/1000.5856_eye of chimera displayer.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5856" />
 
     <entity name="Dejavu Corpse" anm2path="reverie/1000.5857_dejavu corpse.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="5857" />
+    
+    <entity name="Bone Break Effect" anm2path="reverie/1000.5858_bone break effect.anm2" id="1000" variant="5858" subtype="0" collisionRadius="0" numGridCollisionPoints="0" friction="1" />
 
 
     <!-- Monsters -->
@@ -430,7 +432,7 @@
     <entity name="Doremy Dream Catcher" anm2path="doremy/effects/dream_catcher.anm2" id="1000" variant="58131" subtype="0" collisionRadius="0" numGridCollisionPoints="0" />
     <entity name="Doremy Nightmare Choice" anm2path="doremy/effects/nightmare_choice.anm2" id="1000" variant="58132" subtype="0" collisionRadius="16" numGridCollisionPoints="0" friction="1" />
     <entity name="Doremy Dream Star" anm2path="doremy/effects/dream_star.anm2" id="1000" variant="58133" subtype="0" collisionRadius="16" numGridCollisionPoints="0" friction="1" />
-    
+
     
     <entity name="Nightmare Pooter" anm2path="doremy/nightmare_pooter.anm2" baseHP="1" boss="0" champion="0" collisionDamage="0" collisionMass="4" collisionRadius="17" friction="1" gridCollision="walls" id="14" subtype="5810" numGridCollisionPoints="4" portrait="12" reroll="false" shadowSize="11" stageHP="0" tags="fly noreroll" variant="0">
         <preload-snd id="178"/>

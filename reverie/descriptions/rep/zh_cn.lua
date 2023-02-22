@@ -1411,7 +1411,7 @@ EIDInfo.Birthrights = {
         PlayerName = "觉"
     },
     [Players.SatoriB.Type] = {
-        Description = "翻倍{{Pill}}药丸提供的{{Speed}}移速上升，并且没有上限"..
+        Description = "↑  {{Speed}}+0.4移速"..
         "#加速蓄力大于一半时，角色始终无敌"..
         "#碾压会造成爆炸",
         PlayerName = "堕化觉"

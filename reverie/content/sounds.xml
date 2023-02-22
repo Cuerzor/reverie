@@ -165,4 +165,7 @@
 	<sound name="Acid Rain">
 		<sample weight="1" path="acid_rain.wav"/>
 	</sound>
+	<sound name="Bone Break">
+		<sample weight="1" path="bone_break.wav"/>
+	</sound>
 </sounds>

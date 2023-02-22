@@ -1455,13 +1455,13 @@ EIDInfo.Characters = {
                 {str = "Start Data", fsize = 2, clr = 3, halign = 0},
                 {str = "Items:"},
                 {str = "- Placebo"},
-                {str = "- Candy Heart"},
+                {str = "- Final Plan"},
                 {str = "- Hematemesis"},
                 {str = "Stats:"},
-                {str = "- HP: 2 Heart Containers + half Red Heart"},
-                {str = "- Speed: 0.5"},
+                {str = "- HP: 2 Hearts"},
+                {str = "- Speed: 1"},
                 {str = "- Tear Rate: 2.73"},
-                {str = "- Damage: 2.80"},
+                {str = "- Damage: 3.50"},
                 {str = "- Range: 6.50"},
                 {str = "- Shot Speed: 1.00"},
                 {str = "- Luck: 0.00"},
@@ -1469,8 +1469,9 @@ EIDInfo.Characters = {
             { -- Traits
                 {str = "Traits", fsize = 2, clr = 3, halign = 0},
                 {str = "Tainted Satori sits on a wheel chair, that means she can safely walk on spikes or creeps."},
-                {str = "Tainted Satori can slowly increase her velocity by keep moving. When her speed charge is more than 50%, she can crash any enemies in front of her, dealing a terrible number of damage."},
-                {str = "-If target enemy's HP is lower than the damage, only the charge that just kills the enemy will be lost. Otherwise, all charges will be lost, and Tainted Satori will be bounced off."},
+                {str = "Tainted Satori can slowly increase her velocity by keep moving. When her speed charge is more than 50%, she can crush any enemies in front of her, dealing a terrible number of damage."},
+                {str = "- If target enemy's HP is lower than the damage, only the charge that just kills the enemy will be lost. Otherwise, all charges will be lost, and Tainted Satori will be bounced off."},
+                {str = "After a room is cleared, Tainted Satori's speed and damage will be decreased due to her drug addiction. She must take pills or use her pocket active item-Final Plan to relieve it, and increase her speed and damage."},
             },
             { -- Birthright
                 {str = "Birthright", fsize = 2, clr = 3, halign = 0},
@@ -1829,7 +1830,7 @@ EIDInfo.Birthrights = {
         PlayerName = "Satori"
     },
     [Players.SatoriB.Type] = {
-        Description = "Doubles {{Pill}}pills' {{Speed}}speed ups, and remove these speed ups' limit"..
+        Description = "↑  {{Speed}}+0.4 speed up"..
         "#Always invincible when the speed charge is more than half"..
         "#Crushes will cause explosions",
         PlayerName = "Tainted Satori"

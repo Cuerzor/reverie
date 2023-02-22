@@ -79,7 +79,7 @@
     <passive id="106" name="Guppy's Corpse Cart" description="CRUSSSSS YOU!" gfx="guppys_corpse_cart.png" quality="3" cache="flying speed" devilprice="2" tags="nolostbr summonable guppy"/>
     <passive id="107" name="Technology 666" description="Made in Hell" gfx="technology_666.png" quality="3" devilprice="2" tags="offensive summonable tech"/>
     <active id="108" name="Psycho Knife" description="Watch     Your     Back" gfx="psycho_knife.png" maxcharges="150" chargetype="timed" quality="2" tags="offensive nocantrip"/>
-    <active id="109" name="Final Plan" description="We have one last plan" gfx="final_plan.png" quality="0" hidden="true" maxcharges="1" tags="nolostbr noeden quest"/>
+    <active id="109" name="Final Plan" description="We have one last plan" gfx="final_plan.png" quality="0" hidden="true" maxcharges="1" tags="noeden"/>
 
     <!-- TH12-->
     <passive id="121" name="Dowsing Rods" description="More Treasures" gfx="dowsing_rods.png" quality="2" tags="offensive nocantrip"/>

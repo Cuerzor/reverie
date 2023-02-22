@@ -14,7 +14,7 @@ local seed = Random()
 if (seed == 0) then seed = 1; end
 TextRNG:SetSeed(seed, 0)
 
--- TODO: Temporary, will be removed after ItemEffectPillEffect.EffectClass get fixed.
+-- #TODO: Temporary, will be removed after ItemEffectPillEffect.EffectClass get fixed.
 SatoriB.PillEffectConfigs = {
     [PillEffect.PILLEFFECT_BAD_GAS] = { EffectClass = 1, EffectSubClass = 1 },
     [PillEffect.PILLEFFECT_BAD_TRIP] = { EffectClass = 2, EffectSubClass = -1 },
@@ -309,6 +309,9 @@ function SatoriB:OnEvaluateCache(player, cache)
         if (cache == CacheFlag.CACHE_DAMAGE) then
             Stats:MultiplyDamage(player, SatoriB:GetDamageMultiplerByAddiction(SatoriB:GetAddiction(player)));
         elseif (cache == CacheFlag.CACHE_SPEED) then
+            if (player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
+                player.MoveSpeed = player.MoveSpeed + 0.4;
+            end
             player.MoveSpeed = player.MoveSpeed + SatoriB:GetSpeedUpByAddiction(SatoriB:GetAddiction(player));
         end
     end
@@ -337,7 +340,7 @@ function SatoriB:PreTakeDamage(tookDamage, amount, flags, source, countdown)
         end
     end
 end
-SatoriB:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, SatoriB.PreTakeDamage);
+SatoriB:AddPriorityCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, CallbackPriority.EARLY, SatoriB.PreTakeDamage);
 
 
 function SatoriB:PostCrushEnemy(source, crushed, damage)

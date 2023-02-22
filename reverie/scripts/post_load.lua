@@ -79,5 +79,5 @@ Collectibles.Jealousy.Item,
 Collectibles.RainbowCard.Item})
 
 
--- TODO: Temporary, will be removed after ItemEffectPillEffect.EffectClass get fixed.
+-- #TODO: Temporary, will be removed after ItemEffectPillEffect.EffectClass get fixed.
 Reverie.Players.SatoriB.PillEffectConfigs[Reverie.Pills.PillOfUltramarineOrb.ID] = { EffectClass = 2 }

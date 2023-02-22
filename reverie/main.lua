@@ -75,7 +75,7 @@ end
 Lib:InitMod(THI, "REVERIE");
 
 THI.Version = {
-    12,10,6
+    12,11,0
 }
 function THI:GetVersionString()
     local versionString = "";
@@ -148,7 +148,7 @@ function THI.RandomFloat(min, max)
         max = min;
         min = 0;
     end
-    return Random() % ((max - min) * 1000) / 1000 + min;
+    return Random() % ((max - min) * 1000000) / 1000000 + min;
 end 
 
 do -- Announcers.
@@ -386,6 +386,7 @@ THI.Sounds = {
     SOUND_PIANO_C4 = Isaac.GetSoundIdByName("Piano C4"),
     SOUND_MUSIC_BOX_C4 = Isaac.GetSoundIdByName("Music Box C4"),
     SOUND_ACID_RAIN = Isaac.GetSoundIdByName("Acid Rain"),
+    SOUND_BONE_BREAK = Isaac.GetSoundIdByName("Bone Break"),
 }
 
 
@@ -462,7 +463,8 @@ THI.Effects = {
     AcidRaindrop = Require("scripts/effects/acid_raindrop"),
     DaggerWarning = Require("scripts/effects/dagger_warning"),
     EyeOfChimeraDisplayer = Require("scripts/effects/eye_of_chimera_displayer"),
-    DejavuCorpse = Require("scripts/effects/dejavu_corpse")
+    DejavuCorpse = Require("scripts/effects/dejavu_corpse"),
+    BoneBreakEffect = Require("scripts/effects/bone_break_effect")
 }
 THI.Familiars = {
     Illusion = Require("scripts/familiars/illusion"),
