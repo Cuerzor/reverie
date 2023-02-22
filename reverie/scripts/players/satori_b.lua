@@ -184,7 +184,6 @@ function SatoriB:ShowSadText(addiction)
 end
 
 function SatoriB:GetPillEffectAddictionCure(effect)
-    local multiplier = 1;
     local class, subclass = 0, 0;
     -- -- This is Broken.
     -- local config = Isaac.GetItemConfig():GetPillEffect(effect);
@@ -194,10 +193,11 @@ function SatoriB:GetPillEffectAddictionCure(effect)
         subclass = config.EffectSubClass;
     end
 
+    local multiplier = 2;
     if (subclass == -1) then
-        multiplier = 2;
+        multiplier = 4;
     elseif (subclass == 0) then
-        multiplier = 1.5;
+        multiplier = 3;
     end
     return class * multiplier;
 end
@@ -209,7 +209,7 @@ function SatoriB:PostPlayerInit(player)
 
         local game = Game();
         if (not (game:GetRoom():GetFrameCount() < 0 and game:GetFrameCount() > 0)) then
-            player:SetPocketActiveItem(THI.Collectibles.FinalPlan.Item, ActiveSlot.SLOT_POCKET, false);
+            player:SetPocketActiveItem(THI.Collectibles.Transfuse.Item, ActiveSlot.SLOT_POCKET, false);
         end
         local itemPool = game:GetItemPool();
         local pillColor = itemPool:ForceAddPillEffect(PillEffect.PILLEFFECT_HEMATEMESIS);
@@ -225,6 +225,8 @@ function SatoriB:PostPlayerUpdate(player)
     if (playerType == SatoriB.Type) then
         UpdatePlayerSprite(player);
         Wheelchair:PlayerUpdate(player);
+    else
+        
     end
 end
 SatoriB:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, SatoriB.PostPlayerUpdate)
@@ -241,7 +243,7 @@ SatoriB:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, SatoriB.PostPlayerEffec
 
 function SatoriB:PreSpawnCleanAward(rng, spawnPos)
     for p, player in Players.PlayerPairs() do
-        if (player:GetPlayerType() == SatoriB.Type) then
+        if (player:GetPlayerType() == SatoriB.Type and not player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
             local addiction = 1;
             local curAddiction = SatoriB:GetAddiction(player);
             if (curAddiction <= -6) then
@@ -309,9 +311,9 @@ function SatoriB:OnEvaluateCache(player, cache)
         if (cache == CacheFlag.CACHE_DAMAGE) then
             Stats:MultiplyDamage(player, SatoriB:GetDamageMultiplerByAddiction(SatoriB:GetAddiction(player)));
         elseif (cache == CacheFlag.CACHE_SPEED) then
-            if (player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
-                player.MoveSpeed = player.MoveSpeed + 0.4;
-            end
+            -- if (player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
+            --     player.MoveSpeed = player.MoveSpeed + 0.4;
+            -- end
             player.MoveSpeed = player.MoveSpeed + SatoriB:GetSpeedUpByAddiction(SatoriB:GetAddiction(player));
         end
     end

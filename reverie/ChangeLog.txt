@@ -2695,3 +2695,13 @@ Greed Shop: Added D Flip
 -重做了堕化觉。
 -Fixed an issue that Seija + Mimic Tears will remove quest items.
 -修复正邪+仿身泪滴会移除任务道具的BUG。
+
+12.11.1-2023.2.23
+-Renamed Final Plan into "Transfuse".
+-将最终计划重命名为“输液”。
+-Changed Transfuse's max charges into 0, and reduced red heart damage into 1 red heart.
+-修改输液的充能为0，效果为受到一颗心的伤害。
+-Crush damage of tainted Satori + Mars/Ponies/Brutal Horseshoe has been reduced to 33%.
+-堕化觉+火星、马和残暴马蹄铁的碾压伤害会降到原先的33%。
+-Modified tainted Satori's Birthright, it will now make her no longer lose stats from drug addiction, instead of speed up.
+-修改堕化觉的长子名分效果，不再增加移速，改为不再因药瘾失去属性。

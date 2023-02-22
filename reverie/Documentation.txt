@@ -150,7 +150,7 @@ Range: 6.5
 Shot Speed: 1.0
 Luck: 0
 
-Starting Items: Placebo, Hematemesis, Final Plan (Pocket Slot)
+Starting Items: Placebo, Hematemesis, Transfuse (Pocket Slot)
 
 Features:
 * Immune to spikes and creeps.
@@ -163,8 +163,8 @@ Features:
         * The stronger and negativer effect pill has, the more drug addiction relieves.
 
 Unique Collectible: 
-Final Plan
-Description: We have one last plan
+Transfuse
+Description: Feels healthy...?
 Type: Active Item
 Charges: 1
 Quality: 0

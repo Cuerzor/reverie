@@ -375,7 +375,7 @@ Translation.Collectibles ={
 --Reference litte meme voice　by...forget(maybe PSYCHO-PASS)「A U G H H H H H !!! I Want Run Overrrrrr!!! I WAAAAAAAAAANT!!!」
     [Collectibles.Technology666.Item] = {Name="テクノロジー666" , Description="地獄の技術"},
     [Collectibles.PsychoKnife.Item] = {Name="サイコナイフ" , Description="あ　な　た　の　う　し　ろ　に"},
-    [Collectibles.FinalPlan.Item] = {Name="最終プラン" , Description="最後のプランがある"},
+    [Collectibles.Transfuse.Item] = {Name="点滴" , Description="健康を感じる。。。？"},
 --包丁はアイザック含め何かとインディーズゲームと縁深いですが、名前のこのひらがな表記は「ゆめにっき」が基になってます。二次創作にはなりますが、よくこいしと絡められています。
 --name nearing is yume nikki    koisi in yume nikki mixed fanfic is common
 

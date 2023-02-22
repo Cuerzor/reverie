@@ -483,11 +483,11 @@ EIDInfo.Collectibles = {
         BookOfVirtues = "Dark wisps",
         BookOfBelial = "↑{{Damage}}+1 Damage up in 10 seconds after kills by the execution"
     },
-    [Collectibles.FinalPlan.Item] = {
-        Name = "Final Plan",
+    [Collectibles.Transfuse.Item] = {
+        Name = "Transfuse",
         Description = "{{Player"..Players.SatoriB.Type.."}} T. Satori will get drug addiction after room cleared, ↓ {{Speed}}speed and {{Damage}} damage down"..
         "#{{Pill}} Take pills to relieve drug addiction, and ↑ increase {{Speed}}speed and {{Damage}} damage"..
-        "#!!! After use this item, player loses {{Heart}}{{Heart}}{{Heart}}3 hearts (red hearts first) and relieve drug addiction by an amount",
+        "#!!! After use this item, player loses {{Heart}}1 heart (red hearts first) and relieve drug addiction by an amount",
     },
 
     
@@ -1455,7 +1455,7 @@ EIDInfo.Characters = {
                 {str = "Start Data", fsize = 2, clr = 3, halign = 0},
                 {str = "Items:"},
                 {str = "- Placebo"},
-                {str = "- Final Plan"},
+                {str = "- Transfuse"},
                 {str = "- Hematemesis"},
                 {str = "Stats:"},
                 {str = "- HP: 2 Hearts"},
@@ -1471,11 +1471,11 @@ EIDInfo.Characters = {
                 {str = "Tainted Satori sits on a wheel chair, that means she can safely walk on spikes or creeps."},
                 {str = "Tainted Satori can slowly increase her velocity by keep moving. When her speed charge is more than 50%, she can crush any enemies in front of her, dealing a terrible number of damage."},
                 {str = "- If target enemy's HP is lower than the damage, only the charge that just kills the enemy will be lost. Otherwise, all charges will be lost, and Tainted Satori will be bounced off."},
-                {str = "After a room is cleared, Tainted Satori's speed and damage will be decreased due to her drug addiction. She must take pills or use her pocket active item-Final Plan to relieve it, and increase her speed and damage."},
+                {str = "After a room is cleared, Tainted Satori's speed and damage will be decreased due to her drug addiction. She must take pills or use her pocket active item-Transfuse to relieve it, and increase her speed and damage."},
             },
             { -- Birthright
                 {str = "Birthright", fsize = 2, clr = 3, halign = 0},
-                {str = "+0.4 speed up"},
+                {str = "No longer loses stats from drug addiction"},
                 {str = "Always invincible when the speed charge is more than half." },
                 {str = "Crushes will cause explosions." }
             },
@@ -1830,7 +1830,7 @@ EIDInfo.Birthrights = {
         PlayerName = "Satori"
     },
     [Players.SatoriB.Type] = {
-        Description = "↑  {{Speed}}+0.4 speed up"..
+        Description = "No longer loses stats from drug addiction"..
         "#Always invincible when the speed charge is more than half"..
         "#Crushes will cause explosions",
         PlayerName = "Tainted Satori"

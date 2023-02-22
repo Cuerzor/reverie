@@ -75,7 +75,7 @@ end
 Lib:InitMod(THI, "REVERIE");
 
 THI.Version = {
-    12,11,0
+    12,11,1
 }
 function THI:GetVersionString()
     local versionString = "";
@@ -590,7 +590,7 @@ Collectibles.PsycheEye = Require("scripts/items/th11/psyche_eye");
 Collectibles.GuppysCorpseCart = Require("scripts/items/th11/guppys_corpse_cart");
 Collectibles.Technology666 = Require("scripts/items/th11/technology_666");
 Collectibles.PsychoKnife = Require("scripts/items/th11/psycho_knife");
-Collectibles.FinalPlan = Require("scripts/items/th11/final_plan");
+Collectibles.Transfuse = Require("scripts/items/th11/transfuse");
 -- TH12
 Collectibles.DowsingRods = Require("scripts/items/th12/dowsing_rods");
 Collectibles.ScaringUmbrella = Require("scripts/items/th12/scaring_umbrella");

@@ -319,7 +319,7 @@ Translation.Collectibles ={
     [Collectibles.GuppysCorpseCart.Item] = {Name="嗝屁猫的尸体推车" , Description="创死你！"},
     [Collectibles.Technology666.Item] = {Name="科技666" , Description="地狱制造"},
     [Collectibles.PsychoKnife.Item] = {Name="疯人刀" , Description="当 心 你 的 背 后"},
-    [Collectibles.FinalPlan.Item] = {Name="最终计划" , Description="我们还有最后一个计划"},
+    [Collectibles.Transfuse.Item] = {Name="输液" , Description="感觉很健康……？"},
     
     [Collectibles.DowsingRods.Item] = {Name="探宝棒" , Description="更多宝藏"},
     [Collectibles.ScaringUmbrella.Item] = {Name="惊吓唐伞" , Description="这不好玩"},

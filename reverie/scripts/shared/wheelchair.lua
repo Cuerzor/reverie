@@ -662,11 +662,12 @@ function WheelChair:PostHitboxCollision(hitbox, other, low)
                     local slice = false;
                     
                     -- Mars, A Pony, White Pony.
-                    if (playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_MARS) or
+                    if (playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_MARS) or 
                     playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_PONY) or
                     playerEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_WHITE_PONY) or
                     Reverie.Collectibles.BrutalHorseshoe:IsDashing(player)) then
                         applyKnockback = false;
+                        damage = damage * 0.33;
                     end
 
                     -- Aries Synergy.
