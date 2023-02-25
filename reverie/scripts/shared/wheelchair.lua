@@ -203,9 +203,9 @@ local function PeppersSynergy(player, hitbox)
             tear.CollisionDamage = player.Damage * 4;
         end
         
-        local cooldown = math.max(2, 12-player.Luck) / 2;
+        local cooldown = math.max(2, 12-player.Luck);
         if (birdsEye and ghostPepper) then
-            cooldown = math.max(2, 8-player.Luck) / 2;
+            cooldown = math.max(2, 8-player.Luck);
         end
         hitBoxData.PepperCooldown = (hitBoxData.PepperCooldown or 0) + cooldown;
     else
@@ -387,17 +387,12 @@ function WheelChair:PlayerEffect(player)
 
         -- Invincible.
         local invincible = false;
-        local SatoriB = Reverie.Players.SatoriB;
-        if (player:GetPlayerType() == SatoriB.Type and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)) then
-            invincible = true;
-        else
-            for _, ent in ipairs(Isaac.GetRoomEntities()) do
-                if (ent:IsEnemy() and 
-                not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and 
-                --MovingTowards(player, ent) and 
-                player.Position:Distance(ent.Position) < ent.Size + player.Size + 40) then
-                    invincible = true;
-                end
+        for _, ent in ipairs(Isaac.GetRoomEntities()) do
+            if (ent:IsEnemy() and 
+            not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and 
+            --MovingTowards(player, ent) and 
+            player.Position:Distance(ent.Position) < ent.Size + player.Size + 40) then
+                invincible = true;
             end
         end
         if (invincible) then
@@ -457,7 +452,7 @@ function WheelChair:PostHitboxUpdate(hitbox)
         if (spawner and spawner:Exists()) then
             local vel = spawner.Velocity;
             local speed = vel:Length();
-            hitbox.Size = 20
+            hitbox.Size = math.max(spawner.Size * 2, spawner.SpriteScale.X * 20);
             player = spawner:ToPlayer();
             if (player) then
                 hitbox.TearFlags = player.TearFlags;
@@ -651,7 +646,7 @@ function WheelChair:PostHitboxCollision(hitbox, other, low)
                     --     multiplier = (data.SpeedUp - 0.5) * 2 * 3;
                     -- end
 
-                    local damageScale = data.SpeedUp * 40 * player.MoveSpeed ^ 2 / 3.5;
+                    local damageScale = data.SpeedUp * 10 * player.MoveSpeed ^ 1.5;
                     local tearParams = player:GetTearHitParams ( WeaponType.WEAPON_KNIFE, damageScale, 1, hitbox);
                     hitbox:SetColor(tearParams.TearColor, -1, 0);
                     hitbox.TearFlags = tearParams.TearFlags;

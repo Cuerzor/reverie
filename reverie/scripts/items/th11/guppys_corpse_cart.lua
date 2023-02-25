@@ -5,6 +5,9 @@ CorpseCart.ChargeSpritePath = "gfx\\reverie\\characters\\costumes\\costume_guppy
 CorpseCart.NormalSpritePath = "gfx\\reverie\\characters\\costumes\\costume_guppys_corpse_cart.png";
 
 function CorpseCart:CanCrush(player)
+    if (player:GetPlayerType() == Reverie.Players.SatoriB.Type) then
+        return false;
+    end
     local effects = player:GetEffects();
     return effects:HasCollectibleEffect(CorpseCart.Item);
 end

@@ -2705,3 +2705,31 @@ Greed Shop: Added D Flip
 -堕化觉+火星、马和残暴马蹄铁的碾压伤害会降到原先的33%。
 -Modified tainted Satori's Birthright, it will now make her no longer lose stats from drug addiction, instead of speed up.
 -修改堕化觉的长子名分效果，不再增加移速，改为不再因药瘾失去属性。
+
+12.12.0-2023.2.25
+* Tainted Satori now starts with trinket "Safety Cap" instead of collectible "Placebo".
+* 堕化觉现在初始携带饰品“保险瓶盖”而非道具“安慰剂”。
+* Tainted Satori now has a HUD bar that display drug addiction values.
+* 堕化觉现在有了显示药瘾值的HUD条。
+* The crushing range of Tainted Satori is now related to the player's size.
+* 堕化觉的碾压范围现在和玩家体型有关。
+* The crush damage of Tainted Satori was adjusted from (40 * chargePercent * speed ^ 2 * damage/3.5) to (10 * chargePercent * speed ^ 1.5 * damage).
+* 堕化觉的撞击伤害从（40*加速百分比*移速^2*伤害/3.5）调整至（10*加速百分比*移速^1.5*伤害）。
+* Tainted Satori's Birthright will no longer give her the invincible effect during the charge.
+* 堕化觉现在拥有长子名分时，加速状态下不再给予角色始终无敌的效果。
+* The trigger frequency of the backward jet flame of Ghost Peeper and Bird's Eye during Tainted Satori's charge is halved.
+* 堕化觉在加速状态下，断魂椒和鸟眼椒向后喷射火焰的触发频率减半。
+* Transfuse now deals only half a heart damage, and will deal a whole heart damage after the Womb.
+* 输液现在只造成半颗心的伤害，并在血宫层之后会造成一整颗心的伤害。
+* Added a new stop layout.
+* 加入了一种新的商店布局。
+* Reduced the weight of the stop layout contains a locked restock machine.
+* 降低了被锁住的补货机的商店布局的权重。
+* The counter of Peerless Elixir will gradually turn red after use to remind the player of danger.
+* 无双之药的计数器在使用后会逐渐变红，以提示玩家危险。
+* Rod of Remorse will no longer teleport players when it is already in the Darkroom/the Chest.
+* 悔悟棒在暗室/玩具箱中时不再将玩家传送。
+* The shop price of Yamawaro's Crate is now adjusted from 10 cents to 15 cents.
+* 山童的木箱现在标价从10美分调整至15美分。
+* Fixed an issue that Tainted Satori has an abnormal bounce effect when she has Guppy's Corpse Cart.
+* 修复了堕化觉拥有嗝屁猫的尸体推车时，具有异常的反弹效果的问题。

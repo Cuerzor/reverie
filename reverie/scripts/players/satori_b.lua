@@ -1,5 +1,6 @@
 local Stats = CuerLib.Stats;
 local Players = CuerLib.Players;
+local NetCoop = CuerLib.NetCoop;
 local SatoriB = ModPlayer("Tainted Satori", true, "SatoriB");
 SatoriB.Costume = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_satori_b.anm2");
 SatoriB.CostumeHair = Isaac.GetCostumeIdByPath("gfx/reverie/characters/costume_satori_b_hair.anm2");
@@ -8,6 +9,13 @@ SatoriB.Sprite = "gfx/reverie/satori_b.anm2";
 SatoriB.SpriteFlying = "gfx/reverie/satori_b_flying.anm2";
 SatoriB.MaxAddiction = 65536;
 SatoriB.MinAddiction = -65536;
+SatoriB.AddictionBarSpr = Sprite();
+SatoriB.AddictionBarSpr:Load("gfx/reverie/ui/satori_addiction_bar.anm2");
+SatoriB.AddictionBarSpr:Play("Idle");
+local barWidthScale = 1;
+local barOriginOffset = 0;
+local renderAddiction = 0;
+local barAlpha = 1;
 
 local TextRNG = RNG();
 local seed = Random()
@@ -105,6 +113,68 @@ local function UpdatePlayerSprite(player)
         spr:SetFrame(animation, frame);
         spr:SetOverlayFrame(overlayAnimation, overlayFrame);
     end
+end
+
+local function RenderAddictionBar(player)
+    if (MusicManager():GetCurrentMusicID() == Music.MUSIC_JINGLE_BOSS) then
+        return;
+    end
+
+    local spr = SatoriB.AddictionBarSpr;
+    local hudOffset = Options.HUDOffset;
+    local x = 80 + 20 * hudOffset;
+    local y = 40 + 12 * hudOffset;
+
+
+    local pos = Vector(x, y);
+    local unitLength = 5;
+    local addiction = SatoriB:GetAddiction(player);
+    local showGradutionCount = math.max(6, math.abs(addiction) * 1.2) + 6;
+
+    local targetAlpha = 0.8;
+    for p, player in Players.PlayerPairs() do
+        local position = Isaac.WorldToScreen(player.Position);
+        if (position:DistanceSquared(pos) < 6400) then
+            targetAlpha = 0.2;
+        end
+    end
+
+    local targetScale = showGradutionCount / 12
+    local targetOriginOffset = 0;
+    if (addiction < 0) then
+        targetOriginOffset = 30-6 * unitLength / barWidthScale;
+    else
+        targetOriginOffset = 6 * unitLength / barWidthScale - 30;
+    end
+    barWidthScale = barWidthScale + (targetScale - barWidthScale) * 0.2;
+    barOriginOffset = barOriginOffset + (targetOriginOffset - barOriginOffset) * 0.2;
+    renderAddiction = renderAddiction + (addiction - renderAddiction) * 0.2;
+    barAlpha = barAlpha + (targetAlpha - barAlpha) * 0.2;
+
+    local maxGraduationCount = math.floor(6 * barWidthScale);
+    local originPos = pos + Vector(barOriginOffset, 0);
+
+    spr.Color = Color(1, 1, 1, barAlpha);
+    spr:RenderLayer (0, pos);
+
+    -- Bar.
+    local sign = 1;
+    spr.Color = Color(0.5, 0.5, 0.5, barAlpha);
+    if (renderAddiction < 0) then
+        sign = -1;
+        spr.Color = Color(1, 0.5, 0.8, barAlpha);
+    end
+    local abs = math.max(1,math.abs(renderAddiction * unitLength) / barWidthScale);
+    spr.Scale = Vector(-sign * abs, 1);
+    spr:RenderLayer (3, originPos);
+    spr.Scale = Vector.One;
+    spr.Color = Color(1, 1, 1, barAlpha);
+    -- Graduations.
+    for i = -maxGraduationCount, maxGraduationCount do
+        spr:RenderLayer (1, pos - Vector(unitLength * i / barWidthScale, 0));
+    end
+    -- Origin.
+    spr:RenderLayer (2, originPos);
 end
 
 function SatoriB:AddAddiction(player, value)
@@ -225,8 +295,6 @@ function SatoriB:PostPlayerUpdate(player)
     if (playerType == SatoriB.Type) then
         UpdatePlayerSprite(player);
         Wheelchair:PlayerUpdate(player);
-    else
-        
     end
 end
 SatoriB:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, SatoriB.PostPlayerUpdate)
@@ -356,5 +424,20 @@ function SatoriB:PostCrushEnemy(source, crushed, damage)
     end
 end
 Wheelchair:AddCallback(SatoriB, Wheelchair.Callbacks.WC_POST_CRUSH_NPC, SatoriB.PostCrushEnemy);
+
+function SatoriB:PostRender()
+    local game = Game();
+    local localIndex = NetCoop.GetLocalPlayerIndex();
+    local player;
+    if (localIndex < 0) then -- Single Player.
+        player = game:GetPlayer(0);
+    else -- Net Coop.
+        player = game:GetPlayer(localIndex)
+    end
+    if (player and player:GetPlayerType() == SatoriB.Type) then
+        RenderAddictionBar(player);
+    end
+end
+SatoriB:AddPriorityCallback(ModCallbacks.MC_POST_RENDER, CallbackPriority.EARLY, SatoriB.PostRender);
 
 return SatoriB;

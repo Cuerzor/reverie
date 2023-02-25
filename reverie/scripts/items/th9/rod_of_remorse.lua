@@ -181,7 +181,7 @@ function RodOfRemorse.TriggerSacrificeEffect(count, player)
             Isaac.Spawn(EntityType.ENTITY_FALLEN, 1, 0, pos, Vector.Zero, nil);
         end
     elseif (count >= 12) then
-        if (rng:RandomInt(2) > 0) then
+        if (level:GetStage() ~= LevelStage.STAGE6 and rng:RandomInt(2) > 0) then
             level:SetStage (LevelStage.STAGE6, stageType);
             player:UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, UseFlag.USE_NOANIM | UseFlag.USE_NOCOSTUME | UseFlag.USE_NOANNOUNCER);
             teleported = true;

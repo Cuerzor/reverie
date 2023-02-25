@@ -156,7 +156,7 @@ Features:
 * Immune to spikes and creeps.
 * Slowly increase speed boost up to 100% while player is moving.
 * if player is moving with 50% speed boost and close enough to the enemy, becomes invincible and crushes it.
-    * Crush Damage is 40 * Speed Boost Percent * Player Speed ^ 2 * (Player Damage / 3.5).
+    * Crush Damage is 10 * Speed Boost Percent * Player Speed ^ 1.5 * Player Damage.
     * Lose some speed boost after crushing enemy.
 * After room cleared, Tainted Satori will get drug addiction, speed and damage down.
     * Take pills can relieve the drug addiction, and can transform the speed and damage down into up.
@@ -169,12 +169,11 @@ Type: Active Item
 Charges: 1
 Quality: 0
 Tags: No Eden
-* Upon use, take damage of 3 hearts (red hearts first), relieve the drug addiction by an amount.
+* Upon use, take damage of half heart (red hearts first), relieve the drug addiction by an amount.
 
 Birthright:
 Description: Jesus Take the wheel
-* +0.4 Speed up.
-* Always invincible when the speed charge is more than half.
+* No longer loses stats from drug addiction.
 * Crushes will cause explosions.
 
 --------------------------------

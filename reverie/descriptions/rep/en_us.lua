@@ -487,7 +487,7 @@ EIDInfo.Collectibles = {
         Name = "Transfuse",
         Description = "{{Player"..Players.SatoriB.Type.."}} T. Satori will get drug addiction after room cleared, ↓ {{Speed}}speed and {{Damage}} damage down"..
         "#{{Pill}} Take pills to relieve drug addiction, and ↑ increase {{Speed}}speed and {{Damage}} damage"..
-        "#!!! After use this item, player loses {{Heart}}1 heart (red hearts first) and relieve drug addiction by an amount",
+        "#!!! After use this item, player loses {{HalfHeart}}half heart (red hearts first) and relieve drug addiction by an amount",
     },
 
     
@@ -1476,7 +1476,7 @@ EIDInfo.Characters = {
             { -- Birthright
                 {str = "Birthright", fsize = 2, clr = 3, halign = 0},
                 {str = "No longer loses stats from drug addiction"},
-                {str = "Always invincible when the speed charge is more than half." },
+                -- {str = "Always invincible when the speed charge is more than half." },
                 {str = "Crushes will cause explosions." }
             },
         }
@@ -1831,7 +1831,7 @@ EIDInfo.Birthrights = {
     },
     [Players.SatoriB.Type] = {
         Description = "No longer loses stats from drug addiction"..
-        "#Always invincible when the speed charge is more than half"..
+        -- "#Always invincible when the speed charge is more than half"..
         "#Crushes will cause explosions",
         PlayerName = "Tainted Satori"
     },

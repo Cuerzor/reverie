@@ -145,7 +145,7 @@
         
     <!-- TH18-->
     <active id="241" name="Gambling D6" description="Greater or Less" gfx="gambling_d6.png" maxcharges="2" quality="3" tags="offensive nocantrip"/>
-    <active id="242" name="Yamawaro's Crate" description="Item storage" gfx="yamawaros_crate.png" maxcharges="0" quality="2" tags="offensive nocantrip nochallenge" shopprice="10"/>
+    <active id="242" name="Yamawaro's Crate" description="Item storage" gfx="yamawaros_crate.png" maxcharges="0" quality="2" tags="offensive nocantrip nochallenge"/>
     <active id="243" name="Delusion Pipe" description="Drowning in delight" gfx="delusion_pipe.png" maxcharges="30" chargetype="timed" quality="1" tags="offensive"/>
     <active id="244" name="Soul Magatama" description="Life Swapper" gfx="soul_magatama.png" maxcharges="2" quality="2" tags="offensive"/>
     <passive id="245" name="Fox in Tube" description="How could I lie to you?" gfx="fox_in_tube.png" quality="2" tags="offensive nocantrip"/>

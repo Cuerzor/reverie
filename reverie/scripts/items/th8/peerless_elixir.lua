@@ -96,7 +96,9 @@ PeerlessElixir:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, PeerlessElixir.onFa
 function PeerlessElixir:RenderOverlay(name)
     Actives:RenderActivesCount(PeerlessElixir.Item, function(player) 
         local data = PeerlessElixir.GetPlayerData(player);
-        return (data and data.UsedTime) or 0;
+        local usedTime = (data and data.UsedTime) or 0;
+        local color = Color(1, 1 - usedTime / 3, 1 - usedTime / 3, 1);
+        return usedTime, color;
     end);
 end
 PeerlessElixir:AddCallback(CuerLib.Callbacks.CLC_RENDER_OVERLAY, PeerlessElixir.RenderOverlay);

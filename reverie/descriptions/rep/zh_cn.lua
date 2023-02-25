@@ -539,7 +539,7 @@ EIDInfo.Collectibles = {
         Name = "输液",
         Description = "{{Player"..Players.SatoriB.Type.."}} 堕化觉会在清理房间后产生药瘾，↓{{Speed}}移速和{{Damage}}伤害下降"..
         "#{{Pill}} 吃药可以缓解药瘾，并↑提升{{Speed}}移速和{{Damage}}伤害"..
-        "#!!! 使用该道具后，角色失去{{Heart}}1颗心(红心优先)，并缓解一定程度的药瘾",
+        "#!!! 使用该道具后，角色失去{{HalfHeart}}半颗心(红心优先)，并缓解一定程度的药瘾",
     },
 
     --TH12
@@ -1412,7 +1412,7 @@ EIDInfo.Birthrights = {
     },
     [Players.SatoriB.Type] = {
         Description = "不再因药瘾失去属性"..
-        "#加速蓄力大于一半时，角色始终无敌"..
+        -- "#加速蓄力大于一半时，角色始终无敌"..
         "#碾压会造成爆炸",
         PlayerName = "堕化觉"
     },

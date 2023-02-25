@@ -215,7 +215,7 @@ do
 
     local WhiteColor = Color(1,1,1,1,1,1,1);
     local function RenderOverlay(mod)
-        local function func(player, playerIndex, slot, pos, scale)
+        local function func(player, order, slot, pos, scale)
             local charges = Actives:GetTotalCharges(player, slot);
             charges = math.min(charges, MaxCharges);
             if (charges > 0) then
